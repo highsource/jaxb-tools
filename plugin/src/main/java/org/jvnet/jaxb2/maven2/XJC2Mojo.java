@@ -27,7 +27,6 @@ import org.apache.maven.project.MavenProject;
  * 
  * @goal generate
  * @phase generate-sources
- * @requiresDependencyResolution compile
  * 
  * @description JAXB-1.x Generator Plugin for Maven-2, bound by default at
  *              'generate-sources' phase.

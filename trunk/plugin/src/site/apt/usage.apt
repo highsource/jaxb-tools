@@ -1,0 +1,115 @@
+													 ------
+								 Maven-2 JAXB-1.x Plugin Usage
+													 ------
+
+How to use
+
+	The next pom.xml extract is a brief example on how to use the 
+	<<<jaxb1:generate goal>>>.  Note that this particular example
+	mimics the behavior of the deprecated jaxb1-maven-plugin on mojo.codehaus.
+ 
++--------------------------------------------------------
+			....
+      <plugin>
+        <groupId>com.sun.tools.xjc.maven2</groupId>
+        <artifactId>maven-jaxb1-plugin</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        
+        <configuration>
+          <packageName>gr.forthnet.hift.xmltypes</packageName>
+          <schemaDirectory>src/main/xsd</schemaDirectory>
+          <generateDirectory>${project.build.directory}/jaxb-source</generateDirectory>
+          <extension>true</extension>
+          <verbose>true</verbose>
+        </configuration>
+
+      </plugin>
+			....
++--------------------------------------------------------
+
+  The dependecies required for projects using the JAXB-1.x generated sources
+  are similar to those listed below:
+  
++--------------------------------------------------------
+    <dependencies>
+    ....
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.xml.bind</groupId>
+      <artifactId>jaxb-impl</artifactId>
+      <version>1.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.xml.bind</groupId>
+      <artifactId>jaxb-libs</artifactId>
+      <version>1.0.6</version>
+    </dependency>
+
+    <dependency>
+      <groupId>relaxngDatatype</groupId>
+      <artifactId>relaxngDatatype</artifactId>
+      <version>20020414</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.msv.datatype.xsd</groupId>
+      <artifactId>xsdlib</artifactId>
+      <version>20060614</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.xml</groupId>
+      <artifactId>namespace</artifactId>
+      <version>1.0.1</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.xml</groupId>
+      <artifactId>jax-qname</artifactId>
+      <version>1.1</version>
+      <scope>runtime</scope>
+    </dependency>
+    ....
+  </dependencies>
++--------------------------------------------------------
+
+  Don't forget to add the {{{https://maven-repository.dev.java.net/}dev.java.net's repository}},  
+  into your pom's repositories list if you use it, like that:
+  
++--------------------------------------------------------
+  <repositories>
+    ...
+    <repository>
+      <id>java.net</id>
+      <name>java.net Maven Repository</name>
+      <url>https://maven-repository.dev.java.net/nonav/repository</url>
+      <layout>legacy</layout>
+    </repository>
+    ...
+  </repositories>
++--------------------------------------------------------
+  
+    
+  This plugin is intended to be a drop-in replacement for JAXB 2 plugin (or the 
+  other way round) as much as possible.  Since it is not based on the 
+  {{{http://java.sun.com/webservices/docs/1.5/jaxb/ant.html}XJC Ant task}} the
+  JAXB 2 plugin's mojo parameters <<<depends>>> and <<<produces>>> are not required.
+	In addition, the following 4+1 instrumental mojo parameters have changed:
+
+-----
+	includeSchemas 		(renamed)--> schemasIncludes
+	excludeSchemas 		(renamed)--> schemaExcludes
+	includeBindings 	(renamed)--> bindingIncludes
+	excludeBindings 	(renamed)--> bindingExcludes
+	bindingDirectory 	(new parameter, defaults to [schemaDirectory])
+-----  
+

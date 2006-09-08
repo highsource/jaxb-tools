@@ -1,0 +1,104 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jvnet.jaxb2.maven2</groupId>
+	<artifactId>maven-jaxb2-plugin-project</artifactId>
+	<packaging>pom</packaging>
+	<version>0.1</version>
+	<name>JAXB-2.x Maven-2 Plugin</name>
+	<inceptionYear>2006</inceptionYear>
+	<url>https://maven-jaxb2-plugin.dev.java.net/nonav/plugin-docs</url>
+	<description>A Maven-2 plugin that uses JAXB 2.x XJC compiler to generate 
+		java sources from schemas.</description>
+	<modules>
+		<module>plugin</module>
+	</modules>
+	<organization>
+		<name>java.net</name>
+		<url>http://www.java.net/</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>ankostis</id>
+			<name>Kostis Anagnostopoulos</name>
+			<email>ankostis@mail.com</email>
+			<roles>
+				<role>commiter</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>lexi</id>
+			<name>Aleksei Valikov</name>
+			<email>valikov@gmx.net</email>
+			<roles>
+				<role>commiter</role>
+			</roles>
+		</developer>
+	</developers>
+	<repositories>
+		<repository>
+			<id>maven2-repository.dev.java.net</id>
+			<name>Java.net Maven 2 Repository</name>
+			<url>https://maven2-repository.dev.java.net/nonav/repository</url>
+		</repository>
+		<repository>
+			<id>maven1-repository.dev.java.net</id>
+			<name>Java.net Maven 1 Repository (legacy)</name>
+			<url>https://maven-repository.dev.java.net/nonav/repository</url>
+			<layout>legacy</layout>
+		</repository>
+	</repositories>
+	<dependencyManagement>
+		<dependencies>
+			<!-- Maven plugin and api classes -->
+			<dependency>
+				<groupId>org.apache.maven</groupId>
+				<artifactId>maven-plugin-api</artifactId>
+				<version>2.0.4</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.maven</groupId>
+				<artifactId>maven-project</artifactId>
+				<version>2.0.4</version>
+			</dependency>
+			<!-- Core jaxb classes -->
+			<dependency>
+				<groupId>javax.xml.bind</groupId>
+				<artifactId>jaxb-api</artifactId>
+				<version>2.0</version>
+			</dependency>
+			<!-- Core jaxb classes -->
+			<dependency>
+				<groupId>com.sun.xml.bind</groupId>
+				<artifactId>jaxb-impl</artifactId>
+				<version>2.0.1</version>
+			</dependency>
+			<!-- Needed for xjc -->
+			<dependency>
+				<groupId>com.sun.xml.bind</groupId>
+				<artifactId>jaxb-xjc</artifactId>
+				<version>2.0.1</version>
+			</dependency>
+			<!-- Needed for xjc -->
+			<dependency>
+				<groupId>javax.activation</groupId>
+				<artifactId>activation</artifactId>
+				<version>1.1</version>
+			</dependency>
+			<!-- Needed for xjc -->
+			<dependency>
+				<groupId>javax.xml.bind</groupId>
+				<artifactId>jsr173_api</artifactId>
+				<version>1.0</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

@@ -6,13 +6,14 @@
 	<artifactId>maven-jaxb2-plugin-project</artifactId>
 	<packaging>pom</packaging>
 	<version>0.1</version>
-	<name>JAXB-2.x Maven-2 Plugin</name>
+	<name>JAXB-2.x Maven-2 Plugin Project</name>
 	<inceptionYear>2006</inceptionYear>
 	<url>https://maven-jaxb2-plugin.dev.java.net/nonav/plugin-docs</url>
 	<description>A Maven-2 plugin that uses JAXB 2.x XJC compiler to generate 
 		java sources from schemas.</description>
 	<modules>
 		<module>plugin</module>
+		<module>tests</module>
 	</modules>
 	<organization>
 		<name>java.net</name>
@@ -50,12 +51,23 @@
 			<url>https://maven2-repository.dev.java.net/nonav/repository</url>
 		</repository>
 		<repository>
-			<id>maven1-repository.dev.java.net</id>
+			<id>maven-repository.dev.java.net</id>
 			<name>Java.net Maven 1 Repository (legacy)</name>
 			<url>https://maven-repository.dev.java.net/nonav/repository</url>
 			<layout>legacy</layout>
 		</repository>
 	</repositories>
+	<!--pluginRepositories>
+		<pluginRepository>
+			<id>maven2-repository.dev.java.net</id>
+			<url>https://maven2-repository.dev.java.net/nonav/repository</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>maven-repository.dev.java.net</id>
+			<url>https://maven-repository.dev.java.net/nonav/repository</url>
+			<layout>legacy</layout>
+		</pluginRepository>
+	</pluginRepositories-->
 	<dependencyManagement>
 		<dependencies>
 			<!-- Maven plugin and api classes -->
@@ -79,13 +91,13 @@
 			<dependency>
 				<groupId>com.sun.xml.bind</groupId>
 				<artifactId>jaxb-impl</artifactId>
-				<version>2.0.1</version>
+				<version>2.0</version>
 			</dependency>
 			<!-- Needed for xjc -->
 			<dependency>
 				<groupId>com.sun.xml.bind</groupId>
 				<artifactId>jaxb-xjc</artifactId>
-				<version>2.0.1</version>
+				<version>2.0</version>
 			</dependency>
 			<!-- Needed for xjc -->
 			<dependency>
@@ -99,6 +111,26 @@
 				<artifactId>jsr173_api</artifactId>
 				<version>1.0</version>
 			</dependency>
+			<dependency>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<version>${pom.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	<build>
+	<pluginManagement>
+	<plugins>
+      <plugin>
+	<inherited>true</inherited>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+	      </plugin>
+	</plugins>
+	</pluginManagement>
+	</build>
 </project>

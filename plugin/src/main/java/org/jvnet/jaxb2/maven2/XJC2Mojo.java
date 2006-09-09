@@ -175,13 +175,6 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 	 */
 	protected boolean strict;
 
-    /** 
-     * If 'true', equivalent to specifying the '-trace-unmarshaller' option to XJC. 
-     * 
-	 * @parameter default-value="false" expression="${maven.xjc2.traceUnmarshaller}"
-     */
-	protected boolean traceUnmarshaller;
-    
     /**
      * If 'false', the plugin will not write the generated code to disk.
      * 
@@ -189,40 +182,6 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
      */
     protected boolean writeCode = true;
     
-    /** 
-     * If 'false', XJC will not generate code for the on-demand validation. 
-     * 
-	 * @parameter default-value="true" expression="${maven.xjc2.generateValidationCode}"
-     */
-	protected boolean generateValidationCode;
-    
-    /** 
-     * If 'false', XJC will not generate code for the marshalling.
-     *  
-	 * @parameter default-value="true" expression="${maven.xjc2.generateMarshallingCode}"
-     */
-	protected boolean generateMarshallingCode;
-    
-    /** 
-     * If 'false', XJC will not generate code for the unmarshalling. 
-     *  
-	 * @parameter default-value="true" expression="${maven.xjc2.generateUnmarshallingCode}"
-     */
-	protected boolean generateUnmarshallingCode;
-
-    /**
-     * <p>The package name of the generated runtime. Leave unspecified
-     * to generate it into the default location.  If specified,
-     * it avoids generating the runtime.
-     * </p>
-     * <p>This option is useful to consolidate the runtimes into one 
-     * when a lot of schemas are compiled separately.
-     * </p>
-     * 
-	 * @parameter expression="${maven.xjc2.runtimePackage}"
-     */
-	protected String runtimePackage;
-
 ///////////////////////////////////////////////
 // NO, set java VM proxy properties into .m2/settings.xml instead.
 ///////////////////////////////////////////////
@@ -335,212 +294,171 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 		executeImp();
 	}
 
-	protected void setSchemaLanguage(String schemaLanguage) {
+	public void setSchemaLanguage(String schemaLanguage) {
 		this.schemaLanguage = schemaLanguage;
 	}
 
-	protected String getSchemaLanguage() {
+	public String getSchemaLanguage() {
 		return schemaLanguage;
 	}
 
-	protected void setSchemaDirectory(File schemaDirectory) {
+	public void setSchemaDirectory(File schemaDirectory) {
 		this.schemaDirectory = schemaDirectory;
 	}
 
-	protected File getSchemaDirectory() {
+	public File getSchemaDirectory() {
 		return schemaDirectory;
 	}
 
-	protected void setSchemaIncludes(String[] schemaIncludes) {
+	public void setSchemaIncludes(String[] schemaIncludes) {
 		this.schemaIncludes = schemaIncludes;
 	}
 
-	protected String[] getSchemaIncludes() {
+	public String[] getSchemaIncludes() {
 		return schemaIncludes;
 	}
 
-	protected void setSchemasExcludes(String[] schemasExcludes) {
+	public void setSchemasExcludes(String[] schemasExcludes) {
 		this.schemasExcludes = schemasExcludes;
 	}
 
-	protected String[] getSchemasExcludes() {
+	public String[] getSchemasExcludes() {
 		return schemasExcludes;
 	}
 
-	protected void setBindingDirectory(File bindingDirectory) {
+	public void setBindingDirectory(File bindingDirectory) {
 		this.bindingDirectory = bindingDirectory;
 	}
 
-	protected File getBindingDirectory() {
+	public File getBindingDirectory() {
 		return bindingDirectory;
 	}
 
-	protected void setBindingIncludes(String[] bindingIncludes) {
+	public void setBindingIncludes(String[] bindingIncludes) {
 		this.bindingIncludes = bindingIncludes;
 	}
 
-	protected String[] getBindingIncludes() {
+	public String[] getBindingIncludes() {
 		return bindingIncludes;
 	}
 
-	protected void setBindingExcludes(String[] bindingExcludes) {
+	public void setBindingExcludes(String[] bindingExcludes) {
 		this.bindingExcludes = bindingExcludes;
 	}
 
-	protected String[] getBindingExcludes() {
+	public String[] getBindingExcludes() {
 		return bindingExcludes;
 	}
 
-	protected void setDisableDefaultExcludes(boolean disableDefaultExcludes) {
+	public void setDisableDefaultExcludes(boolean disableDefaultExcludes) {
 		this.disableDefaultExcludes = disableDefaultExcludes;
 	}
 
-	protected boolean isDisableDefaultExcludes() {
+	public boolean isDisableDefaultExcludes() {
 		return disableDefaultExcludes;
 	}
 
-	protected void setCatalog(File catalog) {
+	public void setCatalog(File catalog) {
 		this.catalog = catalog;
 	}
 
-	protected File getCatalog() {
+	public File getCatalog() {
 		return catalog;
 	}
 
-	protected void setGeneratePackage(String generatePackage) {
+	public void setGeneratePackage(String generatePackage) {
 		this.generatePackage = generatePackage;
 	}
 
-	protected String getGeneratePackage() {
+	public String getGeneratePackage() {
 		return generatePackage;
 	}
 
-	protected void setGenerateDirectory(File generateDirectory) {
+	public void setGenerateDirectory(File generateDirectory) {
 		this.generateDirectory = generateDirectory;
 	}
 
-	protected File getGenerateDirectory() {
+	public File getGenerateDirectory() {
 		return generateDirectory;
 	}
 
-	protected void setReadOnly(boolean readOnly) {
+	public void setReadOnly(boolean readOnly) {
 		this.readOnly = readOnly;
 	}
 
-	protected boolean isReadOnly() {
+	public boolean isReadOnly() {
 		return readOnly;
 	}
 
-	protected void setExtension(boolean extension) {
+	public void setExtension(boolean extension) {
 		this.extension = extension;
 	}
 
-	protected boolean isExtension() {
+	public boolean isExtension() {
 		return extension;
 	}
 
-	protected void setStrict(boolean strict) {
+	public void setStrict(boolean strict) {
 		this.strict = strict;
 	}
 
-	protected boolean isStrict() {
+	public boolean isStrict() {
 		return strict;
 	}
 
-	protected void setTraceUnmarshaller(boolean traceUnmarshaller) {
-		this.traceUnmarshaller = traceUnmarshaller;
-	}
-
-	protected boolean isTraceUnmarshaller() {
-		return traceUnmarshaller;
-	}
-    
-    protected boolean isWriteCode() {
+    public boolean isWriteCode() {
         return writeCode;
     }
     
-    protected void setWriteCode(boolean writeCode) {
+    public void setWriteCode(boolean writeCode) {
         this.writeCode = writeCode;
     }
 
-	protected void setGenerateValidationCode(boolean generateValidationCode) {
-		this.generateValidationCode = generateValidationCode;
-	}
-
-	protected boolean isGenerateValidationCode() {
-		return generateValidationCode;
-	}
-
-	protected void setGenerateMarshallingCode(boolean generateMarshallingCode) {
-		this.generateMarshallingCode = generateMarshallingCode;
-	}
-
-	protected boolean isGenerateMarshallingCode() {
-		return generateMarshallingCode;
-	}
-
-	protected void setGenerateUnmarshallingCode(
-			boolean generateUnmarshallingCode) {
-		this.generateUnmarshallingCode = generateUnmarshallingCode;
-	}
-
-	protected boolean isGenerateUnmarshallingCode() {
-		return generateUnmarshallingCode;
-	}
-
-	protected void setRuntimePackage(String runtimePackage) {
-		this.runtimePackage = runtimePackage;
-	}
-
-	protected String getRuntimePackage() {
-		return runtimePackage;
-	}
-
-	protected void setVerbose(boolean verbose) {
+	public void setVerbose(boolean verbose) {
 		this.verbose = verbose;
 	}
 
-	protected boolean isVerbose() {
+	public boolean isVerbose() {
 		return verbose;
 	}
 
-	protected void setDebug(boolean debug) {
+	public void setDebug(boolean debug) {
 		this.debug = debug;
 	}
 
-	protected boolean isDebug() {
+	public boolean isDebug() {
 		return debug;
 	}
 
-	protected void setArgs(List args) {
+	public void setArgs(List args) {
 		this.args = args;
 	}
 
-	protected List getArgs() {
+	public List getArgs() {
 		return args;
 	}
 
-	protected void setForceRegenerate(boolean forceRegenerate) {
+	public void setForceRegenerate(boolean forceRegenerate) {
 		this.forceRegenerate = forceRegenerate;
 	}
 
-	protected boolean isForceRegenerate() {
+	public boolean isForceRegenerate() {
 		return forceRegenerate;
 	}
 
-	protected void setRemoveOldOutput(boolean removeOldOutput) {
+	public void setRemoveOldOutput(boolean removeOldOutput) {
 		this.removeOldOutput = removeOldOutput;
 	}
 
-	protected boolean isRemoveOldOutput() {
+	public boolean isRemoveOldOutput() {
 		return removeOldOutput;
 	}
 
-	protected void setOtherDepends(String[] otherDepends) {
+	public void setOtherDepends(String[] otherDepends) {
 		this.otherDepends = otherDepends;
 	}
 
-	protected String[] getOtherDepends() {
+	public String[] getOtherDepends() {
 		return otherDepends;
 	}
 
@@ -548,7 +466,7 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 		this.classpathElements = classpathElements;
 	}
 
-	protected List getClasspathElements() {
+	public List getClasspathElements() {
 		return classpathElements;
 	}
 
@@ -556,7 +474,7 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 		this.project = project;
 	}
 
-	protected MavenProject getProject() {
+	public MavenProject getProject() {
 		return project;
 	}
 

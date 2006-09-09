@@ -324,17 +324,12 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
     sb.append("\n\texcludeBindings: " + recursiveToString(getBindingExcludes()));
     sb.append("\n\tdisableDefaultExcludes: " + isDisableDefaultExcludes());
     sb.append("\n\tcatalog: " + getCatalog());
-    sb.append("\n\truntimePackage: " + getRuntimePackage());
     sb.append("\n\tdefaultPackage: " + getGeneratePackage());
     sb.append("\n\tdestinationDirectory: " + getGenerateDirectory());
     sb.append("\n\tforceRegenerate: " + isForceRegenerate());
     sb.append("\n\totherDepends: " + recursiveToString(getOtherDepends()));
     sb.append("\n\tremoveOldOutput: " + isRemoveOldOutput());
-    sb.append("\n\ttraceUnmarshaller: " + isTraceUnmarshaller());
     sb.append("\n\twriteCode: " + isWriteCode());
-    sb.append("\n\tgenerateValidationCode: " + isGenerateValidationCode());
-    sb.append("\n\tgenerateMarshallingCode: " + isGenerateMarshallingCode());
-    sb.append("\n\tgenerateUnmarshallingCode: " + isGenerateUnmarshallingCode());
     sb.append("\n\treadOnly: " + isReadOnly());
     sb.append("\n\textension: " + isExtension());
     sb.append("\n\tstrict: " + isStrict());
@@ -715,113 +710,93 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
     return sb.toString();
   }
 
-  protected abstract void setSchemaLanguage(String schemaLanguage);
+  public abstract void setSchemaLanguage(String schemaLanguage);
 
-  protected abstract String getSchemaLanguage();
+  public abstract String getSchemaLanguage();
 
-  protected abstract void setSchemaDirectory(File schemaDirectory);
+  public abstract void setSchemaDirectory(File schemaDirectory);
 
-  protected abstract File getSchemaDirectory();
+  public abstract File getSchemaDirectory();
 
-  protected abstract void setSchemaIncludes(String[] schemaIncludes);
+  public abstract void setSchemaIncludes(String[] schemaIncludes);
 
-  protected abstract String[] getSchemaIncludes();
+  public abstract String[] getSchemaIncludes();
 
-  protected abstract void setSchemasExcludes(String[] schemasExcludes);
+  public abstract void setSchemasExcludes(String[] schemasExcludes);
 
-  protected abstract String[] getSchemasExcludes();
+  public abstract String[] getSchemasExcludes();
 
-  protected abstract void setBindingDirectory(File bindingDirectory);
+  public abstract void setBindingDirectory(File bindingDirectory);
 
-  protected abstract File getBindingDirectory();
+  public abstract File getBindingDirectory();
 
-  protected abstract void setBindingIncludes(String[] bindingIncludes);
+  public abstract void setBindingIncludes(String[] bindingIncludes);
 
-  protected abstract String[] getBindingIncludes();
+  public abstract String[] getBindingIncludes();
 
-  protected abstract void setBindingExcludes(String[] bindingExcludes);
+  public abstract void setBindingExcludes(String[] bindingExcludes);
 
-  protected abstract String[] getBindingExcludes();
+  public abstract String[] getBindingExcludes();
 
-  protected abstract void setDisableDefaultExcludes(boolean disableDefaultExcludes);
+  public abstract void setDisableDefaultExcludes(boolean disableDefaultExcludes);
 
-  protected abstract boolean isDisableDefaultExcludes();
+  public abstract boolean isDisableDefaultExcludes();
 
-  protected abstract void setCatalog(File catalog);
+  public abstract void setCatalog(File catalog);
 
-  protected abstract File getCatalog();
+  public abstract File getCatalog();
 
-  protected abstract void setGeneratePackage(String generatePackage);
+  public abstract void setGeneratePackage(String generatePackage);
 
-  protected abstract String getGeneratePackage();
+  public abstract String getGeneratePackage();
 
-  protected abstract void setGenerateDirectory(File generateDirectory);
+  public abstract void setGenerateDirectory(File generateDirectory);
 
-  protected abstract File getGenerateDirectory();
+  public abstract File getGenerateDirectory();
 
-  protected abstract void setReadOnly(boolean readOnly);
+  public abstract void setReadOnly(boolean readOnly);
 
-  protected abstract boolean isReadOnly();
+  public abstract boolean isReadOnly();
 
-  protected abstract void setExtension(boolean extension);
+  public abstract void setExtension(boolean extension);
 
-  protected abstract boolean isExtension();
+  public abstract boolean isExtension();
 
-  protected abstract void setStrict(boolean strict);
+  public abstract void setStrict(boolean strict);
 
-  protected abstract boolean isStrict();
+  public abstract boolean isStrict();
 
-  protected abstract void setWriteCode(boolean writeCode);
+  public abstract void setWriteCode(boolean writeCode);
 
-  protected abstract boolean isWriteCode();
+  public abstract boolean isWriteCode();
 
-  protected abstract void setTraceUnmarshaller(boolean traceUnmarshaller);
+  public abstract void setVerbose(boolean verbose);
 
-  protected abstract boolean isTraceUnmarshaller();
+  public abstract boolean isVerbose();
 
-  protected abstract void setGenerateValidationCode(boolean generateValidationCode);
+  public abstract void setDebug(boolean debug);
 
-  protected abstract boolean isGenerateValidationCode();
+  public abstract boolean isDebug();
 
-  protected abstract void setGenerateMarshallingCode(boolean generateMarshallingCode);
+  public abstract void setArgs(List args);
 
-  protected abstract boolean isGenerateMarshallingCode();
+  public abstract List getArgs();
 
-  protected abstract void setGenerateUnmarshallingCode(boolean generateUnmarshallingCode);
+  public abstract void setForceRegenerate(boolean forceRegenerate);
 
-  protected abstract boolean isGenerateUnmarshallingCode();
+  public abstract boolean isForceRegenerate();
 
-  protected abstract void setRuntimePackage(String runtimePackage);
+  public abstract void setRemoveOldOutput(boolean removeOldOutput);
 
-  protected abstract String getRuntimePackage();
+  public abstract boolean isRemoveOldOutput();
 
-  protected abstract void setVerbose(boolean verbose);
+  public abstract void setOtherDepends(String[] otherDepends);
 
-  protected abstract boolean isVerbose();
+  public abstract String[] getOtherDepends();
 
-  protected abstract void setDebug(boolean debug);
+  public abstract List getClasspathElements();
 
-  protected abstract boolean isDebug();
-
-  protected abstract void setArgs(List args);
-
-  protected abstract List getArgs();
-
-  protected abstract void setForceRegenerate(boolean forceRegenerate);
-
-  protected abstract boolean isForceRegenerate();
-
-  protected abstract void setRemoveOldOutput(boolean removeOldOutput);
-
-  protected abstract boolean isRemoveOldOutput();
-
-  protected abstract void setOtherDepends(String[] otherDepends);
-
-  protected abstract String[] getOtherDepends();
-
-  protected abstract List getClasspathElements();
-
-  protected abstract MavenProject getProject();
+  public abstract MavenProject getProject();
 
   protected class JaxbErrorReceiver4Mvn extends ErrorReceiver {
 

@@ -57,7 +57,7 @@
 			<layout>legacy</layout>
 		</repository>
 	</repositories>
-	<!--pluginRepositories>
+	<pluginRepositories>
 		<pluginRepository>
 			<id>maven2-repository.dev.java.net</id>
 			<url>https://maven2-repository.dev.java.net/nonav/repository</url>
@@ -67,7 +67,7 @@
 			<url>https://maven-repository.dev.java.net/nonav/repository</url>
 			<layout>legacy</layout>
 		</pluginRepository>
-	</pluginRepositories-->
+	</pluginRepositories>
 	<dependencyManagement>
 		<dependencies>
 			<!-- Maven plugin and api classes -->
@@ -119,18 +119,18 @@
 		</dependencies>
 	</dependencyManagement>
 	<build>
-	<pluginManagement>
-	<plugins>
-      <plugin>
-	<inherited>true</inherited>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-				</configuration>
-	      </plugin>
-	</plugins>
-	</pluginManagement>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<inherited>true</inherited>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.5</source>
+						<target>1.5</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 </project>

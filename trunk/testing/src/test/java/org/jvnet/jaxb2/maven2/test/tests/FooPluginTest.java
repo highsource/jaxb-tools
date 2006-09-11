@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
-import org.jvnet.hyperjaxb3.maven2.test.RunXJC2Mojo;
+import org.jvnet.jaxb2.maven2.test.RunXJC2Mojo;
 
 public class FooPluginTest extends RunXJC2Mojo {
 

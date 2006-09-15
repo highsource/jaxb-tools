@@ -107,5 +107,42 @@
 		&lt;/schemaIncludes>
 	&lt;/configuration>
 &lt;/plugin></code></pre>
+		<h1>Testing infrastructure</h1>
+		<p>This projects also provides a testing infrastructure
+			that allows executing the JAXB2 Maven2 plugin from your own Java code, for instance
+			in a frame of a JUnit-based test case. Please see the <a href="https://maven-jaxb2-plugin.dev.java.net/source/browse/maven-jaxb2-plugin/trunk/testing/"><code>testing</code></a> module for details.</p>
+		<p>This module provides a <code>org.jvnet.jaxb2.maven2.test.RunXJC2Mojo</code>
+			class which configures and executes the JAXB2 Maven2 plugin
+			from within the test case. Subclasses may override methods
+			of the base class to add some configuration parameters,
+			redefine schema location and so on. Below is a typical
+			test case that tests code generation with the dummy <code>Xfoo</code>
+			JAXB plugin truned on:</p>
+		<pre><code>package org.jvnet.jaxb2.maven2.test.tests;
+
+import java.io.File;
+import java.util.Collections;
+import java.util.List;
+
+import org.jvnet.jaxb2.maven2.test.RunXJC2Mojo;
+
+public class FooPluginTest extends RunXJC2Mojo {
+
+  @Override
+  public File getSchemaDirectory() {
+    return new File(getBaseDir(), "src/test/resources");
+  }
+
+  @Override
+  public List&lt;String> getArgs() {
+    return Collections.singletonList("-Xfoo");
+  }
+
+}</code></pre>
+		<p>Testing infrastructure is especially helpful when you develop
+			your own JAXB plugins. You often need a possibility to debug
+			the JAXB plugin that you write, trace it in the debugger and
+			so on. Ability to execute the code generation from a test case
+			is simply invaluable for this kind of projects.</p>
 	</body>
 </html>

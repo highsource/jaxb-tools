@@ -18,7 +18,7 @@ import org.jvnet.jaxb2.maven2.XJC2Mojo;
  * @author Aleksei Valikov
  */
 
-public abstract class RunXJC2Mojo extends TestCase {
+public class RunXJC2Mojo extends TestCase {
   /**
    * Logger.
    */

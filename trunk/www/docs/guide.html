@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<title>JAXB2 Maven2 Plugin -Reference Guide</title>
+	</head>
+	<body>
+		<h1>About the plugin</h1>
+		<p>JAXB2 Maven2 plugin which allows you to generate code with <a 
+			href="http://jaxb.dev.java.net/">JAXB RI</a> in Maven builds. The 
+			plugin takes part in the <code>generate-code</code> phase and 
+			produces code of the schema-derived classes (or other resources) 
+			out of the XML Schemas, DTDs and so on.</p>
+		<h1>Using the plugin</h1>
+		<p>In order to use the plugin, you first have to make it available to 
+			your build. The plugin is distributed via the <a 
+			href="https://maven2-repository.dev.java.net/nonav/repository">dev.java.net 
+			Maven2 repository</a>, so add this to your <code>pom.xml</code>:</p>
+		<pre><code>
+&lt;repositories>
+	&lt;repository>
+		&lt;id>maven2-repository.dev.java.net&lt;/id>
+		&lt;name>Java.net Maven 2 Repository&lt;/name>
+		&lt;url>https://maven2-repository.dev.java.net/nonav/repository&lt;/url>
+	&lt;/repository>
+&lt;/repositories>
+&lt;pluginRepositories>
+	&lt;pluginRepository>
+		&lt;id>maven2-repository.dev.java.net&lt;/id>
+		&lt;url>https://maven2-repository.dev.java.net/nonav/repository&lt;/url>
+	&lt;/pluginRepository>
+&lt;/pluginRepositories>
+</code></pre>
+		<p>When this is done, simply add the <code>generate</code> execution 
+			goal to the build:</p>
+		<pre><code>
+&lt;build>
+	&lt;plugins>
+		&lt;plugin>
+			&lt;groupId>org.jvnet.jaxb2.maven2&lt;/groupId>
+			&lt;artifactId>maven-jaxb2-plugin&lt;/artifactId>
+			&lt;executions>
+				&lt;execution>
+					&lt;goals>
+						&lt;goal>generate&lt;/goal>
+					&lt;/goals>
+				&lt;/execution>
+			&lt;/executions>
+		&lt;/plugin>
+	&lt;/plugins>
+&lt;/build></code></pre>
+		<p>To compile the generated sources, set <code>1.5</code> in 
+			<code>source</code> and <code>target</code> of the 
+			<code>maven-compiler-plugin</code>:</p>
+		<pre><code>&lt;build>
+	&lt;plugins>
+		...
+		&lt;plugin>
+			&lt;inherited>true&lt;/inherited>
+			&lt;groupId>org.apache.maven.plugins&lt;/groupId>
+			&lt;artifactId>maven-compiler-plugin&lt;/artifactId>
+			&lt;configuration>
+				&lt;source>1.5&lt;/source>
+				&lt;target>1.5&lt;/target>
+			&lt;/configuration>
+		&lt;/plugin>
+	&lt;/plugins>
+&lt;/build></code></pre>
+		<p>For a sample project please see the <a 
+			href="https://maven-jaxb2-plugin.dev.java.net/source/browse/maven-jaxb2-plugin/trunk/sample/"><code>sample</code></a> 
+			module.</p>
+	</body>
+</html>

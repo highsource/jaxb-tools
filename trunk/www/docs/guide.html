@@ -8,15 +8,15 @@
 		<p>JAXB2 Maven2 plugin which allows you to generate code with <a 
 			href="http://jaxb.dev.java.net/">JAXB RI</a> in Maven builds. The 
 			plugin takes part in the <code>generate-code</code> phase and 
-			produces code of the schema-derived classes (or other resources) 
-			out of the XML Schemas, DTDs and so on.</p>
+			produces code of the schema-derived classes (plus maybe some other 
+			resources) out of the XML Schemas, DTDs and so on.</p>
 		<h1>Using the plugin</h1>
+		<h2>Basic usage</h2>
 		<p>In order to use the plugin, you first have to make it available to 
 			your build. The plugin is distributed via the <a 
-			href="https://maven2-repository.dev.java.net/nonav/repository">dev.java.net 
-			Maven2 repository</a>, so add this to your <code>pom.xml</code>:</p>
-		<pre><code>
-&lt;repositories>
+			href="https://maven2-repository.dev.java.net">dev.java.net Maven2 
+			repository</a>, so add this to your <code>pom.xml</code>:</p>
+		<pre><code>&lt;repositories>
 	&lt;repository>
 		&lt;id>maven2-repository.dev.java.net&lt;/id>
 		&lt;name>Java.net Maven 2 Repository&lt;/name>
@@ -28,8 +28,7 @@
 		&lt;id>maven2-repository.dev.java.net&lt;/id>
 		&lt;url>https://maven2-repository.dev.java.net/nonav/repository&lt;/url>
 	&lt;/pluginRepository>
-&lt;/pluginRepositories>
-</code></pre>
+&lt;/pluginRepositories></code></pre>
 		<p>When this is done, simply add the <code>generate</code> execution 
 			goal to the build:</p>
 		<pre><code>
@@ -65,8 +64,52 @@
 		&lt;/plugin>
 	&lt;/plugins>
 &lt;/build></code></pre>
-		<p>For a sample project please see the <a 
+		<p>For a small sample project that uses this plugin, please see the <a 
 			href="https://maven-jaxb2-plugin.dev.java.net/source/browse/maven-jaxb2-plugin/trunk/sample/"><code>sample</code></a> 
 			module.</p>
+		<h2>Configuring the plugin</h2>
+		<p>The plugin has a large number of configuration options. Please see 
+			the <a 
+			href="https://maven-jaxb1-plugin.dev.java.net/nonav/plugin-docs/">plugin 
+			docs</a> for a complete reference. Below are just a couple of 
+			configuration examples.</p>
+		<p>Using a custom JAXB2 plugin:</p>
+		<pre><code>&lt;plugin>
+	&lt;groupId>org.jvnet.jaxb2.maven2&lt;/groupId>
+	&lt;artifactId>maven-jaxb2-plugin&lt;/artifactId>
+	&lt;executions>
+		&lt;execution>
+			&lt;goals>
+				&lt;goal>generate&lt;/goal>
+			&lt;/goals>
+		&lt;/execution>
+	&lt;/executions>
+	&lt;configuration>
+		&lt;args>
+			&lt;arg>-XtoString&lt;/arg>
+		&lt;/args>
+	&lt;/configuration>
+&lt;/plugin></code></pre>
+		<p>Compiling DTDs:</p>
+		<pre><code>&lt;plugin>
+	&lt;groupId>org.jvnet.jaxb2.maven2&lt;/groupId>
+	&lt;artifactId>maven-jaxb2-plugin&lt;/artifactId>
+	&lt;executions>
+		&lt;execution>
+			&lt;goals>
+				&lt;goal>generate&lt;/goal>
+			&lt;/goals>
+		&lt;/execution>
+	&lt;/executions>
+	&lt;configuration>
+		&lt;schemaLanguage>DTD&lt;/schemaLanguage>
+		&lt;schemaIncludes>
+				&lt;value>*.dtd&lt;/value>
+		&lt;/schemaIncludes>
+	&lt;/configuration>
+&lt;/plugin></code></pre>
+		
+
+		
 	</body>
 </html>

@@ -1,3 +1,104 @@
+</dd>
+<script id="eraser">
+  // hide all default navigation bars
+  
+  // get to the block
+  var dd = document.getElementById("eraser").previousSibling;
+  for( n=dd; n!=null; n=n.previousSibling ) {
+    if(n.nodeType==1) { // if element
+      if(n.tagName=="DD") { // kill all the link items
+        n.style.display = "none";
+      }
+      if(n.tagName=="DT") { // change the title
+        n.innerHTML = "JAXB project";
+      }
+    }
+  }
+  
+  // delete the "get involved" block
+  for( n=dd.parentNode.previousSibling; n!=null; n=n.previousSibling ) {
+    if(n.nodeType==1) { // if element
+      if(n.tagName=="DL") {
+        n.style.display = "none";
+      }
+    }
+  }
+</script>
+
+
+
+<dd>
+  <ul>
+    <li>
+      <a href="/servlets/ProjectHome">Project home</a>
+    <li>
+      <a href="/servlets/ProjectMemberList">Membership</a>
+  </ul>
+<dd>
+  <ul>
+    <li>
+      <a href="/servlets/ProjectNewsList">Announcements</a>
+    <li>
+      <a href="http://forums.java.net/jive/forum.jspa?forumID=46&start=0">Discussion forums</a>
+    <li>
+      <a href="/servlets/ProjectMailingListList">Mailing lists</a>
+  </ul>
+<dd>
+  <ul>
+    <li>
+      <a href="http://jaxb.dev.java.net/servlets/ProjectDocumentList">Downloads</a>
+    <li>
+      <a href="http://fisheye.cenqua.com/java.net/viewrep/jaxb2-sources">CVS Repository</a>
+  </ul>
+<dd>
+  <ul>
+    <li>
+      <a href="http://jaxb.dev.java.net/servlets/ProjectIssues">Issue tracker</a>
+    <li>
+      <form name="ProjectIssuesForm" method="get" action="http://jaxb.dev.java.net/issues/show_bug.cgi">
+        <input type="submit" value="Go to" /> # <input name="id" size="3" />
+      </form>
+  </ul>
+<dd>
+  <ul>
+    <li>
+      <a href="http://jaxb.dev.java.net/faq/index.html">FAQ</a>
+    <li>
+      <a href="http://wiki.java.net/bin/view/Javawsxml/JaxbSI">Wiki</a>
+  </ul>
+
+	
 <div>
   <a href="/docs/guide.html">Reference</a>
 </div>
+<!--
+
+
+        <links>
+	    <item name="${project.name}" href="${project.url}"/>
+            <item name="jwsdp" href="https://jwsdp.dev.java.net/" />
+            <item name="java-ws-xml" href="https://java-ws-xml.dev.java.net/" />
+            <item name="java.net" href="http://www.java.net/" />
+        </links>
+
+        <menu name="Quickstart">
+            <item name="Overview" href="index.html"/>
+            <item name="Usage" href="usage.html"/>
+            <item name="Plugin Info" href="plugin-info.html"/>
+            <item name="Similar Plugins" href="similar-plugins.html"/>
+        </menu>
+    
+        <menu name="Resources">
+            <item name="Maven JAXB1 Plugin" href="https://maven-jaxb1-plugin.dev.java.net" />
+            <item name="JAXB RI" href="https://jaxb.dev.java.net" />
+            <item name="Hyperjaxb3" href="https://maven-jaxb1-plugin.dev.java.net" />
+            <item name="JAXB2 Commons" href="https://maven-jaxb1-plugin.dev.java.net" />
+        </menu>
+
+        <menu name="Repositories">
+            <item name="Maven2 dev.java.net repo" href="https://maven2-repository.dev.java.net" />
+            <item name="Maven dev.java.net repo" href="https://maven-repository.dev.java.net" />
+        </menu>
+
+        </menu>
+-->

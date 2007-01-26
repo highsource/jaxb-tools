@@ -733,7 +733,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
     Exception embeded = ex instanceof SAXParseException? ( (SAXParseException)ex).getException(): null;
     
     if (embeded != null && cause != embeded) {
-      pw.append("Embeded ex:");
+      pw.append("Embedded ex:");
       embeded.printStackTrace(pw);
     }
 

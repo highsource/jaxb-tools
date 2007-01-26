@@ -704,11 +704,47 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 
   public static String getAllExMsgs(Throwable ex, boolean includeExName) {
     StringBuffer sb = new StringBuffer((includeExName ? ex.toString() : ex.getLocalizedMessage()));
-    while ((ex = ex.getCause()) != null)
-      sb.append("\nCaused by: " + ex.toString());
+    
+    Throwable cause = ex.getCause();
+    Exception embeded = ex instanceof SAXParseException? ( (SAXParseException)ex).getException(): null;
+    // Fisrt check that embeded and cause are the same,
+    // then process each one.
+    if ((cause == embeded && cause != null) || cause != null) 
+            getAllCauseExMsgs(cause, includeExName, sb);
+    else if (embeded != null)
+            getAllCauseExMsgs(embeded, includeExName, sb);
 
     return sb.toString();
   }
+
+  private static void getAllCauseExMsgs(Throwable ex, boolean includeExName, StringBuffer sb) {
+      do {
+          sb.append("\nCaused by: " + (includeExName? ex.toString(): ex.getLocalizedMessage()));
+      } while ((ex = ex.getCause()) != null);
+  }
+
+  public static String getAllExStackTraces(Throwable ex) {
+    StringWriter sw = new StringWriter();
+    PrintWriter pw = new PrintWriter(sw);
+
+    ex.printStackTrace(pw);
+
+    Throwable cause = ex.getCause();
+    Exception embeded = ex instanceof SAXParseException? ( (SAXParseException)ex).getException(): null;
+    
+    if (embeded != null && cause != embeded) {
+      pw.append("Embeded ex:");
+      embeded.printStackTrace(pw);
+    }
+
+    return sw.toString();
+  }
+
+//  private static void getAllCauseExStackTraces(Throwable ex, boolean includeExName, StringWriter sw) {
+//      do {
+//          sb.append("\nCaused by: " + (includeExName? ex.toString(): ex.getLocalizedMessage()));
+//      } while ((ex = ex.getCause()) != null);
+//  }
 
   public abstract void setSchemaLanguage(String schemaLanguage);
 
@@ -827,9 +863,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 
       String exString;
       if (isDebug()) {
-        StringWriter sw = new StringWriter();
-        ex.printStackTrace(new PrintWriter(sw));
-        exString = sw.toString();
+        exString = getAllExStackTraces(ex);
       }
       else
         exString = getAllExMsgs(ex, printExName);

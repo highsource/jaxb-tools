@@ -13,37 +13,38 @@
 	<build>
 		<defaultGoal>test</defaultGoal>
 		<plugins>
-<plugin>
-        <groupId>org.jvnet.jaxb2.maven2</groupId>
-        <artifactId>maven-jaxb2-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-            <configuration>
-              <extension>true</extension>
-              <!--schemaLanguage>DTD</schemaLanguage-->
-              <schemaIncludes>
-                <schemaInclude>*.xsd</schemaInclude>
-              </schemaIncludes>
-              <!--bindingIncludes>
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<extension>true</extension>
+							<!--schemaLanguage>DTD</schemaLanguage-->
+							<schemaIncludes>
+								<schemaInclude>*.xsd</schemaInclude>
+							</schemaIncludes>
+							<!--bindingIncludes>
                 <bindingInclude>*.jaxb</bindingInclude>
               </bindingIncludes-->
-              <args>
-                <arg>-Xfoo</arg>
-              </args>
-              <plugins>
-                <plugin>
-			<groupId>org.jvnet.jaxb2.maven2</groupId>
-			<artifactId>maven-jaxb2-plugin-testing</artifactId>
-                  <version>0.2</version>
-                </plugin>
-              </plugins>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin> 
+							<args>
+								<arg>-Xfoo</arg>
+							</args>
+							<plugins>
+								<plugin>
+									<groupId>org.jvnet.jaxb2.maven2</groupId>
+									<artifactId>
+										maven-jaxb2-plugin-testing</artifactId>
+									<version>0.2</version>
+								</plugin>
+							</plugins>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>

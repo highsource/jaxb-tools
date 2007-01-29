@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
@@ -163,6 +164,8 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
     // MUST COME AFTER setting "com.sun.tools.xjc.Options.findServices"
     // since this property should be present during classloading.
     Options xjcOpts = new Options();
+
+    xjcOpts.classpaths.addAll(this.getPluginURLs());
 
     xjcOpts.verbose = this.isVerbose();
     xjcOpts.debugMode = this.isDebug();
@@ -833,6 +836,8 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
   public abstract List getClasspathElements();
 
   public abstract MavenProject getProject();
+  
+  public abstract Set getPluginURLs() throws MojoExecutionException;  
 
   protected class JaxbErrorReceiver4Mvn extends ErrorReceiver {
 

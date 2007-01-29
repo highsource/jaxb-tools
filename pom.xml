@@ -5,7 +5,7 @@
 	<groupId>org.jvnet.jaxb2.maven2</groupId>
 	<artifactId>maven-jaxb2-plugin-project</artifactId>
 	<packaging>pom</packaging>
-	<version>0.1</version>
+	<version>0.2</version>
 	<name>JAXB-2.x Maven-2 Plugin Project</name>
 	<inceptionYear>2006</inceptionYear>
 	<url>https://maven-jaxb2-plugin.dev.java.net/nonav/maven-jaxb2-plugin-project</url>
@@ -13,6 +13,7 @@
 	<modules>
 		<module>plugin</module>
 		<module>testing</module>
+		<module>tests</module>
 	</modules>
 	<organization>
 		<name>java.net</name>
@@ -67,6 +68,14 @@
 			<layout>legacy</layout>
 		</pluginRepository>
 	</pluginRepositories>
+	<dependencies>
+		<!-- JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<!-- Maven plugin and api classes -->

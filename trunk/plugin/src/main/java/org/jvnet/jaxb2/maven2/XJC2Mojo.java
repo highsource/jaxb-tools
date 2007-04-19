@@ -34,9 +34,9 @@ import org.apache.maven.project.ProjectBuildingException;
 import org.apache.maven.project.artifact.InvalidDependencyVersionException;
 
 /**
- * A mojo that uses JAXB 1.x XJC compiler to generate java source classes from
+ * A mojo that uses JAXB 2.x XJC compiler to generate java source classes from
  * schemas (XML schemas, DTD, WSDL, or RELAXNG). For details on JAXB see <a
- * href="https://jaxb.dev.java.net/1.0/">JAXB 1.x Project</a>.
+ * href="https://jaxb.dev.java.net/">JAXB 2.x Project</a>.
  * 
  * @goal generate
  * @phase generate-sources

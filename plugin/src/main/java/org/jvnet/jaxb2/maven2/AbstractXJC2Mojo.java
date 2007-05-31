@@ -199,7 +199,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
     Iterator it;
 
     files = gatherFiles(this.getSchemaDirectory(), this.getSchemaIncludes(), this
-        .getSchemasExcludes());
+        .getSchemaExcludes());
 
     it = files.iterator();
     for (; it.hasNext();)
@@ -320,11 +320,11 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
   protected void logUserSettings(StringBuffer sb) {
     sb.append("\n\tschemaLanguage: " + getSchemaLanguage());
     sb.append("\n\tschemaDirectory: " + getSchemaDirectory());
-    sb.append("\n\tincludeSchemas: " + recursiveToString(getSchemaIncludes()));
-    sb.append("\n\texcludeSchemas: " + recursiveToString(getSchemasExcludes()));
+    sb.append("\n\tschemaIncludes: " + recursiveToString(getSchemaIncludes()));
+    sb.append("\n\tschemaExcludes: " + recursiveToString(getSchemaExcludes()));
     sb.append("\n\tbindingDirectory: " + getBindingDirectory());
-    sb.append("\n\tincludeBindings: " + recursiveToString(getBindingIncludes()));
-    sb.append("\n\texcludeBindings: " + recursiveToString(getBindingExcludes()));
+    sb.append("\n\tbindingIncludes: " + recursiveToString(getBindingIncludes()));
+    sb.append("\n\tbindingExcludes: " + recursiveToString(getBindingExcludes()));
     sb.append("\n\tdisableDefaultExcludes: " + isDisableDefaultExcludes());
     sb.append("\n\tcatalog: " + getCatalog());
     sb.append("\n\tdefaultPackage: " + getGeneratePackage());
@@ -623,7 +623,8 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
   protected String[] getExcludes(String[] origExcludes) {
     if (origExcludes == null)
       return null;
-    List newExc = getExcludes(Arrays.asList(origExcludes));
+    final List ex = new ArrayList(Arrays.asList(origExcludes));
+    List newExc = getExcludes(ex);
     return (String[]) newExc.toArray(new String[newExc.size()]);
   }
 
@@ -761,9 +762,9 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 
   public abstract String[] getSchemaIncludes();
 
-  public abstract void setSchemasExcludes(String[] schemasExcludes);
+  public abstract void setSchemaExcludes(String[] schemasExcludes);
 
-  public abstract String[] getSchemasExcludes();
+  public abstract String[] getSchemaExcludes();
 
   public abstract void setBindingDirectory(File bindingDirectory);
 

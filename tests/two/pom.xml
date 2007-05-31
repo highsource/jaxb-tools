@@ -9,7 +9,7 @@
 	</parent>
 	<artifactId>maven-jaxb2-plugin-tests-two</artifactId>
 	<packaging>jar</packaging>
-	<name>Maven JAXB 2.0 Plugin Tests [two]</name>
+	<name>Maven JAXB 2.x Plugin Tests [two]</name>
 	<build>
 		<defaultGoal>test</defaultGoal>
 		<plugins>
@@ -27,9 +27,13 @@
 							<schemaIncludes>
 								<schemaInclude>*.xsd</schemaInclude>
 							</schemaIncludes>
+							<schemaExcludes>
+								<schemaExcludes>*.xs</schemaExcludes>
+							</schemaExcludes>
+
 							<!--bindingIncludes>
-                <bindingInclude>*.jaxb</bindingInclude>
-              </bindingIncludes-->
+								<bindingInclude>*.jaxb</bindingInclude>
+							</bindingIncludes-->
 							<args>
 								<arg>-Xfoo</arg>
 							</args>

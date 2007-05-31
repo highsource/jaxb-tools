@@ -93,7 +93,7 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 	 * 
 	 */
 	@MojoParameter
-	protected String[] schemasExcludes;
+	protected String[] schemaExcludes;
 
 	/**
 	 * <p>
@@ -344,12 +344,12 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 		return schemaIncludes;
 	}
 
-	public void setSchemasExcludes(String[] schemasExcludes) {
-		this.schemasExcludes = schemasExcludes;
+	public void setSchemaExcludes(String[] schemasExcludes) {
+		this.schemaExcludes = schemasExcludes;
 	}
 
-	public String[] getSchemasExcludes() {
-		return schemasExcludes;
+	public String[] getSchemaExcludes() {
+		return schemaExcludes;
 	}
 
 	public void setBindingDirectory(File bindingDirectory) {

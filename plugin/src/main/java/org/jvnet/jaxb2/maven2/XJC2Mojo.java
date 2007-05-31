@@ -32,19 +32,22 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectBuilder;
 import org.apache.maven.project.ProjectBuildingException;
 import org.apache.maven.project.artifact.InvalidDependencyVersionException;
+import org.jfrog.maven.annomojo.annotations.MojoComponent;
+import org.jfrog.maven.annomojo.annotations.MojoGoal;
+import org.jfrog.maven.annomojo.annotations.MojoParameter;
+import org.jfrog.maven.annomojo.annotations.MojoPhase;
 
 /**
  * A mojo that uses JAXB 2.x XJC compiler to generate java source classes from
  * schemas (XML schemas, DTD, WSDL, or RELAXNG). For details on JAXB see <a
- * href="https://jaxb.dev.java.net/">JAXB 2.x Project</a>.
- * 
- * @goal generate
- * @phase generate-sources
+ * href="https://jaxb.dev.java.net/1.0/">JAXB 1.x Project</a>.
  * 
  * @description JAXB-1.x Generator Plugin for Maven-2, bound by default at
  *              'generate-sources' phase.
  * @author Kostis Anagnostopoulos (ankostis@mail.com)
  */
+@MojoGoal("generate")
+@MojoPhase("generate-sources")
 public class XJC2Mojo extends AbstractXJC2Mojo {
 
 	/**
@@ -56,19 +59,16 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 	 * If unspecified, it is assumed AUTODETECT.
 	 * </p>
 	 * 
-	 * @parameter expression="${maven.xjc2.schemaLanguage}"
-	 * 
 	 */
+	@MojoParameter(expression = "${maven.xjc2.schemaLanguage}")
 	protected String schemaLanguage;
 
 	/**
 	 * The source directory containing *.xsd schema files. Notice that binding
 	 * files are searched by default in this deriectory.
 	 * 
-	 * @parameter default-value="src/main/resources"
-	 *            expression="${maven.xjc2.schemaDirectory}"
-	 * @required
 	 */
+	@MojoParameter(defaultValue = "src/main/resources", expression = "${maven.xjc2.schemaDirectory}", required = true)
 	protected File schemaDirectory;
 
 	/**
@@ -82,8 +82,8 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 	 * processed.
 	 * </p>
 	 * 
-	 * @parameter
 	 */
+	@MojoParameter
 	protected String[] schemaIncludes = new String[] { "*.xsd" };
 
 	/**
@@ -91,8 +91,8 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 	 * to be excluded from the <code>schemaIncludes</code> list. Searching is
 	 * based from the root of schemaDirectory.
 	 * 
-	 * @parameter
 	 */
+	@MojoParameter
 	protected String[] schemasExcludes;
 
 	/**
@@ -102,9 +102,8 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 	 * <p>
 	 * If left undefined, then the <code>schemaDirectory</code> is assumed.
 	 * </p>
-	 * 
-	 * @parameter expression="${maven.xjc2.bindingDirectory}"
 	 */
+	@MojoParameter(expression = "${maven.xjc2.bindingDirectory}")
 	protected File bindingDirectory;
 
 	/**
@@ -117,27 +116,23 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 	 * If left undefined, then all *.xjb files in schemaDirectory will be
 	 * processed.
 	 * </p>
-	 * 
-	 * @parameter
 	 */
+	@MojoParameter
 	protected String[] bindingIncludes = new String[] { "*.xjb" };
 
 	/**
 	 * A list of regular expression file search patterns to specify the binding
 	 * files to be excluded from the <code>bindingIncludes</code>. Searching
 	 * is based from the root of bindingDirectory.
-	 * 
-	 * @parameter
 	 */
+	@MojoParameter
 	protected String[] bindingExcludes;
 
 	/**
 	 * If 'true', maven's default exludes are NOT added to all the excludes
 	 * lists.
-	 * 
-	 * @parameter default-value="false"
-	 *            expression="${maven.xjc2.disableDefaultExcludes}"
 	 */
+	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.disableDefaultExcludes}")
 	protected boolean disableDefaultExcludes;
 
 	/**
@@ -149,9 +144,8 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 	 * Support TR9401, XCatalog, and OASIS XML Catalog format. See the
 	 * catalog-resolver sample and this article for details.
 	 * </p>
-	 * 
-	 * @parameter expression="${maven.xjc2.catalog}"
 	 */
+	@MojoParameter(expression = "${maven.xjc2.catalog}")
 	protected File catalog;
 
 	/**
@@ -162,9 +156,8 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 	 * <p>
 	 * If left unspecified, the package will be derived from the schemas only.
 	 * </p>
-	 * 
-	 * @parameter expression="${maven.xjc2.generatePackage}"
 	 */
+	@MojoParameter(expression = "${maven.xjc2.generatePackage}")
 	protected String generatePackage;
 
 	/**
@@ -176,62 +169,37 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 	 * and <code>generatePackage="org.here"</code>, then files are generated
 	 * to <code>doe/ray/org/here</code>.
 	 * </p>
-	 * 
-	 * @parameter default-value="${project.build.directory}/generated-sources/xjc"
-	 *            expression="${maven.xjc2.generateDirectory}"
-	 * @required
 	 */
+	@MojoParameter(defaultValue = "${project.build.directory}/generated-sources/xjc", expression = "${maven.xjc2.generateDirectory}", required = true)
 	protected File generateDirectory;
 
 	/**
 	 * If 'true', the generated Java source files are set as read-only (xjc's
 	 * -readOnly option).
-	 * 
-	 * @parameter default-value="false" expression="${maven.xjc2.readOnly}"
 	 */
+	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.readOnly}")
 	protected boolean readOnly;
 
 	/**
 	 * If 'true', the XJC binding compiler will run in the extension mode (xjc's
 	 * -extension option). Otherwise, it will run in the strict conformance
 	 * mode.
-	 * 
-	 * @parameter default-value="false" expression="${maven.xjc2.extension}"
 	 */
+	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.extension}")
 	protected boolean extension;
 
 	/**
 	 * If 'true', Perform strict validation of the input schema (xjc's -nv
 	 * option).
-	 * 
-	 * @parameter default-value="true" expression="${maven.xjc2.strict}"
 	 */
+	@MojoParameter(defaultValue = "true", expression = "${maven.xjc2.strict}")
 	protected boolean strict;
 
 	/**
 	 * If 'false', the plugin will not write the generated code to disk.
-	 * 
-	 * @parameter default-value="true" expression="${maven.xjc2.writeCode}"
 	 */
+	@MojoParameter(defaultValue = "true", expression = "${maven.xjc2.writeCode}")
 	protected boolean writeCode = true;
-
-	// /////////////////////////////////////////////
-	// NO, set java VM proxy properties into .m2/settings.xml instead.
-	// /////////////////////////////////////////////
-	// /**
-	// * Set VM's HTTP/HTTPS proxy properties.
-	// *
-	// * @parameter
-	// */
-	// protected String proxyHost;
-	//
-	// /**
-	// * Set VM's HTTP/HTTPS proxy properties.
-	// *
-	// * @parameter
-	// */
-	// protected String proxyPort;
-	// /////////////////////////////////////////////
 
 	/**
 	 * <p>
@@ -242,9 +210,8 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 	 * It is automatically set to 'true' when maven is run in debug mode (mvn's
 	 * -X option).
 	 * </p>
-	 * 
-	 * @parameter default-value="false" expression="${maven.xjc2.verbose}"
 	 */
+	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.verbose}")
 	protected boolean verbose;
 
 	/**
@@ -257,9 +224,8 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 	 * It is automatically set to 'true' when maven is run in debug mode (mvn's
 	 * -X option).
 	 * </p>
-	 * 
-	 * @parameter default-value="false" expression="${maven.xjc2.debug}"
 	 */
+	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.debug}")
 	protected boolean debug;
 
 	/**
@@ -270,18 +236,16 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 	 * <p>
 	 * Arguments set here take precedence over other mojo parameters.
 	 * </p>
-	 * 
-	 * @parameter
 	 */
+	@MojoParameter
 	protected List args;
 
 	/**
 	 * If 'true', no up-to-date check is performed and the XJC always
 	 * re-generates the sources.
 	 * 
-	 * @parameter default-value="false"
-	 *            expression="${maven.xjc2.forceRegenerate}"
 	 */
+	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.forceRegenerate}")
 	protected boolean forceRegenerate;
 
 	/**
@@ -295,9 +259,8 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 	 * 'xjc/org/w3/_2001/xmlschema' directory).
 	 * </p>
 	 * 
-	 * @parameter default-value="true"
-	 *            expression="${maven.xjc2.removeOldOutput}"
 	 */
+	@MojoParameter(defaultValue = "true", expression = "${maven.xjc2.removeOldOutput}")
 	protected boolean removeOldOutput;
 
 	/**
@@ -305,62 +268,46 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 	 * default it always considers: 1. schema files, 2. binding files, 3.
 	 * catalog file, and 4. the pom.xml file of the project executing this
 	 * plugin.
-	 * 
-	 * @parameter
 	 */
+	@MojoParameter
 	protected String[] otherDepends;
 
 	/**
 	 * Project classpath. Used internally when runing the XJC compiler.
-	 * 
-	 * @parameter expression="${project.compileClasspathElements}"
-	 * @required
-	 * @readonly
 	 */
+	@MojoParameter(expression = "${project.compileClasspathElements}", required = true, readonly = true)
 	protected List classpathElements;
 
 	/**
 	 * The Maven project reference, used internally.
-	 * 
-	 * @parameter expression="${project}"
-	 * @required
-	 * @readonly
 	 */
+	@MojoParameter(expression = "${project}", required = true, readonly = true)
 	protected MavenProject project;
 
 	/**
 	 * XJC plugins to be made available to XJC. They still need to be activated
 	 * by using &lt;args> and enable plugin activation option.
-	 * 
-	 * @parameter
 	 */
+	@MojoParameter
 	protected Artifact[] plugins;
 
 	/**
 	 * Used internally to resolve {@link #plugins} to their jar files.
-	 * 
-	 * @component
 	 */
+	@MojoComponent
 	protected ArtifactResolver artifactResolver;
 
-	/**
-	 * @component
-	 */
+	@MojoComponent
 	protected ArtifactFactory artifactFactory;
 
-	/**
-	 * @parameter expression="${localRepository}"
-	 * @required
-	 */
+	@MojoParameter(expression = "${localRepository}", required = true)
 	protected ArtifactRepository localRepository;
 
 	/**
 	 * Artifact factory, needed to download source jars.
 	 * 
-	 * @component role="org.apache.maven.project.MavenProjectBuilder"
-	 * @required
-	 * @readonly
 	 */
+	@MojoComponent(role = "org.apache.maven.project.MavenProjectBuilder")
 	protected MavenProjectBuilder mavenProjectBuilder;
 
 	/**

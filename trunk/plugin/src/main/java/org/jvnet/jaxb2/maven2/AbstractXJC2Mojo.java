@@ -550,6 +550,22 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 
 		if (getProject() != null) // null when run for testing.
 			getProject().addResource(jaxbRes);
+
+		if (getEpisodeFile() != null)
+		{
+			final String episodeFilePath = getEpisodeFile().getAbsolutePath();
+			final String generatedDirectoryPath = getGenerateDirectory().getAbsolutePath();
+			
+			if (episodeFilePath.startsWith(generatedDirectoryPath + File.separator))
+			{
+				final String path = episodeFilePath.substring(generatedDirectoryPath.length() + 1);
+
+				final Resource resource = new Resource();
+				resource.setDirectory(generatedDirectoryPath);
+				resource.addInclude(path);
+				getProject().addResource(resource);
+			}
+		}
 	}
 
 	/**

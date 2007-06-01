@@ -462,7 +462,7 @@ public class XJC2Mojo extends AbstractMojo {
 	}
 
 	public void setArgs(List args) {
-		this.args = args;
+		this.args.addAll(args);
 	}
 
 	private boolean forceRegenerate;

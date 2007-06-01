@@ -27,21 +27,33 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.maven.artifact.factory.ArtifactFactory;
+import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
+import org.apache.maven.artifact.resolver.ArtifactResolutionException;
+import org.apache.maven.artifact.resolver.ArtifactResolver;
+import org.apache.maven.artifact.resolver.filter.ScopeArtifactFilter;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
+import org.apache.maven.project.MavenProjectBuilder;
+import org.apache.maven.project.ProjectBuildingException;
+import org.apache.maven.project.artifact.InvalidDependencyVersionException;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.FileUtils;
+import org.jfrog.maven.annomojo.annotations.MojoComponent;
+import org.jfrog.maven.annomojo.annotations.MojoGoal;
+import org.jfrog.maven.annomojo.annotations.MojoParameter;
+import org.jfrog.maven.annomojo.annotations.MojoPhase;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXParseException;
-
-import sun.print.PSPrinterJob.EPSPrinter;
 
 import com.sun.codemodel.CodeWriter;
 import com.sun.codemodel.JCodeModel;
@@ -55,13 +67,48 @@ import com.sun.tools.xjc.model.Model;
 import com.sun.tools.xjc.outline.Outline;
 
 /**
- * The parent of all mojos that uses JAXB 1.x XJC compiler to compile schemas
- * (XML schemas, DTD, WSDL, or RELAXNG) into...anything. For details on JAXB see
- * <a href="https://jaxb.dev.java.net/1.0/">JAXB 1.x Project</a>.
+ * JAXB 2.x Mojo.
  * 
- * @author Kostis Anagnostopoulos (ankostis@mail.com)
+ * @author Aleksei Valikov (valikov@gmx.net)
  */
-public abstract class AbstractXJC2Mojo extends AbstractMojo {
+@MojoGoal("generate")
+@MojoPhase("generate-sources")
+public class AbstractXJC2Mojo extends AbstractMojo {
+
+	private ArtifactResolver artifactResolver;
+
+	@MojoComponent
+	public ArtifactResolver getArtifactResolver() {
+		return artifactResolver;
+	}
+
+	public void setArtifactResolver(ArtifactResolver artifactResolver) {
+		this.artifactResolver = artifactResolver;
+	}
+
+	private ArtifactFactory artifactFactory;
+
+	/**
+	 * Used internally to resolve {@link #plugins} to their jar files.
+	 */
+	@MojoComponent
+	public ArtifactFactory getArtifactFactory() {
+		return artifactFactory;
+	}
+
+	public void setArtifactFactory(ArtifactFactory artifactFactory) {
+		this.artifactFactory = artifactFactory;
+	}
+
+	@MojoParameter(expression = "${localRepository}", required = true)
+	protected ArtifactRepository localRepository;
+
+	/**
+	 * Artifact factory, needed to download source jars.
+	 * 
+	 */
+	@MojoComponent(role = "org.apache.maven.project.MavenProjectBuilder")
+	protected MavenProjectBuilder mavenProjectBuilder;
 
 	/**
 	 * For checking timestamps. Modify freely, nothing to do with XJC options.
@@ -73,11 +120,451 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 	 */
 	protected List bindingFiles = new ArrayList();
 
+	private String schemaLanguage;
+
+	/**
+	 * Type of input schema language. One of: DTD, XMLSCHEMA, RELAXNG,
+	 * RELAXNG_COMPACT, WSDL, AUTODETECT. If unspecified, it is assumed
+	 * AUTODETECT.
+	 */
+	@MojoParameter(expression = "${maven.xjc2.schemaLanguage}")
+	public String getSchemaLanguage() {
+		return schemaLanguage;
+	}
+
+	public void setSchemaLanguage(String schemaLanguage) {
+		this.schemaLanguage = schemaLanguage;
+	}
+
+	private File schemaDirectory;
+
+	/**
+	 * The source directory containing *.xsd schema files. Notice that binding
+	 * files are searched by default in this deriectory.
+	 * 
+	 */
+	@MojoParameter(defaultValue = "src/main/resources", expression = "${maven.xjc2.schemaDirectory}", required = true)
+	public File getSchemaDirectory() {
+		return schemaDirectory;
+	}
+
+	public void setSchemaDirectory(File schemaDirectory) {
+		this.schemaDirectory = schemaDirectory;
+	}
+
+	private String[] schemaIncludes = new String[] { "*.xsd" };
+
+	/**
+	 * <p>
+	 * A list of regular expression file search patterns to specify the schemas
+	 * to be processed. Searching is based from the root of
+	 * <code>schemaDirectory</code>.
+	 * </p>
+	 * <p>
+	 * If left udefined, then all *.xsd files in schemaDirectory will be
+	 * processed.
+	 * </p>
+	 * 
+	 */
+	@MojoParameter
+	public String[] getSchemaIncludes() {
+		return schemaIncludes;
+	}
+
+	public void setSchemaIncludes(String[] schemaIncludes) {
+		this.schemaIncludes = schemaIncludes;
+	}
+
+	private String[] schemaExcludes;
+
+	/**
+	 * A list of regular expression file search patterns to specify the schemas
+	 * to be excluded from the <code>schemaIncludes</code> list. Searching is
+	 * based from the root of schemaDirectory.
+	 * 
+	 */
+	@MojoParameter
+	public String[] getSchemaExcludes() {
+		return schemaExcludes;
+	}
+
+	public void setSchemaExcludes(String[] schemaExcludes) {
+		this.schemaExcludes = schemaExcludes;
+	}
+
+	private File bindingDirectory;
+
+	public void setBindingDirectory(File bindingDirectory) {
+		this.bindingDirectory = bindingDirectory;
+	}
+
+	/**
+	 * <p>
+	 * The source directory containing the *.xjb binding files.
+	 * </p>
+	 * <p>
+	 * If left undefined, then the <code>schemaDirectory</code> is assumed.
+	 * </p>
+	 */
+	@MojoParameter(expression = "${maven.xjc2.bindingDirectory}")
+	public File getBindingDirectory() {
+		return this.bindingDirectory;
+	}
+
+	private String[] bindingIncludes = new String[] { "*.xjb" };
+
+	/**
+	 * <p>
+	 * A list of regular expression file search patterns to specify the binding
+	 * files to be processed. Searching is based from the root of
+	 * <code>bindingDirectory</code>.
+	 * </p>
+	 * <p>
+	 * If left undefined, then all *.xjb files in schemaDirectory will be
+	 * processed.
+	 * </p>
+	 */
+	@MojoParameter
+	public String[] getBindingIncludes() {
+		return bindingIncludes;
+	}
+
+	public void setBindingIncludes(String[] bindingIncludes) {
+		this.bindingIncludes = bindingIncludes;
+	}
+
+	private String[] bindingExcludes;
+
+	/**
+	 * A list of regular expression file search patterns to specify the binding
+	 * files to be excluded from the <code>bindingIncludes</code>. Searching
+	 * is based from the root of bindingDirectory.
+	 */
+	@MojoParameter
+	public String[] getBindingExcludes() {
+		return bindingExcludes;
+	}
+
+	public void setBindingExcludes(String[] bindingExcludes) {
+		this.bindingExcludes = bindingExcludes;
+	}
+
+	protected boolean disableDefaultExcludes;
+
+	/**
+	 * If 'true', maven's default exludes are NOT added to all the excludes
+	 * lists.
+	 */
+	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.disableDefaultExcludes}")
+	public boolean getDisableDefaultExcludes() {
+		return disableDefaultExcludes;
+	}
+
+	public void setDisableDefaultExcludes(boolean disableDefaultExcludes) {
+		this.disableDefaultExcludes = disableDefaultExcludes;
+	}
+
+	private File catalog;
+
+	public File getCatalog() {
+		return catalog;
+	}
+
+	/**
+	 * <p>
+	 * Specify the catalog file to resolve external entity references (xjc's
+	 * -catalog option)
+	 * </p>
+	 * <p>
+	 * Support TR9401, XCatalog, and OASIS XML Catalog format. See the
+	 * catalog-resolver sample and this article for details.
+	 * </p>
+	 */
+	@MojoParameter(expression = "${maven.xjc2.catalog}")
+	public void setCatalog(File catalog) {
+		this.catalog = catalog;
+	}
+
+	private String generatePackage;
+
+	/**
+	 * <p>
+	 * The generated classes will all be placed under this Java package (xjc's
+	 * -p option), unless otherwise specified in the schemas.
+	 * </p>
+	 * <p>
+	 * If left unspecified, the package will be derived from the schemas only.
+	 * </p>
+	 */
+	@MojoParameter(expression = "${maven.xjc2.generatePackage}")
+	public String getGeneratePackage() {
+		return generatePackage;
+	}
+
+	public void setGeneratePackage(String generatePackage) {
+		this.generatePackage = generatePackage;
+	}
+
+	private File generateDirectory;
+
+	/**
+	 * <p>
+	 * Generated code will be written under this directory.
+	 * </p>
+	 * <p>
+	 * For instance, if you specify <code>generateDirectory="doe/ray"</code>
+	 * and <code>generatePackage="org.here"</code>, then files are generated
+	 * to <code>doe/ray/org/here</code>.
+	 * </p>
+	 */
+	@MojoParameter(defaultValue = "${project.build.directory}/generated-sources/xjc", expression = "${maven.xjc2.generateDirectory}", required = true)
+	public File getGenerateDirectory() {
+		return generateDirectory;
+	}
+
+	public void setGenerateDirectory(File generateDirectory) {
+		this.generateDirectory = generateDirectory;
+	}
+
+	private boolean readOnly;
+
+	/**
+	 * If 'true', the generated Java source files are set as read-only (xjc's
+	 * -readOnly option).
+	 */
+	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.readOnly}")
+	public boolean getReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
+	}
+
+	private boolean extension;
+
+	/**
+	 * If 'true', the XJC binding compiler will run in the extension mode (xjc's
+	 * -extension option). Otherwise, it will run in the strict conformance
+	 * mode.
+	 */
+	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.extension}")
+	public boolean getExtension() {
+		return extension;
+	}
+
+	public void setExtension(boolean extension) {
+		this.extension = extension;
+	}
+
+	private boolean strict;
+
+	/**
+	 * If 'true', Perform strict validation of the input schema (xjc's -nv
+	 * option).
+	 */
+	@MojoParameter(defaultValue = "true", expression = "${maven.xjc2.strict}")
+	public boolean getStrict() {
+		return strict;
+	}
+
+	public void setStrict(boolean strict) {
+		this.strict = strict;
+	}
+
+	private boolean writeCode = true;
+
+	/**
+	 * If 'false', the plugin will not write the generated code to disk.
+	 */
+	@MojoParameter(defaultValue = "true", expression = "${maven.xjc2.writeCode}")
+	public boolean getWriteCode() {
+		return writeCode;
+	}
+
+	public void setWriteCode(boolean writeCode) {
+		this.writeCode = writeCode;
+	}
+
+	private boolean verbose;
+
+	/**
+	 * <p>
+	 * If 'true', the plugin and the XJC compiler are both set to verbose mode
+	 * (xjc's -verbose option).
+	 * </p>
+	 * <p>
+	 * It is automatically set to 'true' when maven is run in debug mode (mvn's
+	 * -X option).
+	 * </p>
+	 */
+	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.verbose}")
+	public boolean getVerbose() {
+		return verbose;
+	}
+
+	public void setVerbose(boolean verbose) {
+		this.verbose = verbose;
+	}
+
+	private boolean debug;
+
+	/**
+	 * <p>
+	 * If 'true', the XJC compiler is set to debug mode (xjc's -debug option)and
+	 * the 'com.sun.tools.xjc.Options.findServices' property is set, to print
+	 * any add-on instanciation messages.
+	 * </p>
+	 * <p>
+	 * It is automatically set to 'true' when maven is run in debug mode (mvn's
+	 * -X option).
+	 * </p>
+	 */
+	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.debug}")
+	public boolean getDebug() {
+		return debug;
+	}
+
+	public void setDebug(boolean debug) {
+		this.debug = debug;
+	}
+
+	private List args = new ArrayList();
+
+	/**
+	 * <p>
+	 * A list of extra XJC's command-line arguments (items must include the dash
+	 * '-').
+	 * </p>
+	 * <p>
+	 * Arguments set here take precedence over other mojo parameters.
+	 * </p>
+	 */
+	@MojoParameter
+	public List getArgs() {
+		return args;
+	}
+
+	public void setArgs(List args) {
+		this.args = args;
+	}
+
+	private boolean forceRegenerate;
+
+	/**
+	 * If 'true', no up-to-date check is performed and the XJC always
+	 * re-generates the sources.
+	 * 
+	 */
+	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.forceRegenerate}")
+	public boolean getForceRegenerate() {
+		return forceRegenerate;
+	}
+
+	public void setForceRegenerate(boolean forceRegenerate) {
+		this.forceRegenerate = forceRegenerate;
+	}
+
+	private boolean removeOldOutput;
+
+	/**
+	 * <p>
+	 * If 'true', the [generateDirectory] dir will be deleted before the XJC
+	 * binding compiler recompiles the source files.
+	 * </p>
+	 * <p>
+	 * Note that if set to 'false', the up-to-date check might not work, since
+	 * XJC does not regenerate all files (i.e. files for "any" elements under
+	 * 'xjc/org/w3/_2001/xmlschema' directory).
+	 * </p>
+	 * 
+	 */
+	@MojoParameter(defaultValue = "true", expression = "${maven.xjc2.removeOldOutput}")
+	public boolean getRemoveOldOutput() {
+		return removeOldOutput;
+	}
+
+	public void setRemoveOldOutput(boolean removeOldOutput) {
+		this.removeOldOutput = removeOldOutput;
+	}
+
+	private String[] otherDepends;
+
+	/**
+	 * A list of of input files or URLs to consider during the up-to-date. By
+	 * default it always considers: 1. schema files, 2. binding files, 3.
+	 * catalog file, and 4. the pom.xml file of the project executing this
+	 * plugin.
+	 */
+	@MojoParameter
+	public String[] getOtherDepends() {
+		return otherDepends;
+	}
+
+	public void setOtherDepends(String[] otherDepends) {
+		this.otherDepends = otherDepends;
+	}
+
+	private File episodeFile;
+
+	@MojoParameter(expression = "${maven.xjc2.episodeFile}"
+	/*
+	 * , defaultValue =
+	 * "${project.build.directory}/generated-sources/xjc/META-INF/sun-jaxb.episode"
+	 */)
+	public File getEpisodeFile() {
+		return episodeFile;
+	}
+
+	public void setEpisodeFile(File episodeFile) {
+		this.episodeFile = episodeFile;
+	}
+
+	private List classpathElements;
+
+	/**
+	 * Project classpath. Used internally when runing the XJC compiler.
+	 */
+	@MojoParameter(expression = "${project.compileClasspathElements}", required = true, readonly = true)
+	public List getClasspathElements() {
+		return classpathElements;
+	}
+
+	public void setClasspathElements(List classpathElements) {
+		this.classpathElements = classpathElements;
+	}
+
+	private MavenProject project;
+
+	@MojoParameter(expression = "${project}", required = true, readonly = true)
+	public MavenProject getProject() {
+		return project;
+	}
+
+	public void setProject(MavenProject project) {
+		this.project = project;
+	}
+
+	protected Artifact[] plugins;
+
+	/**
+	 * XJC plugins to be made available to XJC. They still need to be activated
+	 * by using &lt;args> and enable plugin activation option.
+	 */
+	@MojoParameter
+	public Artifact[] getPlugins() {
+		return plugins;
+	}
+
+	public void setPlugins(Artifact[] plugins) {
+		this.plugins = plugins;
+	}
+
 	/**
 	 * Execute the maven2 mojo to invoke the xjc2 compiler based on any
 	 * configuration settings.
 	 */
-	protected void executeImp() throws MojoExecutionException {
+	public void execute() throws MojoExecutionException {
 		try {
 			setupLogging();
 
@@ -86,7 +573,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 			// SIDE-EFFECT: populates schemaFiles and bindingFiles member vars.
 			Options xjcOpts = setupOptions();
 
-			if (isVerbose()) {
+			if (getVerbose()) {
 				logSettings();
 			}
 
@@ -94,7 +581,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 			updateMavenPaths();
 
 			// Check whether to re-generate sources.
-			if (!this.isForceRegenerate() && isUpdToDate()) {
+			if (!this.getForceRegenerate() && isUpdToDate()) {
 				getLog()
 						.info(
 								"Skipped XJC execution.  Generated sources were up-to-date.");
@@ -102,7 +589,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 			}
 
 			// Remove old generated dir.
-			if (this.isRemoveOldOutput()) {
+			if (this.getRemoveOldOutput()) {
 				if (this.getGenerateDirectory().exists()) {
 					try {
 						FileUtils.deleteDirectory(this.getGenerateDirectory());
@@ -116,7 +603,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 										+ "' due to: " + ex);
 					}
 
-				} else if (isVerbose())
+				} else if (getVerbose())
 					getLog().info(
 							"Skipped removal of old generateDirectory '"
 									+ this.getGenerateDirectory()
@@ -177,13 +664,13 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 
 		xjcOpts.classpaths.addAll(this.getPluginURLs());
 
-		xjcOpts.verbose = this.isVerbose();
-		xjcOpts.debugMode = this.isDebug();
+		xjcOpts.verbose = this.getVerbose();
+		xjcOpts.debugMode = this.getDebug();
 
 		// Setup Schema Language.
 		if (!isDefined(getSchemaLanguage(), 1)) {
 			setSchemaLanguage("AUTODETECT");
-			if (isVerbose())
+			if (getVerbose())
 				getLog()
 						.info(
 								"The <schemaLanguage> setting was not defined, assuming 'AUTODETECT'.");
@@ -228,7 +715,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 		// Setup binding files.
 		if (!isDefined(getBindingDirectory(), 1)) {
 			setBindingDirectory(getSchemaDirectory());
-			if (isVerbose())
+			if (getVerbose())
 				getLog()
 						.info(
 								"The <bindingDirectory> setting was not defined, assuming the same as <schemaDirectory>: "
@@ -261,10 +748,10 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 		xjcOpts.defaultPackage = this.getGeneratePackage();
 		xjcOpts.targetDir = this.getGenerateDirectory();
 
-		xjcOpts.strictCheck = this.isStrict();
-		xjcOpts.readOnly = this.isReadOnly();
+		xjcOpts.strictCheck = this.getStrict();
+		xjcOpts.readOnly = this.getReadOnly();
 
-		if (this.isExtension())
+		if (this.getExtension())
 			xjcOpts.compatibilityMode = Options.EXTENSION;
 
 		setupCmdLineArgs(xjcOpts);
@@ -274,10 +761,8 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 
 	protected void setupCmdLineArgs(Options xjcOpts)
 			throws MojoExecutionException {
-		if (getEpisodeFile() != null)
-		{
-			if (getArgs() == null)
-			{
+		if (getEpisodeFile() != null) {
+			if (getArgs() == null) {
 				setArgs(new ArrayList(10));
 			}
 			getArgs().add("-episode");
@@ -307,7 +792,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 		if (log.isDebugEnabled())
 			this.setDebug(true);
 
-		if (this.isDebug()) {
+		if (this.getDebug()) {
 			// If not verbose, debug messages would be lost.
 			this.setVerbose(true);
 
@@ -350,19 +835,19 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 				+ recursiveToString(getBindingIncludes()));
 		sb.append("\n\tbindingExcludes: "
 				+ recursiveToString(getBindingExcludes()));
-		sb.append("\n\tdisableDefaultExcludes: " + isDisableDefaultExcludes());
+		sb.append("\n\tdisableDefaultExcludes: " + getDisableDefaultExcludes());
 		sb.append("\n\tcatalog: " + getCatalog());
 		sb.append("\n\tdefaultPackage: " + getGeneratePackage());
 		sb.append("\n\tdestinationDirectory: " + getGenerateDirectory());
-		sb.append("\n\tforceRegenerate: " + isForceRegenerate());
+		sb.append("\n\tforceRegenerate: " + getForceRegenerate());
 		sb.append("\n\totherDepends: " + recursiveToString(getOtherDepends()));
-		sb.append("\n\tremoveOldOutput: " + isRemoveOldOutput());
-		sb.append("\n\twriteCode: " + isWriteCode());
-		sb.append("\n\treadOnly: " + isReadOnly());
-		sb.append("\n\textension: " + isExtension());
-		sb.append("\n\tstrict: " + isStrict());
-		sb.append("\n\tverbose: " + isVerbose());
-		sb.append("\n\tdebug: " + isDebug());
+		sb.append("\n\tremoveOldOutput: " + getRemoveOldOutput());
+		sb.append("\n\twriteCode: " + getWriteCode());
+		sb.append("\n\treadOnly: " + getReadOnly());
+		sb.append("\n\textension: " + getExtension());
+		sb.append("\n\tstrict: " + getStrict());
+		sb.append("\n\tverbose: " + getVerbose());
+		sb.append("\n\tdebug: " + getDebug());
 		sb.append("\n\txjcArgs: " + recursiveToString(getArgs()));
 	}
 
@@ -387,14 +872,16 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 		List producesFiles = new ArrayList();
 
 		gatherDependsFiles(dependsFiles);
-		if (isVerbose() && !isDebug()) // If debug, they are printed along with
+		if (getVerbose() && !getDebug()) // If debug, they are printed along
+			// with
 			// modifTime.
 			getLog().info(
 					"Checking up-to-date depends: "
 							+ recursiveToString(dependsFiles));
 
 		gatherProducesFiles(producesFiles);
-		if (isVerbose() && !isDebug()) // If debug, they are printed along with
+		if (getVerbose() && !getDebug()) // If debug, they are printed along
+			// with
 			// modifTime.
 			getLog().info(
 					"Checking up-to-date produces: "
@@ -409,7 +896,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 		// The younger of all destination files.
 		long destTimeStamp = findLastModified(producesFiles, false);
 
-		if (isVerbose())
+		if (getVerbose())
 			getLog().info(
 					"Depends timeStamp: " + inputTimeStamp
 							+ ", produces timestamp: " + destTimeStamp);
@@ -487,7 +974,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 		JaxbErrorReceiver4Mvn errorReceiver = new JaxbErrorReceiver4Mvn();
 
 		Model model;
-		if (isVerbose())
+		if (getVerbose())
 			getLog().info("Parsing input schema(s)...");
 
 		errorReceiver.stage = "parsing";
@@ -499,7 +986,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 
 		try {
 
-			if (isVerbose())
+			if (getVerbose())
 				getLog().info("Compiling input schema(s)...");
 
 			errorReceiver.stage = "compiling";
@@ -516,14 +1003,14 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 			// throw new MojoExecutionException("Failed to compile input
 			// schema(s)! Error messages should have been provided.");
 
-			if (isWriteCode()) {
-				if (isVerbose())
+			if (getWriteCode()) {
+				if (getVerbose())
 					getLog().info("Writing output to: " + xjcOpts.targetDir);
 
 				model.codeModel.build(new JaxbCodeWriter4Mvn(xjcOpts
 						.createCodeWriter()));
 			} else {
-				if (isVerbose())
+				if (getVerbose())
 					getLog().info("Code will not be written.");
 			}
 		} catch (IOException e) {
@@ -551,14 +1038,15 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 		if (getProject() != null) // null when run for testing.
 			getProject().addResource(jaxbRes);
 
-		if (getEpisodeFile() != null)
-		{
+		if (getEpisodeFile() != null) {
 			final String episodeFilePath = getEpisodeFile().getAbsolutePath();
-			final String generatedDirectoryPath = getGenerateDirectory().getAbsolutePath();
-			
-			if (episodeFilePath.startsWith(generatedDirectoryPath + File.separator))
-			{
-				final String path = episodeFilePath.substring(generatedDirectoryPath.length() + 1);
+			final String generatedDirectoryPath = getGenerateDirectory()
+					.getAbsolutePath();
+
+			if (episodeFilePath.startsWith(generatedDirectoryPath
+					+ File.separator)) {
+				final String path = episodeFilePath
+						.substring(generatedDirectoryPath.length() + 1);
 
 				final Resource resource = new Resource();
 				resource.setDirectory(generatedDirectoryPath);
@@ -614,7 +1102,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 					// asume instanceof File
 					fileModifTime = ((File) no).lastModified();
 
-				if (isDebug())
+				if (getDebug())
 					getLog().info(
 							(oldest ? "Depends " : "Produces ") + no + ": "
 									+ new Date(fileModifTime));
@@ -692,7 +1180,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 	 * @return the augmented list or the input unchanged.
 	 */
 	protected List/* <String> */getExcludes(List/* <String> */origExcludes) {
-		if (origExcludes == null || this.isDisableDefaultExcludes())
+		if (origExcludes == null || this.getDisableDefaultExcludes())
 			return origExcludes;
 
 		origExcludes.addAll(Arrays.asList(FileUtils.getDefaultExcludes()));
@@ -809,109 +1297,6 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 		return sw.toString();
 	}
 
-	// private static void getAllCauseExStackTraces(Throwable ex, boolean
-	// includeExName, StringWriter sw) {
-	// do {
-	// sb.append("\nCaused by: " + (includeExName? ex.toString():
-	// ex.getLocalizedMessage()));
-	// } while ((ex = ex.getCause()) != null);
-	// }
-
-	public abstract void setSchemaLanguage(String schemaLanguage);
-
-	public abstract String getSchemaLanguage();
-
-	public abstract void setSchemaDirectory(File schemaDirectory);
-
-	public abstract File getSchemaDirectory();
-
-	public abstract void setEpisodeFile(File episodeFile);
-
-	public abstract File getEpisodeFile();
-
-	public abstract void setSchemaIncludes(String[] schemaIncludes);
-
-	public abstract String[] getSchemaIncludes();
-
-	public abstract void setSchemaExcludes(String[] schemasExcludes);
-
-	public abstract String[] getSchemaExcludes();
-
-	public abstract void setBindingDirectory(File bindingDirectory);
-
-	public abstract File getBindingDirectory();
-
-	public abstract void setBindingIncludes(String[] bindingIncludes);
-
-	public abstract String[] getBindingIncludes();
-
-	public abstract void setBindingExcludes(String[] bindingExcludes);
-
-	public abstract String[] getBindingExcludes();
-
-	public abstract void setDisableDefaultExcludes(
-			boolean disableDefaultExcludes);
-
-	public abstract boolean isDisableDefaultExcludes();
-
-	public abstract void setCatalog(File catalog);
-
-	public abstract File getCatalog();
-
-	public abstract void setGeneratePackage(String generatePackage);
-
-	public abstract String getGeneratePackage();
-
-	public abstract void setGenerateDirectory(File generateDirectory);
-
-	public abstract File getGenerateDirectory();
-
-	public abstract void setReadOnly(boolean readOnly);
-
-	public abstract boolean isReadOnly();
-
-	public abstract void setExtension(boolean extension);
-
-	public abstract boolean isExtension();
-
-	public abstract void setStrict(boolean strict);
-
-	public abstract boolean isStrict();
-
-	public abstract void setWriteCode(boolean writeCode);
-
-	public abstract boolean isWriteCode();
-
-	public abstract void setVerbose(boolean verbose);
-
-	public abstract boolean isVerbose();
-
-	public abstract void setDebug(boolean debug);
-
-	public abstract boolean isDebug();
-
-	public abstract void setArgs(List args);
-
-	public abstract List getArgs();
-
-	public abstract void setForceRegenerate(boolean forceRegenerate);
-
-	public abstract boolean isForceRegenerate();
-
-	public abstract void setRemoveOldOutput(boolean removeOldOutput);
-
-	public abstract boolean isRemoveOldOutput();
-
-	public abstract void setOtherDepends(String[] otherDepends);
-
-	public abstract String[] getOtherDepends();
-
-	public abstract List getClasspathElements();
-
-	public abstract MavenProject getProject();
-
-	public abstract Set getPluginURLs() throws MojoExecutionException;
-
 	protected class JaxbErrorReceiver4Mvn extends ErrorReceiver {
 
 		public String stage = "processing";
@@ -929,7 +1314,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 		}
 
 		public void info(SAXParseException e) {
-			if (isVerbose())
+			if (getVerbose())
 				getLog().info(makeMessage(e, false));
 		}
 
@@ -940,7 +1325,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 			String pub = ex.getPublicId();
 
 			String exString;
-			if (isDebug()) {
+			if (getDebug()) {
 				exString = getAllExStackTraces(ex);
 			} else
 				exString = getAllExMsgs(ex, printExName);
@@ -964,7 +1349,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 
 		public Writer openSource(JPackage pkg, String fileName)
 				throws IOException {
-			if (isVerbose()) {
+			if (getVerbose()) {
 				if (pkg.isUnnamed())
 					getLog().info("XJC writing: " + fileName);
 				else
@@ -980,7 +1365,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 
 		public OutputStream openBinary(JPackage pkg, String fileName)
 				throws IOException {
-			if (isVerbose()) {
+			if (getVerbose()) {
 				if (pkg.isUnnamed())
 					getLog().info("XJC writing: " + fileName);
 				else
@@ -999,4 +1384,109 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 		}
 
 	}
+
+	public Set getPluginURLs() throws MojoExecutionException {
+
+		Set urls = new HashSet();
+		if (plugins != null) {
+			for (int i = 0; i < plugins.length; i++) {
+				org.apache.maven.artifact.Artifact a = plugins[i]
+						.toArtifact(getArtifactFactory());
+				try {
+					getArtifactResolver().resolve(a,
+							getProject().getRemoteArtifactRepositories(),
+							localRepository);
+					urls.add(a.getFile().toURL());
+					final Set a1 = resolveArtifactDependencies(a);
+					for (Iterator iterator = a1.iterator(); iterator.hasNext();) {
+						org.apache.maven.artifact.Artifact a2 = (org.apache.maven.artifact.Artifact) iterator
+								.next();
+						getArtifactResolver().resolve(a2,
+								getProject().getRemoteArtifactRepositories(),
+								localRepository);
+
+						urls.add(a2.getFile().toURL());
+					}
+
+				} catch (ArtifactResolutionException e) {
+					throw new MojoExecutionException(
+							"Error attempting to download the plugin: "
+									+ plugins[i], e);
+				} catch (ArtifactNotFoundException e) {
+					throw new MojoExecutionException("Plugin doesn't exist: "
+							+ plugins[i], e);
+				} catch (MalformedURLException e) {
+					throw new MojoExecutionException(
+							"Failed to obtain a plugin URL", e);
+				} catch (ProjectBuildingException e) {
+					throw new MojoExecutionException(
+							"Error processing the plugin dependency POM.", e);
+				} catch (InvalidDependencyVersionException e) {
+					throw new MojoExecutionException(
+							"Invalid plugin dependency version.", e);
+				}
+			}
+		}
+		return urls;
+	}
+
+	/**
+	 * This method resolves the dependency artifacts from the project.
+	 * 
+	 * @param theProject
+	 *            The POM.
+	 * @return resolved set of dependency artifacts.
+	 * 
+	 * @throws ArtifactResolutionException
+	 * @throws ArtifactNotFoundException
+	 * @throws InvalidDependencyVersionException
+	 */
+	protected Set resolveDependencyArtifacts(MavenProject theProject)
+			throws ArtifactResolutionException, ArtifactNotFoundException,
+			InvalidDependencyVersionException {
+		Set artifacts = theProject.createArtifacts(getArtifactFactory(),
+				org.apache.maven.artifact.Artifact.SCOPE_RUNTIME,
+				new ScopeArtifactFilter(
+						org.apache.maven.artifact.Artifact.SCOPE_RUNTIME));
+
+		for (Iterator i = artifacts.iterator(); i.hasNext();) {
+			org.apache.maven.artifact.Artifact artifact = (org.apache.maven.artifact.Artifact) i
+					.next();
+			// resolve the new artifact
+			getArtifactResolver().resolve(artifact,
+					getProject().getRemoteArtifactRepositories(),
+					this.localRepository);
+		}
+		return artifacts;
+	}
+
+	/**
+	 * This method resolves all transitive dependencies of an artifact.
+	 * 
+	 * @param artifact
+	 *            the artifact used to retrieve dependencies
+	 * 
+	 * @return resolved set of dependencies
+	 * 
+	 * @throws ArtifactResolutionException
+	 * @throws ArtifactNotFoundException
+	 * @throws ProjectBuildingException
+	 * @throws InvalidDependencyVersionException
+	 */
+	protected Set resolveArtifactDependencies(
+			org.apache.maven.artifact.Artifact artifact)
+			throws ArtifactResolutionException, ArtifactNotFoundException,
+			ProjectBuildingException, InvalidDependencyVersionException {
+		final org.apache.maven.artifact.Artifact pomArtifact = getArtifactFactory()
+				.createArtifact(artifact.getGroupId(),
+						artifact.getArtifactId(), artifact.getVersion(), "",
+						"pom");
+
+		final MavenProject pomProject = mavenProjectBuilder
+				.buildFromRepository(pomArtifact, getProject()
+						.getRemoteArtifactRepositories(), this.localRepository);
+
+		return resolveDependencyArtifacts(pomProject);
+	}
+
 }

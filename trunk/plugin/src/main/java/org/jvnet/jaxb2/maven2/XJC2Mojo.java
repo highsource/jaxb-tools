@@ -309,6 +309,10 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 	 */
 	@MojoComponent(role = "org.apache.maven.project.MavenProjectBuilder")
 	protected MavenProjectBuilder mavenProjectBuilder;
+	
+	@MojoParameter(expression = "${maven.xjc2.episodeFile}")
+	protected File episodeFile;
+	
 
 	/**
 	 * Execute the maven2 mojo to invoke the xjc2 compiler based on any
@@ -334,6 +338,14 @@ public class XJC2Mojo extends AbstractXJC2Mojo {
 
 	public File getSchemaDirectory() {
 		return schemaDirectory;
+	}
+	
+	public void setEpisodeFile(File episodeFile) {
+		this.episodeFile = episodeFile;
+	}
+	
+	public File getEpisodeFile() {
+		return episodeFile;
 	}
 
 	public void setSchemaIncludes(String[] schemaIncludes) {

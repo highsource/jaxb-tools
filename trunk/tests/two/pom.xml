@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.jvnet.jaxb2.maven2</groupId>
 		<artifactId>maven-jaxb2-plugin-tests</artifactId>
-		<version>0.3</version>
+		<version>0.4-SNAPSHOT</version>
 	</parent>
 	<artifactId>maven-jaxb2-plugin-tests-two</artifactId>
 	<packaging>jar</packaging>
@@ -37,11 +37,12 @@
 							<args>
 								<arg>-Xfoo</arg>
 							</args>
+							<episodeFile>${project.build.directory}/generated-sources/xjc/META-INF/sun-jaxb.episode</episodeFile>
 							<plugins>
 								<plugin>
 									<groupId>org.jvnet.jaxb2.maven2</groupId>
 									<artifactId>maven-jaxb2-plugin-testing</artifactId>
-									<version>0.3</version>
+									<version>0.4-SNAPSHOT</version>
 								</plugin>
 							</plugins>
 						</configuration>

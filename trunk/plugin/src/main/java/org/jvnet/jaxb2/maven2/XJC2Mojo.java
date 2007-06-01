@@ -73,7 +73,7 @@ import com.sun.tools.xjc.outline.Outline;
  */
 @MojoGoal("generate")
 @MojoPhase("generate-sources")
-public class AbstractXJC2Mojo extends AbstractMojo {
+public class XJC2Mojo extends AbstractMojo {
 
 	private ArtifactResolver artifactResolver;
 
@@ -100,15 +100,31 @@ public class AbstractXJC2Mojo extends AbstractMojo {
 		this.artifactFactory = artifactFactory;
 	}
 
+	private ArtifactRepository localRepository;
+
 	@MojoParameter(expression = "${localRepository}", required = true)
-	protected ArtifactRepository localRepository;
+	public ArtifactRepository getLocalRepository() {
+		return localRepository;
+	}
+
+	public void setLocalRepository(ArtifactRepository localRepository) {
+		this.localRepository = localRepository;
+	}
+
+	private MavenProjectBuilder mavenProjectBuilder;
 
 	/**
 	 * Artifact factory, needed to download source jars.
 	 * 
 	 */
 	@MojoComponent(role = "org.apache.maven.project.MavenProjectBuilder")
-	protected MavenProjectBuilder mavenProjectBuilder;
+	public MavenProjectBuilder getMavenProjectBuilder() {
+		return mavenProjectBuilder;
+	}
+
+	public void setMavenProjectBuilder(MavenProjectBuilder mavenProjectBuilder) {
+		this.mavenProjectBuilder = mavenProjectBuilder;
+	}
 
 	/**
 	 * For checking timestamps. Modify freely, nothing to do with XJC options.
@@ -249,7 +265,7 @@ public class AbstractXJC2Mojo extends AbstractMojo {
 		this.bindingExcludes = bindingExcludes;
 	}
 
-	protected boolean disableDefaultExcludes;
+	private boolean disableDefaultExcludes;
 
 	/**
 	 * If 'true', maven's default exludes are NOT added to all the excludes
@@ -507,11 +523,7 @@ public class AbstractXJC2Mojo extends AbstractMojo {
 
 	private File episodeFile;
 
-	@MojoParameter(expression = "${maven.xjc2.episodeFile}"
-	/*
-	 * , defaultValue =
-	 * "${project.build.directory}/generated-sources/xjc/META-INF/sun-jaxb.episode"
-	 */)
+	@MojoParameter(expression = "${maven.xjc2.episodeFile}", defaultValue = "${project.build.directory}/generated-sources/xjc/META-INF/sun-jaxb.episode")
 	public File getEpisodeFile() {
 		return episodeFile;
 	}
@@ -545,7 +557,7 @@ public class AbstractXJC2Mojo extends AbstractMojo {
 		this.project = project;
 	}
 
-	protected Artifact[] plugins;
+	private Artifact[] plugins;
 
 	/**
 	 * XJC plugins to be made available to XJC. They still need to be activated
@@ -558,6 +570,17 @@ public class AbstractXJC2Mojo extends AbstractMojo {
 
 	public void setPlugins(Artifact[] plugins) {
 		this.plugins = plugins;
+	}
+
+	private Artifact[] episodes;
+
+	@MojoParameter
+	public Artifact[] getEpisodes() {
+		return episodes;
+	}
+
+	public void setEpisodes(Artifact[] episodes) {
+		this.episodes = episodes;
 	}
 
 	/**
@@ -762,12 +785,18 @@ public class AbstractXJC2Mojo extends AbstractMojo {
 	protected void setupCmdLineArgs(Options xjcOpts)
 			throws MojoExecutionException {
 		if (getEpisodeFile() != null) {
-			if (getArgs() == null) {
-				setArgs(new ArrayList(10));
-			}
 			getArgs().add("-episode");
 			getArgs().add(getEpisodeFile().getAbsolutePath());
 		}
+
+		if (getEpisodes() != null) {
+			final Collection<File> episodeFiles = getEpisodeFiles();
+
+			for (final File episodeFile : episodeFiles) {
+				getArgs().add(episodeFile.getAbsolutePath());
+			}
+		}
+
 		if (isDefined(this.getArgs(), 1)) {
 			try {
 				xjcOpts.parseArguments((String[]) getArgs().toArray(
@@ -1385,39 +1414,58 @@ public class AbstractXJC2Mojo extends AbstractMojo {
 
 	}
 
-	public Set getPluginURLs() throws MojoExecutionException {
+	public Collection<URL> getPluginURLs() throws MojoExecutionException {
+		final Collection<URL> pluginURLs = new HashSet<URL>();
+		for (File artifactFile : getArtifactFiles(getPlugins(), true)) {
+			try {
+				pluginURLs.add(artifactFile.toURL());
+			} catch (MalformedURLException ex) {
+				throw new MojoExecutionException(
+						"Could not retrieve URL for a file.", ex);
+			}
+		}
+		return pluginURLs;
+	}
 
-		Set urls = new HashSet();
-		if (plugins != null) {
-			for (int i = 0; i < plugins.length; i++) {
-				org.apache.maven.artifact.Artifact a = plugins[i]
+	public Collection<File> getEpisodeFiles() throws MojoExecutionException {
+		return getArtifactFiles(getEpisodes(), false);
+	}
+
+	protected Collection<File> getArtifactFiles(final Artifact[] artifacts,
+			boolean resolveDependencies) throws MojoExecutionException {
+		final Set<File> files = new HashSet<File>();
+		if (artifacts != null) {
+			for (int i = 0; i < artifacts.length; i++) {
+				org.apache.maven.artifact.Artifact artifact = artifacts[i]
 						.toArtifact(getArtifactFactory());
 				try {
-					getArtifactResolver().resolve(a,
+					getArtifactResolver().resolve(artifact,
 							getProject().getRemoteArtifactRepositories(),
 							localRepository);
-					urls.add(a.getFile().toURL());
-					final Set a1 = resolveArtifactDependencies(a);
-					for (Iterator iterator = a1.iterator(); iterator.hasNext();) {
-						org.apache.maven.artifact.Artifact a2 = (org.apache.maven.artifact.Artifact) iterator
-								.next();
-						getArtifactResolver().resolve(a2,
-								getProject().getRemoteArtifactRepositories(),
-								localRepository);
+					files.add(artifact.getFile());
+					if (resolveDependencies) {
+						final Set<org.apache.maven.artifact.Artifact> artifactDependencies = resolveArtifactDependencies(artifact);
+						for (Iterator iterator = artifactDependencies
+								.iterator(); iterator.hasNext();) {
+							org.apache.maven.artifact.Artifact artifactDependency = (org.apache.maven.artifact.Artifact) iterator
+									.next();
+							getArtifactResolver().resolve(
+									artifactDependency,
+									getProject()
+											.getRemoteArtifactRepositories(),
+									localRepository);
 
-						urls.add(a2.getFile().toURL());
+							files.add(artifactDependency.getFile());
+						}
 					}
 
 				} catch (ArtifactResolutionException e) {
 					throw new MojoExecutionException(
 							"Error attempting to download the plugin: "
-									+ plugins[i], e);
+									+ artifacts[i], e);
 				} catch (ArtifactNotFoundException e) {
 					throw new MojoExecutionException("Plugin doesn't exist: "
-							+ plugins[i], e);
-				} catch (MalformedURLException e) {
-					throw new MojoExecutionException(
-							"Failed to obtain a plugin URL", e);
+							+ artifacts[i], e);
 				} catch (ProjectBuildingException e) {
 					throw new MojoExecutionException(
 							"Error processing the plugin dependency POM.", e);
@@ -1427,37 +1475,7 @@ public class AbstractXJC2Mojo extends AbstractMojo {
 				}
 			}
 		}
-		return urls;
-	}
-
-	/**
-	 * This method resolves the dependency artifacts from the project.
-	 * 
-	 * @param theProject
-	 *            The POM.
-	 * @return resolved set of dependency artifacts.
-	 * 
-	 * @throws ArtifactResolutionException
-	 * @throws ArtifactNotFoundException
-	 * @throws InvalidDependencyVersionException
-	 */
-	protected Set resolveDependencyArtifacts(MavenProject theProject)
-			throws ArtifactResolutionException, ArtifactNotFoundException,
-			InvalidDependencyVersionException {
-		Set artifacts = theProject.createArtifacts(getArtifactFactory(),
-				org.apache.maven.artifact.Artifact.SCOPE_RUNTIME,
-				new ScopeArtifactFilter(
-						org.apache.maven.artifact.Artifact.SCOPE_RUNTIME));
-
-		for (Iterator i = artifacts.iterator(); i.hasNext();) {
-			org.apache.maven.artifact.Artifact artifact = (org.apache.maven.artifact.Artifact) i
-					.next();
-			// resolve the new artifact
-			getArtifactResolver().resolve(artifact,
-					getProject().getRemoteArtifactRepositories(),
-					this.localRepository);
-		}
-		return artifacts;
+		return files;
 	}
 
 	/**
@@ -1473,7 +1491,7 @@ public class AbstractXJC2Mojo extends AbstractMojo {
 	 * @throws ProjectBuildingException
 	 * @throws InvalidDependencyVersionException
 	 */
-	protected Set resolveArtifactDependencies(
+	protected Set<org.apache.maven.artifact.Artifact> resolveArtifactDependencies(
 			org.apache.maven.artifact.Artifact artifact)
 			throws ArtifactResolutionException, ArtifactNotFoundException,
 			ProjectBuildingException, InvalidDependencyVersionException {
@@ -1482,11 +1500,43 @@ public class AbstractXJC2Mojo extends AbstractMojo {
 						artifact.getArtifactId(), artifact.getVersion(), "",
 						"pom");
 
-		final MavenProject pomProject = mavenProjectBuilder
-				.buildFromRepository(pomArtifact, getProject()
-						.getRemoteArtifactRepositories(), this.localRepository);
+		final MavenProject pomProject = getMavenProjectBuilder()
+				.buildFromRepository(pomArtifact,
+						getProject().getRemoteArtifactRepositories(),
+						getLocalRepository());
 
 		return resolveDependencyArtifacts(pomProject);
+	}
+
+	/**
+	 * This method resolves the dependency artifacts from the project.
+	 * 
+	 * @param theProject
+	 *            The POM.
+	 * @return resolved set of dependency artifacts.
+	 * 
+	 * @throws ArtifactResolutionException
+	 * @throws ArtifactNotFoundException
+	 * @throws InvalidDependencyVersionException
+	 */
+	@SuppressWarnings("unchecked")
+	protected Set<org.apache.maven.artifact.Artifact> resolveDependencyArtifacts(
+			MavenProject theProject) throws ArtifactResolutionException,
+			ArtifactNotFoundException, InvalidDependencyVersionException {
+		final Set<org.apache.maven.artifact.Artifact> artifacts = theProject
+				.createArtifacts(
+						getArtifactFactory(),
+						org.apache.maven.artifact.Artifact.SCOPE_RUNTIME,
+						new ScopeArtifactFilter(
+								org.apache.maven.artifact.Artifact.SCOPE_RUNTIME));
+
+		for (org.apache.maven.artifact.Artifact artifact : artifacts) {
+			// resolve the new artifact
+			getArtifactResolver().resolve(artifact,
+					getProject().getRemoteArtifactRepositories(),
+					getLocalRepository());
+		}
+		return artifacts;
 	}
 
 }

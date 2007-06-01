@@ -42,18 +42,18 @@ public class JAXBGenerateTest extends TestCase {
     XJC2Mojo generator = new XJC2Mojo();
     String userDir = System.getProperty("user.dir").toString();
 
-    generator.schemaDirectory = new File(getBaseDir(), "src/test/resources/");
-    generator.schemaIncludes = new String[]{ "*.xsd" };
-    generator.bindingIncludes = new String[]{ "*.xjb" };
-    generator.generateDirectory = new File(getBaseDir(), "target/test/generated-sources");
-    generator.verbose = true;
-    generator.generatePackage = "unittest";
-    generator.removeOldOutput = false;
+    generator.setSchemaDirectory(new File(getBaseDir(), "src/test/resources/"));
+    generator.setSchemaIncludes(new String[]{ "*.xsd" });
+    generator.setBindingIncludes(new String[]{ "*.xjb" });
+    generator.setGenerateDirectory(new File(getBaseDir(), "target/test/generated-sources"));
+    generator.setVerbose(true);
+    generator.setGeneratePackage("unittest");
+    generator.setRemoveOldOutput( false);
 
     generator.execute();
 
     // Ensure package directory is created
-    File[] files = generator.generateDirectory.listFiles();
+    File[] files = generator.getGenerateDirectory().listFiles();
     assertTrue(files.length >= 1);
 
     // Ensure four po java files are created.

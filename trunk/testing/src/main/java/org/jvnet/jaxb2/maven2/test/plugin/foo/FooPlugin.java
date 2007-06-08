@@ -18,51 +18,51 @@ import com.sun.tools.xjc.outline.Outline;
 
 public class FooPlugin extends Plugin {
 
-  private Log logger = LogFactory.getLog(getClass());
+	private Log logger = LogFactory.getLog(getClass());
 
-  @Override
-  public String getOptionName() {
-    return "Xfoo";
-  }
+	@Override
+	public String getOptionName() {
+		return "Xfoo";
+	}
 
-  @Override
-  public String getUsage() {
-    return "  -Xfoo              :  does nothing";
-  }
+	@Override
+	public String getUsage() {
+		return "  -Xfoo              :  does nothing";
+	}
 
-  @Override
-  public boolean run(Outline outline, Options opt, ErrorHandler errorHandler) {
-    // TODO Auto-generated method stub
-    // outline.get
-    for (final ClassOutline classOutline : outline.getClasses()) {
-      for (final CPluginCustomization pluginCustomization : classOutline.target.getCustomizations()) {
-        pluginCustomization.markAsAcknowledged();
-      }
-      final CClassInfo classInfo = classOutline.target;
-      logger.debug("Class:" + classInfo.getName());
+	@Override
+	public boolean run(Outline outline, Options opt, ErrorHandler errorHandler) {
+		for (final ClassOutline classOutline : outline.getClasses()) {
+			for (final CPluginCustomization pluginCustomization : classOutline.target
+					.getCustomizations()) {
+				pluginCustomization.markAsAcknowledged();
+			}
+			final CClassInfo classInfo = classOutline.target;
+			logger.debug("Class:" + classInfo.getName());
 
-      for (final FieldOutline fieldOutline : classOutline.getDeclaredFields()) {
+			for (final FieldOutline fieldOutline : classOutline
+					.getDeclaredFields()) {
 
-        final CPropertyInfo propertyInfo = fieldOutline.getPropertyInfo();
-        logger.debug("Property:" + propertyInfo.getName(true));
+				final CPropertyInfo propertyInfo = fieldOutline
+						.getPropertyInfo();
+				logger.debug("Property:" + propertyInfo.getName(true));
 
-        for (final CPluginCustomization pluginCustomization : fieldOutline
-            .getPropertyInfo()
-            .getCustomizations()) {
-          pluginCustomization.markAsAcknowledged();
-        }
-      }
-    }
-    return true;
-  }
+				for (final CPluginCustomization pluginCustomization : fieldOutline
+						.getPropertyInfo().getCustomizations()) {
+					pluginCustomization.markAsAcknowledged();
+				}
+			}
+		}
+		return true;
+	}
 
-  @Override
-  public List<String> getCustomizationURIs() {
-    return Collections.EMPTY_LIST;
-  }
+	@Override
+	public List<String> getCustomizationURIs() {
+		return Collections.EMPTY_LIST;
+	}
 
-  @Override
-  public boolean isCustomizationTagName(String nsUri, String localName) {
-    return true;
-  }
+	@Override
+	public boolean isCustomizationTagName(String nsUri, String localName) {
+		return true;
+	}
 }

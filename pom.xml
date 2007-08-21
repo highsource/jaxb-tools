@@ -5,7 +5,7 @@
 	<groupId>org.jvnet.jaxb2.maven2</groupId>
 	<artifactId>maven-jaxb2-plugin-project</artifactId>
 	<packaging>pom</packaging>
-	<version>0.4-SNAPSHOT</version>
+	<version>0.4.M1</version>
 	<name>Maven JAXB 2.x Plugin Project</name>
 	<inceptionYear>2006</inceptionYear>
 	<url>
@@ -16,7 +16,7 @@
 		<module>plugin</module>
 		<module>testing</module>
 		<module>tests</module>
-		<!--module>samples</module-->
+		<module>samples</module>
 	</modules>
 	<organization>
 		<name>java.net</name>
@@ -121,6 +121,11 @@
 				<artifactId>maven-project</artifactId>
 				<version>2.0.4</version>
 			</dependency>
+			<dependency>
+				<groupId>org.apache.maven.shared</groupId>
+				<artifactId>maven-plugin-testing-harness</artifactId>
+				<version>1.1</version>
+			</dependency>
 			<!-- Core jaxb classes -->
 			<dependency>
 				<groupId>com.sun.xml.bind</groupId>
@@ -176,12 +181,8 @@
 	<distributionManagement>
 		<repository>
 			<id>local-repository</id>
-			<url>file:${path-to-m2-repo.java.net}</url>
+			<url>file:${m2-repo.java.net.url}</url>
 		</repository>
-		<site>
-			<id>local-site</id>
-			<url>file:www/maven-jaxb2-plugin-project</url>
-		</site>
 	</distributionManagement>
 	<build>
 		<pluginManagement>

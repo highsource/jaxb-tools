@@ -34,6 +34,7 @@ import java.util.Set;
 
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.artifact.resolver.AbstractArtifactResolutionException;
 import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
 import org.apache.maven.artifact.resolver.ArtifactResolutionException;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
@@ -74,6 +75,10 @@ import com.sun.tools.xjc.outline.Outline;
 @MojoGoal("generate")
 @MojoPhase("generate-sources")
 public class XJC2Mojo extends AbstractMojo {
+
+	public XJC2Mojo() {
+
+	}
 
 	private ArtifactResolver artifactResolver;
 
@@ -1449,11 +1454,11 @@ public class XJC2Mojo extends AbstractMojo {
 								.iterator(); iterator.hasNext();) {
 							org.apache.maven.artifact.Artifact artifactDependency = (org.apache.maven.artifact.Artifact) iterator
 									.next();
-							getArtifactResolver().resolve(
-									artifactDependency,
-									getProject()
-											.getRemoteArtifactRepositories(),
-									localRepository);
+//							getArtifactResolver().resolve(
+//									artifactDependency,
+//									getProject()
+//											.getRemoteArtifactRepositories(),
+//									localRepository);
 
 							files.add(artifactDependency.getFile());
 						}
@@ -1505,7 +1510,19 @@ public class XJC2Mojo extends AbstractMojo {
 						getProject().getRemoteArtifactRepositories(),
 						getLocalRepository());
 
-		return resolveDependencyArtifacts(pomProject);
+		final Set<org.apache.maven.artifact.Artifact> artifacts = new HashSet<org.apache.maven.artifact.Artifact>();
+
+		final Set<org.apache.maven.artifact.Artifact> dependencyArtifacts = resolveDependencyArtifacts(pomProject);
+
+		artifacts.addAll(dependencyArtifacts);
+		if (!dependencyArtifacts.isEmpty()) {
+			for (org.apache.maven.artifact.Artifact a : dependencyArtifacts) {
+				if (!a.isOptional()) {
+					artifacts.addAll(resolveArtifactDependencies(a));
+				}
+			}
+		}
+		return artifacts;
 	}
 
 	/**
@@ -1523,6 +1540,9 @@ public class XJC2Mojo extends AbstractMojo {
 	protected Set<org.apache.maven.artifact.Artifact> resolveDependencyArtifacts(
 			MavenProject theProject) throws ArtifactResolutionException,
 			ArtifactNotFoundException, InvalidDependencyVersionException {
+
+		final Set<org.apache.maven.artifact.Artifact> as = new HashSet<org.apache.maven.artifact.Artifact>();
+
 		final Set<org.apache.maven.artifact.Artifact> artifacts = theProject
 				.createArtifacts(
 						getArtifactFactory(),
@@ -1531,12 +1551,20 @@ public class XJC2Mojo extends AbstractMojo {
 								org.apache.maven.artifact.Artifact.SCOPE_RUNTIME));
 
 		for (org.apache.maven.artifact.Artifact artifact : artifacts) {
-			// resolve the new artifact
-			getArtifactResolver().resolve(artifact,
-					getProject().getRemoteArtifactRepositories(),
-					getLocalRepository());
+			if (!artifact.isOptional()) {
+				try {
+					getArtifactResolver().resolve(artifact,
+							getProject().getRemoteArtifactRepositories(),
+							getLocalRepository());
+					as.add(artifact);
+				} catch (ArtifactNotFoundException arex) {
+					getLog().warn("Error resolving plugin dependency.", arex);
+				} catch (ArtifactResolutionException arex) {
+					getLog().warn("Error resolving plugin dependency.", arex);
+				}
+			}
 		}
-		return artifacts;
+		return as;
 	}
 
 }

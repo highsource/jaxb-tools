@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.jvnet.jaxb2.maven2</groupId>
 		<artifactId>maven-jaxb2-plugin-project</artifactId>
-		<version>0.4-SNAPSHOT</version>
+		<version>0.4.M1</version>
 	</parent>
 	<modules>
 		<module>po</module>
@@ -25,7 +25,6 @@
 						<descriptors>
 							<descriptor>../src/main/assembly/maven-src.xml</descriptor>
 						</descriptors>
-						<outputDirectory>../../files/${pom.version}</outputDirectory>
 					</configuration>
 					<executions>
 						<execution>
@@ -47,7 +46,7 @@
 							<configuration>
 								<tasks>
 									<mkdir dir="target/test-maven-repository"/>
-									<unzip src="../../files/${pom.version}/${pom.artifactId}-${pom.version}-maven-src.zip" dest="${basedir}/target/test-maven-assembly"/>
+									<unzip src="target/${pom.artifactId}-${pom.version}-maven-src.zip" dest="${basedir}/target/test-maven-assembly"/>
 								</tasks>
 							</configuration>
 							<goals>

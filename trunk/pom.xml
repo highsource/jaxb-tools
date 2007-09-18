@@ -180,9 +180,13 @@
 	</dependencyManagement>
 	<distributionManagement>
 		<repository>
-			<id>local-repository</id>
-			<url>file:${m2-repo.java.net.url}</url>
+			<id>dev.java.net-releases</id>
+			<url>${dev.java.net-releases.deploy.url}</url>
 		</repository>
+		<snapshotRepository>
+			<id>dev.java.net-snapshots</id>
+			<url>${dev.java.net-snapshots.deploy.url}</url>
+		</snapshotRepository>
 	</distributionManagement>
 	<build>
 		<pluginManagement>

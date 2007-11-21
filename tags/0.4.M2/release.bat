@@ -1,0 +1,1 @@
+call mvn -DperformRelease=true clean deploy

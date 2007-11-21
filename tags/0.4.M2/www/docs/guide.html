@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<title>JAXB2 Maven2 Plugin -Reference Guide</title>
+	</head>
+	<body>
+		<h1>About the plugin</h1>
+		<p>JAXB2 Maven2 plugin which allows you to generate code with <a 
+			href="http://jaxb.dev.java.net/">JAXB RI</a> in Maven builds. The 
+			plugin takes part in the <code>generate-code</code> phase and 
+			produces code of the schema-derived classes (plus maybe some other 
+			resources) out of the XML Schemas, DTDs and so on.</p>
+		<h1>Using the plugin</h1>
+		<h2>Basic usage</h2>
+		<p>In order to use the plugin, you first have to make it available to 
+			your build. The plugin is distributed via the <a 
+			href="https://maven2-repository.dev.java.net">dev.java.net Maven2 
+			repository</a>, so add this to your <code>pom.xml</code>:</p>
+		<pre><code>&lt;repositories>
+	&lt;repository>
+		&lt;id>maven2-repository.dev.java.net&lt;/id>
+		&lt;name>Java.net Maven 2 Repository&lt;/name>
+		&lt;url>https://maven2-repository.dev.java.net/nonav/repository&lt;/url>
+	&lt;/repository>
+	&lt;repository>
+		&lt;id>maven-repository.dev.java.net&lt;/id>
+		&lt;name>Java.net Maven 1 Repository (legacy)&lt;/name>
+		&lt;url>https://maven-repository.dev.java.net/nonav/repository&lt;/url>
+		&lt;layout>legacy&lt;/layout>
+	&lt;/repository>
+&lt;/repositories>
+&lt;pluginRepositories>
+	&lt;pluginRepository>
+		&lt;id>maven2-repository.dev.java.net&lt;/id>
+		&lt;url>https://maven2-repository.dev.java.net/nonav/repository&lt;/url>
+	&lt;/pluginRepository>
+	&lt;pluginRepository>
+		&lt;id>maven-repository.dev.java.net&lt;/id>
+		&lt;name>Java.net Maven 1 Repository (legacy)&lt;/name>
+		&lt;url>https://maven-repository.dev.java.net/nonav/repository&lt;/url>
+		&lt;layout>legacy&lt;/layout>
+	&lt;/pluginRepository>
+&lt;/pluginRepositories></code></pre>
+		<p>When this is done, simply add the <code>generate</code> execution 
+			goal to the build:</p>
+		<pre><code>&lt;build>
+	&lt;plugins>
+		&lt;plugin>
+			&lt;groupId>org.jvnet.jaxb2.maven2&lt;/groupId>
+			&lt;artifactId>maven-jaxb2-plugin&lt;/artifactId>
+			&lt;executions>
+				&lt;execution>
+					&lt;goals>
+						&lt;goal>generate&lt;/goal>
+					&lt;/goals>
+				&lt;/execution>
+			&lt;/executions>
+		&lt;/plugin>
+	&lt;/plugins>
+&lt;/build></code></pre>
+		<p>To compile the generated sources, set <code>1.5</code> in 
+			<code>source</code> and <code>target</code> of the 
+			<code>maven-compiler-plugin</code>:</p>
+		<pre><code>&lt;build>
+	&lt;plugins>
+		...
+		&lt;plugin>
+			&lt;inherited>true&lt;/inherited>
+			&lt;groupId>org.apache.maven.plugins&lt;/groupId>
+			&lt;artifactId>maven-compiler-plugin&lt;/artifactId>
+			&lt;configuration>
+				&lt;source>1.5&lt;/source>
+				&lt;target>1.5&lt;/target>
+			&lt;/configuration>
+		&lt;/plugin>
+	&lt;/plugins>
+&lt;/build></code></pre>
+		<p>See the <a href="/repository/org/jvnet/jaxb2/maven2/maven-jaxb2-plugin-sample/1.0/maven-jaxb2-plugin-sample-1.0-src.zip">sample project</a>
+			for the practical example.</p>
+		<h2>Configuring the plugin</h2>
+		<p>The plugin has a large number of configuration options. Please see 
+			the <a href="/nonav/maven-jaxb2-plugin-project/maven-jaxb2-plugin/plugin-info.html">plugin documentation</a> for a complete reference.
+			Below are just a couple of configuration examples.</p>
+		<h3>Using a custom JAXB2 plugin:</h3>
+		<pre><code>&lt;plugin>
+	&lt;groupId>org.jvnet.jaxb2.maven2&lt;/groupId>
+	&lt;artifactId>maven-jaxb2-plugin&lt;/artifactId>
+	&lt;executions>
+		&lt;execution>
+			&lt;goals>
+				&lt;goal>generate&lt;/goal>
+			&lt;/goals>
+		&lt;/execution>
+	&lt;/executions>
+	&lt;configuration>
+		&lt;args>
+			&lt;arg>-XtoString&lt;/arg>
+		&lt;/args>
+	&lt;/configuration>
+&lt;/plugin></code></pre>
+		<h3>Compiling DTDs</h3>
+		<pre><code>&lt;plugin>
+	&lt;groupId>org.jvnet.jaxb2.maven2&lt;/groupId>
+	&lt;artifactId>maven-jaxb2-plugin&lt;/artifactId>
+	&lt;executions>
+		&lt;execution>
+			&lt;goals>
+				&lt;goal>generate&lt;/goal>
+			&lt;/goals>
+		&lt;/execution>
+	&lt;/executions>
+	&lt;configuration>
+		&lt;schemaLanguage>DTD&lt;/schemaLanguage>
+		&lt;schemaIncludes>
+				&lt;value>*.dtd&lt;/value>
+		&lt;/schemaIncludes>
+	&lt;/configuration>
+&lt;/plugin></code></pre>
+		<h1>Testing infrastructure</h1>
+		<p>This projects also provides a testing infrastructure
+			that allows executing the JAXB2 Maven2 plugin from your own Java code, for instance
+			in a frame of a JUnit-based test case. Please see the <a href="https://maven-jaxb2-plugin.dev.java.net/source/browse/maven-jaxb2-plugin/trunk/testing/"><code>testing</code></a> module for details.</p>
+		<p>This module provides a <code>org.jvnet.jaxb2.maven2.test.RunXJC2Mojo</code>
+			class which configures and executes the JAXB2 Maven2 plugin
+			from within the test case. Subclasses may override methods
+			of the base class to add some configuration parameters,
+			redefine schema location and so on. Below is a typical
+			test case that tests code generation with the dummy <code>Xfoo</code>
+			JAXB plugin turned on:</p>
+		<pre><code>package org.jvnet.jaxb2.maven2.test.tests;
+
+import java.io.File;
+import java.util.Collections;
+import java.util.List;
+
+import org.jvnet.jaxb2.maven2.test.RunXJC2Mojo;
+
+public class FooPluginTest extends RunXJC2Mojo {
+
+  @Override
+  public File getSchemaDirectory() {
+    return new File(getBaseDir(), "src/test/resources");
+  }
+
+  @Override
+  public List&lt;String> getArgs() {
+    return Collections.singletonList("-Xfoo");
+  }
+
+}</code></pre>
+		<p>Testing infrastructure is especially helpful when you develop
+			your own JAXB plugins. You often need a possibility to debug
+			the JAXB plugin that you write, trace it in the debugger and
+			so on. Ability to execute the code generation from a test case
+			is simply invaluable for this kind of projects.</p>
+	</body>
+</html>

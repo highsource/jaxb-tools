@@ -536,6 +536,17 @@ public class XJC2Mojo extends AbstractMojo {
 	public void setEpisodeFile(File episodeFile) {
 		this.episodeFile = episodeFile;
 	}
+	
+	private boolean episode = true;
+	
+	@MojoParameter(expression = "${maven.xjc2.episode}", defaultValue = "true")
+	public boolean getEpisode() {
+		return episode;
+	}
+	
+	public void setEpisode(boolean episode) {
+		this.episode = episode;
+	}
 
 	private List classpathElements;
 
@@ -643,7 +654,7 @@ public class XJC2Mojo extends AbstractMojo {
 				getGenerateDirectory().mkdirs();
 			}
 
-			if (getEpisodeFile() != null) {
+			if (getEpisode() && getEpisodeFile() != null) {
 				final File parentFile = getEpisodeFile().getParentFile();
 				parentFile.mkdirs();
 			}
@@ -789,7 +800,7 @@ public class XJC2Mojo extends AbstractMojo {
 
 	protected void setupCmdLineArgs(Options xjcOpts)
 			throws MojoExecutionException {
-		if (getEpisodeFile() != null) {
+		if (getEpisode() && getEpisodeFile() != null) {
 			getArgs().add("-episode");
 			getArgs().add(getEpisodeFile().getAbsolutePath());
 		}
@@ -1072,7 +1083,7 @@ public class XJC2Mojo extends AbstractMojo {
 		if (getProject() != null) // null when run for testing.
 			getProject().addResource(jaxbRes);
 
-		if (getEpisodeFile() != null) {
+		if (getEpisode() && getEpisodeFile() != null) {
 			final String episodeFilePath = getEpisodeFile().getAbsolutePath();
 			final String generatedDirectoryPath = getGenerateDirectory()
 					.getAbsolutePath();

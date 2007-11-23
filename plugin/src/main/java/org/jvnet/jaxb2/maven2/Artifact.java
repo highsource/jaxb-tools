@@ -3,7 +3,7 @@ package org.jvnet.jaxb2.maven2;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 
 /**
- * @author Kohsuke Kawaguchi
+ * @author Aleksei Valikov
  */
 public class Artifact {
 	private String groupId;
@@ -39,5 +39,9 @@ public class Artifact {
 	public org.apache.maven.artifact.Artifact toArtifact(ArtifactFactory factory) {
 		return factory
 				.createArtifact(groupId, artifactId, version, null, "jar");
+	}
+
+	public String toString() {
+		return groupId + ":" + artifactId + ":" + version;
 	}
 }

@@ -34,7 +34,6 @@ import java.util.Set;
 
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.artifact.resolver.AbstractArtifactResolutionException;
 import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
 import org.apache.maven.artifact.resolver.ArtifactResolutionException;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
@@ -53,6 +52,7 @@ import org.jfrog.maven.annomojo.annotations.MojoComponent;
 import org.jfrog.maven.annomojo.annotations.MojoGoal;
 import org.jfrog.maven.annomojo.annotations.MojoParameter;
 import org.jfrog.maven.annomojo.annotations.MojoPhase;
+import org.jfrog.maven.annomojo.annotations.MojoRequiresDependencyResolution;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXParseException;
 
@@ -74,10 +74,39 @@ import com.sun.tools.xjc.outline.Outline;
  */
 @MojoGoal("generate")
 @MojoPhase("generate-sources")
+@MojoRequiresDependencyResolution
 public class XJC2Mojo extends AbstractMojo {
 
 	public XJC2Mojo() {
 
+	}
+
+	/**
+	 * Returns the version of the artifact as inherited from the dependencies.
+	 * 
+	 * @param artifact
+	 *            the artifact for which to return the version.
+	 * @param dependencies
+	 *            the list of dependencies in which to search for the version.
+	 * @return the version of the artifact, or {@code null} if
+	 *         {@code dependencies} is either {@code null} or does not contain
+	 *         the artifact's version.
+	 */
+	protected String getVersionFromDependencies(final Artifact artifact,
+			final Set<org.apache.maven.artifact.Artifact> dependencies) {
+		if (dependencies == null)
+			return null;
+		for (Iterator depIterator = dependencies.iterator(); depIterator
+				.hasNext(); /* */) {
+			org.apache.maven.artifact.Artifact dependency = (org.apache.maven.artifact.Artifact) depIterator
+					.next();
+			if (artifact.getGroupId().equals(dependency.getGroupId())
+					&& artifact.getArtifactId().equals(
+							dependency.getArtifactId())) {
+				return dependency.getVersion();
+			}
+		}
+		return null;
 	}
 
 	private ArtifactResolver artifactResolver;
@@ -287,12 +316,7 @@ public class XJC2Mojo extends AbstractMojo {
 
 	private File catalog;
 
-	public File getCatalog() {
-		return catalog;
-	}
-
 	/**
-	 * <p>
 	 * Specify the catalog file to resolve external entity references (xjc's
 	 * -catalog option)
 	 * </p>
@@ -302,6 +326,10 @@ public class XJC2Mojo extends AbstractMojo {
 	 * </p>
 	 */
 	@MojoParameter(expression = "${maven.xjc2.catalog}")
+	public File getCatalog() {
+		return catalog;
+	}
+
 	public void setCatalog(File catalog) {
 		this.catalog = catalog;
 	}
@@ -536,14 +564,14 @@ public class XJC2Mojo extends AbstractMojo {
 	public void setEpisodeFile(File episodeFile) {
 		this.episodeFile = episodeFile;
 	}
-	
+
 	private boolean episode = true;
-	
+
 	@MojoParameter(expression = "${maven.xjc2.episode}", defaultValue = "true")
 	public boolean getEpisode() {
 		return episode;
 	}
-	
+
 	public void setEpisode(boolean episode) {
 		this.episode = episode;
 	}
@@ -1450,10 +1478,32 @@ public class XJC2Mojo extends AbstractMojo {
 	protected Collection<File> getArtifactFiles(final Artifact[] artifacts,
 			boolean resolveDependencies) throws MojoExecutionException {
 		final Set<File> files = new HashSet<File>();
+		final Set<org.apache.maven.artifact.Artifact> projectDependencies = getProject()
+				.getDependencyArtifacts();
 		if (artifacts != null) {
 			for (int i = 0; i < artifacts.length; i++) {
-				org.apache.maven.artifact.Artifact artifact = artifacts[i]
-						.toArtifact(getArtifactFactory());
+				// org.apache.maven.artifact.Artifact artifact = artifacts[i]
+				// .toArtifact(getArtifactFactory());
+				org.apache.maven.artifact.Artifact artifact = null;
+				if (artifacts[i].getVersion() != null
+						|| projectDependencies == null) {
+					// use version information given by the user
+					artifact = artifacts[i].toArtifact(getArtifactFactory());
+				} else {
+					// try to resolve missing version information from the
+					// dependencies
+					Artifact withVersion = new Artifact();
+					withVersion.setGroupId(artifacts[i].getGroupId());
+					withVersion.setArtifactId(artifacts[i].getArtifactId());
+					withVersion.setVersion(getVersionFromDependencies(
+							artifacts[i], projectDependencies));
+					getLog()
+							.info(
+									"No version specified for plugin/episode-artifact. "
+											+ "Resolving version from dependencies yields "
+											+ withVersion.toString());
+					artifact = withVersion.toArtifact(getArtifactFactory());
+				}
 				try {
 					getArtifactResolver().resolve(artifact,
 							getProject().getRemoteArtifactRepositories(),
@@ -1465,11 +1515,11 @@ public class XJC2Mojo extends AbstractMojo {
 								.iterator(); iterator.hasNext();) {
 							org.apache.maven.artifact.Artifact artifactDependency = (org.apache.maven.artifact.Artifact) iterator
 									.next();
-//							getArtifactResolver().resolve(
-//									artifactDependency,
-//									getProject()
-//											.getRemoteArtifactRepositories(),
-//									localRepository);
+							// getArtifactResolver().resolve(
+							// artifactDependency,
+							// getProject()
+							// .getRemoteArtifactRepositories(),
+							// localRepository);
 
 							files.add(artifactDependency.getFile());
 						}

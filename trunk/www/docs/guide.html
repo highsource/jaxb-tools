@@ -98,7 +98,7 @@
 			<dt><code>schemaLanguage</code></dt>
 			<dd>Type of input schema language. One of: <code>DTD</code>, <code>XMLSCHEMA</code>, <code>RELAXNG</code>, <code>RELAXNG_COMPACT</code>, <code>WSDL</code>, <code>AUTODETECT</code>. If unspecified, it is assumed AUTODETECT.</dd>
 		</dl>
-		<p>Below is an example of a non-standard configuration directory layout configuration:</p>
+		<p>Below is an example of a non-standard directory layout configuration:</p>
 		<pre><code>&lt;configuration>
 	&lt;!-- Changes the default schema directory -->
 	&lt;schemaDirectory>src/main/schema&lt;/schemaDirectory>
@@ -117,13 +117,27 @@
 	&lt;/bindingExcludes>			
 &lt;/configuration></code></pre>
 
-		<p>If you want to compile DTD, change the <code>schemaLanguage</code> to <code>dtd</code> and set the appropriate <code>schemaIncludes</code>:
+		<p>If you want to compile DTD, change the <code>schemaLanguage</code> to <code>DTD</code> and set the appropriate <code>schemaIncludes</code>:
 		<pre><code>&lt;configuration>
 	&lt;schemaLanguage>DTD&lt;/schemaLanguage>
 	&lt;schemaIncludes>
 			&lt;include>*.dtd&lt;/include>
 	&lt;/schemaIncludes>
 &lt;/configuration></code></pre>		
+			
+		<h4>Controlling the output</h4>
+		<dl>
+			<dt><code>generateDirectory</code></dt>
+			<dd>Target directory for the generated code, <code>target/generated-sources/xjc</code> by default.</dd>
+			<dt><code>writeCode</code></dt>
+			<dd>If <code>false</code>, the plugin will not write the generated code to disk, <code>true</code> by default.</dd>
+			<dt><code>readOnly</code></dt>
+			<dd>If <code>true</code>, the generated Java source files are set as read-only (xjc's <code>-readOnly</code> option). Default is <code>false</code>.</dd>
+			<dt><code>removeOldOutput</code></dt>
+			<dd>If <code>true</code> (default), the <code>generateDirectory</code> will be deleted before the XJC binding compiler recompiles the source files.</dd>
+			<dt><code>forceRegenerate</code></dt>
+			<dd>If <code>true</code>, no up-to-date check is performed and the XJC always re-generates the sources. Otherwise schemas will only be recompiled if anything has changed (this is the default behavior).</dd>
+		</dl>
 		
 		<h3>Using a custom JAXB2 plugins</h3>
 		<pre><code>&lt;plugin>

@@ -81,7 +81,7 @@
 		<p>The plugin has a large number of configuration options. Please see 
 			the <a href="/nonav/maven-jaxb2-plugin-project/maven-jaxb2-plugin/generate-mojo.html">plugin documentation</a> for a complete reference.</p>
 		<h3>Basic configuration options</h3>
-		<h4>Specifying schemas to compile</h4>
+		<h4>Specifying schemas and bindings to compile</h4>
 		<dl>
 			<dt><code>schemaDirectory</code></dt>
 			<dd>Specifies the schema directory, <code>src/main/resources</code> by default.</dd>
@@ -89,10 +89,17 @@
 			<dd>Specifies file patterns to include as schemas. By default all <code>*.xsd</code> files will be included.</dd>
 			<dt><code>schemaExcludes</code></dt>
 			<dd>Specifies file patterns of schemas to exclude. By default, nothing is excluded.</dd>
+			<dt><code>bindingDirectory</code></dt>
+			<dd>Specifies the binding directory, defaults to the schema directory.</dd>
+			<dt><code>bindingIncludes</code></dt>
+			<dd>Specifies file patterns to include as bindings. By default all <code>*.xjb</code> files will be included.</dd>
+			<dt><code>bindingExcludes</code></dt>
+			<dd>Specifies file patterns of bindings to exclude. By default, nothing is excluded.</dd>
+			<dt><code>schemaLanguage</code></dt>
+			<dd>Type of input schema language. One of: <code>DTD</code>, <code>XMLSCHEMA</code>, <code>RELAXNG</code>, <code>RELAXNG_COMPACT</code>, <code>WSDL</code>, <code>AUTODETECT</code>. If unspecified, it is assumed AUTODETECT.</dd>
 		</dl>
-		<p>Example:</p>
-		<pre><code>
-&lt;configuration>
+		<p>Below is an example of a non-standard configuration directory layout configuration:</p>
+		<pre><code>&lt;configuration>
 	&lt;!-- Changes the default schema directory -->
 	&lt;schemaDirectory>src/main/schema&lt;/schemaDirectory>
 	&lt;schemaIncludes>
@@ -101,8 +108,22 @@
 	&lt;schemaExcludes>
 		&lt;exclude>one/two/*.xsd&lt;/exclude>
 	&lt;/schemaExcludes>			
-&lt;/configuration>
-		</code></pre>
+	&lt;bindingDirectory>src/main/binding&lt;/bindingDirectory>
+	&lt;bindingIncludes>
+		&lt;include>one/*/*.xjb&lt;/include>
+	&lt;/bindingIncludes>			
+	&lt;bindingExcludes>
+		&lt;exclude>one/two/*.xjb&lt;/exclude>
+	&lt;/bindingExcludes>			
+&lt;/configuration></code></pre>
+
+		<p>If you want to compile DTD, change the <code>schemaLanguage</code> to <code>dtd</code> and set the appropriate <code>schemaIncludes</code>:
+		<pre><code>&lt;configuration>
+	&lt;schemaLanguage>DTD&lt;/schemaLanguage>
+	&lt;schemaIncludes>
+			&lt;include>*.dtd&lt;/include>
+	&lt;/schemaIncludes>
+&lt;/configuration></code></pre>		
 		
 		<h3>Using a custom JAXB2 plugins</h3>
 		<pre><code>&lt;plugin>
@@ -119,24 +140,6 @@
 		&lt;args>
 			&lt;arg>-XtoString&lt;/arg>
 		&lt;/args>
-	&lt;/configuration>
-&lt;/plugin></code></pre>
-		<h3>Compiling DTDs</h3>
-		<pre><code>&lt;plugin>
-	&lt;groupId>org.jvnet.jaxb2.maven2&lt;/groupId>
-	&lt;artifactId>maven-jaxb2-plugin&lt;/artifactId>
-	&lt;executions>
-		&lt;execution>
-			&lt;goals>
-				&lt;goal>generate&lt;/goal>
-			&lt;/goals>
-		&lt;/execution>
-	&lt;/executions>
-	&lt;configuration>
-		&lt;schemaLanguage>DTD&lt;/schemaLanguage>
-		&lt;schemaIncludes>
-				&lt;value>*.dtd&lt;/value>
-		&lt;/schemaIncludes>
 	&lt;/configuration>
 &lt;/plugin></code></pre>
 		<h1>Testing infrastructure</h1>

@@ -190,6 +190,27 @@ It is automatically set to <code>true</code> when Maven is run in debug mode (mv
 &lt;/configuration></code></pre>
 			
 		<p>See the <a href="TODO">sample JAXB2 plugins project</a> for example.</p>
-
+			
+		<h4>Using catalogs</h4>
+		<p>Sometimes a schema may refer to another schema document without indicating where the schema file can be found:</p>
+<pre><code>&lt;xs:import namespace="http://www.w3.org/1999/xlink" /></code></pre>
+		<p>Another case is when the provided schema location is somewhere in the internet but you have you local copy of that schema
+which you'd like to use for compilation.</p>
+		<p>Both cases are resolved using the catalog mechanism. See <a href="https://jaxb.dev.java.net/guide/Fixing_broken_references_in_schema.html">this section</a> JAXB guide.</p>
+		<p>Maven2 JAXB plugin allows you to provide a catalog file using the <code>catalog</code> configuration parameter.</p>
+		<dl>
+			<dt><code>catalog</code></dt>
+			<dd>Specify the catalog file to resolve external entity references (XJC's <code>-catalog</code> option).</dd>
+		</dl>
+		<p>Example:</p>
+<pre><code>&lt;configuration>
+	&lt;catalog>src/main/resources/catalog.cat&lt;/catalog>
+&lt;/configuration></code></pre>
+		<p>The catalog file looks as follows:</p>
+<pre><code>PUBLIC "http://example.org/A" "others/schema_a.xsd"</code></pre>
+		<p>The URI <code>http://example.org/A</code> is the namespace of the schema to be resolved, <code>others/schema_a.xsd</code> is the local schema location (relative to the <code>schemaDirectory</code>).</p>
+			
+		<p>See the <a href="TODO">sample catalog project</a> for example.</p>
+			
 	</body>
 </html>

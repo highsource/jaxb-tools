@@ -124,7 +124,7 @@
 &lt;/configuration></code></pre>		
 		<p>See the <a href="TODO">sample DTD project</a> for example.</p>
 			
-		<h4>Controlling the output</h4>
+		<h4><a name="ControllingTheOutput"/>Controlling the output</h4>
 		<dl>
 			<dt><code>generateDirectory</code></dt>
 			<dd>Target directory for the generated code, <code>target/generated-sources/xjc</code> by default.</dd>
@@ -140,7 +140,7 @@
 			<dd>If <code>true</code>, no up-to-date check is performed and the XJC always re-generates the sources. Otherwise schemas will only be recompiled if anything has changed (this is the default behavior).</dd>
 		</dl>
 			
-		<h4>Controlling the extension and validation modes</h4>
+		<h4><a name="ControllingExtensionAndValidationModes"/>Controlling the extension and validation modes</h4>
 		<dl>
 			<dt><code>extension</code></dt>
 			<dd>If <code>true</code>, the XJC binding compiler will run in the extension mode (XJC's <code>-extension</code> option).
@@ -151,7 +151,7 @@ Please note that you must enable the extension mode if you use vendor extensions
 XJC will be run with <code>-nv</code>, this disables strict validation of schemas.</dd>
 		</dl>
 			
-		<h4>Setting the debug options</h4>
+		<h4><a name="Debug"/>Setting the debug options</h4>
 		<dl>
 			<dt><code>debug</code></dt>
 			<dd>If <code>true</code>, the XJC compiler is set to debug mode (XJC's <code>-debug</code> option) and the <code>com.sun.tools.xjc.Options.findServices</code> property is set, to print any plugin instantiation messages.<br/>
@@ -161,7 +161,7 @@ It is automatically set to <code>true</code> when Maven is run in debug mode (mv
 It is automatically set to <code>true</code> when Maven is run in debug mode (mvn's <code>-X</code> option).</dd>
 		</dl>
 			
-		<h4>Using custom JAXB2 plugins</h4>
+		<h4><a name="JAXB2Plugins"/>Using custom JAXB2 plugins</h4>
 		<dl>
 			<dt><code>plugins/plugin</code></dt>
 			<dd>Configures artifacts of the custom JAXB2 plugins you want to use.</dd>
@@ -188,7 +188,7 @@ It is automatically set to <code>true</code> when Maven is run in debug mode (mv
 			
 		<p>See the <a href="TODO">sample JAXB2 plugins project</a> for example.</p>
 			
-		<h4>Using catalogs</h4>
+		<h4><a name="Catalogs"/>Using catalogs</h4>
 		<p>Sometimes a schema may refer to another schema document without indicating where the schema file can be found:</p>
 <pre><code>&lt;xs:import namespace="http://www.w3.org/1999/xlink" /></code></pre>
 		<p>Another case is when the provided schema location is somewhere in the internet but you have you local copy of that schema
@@ -209,7 +209,7 @@ which you'd like to use for compilation.</p>
 			
 		<p>See the <a href="TODO">sample catalog project</a> for example.</p>
 		
-		<h4>Separate schema compilation</h4>
+		<h4><a name="SeparateCompilation"/>Separate schema compilation</h4>
 		
 		<p>If you're compiling large sets of schemas (like the <a href="https://ogc.dev.java.net">OGC Schemas</a>) you may probably want
 to compile the schemas separately. For instance, if you have two schemas <code>A</code> and <code>B</code> (where <code>B</code> imports

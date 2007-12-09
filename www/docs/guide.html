@@ -75,7 +75,7 @@
 		&lt;/plugin>
 	&lt;/plugins>
 &lt;/build></code></pre>
-		<p>See the <a href="http://download.java.net/maven/2/org/jvnet/jaxb2/maven2/maven-jaxb2-plugin-samples-po/0.4.M1/maven-jaxb2-plugin-samples-po-0.4.M1-maven-src.zip">sample project</a>
+		<p>See the <a href="http://download.java.net/maven/2/org/jvnet/jaxb2/maven2/maven-jaxb2-plugin-samples-po/0.4.M1/maven-jaxb2-plugin-samples-po-0.4.M1-maven-src.zip">sample PO project</a>
 			for example.</p>
 		<h2>Configuring the plugin</h2>
 		<p>The plugin has a large number of configuration options. Please see 
@@ -124,15 +124,19 @@
 		&lt;include>*.dtd&lt;/include>
 	&lt;/schemaIncludes>
 &lt;/configuration></code></pre>		
+		<p>See the <a href="TODO">sample DTD project</a>
+			for example.</p>
 			
 		<h4>Controlling the output</h4>
 		<dl>
 			<dt><code>generateDirectory</code></dt>
 			<dd>Target directory for the generated code, <code>target/generated-sources/xjc</code> by default.</dd>
+			<dt><code>generatePackage</code></dt>
+			<dd> The generated classes will all be placed under this Java package (XJC's <code>-p</code> option), unless otherwise specified in the schemas. If left unspecified, the package will be derived from the schemas only.</dd>
 			<dt><code>writeCode</code></dt>
 			<dd>If <code>false</code>, the plugin will not write the generated code to disk, <code>true</code> by default.</dd>
 			<dt><code>readOnly</code></dt>
-			<dd>If <code>true</code>, the generated Java source files are set as read-only (xjc's <code>-readOnly</code> option). Default is <code>false</code>.</dd>
+			<dd>If <code>true</code>, the generated Java source files are set as read-only (XJC's <code>-readOnly</code> option). Default is <code>false</code>.</dd>
 			<dt><code>removeOldOutput</code></dt>
 			<dd>If <code>true</code> (default), the <code>generateDirectory</code> will be deleted before the XJC binding compiler recompiles the source files.</dd>
 			<dt><code>forceRegenerate</code></dt>
@@ -142,7 +146,7 @@
 		<h4>Controlling the extension and validation modes</h4>
 		<dl>
 			<dt><code>extension</code></dt>
-			<dd>If <code>true</code>, the XJC binding compiler will run in the extension mode (xjc's <code>-extension</code> option).
+			<dd>If <code>true</code>, the XJC binding compiler will run in the extension mode (XJC's <code>-extension</code> option).
 Otherwise, it will run in the strict conformance mode (this is the default).<br/>
 Please note that you must enable the extension mode if you use vendor extensions in your bindings.</dd>
 			<dt><code>strict</code></dt>
@@ -153,66 +157,39 @@ XJC will be run with <code>-nv</code>, this disables strict validation of schema
 		<h4>Setting the debug options</h4>
 		<dl>
 			<dt><code>debug</code></dt>
-			<dd>If <code>true</code>, the XJC compiler is set to debug mode (xjc's <code>-debug</code> option) and the <code>com.sun.tools.xjc.Options.findServices</code> property is set, to print any plugin instantiation messages.<br/>
+			<dd>If <code>true</code>, the XJC compiler is set to debug mode (XJC's <code>-debug</code> option) and the <code>com.sun.tools.xjc.Options.findServices</code> property is set, to print any plugin instantiation messages.<br/>
 It is automatically set to <code>true</code> when Maven is run in debug mode (mvn's <code>-X</code> option).</dd>
 			<dt><code>verbose</code></dt>
-			<dd> If <code>true</code>, the plugin and the XJC compiler are both set to verbose mode (xjc's <code>-verbose</code> option).
+			<dd> If <code>true</code>, the plugin and the XJC compiler are both set to verbose mode (XJC's <code>-verbose</code> option).
 It is automatically set to <code>true</code> when Maven is run in debug mode (mvn's <code>-X</code> option).</dd>
 		</dl>
-		
-		<h3>Using a custom JAXB2 plugins</h3>
-		<pre><code>&lt;plugin>
-	&lt;groupId>org.jvnet.jaxb2.maven2&lt;/groupId>
-	&lt;artifactId>maven-jaxb2-plugin&lt;/artifactId>
-	&lt;executions>
-		&lt;execution>
-			&lt;goals>
-				&lt;goal>generate&lt;/goal>
-			&lt;/goals>
-		&lt;/execution>
-	&lt;/executions>
-	&lt;configuration>
-		&lt;args>
-			&lt;arg>-XtoString&lt;/arg>
-		&lt;/args>
-	&lt;/configuration>
-&lt;/plugin></code></pre>
-		<h1>Testing infrastructure</h1>
-		<p>This projects also provides a testing infrastructure
-			that allows executing the JAXB2 Maven2 plugin from your own Java code, for instance
-			in a frame of a JUnit-based test case. Please see the <a href="https://maven-jaxb2-plugin.dev.java.net/source/browse/maven-jaxb2-plugin/trunk/testing/"><code>testing</code></a> module for details.</p>
-		<p>This module provides a <code>org.jvnet.jaxb2.maven2.test.RunXJC2Mojo</code>
-			class which configures and executes the JAXB2 Maven2 plugin
-			from within the test case. Subclasses may override methods
-			of the base class to add some configuration parameters,
-			redefine schema location and so on. Below is a typical
-			test case that tests code generation with the dummy <code>Xfoo</code>
-			JAXB plugin turned on:</p>
-		<pre><code>package org.jvnet.jaxb2.maven2.test.tests;
+			
+		<h4>Using custom JAXB2 plugins</h4>
+		<dl>
+			<dt><code>plugins/plugin</code></dt>
+			<dd>Configures artifacts of the custom JAXB2 plugins you want to use.</dd>
+			<dt><code>args/arg</code></dt>
+			<dd>A list of extra XJC's command-line arguments (items must include the dash <code>"-"</code>). Use this argument to enable the JAXB2 plugin you want to use.</dd>
+		</dl>
+		<p>Example:</p>
+<pre><code>&lt;configuration>
+	&lt;extension>true&lt;/extension>
+	&lt;args>
+		&lt;arg>-XtoString&lt;/arg>
+		&lt;arg>-Xequals&lt;/arg>
+		&lt;arg>-XhashCode&lt;/arg>
+		&lt;arg>-Xcopyable&lt;/arg>
+	&lt;/args>
+	&lt;plugins>
+		&lt;plugin>
+			&lt;groupId>org.jvnet.jaxb2_commons&lt;/groupId>
+			&lt;artifactId>basic&lt;/artifactId>
+			&lt;version>0.2.GA&lt;/version>
+		&lt;/plugin>
+	&lt;/plugins>
+&lt;/configuration></code></pre>
+			
+		<p>See the <a href="TODO">sample JAXB2 plugins project</a> for example.</p>
 
-import java.io.File;
-import java.util.Collections;
-import java.util.List;
-
-import org.jvnet.jaxb2.maven2.test.RunXJC2Mojo;
-
-public class FooPluginTest extends RunXJC2Mojo {
-
-  @Override
-  public File getSchemaDirectory() {
-    return new File(getBaseDir(), "src/test/resources");
-  }
-
-  @Override
-  public List&lt;String> getArgs() {
-    return Collections.singletonList("-Xfoo");
-  }
-
-}</code></pre>
-		<p>Testing infrastructure is especially helpful when you develop
-			your own JAXB plugins. You often need a possibility to debug
-			the JAXB plugin that you write, trace it in the debugger and
-			so on. Ability to execute the code generation from a test case
-			is simply invaluable for this kind of projects.</p>
 	</body>
 </html>

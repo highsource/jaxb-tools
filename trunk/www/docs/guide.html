@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 	<head>
-		<title>JAXB2 Maven2 Plugin -Reference Guide</title>
+		<title>Maven2 JAXB2 Plugin Reference Guide</title>
 	</head>
 	<body>
 		<h1>About the plugin</h1>
@@ -208,6 +208,74 @@ which you'd like to use for compilation.</p>
 		<p>The URI <code>http://example.org/A</code> is the namespace of the schema to be resolved, <code>others/schema_a.xsd</code> is the local schema location (relative to the <code>schemaDirectory</code>).</p>
 			
 		<p>See the <a href="TODO">sample catalog project</a> for example.</p>
-			
+		
+		<h4>Separate schema compilation</h4>
+		
+		<p>If you're compiling large sets of schemas (like the <a href="https://ogc.dev.java.net">OGC Schemas</a>) you may probably want
+to compile the schemas separately. For instance, if you have two schemas <code>A</code> and <code>B</code> (where <code>B</code> imports
+<code>A</code>), you may want to compile them into <i>two</i> artifacts <code>A.jar</code> and <code>B.jar</code> such that:</p>
+		<ul>
+			<li>Classes relevant to <code>A</code> reside in the <code>A.jar</code> artifact.</li>
+			<li>Classes relevant to <code>B</code> (and <i>only</i> those classes) reside in the <code>B.jar</code> artifact.</li>
+			<li>The <code>A.jar</code> artifact is the dependency of the <code>B.jar</code> artifact.</li>
+		</ul>
+		
+		<p>This task is called the <i>separate</i> or <i>episodic</i> compilation. Kohsuke described it in <a href="http://weblogs.java.net/blog/kohsuke/archive/2006/09/separate_compil.html">his blog</a>.</p>
+		<p>Maven2 JAXB2 plugin supports episodic compilation via the following configuration parameters:</p>
+		
+		<dl>
+			<dt><code>episode</code></dt>
+			<dd>If <code>true</code>, the episode file (describing mapping of elements and types to classes for the compiled schema) will be generated.</dd>
+			<dt><code>episodeFile</code></dt>
+			<dd>Target location of the episode file. By default it is <code>target/generated-sources/xjc/META-INF/sun-jaxb.episode</code> so that the episode file
+			will appear as <code>META-INF/sun-jaxb.episode</code> in the JAR - just as XJC wants it.</dd>
+			<dt>episodes/episode</dt>
+			<dd>If you want to use existing artifacts as episodes for separate compilation, configure them as <code>episodes/episode</code> elements.
+It is assumed that episode artifacts contain an appropriate <code>META-INF/sun-jaxb.episode</code> resource.</dd>
+		</dl>
+		
+		<p>For example, consider that we've built the <code>A</code> schema as <code>com.acme.foo:a-schema:jar:1.0</code> artifact
+and want to use it as an episode when we compile the <code>B</code> schema. Here's how we configure it:</p>
+<pre><code>&lt;project ...>
+	...
+	&lt;dependencies>
+		...
+		&lt;dependency>
+			&lt;groupId>com.acme.foo&lt;/groupId>
+			&lt;artifactId>a-schema&lt;/artifactId>
+			&lt;version>1.0&lt;/version>
+		&lt;/dependency>
+		...
+	&lt;/dependencies>
+	&lt;build>
+		&lt;defaultGoal>test&lt;/defaultGoal>
+		&lt;plugins>
+			&lt;plugin>
+				&lt;groupId>org.jvnet.jaxb2.maven2&lt;/groupId>
+				&lt;artifactId>maven-jaxb2-plugin&lt;/artifactId>
+				&lt;configuration>
+					&lt;extension>true&lt;/extension>
+					&lt;episodes>
+						&lt;episode>
+							&lt;groupId>com.acme.foo&lt;/groupId>
+							&lt;artifactId>a-schema&lt;/artifactId>
+							&lt;!-- Version is not required if the artifact is
+								configured as dependency -->
+						&lt;/episode>
+					&lt;/episodes>
+				&lt;/configuration>
+			&lt;/plugin>
+		&lt;/plugins>
+	&lt;/build>
+	...
+&lt;/project>
+	
+</code></pre>
+		
+		<p>In this case JAXB will not generate classes for the imported <code>A</code> schema. The <code>B.jar</code> artifact
+will only contain classes relevant to the <code>B</code> schema.</p>
+		<p>Note that JAXB still needs to access BOTH <code>A</code> and <code>B</code> schemas during the compilation. You may use
+catalogs to provide alternative locations of the imported schemas.</p>
+		
 	</body>
 </html>

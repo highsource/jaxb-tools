@@ -20,24 +20,24 @@
 	&lt;repository>
 		&lt;id>maven2-repository.dev.java.net&lt;/id>
 		&lt;name>Java.net Maven 2 Repository&lt;/name>
-		&lt;url>https://maven2-repository.dev.java.net/nonav/repository&lt;/url>
+		&lt;url>http://download.java.net/maven/2&lt;/url>
 	&lt;/repository>
 	&lt;repository>
 		&lt;id>maven-repository.dev.java.net&lt;/id>
 		&lt;name>Java.net Maven 1 Repository (legacy)&lt;/name>
-		&lt;url>https://maven-repository.dev.java.net/nonav/repository&lt;/url>
+		&lt;url>http://download.java.net/maven/1&lt;/url>
 		&lt;layout>legacy&lt;/layout>
 	&lt;/repository>
 &lt;/repositories>
 &lt;pluginRepositories>
 	&lt;pluginRepository>
 		&lt;id>maven2-repository.dev.java.net&lt;/id>
-		&lt;url>https://maven2-repository.dev.java.net/nonav/repository&lt;/url>
+		&lt;url>http://download.java.net/maven/2&lt;/url>
 	&lt;/pluginRepository>
 	&lt;pluginRepository>
 		&lt;id>maven-repository.dev.java.net&lt;/id>
 		&lt;name>Java.net Maven 1 Repository (legacy)&lt;/name>
-		&lt;url>https://maven-repository.dev.java.net/nonav/repository&lt;/url>
+		&lt;url>http://download.java.net/maven/1&lt;/url>
 		&lt;layout>legacy&lt;/layout>
 	&lt;/pluginRepository>
 &lt;/pluginRepositories></code></pre>
@@ -75,13 +75,36 @@
 		&lt;/plugin>
 	&lt;/plugins>
 &lt;/build></code></pre>
-		<p>See the <a href="/repository/org/jvnet/jaxb2/maven2/maven-jaxb2-plugin-sample/1.0/maven-jaxb2-plugin-sample-1.0-src.zip">sample project</a>
-			for the practical example.</p>
+		<p>See the <a href="http://download.java.net/maven/2/org/jvnet/jaxb2/maven2/maven-jaxb2-plugin-samples-po/0.4.M1/maven-jaxb2-plugin-samples-po-0.4.M1-maven-src.zip">sample project</a>
+			for example.</p>
 		<h2>Configuring the plugin</h2>
 		<p>The plugin has a large number of configuration options. Please see 
-			the <a href="/nonav/maven-jaxb2-plugin-project/maven-jaxb2-plugin/plugin-info.html">plugin documentation</a> for a complete reference.
-			Below are just a couple of configuration examples.</p>
-		<h3>Using a custom JAXB2 plugin:</h3>
+			the <a href="/nonav/maven-jaxb2-plugin-project/maven-jaxb2-plugin/generate-mojo.html">plugin documentation</a> for a complete reference.</p>
+		<h3>Basic configuration options</h3>
+		<h4>Specifying schemas to compile</h4>
+		<dl>
+			<dt><code>schemaDirectory</code></dt>
+			<dd>Specifies the schema directory, <code>src/main/resources</code> by default.</dd>
+			<dt><code>schemaIncludes</code></dt>
+			<dd>Specifies file patterns to include as schemas. By default all <code>*.xsd</code> files will be included.</dd>
+			<dt><code>schemaExcludes</code></dt>
+			<dd>Specifies file patterns of schemas to exclude. By default, nothing is excluded.</dd>
+		</dl>
+		<p>Example:</p>
+		<pre><code>
+&lt;configuration>
+	&lt;!-- Changes the default schema directory -->
+	&lt;schemaDirectory>src/main/schema&lt;/schemaDirectory>
+	&lt;schemaIncludes>
+		&lt;include>one/*/*.xsd&lt;/include>
+	&lt;/schemaIncludes>			
+	&lt;schemaExcludes>
+		&lt;exclude>one/two/*.xsd&lt;/exclude>
+	&lt;/schemaExcludes>			
+&lt;/configuration>
+		</code></pre>
+		
+		<h3>Using a custom JAXB2 plugins</h3>
 		<pre><code>&lt;plugin>
 	&lt;groupId>org.jvnet.jaxb2.maven2&lt;/groupId>
 	&lt;artifactId>maven-jaxb2-plugin&lt;/artifactId>

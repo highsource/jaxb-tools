@@ -1,1 +1,1 @@
-call mvn -DperformRelease=true clean deploy
+call mvn -DperformRelease=true clean install

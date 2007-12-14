@@ -1,1 +1,1 @@
-call mvn --no-plugin-updates -DperformRelease=true clean install
+call mvn --no-plugin-updates -cpu -DperformRelease=true clean install

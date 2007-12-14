@@ -8,39 +8,17 @@
 	<version>0.4.M3</version>
 	<name>Maven JAXB 2.x Plugin Project</name>
 	<inceptionYear>2006</inceptionYear>
-	<url>
-		https://maven-jaxb2-plugin.dev.java.net/nonav/maven-jaxb2-plugin-project</url>
-	<description>Maven-2 plugin that uses JAXB 2.x XJC compiler to generate java sources
-		from schemas.</description>
-	<profiles>
-		<profile>
-			<id>release</id>
-			<activation>
-				<property>
-					<name>performRelease</name>
-				</property>
-			</activation>
-			<modules>
-				<!--module>samples</module-->
-			</modules>
-		</profile>
-	</profiles>
-	<modules>
-		<module>plugin</module>
-		<module>testing</module>
-		<module>tests</module>
-	</modules>
-	<organization>
-		<name>java.net</name>
-		<url>http://www.java.net/</url>
-	</organization>
+	<url>https://maven-jaxb2-plugin.dev.java.net/nonav/maven-jaxb2-plugin-project</url>
+	<description>Maven2 plugin for JAXB 2.x XJC compiler to generate java sources from schemas.</description>
+
 	<licenses>
 		<license>
-			<name>Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+
 	<developers>
 		<developer>
 			<id>ankostis</id>
@@ -59,6 +37,45 @@
 			</roles>
 		</developer>
 	</developers>
+
+	<distributionManagement>
+		<repository>
+			<id>dev.java.net-releases</id>
+			<url>${dev.java.net-releases.deploy.url}</url>
+		</repository>
+		<snapshotRepository>
+			<id>dev.java.net-snapshots</id>
+			<url>${dev.java.net-snapshots.deploy.url}</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+
+	<scm>
+		<connection>scm:svn:https://svn.dev.java.net/svn/maven-jaxb2-plugin/trunk</connection>
+		<developerConnection>scm:svn:https://svn.dev.java.net/svn/maven-jaxb2-plugin/trunk</developerConnection>
+		<url>https://maven-jaxb2-plugin.dev.java.net/source/browse/maven-jaxb2-plugin/trunk/</url>
+	</scm>
+
+	<modules>
+		<module>plugin</module>
+		<module>testing</module>
+		<module>tests</module>
+	</modules>
+
+	<profiles>
+		<profile>
+			<id>samples</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+				</property>
+			</activation>
+			<modules>
+				<module>samples</module>
+			</modules>
+		</profile>
+	</profiles>
+
 	<repositories>
 		<repository>
 			<id>maven2-repository.dev.java.net</id>
@@ -81,6 +98,7 @@
 			</snapshots>
 		</repository>
 	</repositories>
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>maven2-repository.dev.java.net</id>
@@ -101,6 +119,7 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
+
 	<dependencies>
 		<!-- JUnit -->
 		<dependency>
@@ -109,6 +128,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
 	<dependencyManagement>
 		<dependencies>
 
@@ -164,7 +184,7 @@
 			<dependency>
 				<groupId>commons-logging</groupId>
 				<artifactId>commons-logging</artifactId>
-				<version>1.1</version>
+				<version>1.1.1</version>
 				<exclusions>
 					<exclusion>
 						<groupId>log4j</groupId>
@@ -192,16 +212,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	<distributionManagement>
-		<repository>
-			<id>dev.java.net-releases</id>
-			<url>${dev.java.net-releases.deploy.url}</url>
-		</repository>
-		<snapshotRepository>
-			<id>dev.java.net-snapshots</id>
-			<url>${dev.java.net-snapshots.deploy.url}</url>
-		</snapshotRepository>
-	</distributionManagement>
+
 	<build>
 		<pluginManagement>
 			<plugins>

@@ -28,7 +28,7 @@ public class JAXBGenerateTestSuite
         TestSuite suite = new TestSuite();
 
         // Test all methods
-        suite.addTestSuite(JAXBGenerateTest.class);
+        //	suite.addTestSuite(JAXBGenerateTest.class);
 
         return suite;
     }

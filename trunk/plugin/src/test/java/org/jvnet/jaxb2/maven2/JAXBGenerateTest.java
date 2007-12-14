@@ -61,7 +61,7 @@ public class JAXBGenerateTest extends AbstractMojoTestCase {
 		
         final ArtifactRepository localRepository = new DefaultArtifactRepository( "local", 
         		
-        		new File(getBaseDir(), "target/test-repository").toURL().toString()        		, new DefaultRepositoryLayout());
+        		new File(getBaseDir(), "target/test-repository").toURI().toURL().toString()        		, new DefaultRepositoryLayout());
 		
 		
 		final MavenProject mavenProject = mavenProjectBuilder.build(pom, localRepository, null);
@@ -79,35 +79,6 @@ public class JAXBGenerateTest extends AbstractMojoTestCase {
 		generator.setRemoveOldOutput(false);
 		
 		generator.execute();
-
-
-		
-
-		// MavenProjectBuilder
-		// XJC2Mojo generator = new XJC2Mojo();
-		// String userDir = System.getProperty("user.dir").toString();
-		//
-		// generator.setArtifactFactory(new DefaultArtifactFactory());
-		// generator.setSchemaIncludes(new String[] { "*.xsd" });
-		// generator.setBindingIncludes(new String[] { "*.xjb" });
-		// generator.setGenerateDirectory(new File(getBaseDir(),
-		// "target/test/generated-sources"));
-		// generator.setVerbose(true);
-		// generator.setGeneratePackage("unittest");
-		// generator.setRemoveOldOutput(false);
-		//
-		// final Artifact artifact = new Artifact();
-		// artifact.setGroupId("org.jvnet.jaxb2_commons");
-		// artifact.setArtifactId("basic");
-		// artifact.setVersion("0.2.RC1");
-		// generator.setPlugins(new Artifact[] { artifact });
-		//		
-
-		// XJC2Mojo generator = new XJC2Mojo();
-		// generator = (XJC2Mojo) lookupMojo("generate", pom);
-
-		// configureMojo(generator, "maven-jaxb2-plugin", pom);
-
 	}
 
 	public static void main(String[] args) throws Exception {

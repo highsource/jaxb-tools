@@ -1462,7 +1462,7 @@ public class XJC2Mojo extends AbstractMojo {
 		final Collection<URL> pluginURLs = new HashSet<URL>();
 		for (File artifactFile : getArtifactFiles(getPlugins(), true)) {
 			try {
-				pluginURLs.add(artifactFile.toURL());
+				pluginURLs.add(artifactFile.toURI().toURL());
 			} catch (MalformedURLException ex) {
 				throw new MojoExecutionException(
 						"Could not retrieve URL for a file.", ex);
@@ -1509,7 +1509,7 @@ public class XJC2Mojo extends AbstractMojo {
 							getProject().getRemoteArtifactRepositories(),
 							localRepository);
 					files.add(artifact.getFile());
-					if (resolveDependencies) {
+					if (resolveDependencies && !artifact.isOptional()) {
 						final Set<org.apache.maven.artifact.Artifact> artifactDependencies = resolveArtifactDependencies(artifact);
 						for (Iterator iterator = artifactDependencies
 								.iterator(); iterator.hasNext();) {

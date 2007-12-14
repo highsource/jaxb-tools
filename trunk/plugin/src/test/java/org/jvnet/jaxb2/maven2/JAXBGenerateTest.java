@@ -24,7 +24,7 @@ import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectBuilder;
 
-public class JAXBGenerateTest extends AbstractMojoTestCase {
+public abstract class JAXBGenerateTest extends AbstractMojoTestCase {
 
 	static {
 		System.setProperty("basedir", getBaseDir().getAbsolutePath());
@@ -82,6 +82,6 @@ public class JAXBGenerateTest extends AbstractMojoTestCase {
 	}
 
 	public static void main(String[] args) throws Exception {
-		new JAXBGenerateTest().testExecute();
+		//	new JAXBGenerateTest().testExecute();
 	}
 }

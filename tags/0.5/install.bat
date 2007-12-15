@@ -1,0 +1,1 @@
+call mvn -X -DperformRelease=true clean install >std 2>err

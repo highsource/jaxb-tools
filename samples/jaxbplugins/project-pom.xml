@@ -3,15 +3,22 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jvnet.jaxb2.maven2</groupId>
-	<artifactId>maven-jaxb2-plugin-sample-po-maven</artifactId>
+	<artifactId>maven-jaxb2-plugin-sample-jaxbplugins-maven</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
-	<name>Maven JAXB 2.x Plugin Sample [po|maven]</name>
+	<name>Maven JAXB 2.x Plugin Sample [jaxbplugins|maven]</name>
 	<dependencies>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
 			<version>2.1.5</version>
+		</dependency>
+	</dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>org.jvnet.jaxb2_commons</groupId>
+			<artifactId>runtime</artifactId>
+			<version>0.2.GA</version>
 		</dependency>
 	</dependencies>
 	<repositories>
@@ -58,6 +65,21 @@
 						<goals>
 							<goal>generate</goal>
 						</goals>
+						<configuration>
+							<args>
+								<arg>-XtoString</arg>
+								<arg>-Xequals</arg>
+								<arg>-XhashCode</arg>
+								<arg>-Xcopyable</arg>
+							</args>
+							<plugins>
+								<plugin>
+									<groupId>org.jvnet.jaxb2_commons</groupId>
+									<artifactId>basic</artifactId>
+									<version>0.2.GA</version>
+								</plugin>
+							</plugins>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

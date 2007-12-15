@@ -10,10 +10,13 @@
 		<version>0.5-SNAPSHOT</version>
 	</parent>
 	<modules>
+		<module>catalog</module>
+		<module>dtd</module>
+		<module>episode</module>
+		<module>jaxbplugins</module>
 		<module>po</module>
 	</modules>
 	<build>
-		<defaultGoal>install</defaultGoal>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -59,7 +62,7 @@
 					<configuration>
 						<debug>true</debug>
 						<projectsDirectory>${basedir}/target/test-maven-assembly</projectsDirectory>
-						<localRepositoryPath>${basedir}/target/test-maven-repository</localRepositoryPath>
+						<!--localRepositoryPath>${basedir}/target/test-maven-repository</localRepositoryPath-->
 					</configuration>
 					<executions>
 						<execution>

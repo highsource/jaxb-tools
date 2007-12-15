@@ -1,0 +1,1 @@
+mvn -DperformRelease=true clean deploy >std 2>err

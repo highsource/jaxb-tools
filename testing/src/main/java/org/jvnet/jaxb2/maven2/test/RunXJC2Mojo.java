@@ -9,6 +9,7 @@ import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.maven.plugin.Mojo;
+import org.apache.maven.project.MavenProject;
 import org.jvnet.jaxb2.maven2.XJC2Mojo;
 import org.jvnet.jaxb2.maven2.XJC2Mojo;
 
@@ -76,6 +77,7 @@ public class RunXJC2Mojo extends TestCase {
   }
 
   protected void configureMojo(final XJC2Mojo mojo) {
+	mojo.setProject(new MavenProject());
     mojo.setSchemaDirectory(getSchemaDirectory());
     mojo.setGenerateDirectory(getGeneratedDirectory());
     mojo.setGeneratePackage(getGeneratePackage());

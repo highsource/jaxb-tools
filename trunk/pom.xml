@@ -9,7 +9,7 @@
 	<name>Maven JAXB 2.x Plugin Project</name>
 	<inceptionYear>2006</inceptionYear>
 	<url>https://maven-jaxb2-plugin.dev.java.net/nonav/maven-jaxb2-plugin-project</url>
-	<description>Maven2 plugin for JAXB 2.x XJC compiler to generate java sources from schemas.</description>
+	<description>Maven2 plugin for JAXB 2 XJC compiler to generate java sources from schemas.</description>
 
 	<licenses>
 		<license>
@@ -39,8 +39,13 @@
 	</developers>
 
 	<distributionManagement>
+		<!--site>
+			<id>maven-jaxb2-plugin-www</id>
+			<url>file:www-xxx</url>
+		</site-->
 		<repository>
-			<id>dev.java.net-releases</id>
+			<uniqueVersion>false</uniqueVersion>
+			<id>java.net-maven2-repository</id>
 			<url>${dev.java.net-releases.deploy.url}</url>
 		</repository>
 		<snapshotRepository>
@@ -48,6 +53,7 @@
 			<url>${dev.java.net-snapshots.deploy.url}</url>
 		</snapshotRepository>
 	</distributionManagement>
+
 
 
 	<scm>
@@ -210,7 +216,16 @@
 		</dependencies>
 	</dependencyManagement>
 
+
 	<build>
+		<defaultGoal>install</defaultGoal>
+		<extensions>
+			<extension>
+				<groupId>org.jvnet.wagon-svn</groupId>
+				<artifactId>wagon-svn</artifactId>
+				<version>1.8</version>
+			</extension>
+		</extensions>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -230,6 +245,13 @@
 				<inherited>false</inherited>
 				<configuration>
 					<!--arguments>-cpu</arguments-->
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<configuration>
+					<excludeModules>tests</excludeModules>
 				</configuration>
 			</plugin>
 		</plugins>

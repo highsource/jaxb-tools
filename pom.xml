@@ -67,7 +67,6 @@
 	<modules>
 		<module>plugin</module>
 		<module>testing</module>
-		<module>tests</module>
 	</modules>
 
 	<profiles>
@@ -75,10 +74,22 @@
 			<id>samples</id>
 			<activation>
 				<property>
-					<name>performRelease</name>
+					<name>continuousIntegrationDeploy</name>
 				</property>
 			</activation>
 			<modules>
+				<module>samples</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>tests</id>
+			<activation>
+				<property>
+					<name>continuousIntegrationInstall</name>
+				</property>
+			</activation>
+			<modules>
+				<module>tests</module>
 				<module>samples</module>
 			</modules>
 		</profile>

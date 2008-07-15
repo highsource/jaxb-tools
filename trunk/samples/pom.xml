@@ -59,9 +59,13 @@
 				<plugin>
 					<artifactId>maven-invoker-plugin</artifactId>
 					<inherited>true</inherited>
-					<version>1.0</version>
+					<version>1.2</version>
 					<configuration>
 						<debug>true</debug>
+						<goals>
+							<goal>clean</goal>
+							<goal>install</goal>
+						</goals>
 						<projectsDirectory>${basedir}/target/test-maven-assembly</projectsDirectory>
 						<!--localRepositoryPath>${basedir}/target/test-maven-repository</localRepositoryPath-->
 					</configuration>
@@ -70,7 +74,6 @@
 							<id>integration-test</id>
 							<phase>integration-test</phase>
 							<goals>
-								<!--goal>install</goal-->
 								<goal>run</goal>
 							</goals>
 						</execution>

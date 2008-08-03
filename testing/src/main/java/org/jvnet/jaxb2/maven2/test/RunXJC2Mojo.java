@@ -11,7 +11,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.maven.plugin.Mojo;
 import org.apache.maven.project.MavenProject;
 import org.jvnet.jaxb2.maven2.XJC2Mojo;
-import org.jvnet.jaxb2.maven2.XJC2Mojo;
 
 /**
  * Abstract test for plugins.

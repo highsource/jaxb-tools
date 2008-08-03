@@ -5,11 +5,18 @@
 	<parent>
 		<groupId>org.jvnet.jaxb2.maven2</groupId>
 		<artifactId>maven-jaxb2-plugin-tests</artifactId>
-		<version>0.6.0</version>
+		<version>0.6.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>maven-jaxb2-plugin-tests-catalog</artifactId>
 	<packaging>jar</packaging>
 	<name>Maven JAXB 2.x Plugin Tests [catalog]</name>
+	<dependencies>
+		<dependency>
+			<groupId>org.jvnet.jaxb2.maven2</groupId>
+			<artifactId>maven-jaxb2-plugin-testing</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 	<build>
 		<defaultGoal>test</defaultGoal>
 		<plugins>
@@ -22,6 +29,9 @@
 							<goal>generate</goal>
 						</goals>
 						<configuration>
+							<schemaIncludes>
+								<schemaInclude>schema_b.xsd</schemaInclude>
+							</schemaIncludes>
 							<catalog>src/main/resources/catalog.cat</catalog>
 						</configuration>
 					</execution>

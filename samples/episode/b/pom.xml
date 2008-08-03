@@ -5,16 +5,16 @@
 	<parent>
 		<groupId>org.jvnet.jaxb2.maven2</groupId>
 		<artifactId>maven-jaxb2-plugin-sample-episode-maven</artifactId>
-		<version>0.6.0</version>
+		<version>0.6.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>maven-jaxb2-plugin-sample-episode-b-maven</artifactId>
+	<artifactId>maven-jaxb2-plugin-ample-episode-b-maven</artifactId>
 	<packaging>jar</packaging>
 	<name>Maven JAXB 2.x Plugin Sample [episode-b|maven]</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.jvnet.jaxb2.maven2</groupId>
 			<artifactId>maven-jaxb2-plugin-sample-episode-a-maven</artifactId>
-			<version>0.6.0</version>
+			<version>0.6.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -23,7 +23,7 @@
 			<plugin>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin</artifactId>
-				<version>0.6.0</version>
+				<version>0.6.1-SNAPSHOT</version>
 				<configuration>
 					<extension>true</extension>
 					<episodes>
@@ -32,6 +32,14 @@
 							<artifactId>maven-jaxb2-plugin-sample-episode-a-maven</artifactId>
 						</episode>
 					</episodes>
+					<plugins>
+						<plugin>
+							<groupId>org.jvnet.jaxb2.maven2</groupId>
+							<artifactId>maven-jaxb2-plugin-sample-episode-a-maven</artifactId>
+						</plugin>
+					</plugins>
+					<catalog>src/main/resources/catalog.cat</catalog>
+					<catalogResolver>org.jvnet.jaxb2.maven2.resolver.tools.ClasspathCatalogResolver</catalogResolver>
 				</configuration>
 			</plugin>
 		</plugins>

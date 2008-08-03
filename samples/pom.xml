@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.jvnet.jaxb2.maven2</groupId>
 		<artifactId>maven-jaxb2-plugin-project</artifactId>
-		<version>0.6.0</version>
+		<version>0.6.1-SNAPSHOT</version>
 	</parent>
 	<modules>
 		<module>catalog</module>
@@ -59,13 +59,8 @@
 				<plugin>
 					<artifactId>maven-invoker-plugin</artifactId>
 					<inherited>true</inherited>
-					<version>1.2</version>
 					<configuration>
 						<debug>true</debug>
-						<goals>
-							<goal>clean</goal>
-							<goal>install</goal>
-						</goals>
 						<projectsDirectory>${basedir}/target/test-maven-assembly</projectsDirectory>
 						<!--localRepositoryPath>${basedir}/target/test-maven-repository</localRepositoryPath-->
 					</configuration>

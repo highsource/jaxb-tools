@@ -58,7 +58,7 @@ public class FooPlugin extends Plugin {
 
 	@Override
 	public List<String> getCustomizationURIs() {
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 
 	@Override

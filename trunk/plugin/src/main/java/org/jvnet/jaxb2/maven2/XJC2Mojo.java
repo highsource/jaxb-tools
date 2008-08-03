@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -59,6 +60,7 @@ import org.xml.sax.SAXParseException;
 import com.sun.codemodel.CodeWriter;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JPackage;
+import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
 import com.sun.tools.xjc.BadCommandLineException;
 import com.sun.tools.xjc.ErrorReceiver;
 import com.sun.tools.xjc.Language;
@@ -334,6 +336,22 @@ public class XJC2Mojo extends AbstractMojo {
 		this.catalog = catalog;
 	}
 
+	private String catalogResolver = CatalogResolver.class.getName();
+
+	/**
+	 * Provides the class name of the catalog resolver.
+	 * 
+	 * @return Class name of the catalog resolver.
+	 */
+	@MojoParameter(expression = "${maven.xjc2.catalogResolver}")
+	public String getCatalogResolver() {
+		return catalogResolver;
+	}
+
+	public void setCatalogResolver(String catalogResolver) {
+		this.catalogResolver = catalogResolver;
+	}
+
 	private String generatePackage;
 
 	/**
@@ -478,7 +496,7 @@ public class XJC2Mojo extends AbstractMojo {
 		this.debug = debug;
 	}
 
-	private List args = new ArrayList();
+	private List<String> args = new LinkedList<String>();
 
 	/**
 	 * <p>
@@ -490,11 +508,11 @@ public class XJC2Mojo extends AbstractMojo {
 	 * </p>
 	 */
 	@MojoParameter
-	public List getArgs() {
+	public List<String> getArgs() {
 		return args;
 	}
 
-	public void setArgs(List args) {
+	public void setArgs(List<String> args) {
 		this.args.addAll(args);
 	}
 
@@ -633,59 +651,6 @@ public class XJC2Mojo extends AbstractMojo {
 	 */
 	public void execute() throws MojoExecutionException {
 		try {
-			setupLogging();
-
-			// Translate maven plugin options to XJC ones,
-			// also perform any sanity checks.
-			// SIDE-EFFECT: populates schemaFiles and bindingFiles member vars.
-			Options xjcOpts = setupOptions();
-
-			if (getVerbose()) {
-				logSettings();
-			}
-
-			// Add source path and jaxb resources whether re-generate or not.
-			updateMavenPaths();
-
-			// Check whether to re-generate sources.
-			if (!this.getForceRegenerate() && isUpdToDate()) {
-				getLog()
-						.info(
-								"Skipped XJC execution.  Generated sources were up-to-date.");
-				return;
-			}
-
-			// Remove old generated dir.
-			if (this.getRemoveOldOutput()) {
-				if (this.getGenerateDirectory().exists()) {
-					try {
-						FileUtils.deleteDirectory(this.getGenerateDirectory());
-						getLog().info(
-								"Removed old generateDirectory '"
-										+ this.getGenerateDirectory() + "'.");
-					} catch (IOException ex) {
-						getLog().warn(
-								"Failed to remove old generateDirectory '"
-										+ this.getGenerateDirectory()
-										+ "' due to: " + ex);
-					}
-
-				} else if (getVerbose())
-					getLog().info(
-							"Skipped removal of old generateDirectory '"
-									+ this.getGenerateDirectory()
-									+ "' since it didn't exist.");
-			}
-			// Create the destination path if it does not exist.
-			if (getGenerateDirectory() != null
-					&& !getGenerateDirectory().exists()) {
-				getGenerateDirectory().mkdirs();
-			}
-
-			if (getEpisode() && getEpisodeFile() != null) {
-				final File parentFile = getEpisodeFile().getParentFile();
-				parentFile.mkdirs();
-			}
 
 			// Install project dependencies into classloader's class path
 			// and execute xjc2.
@@ -693,15 +658,76 @@ public class XJC2Mojo extends AbstractMojo {
 			Thread.currentThread().setContextClassLoader(
 					getProjectDepsClassLoader(oldCL));
 			try {
+
+				setupLogging();
+
+				// Translate maven plugin options to XJC ones,
+				// also perform any sanity checks.
+				// SIDE-EFFECT: populates schemaFiles and bindingFiles member
+				// vars.
+				Options xjcOpts = setupOptions();
+
+				if (getVerbose()) {
+					logSettings();
+				}
+
+				// Add source path and jaxb resources whether re-generate or
+				// not.
+				updateMavenPaths();
+
+				// Check whether to re-generate sources.
+				if (!this.getForceRegenerate() && isUpdToDate()) {
+					getLog()
+							.info(
+									"Skipped XJC execution.  Generated sources were up-to-date.");
+					return;
+				}
+
+				// Remove old generated dir.
+				if (this.getRemoveOldOutput()) {
+					if (this.getGenerateDirectory().exists()) {
+						try {
+							FileUtils.deleteDirectory(this
+									.getGenerateDirectory());
+							getLog().info(
+									"Removed old generateDirectory '"
+											+ this.getGenerateDirectory()
+											+ "'.");
+						} catch (IOException ex) {
+							getLog().warn(
+									"Failed to remove old generateDirectory '"
+											+ this.getGenerateDirectory()
+											+ "' due to: " + ex);
+						}
+
+					} else if (getVerbose())
+						getLog().info(
+								"Skipped removal of old generateDirectory '"
+										+ this.getGenerateDirectory()
+										+ "' since it didn't exist.");
+				}
+				// Create the destination path if it does not exist.
+				if (getGenerateDirectory() != null
+						&& !getGenerateDirectory().exists()) {
+					getGenerateDirectory().mkdirs();
+				}
+
+				if (getEpisode() && getEpisodeFile() != null) {
+					final File parentFile = getEpisodeFile().getParentFile();
+					parentFile.mkdirs();
+				}
+
 				runXJC(xjcOpts);
+				// Inform user about completion.
+				getLog()
+						.info(
+								"Succesfully generated output to: "
+										+ xjcOpts.targetDir);
+
 			} finally {
 				// Set back the old classloader
 				Thread.currentThread().setContextClassLoader(oldCL);
 			}
-
-			// Inform user about completion.
-			getLog().info(
-					"Succesfully generated output to: " + xjcOpts.targetDir);
 
 		} catch (RuntimeException ex) {
 			getLog()
@@ -810,6 +836,8 @@ public class XJC2Mojo extends AbstractMojo {
 			}
 		}
 
+		configureCatalogResolver(xjcOpts);
+
 		// Setup Other Options
 
 		xjcOpts.defaultPackage = this.getGeneratePackage();
@@ -824,6 +852,43 @@ public class XJC2Mojo extends AbstractMojo {
 		setupCmdLineArgs(xjcOpts);
 
 		return xjcOpts;
+	}
+
+	protected void configureCatalogResolver(Options options)
+			throws MojoExecutionException {
+		if (catalogResolver != null) {
+
+			try {
+				Class<?> draftCatalogResolverClass = Thread.currentThread()
+						.getContextClassLoader().loadClass(catalogResolver);
+				if (!CatalogResolver.class
+						.isAssignableFrom(draftCatalogResolverClass)) {
+					throw new MojoExecutionException(
+							"Specified catalog resolver class ["
+									+ catalogResolver
+									+ "] could not be casted to ["
+									+ CatalogResolver.class + "].");
+				} else {
+					final Class<? extends CatalogResolver> catalogResolverClass = (Class<? extends CatalogResolver>) draftCatalogResolverClass;
+					final CatalogResolver catalogResolverInstance = catalogResolverClass
+							.newInstance();
+					options.entityResolver = catalogResolverInstance;
+				}
+			} catch (ClassNotFoundException cnfex) {
+				throw new MojoExecutionException(
+						"Could not find specified catalog resolver class ["
+								+ catalogResolver + "].", cnfex);
+			} catch (InstantiationException iex) {
+				throw new MojoExecutionException(
+						"Could not instantiate catalog resolver class ["
+								+ catalogResolver + "].", iex);
+			} catch (IllegalAccessException iaex) {
+				throw new MojoExecutionException(
+						"Could not instantiate catalog resolver class ["
+								+ catalogResolver + "].", iaex);
+			}
+
+		}
 	}
 
 	protected void setupCmdLineArgs(Options xjcOpts)
@@ -841,7 +906,7 @@ public class XJC2Mojo extends AbstractMojo {
 			}
 		}
 
-		if (isDefined(this.getArgs(), 1)) {
+		if (!getArgs().isEmpty()) {
 			try {
 				xjcOpts.parseArguments((String[]) getArgs().toArray(
 						new String[getArgs().size()]));
@@ -1024,7 +1089,7 @@ public class XJC2Mojo extends AbstractMojo {
 					.hasNext();) {
 				String pathElem = (String) it.next();
 				try {
-					urls.add(new File(pathElem).toURL());
+					urls.add(new File(pathElem).toURI().toURL());
 				} catch (MalformedURLException e) {
 					getLog().warn(
 							"Internal classpath element '" + pathElem
@@ -1198,7 +1263,7 @@ public class XJC2Mojo extends AbstractMojo {
 	 */
 	protected static InputSource getInputSource(File f) {
 		try {
-			return new InputSource(f.toURL().toExternalForm());
+			return new InputSource(f.toURI().toURL().toExternalForm());
 		} catch (MalformedURLException e) {
 			return new InputSource(f.getPath());
 		}
@@ -1240,7 +1305,7 @@ public class XJC2Mojo extends AbstractMojo {
 	protected String[] getExcludes(String[] origExcludes) {
 		if (origExcludes == null)
 			return null;
-		final List ex = new ArrayList(Arrays.asList(origExcludes));
+		final List ex = new ArrayList<String>(Arrays.asList(origExcludes));
 		List newExc = getExcludes(ex);
 		return (String[]) newExc.toArray(new String[newExc.size()]);
 	}

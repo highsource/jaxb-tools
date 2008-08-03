@@ -1,1 +1,1 @@
-call mvn -DperformRelease -DcontinuousIntegrationDeploy clean deploy >std 2>err
+call mvn -X -DprepareRelease -DcontinuousIntegrationDeploy clean install >std 2>err

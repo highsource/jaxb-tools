@@ -1,1 +1,1 @@
-call mvn -X -DperformRelease -DcontinuousIntegrationInstall clean install >std 2>err
+call mvn -X -DcontinuousIntegrationInstall clean install >std 2>err

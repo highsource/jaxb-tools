@@ -1,0 +1,505 @@
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>
+    maven-jaxb2-plugin - jaxb2:generate</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+  </head>
+  <body class="composite">
+    <div id="banner">
+                            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+      <div class="xleft">Last Published: Thu Apr 19 12:12:44 EEST 2007</div>
+      <div class="xright">  </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn"><div id="navcolumn">      <h5>Project Documentation</h5>
+    <ul>
+              
+    <li class="none">
+          <a href="index.html">About JAXB-2.x Maven-2 Plugin</a>
+        </li>
+              
+                
+        <li class="collapsed">
+          <a href="project-info.html">Project Info</a>
+                
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+        </li>
+              
+                
+        <li class="collapsed">
+          <a href="maven-reports.html">Project Reports</a>
+                
+      
+              
+        </li>
+          </ul>
+  <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
+              <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
+            </a>
+    </div></div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+  
+  
+    <div class="section"><h2>jaxb2:generate</h2>
+      <p>A mojo that uses JAXB 2.x XJC compiler to generate java source classes from schemas (XML schemas, DTD, WSDL, or RELAXNG). For details on JAXB see <a href="https://jaxb.dev.java.net/">JAXB 2.x Project</a>.</p>
+      <p>Parameters for the goal: </p>
+      <table class="bodyTable">
+        <tr class="a">
+          <th>Parameter</th>
+          <th>Type</th>
+          <th>Expression</th>
+          <th>Default Value</th>
+          <th>Description</th>
+        </tr>
+        <tr class="b">
+          <td>
+            <code>args</code> <i>(Optional)</i></td>
+          <td>
+            <code title="java.util.List">List</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td><p> A list of extra XJC's command-line arguments (items must include the dash '-'). </p> <p> Arguments set here take precedence over other mojo parameters. </p></td>
+        </tr>
+        <tr class="a">
+          <td>
+            <code>artifactFactory</code> <i>(Optional)</i> <i>(Discovered)</i></td>
+          <td>
+            <code title="org.apache.maven.artifact.factory.ArtifactFactory">ArtifactFactory</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>No description.</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <code>artifactResolver</code> <i>(Optional)</i> <i>(Discovered)</i></td>
+          <td>
+            <code title="org.apache.maven.artifact.resolver.ArtifactResolver">ArtifactResolver</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>Used internally to resolve {@link #plugins} to their jar files.</td>
+        </tr>
+        <tr class="a">
+          <td>
+            <code>bindingDirectory</code> <i>(Optional)</i></td>
+          <td>
+            <code title="java.io.File">File</code>
+          </td>
+          <td>
+            <code>${maven.xjc2.bindingDirectory}</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td><p> The source directory containing the *.xjb binding files. </p> <p> If left undefined, then the <code>schemaDirectory</code> is assumed. </p></td>
+        </tr>
+        <tr class="b">
+          <td>
+            <code>bindingExcludes</code> <i>(Optional)</i></td>
+          <td>
+            <code title="java.lang.String">String</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>A list of regular expression file search patterns to specify the binding files to be excluded from the <code>bindingIncludes</code>. Searching is based from the root of bindingDirectory.</td>
+        </tr>
+        <tr class="a">
+          <td>
+            <code>bindingIncludes</code> <i>(Optional)</i></td>
+          <td>
+            <code title="java.lang.String">String</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td><p> A list of regular expression file search patterns to specify the binding files to be processed. Searching is based from the root of <code>bindingDirectory</code>. </p> <p> If left undefined, then all *.xjb files in schemaDirectory will be processed. </p></td>
+        </tr>
+        <tr class="b">
+          <td>
+            <code>catalog</code> <i>(Optional)</i></td>
+          <td>
+            <code title="java.io.File">File</code>
+          </td>
+          <td>
+            <code>${maven.xjc2.catalog}</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td><p> Specify the catalog file to resolve external entity references (xjc's -catalog option) </p> <p> Support TR9401, XCatalog, and OASIS XML Catalog format. See the catalog-resolver sample and this article for details. </p></td>
+        </tr>
+        <tr class="a">
+          <td>
+            <code>classpathElements</code>
+          </td>
+          <td>
+            <code title="java.util.List">List</code>
+          </td>
+          <td>
+            <code>${project.compileClasspathElements}</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>Project classpath. Used internally when runing the XJC compiler.</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <code>debug</code> <i>(Optional)</i></td>
+          <td>
+            <code title="boolean">boolean</code>
+          </td>
+          <td>
+            <code>${maven.xjc2.debug}</code>
+          </td>
+          <td>
+            <code>false</code>
+          </td>
+          <td><p> If 'true', the XJC compiler is set to debug mode (xjc's -debug option)and the 'com.sun.tools.xjc.Options.findServices' property is set, to print any add-on instanciation messages. </p> <p> It is automatically set to 'true' when maven is run in debug mode (mvn's -X option). </p></td>
+        </tr>
+        <tr class="a">
+          <td>
+            <code>disableDefaultExcludes</code> <i>(Optional)</i></td>
+          <td>
+            <code title="boolean">boolean</code>
+          </td>
+          <td>
+            <code>${maven.xjc2.disableDefaultExcludes}</code>
+          </td>
+          <td>
+            <code>false</code>
+          </td>
+          <td>If 'true', maven's default exludes are NOT added to all the excludes lists.</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <code>extension</code> <i>(Optional)</i></td>
+          <td>
+            <code title="boolean">boolean</code>
+          </td>
+          <td>
+            <code>${maven.xjc2.extension}</code>
+          </td>
+          <td>
+            <code>false</code>
+          </td>
+          <td>If 'true', the XJC binding compiler will run in the extension mode (xjc's -extension option). Otherwise, it will run in the strict conformance mode.</td>
+        </tr>
+        <tr class="a">
+          <td>
+            <code>forceRegenerate</code> <i>(Optional)</i></td>
+          <td>
+            <code title="boolean">boolean</code>
+          </td>
+          <td>
+            <code>${maven.xjc2.forceRegenerate}</code>
+          </td>
+          <td>
+            <code>false</code>
+          </td>
+          <td>If 'true', no up-to-date check is performed and the XJC always re-generates the sources.</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <code>generateDirectory</code>
+          </td>
+          <td>
+            <code title="java.io.File">File</code>
+          </td>
+          <td>
+            <code>${maven.xjc2.generateDirectory}</code>
+          </td>
+          <td>
+            <code>${project.build.directory}/generated-sources/xjc</code>
+          </td>
+          <td><p> Generated code will be written under this directory. </p> <p> For instance, if you specify <code>generateDirectory=&quot;doe/ray&quot;</code> and <code>generatePackage=&quot;org.here&quot;</code>, then files are generated to <code>doe/ray/org/here</code>. </p></td>
+        </tr>
+        <tr class="a">
+          <td>
+            <code>generatePackage</code> <i>(Optional)</i></td>
+          <td>
+            <code title="java.lang.String">String</code>
+          </td>
+          <td>
+            <code>${maven.xjc2.generatePackage}</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td><p> The generated classes will all be placed under this Java package (xjc's -p option), unless otherwise specified in the schemas. </p> <p> If left unspecified, the package will be derived from the schemas only. </p></td>
+        </tr>
+        <tr class="b">
+          <td>
+            <code>localRepository</code>
+          </td>
+          <td>
+            <code title="org.apache.maven.artifact.repository.ArtifactRepository">ArtifactRepository</code>
+          </td>
+          <td>
+            <code>${localRepository}</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>No description.</td>
+        </tr>
+        <tr class="a">
+          <td>
+            <code>mavenProjectBuilder</code> <i>(Optional)</i> <i>(Discovered)</i></td>
+          <td>
+            <code title="org.apache.maven.project.MavenProjectBuilder">MavenProjectBuilder</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>Artifact factory, needed to download source jars.</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <code>otherDepends</code> <i>(Optional)</i></td>
+          <td>
+            <code title="java.lang.String">String</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>A list of of input files or URLs to consider during the up-to-date. By default it always considers: 1. schema files, 2. binding files, 3. catalog file, and 4. the pom.xml file of the project executing this plugin.</td>
+        </tr>
+        <tr class="a">
+          <td>
+            <code>plugins</code> <i>(Optional)</i></td>
+          <td>
+            <code title="org.jvnet.jaxb2.maven2.Artifact">Artifact</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>XJC plugins to be made available to XJC. They still need to be activated by using &lt;args&gt; and enable plugin activation option.</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <code>project</code>
+          </td>
+          <td>
+            <code title="org.apache.maven.project.MavenProject">MavenProject</code>
+          </td>
+          <td>
+            <code>${project}</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>The Maven project reference, used internally.</td>
+        </tr>
+        <tr class="a">
+          <td>
+            <code>readOnly</code> <i>(Optional)</i></td>
+          <td>
+            <code title="boolean">boolean</code>
+          </td>
+          <td>
+            <code>${maven.xjc2.readOnly}</code>
+          </td>
+          <td>
+            <code>false</code>
+          </td>
+          <td>If 'true', the generated Java source files are set as read-only (xjc's -readOnly option).</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <code>removeOldOutput</code> <i>(Optional)</i></td>
+          <td>
+            <code title="boolean">boolean</code>
+          </td>
+          <td>
+            <code>${maven.xjc2.removeOldOutput}</code>
+          </td>
+          <td>
+            <code>true</code>
+          </td>
+          <td><p> If 'true', the [generateDirectory] dir will be deleted before the XJC binding compiler recompiles the source files. </p> <p> Note that if set to 'false', the up-to-date check might not work, since XJC does not regenerate all files (i.e. files for &quot;any&quot; elements under 'xjc/org/w3/_2001/xmlschema' directory). </p></td>
+        </tr>
+        <tr class="a">
+          <td>
+            <code>schemaDirectory</code>
+          </td>
+          <td>
+            <code title="java.io.File">File</code>
+          </td>
+          <td>
+            <code>${maven.xjc2.schemaDirectory}</code>
+          </td>
+          <td>
+            <code>src/main/resources</code>
+          </td>
+          <td>The source directory containing *.xsd schema files. Notice that binding files are searched by default in this deriectory.</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <code>schemaIncludes</code> <i>(Optional)</i></td>
+          <td>
+            <code title="java.lang.String">String</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td><p> A list of regular expression file search patterns to specify the schemas to be processed. Searching is based from the root of <code>schemaDirectory</code>. </p> <p> If left udefined, then all *.xsd files in schemaDirectory will be processed. </p></td>
+        </tr>
+        <tr class="a">
+          <td>
+            <code>schemaLanguage</code> <i>(Optional)</i></td>
+          <td>
+            <code title="java.lang.String">String</code>
+          </td>
+          <td>
+            <code>${maven.xjc2.schemaLanguage}</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td><p> Type of input schema language. One of: DTD, XMLSCHEMA, RELAXNG, RELAXNG_COMPACT, WSDL, AUTODETECT </p> <p> If unspecified, it is assumed AUTODETECT. </p></td>
+        </tr>
+        <tr class="b">
+          <td>
+            <code>schemasExcludes</code> <i>(Optional)</i></td>
+          <td>
+            <code title="java.lang.String">String</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>
+            <code>-</code>
+          </td>
+          <td>A list of regular expression file search patterns to specify the schemas to be excluded from the <code>schemaIncludes</code> list. Searching is based from the root of schemaDirectory.</td>
+        </tr>
+        <tr class="a">
+          <td>
+            <code>strict</code> <i>(Optional)</i></td>
+          <td>
+            <code title="boolean">boolean</code>
+          </td>
+          <td>
+            <code>${maven.xjc2.strict}</code>
+          </td>
+          <td>
+            <code>true</code>
+          </td>
+          <td>If 'true', Perform strict validation of the input schema (xjc's -nv option).</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <code>verbose</code> <i>(Optional)</i></td>
+          <td>
+            <code title="boolean">boolean</code>
+          </td>
+          <td>
+            <code>${maven.xjc2.verbose}</code>
+          </td>
+          <td>
+            <code>false</code>
+          </td>
+          <td><p> If 'true', the plugin and the XJC compiler are both set to verbose mode (xjc's -verbose option). </p> <p> It is automatically set to 'true' when maven is run in debug mode (mvn's -X option). </p></td>
+        </tr>
+        <tr class="a">
+          <td>
+            <code>writeCode</code> <i>(Optional)</i></td>
+          <td>
+            <code title="boolean">boolean</code>
+          </td>
+          <td>
+            <code>${maven.xjc2.writeCode}</code>
+          </td>
+          <td>
+            <code>true</code>
+          </td>
+          <td>If 'false', the plugin will not write the generated code to disk.</td>
+        </tr>
+      </table>
+    </div>
+  
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2006-2007
+    
+          java.net
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

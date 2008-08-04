@@ -1,13 +1,17 @@
-
-
-
-
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
 <html>
   <head>
-    <title>Plugin documentation</title>
+    <title>Maven-2 JAXB-2.x Plugin - Plugin documentation</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -15,68 +19,150 @@
     </style>
     <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-  </head>
+      </head>
   <body class="composite">
-    <div id="banner">
-                            <div class="clear">
-        <hr/>
-      </div>
-    </div>
-    <div id="breadcrumbs">
-      <div class="xleft">Last Published: Thu Apr 19 12:12:43 EEST 2007</div>
+    <!-- TODO: move this into JavaScript to patch the skin
       <div class="xright">  </div>
-      <div class="clear">
-        <hr/>
-      </div>
-    </div>
-    <div id="leftColumn"><div id="navcolumn">      <h5>Project Documentation</h5>
-    <ul>
-              
-    <li class="none">
-          <a href="index.html">About JAXB-2.x Maven-2 Plugin</a>
-        </li>
+    -->
+    <div id="leftColumn">
+      <div id="navcolumn">
+             <dl class=navgroup>
+        <dt>Project Documentation</dt>
+        <dd><ul>
               
                 
+              
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
         <li class="collapsed">
-          <a href="project-info.html">Project Info</a>
-                
-      
-            
-      
-            
-      
-            
-      
-            
-      
-            
-      
-            
-      
-              
-        </li>
+              <a href="project-info.html">Project Information</a>
+              </li>
               
                 
-        <li class="collapsed">
-          <a href="maven-reports.html">Project Reports</a>
-                
+              
             
               
-          <ul>
+            <li class="expanded">
+              <a href="project-reports.html">Project Reports</a>
+                <ul>
                   
     <li class="none">
-          <strong><a href="plugin-info.html">Plugin documentation</a></strong>
+              <strong>Plugin documentation</strong>
         </li>
               </ul>
         </li>
-          </ul>
-  <a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy">
-              <img alt="Built by Maven" src="./images/logos/maven-feather.png"></img>
-            </a>
-    </div></div>
+          </ul></dd>
+    </dl>
+        </div>
+      <script>
+        // replace the java.net project tools with the navigation bar from Maven.
+        // also get rid of "Get Involved" thingie too, while we are at it
+        var pt = document.getElementById("projecttools");
+        var nv = document.getElementById("navcolumn");
+        
+        while(pt.previousSibling!=null)
+          pt.parentNode.removeChild(pt.previousSibling);
+        
+        pt.parentNode.insertBefore(nv,pt);
+        pt.parentNode.removeChild(pt);
+      </script>
+      <script>
+        // kill "description" h3 bar
+        var ld = document.getElementById("longdescription");
+        if(ld!=null) {
+          for( n=ld.firstChild; n!=null; n=n.nextSibling ) {
+            if(n.nodeType==1 && n.innerHTML=="Description" ) {
+              n.parentNode.removeChild(n);
+              break;
+            }
+          }
+        }
+      </script>
+    </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>Plugin documentation</h2><p>Goals available:</p><table class="bodyTable"><tr class="a"><th>Goal</th><th>Description</th></tr><tr class="b"><td><a href="generate-mojo.html">jaxb2:generate</a></td><td>A mojo that uses JAXB 2.x XJC compiler to generate java source classes from schemas (XML schemas, DTD, WSDL, or RELAXNG). For details on JAXB see <a href="https://jaxb.dev.java.net/">JAXB 2.x Project</a>.</td></tr></table></div>
+        <div class="section"><h2>Plugin documentation</h2>
+<p>Goals available for this plugin:</p>
+<table class="bodyTable"><tr class="a"><th>Goal</th>
+<th>Description</th>
+</tr>
+<tr class="b"><td><a href="generate-mojo.html">jaxb2:generate</a></td>
+<td>JAXB 2.x Mojo. @author Aleksei Valikov (valikov@gmx.net)</td>
+</tr>
+</table>
+</div>
+<div class="section"><h2>System Requirements</h2>
+<p>The following specifies the minimum requirements to run this Maven plugin:</p>
+<table class="bodyTable"><tr class="a"><td>Maven</td>
+<td>2.0</td>
+</tr>
+<tr class="b"><td>JDK</td>
+<td>1.5</td>
+</tr>
+<tr class="a"><td>Memory</td>
+<td>No minimum requirement.</td>
+</tr>
+<tr class="b"><td>Disk Space</td>
+<td>No minimum requirement.</td>
+</tr>
+</table>
+</div>
+<div class="section"><h2>Usage</h2>
+<p>You could run 'mvn -up' to get the latest version of this plugin, or specify the version in your project's plugin configuration:<div class="source"><pre>&lt;project&gt;
+  ...
+  &lt;build&gt;
+    &lt;!-- To define the plugin version in your parent POM --&gt;
+    &lt;pluginManagement&gt;
+      &lt;plugins&gt;
+        &lt;plugin&gt;
+          &lt;groupId&gt;org.jvnet.jaxb2.maven2&lt;groupId&gt;
+          &lt;artifactId&gt;maven-jaxb2-plugin&lt;artifactId&gt;
+          &lt;version&gt;0.6.1&lt;version&gt;
+        &lt;/plugin&gt;
+        ...
+      &lt;/plugins&gt;
+    &lt;/pluginManagement&gt;
+    &lt;!-- To use the plugin goals in your POM or parent POM --&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.jvnet.jaxb2.maven2&lt;groupId&gt;
+        &lt;artifactId&gt;maven-jaxb2-plugin&lt;artifactId&gt;
+        &lt;version&gt;0.6.1&lt;version&gt;
+      &lt;/plugin&gt;
+      ...
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+  ...
+&lt;/project&gt;
+</pre>
+</div>
+For more information, see <a class="externalLink" href="http://maven.apache.org/guides/mini/guide-configuring-plugins.html">&quot;Guide to Configuring Plug-ins&quot;</a></p>
+</div>
+
       </div>
     </div>
     <div class="clear">
@@ -84,10 +170,16 @@
     </div>
     <div id="footer">
       <div class="xright">&#169;  
-          2006-2007
+          2006-2008
     
-          java.net
-      </div>
+          
+  
+
+  
+  
+  &nbsp;| Last Published: 08/04/2008
+  &nbsp;| Version: 0.6.1
+</div>
       <div class="clear">
         <hr/>
       </div>

@@ -1,0 +1,417 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+<html>
+  <head>
+    <title>Maven2 JAXB2 Plugin Project - Project Dependencies</title>
+    <style type="text/css" media="all">
+      @import url("./css/maven-base.css");
+      @import url("./css/maven-theme.css");
+      @import url("./css/site.css");
+    </style>
+    <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      </head>
+  <body class="composite">
+    <!-- TODO: move this into JavaScript to patch the skin
+      <div class="xright">  </div>
+    -->
+    <div id="leftColumn">
+      <div id="navcolumn">
+             <dl class=navgroup>
+        <dt>Project Documentation</dt>
+        <dd><ul>
+              
+                
+              
+      
+            
+      
+            
+            
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+            
+      
+              
+            <li class="expanded">
+              <a href="project-info.html">Project Information</a>
+                <ul>
+                  
+    <li class="none">
+              <a href="index.html">About</a>
+        </li>
+                  
+    <li class="none">
+              <a href="integration.html">Continuous Integration</a>
+        </li>
+                  
+    <li class="none">
+              <strong>Dependencies</strong>
+        </li>
+                  
+    <li class="none">
+              <a href="dependency-convergence.html">Dependency Convergence</a>
+        </li>
+                  
+    <li class="none">
+              <a href="dependency-management.html">Dependency Management</a>
+        </li>
+                  
+    <li class="none">
+              <a href="issue-tracking.html">Issue Tracking</a>
+        </li>
+                  
+    <li class="none">
+              <a href="mail-lists.html">Mailing Lists</a>
+        </li>
+                  
+    <li class="none">
+              <a href="plugin-management.html">Plugin Management</a>
+        </li>
+                  
+    <li class="none">
+              <a href="plugins.html">Project Plugins</a>
+        </li>
+                  
+    <li class="none">
+              <a href="project-summary.html">Project Summary</a>
+        </li>
+                  
+    <li class="none">
+              <a href="team-list.html">Project Team</a>
+        </li>
+                  
+    <li class="none">
+              <a href="source-repository.html">Source Repository</a>
+        </li>
+              </ul>
+        </li>
+          </ul></dd>
+    </dl>
+        </div>
+      <script>
+        // replace the java.net project tools with the navigation bar from Maven.
+        // also get rid of "Get Involved" thingie too, while we are at it
+        var pt = document.getElementById("projecttools");
+        var nv = document.getElementById("navcolumn");
+        
+        while(pt.previousSibling!=null)
+          pt.parentNode.removeChild(pt.previousSibling);
+        
+        pt.parentNode.insertBefore(nv,pt);
+        pt.parentNode.removeChild(pt);
+      </script>
+      <script>
+        // kill "description" h3 bar
+        var ld = document.getElementById("longdescription");
+        if(ld!=null) {
+          for( n=ld.firstChild; n!=null; n=n.nextSibling ) {
+            if(n.nodeType==1 && n.innerHTML=="Description" ) {
+              n.parentNode.removeChild(n);
+              break;
+            }
+          }
+        }
+      </script>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        <div class="section"><h2>Project Dependencies</h2>
+<div class="section"><h3>compile</h3>
+<p>The following is a list of compile dependencies for this project. These dependencies are required to compile and run the application:</p>
+<table class="bodyTable"><tr class="a"><th>GroupId</th>
+<th>ArtifactId</th>
+<th>Version</th>
+<th>Type</th>
+</tr>
+<tr class="b"><td>com.sun.xml.bind</td>
+<td>jaxb-impl</td>
+<td>2.1.6</td>
+<td>jar</td>
+</tr>
+<tr class="a"><td>org.jvnet.jaxb2.maven2</td>
+<td><a class="externalLink" href="https://maven-jaxb2-plugin.dev.java.net/maven-jaxb2-plugin-project/maven-jaxb2-plugin-tests/maven-jaxb2-plugin-tests-episodes/maven-jaxb2-plugin-tests-episodes-a">maven-jaxb2-plugin-tests-episodes-a</a></td>
+<td>0.6.1</td>
+<td>jar</td>
+</tr>
+</table>
+</div>
+<div class="section"><h3>test</h3>
+<p>The following is a list of test dependencies for this project. These dependencies are only required to compile and run unit tests for the application:</p>
+<table class="bodyTable"><tr class="b"><th>GroupId</th>
+<th>ArtifactId</th>
+<th>Version</th>
+<th>Type</th>
+</tr>
+<tr class="a"><td>junit</td>
+<td>junit</td>
+<td>3.8.1</td>
+<td>jar</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="section"><h2>Project Transitive Dependencies</h2>
+<p>The following is a list of transitive dependencies for this project. Transitive dependencies are the dependencies of the project dependencies.</p>
+<div class="section"><h3>compile</h3>
+<p>The following is a list of compile dependencies for this project. These dependencies are required to compile and run the application:</p>
+<table class="bodyTable"><tr class="b"><th>GroupId</th>
+<th>ArtifactId</th>
+<th>Version</th>
+<th>Type</th>
+</tr>
+<tr class="a"><td>javax.activation</td>
+<td><a class="externalLink" href="http://java.sun.com/products/javabeans/jaf/index.jsp">activation</a></td>
+<td>1.1</td>
+<td>jar</td>
+</tr>
+<tr class="b"><td>javax.xml.bind</td>
+<td>jaxb-api</td>
+<td>2.1</td>
+<td>jar</td>
+</tr>
+<tr class="a"><td>javax.xml.stream</td>
+<td>stax-api</td>
+<td>1.0-2</td>
+<td>jar</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="section"><h2>Project Dependency Graph</h2>
+<script language="javascript" type="text/javascript">
+      function toggleDependencyDetail( divId, imgId )
+      {
+        var div = document.getElementById( divId );
+        var img = document.getElementById( imgId );
+        if( div.style.display == '' )
+        {
+          div.style.display = 'none';
+          img.src='./images/icon_info_sml.gif';
+        }
+        else
+        {
+          div.style.display = '';
+          img.src='./images/close.gif';
+        }
+      }
+</script>
+<div class="section"><h3>Dependency Tree</h3>
+<ul><li>org.jvnet.jaxb2.maven2:maven-jaxb2-plugin-tests-episodes-b:jar:0.6.1 <img id="_369097810" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_2116936243', '_369097810' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_2116936243" style="display:none"><table class="bodyTable"><tr class="b"><th>Maven JAXB 2.x Plugin Tests [episodes:b]</th>
+</tr>
+<tr class="a"><td><p><b>Description: </b>Maven2 plugin for JAXB 2 XJC compiler to generate java sources from schemas.</p>
+<p><b>URL: </b><a class="externalLink" href="https://maven-jaxb2-plugin.dev.java.net/maven-jaxb2-plugin-project/maven-jaxb2-plugin-tests/maven-jaxb2-plugin-tests-episodes/maven-jaxb2-plugin-tests-episodes-b">https://maven-jaxb2-plugin.dev.java.net/maven-jaxb2-plugin-project/maven-jaxb2-plugin-tests/maven-jaxb2-plugin-tests-episodes/maven-jaxb2-plugin-tests-episodes-b</a></p>
+<p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p>
+</td>
+</tr>
+</table>
+</div><ul><li>org.jvnet.jaxb2.maven2:maven-jaxb2-plugin-tests-episodes-a:jar:0.6.1 (compile) <img id="_1498881528" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_581704344', '_1498881528' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_581704344" style="display:none"><table class="bodyTable"><tr class="b"><th>Maven JAXB 2.x Plugin Tests [episodes:a]</th>
+</tr>
+<tr class="a"><td><p><b>Description: </b>Maven2 plugin for JAXB 2 XJC compiler to generate java sources from schemas.</p>
+<p><b>URL: </b><a class="externalLink" href="https://maven-jaxb2-plugin.dev.java.net/maven-jaxb2-plugin-project/maven-jaxb2-plugin-tests/maven-jaxb2-plugin-tests-episodes/maven-jaxb2-plugin-tests-episodes-a">https://maven-jaxb2-plugin.dev.java.net/maven-jaxb2-plugin-project/maven-jaxb2-plugin-tests/maven-jaxb2-plugin-tests-episodes/maven-jaxb2-plugin-tests-episodes-a</a></p>
+<p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p>
+</td>
+</tr>
+</table>
+</div><ul><li>com.sun.xml.bind:jaxb-impl:jar:2.1.6 (compile) <img id="_975824471" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_945227947', '_975824471' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_945227947" style="display:none"><table class="bodyTable"><tr class="b"><th>Unnamed - com.sun.xml.bind:jaxb-impl:jar:2.1.6</th>
+</tr>
+<tr class="a"><td><p><b>Description: </b>There is currently no description associated with this project.</p>
+<p><b>Project License: </b>No project license is defined for this project.</p>
+</td>
+</tr>
+</table>
+</div></li>
+</ul>
+</li>
+<li>com.sun.xml.bind:jaxb-impl:jar:2.1.6 (compile) <img id="_2026965472" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1489305426', '_2026965472' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1489305426" style="display:none"><table class="bodyTable"><tr class="b"><th>Unnamed - com.sun.xml.bind:jaxb-impl:jar:2.1.6</th>
+</tr>
+<tr class="a"><td><p><b>Description: </b>There is currently no description associated with this project.</p>
+<p><b>Project License: </b>No project license is defined for this project.</p>
+</td>
+</tr>
+</table>
+</div><ul><li>javax.xml.bind:jaxb-api:jar:2.1 (compile) <img id="_2096475449" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1113257506', '_2096475449' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1113257506" style="display:none"><table class="bodyTable"><tr class="b"><th>Unnamed - javax.xml.bind:jaxb-api:jar:2.1</th>
+</tr>
+<tr class="a"><td><p><b>Description: </b>There is currently no description associated with this project.</p>
+<p><b>Project License: </b>No project license is defined for this project.</p>
+</td>
+</tr>
+</table>
+</div><ul><li>javax.xml.stream:stax-api:jar:1.0-2 (compile) <img id="_1404917437" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_2009388369', '_1404917437' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_2009388369" style="display:none"><table class="bodyTable"><tr class="b"><th>Unnamed - javax.xml.stream:stax-api:jar:1.0-2</th>
+</tr>
+<tr class="a"><td><p><b>Description: </b>There is currently no description associated with this project.</p>
+<p><b>Project License: </b>No project license is defined for this project.</p>
+</td>
+</tr>
+</table>
+</div></li>
+<li>javax.activation:activation:jar:1.1 (compile) <img id="_1052359812" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_1094563585', '_1052359812' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_1094563585" style="display:none"><table class="bodyTable"><tr class="b"><th>JavaBeans Activation Framework (JAF)</th>
+</tr>
+<tr class="a"><td><p><b>Description: </b>JavaBeans Activation Framework (JAF) is a standard extension to the Java platform that lets you take advantage of standard services to: determine the type of an arbitrary piece of data; encapsulate access to it; discover the operations available on it; and instantiate the appropriate bean to perform the operation(s).</p>
+<p><b>URL: </b><a class="externalLink" href="http://java.sun.com/products/javabeans/jaf/index.jsp">http://java.sun.com/products/javabeans/jaf/index.jsp</a></p>
+<p><b>Project License: </b><a class="externalLink" href="https://glassfish.dev.java.net/public/CDDLv1.0.html">Common Development and Distribution License (CDDL) v1.0</a></p>
+</td>
+</tr>
+</table>
+</div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>junit:junit:jar:3.8.1 (test) <img id="_787757835" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_467106983', '_787757835' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_467106983" style="display:none"><table class="bodyTable"><tr class="b"><th>Unnamed - junit:junit:jar:3.8.1</th>
+</tr>
+<tr class="a"><td><p><b>Description: </b>There is currently no description associated with this project.</p>
+<p><b>Project License: </b>No project license is defined for this project.</p>
+</td>
+</tr>
+</table>
+</div></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section"><h2>Licenses</h2>
+<p><b>Unknown: </b>Unnamed - com.sun.xml.bind:jaxb-impl:jar:2.1.6, Unnamed - javax.xml.bind:jaxb-api:jar:2.1, Unnamed - javax.xml.stream:stax-api:jar:1.0-2, Unnamed - junit:junit:jar:3.8.1</p>
+<p><b>The Apache Software License, Version 2.0: </b>Maven JAXB 2.x Plugin Tests [episodes:a], Maven JAXB 2.x Plugin Tests [episodes:b]</p>
+<p><b>Common Development and Distribution License (CDDL) v1.0: </b>JavaBeans Activation Framework (JAF)</p>
+</div>
+<div class="section"><h2>Dependency File Details</h2>
+<table class="bodyTable"><tbody><tr class="b"><th align="left">Filename</th>
+<th align="right">Size</th>
+<th align="right">Entries</th>
+<th align="right">Classes</th>
+<th align="right">Packages</th>
+<th align="center">JDK Rev</th>
+<th align="center">Debug</th>
+</tr>
+<tr class="a"><td align="left">jaxb-impl-2.1.6.jar</td>
+<td align="right">829.57 kB</td>
+<td align="right">687</td>
+<td align="right">641</td>
+<td align="right">28</td>
+<td align="center">1.5</td>
+<td align="center">debug</td>
+</tr>
+<tr class="b"><td align="left">activation-1.1.jar</td>
+<td align="right">61.51 kB</td>
+<td align="right">50</td>
+<td align="right">38</td>
+<td align="right">3</td>
+<td align="center">1.4</td>
+<td align="center">debug</td>
+</tr>
+<tr class="a"><td align="left">jaxb-api-2.1.jar</td>
+<td align="right">77.69 kB</td>
+<td align="right">110</td>
+<td align="right">97</td>
+<td align="right">6</td>
+<td align="center">1.5</td>
+<td align="center">debug</td>
+</tr>
+<tr class="b"><td align="left">stax-api-1.0-2.jar</td>
+<td align="right">22.80 kB</td>
+<td align="right">44</td>
+<td align="right">37</td>
+<td align="right">3</td>
+<td align="center">1.5</td>
+<td align="center">debug</td>
+</tr>
+<tr class="a"><td align="left">junit-3.8.1.jar</td>
+<td align="right">118.23 kB</td>
+<td align="right">119</td>
+<td align="right">100</td>
+<td align="right">6</td>
+<td align="center">1.1</td>
+<td align="center">debug</td>
+</tr>
+<tr class="b"><td align="left">maven-jaxb2-plugin-tests-episodes-a-0.6.1.jar</td>
+<td align="right">4.74 kB</td>
+<td align="right">14</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="center">1.5</td>
+<td align="center">debug</td>
+</tr>
+<tr class="a"><th align="left">Total</th>
+<th align="right">Size</th>
+<th align="right">Entries</th>
+<th align="right">Classes</th>
+<th align="right">Packages</th>
+<th align="center">JDK Rev</th>
+<th align="center">Debug</th>
+</tr>
+<tr class="b"><td align="right">6</td>
+<td align="right">1.09 MB</td>
+<td align="right">1,024</td>
+<td align="right">917</td>
+<td align="right">47</td>
+<td align="center">1.5</td>
+<td align="right">6</td>
+</tr>
+<tr class="a"><td align="right">compile: 5</td>
+<td align="right">compile: 996.31 kB</td>
+<td align="right">compile: 905</td>
+<td align="right">compile: 817</td>
+<td align="right">compile: 41</td>
+<td align="center">-</td>
+<td align="right">compile: 5</td>
+</tr>
+<tr class="b"><td align="right">test: 1</td>
+<td align="right">test: 118.23 kB</td>
+<td align="right">test: 119</td>
+<td align="right">test: 100</td>
+<td align="right">test: 6</td>
+<td align="center">-</td>
+<td align="right">test: 1</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">&#169;  
+          2006-2008
+    
+          
+  
+
+  
+  
+  &nbsp;| Last Published: 08/04/2008
+  &nbsp;| Version: 0.6.1
+</div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

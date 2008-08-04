@@ -51,6 +51,10 @@
       
             
       
+            
+      
+            
+      
               
             <li class="expanded">
               <a href="project-info.html">Project Information</a>
@@ -73,6 +77,10 @@
         </li>
                   
     <li class="none">
+              <a href="dependency-management.html">Dependency Management</a>
+        </li>
+                  
+    <li class="none">
               <a href="issue-tracking.html">Issue Tracking</a>
         </li>
                   
@@ -81,7 +89,11 @@
         </li>
                   
     <li class="none">
-              <a href="license.html">Project License</a>
+              <a href="plugin-management.html">Plugin Management</a>
+        </li>
+                  
+    <li class="none">
+              <a href="plugins.html">Project Plugins</a>
         </li>
                   
     <li class="none">
@@ -133,16 +145,12 @@
 <table class="bodyTable"><tr class="a"><th>GroupId</th>
 <th>ArtifactId</th>
 <th>Version</th>
-<th>Classifier</th>
 <th>Type</th>
-<th>Optional</th>
 </tr>
 <tr class="b"><td>com.sun.xml.bind</td>
 <td>jaxb-impl</td>
 <td>2.1.6</td>
-<td>-</td>
 <td>jar</td>
-<td> </td>
 </tr>
 </table>
 </div>
@@ -151,16 +159,12 @@
 <table class="bodyTable"><tr class="a"><th>GroupId</th>
 <th>ArtifactId</th>
 <th>Version</th>
-<th>Classifier</th>
 <th>Type</th>
-<th>Optional</th>
 </tr>
 <tr class="b"><td>junit</td>
 <td>junit</td>
 <td>3.8.1</td>
-<td>-</td>
 <td>jar</td>
-<td> </td>
 </tr>
 </table>
 </div>
@@ -172,63 +176,189 @@
 <table class="bodyTable"><tr class="a"><th>GroupId</th>
 <th>ArtifactId</th>
 <th>Version</th>
-<th>Classifier</th>
 <th>Type</th>
-<th>Optional</th>
 </tr>
 <tr class="b"><td>javax.activation</td>
-<td>activation</td>
+<td><a class="externalLink" href="http://java.sun.com/products/javabeans/jaf/index.jsp">activation</a></td>
 <td>1.1</td>
-<td>-</td>
 <td>jar</td>
-<td> </td>
 </tr>
 <tr class="a"><td>javax.xml.bind</td>
 <td>jaxb-api</td>
 <td>2.1</td>
-<td>-</td>
 <td>jar</td>
-<td> </td>
 </tr>
 <tr class="b"><td>javax.xml.stream</td>
 <td>stax-api</td>
 <td>1.0-2</td>
-<td>-</td>
 <td>jar</td>
-<td> </td>
 </tr>
 </table>
 </div>
 </div>
 <div class="section"><h2>Project Dependency Graph</h2>
+<script language="javascript" type="text/javascript">
+      function toggleDependencyDetail( divId, imgId )
+      {
+        var div = document.getElementById( divId );
+        var img = document.getElementById( imgId );
+        if( div.style.display == '' )
+        {
+          div.style.display = 'none';
+          img.src='./images/icon_info_sml.gif';
+        }
+        else
+        {
+          div.style.display = '';
+          img.src='./images/close.gif';
+        }
+      }
+</script>
 <div class="section"><h3>Dependency Tree</h3>
-<p><ul><li><a href="#org.jvnet.jaxb2.maven2:maven-jaxb2-plugin-tests-episodes-a:jar">org.jvnet.jaxb2.maven2:maven-jaxb2-plugin-tests-episodes-a:jar</a><ul><li><a href="#com.sun.xml.bind:jaxb-impl:jar">com.sun.xml.bind:jaxb-impl:jar</a><ul><li><a href="#javax.xml.bind:jaxb-api:jar">javax.xml.bind:jaxb-api:jar</a><ul><li><a href="#javax.xml.stream:stax-api:jar">javax.xml.stream:stax-api:jar</a></li>
-<li><a href="#javax.activation:activation:jar">javax.activation:activation:jar</a></li>
+<ul><li>org.jvnet.jaxb2.maven2:maven-jaxb2-plugin-tests-episodes-a:jar:0.6.1 <img id="_1695869751" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_687487071', '_1695869751' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_687487071" style="display:none"><table class="bodyTable"><tr class="a"><th>Maven JAXB 2.x Plugin Tests [episodes:a]</th>
+</tr>
+<tr class="b"><td><p><b>Description: </b>Maven2 plugin for JAXB 2 XJC compiler to generate java sources from schemas.</p>
+<p><b>URL: </b><a class="externalLink" href="https://maven-jaxb2-plugin.dev.java.net/maven-jaxb2-plugin-project/maven-jaxb2-plugin-tests/maven-jaxb2-plugin-tests-episodes/maven-jaxb2-plugin-tests-episodes-a">https://maven-jaxb2-plugin.dev.java.net/maven-jaxb2-plugin-project/maven-jaxb2-plugin-tests/maven-jaxb2-plugin-tests-episodes/maven-jaxb2-plugin-tests-episodes-a</a></p>
+<p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p>
+</td>
+</tr>
+</table>
+</div><ul><li>com.sun.xml.bind:jaxb-impl:jar:2.1.6 (compile) <img id="_1571108662" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_488441503', '_1571108662' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_488441503" style="display:none"><table class="bodyTable"><tr class="a"><th>Unnamed - com.sun.xml.bind:jaxb-impl:jar:2.1.6</th>
+</tr>
+<tr class="b"><td><p><b>Description: </b>There is currently no description associated with this project.</p>
+<p><b>Project License: </b>No project license is defined for this project.</p>
+</td>
+</tr>
+</table>
+</div><ul><li>javax.xml.bind:jaxb-api:jar:2.1 (compile) <img id="_249562741" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_689189709', '_249562741' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_689189709" style="display:none"><table class="bodyTable"><tr class="a"><th>Unnamed - javax.xml.bind:jaxb-api:jar:2.1</th>
+</tr>
+<tr class="b"><td><p><b>Description: </b>There is currently no description associated with this project.</p>
+<p><b>Project License: </b>No project license is defined for this project.</p>
+</td>
+</tr>
+</table>
+</div><ul><li>javax.xml.stream:stax-api:jar:1.0-2 (compile) <img id="_1560095122" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_105847605', '_1560095122' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_105847605" style="display:none"><table class="bodyTable"><tr class="a"><th>Unnamed - javax.xml.stream:stax-api:jar:1.0-2</th>
+</tr>
+<tr class="b"><td><p><b>Description: </b>There is currently no description associated with this project.</p>
+<p><b>Project License: </b>No project license is defined for this project.</p>
+</td>
+</tr>
+</table>
+</div></li>
+<li>javax.activation:activation:jar:1.1 (compile) <img id="_919306891" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_400473890', '_919306891' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_400473890" style="display:none"><table class="bodyTable"><tr class="a"><th>JavaBeans Activation Framework (JAF)</th>
+</tr>
+<tr class="b"><td><p><b>Description: </b>JavaBeans Activation Framework (JAF) is a standard extension to the Java platform that lets you take advantage of standard services to: determine the type of an arbitrary piece of data; encapsulate access to it; discover the operations available on it; and instantiate the appropriate bean to perform the operation(s).</p>
+<p><b>URL: </b><a class="externalLink" href="http://java.sun.com/products/javabeans/jaf/index.jsp">http://java.sun.com/products/javabeans/jaf/index.jsp</a></p>
+<p><b>Project License: </b><a class="externalLink" href="https://glassfish.dev.java.net/public/CDDLv1.0.html">Common Development and Distribution License (CDDL) v1.0</a></p>
+</td>
+</tr>
+</table>
+</div></li>
 </ul>
-</p>
 </li>
 </ul>
-</p>
 </li>
-<li><a href="#junit:junit:jar">junit:junit:jar</a></li>
+<li>junit:junit:jar:3.8.1 (test) <img id="_72803689" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_472814402', '_72803689' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_472814402" style="display:none"><table class="bodyTable"><tr class="a"><th>Unnamed - junit:junit:jar:3.8.1</th>
+</tr>
+<tr class="b"><td><p><b>Description: </b>There is currently no description associated with this project.</p>
+<p><b>Project License: </b>No project license is defined for this project.</p>
+</td>
+</tr>
+</table>
+</div></li>
 </ul>
-</p>
 </li>
 </ul>
-</p>
 </div>
-<div class="section"><h3>Dependency Listings</h3>
-<p><a name="org.jvnet.jaxb2.maven2:maven-jaxb2-plugin-tests-episodes-a:jar"><b>Maven JAXB 2.x Plugin Tests [episodes:a]</b></a></p>
-<p>Maven2 plugin for JAXB 2 XJC compiler to generate java sources from schemas.</p>
-<p><a href="https://maven-jaxb2-plugin.dev.java.net/maven-jaxb2-plugin-project/maven-jaxb2-plugin-tests/maven-jaxb2-plugin-tests-episodes/maven-jaxb2-plugin-tests-episodes-a" class="externalLink">https://maven-jaxb2-plugin.dev.java.net/maven-jaxb2-plugin-project/maven-jaxb2-plugin-tests/maven-jaxb2-plugin-tests-episodes/maven-jaxb2-plugin-tests-episodes-a</a></p>
-<p><a name="com.sun.xml.bind:jaxb-impl:jar"><b>Unnamed - com.sun.xml.bind:jaxb-impl:jar:2.1.6</b></a></p>
-<p><a name="javax.xml.bind:jaxb-api:jar"><b>Unnamed - javax.xml.bind:jaxb-api:jar:2.1</b></a></p>
-<p><a name="javax.xml.stream:stax-api:jar"><b>Unnamed - javax.xml.stream:stax-api:jar:1.0-2</b></a></p>
-<p><a name="javax.activation:activation:jar"><b>Unnamed - javax.activation:activation:jar:1.1</b></a></p>
-<p><a name="junit:junit:jar"><b>JUnit</b></a></p>
-<p>JUnit is a regression testing framework written by Erich Gamma and Kent Beck. It is used by the developer who implements unit tests in Java.</p>
-<p><a href="http://junit.org" class="externalLink">http://junit.org</a></p>
 </div>
+<div class="section"><h2>Licenses</h2>
+<p><b>Unknown: </b>Unnamed - com.sun.xml.bind:jaxb-impl:jar:2.1.6, Unnamed - javax.xml.bind:jaxb-api:jar:2.1, Unnamed - javax.xml.stream:stax-api:jar:1.0-2, Unnamed - junit:junit:jar:3.8.1</p>
+<p><b>The Apache Software License, Version 2.0: </b>Maven JAXB 2.x Plugin Tests [episodes:a]</p>
+<p><b>Common Development and Distribution License (CDDL) v1.0: </b>JavaBeans Activation Framework (JAF)</p>
+</div>
+<div class="section"><h2>Dependency File Details</h2>
+<table class="bodyTable"><tbody><tr class="a"><th align="left">Filename</th>
+<th align="right">Size</th>
+<th align="right">Entries</th>
+<th align="right">Classes</th>
+<th align="right">Packages</th>
+<th align="center">JDK Rev</th>
+<th align="center">Debug</th>
+</tr>
+<tr class="b"><td align="left">jaxb-impl-2.1.6.jar</td>
+<td align="right">829.57 kB</td>
+<td align="right">687</td>
+<td align="right">641</td>
+<td align="right">28</td>
+<td align="center">1.5</td>
+<td align="center">debug</td>
+</tr>
+<tr class="a"><td align="left">activation-1.1.jar</td>
+<td align="right">61.51 kB</td>
+<td align="right">50</td>
+<td align="right">38</td>
+<td align="right">3</td>
+<td align="center">1.4</td>
+<td align="center">debug</td>
+</tr>
+<tr class="b"><td align="left">jaxb-api-2.1.jar</td>
+<td align="right">77.69 kB</td>
+<td align="right">110</td>
+<td align="right">97</td>
+<td align="right">6</td>
+<td align="center">1.5</td>
+<td align="center">debug</td>
+</tr>
+<tr class="a"><td align="left">stax-api-1.0-2.jar</td>
+<td align="right">22.80 kB</td>
+<td align="right">44</td>
+<td align="right">37</td>
+<td align="right">3</td>
+<td align="center">1.5</td>
+<td align="center">debug</td>
+</tr>
+<tr class="b"><td align="left">junit-3.8.1.jar</td>
+<td align="right">118.23 kB</td>
+<td align="right">119</td>
+<td align="right">100</td>
+<td align="right">6</td>
+<td align="center">1.1</td>
+<td align="center">debug</td>
+</tr>
+<tr class="a"><th align="left">Total</th>
+<th align="right">Size</th>
+<th align="right">Entries</th>
+<th align="right">Classes</th>
+<th align="right">Packages</th>
+<th align="center">JDK Rev</th>
+<th align="center">Debug</th>
+</tr>
+<tr class="b"><td align="right">5</td>
+<td align="right">1.08 MB</td>
+<td align="right">1,010</td>
+<td align="right">913</td>
+<td align="right">46</td>
+<td align="center">1.5</td>
+<td align="right">5</td>
+</tr>
+<tr class="a"><td align="right">compile: 4</td>
+<td align="right">compile: 991.57 kB</td>
+<td align="right">compile: 891</td>
+<td align="right">compile: 813</td>
+<td align="right">compile: 40</td>
+<td align="center">-</td>
+<td align="right">compile: 4</td>
+</tr>
+<tr class="b"><td align="right">test: 1</td>
+<td align="right">test: 118.23 kB</td>
+<td align="right">test: 119</td>
+<td align="right">test: 100</td>
+<td align="right">test: 6</td>
+<td align="center">-</td>
+<td align="right">test: 1</td>
+</tr>
+</tbody>
+</table>
 </div>
 
       </div>
@@ -245,8 +375,8 @@
 
   
   
-  &nbsp;| Last Published: 07/12/2008
-  &nbsp;| Version: 0.6.0
+  &nbsp;| Last Published: 08/04/2008
+  &nbsp;| Version: 0.6.1
 </div>
       <div class="clear">
         <hr/>

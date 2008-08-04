@@ -1,2 +1,2 @@
-call mvn clean site
+call mvn -o clean site
 call mvn site:deploy

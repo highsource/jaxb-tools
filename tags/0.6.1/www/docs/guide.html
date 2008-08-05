@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>Maven2 JAXB2 Plugin Reference Guide</title>
+</head>
+<body>
+<h1>About the plugin</h1>
+<p>JAXB2 Maven2 plugin which allows you to generate code with <a href="http://jaxb.dev.java.net/">JAXB RI</a> in Maven builds. The plugin takes
+part in the <code>generate-code</code> phase and produces code of the schema-derived classes (plus maybe some other resources) out of the XML Schemas,
+DTDs and so on.</p>
+<h1>Using the plugin</h1>
+<h2>Basic usage</h2>
+<p>In order to use the plugin, you first have to make it available to your build. The plugin is distributed via the <a
+	href="https://maven2-repository.dev.java.net">dev.java.net Maven2 repository</a>, so add this to your <code>pom.xml</code>:</p>
+<pre><code>&lt;repositories>
+	&lt;repository>
+		&lt;id>maven2-repository.dev.java.net&lt;/id>
+		&lt;name>Java.net Maven 2 Repository&lt;/name>
+		&lt;url>http://download.java.net/maven/2&lt;/url>
+	&lt;/repository>
+	&lt;repository>
+		&lt;id>maven-repository.dev.java.net&lt;/id>
+		&lt;name>Java.net Maven 1 Repository (legacy)&lt;/name>
+		&lt;url>http://download.java.net/maven/1&lt;/url>
+		&lt;layout>legacy&lt;/layout>
+	&lt;/repository>
+&lt;/repositories>
+&lt;pluginRepositories>
+	&lt;pluginRepository>
+		&lt;id>maven2-repository.dev.java.net&lt;/id>
+		&lt;url>http://download.java.net/maven/2&lt;/url>
+	&lt;/pluginRepository>
+	&lt;pluginRepository>
+		&lt;id>maven-repository.dev.java.net&lt;/id>
+		&lt;name>Java.net Maven 1 Repository (legacy)&lt;/name>
+		&lt;url>http://download.java.net/maven/1&lt;/url>
+		&lt;layout>legacy&lt;/layout>
+	&lt;/pluginRepository>
+&lt;/pluginRepositories></code></pre>
+<p>When this is done, simply add the <code>generate</code> execution goal to the build:</p>
+<pre><code>&lt;build>
+	&lt;plugins>
+		&lt;plugin>
+			&lt;groupId>org.jvnet.jaxb2.maven2&lt;/groupId>
+			&lt;artifactId>maven-jaxb2-plugin&lt;/artifactId>
+			&lt;executions>
+				&lt;execution>
+					&lt;goals>
+						&lt;goal>generate&lt;/goal>
+					&lt;/goals>
+				&lt;/execution>
+			&lt;/executions>
+		&lt;/plugin>
+	&lt;/plugins>
+&lt;/build></code></pre>
+<p>To compile the generated sources, set <code>1.5</code> in <code>source</code> and <code>target</code> of the <code>maven-compiler-plugin</code>:</p>
+<pre><code>&lt;build>
+	&lt;plugins>
+		...
+		&lt;plugin>
+			&lt;inherited>true&lt;/inherited>
+			&lt;groupId>org.apache.maven.plugins&lt;/groupId>
+			&lt;artifactId>maven-compiler-plugin&lt;/artifactId>
+			&lt;configuration>
+				&lt;source>1.5&lt;/source>
+				&lt;target>1.5&lt;/target>
+			&lt;/configuration>
+		&lt;/plugin>
+	&lt;/plugins>
+&lt;/build></code></pre>
+<p>See the <a
+	href="http://download.java.net/maven/2/org/jvnet/jaxb2/maven2/maven-jaxb2-plugin-sample-po/0.6.1/maven-jaxb2-plugin-sample-po-0.6.1-maven-src.zip">sample
+PO project</a> for example.</p>
+<h2>Configuring the plugin</h2>
+<p>The plugin has a large number of configuration options. Please see the <a
+	href="/maven-jaxb2-plugin-project/maven-jaxb2-plugin/generate-mojo.html">plugin documentation</a> for a complete reference.</p>
+<h3>Basic configuration options</h3>
+<h4><a name="SpecifyingSchemasAndBindings">Specifying schemas and bindings to compile</a></h4>
+<dl>
+	<dt><code>schemaDirectory</code></dt>
+	<dd>Specifies the schema directory, <code>src/main/resources</code> by default.</dd>
+	<dt><code>schemaIncludes</code></dt>
+	<dd>Specifies file patterns to include as schemas. By default all <code>*.xsd</code> files will be included.</dd>
+	<dt><code>schemaExcludes</code></dt>
+	<dd>Specifies file patterns of schemas to exclude. By default, nothing is excluded.</dd>
+	<dt><code>bindingDirectory</code></dt>
+	<dd>Specifies the binding directory, defaults to the schema directory.</dd>
+	<dt><code>bindingIncludes</code></dt>
+	<dd>Specifies file patterns to include as bindings. By default all <code>*.xjb</code> files will be included.</dd>
+	<dt><code>bindingExcludes</code></dt>
+	<dd>Specifies file patterns of bindings to exclude. By default, nothing is excluded.</dd>
+	<dt><code>schemaLanguage</code></dt>
+	<dd>Type of input schema language. One of: <code>DTD</code>, <code>XMLSCHEMA</code>, <code>RELAXNG</code>, <code>RELAXNG_COMPACT</code>, <code>WSDL</code>,
+	<code>AUTODETECT</code>. If unspecified, it is assumed AUTODETECT.</dd>
+</dl>
+<p>Below is an example of a non-standard directory layout configuration:</p>
+<pre><code>&lt;configuration>
+	&lt;!-- Changes the default schema directory -->
+	&lt;schemaDirectory>src/main/schema&lt;/schemaDirectory>
+	&lt;schemaIncludes>
+		&lt;include>one/*/*.xsd&lt;/include>
+	&lt;/schemaIncludes>			
+	&lt;schemaExcludes>
+		&lt;exclude>one/two/*.xsd&lt;/exclude>
+	&lt;/schemaExcludes>			
+	&lt;bindingDirectory>src/main/binding&lt;/bindingDirectory>
+	&lt;bindingIncludes>
+		&lt;include>one/*/*.xjb&lt;/include>
+	&lt;/bindingIncludes>			
+	&lt;bindingExcludes>
+		&lt;exclude>one/two/*.xjb&lt;/exclude>
+	&lt;/bindingExcludes>			
+&lt;/configuration></code></pre>
+
+<p>If you want to compile DTD, change the <code>schemaLanguage</code> to <code>DTD</code> and set the appropriate <code>schemaIncludes</code>:</p>
+<pre><code>&lt;configuration>
+	&lt;schemaLanguage>DTD&lt;/schemaLanguage>
+	&lt;schemaIncludes>
+		&lt;include>*.dtd&lt;/include>
+	&lt;/schemaIncludes>
+&lt;/configuration></code></pre>
+<p>See the <a
+	href="http://download.java.net/maven/2/org/jvnet/jaxb2/maven2/maven-jaxb2-plugin-sample-dtd/0.6.1/maven-jaxb2-plugin-sample-dtd-0.6.1-maven-src.zip">sample
+DTD project</a> for example.</p>
+
+<h4><a name="ControllingTheOutput">Controlling the output</a></h4>
+<dl>
+	<dt><code>generateDirectory</code></dt>
+	<dd>Target directory for the generated code, <code>target/generated-sources/xjc</code> by default.</dd>
+	<dt><code>generatePackage</code></dt>
+	<dd>The generated classes will all be placed under this Java package (XJC's <code>-p</code> option), unless otherwise specified in the schemas.
+	If left unspecified, the package will be derived from the schemas only.</dd>
+	<dt><code>writeCode</code></dt>
+	<dd>If <code>false</code>, the plugin will not write the generated code to disk, <code>true</code> by default.</dd>
+	<dt><code>readOnly</code></dt>
+	<dd>If <code>true</code>, the generated Java source files are set as read-only (XJC's <code>-readOnly</code> option). Default is <code>false</code>.</dd>
+	<dt><code>removeOldOutput</code></dt>
+	<dd>If <code>true</code> (default), the <code>generateDirectory</code> will be deleted before the XJC binding compiler recompiles the source
+	files.</dd>
+	<dt><code>forceRegenerate</code></dt>
+	<dd>If <code>true</code>, no up-to-date check is performed and the XJC always re-generates the sources. Otherwise schemas will only be
+	recompiled if anything has changed (this is the default behavior).</dd>
+</dl>
+
+<h4><a name="ControllingExtensionAndValidationModes">Controlling the extension and validation modes</a></h4>
+<dl>
+	<dt><code>extension</code></dt>
+	<dd>If <code>true</code>, the XJC binding compiler will run in the extension mode (XJC's <code>-extension</code> option). Otherwise, it will run
+	in the strict conformance mode (this is the default).<br />
+	Please note that you must enable the extension mode if you use vendor extensions in your bindings.</dd>
+	<dt><code>strict</code></dt>
+	<dd>If <code>true</code> (default), XJC will perform strict validation of the input schema. If <code>strict</code> is set to <code>false</code>
+	XJC will be run with <code>-nv</code>, this disables strict validation of schemas.</dd>
+</dl>
+
+<h4><a name="Debug">Setting the debug options</a></h4>
+<dl>
+	<dt><code>debug</code></dt>
+	<dd>If <code>true</code>, the XJC compiler is set to debug mode (XJC's <code>-debug</code> option) and the <code>com.sun.tools.xjc.Options.findServices</code>
+	property is set, to print any plugin instantiation messages.<br />
+	It is automatically set to <code>true</code> when Maven is run in debug mode (mvn's <code>-X</code> option).</dd>
+	<dt><code>verbose</code></dt>
+	<dd>If <code>true</code>, the plugin and the XJC compiler are both set to verbose mode (XJC's <code>-verbose</code> option). It is automatically
+	set to <code>true</code> when Maven is run in debug mode (mvn's <code>-X</code> option).</dd>
+</dl>
+
+<h4><a name="JAXB2Plugins">Using custom JAXB2 plugins</a></h4>
+<dl>
+	<dt><code>plugins/plugin</code></dt>
+	<dd>Configures artifacts of the custom JAXB2 plugins you want to use.</dd>
+	<dt><code>args/arg</code></dt>
+	<dd>A list of extra XJC's command-line arguments (items must include the dash <code>"-"</code>). Use this argument to enable the JAXB2 plugin
+	you want to use.</dd>
+</dl>
+<p>Example:</p>
+<pre><code>&lt;configuration>
+	&lt;extension>true&lt;/extension>
+	&lt;args>
+		&lt;arg>-XtoString&lt;/arg>
+		&lt;arg>-Xequals&lt;/arg>
+		&lt;arg>-XhashCode&lt;/arg>
+		&lt;arg>-Xcopyable&lt;/arg>
+	&lt;/args>
+	&lt;plugins>
+		&lt;plugin>
+			&lt;groupId>org.jvnet.jaxb2_commons&lt;/groupId>
+			&lt;artifactId>basic&lt;/artifactId>
+			&lt;version>0.2.GA&lt;/version>
+		&lt;/plugin>
+	&lt;/plugins>
+&lt;/configuration></code></pre>
+
+<p>See the <a
+	href="http://download.java.net/maven/2/org/jvnet/jaxb2/maven2/maven-jaxb2-plugin-sample-jaxbplugins/0.6.1/maven-jaxb2-plugin-sample-jaxbplugins-0.6.1-maven-src.zip">sample
+JAXB2 plugins project</a> for example.</p>
+
+<h4><a name="Catalogs">Using catalogs</a></h4>
+<p>Sometimes a schema may refer to another schema document without indicating where the schema file can be found:</p>
+<pre><code>&lt;xs:import namespace="http://www.w3.org/1999/xlink" /></code></pre>
+<p>Another case is when the provided schema location is somewhere in the internet but you have you local copy of that schema which you'd like to
+use for compilation.</p>
+<p>Both cases are resolved using the catalog mechanism. See <a href="https://jaxb.dev.java.net/guide/Fixing_broken_references_in_schema.html">this
+section</a> JAXB guide.</p>
+<p>Maven2 JAXB plugin allows you to provide a catalog file using the <code>catalog</code> configuration parameter.</p>
+<dl>
+	<dt><code>catalog</code></dt>
+	<dd>Specify the catalog file to resolve external entity references (XJC's <code>-catalog</code> option).</dd>
+	<dt><code>catalogResolver</code></dt>
+	<dd>Specify the class name of the catalog resolver. This class must extend the <code>com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver</code>
+	class and provide a public no-arg constructor. For instance, if you want to resolve schemas from the classpath you may configure the <code>org.jvnet.jaxb2.maven2.resolver.tools.ClasspathCatalogResolver</code>
+	class. See the <a
+		href="http://download.java.net/maven/2/org/jvnet/jaxb2/maven2/maven-jaxb2-plugin-sample-episode/0.6.1/maven-jaxb2-plugin-sample-episode-0.6.1-maven-src.zip">episode
+	sample project</a> for example.</dd>
+</dl>
+<p>Example:</p>
+<pre><code>&lt;configuration>
+	&lt;catalog>src/main/resources/catalog.cat&lt;/catalog>
+	&lt;catalogResolver>org.jvnet.jaxb2.maven2.resolver.tools.ClasspathCatalogResolver&lt;/catalogResolver>
+&lt;/configuration></code></pre>
+<p>The catalog file looks as follows:</p>
+<pre><code>PUBLIC "http://example.org/A" "others/schema_a.xsd"</code></pre>
+<p>The URI <code>http://example.org/A</code> is the namespace of the schema to be resolved, <code>others/schema_a.xsd</code> is the local schema
+location (relative to the <code>schemaDirectory</code>).</p>
+
+<p>Please note that if you want to load schemas from the classpath then they <i>must</i> be in the classpath. In order to achieve this
+you may need to add the artifact containing schemas to the <code>plugins/plugin</code>.
+
+<p>See the <a
+	href="http://download.java.net/maven/2/org/jvnet/jaxb2/maven2/maven-jaxb2-plugin-sample-catalog/0.6.1/maven-jaxb2-plugin-sample-catalog-0.6.1-maven-src.zip">sample
+catalog project</a> for example.</p>
+
+<h4><a name="SeparateCompilation">Separate schema compilation</a></h4>
+
+<p>If you're compiling large sets of schemas (like the <a href="https://ogc.dev.java.net">OGC Schemas</a>) you may probably want to compile the
+schemas separately. For instance, if you have two schemas <code>A</code> and <code>B</code> (where <code>B</code> imports <code>A</code>), you may
+want to compile them into <i>two</i> artifacts <code>A.jar</code> and <code>B.jar</code> such that:</p>
+<ul>
+	<li>Classes relevant to <code>A</code> reside in the <code>A.jar</code> artifact.</li>
+	<li>Classes relevant to <code>B</code> (and <i>only</i> those classes) reside in the <code>B.jar</code> artifact.</li>
+	<li>The <code>A.jar</code> artifact is the dependency of the <code>B.jar</code> artifact.</li>
+</ul>
+
+<p>This task is called the <i>separate</i> or <i>episodic</i> compilation. Kohsuke described it in <a
+	href="http://weblogs.java.net/blog/kohsuke/archive/2006/09/separate_compil.html">his blog</a>.</p>
+<p>Maven2 JAXB2 plugin supports episodic compilation via the following configuration parameters:</p>
+
+<dl>
+	<dt><code>episode</code></dt>
+	<dd>If <code>true</code>, the episode file (describing mapping of elements and types to classes for the compiled schema) will be generated.</dd>
+	<dt><code>episodeFile</code></dt>
+	<dd>Target location of the episode file. By default it is <code>target/generated-sources/xjc/META-INF/sun-jaxb.episode</code> so that the
+	episode file will appear as <code>META-INF/sun-jaxb.episode</code> in the JAR - just as XJC wants it.</dd>
+	<dt>episodes/episode</dt>
+	<dd>If you want to use existing artifacts as episodes for separate compilation, configure them as <code>episodes/episode</code> elements. It is
+	assumed that episode artifacts contain an appropriate <code>META-INF/sun-jaxb.episode</code> resource.</dd>
+</dl>
+
+<p>For example, consider that we've built the <code>A</code> schema as <code>com.acme.foo:a-schema:jar:1.0</code> artifact and want to use it as
+an episode when we compile the <code>B</code> schema. Here's how we configure it:</p>
+<pre><code>&lt;project ...>
+	...
+	&lt;dependencies>
+		...
+		&lt;dependency>
+			&lt;groupId>com.acme.foo&lt;/groupId>
+			&lt;artifactId>a-schema&lt;/artifactId>
+			&lt;version>1.0&lt;/version>
+		&lt;/dependency>
+		...
+	&lt;/dependencies>
+	&lt;build>
+		&lt;defaultGoal>test&lt;/defaultGoal>
+		&lt;plugins>
+			&lt;plugin>
+				&lt;groupId>org.jvnet.jaxb2.maven2&lt;/groupId>
+				&lt;artifactId>maven-jaxb2-plugin&lt;/artifactId>
+				&lt;configuration>
+					&lt;extension>true&lt;/extension>
+					&lt;episodes>
+						&lt;episode>
+							&lt;groupId>com.acme.foo&lt;/groupId>
+							&lt;artifactId>a-schema&lt;/artifactId>
+							&lt;!-- Version is not required if the artifact is
+								configured as dependency -->
+						&lt;/episode>
+					&lt;/episodes>
+				&lt;/configuration>
+			&lt;/plugin>
+		&lt;/plugins>
+	&lt;/build>
+	...
+&lt;/project>
+	
+</code></pre>
+
+<p>In this case JAXB will not generate classes for the imported <code>A</code> schema. The <code>B.jar</code> artifact will only contain classes
+relevant to the <code>B</code> schema.</p>
+<p>Note that JAXB still needs to access BOTH <code>A</code> and <code>B</code> schemas during the compilation. You may use catalogs to provide
+alternative locations of the imported schemas.</p>
+
+<p>See the <a
+	href="http://download.java.net/maven/2/org/jvnet/jaxb2/maven2/maven-jaxb2-plugin-sample-episode/0.6.1/maven-jaxb2-plugin-sample-episode-0.6.1-maven-src.zip">sample
+episode project</a> for example.</p>
+
+</body>
+</html>

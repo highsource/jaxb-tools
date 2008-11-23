@@ -478,9 +478,7 @@ public class XJC2Mojo extends AbstractMojo {
 
 	/**
 	 * <p>
-	 * If 'true', the XJC compiler is set to debug mode (xjc's -debug option)and
-	 * the 'com.sun.tools.xjc.Options.findServices' property is set, to print
-	 * any add-on instanciation messages.
+	 * If 'true', the XJC compiler is set to debug mode (xjc's -debug option).
 	 * </p>
 	 * <p>
 	 * It is automatically set to 'true' when maven is run in debug mode (mvn's
@@ -927,12 +925,11 @@ public class XJC2Mojo extends AbstractMojo {
 
 		// Maven's logging level should propagate to
 		// plugin's verbose/debug mode.
-		if (log.isDebugEnabled())
-			this.setDebug(true);
+		if (!this.getVerbose()) {
+			this.setVerbose(log.isDebugEnabled());
+		}
 
-		if (this.getDebug()) {
-			// If not verbose, debug messages would be lost.
-			this.setVerbose(true);
+		if (this.getVerbose()) {
 
 			// Also print XJC add-on plugins instanciation messages.
 			// NOTE that it must happend BEFORE 'Options' constructor.

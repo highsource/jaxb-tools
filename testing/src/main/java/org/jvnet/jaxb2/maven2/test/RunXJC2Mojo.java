@@ -10,7 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.maven.plugin.Mojo;
 import org.apache.maven.project.MavenProject;
-import org.jvnet.jaxb2.maven2.XJC2Mojo;
+import org.jvnet.jaxb2.maven2.RawXJC2Mojo;
 
 /**
  * Abstract test for plugins.
@@ -65,17 +65,17 @@ public class RunXJC2Mojo extends TestCase {
     return true;
   }
 
-  public XJC2Mojo initMojo() {
-    final XJC2Mojo mojo = createMojo();
+  public RawXJC2Mojo initMojo() {
+    final RawXJC2Mojo mojo = createMojo();
     configureMojo(mojo);
     return mojo;
   }
 
-  protected XJC2Mojo createMojo() {
-    return new XJC2Mojo();
+  protected RawXJC2Mojo createMojo() {
+    return new RawXJC2Mojo();
   }
 
-  protected void configureMojo(final XJC2Mojo mojo) {
+  protected void configureMojo(final RawXJC2Mojo mojo) {
 	mojo.setProject(new MavenProject());
     mojo.setSchemaDirectory(getSchemaDirectory());
     mojo.setGenerateDirectory(getGeneratedDirectory());

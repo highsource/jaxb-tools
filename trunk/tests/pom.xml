@@ -9,26 +9,33 @@
 	<parent>
 		<groupId>org.jvnet.jaxb2.maven2</groupId>
 		<artifactId>maven-jaxb2-plugin-project</artifactId>
-		<version>0.6.3</version>
+		<version>0.7.0-SNAPSHOT</version>
 	</parent>
 	<modules>
-		<module>catalog</module>
 		<module>po</module>
+		<module>po-raw</module>
+		<module>catalog</module>
 		<module>episodes</module>
 	</modules>
-	<dependencies>
-		<dependency>
-			<groupId>com.sun.xml.bind</groupId>
-			<artifactId>jaxb-impl</artifactId>
-			<version>2.1.9</version>
-		</dependency>
-	</dependencies>
 	<build>
 		<pluginManagement>
 			<plugins>
 				<plugin>
 					<groupId>org.jvnet.jaxb2.maven2</groupId>
 					<artifactId>maven-jaxb2-plugin</artifactId>
+					<version>0.7.0-SNAPSHOT</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>generate</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.jvnet.jaxb2.maven2</groupId>
+					<artifactId>maven-jaxb2-plugin-raw</artifactId>
+					<version>0.7.0-SNAPSHOT</version>
 					<executions>
 						<execution>
 							<goals>

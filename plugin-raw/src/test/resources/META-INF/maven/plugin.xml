@@ -1,0 +1,388 @@
+<plugin>
+  <description>Maven2 plugin for JAXB 2 XJC compiler to generate java sources from schemas.</description>
+  <groupId>org.jvnet.jaxb2.maven2</groupId>
+  <artifactId>maven-jaxb2-plugin-raw</artifactId>
+  <version>0.7.0-SNAPSHOT</version>
+  <goalPrefix>jaxb2raw</goalPrefix>
+  <isolatedRealm>false</isolatedRealm>
+  <inheritedByDefault>true</inheritedByDefault>
+  <mojos>
+    <mojo>
+      <goal>generate</goal>
+      <description> Maven JAXB 2.x Mojo.
+ 
+ @author Aleksei Valikov (valikov@gmx.net)
+</description>
+      <requiresDependencyResolution>runtime</requiresDependencyResolution>
+      <requiresDirectInvocation>false</requiresDirectInvocation>
+      <requiresProject>true</requiresProject>
+      <requiresReports>false</requiresReports>
+      <aggregator>false</aggregator>
+      <requiresOnline>false</requiresOnline>
+      <inheritedByDefault>true</inheritedByDefault>
+      <phase>generate-sources</phase>
+      <implementation>org.jvnet.jaxb2.maven2.RawXJC2Mojo</implementation>
+      <language>java</language>
+      <instantiationStrategy>per-lookup</instantiationStrategy>
+      <executionStrategy>once-per-session</executionStrategy>
+      <parameters>
+        <parameter>
+          <name>localRepository</name>
+          <type>org.apache.maven.artifact.repository.ArtifactRepository</type>
+          <required>true</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>schemaLanguage</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> Type of input schema language. One of: DTD, XMLSCHEMA, RELAXNG,
+ RELAXNG_COMPACT, WSDL, AUTODETECT. If unspecified, it is assumed
+ AUTODETECT.
+</description>
+        </parameter>
+        <parameter>
+          <name>schemaDirectory</name>
+          <type>java.io.File</type>
+          <required>true</required>
+          <editable>true</editable>
+          <description> The source directory containing *.xsd schema files. Notice that binding
+ files are searched by default in this deriectory.
+ 
+</description>
+        </parameter>
+        <parameter>
+          <name>schemaIncludes</name>
+          <type>java.lang.String[]</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> &lt;p&gt;
+ A list of regular expression file search patterns to specify the schemas
+ to be processed. Searching is based from the root of
+ &lt;code&gt;schemaDirectory&lt;/code&gt;.
+ &lt;/p&gt;
+ &lt;p&gt;
+ If left udefined, then all *.xsd files in schemaDirectory will be
+ processed.
+ &lt;/p&gt;
+ 
+</description>
+        </parameter>
+        <parameter>
+          <name>schemaExcludes</name>
+          <type>java.lang.String[]</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> A list of regular expression file search patterns to specify the schemas
+ to be excluded from the &lt;code&gt;schemaIncludes&lt;/code&gt; list. Searching is
+ based from the root of schemaDirectory.
+ 
+</description>
+        </parameter>
+        <parameter>
+          <name>bindingDirectory</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> &lt;p&gt;
+ The source directory containing the *.xjb binding files.
+ &lt;/p&gt;
+ &lt;p&gt;
+ If left undefined, then the &lt;code&gt;schemaDirectory&lt;/code&gt; is assumed.
+ &lt;/p&gt;
+</description>
+        </parameter>
+        <parameter>
+          <name>bindingIncludes</name>
+          <type>java.lang.String[]</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> &lt;p&gt;
+ A list of regular expression file search patterns to specify the binding
+ files to be processed. Searching is based from the root of
+ &lt;code&gt;bindingDirectory&lt;/code&gt;.
+ &lt;/p&gt;
+ &lt;p&gt;
+ If left undefined, then all *.xjb files in schemaDirectory will be
+ processed.
+ &lt;/p&gt;
+</description>
+        </parameter>
+        <parameter>
+          <name>bindingExcludes</name>
+          <type>java.lang.String[]</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> A list of regular expression file search patterns to specify the binding
+ files to be excluded from the &lt;code&gt;bindingIncludes&lt;/code&gt;. Searching
+ is based from the root of bindingDirectory.
+</description>
+        </parameter>
+        <parameter>
+          <name>disableDefaultExcludes</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> If &apos;true&apos;, maven&apos;s default exludes are NOT added to all the excludes
+ lists.
+</description>
+        </parameter>
+        <parameter>
+          <name>catalog</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> Specify the catalog file to resolve external entity references (xjc&apos;s
+ -catalog option)
+ &lt;/p&gt;
+ &lt;p&gt;
+ Support TR9401, XCatalog, and OASIS XML Catalog format. See the
+ catalog-resolver sample and this article for details.
+ &lt;/p&gt;
+</description>
+        </parameter>
+        <parameter>
+          <name>catalogResolver</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> Provides the class name of the catalog resolver.
+ 
+ @return Class name of the catalog resolver.
+</description>
+        </parameter>
+        <parameter>
+          <name>generatePackage</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> &lt;p&gt;
+ The generated classes will all be placed under this Java package (xjc&apos;s
+ -p option), unless otherwise specified in the schemas.
+ &lt;/p&gt;
+ &lt;p&gt;
+ If left unspecified, the package will be derived from the schemas only.
+ &lt;/p&gt;
+</description>
+        </parameter>
+        <parameter>
+          <name>generateDirectory</name>
+          <type>java.io.File</type>
+          <required>true</required>
+          <editable>true</editable>
+          <description> &lt;p&gt;
+ Generated code will be written under this directory.
+ &lt;/p&gt;
+ &lt;p&gt;
+ For instance, if you specify &lt;code&gt;generateDirectory=&quot;doe/ray&quot;&lt;/code&gt;
+ and &lt;code&gt;generatePackage=&quot;org.here&quot;&lt;/code&gt;, then files are generated
+ to &lt;code&gt;doe/ray/org/here&lt;/code&gt;.
+ &lt;/p&gt;
+</description>
+        </parameter>
+        <parameter>
+          <name>readOnly</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> If &apos;true&apos;, the generated Java source files are set as read-only (xjc&apos;s
+ -readOnly option).
+</description>
+        </parameter>
+        <parameter>
+          <name>extension</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> If &apos;true&apos;, the XJC binding compiler will run in the extension mode (xjc&apos;s
+ -extension option). Otherwise, it will run in the strict conformance
+ mode.
+</description>
+        </parameter>
+        <parameter>
+          <name>strict</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> If &apos;true&apos;, Perform strict validation of the input schema (xjc&apos;s -nv
+ option).
+</description>
+        </parameter>
+        <parameter>
+          <name>writeCode</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> If &apos;false&apos;, the plugin will not write the generated code to disk.
+</description>
+        </parameter>
+        <parameter>
+          <name>verbose</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> &lt;p&gt;
+ If &apos;true&apos;, the plugin and the XJC compiler are both set to verbose mode
+ (xjc&apos;s -verbose option).
+ &lt;/p&gt;
+ &lt;p&gt;
+ It is automatically set to &apos;true&apos; when maven is run in debug mode (mvn&apos;s
+ -X option).
+ &lt;/p&gt;
+</description>
+        </parameter>
+        <parameter>
+          <name>debug</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> &lt;p&gt;
+ If &apos;true&apos;, the XJC compiler is set to debug mode (xjc&apos;s -debug option).
+ &lt;/p&gt;
+ &lt;p&gt;
+ It is automatically set to &apos;true&apos; when maven is run in debug mode (mvn&apos;s
+ -X option).
+ &lt;/p&gt;
+</description>
+        </parameter>
+        <parameter>
+          <name>args</name>
+          <type>java.util.List&lt;java.lang.String&gt;</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> &lt;p&gt;
+ A list of extra XJC&apos;s command-line arguments (items must include the dash
+ &apos;-&apos;).
+ &lt;/p&gt;
+ &lt;p&gt;
+ Arguments set here take precedence over other mojo parameters.
+ &lt;/p&gt;
+</description>
+        </parameter>
+        <parameter>
+          <name>forceRegenerate</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> If &apos;true&apos;, no up-to-date check is performed and the XJC always
+ re-generates the sources.
+ 
+</description>
+        </parameter>
+        <parameter>
+          <name>removeOldOutput</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> &lt;p&gt;
+ If &apos;true&apos;, the [generateDirectory] dir will be deleted before the XJC
+ binding compiler recompiles the source files.
+ &lt;/p&gt;
+ &lt;p&gt;
+ Note that if set to &apos;false&apos;, the up-to-date check might not work, since
+ XJC does not regenerate all files (i.e. files for &quot;any&quot; elements under
+ &apos;xjc/org/w3/_2001/xmlschema&apos; directory).
+ &lt;/p&gt;
+ 
+</description>
+        </parameter>
+        <parameter>
+          <name>otherDepends</name>
+          <type>java.lang.String[]</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> A list of of input files or URLs to consider during the up-to-date. By
+ default it always considers: 1. schema files, 2. binding files, 3.
+ catalog file, and 4. the pom.xml file of the project executing this
+ plugin.
+</description>
+        </parameter>
+        <parameter>
+          <name>episodeFile</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>episode</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>classpathElements</name>
+          <type>java.util.List</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description> Project classpath. Used internally when runing the XJC compiler.
+</description>
+        </parameter>
+        <parameter>
+          <name>project</name>
+          <type>org.apache.maven.project.MavenProject</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>plugins</name>
+          <type>org.jvnet.jaxb2.maven2.Artifact[]</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description> XJC plugins to be made available to XJC. They still need to be activated
+ by using &amp;lt;args&gt; and enable plugin activation option.
+</description>
+        </parameter>
+        <parameter>
+          <name>episodes</name>
+          <type>org.jvnet.jaxb2.maven2.Artifact[]</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+      </parameters>
+      <configuration>
+        <episode implementation="boolean" default-value="true">${maven.xjc2.episode}</episode>
+        <writeCode implementation="boolean" default-value="true">${maven.xjc2.writeCode}</writeCode>
+        <schemaDirectory implementation="java.io.File" default-value="src/main/resources">${maven.xjc2.schemaDirectory}</schemaDirectory>
+        <catalog implementation="java.io.File">${maven.xjc2.catalog}</catalog>
+        <episodeFile implementation="java.io.File" default-value="${project.build.directory}/generated-sources/xjc/META-INF/sun-jaxb.episode">${maven.xjc2.episodeFile}</episodeFile>
+        <catalogResolver implementation="java.lang.String">${maven.xjc2.catalogResolver}</catalogResolver>
+        <debug implementation="boolean" default-value="false">${maven.xjc2.debug}</debug>
+        <schemaLanguage implementation="java.lang.String">${maven.xjc2.schemaLanguage}</schemaLanguage>
+        <disableDefaultExcludes implementation="boolean" default-value="false">${maven.xjc2.disableDefaultExcludes}</disableDefaultExcludes>
+        <extension implementation="boolean" default-value="false">${maven.xjc2.extension}</extension>
+        <project implementation="org.apache.maven.project.MavenProject">${project}</project>
+        <bindingDirectory implementation="java.io.File">${maven.xjc2.bindingDirectory}</bindingDirectory>
+        <readOnly implementation="boolean" default-value="false">${maven.xjc2.readOnly}</readOnly>
+        <verbose implementation="boolean" default-value="false">${maven.xjc2.verbose}</verbose>
+        <generatePackage implementation="java.lang.String">${maven.xjc2.generatePackage}</generatePackage>
+        <classpathElements implementation="java.util.List">${project.compileClasspathElements}</classpathElements>
+        <localRepository implementation="org.apache.maven.artifact.repository.ArtifactRepository">${localRepository}</localRepository>
+        <strict implementation="boolean" default-value="true">${maven.xjc2.strict}</strict>
+        <forceRegenerate implementation="boolean" default-value="false">${maven.xjc2.forceRegenerate}</forceRegenerate>
+        <generateDirectory implementation="java.io.File" default-value="${project.build.directory}/generated-sources/xjc">${maven.xjc2.generateDirectory}</generateDirectory>
+        <removeOldOutput implementation="boolean" default-value="true">${maven.xjc2.removeOldOutput}</removeOldOutput>
+      </configuration>
+      <requirements>
+        <requirement>
+          <role>org.apache.maven.artifact.resolver.ArtifactResolver</role>
+          <field-name>artifactResolver</field-name>
+        </requirement>
+        <requirement>
+          <role>org.apache.maven.artifact.factory.ArtifactFactory</role>
+          <field-name>artifactFactory</field-name>
+        </requirement>
+        <requirement>
+          <role>org.apache.maven.project.MavenProjectBuilder</role>
+          <field-name>mavenProjectBuilder</field-name>
+        </requirement>
+      </requirements>
+    </mojo>
+  </mojos>
+  <dependencies/>
+</plugin>

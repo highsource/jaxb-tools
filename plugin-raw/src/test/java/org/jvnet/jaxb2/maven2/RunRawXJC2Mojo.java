@@ -15,6 +15,7 @@
 package org.jvnet.jaxb2.maven2;
 
 import java.io.File;
+import java.util.Set;
 
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.repository.DefaultArtifactRepository;
@@ -67,6 +68,8 @@ public class RunRawXJC2Mojo extends AbstractMojoTestCase {
 
 		final MavenProject mavenProject = mavenProjectBuilder.build(pom,
 				localRepository, null);
+		
+		Set pluginArtifacts = mavenProject.getPluginArtifacts();
 
 		final RawXJC2Mojo generator = (RawXJC2Mojo) lookupMojo("generate", pom);
 		generator.setProject(mavenProject);

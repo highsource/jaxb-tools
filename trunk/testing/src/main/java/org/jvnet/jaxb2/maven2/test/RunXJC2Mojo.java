@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.maven.plugin.Mojo;
 import org.apache.maven.project.MavenProject;
+import org.jvnet.jaxb2.maven2.AbstractXJC2Mojo;
 import org.jvnet.jaxb2.maven2.RawXJC2Mojo;
 
 /**
@@ -65,7 +66,7 @@ public class RunXJC2Mojo extends TestCase {
     return true;
   }
 
-  public RawXJC2Mojo initMojo() {
+  public AbstractXJC2Mojo initMojo() {
     final RawXJC2Mojo mojo = createMojo();
     configureMojo(mojo);
     return mojo;

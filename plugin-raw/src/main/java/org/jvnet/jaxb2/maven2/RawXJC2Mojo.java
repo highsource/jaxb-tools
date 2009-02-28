@@ -217,7 +217,7 @@ public class RawXJC2Mojo extends AbstractXJC2Mojo {
 							+ "], produces timestamp [" + producesTimestamp
 							+ "].");
 
-		return CollectionUtils.<Long> lt().compare(dependsTimestamp,
+		return producesTimestamp != null && CollectionUtils.<Long> lt().compare(dependsTimestamp,
 				producesTimestamp) > 0;
 	}
 

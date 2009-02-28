@@ -1,6 +1,8 @@
 package org.jvnet.jaxb2.maven2;
 
 import java.io.File;
+import java.lang.reflect.Method;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import org.jfrog.maven.annomojo.annotations.MojoParameter;
 import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
 
 public abstract class AbstractXJC2Mojo extends AbstractMojo {
+
 
 	private String schemaLanguage;
 
@@ -129,8 +132,8 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 
 	/**
 	 * A list of regular expression file search patterns to specify the binding
-	 * files to be excluded from the <code>bindingIncludes</code>. Searching is
-	 * based from the root of bindingDirectory.
+	 * files to be excluded from the <code>bindingIncludes</code>. Searching
+	 * is based from the root of bindingDirectory.
 	 */
 	@MojoParameter
 	public String[] getBindingExcludes() {
@@ -160,7 +163,8 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 
 	/**
 	 * Specify the catalog file to resolve external entity references (xjc's
-	 * -catalog option) </p>
+	 * -catalog option)
+	 * </p>
 	 * <p>
 	 * Support TR9401, XCatalog, and OASIS XML Catalog format. See the
 	 * catalog-resolver sample and this article for details.
@@ -218,9 +222,9 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 	 * Generated code will be written under this directory.
 	 * </p>
 	 * <p>
-	 * For instance, if you specify <code>generateDirectory="doe/ray"</code> and
-	 * <code>generatePackage="org.here"</code>, then files are generated to
-	 * <code>doe/ray/org/here</code>.
+	 * For instance, if you specify <code>generateDirectory="doe/ray"</code>
+	 * and <code>generatePackage="org.here"</code>, then files are generated
+	 * to <code>doe/ray/org/here</code>.
 	 * </p>
 	 */
 	@MojoParameter(defaultValue = "${project.build.directory}/generated-sources/xjc", expression = "${maven.xjc2.generateDirectory}", required = true)
@@ -472,6 +476,9 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 	}
 
 	protected void logConfiguration() {
+
+		logApiConfiguration();
+
 		getLog().info("schemaLanguage:" + getSchemaLanguage());
 		getLog().info("schemaDirectory:" + getSchemaDirectory());
 		getLog().info("schemaIncludes:" + getSchemaIncludes());
@@ -499,6 +506,64 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 		getLog().info("classpathElements:" + getClasspathElements());
 		getLog().info("plugins:" + getPlugins());
 		getLog().info("episodes:" + getEpisodes());
+	}
+	
+	private static final String XML_SCHEMA_CLASS_NAME = "XmlSchema";
+
+	private static final String XML_SCHEMA_CLASS_QNAME = "javax.xml.bind.annotation."
+			+ XML_SCHEMA_CLASS_NAME;
+
+	private static final String XML_SCHEMA_RESOURCE_NAME = XML_SCHEMA_CLASS_NAME
+			+ ".class";
+
+	private static final String XML_SCHEMA_RESOURCE_QNAME = "/javax/xml/bind/annotation/"
+			+ XML_SCHEMA_RESOURCE_NAME;
+
+	private static final String XML_ELEMENT_REF_CLASS_NAME = "XmlElementRef";
+
+	private static final String XML_ELEMENT_REF_CLASS_QNAME = "javax.xml.bind.annotation."
+			+ XML_ELEMENT_REF_CLASS_NAME;
+
+	protected void logApiConfiguration() {
+
+		try {
+			final Class<?> xmlSchemaClass = Class
+					.forName(XML_SCHEMA_CLASS_QNAME);
+
+			final URL resource = xmlSchemaClass
+					.getResource(XML_SCHEMA_RESOURCE_NAME);
+
+			final String draftLocation = resource.toExternalForm();
+			final String location;
+			if (draftLocation.endsWith(XML_SCHEMA_RESOURCE_QNAME)) {
+				location = draftLocation.substring(0, draftLocation.length()
+						- XML_SCHEMA_RESOURCE_QNAME.length());
+			} else {
+				location = draftLocation;
+			}
+			getLog().info("JAXB API is loaded from the [" + location + "].");
+
+			try {
+				xmlSchemaClass.getMethod("location");
+
+				final Class<?> xmlElementRefClass = Class
+						.forName(XML_ELEMENT_REF_CLASS_QNAME);
+
+				try {
+					xmlElementRefClass.getMethod("required");
+					getLog().info("Detected JAXB API version [2.2].");
+				} catch (NoSuchMethodException nsmex2) {
+					getLog().info("Detected JAXB API version [2.1].");
+				}
+			} catch (NoSuchMethodException nsmex1) {
+				getLog().info("Detected JAXB API version [2.0].");
+
+			}
+		} catch (ClassNotFoundException cnfex) {
+			getLog()
+					.error(
+							"Could not find JAXB 2.x API classes. Make sure JAXB 2.x API is on the classpath.");
+		}
 	}
 
 }

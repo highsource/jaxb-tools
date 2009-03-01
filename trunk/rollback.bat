@@ -1,1 +1,0 @@
-call mvn release:rollback -DperformRelease >std 2>err

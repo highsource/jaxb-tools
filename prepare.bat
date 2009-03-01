@@ -1,1 +1,0 @@
-call mvn release:prepare -B -DperformRelease >std 2>err

@@ -2,7 +2,7 @@
   <description>Maven2 plugin for JAXB 2 XJC compiler to generate java sources from schemas.</description>
   <groupId>org.jvnet.jaxb2.maven2</groupId>
   <artifactId>maven-jaxb2-plugin-raw</artifactId>
-  <version>0.7.0-SNAPSHOT</version>
+  <version>TEST</version>
   <goalPrefix>jaxb2raw</goalPrefix>
   <isolatedRealm>false</isolatedRealm>
   <inheritedByDefault>true</inheritedByDefault>
@@ -26,13 +26,6 @@
       <instantiationStrategy>per-lookup</instantiationStrategy>
       <executionStrategy>once-per-session</executionStrategy>
       <parameters>
-        <parameter>
-          <name>localRepository</name>
-          <type>org.apache.maven.artifact.repository.ArtifactRepository</type>
-          <required>true</required>
-          <editable>true</editable>
-          <description></description>
-        </parameter>
         <parameter>
           <name>schemaLanguage</name>
           <type>java.lang.String</type>
@@ -290,7 +283,7 @@
         </parameter>
         <parameter>
           <name>otherDepends</name>
-          <type>java.lang.String[]</type>
+          <type>java.io.File[]</type>
           <required>false</required>
           <editable>true</editable>
           <description> A list of of input files or URLs to consider during the up-to-date. By
@@ -322,15 +315,8 @@
 </description>
         </parameter>
         <parameter>
-          <name>project</name>
-          <type>org.apache.maven.project.MavenProject</type>
-          <required>true</required>
-          <editable>false</editable>
-          <description></description>
-        </parameter>
-        <parameter>
           <name>plugins</name>
-          <type>org.jvnet.jaxb2.maven2.Artifact[]</type>
+          <type>org.apache.maven.model.Dependency[]</type>
           <required>false</required>
           <editable>true</editable>
           <description> XJC plugins to be made available to XJC. They still need to be activated
@@ -339,13 +325,42 @@
         </parameter>
         <parameter>
           <name>episodes</name>
-          <type>org.jvnet.jaxb2.maven2.Artifact[]</type>
+          <type>org.apache.maven.model.Dependency[]</type>
           <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>project</name>
+          <type>org.apache.maven.project.MavenProject</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>dependencyManagement</name>
+          <type>org.apache.maven.model.DependencyManagement</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>localRepository</name>
+          <type>org.apache.maven.artifact.repository.ArtifactRepository</type>
+          <required>true</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>pluginArtifacts</name>
+          <type>java.util.List&lt;org.apache.maven.artifact.Artifact&gt;</type>
+          <required>true</required>
           <editable>true</editable>
           <description></description>
         </parameter>
       </parameters>
       <configuration>
+        <dependencyManagement implementation="org.apache.maven.model.DependencyManagement">${project.dependencyManagement}</dependencyManagement>
         <episode implementation="boolean" default-value="true">${maven.xjc2.episode}</episode>
         <writeCode implementation="boolean" default-value="true">${maven.xjc2.writeCode}</writeCode>
         <schemaDirectory implementation="java.io.File" default-value="src/main/resources">${maven.xjc2.schemaDirectory}</schemaDirectory>
@@ -355,6 +370,7 @@
         <debug implementation="boolean" default-value="false">${maven.xjc2.debug}</debug>
         <schemaLanguage implementation="java.lang.String">${maven.xjc2.schemaLanguage}</schemaLanguage>
         <disableDefaultExcludes implementation="boolean" default-value="false">${maven.xjc2.disableDefaultExcludes}</disableDefaultExcludes>
+        <pluginArtifacts implementation="java.util.List&lt;org.apache.maven.artifact.Artifact&gt;">${plugin.artifacts}</pluginArtifacts>
         <extension implementation="boolean" default-value="false">${maven.xjc2.extension}</extension>
         <project implementation="org.apache.maven.project.MavenProject">${project}</project>
         <bindingDirectory implementation="java.io.File">${maven.xjc2.bindingDirectory}</bindingDirectory>
@@ -366,9 +382,13 @@
         <strict implementation="boolean" default-value="true">${maven.xjc2.strict}</strict>
         <forceRegenerate implementation="boolean" default-value="false">${maven.xjc2.forceRegenerate}</forceRegenerate>
         <generateDirectory implementation="java.io.File" default-value="${project.build.directory}/generated-sources/xjc">${maven.xjc2.generateDirectory}</generateDirectory>
-        <removeOldOutput implementation="boolean" default-value="true">${maven.xjc2.removeOldOutput}</removeOldOutput>
+        <removeOldOutput implementation="boolean" default-value="false">${maven.xjc2.removeOldOutput}</removeOldOutput>
       </configuration>
       <requirements>
+        <requirement>
+          <role>org.apache.maven.artifact.metadata.ArtifactMetadataSource</role>
+          <field-name>artifactMetadataSource</field-name>
+        </requirement>
         <requirement>
           <role>org.apache.maven.artifact.resolver.ArtifactResolver</role>
           <field-name>artifactResolver</field-name>

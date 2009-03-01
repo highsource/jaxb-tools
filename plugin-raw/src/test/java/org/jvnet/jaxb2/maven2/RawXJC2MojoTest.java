@@ -15,7 +15,6 @@
 package org.jvnet.jaxb2.maven2;
 
 import java.io.File;
-import java.util.Set;
 
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.repository.DefaultArtifactRepository;
@@ -25,7 +24,7 @@ import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectBuilder;
 
-public class RunRawXJC2Mojo extends AbstractMojoTestCase {
+public class RawXJC2MojoTest extends AbstractMojoTestCase {
 
 	static {
 		System.setProperty("basedir", getBaseDir().getAbsolutePath());
@@ -42,7 +41,7 @@ public class RunRawXJC2Mojo extends AbstractMojoTestCase {
 
 	protected static File getBaseDir() {
 		try {
-			return (new File(RunRawXJC2Mojo.class.getProtectionDomain()
+			return (new File(RawXJC2MojoTest.class.getProtectionDomain()
 					.getCodeSource().getLocation().getFile())).getParentFile()
 					.getParentFile().getAbsoluteFile();
 		} catch (Exception ex) {
@@ -68,10 +67,9 @@ public class RunRawXJC2Mojo extends AbstractMojoTestCase {
 
 		final MavenProject mavenProject = mavenProjectBuilder.build(pom,
 				localRepository, null);
-		
-		Set pluginArtifacts = mavenProject.getPluginArtifacts();
 
-		final RawXJC2Mojo generator = (RawXJC2Mojo) lookupMojo("generate", pom);
+		final AbstractXJC2Mojo generator = (AbstractXJC2Mojo) lookupMojo(
+				"generate", pom);
 		generator.setProject(mavenProject);
 		generator.setLocalRepository(localRepository);
 		generator.setSchemaDirectory(new File(getBaseDir(),

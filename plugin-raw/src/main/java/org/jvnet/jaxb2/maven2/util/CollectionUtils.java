@@ -1,9 +1,10 @@
 package org.jvnet.jaxb2.maven2.util;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
-
+import java.util.List;
 
 public class CollectionUtils {
 
@@ -39,15 +40,24 @@ public class CollectionUtils {
 		public V eval(T argument);
 	}
 
+	public static <T, V> Collection<V> apply(Collection<T> collection,
+			Function<T, V> function) {
+		final List<V> list = new ArrayList<V>(collection.size());
+		for (T t : collection) {
+			list.add(function.eval(t));
+		}
+		return list;
+	}
+
 	public static <T, V> V bestValue(Collection<T> collection,
 			CollectionUtils.Function<T, V> function, Comparator<V> comparator) {
-	
+
 		if (collection == null || collection.isEmpty())
 			return null;
-	
+
 		final Iterator<T> i = collection.iterator();
 		V candidateValue = function.eval(i.next());
-	
+
 		while (i.hasNext()) {
 			final V nextValue = function.eval(i.next());
 			if (comparator.compare(candidateValue, nextValue) < 0) {
@@ -57,17 +67,20 @@ public class CollectionUtils {
 		return candidateValue;
 	}
 
-	@SuppressWarnings("unchecked")
-	public
-	static Comparator<?> LT = new NegativeComparator();
-	@SuppressWarnings("unchecked")
-	public
-	static Comparator<?> GT = new PositiveComparator();
+	public static Comparator<?> LT = new NegativeComparator();
+
+	public static Comparator<?> GT = new PositiveComparator();
+
 	public static <V extends Object & Comparable<? super V>> Comparator<V> lt() {
-		return (Comparator<V>) LT;
+		@SuppressWarnings("unchecked")
+		final Comparator<V> comparator = (Comparator<V>) LT;
+		return comparator;
 	}
+
 	public static <V extends Object & Comparable<? super V>> Comparator<V> gt() {
-		return (Comparator<V>) GT;
+		@SuppressWarnings("unchecked")
+		final Comparator<V> comparator = (Comparator<V>) GT;
+		return comparator;
 	}
 
 }

@@ -17,13 +17,13 @@ package org.jvnet.jaxb2.maven2;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-public class XJC2MojoClassLoader extends URLClassLoader {
+public class ParentFirstClassLoader extends URLClassLoader {
 
-	public XJC2MojoClassLoader(URL[] urls) {
+	public ParentFirstClassLoader(URL[] urls) {
 		super(urls);
 	}
 
-	public XJC2MojoClassLoader(URL[] urls, ClassLoader parent) {
+	public ParentFirstClassLoader(URL[] urls, ClassLoader parent) {
 		super(urls, parent);
 	}
 
@@ -31,11 +31,11 @@ public class XJC2MojoClassLoader extends URLClassLoader {
 		super.addURL(url);
 	}
 
-	public Class loadClass(String name) throws ClassNotFoundException {
+	public Class<?> loadClass(String name) throws ClassNotFoundException {
 		return loadClass(name, false);
 	}
 
-	protected Class loadClass(String name, boolean resolve)
+	protected Class<?> loadClass(String name, boolean resolve)
 			throws ClassNotFoundException {
 
 		// First, check if the class has already been loaded
@@ -49,7 +49,7 @@ public class XJC2MojoClassLoader extends URLClassLoader {
 				// ignore
 			}
 		}
-		
+
 		// then the parent class loader
 		if (c == null) {
 			try {
@@ -66,7 +66,7 @@ public class XJC2MojoClassLoader extends URLClassLoader {
 				throw cnfe;
 			}
 		}
-		
+
 		if (resolve) {
 			resolveClass(c);
 		}

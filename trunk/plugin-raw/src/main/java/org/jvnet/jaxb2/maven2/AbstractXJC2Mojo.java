@@ -1,12 +1,20 @@
 package org.jvnet.jaxb2.maven2;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.maven.artifact.factory.ArtifactFactory;
+import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
+import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.artifact.resolver.ArtifactResolver;
+import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.project.MavenProject;
+import org.apache.maven.project.MavenProjectBuilder;
+import org.jfrog.maven.annomojo.annotations.MojoComponent;
 import org.jfrog.maven.annomojo.annotations.MojoParameter;
 
 import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
@@ -449,36 +457,51 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 		this.classpathElements = classpathElements;
 	}
 
-	protected Artifact[] plugins;
+	protected Dependency[] plugins;
 
 	/**
 	 * XJC plugins to be made available to XJC. They still need to be activated
 	 * by using &lt;args> and enable plugin activation option.
 	 */
 	@MojoParameter
-	public Artifact[] getPlugins() {
+	public Dependency[] getPlugins() {
 		return plugins;
 	}
 
-	public void setPlugins(Artifact[] plugins) {
+	public void setPlugins(Dependency[] plugins) {
 		this.plugins = plugins;
 	}
 
-	private Artifact[] episodes;
+	private Dependency[] episodes;
+
+	private MavenProject project;
+
+	private ArtifactResolver artifactResolver;
+
+	private ArtifactMetadataSource artifactMetadataSource;
+
+	private ArtifactFactory artifactFactory;
+
+	private ArtifactRepository localRepository;
+
+	private MavenProjectBuilder mavenProjectBuilder;
+
+	private List<org.apache.maven.artifact.Artifact> pluginArtifacts;
 
 	@MojoParameter
-	public Artifact[] getEpisodes() {
+	public Dependency[] getEpisodes() {
 		return episodes;
 	}
 
-	public void setEpisodes(Artifact[] episodes) {
+	public void setEpisodes(Dependency[] episodes) {
 		this.episodes = episodes;
 	}
 
-	protected void logConfiguration() {
+	protected void logConfiguration() throws MojoExecutionException {
 
 		logApiConfiguration();
 
+		getLog().info("pluginArtifacts:" + getPluginArtifacts());
 		getLog().info("schemaLanguage:" + getSchemaLanguage());
 		getLog().info("schemaDirectory:" + getSchemaDirectory());
 		getLog().info("schemaIncludes:" + getSchemaIncludes());
@@ -506,23 +529,86 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 		getLog().info("classpathElements:" + getClasspathElements());
 		getLog().info("plugins:" + getPlugins());
 		getLog().info("episodes:" + getEpisodes());
+		getLog().info("xjcPlugins:" + getPlugins());
+		getLog().info("episodes:" + getEpisodes());
 	}
 	
 	private static final String XML_SCHEMA_CLASS_NAME = "XmlSchema";
 
+	@MojoParameter(expression = "${project}", required = true, readonly = true)
+	public MavenProject getProject() {
+		return project;
+	}
+
+	public void setProject(MavenProject project) {
+		this.project = project;
+	}
+
 	private static final String XML_SCHEMA_CLASS_QNAME = "javax.xml.bind.annotation."
 			+ XML_SCHEMA_CLASS_NAME;
+
+	@MojoComponent
+	public ArtifactResolver getArtifactResolver() {
+		return artifactResolver;
+	}
+
+	public void setArtifactResolver(ArtifactResolver artifactResolver) {
+		this.artifactResolver = artifactResolver;
+	}
 
 	private static final String XML_SCHEMA_RESOURCE_NAME = XML_SCHEMA_CLASS_NAME
 			+ ".class";
 
+	@MojoComponent
+	public ArtifactMetadataSource getArtifactMetadataSource() {
+		return artifactMetadataSource;
+	}
+
+	public void setArtifactMetadataSource(ArtifactMetadataSource artifactMetadataSource) {
+		this.artifactMetadataSource = artifactMetadataSource;
+	}
+
 	private static final String XML_SCHEMA_RESOURCE_QNAME = "/javax/xml/bind/annotation/"
 			+ XML_SCHEMA_RESOURCE_NAME;
 
+	/**
+	 * Used internally to resolve {@link #plugins} to their jar files.
+	 */
+	@MojoComponent
+	public ArtifactFactory getArtifactFactory() {
+		return artifactFactory;
+	}
+
+	public void setArtifactFactory(ArtifactFactory artifactFactory) {
+		this.artifactFactory = artifactFactory;
+	}
+
 	private static final String XML_ELEMENT_REF_CLASS_NAME = "XmlElementRef";
+
+	@MojoParameter(expression = "${localRepository}", required = true)
+	public ArtifactRepository getLocalRepository() {
+		return localRepository;
+	}
+
+	public void setLocalRepository(ArtifactRepository localRepository) {
+		this.localRepository = localRepository;
+	}
 
 	private static final String XML_ELEMENT_REF_CLASS_QNAME = "javax.xml.bind.annotation."
 			+ XML_ELEMENT_REF_CLASS_NAME;
+
+	/**
+	 * Artifact factory, needed to download source jars.
+	 * 
+	 */
+	@MojoComponent(role = "org.apache.maven.project.MavenProjectBuilder")
+	public MavenProjectBuilder getMavenProjectBuilder() {
+		return mavenProjectBuilder;
+	}
+
+	public void setMavenProjectBuilder(MavenProjectBuilder mavenProjectBuilder) {
+		this.mavenProjectBuilder = mavenProjectBuilder;
+	}
 
 	protected void logApiConfiguration() {
 
@@ -564,6 +650,15 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 					.error(
 							"Could not find JAXB 2.x API classes. Make sure JAXB 2.x API is on the classpath.");
 		}
+	}
+
+	@MojoParameter(expression = "${plugin.artifacts}", required = true)
+	public List<org.apache.maven.artifact.Artifact> getPluginArtifacts() {
+		return pluginArtifacts;
+	}
+
+	public void setPluginArtifacts(List<org.apache.maven.artifact.Artifact> plugingArtifacts) {
+		this.pluginArtifacts = plugingArtifacts;
 	}
 
 }

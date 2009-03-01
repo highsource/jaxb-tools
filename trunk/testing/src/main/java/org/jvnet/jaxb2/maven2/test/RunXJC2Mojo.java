@@ -67,16 +67,16 @@ public class RunXJC2Mojo extends TestCase {
   }
 
   public AbstractXJC2Mojo initMojo() {
-    final RawXJC2Mojo mojo = createMojo();
+    final AbstractXJC2Mojo mojo = createMojo();
     configureMojo(mojo);
     return mojo;
   }
 
-  protected RawXJC2Mojo createMojo() {
+  protected AbstractXJC2Mojo createMojo() {
     return new RawXJC2Mojo();
   }
 
-  protected void configureMojo(final RawXJC2Mojo mojo) {
+  protected void configureMojo(final AbstractXJC2Mojo mojo) {
 	mojo.setProject(new MavenProject());
     mojo.setSchemaDirectory(getSchemaDirectory());
     mojo.setGenerateDirectory(getGeneratedDirectory());

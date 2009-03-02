@@ -12,7 +12,7 @@
 			<dependency>
 				<groupId>org.jvnet.jaxb2_commons</groupId>
 				<artifactId>basic</artifactId>
-				<version>0.4.1.5</version>
+				<version>0.4.1.4</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -61,6 +61,16 @@
 						<plugin>
 							<groupId>org.jvnet.jaxb2_commons</groupId>
 							<artifactId>basic</artifactId>
+							<exclusions>
+								<exclusion>
+									<groupId>com.sun.xml.bind</groupId>
+									<artifactId>jaxb-impl</artifactId>
+								</exclusion>
+								<exclusion>
+									<groupId>com.sun.xml.bind</groupId>
+									<artifactId>jaxb-xjc</artifactId>
+								</exclusion>
+							</exclusions>
 						</plugin>
 					</plugins>
 				</configuration>

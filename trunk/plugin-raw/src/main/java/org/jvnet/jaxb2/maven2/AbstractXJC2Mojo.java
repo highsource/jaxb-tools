@@ -21,7 +21,6 @@ import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
 
 public abstract class AbstractXJC2Mojo extends AbstractMojo {
 
-
 	private String schemaLanguage;
 
 	/**
@@ -140,8 +139,8 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 
 	/**
 	 * A list of regular expression file search patterns to specify the binding
-	 * files to be excluded from the <code>bindingIncludes</code>. Searching
-	 * is based from the root of bindingDirectory.
+	 * files to be excluded from the <code>bindingIncludes</code>. Searching is
+	 * based from the root of bindingDirectory.
 	 */
 	@MojoParameter
 	public String[] getBindingExcludes() {
@@ -171,8 +170,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 
 	/**
 	 * Specify the catalog file to resolve external entity references (xjc's
-	 * -catalog option)
-	 * </p>
+	 * -catalog option) </p>
 	 * <p>
 	 * Support TR9401, XCatalog, and OASIS XML Catalog format. See the
 	 * catalog-resolver sample and this article for details.
@@ -230,9 +228,9 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 	 * Generated code will be written under this directory.
 	 * </p>
 	 * <p>
-	 * For instance, if you specify <code>generateDirectory="doe/ray"</code>
-	 * and <code>generatePackage="org.here"</code>, then files are generated
-	 * to <code>doe/ray/org/here</code>.
+	 * For instance, if you specify <code>generateDirectory="doe/ray"</code> and
+	 * <code>generatePackage="org.here"</code>, then files are generated to
+	 * <code>doe/ray/org/here</code>.
 	 * </p>
 	 */
 	@MojoParameter(defaultValue = "${project.build.directory}/generated-sources/xjc", expression = "${maven.xjc2.generateDirectory}", required = true)
@@ -497,6 +495,17 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 		this.episodes = episodes;
 	}
 
+	private String specVersion = "2.1";
+
+	@MojoParameter(defaultValue = "2.1")
+	public String getSpecVersion() {
+		return specVersion;
+	}
+
+	public void setSpecVersion(String specVersion) {
+		this.specVersion = specVersion;
+	}
+
 	protected void logConfiguration() throws MojoExecutionException {
 
 		logApiConfiguration();
@@ -531,8 +540,9 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 		getLog().info("episodes:" + getEpisodes());
 		getLog().info("xjcPlugins:" + getPlugins());
 		getLog().info("episodes:" + getEpisodes());
+		getLog().info("specVersion:" + getSpecVersion());
 	}
-	
+
 	private static final String XML_SCHEMA_CLASS_NAME = "XmlSchema";
 
 	@MojoParameter(expression = "${project}", required = true, readonly = true)
@@ -564,7 +574,8 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 		return artifactMetadataSource;
 	}
 
-	public void setArtifactMetadataSource(ArtifactMetadataSource artifactMetadataSource) {
+	public void setArtifactMetadataSource(
+			ArtifactMetadataSource artifactMetadataSource) {
 		this.artifactMetadataSource = artifactMetadataSource;
 	}
 
@@ -657,7 +668,8 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 		return pluginArtifacts;
 	}
 
-	public void setPluginArtifacts(List<org.apache.maven.artifact.Artifact> plugingArtifacts) {
+	public void setPluginArtifacts(
+			List<org.apache.maven.artifact.Artifact> plugingArtifacts) {
 		this.pluginArtifacts = plugingArtifacts;
 	}
 

@@ -49,6 +49,7 @@ import com.sun.tools.xjc.BadCommandLineException;
 import com.sun.tools.xjc.Language;
 import com.sun.tools.xjc.ModelLoader;
 import com.sun.tools.xjc.Options;
+import com.sun.tools.xjc.api.SpecVersion;
 import com.sun.tools.xjc.model.Model;
 import com.sun.tools.xjc.outline.Outline;
 
@@ -140,7 +141,10 @@ public class RawXJC2Mojo extends AbstractXJC2Mojo {
 		}
 	}
 
-	/** ************************************************************************** */
+	/**
+	 * *************************************************************************
+	 * *
+	 */
 
 	protected void injectDependencyDefaults() {
 		injectDependencyDefaults(getPlugins());
@@ -264,8 +268,8 @@ public class RawXJC2Mojo extends AbstractXJC2Mojo {
 	 * Initializes logging. If Maven is run in debug mode (that is, debug level
 	 * is enabled in the log), turn on the verbose mode in Mojo. Further on, if
 	 * vebose mode is on, set the
-	 * <code>com.sun.tools.xjc.Options.findServices</code> system property on
-	 * to enable debuggin of XJC plugins.
+	 * <code>com.sun.tools.xjc.Options.findServices</code> system property on to
+	 * enable debuggin of XJC plugins.
 	 * 
 	 */
 	protected void setupLogging() {
@@ -346,9 +350,9 @@ public class RawXJC2Mojo extends AbstractXJC2Mojo {
 
 	protected void setupSchemaFiles() throws MojoExecutionException {
 		try {
-			this.schemaFiles = IOUtils.scanDirectoryForFiles(getSchemaDirectory(),
-					getSchemaIncludes(), getSchemaExcludes(),
-					!getDisableDefaultExcludes());
+			this.schemaFiles = IOUtils.scanDirectoryForFiles(
+					getSchemaDirectory(), getSchemaIncludes(),
+					getSchemaExcludes(), !getDisableDefaultExcludes());
 		} catch (IOException ioex) {
 			throw new MojoExecutionException("Could not setup schema files.",
 					ioex);
@@ -357,15 +361,15 @@ public class RawXJC2Mojo extends AbstractXJC2Mojo {
 
 	protected void setupBindingFiles() throws MojoExecutionException {
 		try {
-			this.bindingFiles = IOUtils.scanDirectoryForFiles(getBindingDirectory(),
-					getBindingIncludes(), getBindingExcludes(),
-					!getDisableDefaultExcludes());
+			this.bindingFiles = IOUtils.scanDirectoryForFiles(
+					getBindingDirectory(), getBindingIncludes(),
+					getBindingExcludes(), !getDisableDefaultExcludes());
 		} catch (IOException ioex) {
 			throw new MojoExecutionException("Could not setup schema files.",
 					ioex);
 		}
 	}
-	
+
 	protected void setupDependsFiles() {
 		final List<File> dependsFiles = new ArrayList<File>();
 
@@ -384,15 +388,16 @@ public class RawXJC2Mojo extends AbstractXJC2Mojo {
 
 	protected void setupProducesFiles() throws MojoExecutionException {
 		try {
-			this.producesFiles = IOUtils.scanDirectoryForFiles(getGenerateDirectory(),
-					new String[] { "**/*.*", "**/*.java", "**/bgm.ser",
-							"**/jaxb.properties" }, new String[0], false);
+			this.producesFiles = IOUtils.scanDirectoryForFiles(
+					getGenerateDirectory(), new String[] { "**/*.*",
+							"**/*.java", "**/bgm.ser", "**/jaxb.properties" },
+					new String[0], false);
 		} catch (IOException ioex) {
 			throw new MojoExecutionException("Could not setup produced files.",
 					ioex);
 		}
 	}
-	
+
 	/**
 	 * Log the configuration settings. Shown when exception thrown or when
 	 * verbose is true.
@@ -401,15 +406,18 @@ public class RawXJC2Mojo extends AbstractXJC2Mojo {
 		super.logConfiguration();
 		getLog().info("schemaFiles (calculated):" + getSchemaFiles());
 		getLog().info("bindingFiles (calculated):" + getBindingFiles());
-		getLog().info("xjcPluginArtifacts (resolved):" + getXjcPluginArtifacts());
+		getLog().info(
+				"xjcPluginArtifacts (resolved):" + getXjcPluginArtifacts());
 		getLog().info("xjcPluginFiles (resolved):" + getXjcPluginFiles());
 		getLog().info("xjcPluginURLs (resolved):" + getXjcPluginURLs());
 		getLog().info("episodeArtifacts (resolved):" + getEpisodeArtifacts());
 		getLog().info("episodeFiles (resolved):" + getEpisodeArtifacts());
 	}
 
-	/** ************************************************************************** */
-
+	/**
+	 * *************************************************************************
+	 * *
+	 */
 
 	/**
 	 * Creates and initializes an instance of XJC options.
@@ -421,6 +429,8 @@ public class RawXJC2Mojo extends AbstractXJC2Mojo {
 		options.verbose = this.getVerbose();
 		options.classpaths.addAll(getXjcPluginURLs());
 		options.debugMode = this.getDebug();
+		final SpecVersion specVersion = SpecVersion.parse(getSpecVersion());
+		options.target = specVersion == null ? SpecVersion.LATEST : specVersion;
 
 		final Language schemaLanguage = getLanguage();
 		if (schemaLanguage != null) {
@@ -476,7 +486,7 @@ public class RawXJC2Mojo extends AbstractXJC2Mojo {
 
 		return options;
 	}
-	
+
 	/**
 	 * Returns the internal schema language as enum, or <code>null</code> for
 	 * autodetect.
@@ -511,7 +521,7 @@ public class RawXJC2Mojo extends AbstractXJC2Mojo {
 					+ schemaLanguage + "]");
 		}
 	}
-	
+
 	protected List<InputSource> getGrammars() throws MojoExecutionException {
 		final List<File> schemaFiles = getSchemaFiles();
 		final List<InputSource> grammars = new ArrayList<InputSource>(
@@ -521,7 +531,6 @@ public class RawXJC2Mojo extends AbstractXJC2Mojo {
 		}
 		return grammars;
 	}
-	
 
 	protected List<InputSource> getBindFiles() throws MojoExecutionException {
 		final List<File> bindingFiles = getBindingFiles();
@@ -533,7 +542,7 @@ public class RawXJC2Mojo extends AbstractXJC2Mojo {
 		return bindFiles;
 
 	}
-	
+
 	/**
 	 * Creates an instance of catalog resolver.
 	 * 
@@ -582,7 +591,7 @@ public class RawXJC2Mojo extends AbstractXJC2Mojo {
 
 		}
 	}
-	
+
 	/**
 	 * @return true to indicate results are up-to-date, that is, when the latest
 	 *         from input files is earlier than the younger from the output
@@ -692,7 +701,5 @@ public class RawXJC2Mojo extends AbstractXJC2Mojo {
 		}
 		return arguments.toArray(new String[arguments.size()]);
 	}
-
-
 
 }

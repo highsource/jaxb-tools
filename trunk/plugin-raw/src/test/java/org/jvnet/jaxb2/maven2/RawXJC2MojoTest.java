@@ -80,8 +80,7 @@ public class RawXJC2MojoTest extends AbstractMojoTestCase {
 				"target/test/generated-sources"));
 		generator.setVerbose(true);
 		generator.setGeneratePackage("unittest");
-		generator.setRemoveOldOutput(false);
-
+		generator.setRemoveOldOutput(true);
 		generator.execute();
 	}
 }

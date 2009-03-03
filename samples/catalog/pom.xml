@@ -14,12 +14,30 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>maven-assembly</id>
+						<phase>package</phase>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>maven-unpack</id>
+						<phase>pre-integration-test</phase>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<artifactId>maven-invoker-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>maven-integration-test</id>
+						<phase>integration-test</phase>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

@@ -35,7 +35,6 @@ import org.apache.maven.project.artifact.InvalidDependencyVersionException;
 import org.codehaus.plexus.util.FileUtils;
 import org.jfrog.maven.annomojo.annotations.MojoGoal;
 import org.jfrog.maven.annomojo.annotations.MojoPhase;
-import org.jfrog.maven.annomojo.annotations.MojoRequiresDependencyResolution;
 import org.jvnet.jaxb2.maven2.util.ArtifactUtils;
 import org.jvnet.jaxb2.maven2.util.CollectionUtils;
 import org.jvnet.jaxb2.maven2.util.IOUtils;
@@ -60,7 +59,6 @@ import com.sun.tools.xjc.outline.Outline;
  */
 @MojoGoal("generate")
 @MojoPhase("generate-sources")
-@MojoRequiresDependencyResolution
 public class RawXJC2Mojo extends AbstractXJC2Mojo {
 
 	private Collection<Artifact> xjcPluginArtifacts;

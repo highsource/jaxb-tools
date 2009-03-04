@@ -16,7 +16,6 @@ package org.jvnet.jaxb2.maven2;
 
 import org.jfrog.maven.annomojo.annotations.MojoGoal;
 import org.jfrog.maven.annomojo.annotations.MojoPhase;
-import org.jfrog.maven.annomojo.annotations.MojoRequiresDependencyResolution;
 
 /**
  * JAXB 2.x Mojo.
@@ -25,7 +24,6 @@ import org.jfrog.maven.annomojo.annotations.MojoRequiresDependencyResolution;
  */
 @MojoGoal("generate")
 @MojoPhase("generate-sources")
-@MojoRequiresDependencyResolution
 public class XJC2Mojo extends RawXJC2Mojo {
 
 }

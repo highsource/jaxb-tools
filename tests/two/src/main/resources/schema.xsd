@@ -234,5 +234,15 @@
 		</xs:sequence>
 		<xs:attribute name="constantAttribute" type="xs:decimal" use="required" fixed="2.2"/>
 	</xs:complexType>
+
+	<xs:element name="namedAny" type="namedAny"/>
+	<xs:complexType name="namedAny">
+		<xs:sequence>
+			<xs:any maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string"/>
+	</xs:complexType>
+
+
 	
 </xs:schema>

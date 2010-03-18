@@ -43,6 +43,7 @@ import org.xml.sax.InputSource;
 
 import com.sun.codemodel.CodeWriter;
 import com.sun.codemodel.JCodeModel;
+import com.sun.org.apache.xml.internal.resolver.CatalogManager;
 import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
 import com.sun.tools.xjc.BadCommandLineException;
 import com.sun.tools.xjc.Language;
@@ -452,7 +453,13 @@ public class RawXJC2Mojo extends AbstractXJC2Mojo {
 		final File catalog = this.getCatalog();
 		if (catalog != null) {
 			try {
-				options.addCatalog(catalog);
+				if(options.entityResolver==null) {
+		            CatalogManager.getStaticManager().setIgnoreMissingProperties(true);
+		            options.entityResolver = new CatalogResolver(true);
+		        }
+		        final URL catalogURL = catalog.toURI().toURL();
+				((CatalogResolver)options.entityResolver).getCatalog().parseCatalog(catalogURL);
+//				options.addCatalog(catalog);
 			} catch (IOException ioex) {
 				throw new MojoExecutionException(
 						"Error while setting the catalog to ["

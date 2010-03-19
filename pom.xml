@@ -21,30 +21,15 @@
 
 	<developers>
 		<developer>
-			<id>ankostis</id>
-			<name>Kostis Anagnostopoulos</name>
-			<email>ankostis@mail.com</email>
-			<roles>
-				<role>commiter</role>
-			</roles>
-		</developer>
-		<developer>
 			<id>lexi</id>
 			<name>Aleksei Valikov</name>
 			<email>valikov@gmx.net</email>
 			<roles>
-				<role>commiter</role>
+				<role>project owner</role>
 			</roles>
 		</developer>
 	</developers>
-
 	<distributionManagement>
-		<site>
-			<id>maven-jaxb2-plugin-www</id>
-			<!--url>java-net:/maven-jaxb2-plugin/trunk/www/</url-->
-
-			<url>file:www/maven-jaxb2-plugin-project</url>
-		</site>
 		<repository>
 			<uniqueVersion>false</uniqueVersion>
 			<id>java.net-maven2-repository</id>
@@ -54,10 +39,10 @@
 			<id>dev.java.net-snapshots</id>
 			<url>${dev.java.net-snapshots.deploy.url}</url>
 		</snapshotRepository>
+		<site>
+			<url>${sftp.static.highsource.org}/hyperjaxb3</url>
+		</site>
 	</distributionManagement>
-
-
-
 	<scm>
 		<connection>scm:svn:https://svn.dev.java.net/svn/maven-jaxb2-plugin/trunk</connection>
 		<developerConnection>scm:svn:https://svn.dev.java.net/svn/maven-jaxb2-plugin/trunk</developerConnection>

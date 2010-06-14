@@ -5,7 +5,7 @@
 	<groupId>org.jvnet.jaxb2.maven2</groupId>
 	<artifactId>maven-jaxb2-plugin-project</artifactId>
 	<packaging>pom</packaging>
-	<version>0.7.3</version>
+	<version>0.7.4-SNAPSHOT</version>
 	<name>Maven JAXB 2.x Plugin Project</name>
 	<inceptionYear>2006</inceptionYear>
 	<url>https://maven-jaxb2-plugin.dev.java.net/maven-jaxb2-plugin-project</url>
@@ -36,8 +36,9 @@
 			<url>${dev.java.net-releases.deploy.url}</url>
 		</repository>
 		<snapshotRepository>
-			<id>dev.java.net-snapshots</id>
-			<url>${dev.java.net-snapshots.deploy.url}</url>
+			<uniqueVersion>false</uniqueVersion>
+			<id>org.highsource.repository.maven2.snapshots</id>
+			<url>${sftp.repository.highsource.org}/maven2/snapshots</url>
 		</snapshotRepository>
 		<site>
 			<url>${sftp.static.highsource.org}/mjiip</url>
@@ -122,17 +123,17 @@
 			<dependency>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin-raw</artifactId>
-				<version>0.7.3</version>
+				<version>0.7.4-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin</artifactId>
-				<version>0.7.3</version>
+				<version>0.7.4-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin-testing</artifactId>
-				<version>0.7.3</version>
+				<version>0.7.4-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>org.jfrog.maven.annomojo</groupId>

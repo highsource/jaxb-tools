@@ -240,6 +240,12 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 
 	public void setGenerateDirectory(File generateDirectory) {
 		this.generateDirectory = generateDirectory;
+
+		if (getEpisodeFile() == null) {
+			final File episodeFile = new File(getGenerateDirectory(), "META-INF"
+					+ File.separator + "sun-jaxb.episode");
+			setEpisodeFile(episodeFile);
+		}
 	}
 
 	private boolean readOnly;
@@ -421,7 +427,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 
 	private File episodeFile;
 
-	@MojoParameter(expression = "${maven.xjc2.episodeFile}", defaultValue = "${project.build.directory}/generated-sources/xjc/META-INF/sun-jaxb.episode")
+	@MojoParameter(expression = "${maven.xjc2.episodeFile}")
 	public File getEpisodeFile() {
 		return episodeFile;
 	}

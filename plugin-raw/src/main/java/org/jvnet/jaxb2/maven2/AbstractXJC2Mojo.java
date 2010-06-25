@@ -407,6 +407,18 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 	public void setRemoveOldOutput(boolean removeOldOutput) {
 		this.removeOldOutput = removeOldOutput;
 	}
+	
+	private String[] produces = new String[] { "**/*.*",
+			"**/*.java", "**/bgm.ser", "**/jaxb.properties" };
+
+	@MojoParameter
+	public String[] getProduces() {
+		return produces;
+	}
+
+	public void setProduces(String[] produces) {
+		this.produces = produces;
+	}
 
 	private File[] otherDepends;
 

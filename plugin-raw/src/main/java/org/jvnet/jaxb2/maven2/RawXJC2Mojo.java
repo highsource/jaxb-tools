@@ -388,8 +388,7 @@ public class RawXJC2Mojo extends AbstractXJC2Mojo {
 	protected void setupProducesFiles() throws MojoExecutionException {
 		try {
 			this.producesFiles = IOUtils.scanDirectoryForFiles(
-					getGenerateDirectory(), new String[] { "**/*.*",
-							"**/*.java", "**/bgm.ser", "**/jaxb.properties" },
+					getGenerateDirectory(), getProduces(),
 					new String[0], !getDisableDefaultExcludes());
 		} catch (IOException ioex) {
 			throw new MojoExecutionException("Could not setup produced files.",

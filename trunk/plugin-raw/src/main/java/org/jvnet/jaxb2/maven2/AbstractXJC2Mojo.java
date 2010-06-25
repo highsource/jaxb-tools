@@ -2,6 +2,7 @@ package org.jvnet.jaxb2.maven2;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectBuilder;
 import org.jfrog.maven.annomojo.annotations.MojoComponent;
 import org.jfrog.maven.annomojo.annotations.MojoParameter;
+import org.jvnet.jaxb2.maven2.util.StringUtils;
 
 import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
 
@@ -550,6 +552,7 @@ public abstract class AbstractXJC2Mojo extends AbstractMojo {
 		getLog().info("args:" + getArgs());
 		getLog().info("forceRegenerate:" + getForceRegenerate());
 		getLog().info("removeOldOutput:" + getRemoveOldOutput());
+		getLog().info("produces:" + Arrays.toString(getProduces()));
 		getLog().info("otherDepends:" + getOtherDepends());
 		getLog().info("episodeFile:" + getEpisodeFile());
 		getLog().info("episode:" + getEpisode());

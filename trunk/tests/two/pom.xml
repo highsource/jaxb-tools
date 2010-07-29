@@ -2,12 +2,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<!--parent>
-		<groupId>org.jvnet.hyperjaxb3</groupId>
-		<artifactId>hyperjaxb3-ejb-schemas</artifactId>
-		<version>0.5.3-SNAPSHOT</version>
-	</parent-->
-
 	<parent>
 		<groupId>org.jvnet.jaxb2.maven2</groupId>
 		<artifactId>maven-jaxb2-plugin-tests</artifactId>
@@ -17,12 +11,10 @@
 		<dependency>
 			<groupId>org.jvnet.jaxb2_commons</groupId>
 			<artifactId>runtime</artifactId>
-			<version>0.4.1.4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>2.1.12</version>
 		</dependency>
 		<!-- JUnit -->
 		<dependency>
@@ -55,7 +47,6 @@
 						</goals>
 						<configuration>
 							<extension>true</extension>
-							<!--schemaLanguage>DTD</schemaLanguage-->
 							<schemaIncludes>
 								<schemaInclude>*.xsd</schemaInclude>
 							</schemaIncludes>
@@ -78,7 +69,7 @@
 								<plugin>
 									<groupId>org.jvnet.jaxb2_commons</groupId>
 									<artifactId>basic</artifactId>
-									<version>0.4.1.4</version>
+									<version>${jaxb2-basics.version{</version>
 									<exclusions>
 										<exclusion>
 											<groupId>com.sun.xml.bind</groupId>

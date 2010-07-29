@@ -68,7 +68,7 @@ public class IOUtils {
 	 *            exclusion pattern.
 	 * @param defaultExcludes
 	 *            default exclusion flag.
-	 * @return Files from the given directory which satisfy given patterns.
+	 * @return Files from the given directory which satisfy given patterns. The files are {@link File#getCanonicalFile() canonical}.
 	 */
 	public static List<File> scanDirectoryForFiles(final File directory,
 			final String[] includes, final String[] excludes,

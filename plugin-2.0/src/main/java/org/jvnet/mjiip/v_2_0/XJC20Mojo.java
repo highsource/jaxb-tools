@@ -1,6 +1,9 @@
 package org.jvnet.mjiip.v_2_0;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.jfrog.maven.annomojo.annotations.MojoGoal;
@@ -90,6 +93,16 @@ public class XJC20Mojo extends RawXJC2Mojo<Options> {
 		} else {
 			getLog().info("Code will not be written.");
 		}
+	}
+	
+	@Override
+	public Collection<File> getEpisodeFiles() {
+		return Collections.emptyList();
+	}
+	
+	@Override
+	public boolean getEpisode() {
+		return false;
 	}
 
 }

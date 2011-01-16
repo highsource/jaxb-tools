@@ -10,7 +10,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>runtime</artifactId>
+			<artifactId>jaxb2-basics-runtime</artifactId>
+			<version>${jaxb2-basics.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
@@ -68,18 +69,8 @@
 							<plugins>
 								<plugin>
 									<groupId>org.jvnet.jaxb2_commons</groupId>
-									<artifactId>basic</artifactId>
+									<artifactId>jaxb2-basics</artifactId>
 									<version>${jaxb2-basics.version}</version>
-									<exclusions>
-										<exclusion>
-											<groupId>com.sun.xml.bind</groupId>
-											<artifactId>jaxb-impl</artifactId>
-										</exclusion>
-										<exclusion>
-											<groupId>com.sun.xml.bind</groupId>
-											<artifactId>jaxb-xjc</artifactId>
-										</exclusion>
-									</exclusions>
 								</plugin>
 							</plugins>
 						</configuration>

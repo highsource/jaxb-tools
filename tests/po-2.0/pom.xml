@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jvnet.jaxb2.maven2</groupId>
-	<artifactId>maven-jaxb2-plugin-tests-po-raw</artifactId>
+	<artifactId>maven-jaxb2-plugin-tests-po-2.0</artifactId>
 	<parent>
 		<groupId>org.jvnet.jaxb2.maven2</groupId>
 		<artifactId>maven-jaxb2-plugin-tests</artifactId>
@@ -11,31 +11,19 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<packaging>jar</packaging>
-	<name>Maven JAXB 2.x Plugin Tests [po-raw]</name>
+	<name>Maven JAXB 2.x Plugin Tests [po-2.0]</name>
 	<dependencies>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>${jaxb-ri.version}</version>
+			<version>${jaxb20.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin-raw</artifactId>
-				<dependencies>
-					<dependency>
-						<groupId>com.sun.xml.bind</groupId>
-						<artifactId>jaxb-impl</artifactId>
-						<version>${jaxb-ri.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.jvnet.jaxb2_commons</groupId>
-						<artifactId>jaxb2-basics-jaxb-xjc</artifactId>
-						<version>2.1.13.MR2</version>
-					</dependency>
-				</dependencies>
+				<artifactId>maven-jaxb20-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>

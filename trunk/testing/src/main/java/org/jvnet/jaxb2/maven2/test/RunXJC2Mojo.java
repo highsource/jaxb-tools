@@ -11,7 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.maven.plugin.Mojo;
 import org.apache.maven.project.MavenProject;
 import org.jvnet.jaxb2.maven2.AbstractXJC2Mojo;
-import org.jvnet.jaxb2.maven2.RawXJC2Mojo;
+import org.jvnet.mjiip.v_2.XJC2Mojo;
 
 /**
  * Abstract test for plugins.
@@ -73,7 +73,7 @@ public class RunXJC2Mojo extends TestCase {
   }
 
   protected AbstractXJC2Mojo createMojo() {
-    return new RawXJC2Mojo();
+    return new XJC2Mojo();
   }
 
   protected void configureMojo(final AbstractXJC2Mojo mojo) {

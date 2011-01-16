@@ -63,7 +63,7 @@ public class XJC22Mojo extends RawXJC2Mojo<Options> {
 						getLog(), getVerbose()));
 		if (outline == null) {
 			throw new MojoExecutionException(
-					"Failed to compile input schema(s)!  Error messages should have been provided.");
+					"Failed to compile input schema(s)! Error messages should have been provided.");
 		} else {
 			return outline;
 		}

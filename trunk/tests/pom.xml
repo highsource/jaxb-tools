@@ -14,7 +14,9 @@
 	</parent>
 	<modules>
 		<module>po</module>
-		<module>po-raw</module>
+		<module>po-2.0</module>
+		<module>po-2.1</module>
+		<module>po-2.2</module>
 		<module>po-scd</module>
 		<module>catalog</module>
 		<module>episodes</module>
@@ -39,7 +41,31 @@
 				</plugin>
 				<plugin>
 					<groupId>org.jvnet.jaxb2.maven2</groupId>
-					<artifactId>maven-jaxb2-plugin-raw</artifactId>
+					<artifactId>maven-jaxb20-plugin</artifactId>
+					<version>${project.version}</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>generate</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.jvnet.jaxb2.maven2</groupId>
+					<artifactId>maven-jaxb21-plugin</artifactId>
+					<version>${project.version}</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>generate</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.jvnet.jaxb2.maven2</groupId>
+					<artifactId>maven-jaxb22-plugin</artifactId>
 					<version>${project.version}</version>
 					<executions>
 						<execution>

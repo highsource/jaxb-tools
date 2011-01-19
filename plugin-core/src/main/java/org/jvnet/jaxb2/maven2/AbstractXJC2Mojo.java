@@ -270,6 +270,28 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo {
 		}
 	}
 
+	private boolean addCompileSourceRoot = true;
+
+	@MojoParameter(defaultValue = "true", expression = "${maven.xjc2.addCompileSourceRoot}", required = false, description = "If set to true (default), adds target directory as a compile source root of this Maven project.")
+	public boolean getAddCompileSourceRoot() {
+		return addCompileSourceRoot;
+	}
+
+	public void setAddCompileSourceRoot(boolean addCompileSourceRoot) {
+		this.addCompileSourceRoot = addCompileSourceRoot;
+	}
+
+	private boolean addTestCompileSourceRoot = false;
+
+	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.addTestCompileSourceRoot}", required = false, description = "If set to true, adds target directory as a test compile source root of this Maven project. Default value is false.")
+	public boolean getAddTestCompileSourceRoot() {
+		return addTestCompileSourceRoot;
+	}
+
+	public void setAddTestCompileSourceRoot(boolean addTestCompileSourceRoot) {
+		this.addTestCompileSourceRoot = addTestCompileSourceRoot;
+	}
+
 	private boolean readOnly;
 
 	/**
@@ -535,9 +557,9 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo {
 		this.episodes = episodes;
 	}
 
-	private String specVersion = "2.1";
+	private String specVersion = "2.2";
 
-	@MojoParameter(defaultValue = "2.1")
+	@MojoParameter(defaultValue = "2.2", description = "Version of the JAXB specification (ex. 2.0, 2.1 or 2.2).")
 	public String getSpecVersion() {
 		return specVersion;
 	}

@@ -19,7 +19,6 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectBuilder;
 import org.jfrog.maven.annomojo.annotations.MojoComponent;
 import org.jfrog.maven.annomojo.annotations.MojoParameter;
-import org.jvnet.jaxb2.maven2.util.StringUtils;
 
 import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
 

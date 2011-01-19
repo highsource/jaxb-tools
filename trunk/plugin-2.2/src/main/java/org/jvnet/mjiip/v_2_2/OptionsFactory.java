@@ -31,8 +31,7 @@ public class OptionsFactory implements
 
 		options.classpaths.addAll(optionsConfiguration.getPlugins());
 
-		options.target = createSpecVersion(optionsConfiguration
-				.getSpecVersion());
+		options.target = createSpecVersion("2.2");
 
 		options.setSchemaLanguage(createLanguage(optionsConfiguration
 				.getSchemaLanguage()));

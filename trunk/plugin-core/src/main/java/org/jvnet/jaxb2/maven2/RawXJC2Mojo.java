@@ -292,16 +292,14 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	 * Augments Maven paths with generated resources.
 	 */
 	protected void setupMavenPaths() {
-		getProject().addCompileSourceRoot(getGenerateDirectory().getPath());
 
-		// Mark XJC_gen prop files as resources for inclusion to final jar.
-		final Resource generatedResource = new Resource();
-		generatedResource.setDirectory(getGenerateDirectory().getPath());
-		generatedResource.addInclude("**/jaxb.properties");
-		generatedResource.addInclude("**/bgm.ser");
-
-		getProject().addResource(generatedResource);
-
+		if (getAddCompileSourceRoot()) {
+			getProject().addCompileSourceRoot(getGenerateDirectory().getPath());
+		}
+		if (getAddTestCompileSourceRoot()) {
+			getProject().addTestCompileSourceRoot(
+					getGenerateDirectory().getPath());
+		}
 		if (getEpisode() && getEpisodeFile() != null) {
 			final String episodeFilePath = getEpisodeFile().getAbsolutePath();
 			final String generatedDirectoryPath = getGenerateDirectory()
@@ -315,7 +313,13 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 				final Resource resource = new Resource();
 				resource.setDirectory(generatedDirectoryPath);
 				resource.addInclude(path);
-				getProject().addResource(resource);
+				if (getAddCompileSourceRoot()) {
+					getProject().addResource(resource);
+				}
+				if (getAddTestCompileSourceRoot()) {
+					getProject().addTestResource(resource);
+
+				}
 			}
 		}
 	}

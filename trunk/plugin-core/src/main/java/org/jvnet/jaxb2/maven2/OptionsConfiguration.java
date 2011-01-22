@@ -29,8 +29,6 @@ public class OptionsConfiguration {
 
 	private final boolean strict;
 
-	private final boolean writeCode;
-
 	private final boolean verbose;
 
 	private final boolean debugMode;
@@ -44,9 +42,9 @@ public class OptionsConfiguration {
 	public OptionsConfiguration(String schemaLanguage, List<URL> schemas,
 			List<URL> bindings, URL catalog, CatalogResolver catalogResolver,
 			String generatePackage, File generateDirectory, boolean readOnly,
-			boolean extension, boolean strict, boolean writeCode,
-			boolean verbose, boolean debugMode, List<String> arguments,
-			List<URL> plugins, String specVersion) {
+			boolean extension, boolean strict, boolean verbose,
+			boolean debugMode, List<String> arguments, List<URL> plugins,
+			String specVersion) {
 		super();
 		this.schemaLanguage = schemaLanguage;
 		this.schemas = schemas;
@@ -58,7 +56,6 @@ public class OptionsConfiguration {
 		this.readOnly = readOnly;
 		this.extension = extension;
 		this.strict = strict;
-		this.writeCode = writeCode;
 		this.verbose = verbose;
 		this.debugMode = debugMode;
 		this.arguments = arguments;

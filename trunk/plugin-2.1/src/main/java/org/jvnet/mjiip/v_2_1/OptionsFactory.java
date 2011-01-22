@@ -31,7 +31,7 @@ public class OptionsFactory implements
 
 		options.classpaths.addAll(optionsConfiguration.getPlugins());
 
-		options.target = createSpecVersion("2.1");
+		options.target = SpecVersion.V2_1;
 
 		options.setSchemaLanguage(createLanguage(optionsConfiguration
 				.getSchemaLanguage()));
@@ -89,12 +89,6 @@ public class OptionsFactory implements
 		}
 
 		return options;
-	}
-
-	private SpecVersion createSpecVersion(String specVersion) {
-		final SpecVersion sv = SpecVersion.parse(specVersion);
-		return sv == null ? SpecVersion.LATEST : sv;
-
 	}
 
 	private Language createLanguage(String schemaLanguage)

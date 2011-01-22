@@ -572,8 +572,8 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 				getSchemaLanguage(), getSchemas(), getBindings(),
 				getCatalogURL(), createCatalogResolver(), getGeneratePackage(),
 				getGenerateDirectory(), getReadOnly(), getExtension(),
-				getStrict(), getWriteCode(), getVerbose(), getDebug(),
-				getArguments(), getXjcPluginURLs(), getSpecVersion());
+				getStrict(), getVerbose(), getDebug(), getArguments(),
+				getXjcPluginURLs(), getSpecVersion());
 		return optionsConfiguration;
 	}
 }

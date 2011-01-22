@@ -1,7 +1,5 @@
 package org.jvnet.jaxb2.maven2.util;
 
-
-
 public class StringUtils {
 
 	/**

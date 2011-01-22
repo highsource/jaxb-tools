@@ -1,4 +1,4 @@
-package org.jvnet.mjiip.v_2_2;
+package org.jvnet.mjiip.v_2;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,7 +31,8 @@ public class OptionsFactory implements
 
 		options.classpaths.addAll(optionsConfiguration.getPlugins());
 
-		options.target = SpecVersion.V2_2;
+		options.target = createSpecVersion(optionsConfiguration
+				.getSpecVersion());
 
 		options.setSchemaLanguage(createLanguage(optionsConfiguration
 				.getSchemaLanguage()));
@@ -89,6 +90,16 @@ public class OptionsFactory implements
 		}
 
 		return options;
+	}
+
+	private SpecVersion createSpecVersion(String specVersion) {
+		if (specVersion == null) {
+			return SpecVersion.LATEST;
+		} else {
+			final SpecVersion sv = SpecVersion.parse(specVersion);
+			return sv == null ? SpecVersion.LATEST : sv;
+		}
+
 	}
 
 	private Language createLanguage(String schemaLanguage)

@@ -253,29 +253,25 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 
 		final OptionsConfiguration optionsConfiguration = createOptionsConfiguration();
-		
-		if (optionsConfiguration.getGrammars().isEmpty())
-		{
+
+		if (optionsConfiguration.getGrammars().isEmpty()) {
 			getLog().warn("Skipped XJC execution. Nothing to compile.");
-			
-		}
-		else
-		{
 
-		final O options = getOptionsFactory().createOptions(
-				optionsConfiguration);
+		} else {
 
-		if (!this.getForceRegenerate() && isUpToDate()) {
-			getLog().info(
-					"Skipped XJC execution. Generated sources were up-to-date.");
-			return;
-		}
+			final O options = getOptionsFactory().createOptions(
+					optionsConfiguration);
 
-		doExecute(options);
+			if (!this.getForceRegenerate() && isUpToDate()) {
+				getLog().info(
+						"Skipped XJC execution. Generated sources were up-to-date.");
+				return;
+			}
+
+			doExecute(options);
 		}
 
-		if (getVerbose())
-		{
+		if (getVerbose()) {
 			getLog().info("Finished execution.");
 		}
 	}
@@ -487,7 +483,8 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		} else {
 
 			try {
-				CatalogManager.getStaticManager().setIgnoreMissingProperties(true);
+				CatalogManager.getStaticManager().setIgnoreMissingProperties(
+						true);
 				final String catalogResolverClassName = getCatalogResolver()
 						.trim();
 				final Class<?> draftCatalogResolverClass = Thread

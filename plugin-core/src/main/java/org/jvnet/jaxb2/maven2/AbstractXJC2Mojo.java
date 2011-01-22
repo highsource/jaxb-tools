@@ -556,9 +556,9 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo {
 		this.episodes = episodes;
 	}
 
-	private String specVersion;
+	private String specVersion = "2.1";
 
-	@MojoParameter(description = "Version of the JAXB specification (ex. 2.0, 2.1 or 2.2).")
+	@MojoParameter(defaultValue = "2.1", description = "Version of the JAXB specification (ex. 2.0, 2.1 or 2.2).")
 	public String getSpecVersion() {
 		return specVersion;
 	}

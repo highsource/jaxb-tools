@@ -40,6 +40,7 @@ import org.jvnet.jaxb2.maven2.util.CollectionUtils;
 import org.jvnet.jaxb2.maven2.util.IOUtils;
 import org.xml.sax.InputSource;
 
+import com.sun.org.apache.xml.internal.resolver.CatalogManager;
 import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
 
 /**
@@ -252,20 +253,31 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 
 		final OptionsConfiguration optionsConfiguration = createOptionsConfiguration();
+		
+		if (optionsConfiguration.getGrammars().isEmpty())
+		{
+			getLog().warn("Skipped XJC execution. Nothing to compile.");
+			
+		}
+		else
+		{
 
 		final O options = getOptionsFactory().createOptions(
 				optionsConfiguration);
 
 		if (!this.getForceRegenerate() && isUpToDate()) {
 			getLog().info(
-					"Skipped XJC execution.  Generated sources were up-to-date.");
+					"Skipped XJC execution. Generated sources were up-to-date.");
 			return;
 		}
 
 		doExecute(options);
+		}
 
 		if (getVerbose())
+		{
 			getLog().info("Finished execution.");
+		}
 	}
 
 	public abstract void doExecute(O options) throws MojoExecutionException;
@@ -475,6 +487,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		} else {
 
 			try {
+				CatalogManager.getStaticManager().setIgnoreMissingProperties(true);
 				final String catalogResolverClassName = getCatalogResolver()
 						.trim();
 				final Class<?> draftCatalogResolverClass = Thread

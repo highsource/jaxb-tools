@@ -1,0 +1,32 @@
+<xsd:schema
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="b"
+	xmlns:a="a"
+	xmlns:b="b"
+	elementFormDefault="qualified">
+
+	<xsd:import namespace="a" schemaLocation="https://maven-jaxb2-plugin.dev.java.net/svn/maven-jaxb2-plugin/trunk/samples/episode/a/src/main/resources/a.xsd"/>
+
+	<xsd:element name="b" type="b:BType"/>
+
+	<xsd:complexType name="BType">
+		<xsd:complexContent>
+		    <xsd:extension base="a:AType">
+				<xsd:sequence>
+					<xsd:element name="b" type="b:B1Type"/>
+				</xsd:sequence>
+		    </xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="B1Type">
+		<xsd:complexContent>
+		    <xsd:extension base="a:A1Type">
+				<xsd:sequence>
+					<xsd:element name="b1" type="xsd:string"/>
+				</xsd:sequence>
+		    </xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+</xsd:schema>

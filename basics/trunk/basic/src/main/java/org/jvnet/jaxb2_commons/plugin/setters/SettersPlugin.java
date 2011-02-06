@@ -19,6 +19,7 @@ import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.ClassOutline;
+import com.sun.tools.xjc.outline.FieldAccessor;
 import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.outline.Outline;
 
@@ -82,8 +83,11 @@ public class SettersPlugin extends AbstractParameterizablePlugin {
 					final JMethod generatedSetter = theClass.method(
 							JMod.PUBLIC, theClass.owner().VOID, setterName);
 					final JVar value = generatedSetter.param(type, "value");
-					fieldOutline.create(JExpr._this()).fromRawValue(
-							generatedSetter.body(), "draft", value);
+					final FieldAccessor accessor = fieldOutline.create(JExpr
+							._this());
+					accessor.unsetValues(generatedSetter.body());
+					accessor.fromRawValue(generatedSetter.body(), "draft",
+							value);
 				}
 			}
 		}

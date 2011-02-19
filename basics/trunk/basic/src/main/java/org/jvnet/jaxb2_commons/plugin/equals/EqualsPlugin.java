@@ -18,6 +18,7 @@ import org.jvnet.jaxb2_commons.plugin.util.FieldOutlineUtils;
 import org.jvnet.jaxb2_commons.plugin.util.StrategyClassUtils;
 import org.jvnet.jaxb2_commons.util.ClassUtils;
 import org.jvnet.jaxb2_commons.util.FieldAccessorFactory;
+import org.jvnet.jaxb2_commons.util.PropertyFieldAccessorFactory;
 import org.jvnet.jaxb2_commons.xjc.outline.FieldAccessorEx;
 import org.xml.sax.ErrorHandler;
 
@@ -46,6 +47,17 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 	@Override
 	public String getUsage() {
 		return "TBD";
+	}
+
+	private FieldAccessorFactory fieldAccessorFactory = PropertyFieldAccessorFactory.INSTANCE;
+
+	public FieldAccessorFactory getFieldAccessorFactory() {
+		return fieldAccessorFactory;
+	}
+
+	public void setFieldAccessorFactory(
+			FieldAccessorFactory fieldAccessorFactory) {
+		this.fieldAccessorFactory = fieldAccessorFactory;
 	}
 
 	private Class<? extends EqualsStrategy> equalsStrategyClass = JAXBEqualsStrategy.class;
@@ -80,8 +92,7 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 	@Override
 	public Collection<QName> getCustomizationElementNames() {
 		return Arrays
-				.asList(
-						org.jvnet.jaxb2_commons.plugin.equals.Customizations.IGNORED_ELEMENT_NAME,
+				.asList(org.jvnet.jaxb2_commons.plugin.equals.Customizations.IGNORED_ELEMENT_NAME,
 						Customizations.IGNORED_ELEMENT_NAME,
 						Customizations.GENERATED_ELEMENT_NAME);
 	}
@@ -118,11 +129,11 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 		{
 			final JVar object = objectEquals.param(Object.class, "object");
 			final JBlock body = objectEquals.body();
-			final JVar equalsStrategy = body.decl(JMod.FINAL, codeModel
-					.ref(EqualsStrategy.class), "strategy",
+			final JVar equalsStrategy = body.decl(JMod.FINAL,
+					codeModel.ref(EqualsStrategy.class), "strategy",
 					createEqualsStrategy(codeModel));
-			body._return(JExpr.invoke("equals").arg(JExpr._null()).arg(
-					JExpr._null()).arg(object).arg(equalsStrategy));
+			body._return(JExpr.invoke("equals").arg(JExpr._null())
+					.arg(JExpr._null()).arg(object).arg(equalsStrategy));
 		}
 		return objectEquals;
 	}
@@ -163,7 +174,7 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 					._instanceof(theClass)));
 			ifNotInstanceof._then()._return(JExpr.FALSE);
 
-			// 
+			//
 			body._if(JExpr._this().eq(object))._then()._return(JExpr.TRUE);
 
 			final Boolean superClassImplementsEquals = StrategyClassUtils
@@ -176,8 +187,8 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 				body._if(
 						JOp.not(JExpr._super().invoke("equals")
 								.arg(leftLocator).arg(rightLocator).arg(object)
-								.arg(equalsStrategy)))._then()._return(
-						JExpr.FALSE);
+								.arg(equalsStrategy)))._then()
+						._return(JExpr.FALSE);
 
 			} else {
 				body._if(JOp.not(JExpr._super().invoke("equals").arg(object)))
@@ -196,9 +207,9 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 
 				for (final FieldOutline fieldOutline : declaredFields) {
 
-					final FieldAccessorEx leftFieldAccessor = FieldAccessorFactory
+					final FieldAccessorEx leftFieldAccessor = getFieldAccessorFactory()
 							.createFieldAccessor(fieldOutline, _this);
-					final FieldAccessorEx rightFieldAccessor = FieldAccessorFactory
+					final FieldAccessorEx rightFieldAccessor = getFieldAccessorFactory()
 							.createFieldAccessor(fieldOutline, _that);
 
 					if (leftFieldAccessor.isConstant()
@@ -211,28 +222,29 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 					final String name = fieldOutline.getPropertyInfo().getName(
 							true);
 
-					final JVar lhsValue = block.decl(leftFieldAccessor
-							.getType(), "lhs" + name);
+					final JVar lhsValue = block.decl(
+							leftFieldAccessor.getType(), "lhs" + name);
 					leftFieldAccessor.toRawValue(block, lhsValue);
 
-					final JVar rhsValue = block.decl(rightFieldAccessor
-							.getType(), "rhs" + name);
+					final JVar rhsValue = block.decl(
+							rightFieldAccessor.getType(), "rhs" + name);
 					rightFieldAccessor.toRawValue(block, rhsValue);
 
-					final JExpression leftFieldLocator = codeModel.ref(
-							LocatorUtils.class).staticInvoke("property").arg(
-							leftLocator).arg(
-							fieldOutline.getPropertyInfo().getName(false)).arg(
-							lhsValue);
-					final JExpression rightFieldLocator = codeModel.ref(
-							LocatorUtils.class).staticInvoke("property").arg(
-							rightLocator).arg(
-							fieldOutline.getPropertyInfo().getName(false)).arg(
-							rhsValue);
+					final JExpression leftFieldLocator = codeModel
+							.ref(LocatorUtils.class).staticInvoke("property")
+							.arg(leftLocator)
+							.arg(fieldOutline.getPropertyInfo().getName(false))
+							.arg(lhsValue);
+					final JExpression rightFieldLocator = codeModel
+							.ref(LocatorUtils.class).staticInvoke("property")
+							.arg(rightLocator)
+							.arg(fieldOutline.getPropertyInfo().getName(false))
+							.arg(rhsValue);
 					block._if(
-							JOp.not(JExpr.invoke(equalsStrategy, "equals").arg(
-									leftFieldLocator).arg(rightFieldLocator)
-									.arg(lhsValue).arg(rhsValue)))._then()
+							JOp.not(JExpr.invoke(equalsStrategy, "equals")
+									.arg(leftFieldLocator)
+									.arg(rightFieldLocator).arg(lhsValue)
+									.arg(rhsValue)))._then()
 							._return(JExpr.FALSE);
 				}
 			}

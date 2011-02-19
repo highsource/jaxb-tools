@@ -18,6 +18,7 @@ import org.jvnet.jaxb2_commons.plugin.util.FieldOutlineUtils;
 import org.jvnet.jaxb2_commons.plugin.util.StrategyClassUtils;
 import org.jvnet.jaxb2_commons.util.ClassUtils;
 import org.jvnet.jaxb2_commons.util.FieldAccessorFactory;
+import org.jvnet.jaxb2_commons.util.PropertyFieldAccessorFactory;
 import org.jvnet.jaxb2_commons.xjc.outline.FieldAccessorEx;
 import org.xml.sax.ErrorHandler;
 
@@ -45,6 +46,18 @@ public class HashCodePlugin extends AbstractParameterizablePlugin {
 	public String getUsage() {
 		return "TBD";
 	}
+	
+	private FieldAccessorFactory fieldAccessorFactory = PropertyFieldAccessorFactory.INSTANCE;
+	
+	public FieldAccessorFactory getFieldAccessorFactory() {
+		return fieldAccessorFactory;
+	}
+	
+	public void setFieldAccessorFactory(
+			FieldAccessorFactory fieldAccessorFactory) {
+		this.fieldAccessorFactory = fieldAccessorFactory;
+	}
+
 
 	private Class<? extends HashCodeStrategy> hashCodeStrategyClass = JAXBHashCodeStrategy.class;
 
@@ -162,7 +175,7 @@ public class HashCodePlugin extends AbstractParameterizablePlugin {
 			if (declaredFields.length > 0) {
 
 				for (final FieldOutline fieldOutline : declaredFields) {
-					final FieldAccessorEx fieldAccessor = FieldAccessorFactory
+					final FieldAccessorEx fieldAccessor = getFieldAccessorFactory()
 							.createFieldAccessor(fieldOutline, JExpr._this());
 					if (fieldAccessor.isConstant()) {
 						continue;

@@ -18,6 +18,7 @@ import org.jvnet.jaxb2_commons.plugin.util.FieldOutlineUtils;
 import org.jvnet.jaxb2_commons.plugin.util.StrategyClassUtils;
 import org.jvnet.jaxb2_commons.util.ClassUtils;
 import org.jvnet.jaxb2_commons.util.FieldAccessorFactory;
+import org.jvnet.jaxb2_commons.util.PropertyFieldAccessorFactory;
 import org.jvnet.jaxb2_commons.xjc.outline.FieldAccessorEx;
 import org.xml.sax.ErrorHandler;
 
@@ -48,6 +49,17 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 	@Override
 	public String getUsage() {
 		return "TBD";
+	}
+	
+	private FieldAccessorFactory fieldAccessorFactory = PropertyFieldAccessorFactory.INSTANCE;
+	
+	public FieldAccessorFactory getFieldAccessorFactory() {
+		return fieldAccessorFactory;
+	}
+	
+	public void setFieldAccessorFactory(
+			FieldAccessorFactory fieldAccessorFactory) {
+		this.fieldAccessorFactory = fieldAccessorFactory;
 	}
 
 	private Class<? extends CopyStrategy> copyStrategyClass = JAXBCopyStrategy.class;
@@ -250,9 +262,9 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 
 				for (final FieldOutline fieldOutline : declaredFields) {
 
-					final FieldAccessorEx sourceFieldAccessor = FieldAccessorFactory
+					final FieldAccessorEx sourceFieldAccessor = getFieldAccessorFactory()
 							.createFieldAccessor(fieldOutline, JExpr._this());
-					final FieldAccessorEx copyFieldAccessor = FieldAccessorFactory
+					final FieldAccessorEx copyFieldAccessor = getFieldAccessorFactory()
 							.createFieldAccessor(fieldOutline, copy);
 
 					if (sourceFieldAccessor.isConstant()) {

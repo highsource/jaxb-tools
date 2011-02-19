@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.util.ClassUtils;
+import org.jvnet.jaxb2_commons.util.FieldAccessorFactory;
 import org.jvnet.jaxb2_commons.lang.JAXBMergeStrategy;
 import org.jvnet.jaxb2_commons.lang.MergeFrom;
 import org.jvnet.jaxb2_commons.lang.MergeStrategy;
@@ -17,7 +18,7 @@ import org.jvnet.jaxb2_commons.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb2_commons.plugin.Ignoring;
 import org.jvnet.jaxb2_commons.plugin.util.FieldOutlineUtils;
 import org.jvnet.jaxb2_commons.plugin.util.StrategyClassUtils;
-import org.jvnet.jaxb2_commons.util.FieldAccessorFactory;
+import org.jvnet.jaxb2_commons.util.PropertyFieldAccessorFactory;
 import org.jvnet.jaxb2_commons.xjc.outline.FieldAccessorEx;
 import org.xml.sax.ErrorHandler;
 
@@ -45,6 +46,17 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 	@Override
 	public String getUsage() {
 		return "TBD";
+	}
+
+	private FieldAccessorFactory fieldAccessorFactory = PropertyFieldAccessorFactory.INSTANCE;
+
+	public FieldAccessorFactory getFieldAccessorFactory() {
+		return fieldAccessorFactory;
+	}
+
+	public void setFieldAccessorFactory(
+			FieldAccessorFactory fieldAccessorFactory) {
+		this.fieldAccessorFactory = fieldAccessorFactory;
 	}
 
 	private Class<? extends MergeStrategy> mergeStrategyClass = JAXBMergeStrategy.class;
@@ -79,8 +91,7 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 	@Override
 	public Collection<QName> getCustomizationElementNames() {
 		return Arrays
-				.asList(
-						org.jvnet.jaxb2_commons.plugin.mergeable.Customizations.IGNORED_ELEMENT_NAME,
+				.asList(org.jvnet.jaxb2_commons.plugin.mergeable.Customizations.IGNORED_ELEMENT_NAME,
 						Customizations.IGNORED_ELEMENT_NAME,
 						Customizations.GENERATED_ELEMENT_NAME);
 	}
@@ -104,7 +115,7 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 		@SuppressWarnings("unused")
 		final JMethod mergeFrom$mergeFrom = generateMergeFrom$mergeFrom(
 				classOutline, theClass);
-		
+
 		if (!classOutline.target.isAbstract()) {
 			@SuppressWarnings("unused")
 			final JMethod createCopy = generateMergeFrom$createNewInstance(
@@ -124,12 +135,12 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 			final JVar right = mergeFrom$mergeFrom.param(Object.class, "right");
 			final JBlock body = mergeFrom$mergeFrom.body();
 
-			final JVar mergeStrategy = body.decl(JMod.FINAL, codeModel
-					.ref(MergeStrategy.class), "strategy",
+			final JVar mergeStrategy = body.decl(JMod.FINAL,
+					codeModel.ref(MergeStrategy.class), "strategy",
 					createMergeStrategy(codeModel));
 
-			body.invoke("mergeFrom").arg(JExpr._null()).arg(JExpr._null()).arg(
-					left).arg(right).arg(mergeStrategy);
+			body.invoke("mergeFrom").arg(JExpr._null()).arg(JExpr._null())
+					.arg(left).arg(right).arg(mergeStrategy);
 		}
 		return mergeFrom$mergeFrom;
 	}
@@ -161,8 +172,8 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 
 			} else if (superClassImplementsMergeFrom.booleanValue()) {
 				methodBody.invoke(JExpr._super(), "mergeFrom").arg(leftLocator)
-						.arg(rightLocator).arg(left).arg(right).arg(
-								mergeStrategy);
+						.arg(rightLocator).arg(left).arg(right)
+						.arg(mergeStrategy);
 			} else {
 
 			}
@@ -175,52 +186,62 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 				final JBlock body = methodBody._if(right._instanceof(theClass))
 						._then();
 
-				JVar target = body.decl(JMod.FINAL, theClass, "target", JExpr
-						._this());
+				JVar target = body.decl(JMod.FINAL, theClass, "target",
+						JExpr._this());
 				JVar leftObject = body.decl(JMod.FINAL, theClass, "leftObject",
 						JExpr.cast(theClass, left));
 				JVar rightObject = body.decl(JMod.FINAL, theClass,
 						"rightObject", JExpr.cast(theClass, right));
 				for (final FieldOutline fieldOutline : declaredFields) {
-					final FieldAccessorEx leftFieldAccessor = FieldAccessorFactory
+					final FieldAccessorEx leftFieldAccessor = getFieldAccessorFactory()
 							.createFieldAccessor(fieldOutline, leftObject);
-					final FieldAccessorEx rightFieldAccessor = FieldAccessorFactory
+					final FieldAccessorEx rightFieldAccessor = getFieldAccessorFactory()
 							.createFieldAccessor(fieldOutline, rightObject);
 					if (leftFieldAccessor.isConstant()
 							|| rightFieldAccessor.isConstant()) {
 						continue;
 					}
 					final JBlock block = body.block();
-					final JVar leftField = block.decl(leftFieldAccessor
-							.getType(), "lhs"
-							+ fieldOutline.getPropertyInfo().getName(true));
+					final JVar leftField = block.decl(
+							leftFieldAccessor.getType(),
+							"lhs"
+									+ fieldOutline.getPropertyInfo().getName(
+											true));
 					leftFieldAccessor.toRawValue(block, leftField);
-					final JVar rightField = block.decl(rightFieldAccessor
-							.getType(), "rhs"
-							+ fieldOutline.getPropertyInfo().getName(true));
+					final JVar rightField = block.decl(
+							rightFieldAccessor.getType(),
+							"rhs"
+									+ fieldOutline.getPropertyInfo().getName(
+											true));
 
 					rightFieldAccessor.toRawValue(block, rightField);
 
-					final JExpression leftFieldLocator = codeModel.ref(
-							LocatorUtils.class).staticInvoke("property").arg(
-							leftLocator).arg(
-							fieldOutline.getPropertyInfo().getName(false)).arg(
-							leftField);
-					final JExpression rightFieldLocator = codeModel.ref(
-							LocatorUtils.class).staticInvoke("property").arg(
-							rightLocator).arg(
-							fieldOutline.getPropertyInfo().getName(false)).arg(
-							rightField);
+					final JExpression leftFieldLocator = codeModel
+							.ref(LocatorUtils.class).staticInvoke("property")
+							.arg(leftLocator)
+							.arg(fieldOutline.getPropertyInfo().getName(false))
+							.arg(leftField);
+					final JExpression rightFieldLocator = codeModel
+							.ref(LocatorUtils.class).staticInvoke("property")
+							.arg(rightLocator)
+							.arg(fieldOutline.getPropertyInfo().getName(false))
+							.arg(rightField);
 
-					final FieldAccessorEx targetFieldAccessor = FieldAccessorFactory
+					final FieldAccessorEx targetFieldAccessor = getFieldAccessorFactory()
 							.createFieldAccessor(fieldOutline, target);
-					targetFieldAccessor.fromRawValue(block, "unique"
-							+ fieldOutline.getPropertyInfo().getName(true),
+					targetFieldAccessor.fromRawValue(
+							block,
+							"unique"
+									+ fieldOutline.getPropertyInfo().getName(
+											true),
 
-					JExpr.cast(targetFieldAccessor.getType(),
+							JExpr.cast(
+									targetFieldAccessor.getType(),
 
-					mergeStrategy.invoke("merge").arg(leftFieldLocator).arg(
-							rightFieldLocator).arg(leftField).arg(rightField)));
+									mergeStrategy.invoke("merge")
+											.arg(leftFieldLocator)
+											.arg(rightFieldLocator)
+											.arg(leftField).arg(rightField)));
 				}
 			}
 		}

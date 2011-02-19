@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:basic="http://jaxb2-commons.dev.java.net/basic"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:basic="http://jaxb2-commons.dev.java.net/basic"
 	xmlns:copyable="http://jaxb2-commons.dev.java.net/basic/copyable"
 	xmlns:equals="http://jaxb2-commons.dev.java.net/basic/equals"
 	xmlns:hashCode="http://jaxb2-commons.dev.java.net/basic/hashCode"
@@ -156,5 +157,28 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+
+
+
+	<xs:complexType name="issueJIIB35Type"> 
+		<xs:sequence> 
+			<xs:element name="name" type="xs:string" /> 
+			<xs:choice> 
+				<xs:element name="params" type="issueJIIB35SimpleType" /> 
+				<xs:element name="userName" type="xs:string" /> 
+			</xs:choice> 
+		</xs:sequence> 
+	</xs:complexType>
+
+	<xs:simpleType name="issueJIIB35SimpleType"> 
+		<xs:list itemType="xs:double" /> 
+	</xs:simpleType> 
+
+	<xs:element name="issueJIIB36">
+		<xs:complexType>
+			<xs:attribute name="test" type="xs:int" use="optional" />
+		</xs:complexType>
+	</xs:element>
+
 
 </xs:schema>

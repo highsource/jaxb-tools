@@ -5,7 +5,7 @@ import junit.framework.TestCase;
 
 public class JIIB36Test extends TestCase {
 
-	public void testCollectionSetters() throws Exception {
+	public void testException() throws Exception {
 
 		final IssueJIIB36 one = new IssueJIIB36();
 		final IssueJIIB36 two = new IssueJIIB36();

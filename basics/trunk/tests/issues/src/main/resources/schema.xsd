@@ -159,16 +159,15 @@
 	</xs:complexType>
 
 
-
-	<xs:complexType name="issueJIIB35Type"> 
-		<xs:sequence> 
-			<xs:element name="name" type="xs:string" /> 
-			<xs:choice> 
+	<xs:element name="issueJIIB35">
+		<xs:complexType> 
+			<xs:sequence> 
+				<xs:element name="name" type="xs:string" /> 
 				<xs:element name="params" type="issueJIIB35SimpleType" /> 
 				<xs:element name="userName" type="xs:string" /> 
-			</xs:choice> 
-		</xs:sequence> 
-	</xs:complexType>
+			</xs:sequence> 
+		</xs:complexType>
+	</xs:element>
 
 	<xs:simpleType name="issueJIIB35SimpleType"> 
 		<xs:list itemType="xs:double" /> 

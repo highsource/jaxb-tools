@@ -83,9 +83,8 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 		public JType getType() {
 			return type;
 		}
-		
-		public boolean isVirtual()
-		{
+
+		public boolean isVirtual() {
 			return constantField != null;
 		}
 
@@ -135,55 +134,64 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 		}
 
 		public void toRawValue(JBlock block, JVar $var) {
-			final boolean primitive = type.isPrimitive();
-			if (!primitive) {
-				if (constantField != null) {
-					block.assign($var, theClass.staticRef(this.constantField));
-				} else if (getter != null) {
-					block.assign($var, targetObject.invoke(getter));
-				} else {
-					fieldAccessor.toRawValue(block, $var);
-				}
-			} else {
+			if (constantField != null) {
+				block.assign($var, theClass.staticRef(this.constantField));
+			} else if (type.isPrimitive()
+					|| fieldOutline.getPropertyInfo().isCollection()) {
 				final JExpression defaultExpression;
-				if (type.fullName().equals(type.owner().BOOLEAN.fullName())) {
-					defaultExpression = JExpr.FALSE;
-				} else if (type.fullName().equals(type.owner().BYTE.fullName())) {
-					final byte value = 0;
-					defaultExpression = JExpr.lit(value);
-				} else if (type.fullName().equals(type.owner().CHAR.fullName())) {
-					final char value = 0;
-					defaultExpression = JExpr.lit(value);
-				} else if (type.fullName().equals(type.owner().DOUBLE.fullName())) {
-					final double value = 0;
-					defaultExpression = JExpr.lit(value);
-				} else if (type.fullName().equals(type.owner().FLOAT.fullName())) {
-					final float value = 0;
-					defaultExpression = JExpr.lit(value);
-				} else if (type.fullName().equals(type.owner().INT.fullName())) {
-					final int value = 0;
-					defaultExpression = JExpr.lit(value);
-				} else if (type.fullName().equals(type.owner().LONG.fullName())) {
-					final long value = 0;
-					defaultExpression = JExpr.lit(value);
-				} else if (type.fullName().equals(type.owner().SHORT.fullName())) {
-					final short value = 0;
-					defaultExpression = JExpr.lit(value);
+				if (type.isPrimitive()) {
+					if (type.fullName().equals(type.owner().BOOLEAN.fullName())) {
+						defaultExpression = JExpr.FALSE;
+					} else if (type.fullName().equals(
+							type.owner().BYTE.fullName())) {
+						final byte value = 0;
+						defaultExpression = JExpr.lit(value);
+					} else if (type.fullName().equals(
+							type.owner().CHAR.fullName())) {
+						final char value = 0;
+						defaultExpression = JExpr.lit(value);
+					} else if (type.fullName().equals(
+							type.owner().DOUBLE.fullName())) {
+						final double value = 0;
+						defaultExpression = JExpr.lit(value);
+					} else if (type.fullName().equals(
+							type.owner().FLOAT.fullName())) {
+						final float value = 0;
+						defaultExpression = JExpr.lit(value);
+					} else if (type.fullName().equals(
+							type.owner().INT.fullName())) {
+						final int value = 0;
+						defaultExpression = JExpr.lit(value);
+					} else if (type.fullName().equals(
+							type.owner().LONG.fullName())) {
+						final long value = 0;
+						defaultExpression = JExpr.lit(value);
+					} else if (type.fullName().equals(
+							type.owner().SHORT.fullName())) {
+						final short value = 0;
+						defaultExpression = JExpr.lit(value);
+					} else {
+						throw new UnsupportedOperationException();
+					}
+
+				} else if (fieldOutline.getPropertyInfo().isCollection()) {
+					defaultExpression = JExpr._null();
 				} else {
 					throw new UnsupportedOperationException();
 				}
-
-				if (constantField != null) {
-					block.assign($var, theClass.staticRef(this.constantField));
-				} else if (getter != null) {
-					block.assign($var,
-
-					JOp.cond(hasSetValue(), targetObject.invoke(getter),
-							defaultExpression));
+				if (getter != null) {
+					block.assign($var, JOp.cond(hasSetValue(),
+							targetObject.invoke(getter), defaultExpression));
 				} else {
 					final JConditional _if = block._if(hasSetValue());
 					fieldAccessor.toRawValue(_if._then(), $var);
 					_if._else().assign($var, defaultExpression);
+				}
+			} else {
+				if (getter != null) {
+					block.assign($var, targetObject.invoke(getter));
+				} else {
+					fieldAccessor.toRawValue(block, $var);
 				}
 			}
 		}

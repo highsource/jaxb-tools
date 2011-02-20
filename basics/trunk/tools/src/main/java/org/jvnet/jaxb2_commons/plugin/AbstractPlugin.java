@@ -10,6 +10,8 @@ import java.util.Set;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -20,6 +22,11 @@ import com.sun.tools.xjc.Plugin;
 import com.sun.tools.xjc.outline.Outline;
 
 public abstract class AbstractPlugin extends Plugin {
+
+	/**
+	 * Plugin logger.
+	 */
+	protected Log logger = LogFactory.getLog(getClass());
 
 	@Override
 	public void onActivated(Options options) throws BadCommandLineException {

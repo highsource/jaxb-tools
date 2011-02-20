@@ -26,11 +26,6 @@ import com.sun.tools.xjc.Options;
 public abstract class AbstractParameterizablePlugin extends AbstractPlugin {
 
 	/**
-	 * Plugin logger.
-	 */
-	protected Log logger = LogFactory.getLog(getClass());
-
-	/**
 	 * Parses the arguments and injects values into the beans via properties.
 	 */
 	public int parseArgument(Options opt, String[] args, int start)

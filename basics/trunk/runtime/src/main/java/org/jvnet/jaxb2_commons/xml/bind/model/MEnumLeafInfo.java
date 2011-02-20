@@ -12,4 +12,7 @@ public interface MEnumLeafInfo extends MPackagedTypeInfo {
 
 	public QName getElementName();
 
+	public MElementInfo createElementInfo(MTypeInfo scope,
+			QName substitutionHead);
+
 }

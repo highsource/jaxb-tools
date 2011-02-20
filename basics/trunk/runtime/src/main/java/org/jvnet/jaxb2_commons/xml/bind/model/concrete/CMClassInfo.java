@@ -8,12 +8,18 @@ import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackage;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
+
+import com.sun.xml.bind.v2.model.core.ClassInfo;
+import com.sun.xml.bind.v2.model.core.PropertyInfo;
 
 public class CMClassInfo implements MClassInfo {
 
+	private final ClassInfo<?, ?> classInfo;
 	private final MPackage _package;
 	private final String name;
 	private final String localName;
@@ -24,20 +30,28 @@ public class CMClassInfo implements MClassInfo {
 	private List<MPropertyInfo> unmodifiableProperties = Collections
 			.unmodifiableList(properties);
 
-	public CMClassInfo(MPackage _package, String localName,
-			MClassInfo baseTypeInfo, QName elementName) {
+	public CMClassInfo(ClassInfo<?, ?> classInfo, MPackage _package,
+			String localName, MClassInfo baseTypeInfo, QName elementName) {
 		super();
+		Validate.notNull(classInfo);
 		Validate.notNull(_package);
 		Validate.notNull(localName);
-		// Validate.noNullElements(properties);
+		this.classInfo = classInfo;
 		this.name = _package.getPackagedName(localName);
 		this.localName = localName;
 		this._package = _package;
 		this.baseTypeInfo = baseTypeInfo;
-		// this.properties = properties;
-		// this.unmodifiableProperties =
-		// Collections.unmodifiableList(properties);
 		this.elementName = elementName;
+	}
+	
+	@Override
+	public MElementInfo createElementInfo(MTypeInfo scope,
+			QName substitutionHead) {
+		return new CMElementInfo(getClassInfo(), getPackage(), getElementName(), scope, this, substitutionHead);
+	}
+	
+	public ClassInfo<?, ?> getClassInfo() {
+		return classInfo;
 	}
 
 	@Override
@@ -62,7 +76,6 @@ public class CMClassInfo implements MClassInfo {
 
 	@Override
 	public List<MPropertyInfo> getProperties() {
-
 		return unmodifiableProperties;
 	}
 
@@ -75,7 +88,19 @@ public class CMClassInfo implements MClassInfo {
 	public void addProperty(MPropertyInfo propertyInfo) {
 		Validate.notNull(propertyInfo);
 		this.properties.add(propertyInfo);
+	}
 
+	@Override
+	public void removeProperty(MPropertyInfo propertyInfo) {
+		Validate.notNull(propertyInfo);
+		this.properties.remove(propertyInfo);
+		final List<PropertyInfo<?, ?>> ps = new ArrayList<PropertyInfo<?, ?>>(
+				classInfo.getProperties());
+		for (PropertyInfo<?, ?> p : ps) {
+			if (propertyInfo.getPrivateName().equals(p.getName())) {
+				classInfo.getProperties().remove(p);
+			}
+		}
 	}
 
 	@Override

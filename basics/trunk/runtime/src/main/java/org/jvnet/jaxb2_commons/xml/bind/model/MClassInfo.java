@@ -16,5 +16,10 @@ public interface MClassInfo extends MPackagedTypeInfo {
 
 	public QName getElementName();
 
+	public MElementInfo createElementInfo(MTypeInfo scope,
+			QName substitutionHead);
+
 	public void addProperty(MPropertyInfo propertyInfo);
+
+	public void removeProperty(MPropertyInfo propertyInfo);
 }

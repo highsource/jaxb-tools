@@ -7,14 +7,18 @@ import java.util.List;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
+import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumConstant;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackage;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
 
+import com.sun.xml.bind.v2.model.core.EnumLeafInfo;
+
 public class CMEnumLeafInfo implements MEnumLeafInfo {
 
+	private final EnumLeafInfo<?, ?> enumLeafInfo;
 	private final MPackage _package;
 	private final String name;
 	private final String localName;
@@ -22,14 +26,18 @@ public class CMEnumLeafInfo implements MEnumLeafInfo {
 	private final List<MEnumConstant> unmodifiableConstants;
 	private final QName elementName;
 
-	public CMEnumLeafInfo(MPackage _package, String localName,
-			MTypeInfo baseTypeInfo, List<MEnumConstant> constants,
+	public CMEnumLeafInfo(EnumLeafInfo<?, ?> enumLeafInfo, MPackage _package,
+			String localName, MTypeInfo baseTypeInfo,
+			List<MEnumConstant> constants,
 
 			QName elementName) {
+
+		Validate.notNull(enumLeafInfo);
 		Validate.notNull(_package);
 		Validate.notNull(localName);
 		Validate.notNull(baseTypeInfo);
 		Validate.notEmpty(constants);
+		this.enumLeafInfo = enumLeafInfo;
 		this._package = _package;
 		this.localName = localName;
 		this.name = _package.getPackagedName(localName);
@@ -37,6 +45,17 @@ public class CMEnumLeafInfo implements MEnumLeafInfo {
 		this.unmodifiableConstants = Collections.unmodifiableList(constants);
 		// May be null
 		this.elementName = elementName;
+	}
+
+	public EnumLeafInfo<?, ?> getEnumLeafInfo() {
+		return enumLeafInfo;
+	}
+
+	@Override
+	public MElementInfo createElementInfo(MTypeInfo scope,
+			QName substitutionHead) {
+		return new CMElementInfo(getEnumLeafInfo(), getPackage(),
+				getElementName(), scope, this, substitutionHead);
 	}
 
 	public String getName() {

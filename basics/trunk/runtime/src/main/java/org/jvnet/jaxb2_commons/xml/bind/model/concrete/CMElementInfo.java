@@ -9,7 +9,11 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackage;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 
+import com.sun.xml.bind.v2.model.core.TypeInfo;
+
 public class CMElementInfo implements MElementInfo {
+
+	private final TypeInfo<?, ?> elementInfo;
 
 	private final MPackage _package;
 
@@ -21,16 +25,23 @@ public class CMElementInfo implements MElementInfo {
 
 	private final QName substitutionHead;
 
-	public CMElementInfo(MPackage _package, QName elementName, MTypeInfo scope,
-			MTypeInfo typeInfo, QName substitutionHead) {
+	public CMElementInfo(TypeInfo<?, ?> elementInfo, MPackage _package,
+			QName elementName, MTypeInfo scope, MTypeInfo typeInfo,
+			QName substitutionHead) {
 		super();
+		Validate.notNull(elementInfo);
 		Validate.notNull(elementName);
 		Validate.notNull(_package);
+		this.elementInfo = elementInfo;
 		this._package = _package;
 		this.elementName = elementName;
 		this.scope = scope;
 		this.typeInfo = typeInfo;
 		this.substitutionHead = substitutionHead;
+	}
+
+	public TypeInfo<?, ?> getElementInfo() {
+		return elementInfo;
 	}
 
 	@Override

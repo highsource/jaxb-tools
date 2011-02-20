@@ -66,32 +66,30 @@ public abstract class CMInfoFactory<T, C, F, M> {
 	}
 
 	public MModel createModel() {
+		final CMModel model = new CMModel(typeInfoSet);
+
 		Collection<? extends BuiltinLeafInfo<T, C>> builtins = typeInfoSet
 				.builtins().values();
-		Collection<MBuiltinLeafInfo> builtinLeafInfos = new ArrayList<MBuiltinLeafInfo>(
-				builtins.size());
+
 		for (BuiltinLeafInfo<T, C> builtinLeafInfo : builtins) {
-			builtinLeafInfos.add(getTypeInfo(builtinLeafInfo));
+			model.addBuiltinLeafInfo(getTypeInfo(builtinLeafInfo));
 
 		}
+
 		Collection<? extends ClassInfo<T, C>> beans = typeInfoSet.beans()
 				.values();
-		Collection<MClassInfo> classInfos = new ArrayList<MClassInfo>(
-				beans.size());
 		for (ClassInfo<T, C> classInfo : beans) {
-			classInfos.add(getTypeInfo(classInfo));
+			model.addClassInfo(getTypeInfo(classInfo));
 		}
 		Collection<? extends EnumLeafInfo<T, C>> enums = typeInfoSet.enums()
 				.values();
-		Collection<MEnumLeafInfo> enumLeafInfos = new ArrayList<MEnumLeafInfo>(
-				enums.size());
+
 		for (EnumLeafInfo<T, C> enumLeafInfo : enums) {
-			enumLeafInfos.add(getTypeInfo(enumLeafInfo));
+			model.addEnumLeafInfo(getTypeInfo(enumLeafInfo));
 		}
 
 		Iterable<? extends ElementInfo<T, C>> elements = typeInfoSet
 				.getAllElements();
-		final Collection<MElementInfo> elementInfos = new ArrayList<MElementInfo>();
 		for (ElementInfo<T, C> element : elements) {
 
 			QName elementName = element.getElementName();
@@ -100,13 +98,12 @@ public abstract class CMInfoFactory<T, C, F, M> {
 			MTypeInfo typeInfo = getTypeInfo(element);
 			QName substitutionHead = element.getSubstitutionHead() == null ? null
 					: element.getSubstitutionHead().getElementName();
-			final MElementInfo elementInfo = new CMElementInfo(
+			final MElementInfo elementInfo = new CMElementInfo(element,
 					getPackage(element), elementName, scope, typeInfo,
 					substitutionHead);
-			elementInfos.add(elementInfo);
+			model.addElementInfo(elementInfo);
 		}
-		return new CMModel(builtinLeafInfos, classInfos, enumLeafInfos,
-				elementInfos);
+		return model;
 
 	}
 
@@ -173,7 +170,7 @@ public abstract class CMInfoFactory<T, C, F, M> {
 		}
 
 		final QName elementName = info.getElementName();
-		return new CMEnumLeafInfo(getPackage(info), getLocalName(info),
+		return new CMEnumLeafInfo(info, getPackage(info), getLocalName(info),
 				baseTypeInfo, constants, elementName);
 	}
 
@@ -187,10 +184,8 @@ public abstract class CMInfoFactory<T, C, F, M> {
 					: getTypeInfo(info.getBaseClass());
 			final QName elementName = info.isElement() ? info.getElementName()
 					: null;
-			CMClassInfo cmClassInfo = new CMClassInfo(getPackage(info),
-					getLocalName(info), baseClassInfo,
-
-					elementName);
+			CMClassInfo cmClassInfo = new CMClassInfo(info, getPackage(info),
+					getLocalName(info), baseClassInfo, elementName);
 			mClassInfo = cmClassInfo;
 			classInfos.put(info, mClassInfo);
 

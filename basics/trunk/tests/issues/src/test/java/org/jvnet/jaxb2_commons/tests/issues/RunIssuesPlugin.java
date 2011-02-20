@@ -18,6 +18,8 @@ public class RunIssuesPlugin extends RunXJC2Mojo {
 	@Override
 	public List<String> getArgs() {
 		final List<String> args = new ArrayList<String>(super.getArgs());
+		args.add("-Xmodel");
+		args.add("-XelementWrapper");
 		args.add("-XtoString");
 		args.add("-Xequals");
 		args.add("-XhashCode");

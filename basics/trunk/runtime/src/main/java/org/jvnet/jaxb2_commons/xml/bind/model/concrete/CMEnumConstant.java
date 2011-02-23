@@ -1,9 +1,9 @@
 package org.jvnet.jaxb2_commons.xml.bind.model.concrete;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
-import org.jvnet.jaxb2_commons.xml.bind.model.MEnumConstant;
+import org.jvnet.jaxb2_commons.xml.bind.model.MEnumConstantInfo;
 
-public class CMEnumConstant implements MEnumConstant {
+public class CMEnumConstant implements MEnumConstantInfo {
 
 	private final String lexicalValue;
 

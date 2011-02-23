@@ -14,7 +14,7 @@ import org.jvnet.jaxb2_commons.plugin.Ignoring;
 import org.jvnet.jaxb2_commons.xjc.model.concrete.XJCCMInfoFactory;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementPropertyInfo;
-import org.jvnet.jaxb2_commons.xml.bind.model.MModel;
+import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.util.DefaultPropertyInfoVisitor;
@@ -38,12 +38,12 @@ public class ElementWrapperPlugin extends AbstractParameterizablePlugin {
 		return "Generates @XmlElementWrapper fields.";
 	}
 
-	private MModel retrieveModel(Model model) {
+	private MModelInfo retrieveModel(Model model) {
 		try {
-			return Ring.get(MModel.class);
+			return Ring.get(MModelInfo.class);
 		} catch (Throwable t) {
-			final MModel mmodel = new XJCCMInfoFactory(model).createModel();
-			Ring.add(MModel.class, mmodel);
+			final MModelInfo mmodel = new XJCCMInfoFactory(model).createModel();
+			Ring.add(MModelInfo.class, mmodel);
 			return mmodel;
 		}
 	}
@@ -51,7 +51,7 @@ public class ElementWrapperPlugin extends AbstractParameterizablePlugin {
 	@Override
 	public void postProcessModel(Model model, ErrorHandler errorHandler) {
 
-		final MModel mmodel = retrieveModel(model);
+		final MModelInfo mmodel = retrieveModel(model);
 
 		final Collection<MClassInfo> wrapperClassInfos = new HashSet<MClassInfo>();
 		final Collection<MPropertyInfo> wrapperPropertyInfos = new HashSet<MPropertyInfo>();

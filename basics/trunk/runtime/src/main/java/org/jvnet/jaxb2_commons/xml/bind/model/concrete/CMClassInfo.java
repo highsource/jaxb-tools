@@ -9,7 +9,7 @@ import javax.xml.namespace.QName;
 import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
-import org.jvnet.jaxb2_commons.xml.bind.model.MPackage;
+import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
@@ -20,7 +20,7 @@ import com.sun.xml.bind.v2.model.core.PropertyInfo;
 public class CMClassInfo implements MClassInfo {
 
 	private final ClassInfo<?, ?> classInfo;
-	private final MPackage _package;
+	private final MPackageInfo _package;
 	private final String name;
 	private final String localName;
 	private final MClassInfo baseTypeInfo;
@@ -30,7 +30,7 @@ public class CMClassInfo implements MClassInfo {
 	private List<MPropertyInfo> unmodifiableProperties = Collections
 			.unmodifiableList(properties);
 
-	public CMClassInfo(ClassInfo<?, ?> classInfo, MPackage _package,
+	public CMClassInfo(ClassInfo<?, ?> classInfo, MPackageInfo _package,
 			String localName, MClassInfo baseTypeInfo, QName elementName) {
 		super();
 		Validate.notNull(classInfo);
@@ -55,7 +55,7 @@ public class CMClassInfo implements MClassInfo {
 	}
 
 	@Override
-	public MPackage getPackage() {
+	public MPackageInfo getPackage() {
 		return _package;
 	}
 

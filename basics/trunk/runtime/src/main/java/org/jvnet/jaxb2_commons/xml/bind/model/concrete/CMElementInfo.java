@@ -6,7 +6,7 @@ import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
-import org.jvnet.jaxb2_commons.xml.bind.model.MPackage;
+import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 
 import com.sun.xml.bind.v2.model.core.TypeInfo;
@@ -15,7 +15,7 @@ public class CMElementInfo implements MElementInfo {
 
 	private final TypeInfo<?, ?> elementInfo;
 
-	private final MPackage _package;
+	private final MPackageInfo _package;
 
 	private final QName elementName;
 
@@ -25,7 +25,7 @@ public class CMElementInfo implements MElementInfo {
 
 	private final QName substitutionHead;
 
-	public CMElementInfo(TypeInfo<?, ?> elementInfo, MPackage _package,
+	public CMElementInfo(TypeInfo<?, ?> elementInfo, MPackageInfo _package,
 			QName elementName, MTypeInfo scope, MTypeInfo typeInfo,
 			QName substitutionHead) {
 		super();
@@ -45,7 +45,7 @@ public class CMElementInfo implements MElementInfo {
 	}
 
 	@Override
-	public MPackage getPackage() {
+	public MPackageInfo getPackage() {
 		return _package;
 	}
 

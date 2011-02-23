@@ -8,9 +8,9 @@ import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
-import org.jvnet.jaxb2_commons.xml.bind.model.MEnumConstant;
+import org.jvnet.jaxb2_commons.xml.bind.model.MEnumConstantInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumLeafInfo;
-import org.jvnet.jaxb2_commons.xml.bind.model.MPackage;
+import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
 
@@ -19,16 +19,16 @@ import com.sun.xml.bind.v2.model.core.EnumLeafInfo;
 public class CMEnumLeafInfo implements MEnumLeafInfo {
 
 	private final EnumLeafInfo<?, ?> enumLeafInfo;
-	private final MPackage _package;
+	private final MPackageInfo _package;
 	private final String name;
 	private final String localName;
 	private final MTypeInfo baseTypeInfo;
-	private final List<MEnumConstant> unmodifiableConstants;
+	private final List<MEnumConstantInfo> unmodifiableConstants;
 	private final QName elementName;
 
-	public CMEnumLeafInfo(EnumLeafInfo<?, ?> enumLeafInfo, MPackage _package,
+	public CMEnumLeafInfo(EnumLeafInfo<?, ?> enumLeafInfo, MPackageInfo _package,
 			String localName, MTypeInfo baseTypeInfo,
-			List<MEnumConstant> constants,
+			List<MEnumConstantInfo> constants,
 
 			QName elementName) {
 
@@ -68,7 +68,7 @@ public class CMEnumLeafInfo implements MEnumLeafInfo {
 	}
 
 	@Override
-	public MPackage getPackage() {
+	public MPackageInfo getPackage() {
 		return _package;
 	}
 
@@ -78,7 +78,7 @@ public class CMEnumLeafInfo implements MEnumLeafInfo {
 	}
 
 	@Override
-	public List<MEnumConstant> getConstants() {
+	public List<MEnumConstantInfo> getConstants() {
 		return unmodifiableConstants;
 	}
 

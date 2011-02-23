@@ -15,13 +15,13 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumLeafInfo;
-import org.jvnet.jaxb2_commons.xml.bind.model.MModel;
+import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 
 import com.sun.xml.bind.v2.model.core.ElementInfo;
 import com.sun.xml.bind.v2.model.core.TypeInfoSet;
 
-public class CMModel implements MModel {
+public class CMModel implements MModelInfo {
 
 	private final TypeInfoSet<?, ?, ?, ?> typeInfoSet;
 

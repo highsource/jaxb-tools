@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
-public interface MModel {
+public interface MModelInfo {
 
 	public Collection<MBuiltinLeafInfo> getBuiltinLeafInfos();
 

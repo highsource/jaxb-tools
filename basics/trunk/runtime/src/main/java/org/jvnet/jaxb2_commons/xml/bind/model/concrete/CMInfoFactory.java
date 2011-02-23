@@ -17,10 +17,10 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MBuiltinLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementTypeInfo;
-import org.jvnet.jaxb2_commons.xml.bind.model.MEnumConstant;
+import org.jvnet.jaxb2_commons.xml.bind.model.MEnumConstantInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumLeafInfo;
-import org.jvnet.jaxb2_commons.xml.bind.model.MModel;
-import org.jvnet.jaxb2_commons.xml.bind.model.MPackage;
+import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xmlschema.XmlSchemaConstants;
@@ -65,7 +65,7 @@ public abstract class CMInfoFactory<T, C, F, M> {
 
 	}
 
-	public MModel createModel() {
+	public MModelInfo createModel() {
 		final CMModel model = new CMModel(typeInfoSet);
 
 		Collection<? extends BuiltinLeafInfo<T, C>> builtins = typeInfoSet
@@ -160,7 +160,7 @@ public abstract class CMInfoFactory<T, C, F, M> {
 
 		final MTypeInfo baseTypeInfo = getTypeInfo(info.getBaseType());
 
-		final List<MEnumConstant> constants = new ArrayList<MEnumConstant>();
+		final List<MEnumConstantInfo> constants = new ArrayList<MEnumConstantInfo>();
 		@SuppressWarnings("rawtypes")
 		Iterable<? extends EnumConstant> _constants = info.getConstants();
 		@SuppressWarnings("unchecked")
@@ -307,14 +307,14 @@ public abstract class CMInfoFactory<T, C, F, M> {
 				rp.getExpectedMimeType());
 	}
 
-	protected abstract MPackage getPackage(ClassInfo<T, C> info);
+	protected abstract MPackageInfo getPackage(ClassInfo<T, C> info);
 
 	protected abstract String getLocalName(ClassInfo<T, C> info);
 
-	protected abstract MPackage getPackage(EnumLeafInfo<T, C> info);
+	protected abstract MPackageInfo getPackage(EnumLeafInfo<T, C> info);
 
 	protected abstract String getLocalName(EnumLeafInfo<T, C> info);
 
-	protected abstract MPackage getPackage(ElementInfo<T, C> info);
+	protected abstract MPackageInfo getPackage(ElementInfo<T, C> info);
 
 }

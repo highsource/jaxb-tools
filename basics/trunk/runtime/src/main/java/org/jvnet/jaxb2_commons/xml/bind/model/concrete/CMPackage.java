@@ -1,9 +1,9 @@
 package org.jvnet.jaxb2_commons.xml.bind.model.concrete;
 
 import org.jvnet.jaxb2_commons.lang.StringUtils;
-import org.jvnet.jaxb2_commons.xml.bind.model.MPackage;
+import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 
-public class CMPackage implements MPackage {
+public class CMPackage implements MPackageInfo {
 
 	private final String packageName;
 

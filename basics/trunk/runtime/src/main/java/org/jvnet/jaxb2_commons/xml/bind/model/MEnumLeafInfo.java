@@ -8,7 +8,7 @@ public interface MEnumLeafInfo extends MPackagedTypeInfo {
 
 	public MTypeInfo getBaseTypeInfo();
 
-	public List<MEnumConstant> getConstants();
+	public List<MEnumConstantInfo> getConstants();
 
 	public QName getElementName();
 

@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.xml.bind.model;
 
-public interface MPackage {
+public interface MPackageInfo {
 
 	public String getPackageName();
 

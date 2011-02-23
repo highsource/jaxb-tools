@@ -2,7 +2,7 @@ package org.jvnet.jaxb2_commons.plugin.model;
 
 import org.jvnet.jaxb2_commons.plugin.AbstractPlugin;
 import org.jvnet.jaxb2_commons.xjc.model.concrete.XJCCMInfoFactory;
-import org.jvnet.jaxb2_commons.xml.bind.model.MModel;
+import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 import org.xml.sax.ErrorHandler;
 
 import com.sun.tools.xjc.Options;
@@ -26,17 +26,17 @@ public class ModelPlugin extends AbstractPlugin {
 		return "TBD";
 	}
 
-	private MModel retrieveModel(Model model) {
+	private MModelInfo retrieveModel(Model model) {
 		try {
-			return Ring.get(MModel.class);
+			return Ring.get(MModelInfo.class);
 		} catch (Throwable t) {
-			final MModel mmodel = new XJCCMInfoFactory(model).createModel();
-			Ring.add(MModel.class, mmodel);
+			final MModelInfo mmodel = new XJCCMInfoFactory(model).createModel();
+			Ring.add(MModelInfo.class, mmodel);
 			return mmodel;
 		}
 	}
 
-	private MModel mmodel;
+	private MModelInfo mmodel;
 
 	@Override
 	public void postProcessModel(Model model, ErrorHandler errorHandler) {
@@ -45,7 +45,7 @@ public class ModelPlugin extends AbstractPlugin {
 
 	@Override
 	protected boolean run(Outline outline, Options options) throws Exception {
-		Ring.add(MModel.class, mmodel);
+		Ring.add(MModelInfo.class, mmodel);
 //		logger.info("Generating the model...");
 		return true;
 	}

@@ -6,8 +6,10 @@ import com.sun.codemodel.JEnumConstant;
 
 public interface MEnumConstantOutline extends MTargeted<MEnumConstantInfo> {
 
+	public MEnumOutline getEnumOutline();
+
 	public MEnumConstantInfo getTarget();
-	
+
 	public JEnumConstant getCode();
 
 }

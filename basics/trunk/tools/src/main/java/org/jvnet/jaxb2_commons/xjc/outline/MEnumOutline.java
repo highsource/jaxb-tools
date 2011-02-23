@@ -11,7 +11,7 @@ public interface MEnumOutline extends MChildOutline, MPackagedOutline,
 
 	public MEnumLeafInfo getTarget();
 
-	public List<MEnumConstantOutline> getConstantOutlines();
+	public List<MEnumConstantOutline> getEnumConstantOutlines();
 
 	public JDefinedClass getCode();
 }

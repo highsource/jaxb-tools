@@ -3,7 +3,7 @@ package org.jvnet.jaxb2_commons.xjc.model.concrete;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jvnet.jaxb2_commons.xml.bind.model.MPackage;
+import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.concrete.CMInfoFactory;
 import org.jvnet.jaxb2_commons.xml.bind.model.concrete.CMPackage;
 
@@ -27,36 +27,36 @@ public class XJCCMInfoFactory extends CMInfoFactory<NType, NClass, Void, Void> {
 	}
 
 	@Override
-	protected MPackage getPackage(ClassInfo<NType, NClass> info) {
+	protected MPackageInfo getPackage(ClassInfo<NType, NClass> info) {
 		final CClassInfo cinfo = (CClassInfo) info;
 		return getPackage(cinfo.parent());
 	}
 
 	@Override
-	protected MPackage getPackage(EnumLeafInfo<NType, NClass> info) {
+	protected MPackageInfo getPackage(EnumLeafInfo<NType, NClass> info) {
 		return getPackage(((CEnumLeafInfo) info).parent);
 	}
 
 	@Override
-	protected MPackage getPackage(ElementInfo<NType, NClass> info) {
+	protected MPackageInfo getPackage(ElementInfo<NType, NClass> info) {
 		return getPackage(((CElementInfo) info).parent);
 	}
 
-	private final Map<String, MPackage> packages = new HashMap<String, MPackage>();
+	private final Map<String, MPackageInfo> packages = new HashMap<String, MPackageInfo>();
 
-	private MPackage getPackage(CClassInfoParent parent) {
+	private MPackageInfo getPackage(CClassInfoParent parent) {
 
-		return parent.accept(new Visitor<MPackage>() {
+		return parent.accept(new Visitor<MPackageInfo>() {
 
 			@Override
-			public MPackage onBean(CClassInfo bean) {
+			public MPackageInfo onBean(CClassInfo bean) {
 				return getPackage(bean.parent());
 			}
 
 			@Override
-			public MPackage onPackage(JPackage pkg) {
+			public MPackageInfo onPackage(JPackage pkg) {
 				String packageName = pkg.name();
-				MPackage _package = packages.get(packageName);
+				MPackageInfo _package = packages.get(packageName);
 				if (_package == null) {
 					_package = new CMPackage(packageName);
 					packages.put(packageName, _package);
@@ -65,7 +65,7 @@ public class XJCCMInfoFactory extends CMInfoFactory<NType, NClass, Void, Void> {
 			}
 
 			@Override
-			public MPackage onElement(CElementInfo element) {
+			public MPackageInfo onElement(CElementInfo element) {
 				return getPackage(element.parent);
 			}
 		});

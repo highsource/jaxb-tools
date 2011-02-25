@@ -11,13 +11,11 @@ public interface MClassOutline extends MChildOutline, MPackagedOutline, MTargete
 
 	public MClassInfo getTarget();
 
-	public MModelOutline getModelOutline();
-
 	public MClassOutline getSuperClassOutline();
 
-	public List<MPropertyOutline> getProperties();
+	public List<MPropertyOutline> getPropertyOutlines();
 
-	public List<MPropertyOutline> getDeclaredProperties();
+	public List<MPropertyOutline> getDeclaredPropertyOutlines();
 
 	public JDefinedClass getReferenceCode();
 	

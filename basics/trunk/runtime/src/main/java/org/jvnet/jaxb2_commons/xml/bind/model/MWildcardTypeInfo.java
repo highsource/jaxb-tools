@@ -1,5 +1,8 @@
 package org.jvnet.jaxb2_commons.xml.bind.model;
 
-public interface MWildcardTypeInfo extends MTypeInfo {
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MOriginated;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MWildcardTypeInfoOrigin;
+
+public interface MWildcardTypeInfo extends MTypeInfo, MOriginated<MWildcardTypeInfoOrigin> {
 
 }

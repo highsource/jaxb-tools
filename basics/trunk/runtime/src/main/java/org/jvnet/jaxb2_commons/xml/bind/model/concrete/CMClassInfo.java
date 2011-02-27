@@ -13,13 +13,16 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.ClassInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.PropertyInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MClassInfoOrigin;
 
 import com.sun.xml.bind.v2.model.core.ClassInfo;
 import com.sun.xml.bind.v2.model.core.PropertyInfo;
 
 public class CMClassInfo implements MClassInfo {
 
-	private final ClassInfo<?, ?> classInfo;
+	private final MClassInfoOrigin origin;
 	private final MPackageInfo _package;
 	private final String name;
 	private final String localName;
@@ -30,32 +33,34 @@ public class CMClassInfo implements MClassInfo {
 	private List<MPropertyInfo> unmodifiableProperties = Collections
 			.unmodifiableList(properties);
 
-	public CMClassInfo(ClassInfo<?, ?> classInfo, MPackageInfo _package,
+	public CMClassInfo(MClassInfoOrigin origin, MPackageInfo _package,
 			String localName, MClassInfo baseTypeInfo, QName elementName) {
 		super();
-		Validate.notNull(classInfo);
+		Validate.notNull(origin);
 		Validate.notNull(_package);
 		Validate.notNull(localName);
-		this.classInfo = classInfo;
+		this.origin = origin;
 		this.name = _package.getPackagedName(localName);
 		this.localName = localName;
 		this._package = _package;
 		this.baseTypeInfo = baseTypeInfo;
 		this.elementName = elementName;
 	}
-	
-	@Override
-	public MElementInfo createElementInfo(MTypeInfo scope,
-			QName substitutionHead) {
-		return new CMElementInfo(getClassInfo(), getPackage(), getElementName(), scope, this, substitutionHead);
-	}
-	
-	public ClassInfo<?, ?> getClassInfo() {
-		return classInfo;
+
+	public MClassInfoOrigin getOrigin() {
+		return origin;
 	}
 
 	@Override
-	public MPackageInfo getPackage() {
+	public MElementInfo createElementInfo(MTypeInfo scope,
+			QName substitutionHead) {
+		return new CMElementInfo(getOrigin().createElementInfoOrigin(),
+				getPackageInfo(), getElementName(), scope, this,
+				substitutionHead);
+	}
+
+	@Override
+	public MPackageInfo getPackageInfo() {
 		return _package;
 	}
 
@@ -94,12 +99,14 @@ public class CMClassInfo implements MClassInfo {
 	public void removeProperty(MPropertyInfo propertyInfo) {
 		Validate.notNull(propertyInfo);
 		this.properties.remove(propertyInfo);
-		final List<PropertyInfo<?, ?>> ps = new ArrayList<PropertyInfo<?, ?>>(
-				classInfo.getProperties());
-		for (PropertyInfo<?, ?> p : ps) {
-			if (propertyInfo.getPrivateName().equals(p.getName())) {
-				classInfo.getProperties().remove(p);
-			}
+
+		if (getOrigin() instanceof ClassInfoOrigin
+				&& propertyInfo.getOrigin() instanceof PropertyInfoOrigin) {
+			ClassInfo ci = (ClassInfo) ((ClassInfoOrigin) getOrigin())
+					.getSource();
+			PropertyInfo pi = (PropertyInfo) ((PropertyInfoOrigin) propertyInfo
+					.getOrigin()).getSource();
+			ci.getProperties().remove(pi);
 		}
 	}
 

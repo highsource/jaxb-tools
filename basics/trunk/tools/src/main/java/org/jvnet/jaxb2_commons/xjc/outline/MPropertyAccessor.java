@@ -7,8 +7,6 @@ import com.sun.codemodel.JVar;
 
 public interface MPropertyAccessor {
 
-	public MPropertyOutline getPropertyOutline();
-
 	public void get(JBlock block, JVar variable);
 
 	public void set(JBlock block, String uniqueName, JExpression value);

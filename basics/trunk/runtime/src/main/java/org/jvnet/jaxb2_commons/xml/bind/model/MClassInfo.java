@@ -4,7 +4,11 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
-public interface MClassInfo extends MPackagedTypeInfo {
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MClassInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MOriginated;
+
+public interface MClassInfo extends MPackagedTypeInfo,
+		MOriginated<MClassInfoOrigin> {
 
 	public MClassInfo getBaseTypeInfo();
 
@@ -22,4 +26,5 @@ public interface MClassInfo extends MPackagedTypeInfo {
 	public void addProperty(MPropertyInfo propertyInfo);
 
 	public void removeProperty(MPropertyInfo propertyInfo);
+
 }

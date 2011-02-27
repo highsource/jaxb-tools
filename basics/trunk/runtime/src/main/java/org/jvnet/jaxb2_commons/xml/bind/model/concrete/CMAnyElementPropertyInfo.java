@@ -1,7 +1,9 @@
 package org.jvnet.jaxb2_commons.xml.bind.model.concrete;
 
 import org.jvnet.jaxb2_commons.xml.bind.model.MAnyElementPropertyInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
 public class CMAnyElementPropertyInfo extends CMPropertyInfo implements
 		MAnyElementPropertyInfo {
@@ -10,9 +12,10 @@ public class CMAnyElementPropertyInfo extends CMPropertyInfo implements
 	private final boolean domAllowed;
 	private final boolean typedObjectAllowed;
 
-	public CMAnyElementPropertyInfo(String privateName, boolean collection,
+	public CMAnyElementPropertyInfo(MPropertyInfoOrigin origin,
+			MClassInfo classInfo, String privateName, boolean collection,
 			boolean mixed, boolean domAllowed, boolean typedObjectAllowed) {
-		super(privateName, collection);
+		super(origin, classInfo, privateName, collection);
 		this.mixed = mixed;
 		this.domAllowed = domAllowed;
 		this.typedObjectAllowed = typedObjectAllowed;

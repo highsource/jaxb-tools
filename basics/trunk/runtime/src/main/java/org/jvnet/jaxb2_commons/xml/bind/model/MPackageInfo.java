@@ -1,6 +1,9 @@
 package org.jvnet.jaxb2_commons.xml.bind.model;
 
-public interface MPackageInfo {
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MOriginated;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPackageInfoOrigin;
+
+public interface MPackageInfo extends MOriginated<MPackageInfoOrigin> {
 
 	public String getPackageName();
 

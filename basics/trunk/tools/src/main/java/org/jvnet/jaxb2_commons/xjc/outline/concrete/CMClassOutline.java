@@ -33,11 +33,9 @@ public class CMClassOutline implements MClassOutline {
 			MClassInfo target, MClassOutline superClassOutline,
 			JDefinedClass referenceCode, JDefinedClass implementationCode,
 			JClass implementationReferenceCode) {
-		super();
 		Validate.notNull(parent);
 		Validate.notNull(packageOutline);
 		Validate.notNull(target);
-		Validate.notNull(superClassOutline);
 		Validate.notNull(referenceCode);
 		Validate.notNull(implementationCode);
 		Validate.notNull(implementationReferenceCode);
@@ -84,8 +82,8 @@ public class CMClassOutline implements MClassOutline {
 			return getDeclaredPropertyOutlines();
 		} else {
 			final List<MPropertyOutline> propertyOutlines = new ArrayList<MPropertyOutline>();
-			propertyOutlines.addAll(getDeclaredPropertyOutlines());
 			propertyOutlines.addAll(getSuperClassOutline().getPropertyOutlines());
+			propertyOutlines.addAll(getDeclaredPropertyOutlines());
 			return Collections.unmodifiableList(propertyOutlines);
 		}
 	}

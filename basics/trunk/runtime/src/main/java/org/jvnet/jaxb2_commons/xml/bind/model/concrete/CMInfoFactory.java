@@ -1,9 +1,7 @@
 package org.jvnet.jaxb2_commons.xml.bind.model.concrete;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,16 +15,30 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MBuiltinLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementTypeInfo;
-import org.jvnet.jaxb2_commons.xml.bind.model.MEnumConstantInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
-import org.jvnet.jaxb2_commons.xmlschema.XmlSchemaConstants;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMAnyAttributePropertyInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMBuiltinLeafInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMClassInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMElementInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMEnumConstantInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMEnumLeafInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMModelInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMPropertyInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMWildcardTypeInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MBuiltinLeafInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MClassInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MElementInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MEnumConstantInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MEnumLeafInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MModelInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MWildcardTypeInfoOrigin;
 
 import com.sun.xml.bind.v2.model.core.Adapter;
-import com.sun.xml.bind.v2.model.core.ArrayInfo;
 import com.sun.xml.bind.v2.model.core.AttributePropertyInfo;
 import com.sun.xml.bind.v2.model.core.BuiltinLeafInfo;
 import com.sun.xml.bind.v2.model.core.ClassInfo;
@@ -45,71 +57,83 @@ import com.sun.xml.bind.v2.model.core.TypeRef;
 import com.sun.xml.bind.v2.model.core.ValuePropertyInfo;
 import com.sun.xml.bind.v2.model.core.WildcardTypeInfo;
 
-public abstract class CMInfoFactory<T, C, F, M> {
+public abstract class CMInfoFactory<T, C, TIS extends TypeInfoSet<T, C, ?, ?>,
+//
+TI extends TypeInfo<T, C>,
+//
+BLI extends BuiltinLeafInfo<T, C>,
+//
+EI extends ElementInfo<T, C>,
+//
+ELI extends EnumLeafInfo<T, C>,
+//
+EC extends EnumConstant<T, C>,
+//
+CI extends ClassInfo<T, C>,
+//
+PI extends PropertyInfo<T, C>,
+//
+API extends AttributePropertyInfo<T, C>,
+//
+VPI extends ValuePropertyInfo<T, C>,
+//
+EPI extends ElementPropertyInfo<T, C>,
+//
+RPI extends ReferencePropertyInfo<T, C>,
+//
+WTI extends WildcardTypeInfo<T, C>> {
 
-	private final Map<QName, MBuiltinLeafInfo> builtins = new HashMap<QName, MBuiltinLeafInfo>();
+	private final Map<BLI, MBuiltinLeafInfo> builtinLeafInfos = new IdentityHashMap<BLI, MBuiltinLeafInfo>();
 
-	{
-		for (QName name : XmlSchemaConstants.TYPE_NAMES) {
-			builtins.put(name, new CMBuiltinLeafInfo(name));
-		}
-	}
+	private final Map<CI, MClassInfo> classInfos = new IdentityHashMap<CI, MClassInfo>();
 
-	private final Map<ClassInfo<T, C>, MClassInfo> classInfos = new IdentityHashMap<ClassInfo<T, C>, MClassInfo>();
+	private final Map<ELI, MEnumLeafInfo> enumLeafInfos = new IdentityHashMap<ELI, MEnumLeafInfo>();
 
-	private final TypeInfoSet<T, C, F, M> typeInfoSet;
+	private final Map<EI, MElementInfo> elementInfos = new IdentityHashMap<EI, MElementInfo>();
 
-	public CMInfoFactory(TypeInfoSet<T, C, F, M> typeInfoSet) {
+	private final TIS typeInfoSet;
+
+	public CMInfoFactory(TIS typeInfoSet) {
 		Validate.notNull(typeInfoSet);
 		this.typeInfoSet = typeInfoSet;
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public MModelInfo createModel() {
-		final CMModel model = new CMModel(typeInfoSet);
+		final CMModel<T, C> model = new CMModel<T, C>(
+				createModelInfoOrigin(typeInfoSet));
 
 		Collection<? extends BuiltinLeafInfo<T, C>> builtins = typeInfoSet
 				.builtins().values();
-
 		for (BuiltinLeafInfo<T, C> builtinLeafInfo : builtins) {
-			model.addBuiltinLeafInfo(getTypeInfo(builtinLeafInfo));
-
+			model.addBuiltinLeafInfo(getTypeInfo((BLI) builtinLeafInfo));
 		}
 
 		Collection<? extends ClassInfo<T, C>> beans = typeInfoSet.beans()
 				.values();
 		for (ClassInfo<T, C> classInfo : beans) {
-			model.addClassInfo(getTypeInfo(classInfo));
+			model.addClassInfo(getTypeInfo((CI) classInfo));
 		}
+
 		Collection<? extends EnumLeafInfo<T, C>> enums = typeInfoSet.enums()
 				.values();
-
 		for (EnumLeafInfo<T, C> enumLeafInfo : enums) {
-			model.addEnumLeafInfo(getTypeInfo(enumLeafInfo));
+			model.addEnumLeafInfo(getTypeInfo((ELI) enumLeafInfo));
 		}
 
 		Iterable<? extends ElementInfo<T, C>> elements = typeInfoSet
 				.getAllElements();
 		for (ElementInfo<T, C> element : elements) {
-
-			QName elementName = element.getElementName();
-			MClassInfo scope = element.getScope() == null ? null
-					: getTypeInfo(element.getScope());
-			MTypeInfo typeInfo = getTypeInfo(element);
-			QName substitutionHead = element.getSubstitutionHead() == null ? null
-					: element.getSubstitutionHead().getElementName();
-			final MElementInfo elementInfo = new CMElementInfo(element,
-					getPackage(element), elementName, scope, typeInfo,
-					substitutionHead);
-			model.addElementInfo(elementInfo);
+			model.addElementInfo(getElementInfo((EI) element));
 		}
 		return model;
 
 	}
 
 	protected MTypeInfo getTypeInfo(PropertyInfo<T, C> propertyInfo,
-			TypeInfo<T, C> typeInfo, boolean list, Adapter<T, C> adapter,
-			ID id, MimeType mimeType) {
+			TI typeInfo, boolean list, Adapter<T, C> adapter, ID id,
+			MimeType mimeType) {
 		final MTypeInfo ti = getTypeInfo(typeInfo);
 		if (!list) {
 			return ti;
@@ -118,161 +142,131 @@ public abstract class CMInfoFactory<T, C, F, M> {
 		}
 	}
 
-	private MTypeInfo getTypeInfo(TypeInfo<T, C> typeInfo) {
+	@SuppressWarnings("unchecked")
+	protected MTypeInfo getTypeInfo(TI typeInfo) {
 		if (typeInfo instanceof BuiltinLeafInfo) {
-			return getTypeInfo((BuiltinLeafInfo<T, C>) typeInfo);
+			return getTypeInfo((BLI) typeInfo);
 		} else if (typeInfo instanceof EnumLeafInfo) {
-			return getTypeInfo((EnumLeafInfo<T, C>) typeInfo);
+			return getTypeInfo((ELI) typeInfo);
 		} else if (typeInfo instanceof ElementInfo) {
-			return getTypeInfo((ElementInfo<T, C>) typeInfo);
-			// } else if (typeInfo instanceof CClassRef) {
-			// throw new UnsupportedOperationException();
+			return getTypeInfo((EI) typeInfo);
 		} else if (typeInfo instanceof WildcardTypeInfo) {
-			return new CMWildcardTypeInfo();
+			return createWildcardTypeInfo((WTI) typeInfo);
 		} else if (typeInfo instanceof ClassInfo) {
-			return getTypeInfo((ClassInfo<T, C>) typeInfo);
-		} else if (typeInfo instanceof ArrayInfo) {
-			throw new UnsupportedOperationException();
+			return getTypeInfo((CI) typeInfo);
 		} else {
 			throw new UnsupportedOperationException();
 		}
 	}
 
-	private MBuiltinLeafInfo getTypeInfo(BuiltinLeafInfo<T, C> typeInfo) {
-		QName typeName = typeInfo.getTypeName();
-		MBuiltinLeafInfo knownBuiltin = builtins.get(typeName);
-		if (knownBuiltin != null) {
-			return knownBuiltin;
-		} else {
-			// return new CMBuiltinLeafInfo(typeName);
-			throw new UnsupportedOperationException(MessageFormat.format(
-					"Unsupported builtin type [{0}].", typeName));
+	private MBuiltinLeafInfo getTypeInfo(BLI typeInfo) {
+		MBuiltinLeafInfo builtinLeafInfo = builtinLeafInfos.get(typeInfo);
+		if (builtinLeafInfo == null) {
+			builtinLeafInfo = createBuiltinLeafInfo(typeInfo);
+			builtinLeafInfos.put(typeInfo, builtinLeafInfo);
+			return builtinLeafInfo;
 		}
+		return builtinLeafInfo;
 	}
 
-	private MTypeInfo getTypeInfo(ElementInfo<T, C> info) {
-		ElementPropertyInfo<T, C> p = info.getProperty();
-		return getTypeInfo(p, info.getContentType(), p.isValueList(),
-				p.getAdapter(), p.id(), p.getExpectedMimeType());
-	}
-
-	private MEnumLeafInfo getTypeInfo(final EnumLeafInfo<T, C> info) {
-
-		final MTypeInfo baseTypeInfo = getTypeInfo(info.getBaseType());
-
-		final List<MEnumConstantInfo> constants = new ArrayList<MEnumConstantInfo>();
-		@SuppressWarnings("rawtypes")
-		Iterable<? extends EnumConstant> _constants = info.getConstants();
+	private MTypeInfo getTypeInfo(EI info) {
 		@SuppressWarnings("unchecked")
-		final Iterable<? extends EnumConstant<T, C>> enumConstants = (Iterable<? extends EnumConstant<T, C>>) _constants;
-		for (EnumConstant<?, ?> enumConstant : enumConstants) {
-			constants.add(new CMEnumConstant(enumConstant.getLexicalValue()));
-		}
-
-		final QName elementName = info.getElementName();
-		return new CMEnumLeafInfo(info, getPackage(info), getLocalName(info),
-				baseTypeInfo, constants, elementName);
+		EPI p = (EPI) info.getProperty();
+		@SuppressWarnings("unchecked")
+		TI contentType = (TI) info.getContentType();
+		return getTypeInfo(p, contentType, p.isValueList(), p.getAdapter(),
+				p.id(), p.getExpectedMimeType());
 	}
 
-	private MClassInfo getTypeInfo(ClassInfo<T, C> info) {
+	protected MClassInfo getTypeInfo(CI info) {
 
-		MClassInfo mClassInfo = classInfos.get(info);
+		MClassInfo classInfo = classInfos.get(info);
 
-		if (mClassInfo == null) {
+		if (classInfo == null) {
 
-			final MClassInfo baseClassInfo = info.getBaseClass() == null ? null
-					: getTypeInfo(info.getBaseClass());
-			final QName elementName = info.isElement() ? info.getElementName()
-					: null;
-			CMClassInfo cmClassInfo = new CMClassInfo(info, getPackage(info),
-					getLocalName(info), baseClassInfo, elementName);
-			mClassInfo = cmClassInfo;
-			classInfos.put(info, mClassInfo);
-
-			final List<MPropertyInfo> properties = new ArrayList<MPropertyInfo>();
+			classInfo = createClassInfo(info);
+			classInfos.put(info, classInfo);
 
 			if (info.hasAttributeWildcard()) {
-				properties
-						.add(new CMAnyAttributePropertyInfo("otherAttributes"));
+				classInfo
+						.addProperty(createAnyAttributePropertyInfo(classInfo));
+			}
 
-			}
-			List<? extends PropertyInfo<T, C>> ps = info.getProperties();
-			for (PropertyInfo<T, C> p : ps) {
-				properties.add(createPropertyInfo(p));
-			}
-			for (MPropertyInfo property : properties) {
-				cmClassInfo.addProperty(property);
+			for (PropertyInfo<T, C> p : (List<? extends PropertyInfo<T, C>>) info
+					.getProperties()) {
+				classInfo.addProperty(createPropertyInfo(classInfo, (PI) p));
 			}
 		}
-		return mClassInfo;
+		return classInfo;
 	}
 
-	private MPropertyInfo createPropertyInfo(PropertyInfo<T, C> p) {
+	private MEnumLeafInfo getTypeInfo(ELI info) {
+		MEnumLeafInfo enumLeafInfo = enumLeafInfos.get(info);
+		if (enumLeafInfo == null) {
+			enumLeafInfo = createEnumLeafInfo(info);
+			enumLeafInfos.put(info, enumLeafInfo);
+
+			@SuppressWarnings("rawtypes")
+			Iterable<? extends EnumConstant> _constants = info.getConstants();
+			@SuppressWarnings("unchecked")
+			final Iterable<? extends EnumConstant<T, C>> enumConstants = (Iterable<? extends EnumConstant<T, C>>) _constants;
+			for (EnumConstant<?, ?> enumConstant : enumConstants) {
+				enumLeafInfo.addEnumConstantInfo(createEnumContantInfo(
+						enumLeafInfo, (EC) enumConstant));
+			}
+		}
+		return enumLeafInfo;
+
+	}
+
+	private MElementInfo getElementInfo(EI info) {
+		MElementInfo mElementInfo = elementInfos.get(info);
+		if (mElementInfo == null) {
+			mElementInfo = createElementInfo(info);
+			elementInfos.put(info, mElementInfo);
+		}
+		return mElementInfo;
+
+	}
+
+	protected MClassInfo createClassInfo(CI info) {
+		return new CMClassInfo(createClassInfoOrigin(info), getPackage(info),
+				getLocalName(info), info.getBaseClass() == null ? null
+						: getTypeInfo((CI) info.getBaseClass()),
+				info.isElement() ? info.getElementName() : null);
+	}
+
+	private MPropertyInfo createPropertyInfo(final MClassInfo classInfo, PI p) {
 
 		if (p instanceof AttributePropertyInfo) {
-			final AttributePropertyInfo<T, C> ap = (AttributePropertyInfo<T, C>) p;
-			return new CMAttributePropertyInfo(ap.getName(), getTypeInfo(ap),
-					ap.getXmlName());
+			@SuppressWarnings("unchecked")
+			final API api = (API) p;
+			return createAttributePropertyInfo(classInfo, api);
 		} else if (p instanceof ValuePropertyInfo) {
-			final ValuePropertyInfo<T, C> vp = (ValuePropertyInfo<T, C>) p;
-			// NonElement target = vp.getTarget();
-			return new CMValuePropertyInfo(vp.getName(), getTypeInfo(vp));
+			@SuppressWarnings("unchecked")
+			final VPI vpi = (VPI) p;
+			return createValuePropertyInfo(classInfo, vpi);
 		} else if (p instanceof ElementPropertyInfo) {
-			// System.out.println("Element property: " + p.getName());
-			final ElementPropertyInfo<T, C> ep = (ElementPropertyInfo<T, C>) p;
-
-			List<? extends TypeRef<T, C>> types = ep.getTypes();
-
-			if (types.size() == 1) {
-				final TypeRef<T, C> typeRef = types.get(0);
-				return new CMElementPropertyInfo(ep.getName(),
-						ep.isCollection() && !ep.isValueList(), getTypeInfo(ep,
-								typeRef), typeRef.getTagName(), ep.getXmlName());
+			@SuppressWarnings("unchecked")
+			final EPI ep = (EPI) p;
+			if (ep.getTypes().size() == 1) {
+				return createElementPropertyInfo(classInfo, ep);
 			} else {
-				final Collection<MElementTypeInfo> typedElements = new ArrayList<MElementTypeInfo>();
-				for (TypeRef<T, C> typeRef : types) {
-					typedElements.add(new CMElementTypeInfo(typeRef
-							.getTagName(), getTypeInfo(ep, typeRef)));
-				}
-				return new CMElementsPropertyInfo(ep.getName(),
-						ep.isCollection() && !ep.isValueList(), typedElements,
-						ep.getXmlName());
+				return createElementsPropertyInfo(classInfo, ep);
 
 			}
 		} else if (p instanceof ReferencePropertyInfo) {
-			// System.out.println("Reference property: " + p.getName());
-			final ReferencePropertyInfo<T, C> rp = (ReferencePropertyInfo<T, C>) p;
+			@SuppressWarnings("unchecked")
+			final RPI rp = (RPI) p;
 			final Set<? extends Element<T, C>> elements = rp.getElements();
 			if (elements.size() == 0
 					&& rp.getWildcard() != null
 					&& (rp.getWildcard().allowDom || rp.getWildcard().allowTypedObject)) {
-				return new CMAnyElementPropertyInfo(rp.getName(),
-						rp.isCollection(), rp.isMixed(),
-						rp.getWildcard().allowDom,
-						rp.getWildcard().allowTypedObject);
-
+				return createAnyElementPropertyInfo(classInfo, rp);
 			} else if (elements.size() == 1) {
-				final Element<T, C> element = elements.iterator().next();
-				return new CMElementRefPropertyInfo(rp.getName(),
-						rp.isCollection(), getTypeInfo(rp, element),
-						element.getElementName(), rp.getXmlName(),
-
-						rp.isMixed(), rp.getWildcard() == null ? false
-								: rp.getWildcard().allowDom,
-						rp.getWildcard() == null ? false
-								: rp.getWildcard().allowTypedObject);
+				return createElementRefPropertyInfo(classInfo, rp);
 			} else {
-				final List<MElementTypeInfo> typedElements = new ArrayList<MElementTypeInfo>();
-				for (Element<T, C> element : elements) {
-					typedElements.add(new CMElementTypeInfo(element
-							.getElementName(), getTypeInfo(rp, element)));
-				}
-				return new CMElementRefsPropertyInfo(rp.getName(),
-						rp.isCollection(), typedElements, rp.getXmlName(),
-						rp.isMixed(), rp.getWildcard() == null ? false
-								: rp.getWildcard().allowDom,
-						rp.getWildcard() == null ? false
-								: rp.getWildcard().allowTypedObject);
+				return createElementRefsPropertyInfo(classInfo, rp);
 			}
 		} else if (p instanceof MapPropertyInfo) {
 			// System.out.println("Map property: " + p.getName());
@@ -284,37 +278,196 @@ public abstract class CMInfoFactory<T, C, F, M> {
 
 	}
 
+	protected MPropertyInfo createAttributePropertyInfo(
+			final MClassInfo classInfo, final API propertyInfo) {
+		return new CMAttributePropertyInfo(
+				createPropertyInfoOrigin((PI) propertyInfo), classInfo,
+				propertyInfo.getName(), getTypeInfo(propertyInfo),
+				propertyInfo.getXmlName());
+	}
+
+	protected MPropertyInfo createValuePropertyInfo(final MClassInfo classInfo,
+			final VPI propertyInfo) {
+		return new CMValuePropertyInfo(
+				createPropertyInfoOrigin((PI) propertyInfo), classInfo,
+				propertyInfo.getName(), getTypeInfo(propertyInfo));
+	}
+
+	protected MPropertyInfo createElementPropertyInfo(
+			final MClassInfo classInfo, final EPI ep) {
+		final TypeRef<T, C> typeRef = ep.getTypes().get(0);
+		return new CMElementPropertyInfo(createPropertyInfoOrigin((PI) ep),
+				classInfo, ep.getName(),
+				ep.isCollection() && !ep.isValueList(),
+				getTypeInfo(ep, typeRef), typeRef.getTagName(), ep.getXmlName());
+	}
+
+	protected MPropertyInfo createElementsPropertyInfo(
+			final MClassInfo classInfo, final EPI ep) {
+		List<? extends TypeRef<T, C>> types = ep.getTypes();
+		final Collection<MElementTypeInfo> typedElements = new ArrayList<MElementTypeInfo>(
+				types.size());
+		for (TypeRef<T, C> typeRef : types) {
+			typedElements.add(new CMElementTypeInfo(typeRef.getTagName(),
+					getTypeInfo(ep, typeRef)));
+		}
+		return new CMElementsPropertyInfo(createPropertyInfoOrigin((PI) ep),
+				classInfo, ep.getName(),
+				ep.isCollection() && !ep.isValueList(), typedElements,
+				ep.getXmlName());
+	}
+
+	protected MPropertyInfo createAnyElementPropertyInfo(
+			final MClassInfo classInfo, final RPI rp) {
+		return new CMAnyElementPropertyInfo(createPropertyInfoOrigin((PI) rp),
+				classInfo, rp.getName(), rp.isCollection(), rp.isMixed(),
+				rp.getWildcard().allowDom, rp.getWildcard().allowTypedObject);
+	}
+
+	protected MPropertyInfo createElementRefPropertyInfo(
+			final MClassInfo classInfo, final RPI rp) {
+		final Element<T, C> element = rp.getElements().iterator().next();
+		return new CMElementRefPropertyInfo(createPropertyInfoOrigin((PI) rp),
+				classInfo, rp.getName(), rp.isCollection(), getTypeInfo(rp,
+						element), element.getElementName(), rp.getXmlName(),
+
+				rp.isMixed(), rp.getWildcard() == null ? false
+						: rp.getWildcard().allowDom,
+				rp.getWildcard() == null ? false
+						: rp.getWildcard().allowTypedObject);
+	}
+
+	protected MPropertyInfo createElementRefsPropertyInfo(
+			final MClassInfo classInfo, final RPI rp) {
+		final List<MElementTypeInfo> typedElements = new ArrayList<MElementTypeInfo>();
+		for (Element<T, C> element : rp.getElements()) {
+			typedElements.add(new CMElementTypeInfo(element.getElementName(),
+					getTypeInfo(rp, element)));
+		}
+		return new CMElementRefsPropertyInfo(createPropertyInfoOrigin((PI) rp),
+				classInfo, rp.getName(), rp.isCollection(), typedElements,
+				rp.getXmlName(), rp.isMixed(), rp.getWildcard() == null ? false
+						: rp.getWildcard().allowDom,
+				rp.getWildcard() == null ? false
+						: rp.getWildcard().allowTypedObject);
+	}
+
+	protected CMAnyAttributePropertyInfo createAnyAttributePropertyInfo(
+			final MClassInfo classInfo) {
+		return new CMAnyAttributePropertyInfo(
+				createAnyAttributePropertyInfoOrigin(), classInfo,
+				"otherAttributes");
+	}
+
 	protected MTypeInfo getTypeInfo(final ValuePropertyInfo<T, C> vp) {
-		return getTypeInfo(vp, vp.ref().iterator().next(), vp.isCollection(),
-				vp.getAdapter(), vp.id(), vp.getExpectedMimeType());
+		return getTypeInfo(vp, (TI) vp.ref().iterator().next(),
+				vp.isCollection(), vp.getAdapter(), vp.id(),
+				vp.getExpectedMimeType());
 	}
 
 	protected MTypeInfo getTypeInfo(final AttributePropertyInfo<T, C> ap) {
-		return getTypeInfo(ap, ap.ref().iterator().next(), ap.isCollection(),
-				ap.getAdapter(), ap.id(), ap.getExpectedMimeType());
+		return getTypeInfo(ap, (TI) ap.ref().iterator().next(),
+				ap.isCollection(), ap.getAdapter(), ap.id(),
+				ap.getExpectedMimeType());
 	}
 
 	protected MTypeInfo getTypeInfo(final ElementPropertyInfo<T, C> ep,
 			final TypeRef<T, C> typeRef) {
-		return getTypeInfo(ep, typeRef.getTarget(),
+		return getTypeInfo(ep, (TI) typeRef.getTarget(),
 
 		ep.isValueList(), ep.getAdapter(), ep.id(), ep.getExpectedMimeType());
 	}
 
 	protected MTypeInfo getTypeInfo(final ReferencePropertyInfo<T, C> rp,
 			Element<T, C> element) {
-		return getTypeInfo(rp, element, false, rp.getAdapter(), rp.id(),
+		return getTypeInfo(rp, (TI) element, false, rp.getAdapter(), rp.id(),
 				rp.getExpectedMimeType());
 	}
 
-	protected abstract MPackageInfo getPackage(ClassInfo<T, C> info);
+	protected abstract MPackageInfo getPackage(CI info);
 
-	protected abstract String getLocalName(ClassInfo<T, C> info);
+	protected abstract String getLocalName(CI info);
 
-	protected abstract MPackageInfo getPackage(EnumLeafInfo<T, C> info);
+	protected abstract MPackageInfo getPackage(ELI info);
 
-	protected abstract String getLocalName(EnumLeafInfo<T, C> info);
+	protected abstract String getLocalName(ELI info);
 
-	protected abstract MPackageInfo getPackage(ElementInfo<T, C> info);
+	protected abstract MPackageInfo getPackage(EI info);
+
+	//
+
+	protected MBuiltinLeafInfo createBuiltinLeafInfo(BLI info) {
+		return new CMBuiltinLeafInfo(createBuiltinLeafInfoOrigin(info),
+				info.getTypeName());
+	}
+
+	protected MEnumLeafInfo createEnumLeafInfo(final ELI info) {
+		@SuppressWarnings("unchecked")
+		final TI baseType = (TI) info.getBaseType();
+		return new CMEnumLeafInfo(createEnumLeafInfoOrigin(info),
+				getPackage(info), getLocalName(info), getTypeInfo(baseType),
+				info.getElementName());
+	}
+
+	protected CMEnumConstantInfo createEnumContantInfo(
+			MEnumLeafInfo enumLeafInfo, EC enumConstant) {
+		return new CMEnumConstantInfo(
+				createEnumConstantInfoOrigin(enumConstant), enumLeafInfo,
+				enumConstant.getLexicalValue());
+	}
+
+	protected MElementInfo createElementInfo(EI element) {
+		@SuppressWarnings("unchecked")
+		final CI scopeCI = (CI) element.getScope();
+		final MClassInfo scope = element.getScope() == null ? null
+				: getTypeInfo(scopeCI);
+		final QName substitutionHead = element.getSubstitutionHead() == null ? null
+				: element.getSubstitutionHead().getElementName();
+		final MElementInfo elementInfo = new CMElementInfo(
+				createElementInfoOrigin(element), getPackage(element),
+				element.getElementName(), scope, getTypeInfo(element),
+				substitutionHead);
+		return elementInfo;
+	}
+
+	protected MTypeInfo createWildcardTypeInfo(WTI info) {
+		return new CMWildcardTypeInfo(createWildcardTypeInfoOrigin(info));
+	}
+
+	protected MModelInfoOrigin createModelInfoOrigin(TIS info) {
+		return new CMModelInfoOrigin<T, C, TIS>(info);
+	}
+
+	protected MBuiltinLeafInfoOrigin createBuiltinLeafInfoOrigin(BLI info) {
+		return new CMBuiltinLeafInfoOrigin<T, C, BLI>(info);
+	}
+
+	protected MClassInfoOrigin createClassInfoOrigin(CI info) {
+		return new CMClassInfoOrigin<T, C, CI>(info);
+	}
+
+	protected MPropertyInfoOrigin createAnyAttributePropertyInfoOrigin() {
+		return new CMAnyAttributePropertyInfoOrigin();
+	}
+
+	protected MPropertyInfoOrigin createPropertyInfoOrigin(PI info) {
+		return new CMPropertyInfoOrigin<T, C, PI>(info);
+	}
+
+	protected MElementInfoOrigin createElementInfoOrigin(EI info) {
+		return new CMElementInfoOrigin<T, C, EI>(info);
+	}
+
+	protected MEnumLeafInfoOrigin createEnumLeafInfoOrigin(ELI info) {
+		return new CMEnumLeafInfoOrigin<T, C, ELI>(info);
+	}
+
+	protected MEnumConstantInfoOrigin createEnumConstantInfoOrigin(EC info) {
+		return new CMEnumConstantInfoOrigin<T, C, EC>(info);
+	}
+
+	protected MWildcardTypeInfoOrigin createWildcardTypeInfoOrigin(WTI info) {
+		return new CMWildcardTypeInfoOrigin<T, C, WTI>(info);
+	}
 
 }

@@ -3,6 +3,7 @@ package org.jvnet.jaxb2_commons.xjc.outline;
 import java.util.Collection;
 
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MTargeted;
 
 import com.sun.codemodel.JPackage;
 

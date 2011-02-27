@@ -5,7 +5,10 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
-public interface MModelInfo {
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MModelInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MOriginated;
+
+public interface MModelInfo extends MOriginated<MModelInfoOrigin> {
 
 	public Collection<MBuiltinLeafInfo> getBuiltinLeafInfos();
 
@@ -20,10 +23,6 @@ public interface MModelInfo {
 	public Collection<MElementInfo> getElementInfos();
 
 	public Map<QName, MElementInfo> getElementInfosMap();
-
-	public MElementPropertyInfo createElementPropertyInfo(String privateName,
-			boolean collection, MTypeInfo typeInfo, QName elementName,
-			QName wrapperElementName);
 
 	public void addBuiltinLeafInfo(MBuiltinLeafInfo builtinLeafInfo);
 

@@ -8,9 +8,11 @@ import java.util.List;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
+import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementRefsPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
 public class CMElementRefsPropertyInfo extends CMPropertyInfo implements
 		MElementRefsPropertyInfo {
@@ -25,10 +27,12 @@ public class CMElementRefsPropertyInfo extends CMPropertyInfo implements
 	private final boolean domAllowed;
 	private final boolean typedObjectAllowed;
 
-	public CMElementRefsPropertyInfo(String privateName, boolean collection,
-			Collection<MElementTypeInfo> elementTypeInfos, QName wrapperElementName,
-			boolean mixed, boolean domAllowed, boolean typedObjectAllowed) {
-		super(privateName, collection);
+	public CMElementRefsPropertyInfo(MPropertyInfoOrigin origin,
+			MClassInfo classInfo, String privateName, boolean collection,
+			Collection<MElementTypeInfo> elementTypeInfos,
+			QName wrapperElementName, boolean mixed, boolean domAllowed,
+			boolean typedObjectAllowed) {
+		super(origin, classInfo, privateName, collection);
 		Validate.noNullElements(elementTypeInfos);
 		Validate.notEmpty(elementTypeInfos);
 		Validate.isTrue(elementTypeInfos.size() > 1);

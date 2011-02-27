@@ -2,9 +2,11 @@ package org.jvnet.jaxb2_commons.xml.bind.model.concrete;
 
 import javax.xml.namespace.QName;
 
+import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
 public class CMElementPropertyInfo extends CMPropertyInfo implements
 		MElementPropertyInfo {
@@ -13,9 +15,10 @@ public class CMElementPropertyInfo extends CMPropertyInfo implements
 	private final QName elementName;
 	private final QName wrapperElementName;
 
-	public CMElementPropertyInfo(String privateName, boolean collection,
+	public CMElementPropertyInfo(MPropertyInfoOrigin origin,
+			MClassInfo classInfo, String privateName, boolean collection,
 			MTypeInfo typeInfo, QName elementName, QName wrapperElementName) {
-		super(privateName, collection);
+		super(origin, classInfo, privateName, collection);
 		this.typeInfo = typeInfo;
 		this.elementName = elementName;
 		this.wrapperElementName = wrapperElementName;

@@ -8,12 +8,11 @@ import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
-
-import com.sun.xml.bind.v2.model.core.TypeInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MElementInfoOrigin;
 
 public class CMElementInfo implements MElementInfo {
 
-	private final TypeInfo<?, ?> elementInfo;
+	private final MElementInfoOrigin origin;
 
 	private final MPackageInfo _package;
 
@@ -25,14 +24,14 @@ public class CMElementInfo implements MElementInfo {
 
 	private final QName substitutionHead;
 
-	public CMElementInfo(TypeInfo<?, ?> elementInfo, MPackageInfo _package,
+	public CMElementInfo(MElementInfoOrigin origin, MPackageInfo _package,
 			QName elementName, MTypeInfo scope, MTypeInfo typeInfo,
 			QName substitutionHead) {
 		super();
-		Validate.notNull(elementInfo);
+		Validate.notNull(origin);
 		Validate.notNull(elementName);
 		Validate.notNull(_package);
-		this.elementInfo = elementInfo;
+		this.origin = origin;
 		this._package = _package;
 		this.elementName = elementName;
 		this.scope = scope;
@@ -40,12 +39,12 @@ public class CMElementInfo implements MElementInfo {
 		this.substitutionHead = substitutionHead;
 	}
 
-	public TypeInfo<?, ?> getElementInfo() {
-		return elementInfo;
+	public MElementInfoOrigin getOrigin() {
+		return origin;
 	}
 
 	@Override
-	public MPackageInfo getPackage() {
+	public MPackageInfo getPackageInfo() {
 		return _package;
 	}
 

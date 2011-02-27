@@ -2,9 +2,11 @@ package org.jvnet.jaxb2_commons.xml.bind.model.concrete;
 
 import javax.xml.namespace.QName;
 
+import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementRefPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
 public class CMElementRefPropertyInfo extends CMPropertyInfo implements
 		MElementRefPropertyInfo {
@@ -17,10 +19,11 @@ public class CMElementRefPropertyInfo extends CMPropertyInfo implements
 	private final boolean domAllowed;
 	private final boolean typedObjectAllowed;
 
-	public CMElementRefPropertyInfo(String privateName, boolean collection,
+	public CMElementRefPropertyInfo(MPropertyInfoOrigin origin,
+			MClassInfo classInfo, String privateName, boolean collection,
 			MTypeInfo typeInfo, QName elementName, QName wrapperElementName,
 			boolean mixed, boolean domAllowed, boolean typedObjectAllowed) {
-		super(privateName, collection);
+		super(origin, classInfo, privateName, collection);
 		this.typeInfo = typeInfo;
 		this.elementName = elementName;
 		this.wrapperElementName = wrapperElementName;

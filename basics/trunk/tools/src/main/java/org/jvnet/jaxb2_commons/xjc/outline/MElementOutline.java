@@ -1,6 +1,7 @@
 package org.jvnet.jaxb2_commons.xjc.outline;
 
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MTargeted;
 
 import com.sun.codemodel.JDefinedClass;
 

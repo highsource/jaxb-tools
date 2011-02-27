@@ -13,17 +13,23 @@ import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MBuiltinLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
-import org.jvnet.jaxb2_commons.xml.bind.model.MElementPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.ClassInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.ElementInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.EnumLeafInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.TypeInfoSetOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MModelInfoOrigin;
 
+import com.sun.xml.bind.v2.model.core.ClassInfo;
 import com.sun.xml.bind.v2.model.core.ElementInfo;
+import com.sun.xml.bind.v2.model.core.EnumLeafInfo;
 import com.sun.xml.bind.v2.model.core.TypeInfoSet;
 
-public class CMModel implements MModelInfo {
+public class CMModel<T, C> implements MModelInfo {
 
-	private final TypeInfoSet<?, ?, ?, ?> typeInfoSet;
+	private final MModelInfoOrigin origin;
 
 	private final Collection<MBuiltinLeafInfo> builtinLeafInfos = new ArrayList<MBuiltinLeafInfo>();
 	private final Collection<MBuiltinLeafInfo> unmodifiableBuiltinLeafInfos = Collections
@@ -52,13 +58,13 @@ public class CMModel implements MModelInfo {
 	private final Map<QName, MElementInfo> unmodifiableElementInfosMap = Collections
 			.unmodifiableMap(elementInfosMap);
 
-	public CMModel(TypeInfoSet<?, ?, ?, ?> typeInfoSet) {
-		Validate.notNull(typeInfoSet);
-		this.typeInfoSet = typeInfoSet;
+	public CMModel(MModelInfoOrigin origin) {
+		Validate.notNull(origin);
+		this.origin = origin;
 	}
 
-	public TypeInfoSet<?, ?, ?, ?> getTypeInfoSet() {
-		return typeInfoSet;
+	public MModelInfoOrigin getOrigin() {
+		return origin;
 	}
 
 	@Override
@@ -95,14 +101,6 @@ public class CMModel implements MModelInfo {
 	public MBuiltinLeafInfo getBuiltinLeafInfo(QName name) {
 		Validate.notNull(name);
 		return this.unmodifiableBuiltinLeafInfosMap.get(name);
-	}
-
-	@Override
-	public MElementPropertyInfo createElementPropertyInfo(String privateName,
-			boolean collection, MTypeInfo typeInfo, QName elementName,
-			QName wrapperElementName) {
-		return new CMElementPropertyInfo(privateName, collection, typeInfo,
-				elementName, wrapperElementName);
 	}
 
 	@Override
@@ -143,10 +141,15 @@ public class CMModel implements MModelInfo {
 			}
 		}
 		// TODO Not very good
-		if (enumLeafInfo instanceof CMEnumLeafInfo) {
-			getTypeInfoSet().enums().remove(
-					((CMEnumLeafInfo) enumLeafInfo).getEnumLeafInfo()
-							.getClazz());
+		if (getOrigin() instanceof TypeInfoSetOrigin
+				&& enumLeafInfo.getOrigin() instanceof EnumLeafInfoOrigin) {
+
+			final TypeInfoSet<T, C, ?, ?> tis = ((TypeInfoSetOrigin<T, C, TypeInfoSet<T, C, ?, ?>>) getOrigin())
+					.getSource();
+
+			final EnumLeafInfo<T, C> eli = ((EnumLeafInfoOrigin<T, C, EnumLeafInfo<T, C>>) enumLeafInfo
+					.getOrigin()).getSource();
+			tis.enums().remove(eli.getClazz());
 		}
 	}
 
@@ -168,8 +171,8 @@ public class CMModel implements MModelInfo {
 	@Override
 	public void removeClassInfo(MClassInfo classInfo) {
 		Validate.notNull(classInfo);
-		this.classInfos.add(classInfo);
-		this.typeInfos.add(classInfo);
+		this.classInfos.remove(classInfo);
+		this.typeInfos.remove(classInfo);
 		final QName elementName = classInfo.getElementName();
 		if (elementName != null) {
 			final MElementInfo elementInfo = this.elementInfosMap
@@ -178,10 +181,14 @@ public class CMModel implements MModelInfo {
 				this.elementInfos.remove(elementInfo);
 			}
 		}
-		// TODO Not very good
-		if (classInfo instanceof CMClassInfo) {
-			getTypeInfoSet().beans().remove(
-					((CMClassInfo) classInfo).getClassInfo().getClazz());
+		if (getOrigin() instanceof TypeInfoSetOrigin
+				&& classInfo.getOrigin() instanceof ClassInfoOrigin) {
+			final TypeInfoSet<T, C, ?, ?> tis = ((TypeInfoSetOrigin<T, C, TypeInfoSet<T, C, ?, ?>>) getOrigin())
+					.getSource();
+			final ClassInfo<T, C> ci = ((ClassInfoOrigin<T, C, ClassInfo<T, C>>) classInfo
+					.getOrigin()).getSource();
+			tis.beans().remove(ci);
+
 		}
 	}
 
@@ -201,19 +208,16 @@ public class CMModel implements MModelInfo {
 		this.elementInfos.remove(elementInfo);
 		this.elementInfosMap.remove(elementInfo.getElementName());
 		// TODO Not very good
-		if (elementInfo instanceof CMElementInfo) {
-			final List<ElementInfo<?, ?>> elementInfos = new ArrayList<ElementInfo<?, ?>>();
-			for (ElementInfo<?, ?> ei : getTypeInfoSet().getAllElements()) {
-				elementInfos.add(ei);
-			}
-			TypeInfoSet typeInfoSet2 = getTypeInfoSet();
-			for (ElementInfo<?, ?> ei : elementInfos) {
-				if (((CMElementInfo) elementInfo).getElementInfo() == ei) {
-					typeInfoSet2.getElementMappings(ei.getScope().getClazz())
-							.remove(ei.getElementName());
-				}
+		if (getOrigin() instanceof TypeInfoSetOrigin
+				&& elementInfo.getOrigin() instanceof ElementInfoOrigin) {
+			final TypeInfoSet<T, C, ?, ?> tis = ((TypeInfoSetOrigin<T, C, TypeInfoSet<T, C, ?, ?>>) getOrigin())
+					.getSource();
 
-			}
+			final ElementInfo<T, C> ei = ((ElementInfoOrigin<T, C, ElementInfo<T, C>>) elementInfo
+					.getOrigin()).getSource();
+
+			tis.getElementMappings(ei.getScope().getClazz()).remove(
+					ei.getElementName());
 		}
 
 	}

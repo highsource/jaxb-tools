@@ -11,12 +11,15 @@ import javax.xml.namespace.QName;
 import org.jvnet.jaxb2_commons.plugin.AbstractParameterizablePlugin;
 import org.jvnet.jaxb2_commons.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb2_commons.plugin.Ignoring;
+import org.jvnet.jaxb2_commons.xjc.generator.artificial.WrapperPropertyOutlineGenerator;
 import org.jvnet.jaxb2_commons.xjc.model.concrete.XJCCMInfoFactory;
+import org.jvnet.jaxb2_commons.xjc.model.concrete.origin.DefaultPropertyInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.CMElementPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.util.DefaultPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.util.DefaultTypeInfoVisitor;
 import org.xml.sax.ErrorHandler;
@@ -55,8 +58,9 @@ public class ElementWrapperPlugin extends AbstractParameterizablePlugin {
 
 		final Collection<MClassInfo> wrapperClassInfos = new HashSet<MClassInfo>();
 		final Collection<MPropertyInfo> wrapperPropertyInfos = new HashSet<MPropertyInfo>();
- 
-		final Collection<MClassInfo> classInfos = new ArrayList<MClassInfo>(mmodel.getClassInfos());
+
+		final Collection<MClassInfo> classInfos = new ArrayList<MClassInfo>(
+				mmodel.getClassInfos());
 		for (final MClassInfo classInfo : classInfos) {
 			if (/*
 				 * TODO !getIgnoring().isIgnored(classInfo) &&
@@ -94,55 +98,11 @@ public class ElementWrapperPlugin extends AbstractParameterizablePlugin {
 
 																if (propertyInfo
 																		.isCollection()) {
-																	propertyInfo
-																			.acceptPropertyInfoVisitor(new DefaultPropertyInfoVisitor<Void>() {
-
-																				@Override
-																				public Void visitElementPropertyInfo(
-																						MElementPropertyInfo wrappedPropertyInfo) {
-																					final MTypeInfo wrappedTypeInfo = wrappedPropertyInfo
-																							.getTypeInfo();
-																					System.out
-																							.println("Class info:"
-																									+ classInfo
-																											.getName());
-																					System.out
-																							.println("Wrapper property info:"
-																									+ wrapperPropertyInfo
-																											.getPrivateName());
-																					System.out
-																							.println("Wrapper class info :"
-																									+ wrapperClassInfo
-																											.getName());
-																					System.out
-																							.println("Wrapped property info:"
-																									+ wrappedPropertyInfo
-																											.getPrivateName());
-																					System.out
-																							.println("Wrapped type info:"
-																									+ wrappedTypeInfo);
-
-																					final MPropertyInfo propertyInfo = mmodel
-																							.createElementPropertyInfo(
-																									wrapperPropertyInfo
-																											.getPrivateName(),
-																									wrappedPropertyInfo
-																											.isCollection(),
-																									wrappedTypeInfo,
-																									wrappedPropertyInfo
-																											.getElementName(),
-																									wrapperPropertyInfo
-																											.getElementName());
-
-																					classInfo
-																							.addProperty(propertyInfo);
-																					
-																					// TODO
-																					classInfo.removeProperty(wrapperPropertyInfo);
-																					mmodel.removeClassInfo(wrapperClassInfo);
-																					return null;
-																				}
-																			});
+																	process(mmodel,
+																			classInfo,
+																			wrapperPropertyInfo,
+																			wrapperClassInfo,
+																			propertyInfo);
 																}
 															}
 															return null;
@@ -219,6 +179,47 @@ public class ElementWrapperPlugin extends AbstractParameterizablePlugin {
 	public Collection<QName> getCustomizationElementNames() {
 		return Arrays
 				.asList(org.jvnet.jaxb2_commons.plugin.elementwrapper.Customizations.IGNORED_ELEMENT_NAME);
+	}
+
+	protected void process(final MModelInfo mmodel, final MClassInfo classInfo,
+			final MElementPropertyInfo wrapperPropertyInfo,
+			final MClassInfo wrapperClassInfo,
+			final MPropertyInfo wrappedPropertyInfo) {
+		wrappedPropertyInfo
+				.acceptPropertyInfoVisitor(new DefaultPropertyInfoVisitor<Void>() {
+
+					@Override
+					public Void visitElementPropertyInfo(
+							final MElementPropertyInfo wrappedPropertyInfo) {
+						final MTypeInfo wrappedTypeInfo = wrappedPropertyInfo
+								.getTypeInfo();
+						System.out.println("Class info:" + classInfo.getName());
+						System.out.println("Wrapper property info:"
+								+ wrapperPropertyInfo.getPrivateName());
+						System.out.println("Wrapper class info :"
+								+ wrapperClassInfo.getName());
+						System.out.println("Wrapped property info:"
+								+ wrappedPropertyInfo.getPrivateName());
+						System.out.println("Wrapped type info:"
+								+ wrappedTypeInfo);
+
+						final MPropertyInfo propertyInfo = new CMElementPropertyInfo(
+								new DefaultPropertyInfoOrigin(
+										new WrapperPropertyOutlineGenerator()),
+								wrapperClassInfo, wrapperPropertyInfo
+										.getPrivateName(), wrappedPropertyInfo
+										.isCollection(), wrappedTypeInfo,
+								wrappedPropertyInfo.getElementName(),
+								wrapperPropertyInfo.getElementName());
+
+						classInfo.addProperty(propertyInfo);
+
+						// TODO
+						classInfo.removeProperty(wrapperPropertyInfo);
+						mmodel.removeClassInfo(wrapperClassInfo);
+						return null;
+					}
+				});
 	}
 
 }

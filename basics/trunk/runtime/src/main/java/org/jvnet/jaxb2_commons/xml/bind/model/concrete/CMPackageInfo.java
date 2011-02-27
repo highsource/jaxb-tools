@@ -1,17 +1,26 @@
 package org.jvnet.jaxb2_commons.xml.bind.model.concrete;
 
 import org.jvnet.jaxb2_commons.lang.StringUtils;
+import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPackageInfoOrigin;
 
-public class CMPackage implements MPackageInfo {
+public class CMPackageInfo implements MPackageInfo {
 
+	private final MPackageInfoOrigin origin;
 	private final String packageName;
 
-	public CMPackage(String packageName) {
+	public CMPackageInfo(MPackageInfoOrigin origin, String packageName) {
+		Validate.notNull(origin);
+		Validate.notNull(packageName);
+		this.origin = origin;
 		this.packageName = packageName;
 	}
 
-	@Override
+	public MPackageInfoOrigin getOrigin() {
+		return origin;
+	}
+
 	public String getPackageName() {
 		return packageName;
 	}

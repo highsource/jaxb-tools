@@ -4,7 +4,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.origin.MOriginated;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
 public interface MPropertyInfo extends MOriginated<MPropertyInfoOrigin> {
-	
+
 	public MClassInfo getClassInfo();
 
 	public String getPrivateName();

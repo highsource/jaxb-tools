@@ -1,5 +1,6 @@
 package org.jvnet.jaxb2_commons.xjc.outline.concrete;
 
+import org.apache.commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xjc.outline.FieldAccessorEx;
 import org.jvnet.jaxb2_commons.xjc.outline.MPropertyAccessor;
 
@@ -12,12 +13,10 @@ public class CMPropertyAccessor implements MPropertyAccessor {
 
 	private final FieldAccessorEx fieldAccessor;
 
-	public CMPropertyAccessor(
-			FieldAccessorEx fieldAccessor) {
-		super();
+	public CMPropertyAccessor(FieldAccessorEx fieldAccessor) {
+		Validate.notNull(fieldAccessor);
 		this.fieldAccessor = fieldAccessor;
 	}
-
 
 	@Override
 	public void get(JBlock block, JVar variable) {

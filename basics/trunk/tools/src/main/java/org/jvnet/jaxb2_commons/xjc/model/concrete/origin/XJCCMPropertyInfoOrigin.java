@@ -11,7 +11,8 @@ import com.sun.tools.xjc.model.nav.NType;
 import com.sun.tools.xjc.outline.Outline;
 
 public class XJCCMPropertyInfoOrigin extends
-		CMPropertyInfoOrigin<NType, NClass, CPropertyInfo> implements PropertyOutlineGeneratorFactory{
+		CMPropertyInfoOrigin<NType, NClass, CPropertyInfo> implements
+		PropertyOutlineGeneratorFactory {
 
 	public XJCCMPropertyInfoOrigin(CPropertyInfo source) {
 		super(source);

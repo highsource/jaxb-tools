@@ -12,6 +12,8 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MEnumLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 
 import com.sun.tools.xjc.model.CEnumLeafInfo;
+import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
 import com.sun.tools.xjc.outline.EnumOutline;
 import com.sun.tools.xjc.outline.Outline;
 
@@ -27,15 +29,16 @@ public class CMEnumOutlineGenerator implements MEnumOutlineGenerator {
 		this.enumLeafInfo = enumLeafInfo;
 	}
 
-	@Override
-	public MEnumOutline generate(MPackageOutline parent, MModelInfo modelInfo,
-			MEnumLeafInfo enumLeafInfo) {
+	public MEnumOutline generate(MPackageOutline parent,
+			MModelInfo<NType, NClass> modelInfo,
+			MEnumLeafInfo<NType, NClass> enumLeafInfo) {
 		final EnumOutline eo = outline.getEnum(this.enumLeafInfo);
 
 		final CMEnumOutline enumOutline = new CMEnumOutline(parent.getParent(),
 				parent, enumLeafInfo, eo.clazz);
 
-		for (MEnumConstantInfo enumConstantInfo : enumLeafInfo.getConstants()) {
+		for (MEnumConstantInfo<NType, NClass> enumConstantInfo : enumLeafInfo
+				.getConstants()) {
 
 			if (enumConstantInfo.getOrigin() instanceof EnumConstantOutlineGeneratorFactory) {
 				final MEnumConstantOutlineGenerator generator = ((EnumConstantOutlineGeneratorFactory) enumConstantInfo

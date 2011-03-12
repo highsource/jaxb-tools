@@ -12,6 +12,9 @@ import com.sun.codemodel.JFieldVar;
 import com.sun.codemodel.JMod;
 import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
+import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
+import com.sun.tools.xjc.outline.Outline;
 
 public abstract class ConstantPropertyOutline extends AbstractPropertyOutline {
 
@@ -19,9 +22,9 @@ public abstract class ConstantPropertyOutline extends AbstractPropertyOutline {
 
 	protected final JFieldVar field;
 
-	public ConstantPropertyOutline(MClassOutline classOutline,
-			MPropertyInfo target, final JExpression value) {
-		super(classOutline, target);
+	public ConstantPropertyOutline(Outline outline, MClassOutline classOutline,
+			MPropertyInfo<NType, NClass> target, final JExpression value) {
+		super(outline, classOutline, target);
 		Validate.notNull(value);
 		this.value = value;
 		this.field = generateField();
@@ -36,48 +39,48 @@ public abstract class ConstantPropertyOutline extends AbstractPropertyOutline {
 		JExpression value = createValue();
 
 		JFieldVar field = referenceClass.field(JMod.PUBLIC | JMod.STATIC
-				| JMod.FINAL, implementationType,
-		// TODO public name
-				propertyInfo.getPrivateName(), value);
+				| JMod.FINAL, type, propertyInfo.getPublicName(), value);
 
 		annotate(field);
 
 		return field;
 	}
 
-	@Override
 	public MPropertyAccessor createPropertyAccessor(JExpression target) {
-		return new MPropertyAccessor() {
+		return new PropertyAccessor(target);
+	}
 
-			public void unset(JBlock body) {
-			}
+	public class PropertyAccessor extends
+			AbstractPropertyOutline.PropertyAccessor {
 
-			public void set(JBlock block, String uniqueName, JExpression value) {
-			}
+		public PropertyAccessor(JExpression target) {
+			super(target);
+		}
 
-			public boolean isVirtual() {
-				return false;
-			}
+		@Override
+		public boolean isConstant() {
+			return true;
+		}
 
-			public JExpression isSet() {
-				return JExpr.TRUE;
-			}
+		public void unset(JBlock body) {
+		}
 
-			public boolean isConstant() {
-				return true;
-			}
+		public void set(JBlock block, String uniqueName, JExpression value) {
+		}
 
-			@Override
-			public JType getType() {
-				return ConstantPropertyOutline.this.referenceType;
-			}
+		@Override
+		public boolean isVirtual() {
+			return false;
+		}
 
-			@Override
-			public void get(JBlock block, JVar variable) {
-				block.assign(variable,
-						ConstantPropertyOutline.this.referenceClass
-								.staticRef(ConstantPropertyOutline.this.field));
-			}
-		};
+		public JExpression isSet() {
+			return JExpr.TRUE;
+		}
+
+		public void get(JBlock block, JVar variable) {
+			block.assign(variable, ConstantPropertyOutline.this.referenceClass
+					.staticRef(ConstantPropertyOutline.this.field));
+		}
+
 	}
 }

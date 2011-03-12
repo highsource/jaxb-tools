@@ -8,16 +8,19 @@ import org.jvnet.jaxb2_commons.xjc.outline.MPropertyOutline;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 
 import com.sun.codemodel.JExpression;
+import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
 
 public class CMPropertyOutline implements MPropertyOutline {
 
 	private final MClassOutline classOutline;
 
-	private final MPropertyInfo target;
+	private final MPropertyInfo<NType, NClass> target;
 
 	private final MPropertyAccessorFactory propertyAccessorFactory;
 
-	public CMPropertyOutline(MClassOutline classOutline, MPropertyInfo target,
+	public CMPropertyOutline(MClassOutline classOutline,
+			MPropertyInfo<NType, NClass> target,
 			MPropertyAccessorFactory propertyAccessorFactory) {
 		Validate.notNull(classOutline);
 		Validate.notNull(target);
@@ -31,11 +34,10 @@ public class CMPropertyOutline implements MPropertyOutline {
 		return classOutline;
 	}
 
-	public MPropertyInfo getTarget() {
+	public MPropertyInfo<NType, NClass> getTarget() {
 		return target;
 	}
 
-	@Override
 	public MPropertyAccessor createPropertyAccessor(JExpression target) {
 		return this.propertyAccessorFactory.createPropertyAccessor(target);
 	}

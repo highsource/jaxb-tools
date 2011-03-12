@@ -9,11 +9,12 @@ import org.jvnet.jaxb2_commons.xjc.outline.MPropertyAccessorFactory;
 import org.jvnet.jaxb2_commons.xjc.outline.MPropertyOutline;
 import org.jvnet.jaxb2_commons.xjc.outline.concrete.CMPropertyAccessorFactory;
 import org.jvnet.jaxb2_commons.xjc.outline.concrete.CMPropertyOutline;
-import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 
 import com.sun.tools.xjc.model.CPropertyInfo;
+import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
 import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.outline.Outline;
 
@@ -33,9 +34,9 @@ public class CMPropertyOutlineGenerator implements MPropertyOutlineGenerator {
 		this.propertyInfo = propertyInfo;
 	}
 
-	@Override
 	public MPropertyOutline generate(MClassOutline classOutline,
-			MModelInfo modelInfo, MPropertyInfo propertyInfo) {
+			MModelInfo<NType, NClass> modelInfo,
+			MPropertyInfo<NType, NClass> propertyInfo) {
 
 		final FieldOutline fieldOutline = outline.getField(this.propertyInfo);
 

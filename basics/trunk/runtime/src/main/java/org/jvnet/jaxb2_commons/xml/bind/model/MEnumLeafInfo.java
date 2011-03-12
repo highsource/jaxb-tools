@@ -7,19 +7,22 @@ import javax.xml.namespace.QName;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MEnumLeafInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MOriginated;
 
-public interface MEnumLeafInfo extends MPackagedTypeInfo, MOriginated<MEnumLeafInfoOrigin> {
+public interface MEnumLeafInfo<T, C> extends MPackagedTypeInfo<T, C>,
+		MOriginated<MEnumLeafInfoOrigin> {
 
-	public MTypeInfo getBaseTypeInfo();
+	public C getTargetClass();
 
-	public List<MEnumConstantInfo> getConstants();
-	
-	public void addEnumConstantInfo(MEnumConstantInfo enumConstantInfo);
+	public MTypeInfo<T, C> getBaseTypeInfo();
 
-	public void removeEnumConstantInfo(MEnumConstantInfo enumConstantInfo);
+	public List<MEnumConstantInfo<T, C>> getConstants();
+
+	public void addEnumConstantInfo(MEnumConstantInfo<T, C> enumConstantInfo);
+
+	public void removeEnumConstantInfo(MEnumConstantInfo<T, C> enumConstantInfo);
 
 	public QName getElementName();
 
-	public MElementInfo createElementInfo(MTypeInfo scope,
+	public MElementInfo<T, C> createElementInfo(MTypeInfo<T, C> scope,
 			QName substitutionHead);
 
 }

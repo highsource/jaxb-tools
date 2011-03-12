@@ -1,10 +1,7 @@
 package org.jvnet.jaxb2_commons.xml.bind.model;
 
-import java.util.List;
 
-public interface MElementsPropertyInfo extends MPropertyInfo, MWrappable,
-		MElementTypeInfos {
+public interface MElementsPropertyInfo<T, C> extends MPropertyInfo<T, C>,
+		MWrappable, MElementTypeInfos<T, C> {
 
-	@Override
-	public List<MElementTypeInfo> getElementTypeInfos();
 }

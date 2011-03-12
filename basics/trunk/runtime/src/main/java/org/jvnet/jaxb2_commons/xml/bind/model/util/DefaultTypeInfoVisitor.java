@@ -8,34 +8,30 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MWildcardTypeInfo;
 
-public class DefaultTypeInfoVisitor<V> implements MTypeInfoVisitor<V> {
+public class DefaultTypeInfoVisitor<T, C, V> implements
+		MTypeInfoVisitor<T, C, V> {
 
-	public V visitTypeInfo(MTypeInfo typeInfo) {
+	public V visitTypeInfo(MTypeInfo<T, C> typeInfo) {
 		return null;
 	}
 
-	@Override
-	public V visitList(MList info) {
+	public V visitList(MList<T, C> info) {
 		return visitTypeInfo(info);
 	}
 
-	@Override
-	public V visitBuiltinLeafInfo(MBuiltinLeafInfo info) {
+	public V visitBuiltinLeafInfo(MBuiltinLeafInfo<T, C> info) {
 		return visitTypeInfo(info);
 	}
 
-	@Override
-	public V visitEnumLeafInfo(MEnumLeafInfo info) {
+	public V visitEnumLeafInfo(MEnumLeafInfo<T, C> info) {
 		return visitTypeInfo(info);
 	}
 
-	@Override
-	public V visitWildcardTypeInfo(MWildcardTypeInfo info) {
+	public V visitWildcardTypeInfo(MWildcardTypeInfo<T, C> info) {
 		return visitTypeInfo(info);
 	}
 
-	@Override
-	public V visitClassInfo(MClassInfo info) {
+	public V visitClassInfo(MClassInfo<T, C> info) {
 		return visitTypeInfo(info);
 	}
 

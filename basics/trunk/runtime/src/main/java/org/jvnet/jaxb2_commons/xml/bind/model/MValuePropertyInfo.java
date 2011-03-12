@@ -1,5 +1,5 @@
 package org.jvnet.jaxb2_commons.xml.bind.model;
 
-public interface MValuePropertyInfo extends MSingleTypePropertyInfo {
+public interface MValuePropertyInfo<T, C> extends MSingleTypePropertyInfo<T, C> {
 
 }

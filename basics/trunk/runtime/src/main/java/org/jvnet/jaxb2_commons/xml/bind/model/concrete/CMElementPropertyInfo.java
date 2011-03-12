@@ -8,39 +8,36 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public class CMElementPropertyInfo extends CMPropertyInfo implements
-		MElementPropertyInfo {
+public class CMElementPropertyInfo<T, C> extends CMPropertyInfo<T, C> implements
+		MElementPropertyInfo<T, C> {
 
-	private final MTypeInfo typeInfo;
+	private final MTypeInfo<T, C> typeInfo;
 	private final QName elementName;
 	private final QName wrapperElementName;
 
 	public CMElementPropertyInfo(MPropertyInfoOrigin origin,
-			MClassInfo classInfo, String privateName, boolean collection,
-			MTypeInfo typeInfo, QName elementName, QName wrapperElementName) {
+			MClassInfo<T, C> classInfo, String privateName, boolean collection,
+			MTypeInfo<T, C> typeInfo, QName elementName,
+			QName wrapperElementName) {
 		super(origin, classInfo, privateName, collection);
 		this.typeInfo = typeInfo;
 		this.elementName = elementName;
 		this.wrapperElementName = wrapperElementName;
 	}
 
-	@Override
-	public MTypeInfo getTypeInfo() {
+	public MTypeInfo<T, C> getTypeInfo() {
 		return typeInfo;
 	}
 
-	@Override
 	public QName getElementName() {
 		return elementName;
 	}
 
-	@Override
 	public QName getWrapperElementName() {
 		return wrapperElementName;
 	}
 
-	@Override
-	public <V> V acceptPropertyInfoVisitor(MPropertyInfoVisitor<V> visitor) {
+	public <V> V acceptPropertyInfoVisitor(MPropertyInfoVisitor<T, C, V> visitor) {
 		return visitor.visitElementPropertyInfo(this);
 	}
 

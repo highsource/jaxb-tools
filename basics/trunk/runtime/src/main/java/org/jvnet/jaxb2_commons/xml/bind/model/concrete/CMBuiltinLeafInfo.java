@@ -7,34 +7,39 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MBuiltinLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MBuiltinLeafInfoOrigin;
 
-public class CMBuiltinLeafInfo implements MBuiltinLeafInfo {
+public class CMBuiltinLeafInfo<T, C> implements MBuiltinLeafInfo<T, C> {
 
 	private final MBuiltinLeafInfoOrigin origin;
+	private final T targetType;
 	private final QName typeName;
 
-	public CMBuiltinLeafInfo(MBuiltinLeafInfoOrigin origin, QName typeName) {
+	public CMBuiltinLeafInfo(MBuiltinLeafInfoOrigin origin, T targetType,
+			QName typeName) {
 		Validate.notNull(origin);
+		Validate.notNull(targetType);
 		Validate.notNull(typeName);
 		this.origin = origin;
+		this.targetType = targetType;
 		this.typeName = typeName;
+	}
+
+	public T getTargetType() {
+		return targetType;
 	}
 
 	public MBuiltinLeafInfoOrigin getOrigin() {
 		return origin;
 	}
 
-	@Override
 	public QName getTypeName() {
 		return typeName;
 	}
 
-	@Override
 	public String toString() {
 		return "BuiltinLeafInfo [" + getTypeName() + "]";
 	}
 
-	@Override
-	public <V> V acceptTypeInfoVisitor(MTypeInfoVisitor<V> visitor) {
+	public <V> V acceptTypeInfoVisitor(MTypeInfoVisitor<T, C, V> visitor) {
 		return visitor.visitBuiltinLeafInfo(this);
 	}
 }

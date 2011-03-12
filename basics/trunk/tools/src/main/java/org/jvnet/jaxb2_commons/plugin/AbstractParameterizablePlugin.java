@@ -3,8 +3,6 @@ package org.jvnet.jaxb2_commons.plugin;
 import java.io.IOException;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import com.sun.tools.xjc.BadCommandLineException;
 import com.sun.tools.xjc.Options;

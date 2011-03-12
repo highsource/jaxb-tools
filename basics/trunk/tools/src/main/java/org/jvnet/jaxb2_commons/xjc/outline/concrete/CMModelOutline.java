@@ -20,10 +20,12 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 
 import com.sun.codemodel.JCodeModel;
+import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
 
 public class CMModelOutline implements MModelOutline {
 
-	private final MModelInfo target;
+	private final MModelInfo<NType, NClass> target;
 	private final JCodeModel code;
 
 	private final List<MPackageOutline> packageOutlines = new ArrayList<MPackageOutline>();
@@ -33,24 +35,24 @@ public class CMModelOutline implements MModelOutline {
 	private final List<MElementOutline> elementOutlines = new ArrayList<MElementOutline>();
 	private final List<MElementOutline> _elementOutlines = Collections
 			.unmodifiableList(elementOutlines);
-	private final Map<MElementInfo, MElementOutline> elementOutlinesMap = new IdentityHashMap<MElementInfo, MElementOutline>();
+	private final Map<MElementInfo<NType, NClass>, MElementOutline> elementOutlinesMap = new IdentityHashMap<MElementInfo<NType, NClass>, MElementOutline>();
 	private final List<MClassOutline> classOutlines = new ArrayList<MClassOutline>();
 	private final List<MClassOutline> _classOutlines = Collections
 			.unmodifiableList(classOutlines);
-	private final Map<MClassInfo, MClassOutline> classOutlinesMap = new IdentityHashMap<MClassInfo, MClassOutline>();
+	private final Map<MClassInfo<NType, NClass>, MClassOutline> classOutlinesMap = new IdentityHashMap<MClassInfo<NType, NClass>, MClassOutline>();
 	private final List<MEnumOutline> enumOutlines = new ArrayList<MEnumOutline>();
 	private final List<MEnumOutline> _enumOutlines = Collections
 			.unmodifiableList(enumOutlines);
-	private final Map<MEnumLeafInfo, MEnumOutline> enumOutlinesMap = new IdentityHashMap<MEnumLeafInfo, MEnumOutline>();
+	private final Map<MEnumLeafInfo<NType, NClass>, MEnumOutline> enumOutlinesMap = new IdentityHashMap<MEnumLeafInfo<NType, NClass>, MEnumOutline>();
 
-	public CMModelOutline(MModelInfo target, JCodeModel code) {
+	public CMModelOutline(MModelInfo<NType, NClass> target, JCodeModel code) {
 		Validate.notNull(target);
 		Validate.notNull(code);
 		this.target = target;
 		this.code = code;
 	}
 
-	public MModelInfo getTarget() {
+	public MModelInfo<NType, NClass> getTarget() {
 		return target;
 	}
 
@@ -76,7 +78,7 @@ public class CMModelOutline implements MModelOutline {
 		return _classOutlines;
 	}
 
-	public MClassOutline getClassOutline(MClassInfo target) {
+	public MClassOutline getClassOutline(MClassInfo<NType, NClass> target) {
 		return classOutlinesMap.get(target);
 	}
 
@@ -90,7 +92,7 @@ public class CMModelOutline implements MModelOutline {
 		return _enumOutlines;
 	}
 
-	public MEnumOutline getEnumOutline(MEnumLeafInfo target) {
+	public MEnumOutline getEnumOutline(MEnumLeafInfo<NType, NClass> target) {
 		return enumOutlinesMap.get(target);
 	}
 
@@ -104,7 +106,7 @@ public class CMModelOutline implements MModelOutline {
 		return _elementOutlines;
 	}
 
-	public MElementOutline getElementOutline(MElementInfo target) {
+	public MElementOutline getElementOutline(MElementInfo<NType, NClass> target) {
 		return elementOutlinesMap.get(target);
 	}
 

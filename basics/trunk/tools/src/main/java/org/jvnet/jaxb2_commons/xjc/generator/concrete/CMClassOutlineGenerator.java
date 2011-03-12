@@ -12,6 +12,8 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 
 import com.sun.tools.xjc.model.CClassInfo;
+import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
 
@@ -28,9 +30,9 @@ public class CMClassOutlineGenerator implements MClassOutlineGenerator {
 		this.classInfo = classInfo;
 	}
 
-	@Override
-	public MClassOutline generate(MPackageOutline parent, MModelInfo modelInfo,
-			MClassInfo classInfo) {
+	public MClassOutline generate(MPackageOutline parent,
+			MModelInfo<NType, NClass> modelInfo,
+			MClassInfo<NType, NClass> classInfo) {
 
 		ClassOutline co = outline.getClazz(this.classInfo);
 
@@ -46,7 +48,8 @@ public class CMClassOutlineGenerator implements MClassOutlineGenerator {
 				parent.getParent(), parent, classInfo, superClassOutline,
 				co.ref, co.implClass, co.implRef);
 
-		for (MPropertyInfo propertyInfo : classInfo.getProperties()) {
+		for (MPropertyInfo<NType, NClass> propertyInfo : classInfo
+				.getProperties()) {
 			if (propertyInfo.getOrigin() instanceof PropertyOutlineGeneratorFactory) {
 				final MPropertyOutlineGenerator generator = ((PropertyOutlineGeneratorFactory) propertyInfo
 						.getOrigin()).createGenerator(outline);

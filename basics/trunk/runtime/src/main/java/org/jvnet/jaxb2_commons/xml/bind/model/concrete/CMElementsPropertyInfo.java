@@ -14,17 +14,17 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MElementsPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public class CMElementsPropertyInfo extends CMPropertyInfo implements
-		MElementsPropertyInfo {
+public class CMElementsPropertyInfo<T, C> extends CMPropertyInfo<T, C>
+		implements MElementsPropertyInfo<T, C> {
 
-	private final List<MElementTypeInfo> elementTypeInfos = new ArrayList<MElementTypeInfo>();
-	private final List<MElementTypeInfo> unmodifiableElementTypeInfos = Collections
+	private final List<MElementTypeInfo<T, C>> elementTypeInfos = new ArrayList<MElementTypeInfo<T, C>>();
+	private final List<MElementTypeInfo<T, C>> unmodifiableElementTypeInfos = Collections
 			.unmodifiableList(elementTypeInfos);
 	private final QName wrapperElementName;
 
 	public CMElementsPropertyInfo(MPropertyInfoOrigin origin,
-			MClassInfo classInfo, String privateName, boolean collection,
-			Collection<MElementTypeInfo> elementTypeInfos,
+			MClassInfo<T, C> classInfo, String privateName, boolean collection,
+			Collection<MElementTypeInfo<T, C>> elementTypeInfos,
 			QName wrapperElementName) {
 		super(origin, classInfo, privateName, collection);
 		Validate.noNullElements(elementTypeInfos);
@@ -34,18 +34,15 @@ public class CMElementsPropertyInfo extends CMPropertyInfo implements
 		this.wrapperElementName = wrapperElementName;
 	}
 
-	@Override
-	public List<MElementTypeInfo> getElementTypeInfos() {
+	public List<MElementTypeInfo<T, C>> getElementTypeInfos() {
 		return unmodifiableElementTypeInfos;
 	}
 
-	@Override
 	public QName getWrapperElementName() {
 		return wrapperElementName;
 	}
 
-	@Override
-	public <V> V acceptPropertyInfoVisitor(MPropertyInfoVisitor<V> visitor) {
+	public <V> V acceptPropertyInfoVisitor(MPropertyInfoVisitor<T, C, V> visitor) {
 		return visitor.visitElementsPropertyInfo(this);
 	}
 

@@ -9,6 +9,8 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 
 import com.sun.tools.xjc.model.CElementInfo;
+import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
 import com.sun.tools.xjc.outline.ElementOutline;
 import com.sun.tools.xjc.outline.Outline;
 
@@ -24,13 +26,17 @@ public class CMElementOutlineGenerator implements MElementOutlineGenerator {
 		this.elementInfo = elementInfo;
 	}
 
-	@Override
 	public MElementOutline generate(MPackageOutline parent,
-			MModelInfo modelInfo, MElementInfo elementInfo) {
+			MModelInfo<NType, NClass> modelInfo,
+			MElementInfo<NType, NClass> elementInfo) {
 		final ElementOutline elementOutline = outline
 				.getElement(this.elementInfo);
-		return new CMElementOutline(parent.getParent(), parent, elementInfo,
-				elementOutline.implClass);
+		if (elementOutline != null) {
+			return new CMElementOutline(parent.getParent(), parent,
+					elementInfo, elementOutline.implClass);
+		} else {
+			return null;
+		}
 	}
 
 }

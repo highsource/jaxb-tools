@@ -20,26 +20,30 @@ import org.jvnet.jaxb2_commons.xml.bind.model.origin.MClassInfoOrigin;
 import com.sun.xml.bind.v2.model.core.ClassInfo;
 import com.sun.xml.bind.v2.model.core.PropertyInfo;
 
-public class CMClassInfo implements MClassInfo {
+public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 
 	private final MClassInfoOrigin origin;
+	private final C targetClass;
 	private final MPackageInfo _package;
 	private final String name;
 	private final String localName;
-	private final MClassInfo baseTypeInfo;
+	private final MClassInfo<T, C> baseTypeInfo;
 	private final QName elementName;
 
-	private List<MPropertyInfo> properties = new ArrayList<MPropertyInfo>();
-	private List<MPropertyInfo> unmodifiableProperties = Collections
+	private List<MPropertyInfo<T, C>> properties = new ArrayList<MPropertyInfo<T, C>>();
+	private List<MPropertyInfo<T, C>> unmodifiableProperties = Collections
 			.unmodifiableList(properties);
 
-	public CMClassInfo(MClassInfoOrigin origin, MPackageInfo _package,
-			String localName, MClassInfo baseTypeInfo, QName elementName) {
+	public CMClassInfo(MClassInfoOrigin origin, C targetClass,
+			MPackageInfo _package, String localName,
+			MClassInfo<T, C> baseTypeInfo, QName elementName) {
 		super();
 		Validate.notNull(origin);
+		Validate.notNull(targetClass);
 		Validate.notNull(_package);
 		Validate.notNull(localName);
 		this.origin = origin;
+		this.targetClass = targetClass;
 		this.name = _package.getPackagedName(localName);
 		this.localName = localName;
 		this._package = _package;
@@ -51,72 +55,70 @@ public class CMClassInfo implements MClassInfo {
 		return origin;
 	}
 
-	@Override
-	public MElementInfo createElementInfo(MTypeInfo scope,
+	public C getTargetClass() {
+		return targetClass;
+	}
+
+	public T getTargetType() {
+		return targetClass;
+	}
+
+	public MElementInfo<T, C> createElementInfo(MTypeInfo<T, C> scope,
 			QName substitutionHead) {
-		return new CMElementInfo(getOrigin().createElementInfoOrigin(),
+		return new CMElementInfo<T, C>(getOrigin().createElementInfoOrigin(),
 				getPackageInfo(), getElementName(), scope, this,
 				substitutionHead);
 	}
 
-	@Override
 	public MPackageInfo getPackageInfo() {
 		return _package;
 	}
 
-	@Override
 	public String getName() {
 		return name;
 	}
 
-	@Override
 	public String getLocalName() {
 		return localName;
 	}
 
-	@Override
-	public MClassInfo getBaseTypeInfo() {
+	public MClassInfo<T, C> getBaseTypeInfo() {
 		return baseTypeInfo;
 	}
 
-	@Override
-	public List<MPropertyInfo> getProperties() {
+	public List<MPropertyInfo<T, C>> getProperties() {
 		return unmodifiableProperties;
 	}
 
-	@Override
 	public QName getElementName() {
 		return elementName;
 	}
 
-	@Override
-	public void addProperty(MPropertyInfo propertyInfo) {
+	public void addProperty(MPropertyInfo<T, C> propertyInfo) {
 		Validate.notNull(propertyInfo);
 		this.properties.add(propertyInfo);
 	}
 
-	@Override
-	public void removeProperty(MPropertyInfo propertyInfo) {
+	@SuppressWarnings("unchecked")
+	public void removeProperty(MPropertyInfo<T, C> propertyInfo) {
 		Validate.notNull(propertyInfo);
 		this.properties.remove(propertyInfo);
 
 		if (getOrigin() instanceof ClassInfoOrigin
 				&& propertyInfo.getOrigin() instanceof PropertyInfoOrigin) {
-			ClassInfo ci = (ClassInfo) ((ClassInfoOrigin) getOrigin())
+			ClassInfo<T, C> ci = (ClassInfo<T, C>) ((ClassInfoOrigin) getOrigin())
 					.getSource();
-			PropertyInfo pi = (PropertyInfo) ((PropertyInfoOrigin) propertyInfo
+			PropertyInfo<T, C> pi = (PropertyInfo<T, C>) ((PropertyInfoOrigin) propertyInfo
 					.getOrigin()).getSource();
 			ci.getProperties().remove(pi);
 		}
 	}
 
-	@Override
 	public String toString() {
 		return "ClassInfo [" + getName() + "]";
 	}
 
-	@Override
-	public <V> V acceptTypeInfoVisitor(MTypeInfoVisitor<V> visitor) {
+	public <V> V acceptTypeInfoVisitor(MTypeInfoVisitor<T, C, V> visitor) {
 		return visitor.visitClassInfo(this);
 	}
 }

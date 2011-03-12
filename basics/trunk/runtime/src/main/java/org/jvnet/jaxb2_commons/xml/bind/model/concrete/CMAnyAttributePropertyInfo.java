@@ -5,16 +5,15 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public class CMAnyAttributePropertyInfo extends CMPropertyInfo implements
-		MAnyAttributePropertyInfo {
+public class CMAnyAttributePropertyInfo<T, C> extends CMPropertyInfo<T, C>
+		implements MAnyAttributePropertyInfo<T, C> {
 
 	public CMAnyAttributePropertyInfo(MPropertyInfoOrigin origin,
-			MClassInfo classInfo, String privateName) {
+			MClassInfo<T, C> classInfo, String privateName) {
 		super(origin, classInfo, privateName, false);
 	}
 
-	@Override
-	public <V> V acceptPropertyInfoVisitor(MPropertyInfoVisitor<V> visitor) {
+	public <V> V acceptPropertyInfoVisitor(MPropertyInfoVisitor<T, C, V> visitor) {
 		return visitor.visitAnyAttributePropertyInfo(this);
 	}
 

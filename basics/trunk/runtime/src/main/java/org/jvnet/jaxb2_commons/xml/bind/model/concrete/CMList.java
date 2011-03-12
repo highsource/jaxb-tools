@@ -7,17 +7,23 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MList;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
 
-public class CMList implements MList {
+public class CMList<T, C> implements MList<T, C> {
 
-	private final MTypeInfo itemTypeInfo;
+	private final MTypeInfo<T, C> itemTypeInfo;
+	private final T targetType;
 
-	public CMList(MTypeInfo itemTypeInfo) {
+	public CMList(T targetType, MTypeInfo<T, C> itemTypeInfo) {
+		Validate.notNull(targetType);
 		Validate.notNull(itemTypeInfo);
+		this.targetType = targetType;
 		this.itemTypeInfo = itemTypeInfo;
 	}
 
-	@Override
-	public MTypeInfo getItemTypeInfo() {
+	public T getTargetType() {
+		return targetType;
+	}
+
+	public MTypeInfo<T, C> getItemTypeInfo() {
 		return itemTypeInfo;
 	}
 
@@ -26,8 +32,7 @@ public class CMList implements MList {
 		return MessageFormat.format("List [{0}]", getItemTypeInfo());
 	}
 
-	@Override
-	public <V> V acceptTypeInfoVisitor(MTypeInfoVisitor<V> visitor) {
+	public <V> V acceptTypeInfoVisitor(MTypeInfoVisitor<T, C, V> visitor) {
 		return visitor.visitList(this);
 	}
 }

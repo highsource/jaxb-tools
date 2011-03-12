@@ -12,12 +12,14 @@ import org.jvnet.jaxb2_commons.xjc.outline.MPackageOutline;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumLeafInfo;
 
 import com.sun.codemodel.JDefinedClass;
+import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
 
 public class CMEnumOutline implements MEnumOutline {
 
 	private final MModelOutline parent;
 	private final MPackageOutline packageOutline;
-	private final MEnumLeafInfo target;
+	private final MEnumLeafInfo<NType, NClass> target;
 	private final JDefinedClass code;
 
 	private final List<MEnumConstantOutline> enumConstantOutlines = new ArrayList<MEnumConstantOutline>();
@@ -25,7 +27,7 @@ public class CMEnumOutline implements MEnumOutline {
 			.unmodifiableList(enumConstantOutlines);
 
 	public CMEnumOutline(MModelOutline parent, MPackageOutline packageOutline,
-			MEnumLeafInfo target, JDefinedClass code) {
+			MEnumLeafInfo<NType, NClass> target, JDefinedClass code) {
 		Validate.notNull(parent);
 		Validate.notNull(packageOutline);
 		Validate.notNull(target);
@@ -44,7 +46,7 @@ public class CMEnumOutline implements MEnumOutline {
 		return packageOutline;
 	}
 
-	public MEnumLeafInfo getTarget() {
+	public MEnumLeafInfo<NType, NClass> getTarget() {
 		return target;
 	}
 

@@ -1,6 +1,8 @@
 package org.jvnet.jaxb2_commons.xml.bind.model;
 
-public interface MTypeInfo {
+public interface MTypeInfo<T, C> {
 
-	public <V> V acceptTypeInfoVisitor(MTypeInfoVisitor<V> visitor);
+	public T getTargetType();
+
+	public <V> V acceptTypeInfoVisitor(MTypeInfoVisitor<T, C, V> visitor);
 }

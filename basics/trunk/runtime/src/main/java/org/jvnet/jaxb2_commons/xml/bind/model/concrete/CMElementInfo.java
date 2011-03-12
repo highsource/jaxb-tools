@@ -10,7 +10,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MElementInfoOrigin;
 
-public class CMElementInfo implements MElementInfo {
+public class CMElementInfo<T, C> implements MElementInfo<T, C> {
 
 	private final MElementInfoOrigin origin;
 
@@ -18,14 +18,14 @@ public class CMElementInfo implements MElementInfo {
 
 	private final QName elementName;
 
-	private final MTypeInfo scope;
+	private final MTypeInfo<T, C> scope;
 
-	private final MTypeInfo typeInfo;
+	private final MTypeInfo<T, C> typeInfo;
 
 	private final QName substitutionHead;
 
 	public CMElementInfo(MElementInfoOrigin origin, MPackageInfo _package,
-			QName elementName, MTypeInfo scope, MTypeInfo typeInfo,
+			QName elementName, MTypeInfo<T, C> scope, MTypeInfo<T, C> typeInfo,
 			QName substitutionHead) {
 		super();
 		Validate.notNull(origin);
@@ -43,32 +43,26 @@ public class CMElementInfo implements MElementInfo {
 		return origin;
 	}
 
-	@Override
 	public MPackageInfo getPackageInfo() {
 		return _package;
 	}
 
-	@Override
 	public QName getElementName() {
 		return elementName;
 	}
 
-	@Override
-	public MTypeInfo getScope() {
+	public MTypeInfo<T, C> getScope() {
 		return scope;
 	}
 
-	@Override
-	public MTypeInfo getTypeInfo() {
+	public MTypeInfo<T, C> getTypeInfo() {
 		return typeInfo;
 	}
 
-	@Override
 	public QName getSubstitutionHead() {
 		return substitutionHead;
 	}
 
-	@Override
 	public String toString() {
 		return MessageFormat.format("ElementInfo [{0}: {1}]", getElementName(),
 				getTypeInfo());

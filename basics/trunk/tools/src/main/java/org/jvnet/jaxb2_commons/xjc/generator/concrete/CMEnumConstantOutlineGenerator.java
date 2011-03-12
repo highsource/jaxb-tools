@@ -6,11 +6,12 @@ import org.jvnet.jaxb2_commons.xjc.outline.MEnumConstantOutline;
 import org.jvnet.jaxb2_commons.xjc.outline.MEnumOutline;
 import org.jvnet.jaxb2_commons.xjc.outline.concrete.CMEnumConstantOutline;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumConstantInfo;
-import org.jvnet.jaxb2_commons.xml.bind.model.MEnumLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 
 import com.sun.tools.xjc.model.CEnumConstant;
 import com.sun.tools.xjc.model.CEnumLeafInfo;
+import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
 import com.sun.tools.xjc.outline.EnumConstantOutline;
 import com.sun.tools.xjc.outline.EnumOutline;
 import com.sun.tools.xjc.outline.Outline;
@@ -29,9 +30,9 @@ public class CMEnumConstantOutlineGenerator implements
 		this.enumConstant = enumConstant;
 	}
 
-	@Override
 	public MEnumConstantOutline generate(MEnumOutline parent,
-			MModelInfo modelInfo, MEnumConstantInfo enumConstantInfo) {
+			MModelInfo<NType, NClass> modelInfo,
+			MEnumConstantInfo<NType, NClass> enumConstantInfo) {
 
 		final CEnumLeafInfo eli = enumConstant.getEnclosingClass();
 

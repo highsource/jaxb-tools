@@ -5,21 +5,26 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MWildcardTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MWildcardTypeInfoOrigin;
 
-public class CMWildcardTypeInfo implements MWildcardTypeInfo {
+public class CMWildcardTypeInfo<T, C> implements MWildcardTypeInfo<T, C> {
 
+	private final T targetType;
 	private final MWildcardTypeInfoOrigin origin;
 
-	public CMWildcardTypeInfo(MWildcardTypeInfoOrigin origin) {
+	public CMWildcardTypeInfo(MWildcardTypeInfoOrigin origin, T targetType) {
 		Validate.notNull(origin);
 		this.origin = origin;
+		this.targetType = targetType;
+	}
+
+	public T getTargetType() {
+		return targetType;
 	}
 
 	public MWildcardTypeInfoOrigin getOrigin() {
 		return origin;
 	}
 
-	@Override
-	public <V> V acceptTypeInfoVisitor(MTypeInfoVisitor<V> visitor) {
+	public <V> V acceptTypeInfoVisitor(MTypeInfoVisitor<T, C, V> visitor) {
 		return visitor.visitWildcardTypeInfo(this);
 	}
 

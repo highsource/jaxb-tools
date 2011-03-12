@@ -7,10 +7,11 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MTargeted;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JDefinedClass;
+import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
 
-public interface MClassOutline extends MChildOutline, MPackagedOutline, MTargeted<MClassInfo>{
-
-	public MClassInfo getTarget();
+public interface MClassOutline extends MChildOutline, MPackagedOutline,
+		MTargeted<MClassInfo<NType, NClass>> {
 
 	public MClassOutline getSuperClassOutline();
 
@@ -19,7 +20,7 @@ public interface MClassOutline extends MChildOutline, MPackagedOutline, MTargete
 	public List<MPropertyOutline> getDeclaredPropertyOutlines();
 
 	public JDefinedClass getReferenceCode();
-	
+
 	public JDefinedClass getImplementationCode();
 
 	public JClass getImplementationReferenceCode();

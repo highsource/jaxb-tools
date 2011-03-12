@@ -8,10 +8,10 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public class CMElementRefPropertyInfo extends CMPropertyInfo implements
-		MElementRefPropertyInfo {
+public class CMElementRefPropertyInfo<T, C> extends CMPropertyInfo<T, C>
+		implements MElementRefPropertyInfo<T, C> {
 
-	private final MTypeInfo typeInfo;
+	private final MTypeInfo<T, C> typeInfo;
 	private final QName elementName;
 	private final QName wrapperElementName;
 
@@ -20,9 +20,10 @@ public class CMElementRefPropertyInfo extends CMPropertyInfo implements
 	private final boolean typedObjectAllowed;
 
 	public CMElementRefPropertyInfo(MPropertyInfoOrigin origin,
-			MClassInfo classInfo, String privateName, boolean collection,
-			MTypeInfo typeInfo, QName elementName, QName wrapperElementName,
-			boolean mixed, boolean domAllowed, boolean typedObjectAllowed) {
+			MClassInfo<T, C> classInfo, String privateName, boolean collection,
+			MTypeInfo<T, C> typeInfo, QName elementName,
+			QName wrapperElementName, boolean mixed, boolean domAllowed,
+			boolean typedObjectAllowed) {
 		super(origin, classInfo, privateName, collection);
 		this.typeInfo = typeInfo;
 		this.elementName = elementName;
@@ -32,38 +33,31 @@ public class CMElementRefPropertyInfo extends CMPropertyInfo implements
 		this.typedObjectAllowed = typedObjectAllowed;
 	}
 
-	@Override
-	public MTypeInfo getTypeInfo() {
+	public MTypeInfo<T, C> getTypeInfo() {
 		return typeInfo;
 	}
 
-	@Override
 	public QName getElementName() {
 		return elementName;
 	}
 
-	@Override
 	public QName getWrapperElementName() {
 		return wrapperElementName;
 	}
 
-	@Override
 	public boolean isMixed() {
 		return mixed;
 	}
 
-	@Override
 	public boolean isDomAllowed() {
 		return domAllowed;
 	}
 
-	@Override
 	public boolean isTypedObjectAllowed() {
 		return typedObjectAllowed;
 	}
 
-	@Override
-	public <V> V acceptPropertyInfoVisitor(MPropertyInfoVisitor<V> visitor) {
+	public <V> V acceptPropertyInfoVisitor(MPropertyInfoVisitor<T, C, V> visitor) {
 		return visitor.visitElementRefPropertyInfo(this);
 	}
 

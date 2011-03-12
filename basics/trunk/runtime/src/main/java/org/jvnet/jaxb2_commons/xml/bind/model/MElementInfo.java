@@ -5,15 +5,12 @@ import javax.xml.namespace.QName;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MElementInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MOriginated;
 
-public interface MElementInfo extends MElementTypeInfo, MPackaged, MOriginated<MElementInfoOrigin> {
+public interface MElementInfo<T, C> extends MElementTypeInfo<T, C>, MPackaged,
+		MOriginated<MElementInfoOrigin> {
 
-	@Override
 	public QName getElementName();
 
-	public MTypeInfo getScope();
-
-	@Override
-	public MTypeInfo getTypeInfo();
+	public MTypeInfo<T, C> getScope();
 
 	public QName getSubstitutionHead();
 

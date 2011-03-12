@@ -40,10 +40,8 @@ public class CodeModelUtils {
 	public static JPropertyFile getOrCreatePropertyFile(JPackage thePackage,
 			String name) {
 		JPropertyFile propertyFile = null;
-		for (@SuppressWarnings("unchecked")
-		Iterator<JResourceFile> iterator = thePackage.propertyFiles(); iterator
-				.hasNext()
-				&& (null == propertyFile);) {
+		for (Iterator<JResourceFile> iterator = thePackage.propertyFiles(); iterator
+				.hasNext() && (null == propertyFile);) {
 			final JResourceFile resourceFile = (JResourceFile) iterator.next();
 			if (resourceFile instanceof JPropertyFile
 					&& name.equals(resourceFile.name())) {
@@ -220,8 +218,8 @@ public class CodeModelUtils {
 					.hasNext();) {
 				final JPackage _package = iterator.next();
 				if (packageName.equals(_package.name())) {
-					return _getClass(_package, fullyQualifiedName
-							.substring(idx + 1));
+					return _getClass(_package,
+							fullyQualifiedName.substring(idx + 1));
 				}
 			}
 			return null;
@@ -260,8 +258,8 @@ public class CodeModelUtils {
 			return null;
 
 		} else {
-			final JDefinedClass nestedClass = _getClass(_class, name.substring(
-					0, idx));
+			final JDefinedClass nestedClass = _getClass(_class,
+					name.substring(0, idx));
 			if (nestedClass == null) {
 				return null;
 			} else {

@@ -19,6 +19,8 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 
 import com.sun.tools.xjc.model.Model;
+import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
 import com.sun.tools.xjc.outline.Outline;
 
 public class CMModelOutlineGenerator implements MModelOutlineGenerator {
@@ -33,36 +35,39 @@ public class CMModelOutlineGenerator implements MModelOutlineGenerator {
 		this.model = model;
 	}
 
-	@Override
-	public MModelOutline generate(MModelInfo modelInfo) {
+	public MModelOutline generate(MModelInfo<NType, NClass> modelInfo) {
 
 		final CMModelOutline modelOutline = new CMModelOutline(modelInfo,
 				outline.getCodeModel());
 
-		for (MClassInfo classInfo : modelInfo.getClassInfos()) {
+		for (MClassInfo<NType, NClass> classInfo : modelInfo.getClassInfos()) {
 			generatePackageOutline(modelOutline, modelInfo,
 					classInfo.getPackageInfo());
 		}
 
-		for (MElementInfo elementInfo : modelInfo.getElementInfos()) {
+		for (MElementInfo<NType, NClass> elementInfo : modelInfo
+				.getElementInfos()) {
 			generatePackageOutline(modelOutline, modelInfo,
 					elementInfo.getPackageInfo());
 		}
 
-		for (MEnumLeafInfo enumLeafInfo : modelInfo.getEnumLeafInfos()) {
+		for (MEnumLeafInfo<NType, NClass> enumLeafInfo : modelInfo
+				.getEnumLeafInfos()) {
 			generatePackageOutline(modelOutline, modelInfo,
 					enumLeafInfo.getPackageInfo());
 		}
 
-		for (MClassInfo classInfo : modelInfo.getClassInfos()) {
+		for (MClassInfo<NType, NClass> classInfo : modelInfo.getClassInfos()) {
 			generateClassOutline(modelOutline, modelInfo, classInfo);
 		}
 
-		for (MElementInfo elementInfo : modelInfo.getElementInfos()) {
+		for (MElementInfo<NType, NClass> elementInfo : modelInfo
+				.getElementInfos()) {
 			generateElementOutline(modelOutline, modelInfo, elementInfo);
 		}
 
-		for (MEnumLeafInfo enumLeafInfo : modelInfo.getEnumLeafInfos()) {
+		for (MEnumLeafInfo<NType, NClass> enumLeafInfo : modelInfo
+				.getEnumLeafInfos()) {
 			generateEnumOutline(modelOutline, modelInfo, enumLeafInfo);
 		}
 
@@ -71,7 +76,7 @@ public class CMModelOutlineGenerator implements MModelOutlineGenerator {
 	}
 
 	private void generatePackageOutline(CMModelOutline modelOutline,
-			MModelInfo modelInfo, MPackageInfo packageInfo) {
+			MModelInfo<NType, NClass> modelInfo, MPackageInfo packageInfo) {
 		if (modelOutline.getPackageOutline(packageInfo) == null &&
 
 		packageInfo.getOrigin() instanceof PackageOutlineGeneratorFactory) {
@@ -85,7 +90,8 @@ public class CMModelOutlineGenerator implements MModelOutlineGenerator {
 	}
 
 	private void generateClassOutline(CMModelOutline modelOutline,
-			MModelInfo modelInfo, MClassInfo classInfo) {
+			MModelInfo<NType, NClass> modelInfo,
+			MClassInfo<NType, NClass> classInfo) {
 		if (classInfo.getBaseTypeInfo() != null) {
 			generateClassOutline(modelOutline, modelInfo,
 					classInfo.getBaseTypeInfo());
@@ -104,7 +110,8 @@ public class CMModelOutlineGenerator implements MModelOutlineGenerator {
 	}
 
 	private void generateElementOutline(CMModelOutline modelOutline,
-			MModelInfo modelInfo, MElementInfo elementInfo)
+			MModelInfo<NType, NClass> modelInfo,
+			MElementInfo<NType, NClass> elementInfo)
 
 	{
 		if (elementInfo.getOrigin() instanceof ElementOutlineGeneratorFactory) {
@@ -120,7 +127,8 @@ public class CMModelOutlineGenerator implements MModelOutlineGenerator {
 	}
 
 	private void generateEnumOutline(CMModelOutline modelOutline,
-			MModelInfo modelInfo, MEnumLeafInfo enumLeafInfo)
+			MModelInfo<NType, NClass> modelInfo,
+			MEnumLeafInfo<NType, NClass> enumLeafInfo)
 
 	{
 		if (enumLeafInfo.getOrigin() instanceof EnumOutlineGeneratorFactory) {

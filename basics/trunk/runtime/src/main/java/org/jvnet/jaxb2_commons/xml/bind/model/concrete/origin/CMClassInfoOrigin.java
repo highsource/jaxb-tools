@@ -20,7 +20,6 @@ public class CMClassInfoOrigin<T, C, CI extends ClassInfo<T, C>> implements
 		return source;
 	}
 
-	@Override
 	public MElementInfoOrigin createElementInfoOrigin() {
 		return new CMClassElementInfoOrigin<T, C, CI>(getSource());
 	}

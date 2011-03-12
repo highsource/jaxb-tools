@@ -5,14 +5,14 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MEnumConstantInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MEnumConstantInfoOrigin;
 
-public class CMEnumConstantInfo implements MEnumConstantInfo {
+public class CMEnumConstantInfo<T, C> implements MEnumConstantInfo<T, C> {
 
 	private final MEnumConstantInfoOrigin origin;
-	private final MEnumLeafInfo enumLeafInfo;
+	private final MEnumLeafInfo<T, C> enumLeafInfo;
 	private final String lexicalValue;
 
 	public CMEnumConstantInfo(MEnumConstantInfoOrigin origin,
-			MEnumLeafInfo enumLeafInfo, String lexicalValue) {
+			MEnumLeafInfo<T, C> enumLeafInfo, String lexicalValue) {
 		Validate.notNull(origin);
 		Validate.notNull(enumLeafInfo);
 		Validate.notNull(lexicalValue);
@@ -25,7 +25,7 @@ public class CMEnumConstantInfo implements MEnumConstantInfo {
 		return origin;
 	}
 
-	public MEnumLeafInfo getEnumLeafInfo() {
+	public MEnumLeafInfo<T, C> getEnumLeafInfo() {
 		return enumLeafInfo;
 	}
 

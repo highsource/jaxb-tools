@@ -13,12 +13,14 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JDefinedClass;
+import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
 
 public class CMClassOutline implements MClassOutline {
 
 	private final MModelOutline parent;
 	private final MPackageOutline packageOutline;
-	private final MClassInfo target;
+	private final MClassInfo<NType, NClass> target;
 	private final MClassOutline superClassOutline;
 
 	private final JDefinedClass referenceCode;
@@ -30,7 +32,7 @@ public class CMClassOutline implements MClassOutline {
 			.unmodifiableList(declaredPropertyOutlines);
 
 	public CMClassOutline(MModelOutline parent, MPackageOutline packageOutline,
-			MClassInfo target, MClassOutline superClassOutline,
+			MClassInfo<NType, NClass> target, MClassOutline superClassOutline,
 			JDefinedClass referenceCode, JDefinedClass implementationCode,
 			JClass implementationReferenceCode) {
 		Validate.notNull(parent);
@@ -56,7 +58,7 @@ public class CMClassOutline implements MClassOutline {
 		return packageOutline;
 	}
 
-	public MClassInfo getTarget() {
+	public MClassInfo<NType, NClass> getTarget() {
 		return target;
 	}
 
@@ -76,19 +78,18 @@ public class CMClassOutline implements MClassOutline {
 		return implementationReferenceCode;
 	}
 
-	@Override
 	public List<MPropertyOutline> getPropertyOutlines() {
 		if (getSuperClassOutline() == null) {
 			return getDeclaredPropertyOutlines();
 		} else {
 			final List<MPropertyOutline> propertyOutlines = new ArrayList<MPropertyOutline>();
-			propertyOutlines.addAll(getSuperClassOutline().getPropertyOutlines());
+			propertyOutlines.addAll(getSuperClassOutline()
+					.getPropertyOutlines());
 			propertyOutlines.addAll(getDeclaredPropertyOutlines());
 			return Collections.unmodifiableList(propertyOutlines);
 		}
 	}
 
-	@Override
 	public List<MPropertyOutline> getDeclaredPropertyOutlines() {
 		return _delcaredPropertyOutlines;
 	}

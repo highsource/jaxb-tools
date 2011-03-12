@@ -18,37 +18,30 @@ public class CMPropertyAccessor implements MPropertyAccessor {
 		this.fieldAccessor = fieldAccessor;
 	}
 
-	@Override
 	public void get(JBlock block, JVar variable) {
 		fieldAccessor.toRawValue(block, variable);
 	}
 
-	@Override
 	public void set(JBlock block, String uniqueName, JExpression value) {
 		fieldAccessor.fromRawValue(block, uniqueName, value);
 	}
 
-	@Override
 	public void unset(JBlock body) {
 		fieldAccessor.unsetValues(body);
 	}
 
-	@Override
 	public JExpression isSet() {
 		return fieldAccessor.hasSetValue();
 	}
 
-	@Override
 	public JType getType() {
 		return fieldAccessor.getType();
 	}
 
-	@Override
 	public boolean isConstant() {
 		return fieldAccessor.isConstant();
 	}
 
-	@Override
 	public boolean isVirtual() {
 		return fieldAccessor.isVirtual();
 	}

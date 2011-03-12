@@ -8,33 +8,33 @@ import javax.xml.namespace.QName;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MModelInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MOriginated;
 
-public interface MModelInfo extends MOriginated<MModelInfoOrigin> {
+public interface MModelInfo<T, C> extends MOriginated<MModelInfoOrigin> {
 
-	public Collection<MBuiltinLeafInfo> getBuiltinLeafInfos();
+	public Collection<MBuiltinLeafInfo<T, C>> getBuiltinLeafInfos();
 
-	public MBuiltinLeafInfo getBuiltinLeafInfo(QName name);
+	public MBuiltinLeafInfo<T, C> getBuiltinLeafInfo(QName name);
 
-	public Collection<MClassInfo> getClassInfos();
+	public Collection<MClassInfo<T, C>> getClassInfos();
 
-	public Collection<MEnumLeafInfo> getEnumLeafInfos();
+	public Collection<MEnumLeafInfo<T, C>> getEnumLeafInfos();
 
-	public Collection<MTypeInfo> getTypeInfos();
+	public Collection<MTypeInfo<T, C>> getTypeInfos();
 
-	public Collection<MElementInfo> getElementInfos();
+	public Collection<MElementInfo<T, C>> getElementInfos();
 
-	public Map<QName, MElementInfo> getElementInfosMap();
+	public Map<QName, MElementInfo<T, C>> getElementInfosMap();
 
-	public void addBuiltinLeafInfo(MBuiltinLeafInfo builtinLeafInfo);
+	public void addBuiltinLeafInfo(MBuiltinLeafInfo<T, C> builtinLeafInfo);
 
-	public void addEnumLeafInfo(MEnumLeafInfo enumLeafInfo);
+	public void addEnumLeafInfo(MEnumLeafInfo<T, C> enumLeafInfo);
 
-	public void removeEnumLeafInfo(MEnumLeafInfo enumLeafInfo);
+	public void removeEnumLeafInfo(MEnumLeafInfo<T, C> enumLeafInfo);
 
-	public void addClassInfo(MClassInfo classInfo);
+	public void addClassInfo(MClassInfo<T, C> classInfo);
 
-	public void removeClassInfo(MClassInfo classInfo);
+	public void removeClassInfo(MClassInfo<T, C> classInfo);
 
-	public void addElementInfo(MElementInfo elementInfo);
+	public void addElementInfo(MElementInfo<T, C> elementInfo);
 
-	public void removeElementInfo(MElementInfo elementInfo);
+	public void removeElementInfo(MElementInfo<T, C> elementInfo);
 }

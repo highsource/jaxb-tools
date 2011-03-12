@@ -7,16 +7,18 @@ import org.jvnet.jaxb2_commons.xjc.outline.MPackageOutline;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 
 import com.sun.codemodel.JDefinedClass;
+import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
 
 public class CMElementOutline implements MElementOutline {
 
 	private final MModelOutline parent;
 	private final MPackageOutline packageOutline;
-	private final MElementInfo target;
+	private final MElementInfo<NType, NClass> target;
 	private final JDefinedClass code;
 
 	public CMElementOutline(MModelOutline parent,
-			MPackageOutline packageOutline, MElementInfo target,
+			MPackageOutline packageOutline, MElementInfo<NType, NClass> target,
 			JDefinedClass code) {
 		Validate.notNull(parent);
 		Validate.notNull(packageOutline);
@@ -36,7 +38,7 @@ public class CMElementOutline implements MElementOutline {
 		return packageOutline;
 	}
 
-	public MElementInfo getTarget() {
+	public MElementInfo<NType, NClass> getTarget() {
 		return target;
 	}
 

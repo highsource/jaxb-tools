@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.namespace.QName;
@@ -27,35 +26,35 @@ import com.sun.xml.bind.v2.model.core.ElementInfo;
 import com.sun.xml.bind.v2.model.core.EnumLeafInfo;
 import com.sun.xml.bind.v2.model.core.TypeInfoSet;
 
-public class CMModel<T, C> implements MModelInfo {
+public class CMModel<T, C> implements MModelInfo<T, C> {
 
 	private final MModelInfoOrigin origin;
 
-	private final Collection<MBuiltinLeafInfo> builtinLeafInfos = new ArrayList<MBuiltinLeafInfo>();
-	private final Collection<MBuiltinLeafInfo> unmodifiableBuiltinLeafInfos = Collections
+	private final Collection<MBuiltinLeafInfo<T, C>> builtinLeafInfos = new ArrayList<MBuiltinLeafInfo<T, C>>();
+	private final Collection<MBuiltinLeafInfo<T, C>> unmodifiableBuiltinLeafInfos = Collections
 			.unmodifiableCollection(builtinLeafInfos);
-	private final Map<QName, MBuiltinLeafInfo> builtinLeafInfosMap = new HashMap<QName, MBuiltinLeafInfo>();
-	private final Map<QName, MBuiltinLeafInfo> unmodifiableBuiltinLeafInfosMap = Collections
+	private final Map<QName, MBuiltinLeafInfo<T, C>> builtinLeafInfosMap = new HashMap<QName, MBuiltinLeafInfo<T, C>>();
+	private final Map<QName, MBuiltinLeafInfo<T, C>> unmodifiableBuiltinLeafInfosMap = Collections
 			.unmodifiableMap(builtinLeafInfosMap);
 
-	private final Collection<MClassInfo> classInfos = new ArrayList<MClassInfo>();
-	private final Collection<MClassInfo> unmodifiableClassInfos = Collections
+	private final Collection<MClassInfo<T, C>> classInfos = new ArrayList<MClassInfo<T, C>>();
+	private final Collection<MClassInfo<T, C>> unmodifiableClassInfos = Collections
 			.unmodifiableCollection(classInfos);
 
-	private final Collection<MEnumLeafInfo> enumLeafInfos = new ArrayList<MEnumLeafInfo>();
-	private final Collection<MEnumLeafInfo> unmodifiableEnumLeafInfos = Collections
+	private final Collection<MEnumLeafInfo<T, C>> enumLeafInfos = new ArrayList<MEnumLeafInfo<T, C>>();
+	private final Collection<MEnumLeafInfo<T, C>> unmodifiableEnumLeafInfos = Collections
 			.unmodifiableCollection(enumLeafInfos);
 
-	private final Collection<MTypeInfo> typeInfos = new ArrayList<MTypeInfo>();
-	private final Collection<MTypeInfo> unmodifiableTypeInfos = Collections
+	private final Collection<MTypeInfo<T, C>> typeInfos = new ArrayList<MTypeInfo<T, C>>();
+	private final Collection<MTypeInfo<T, C>> unmodifiableTypeInfos = Collections
 			.unmodifiableCollection(typeInfos);
 
-	private final Collection<MElementInfo> elementInfos = new ArrayList<MElementInfo>();
-	private final Collection<MElementInfo> unmodifiableElementInfos = Collections
+	private final Collection<MElementInfo<T, C>> elementInfos = new ArrayList<MElementInfo<T, C>>();
+	private final Collection<MElementInfo<T, C>> unmodifiableElementInfos = Collections
 			.unmodifiableCollection(elementInfos);
 
-	private final Map<QName, MElementInfo> elementInfosMap = new HashMap<QName, MElementInfo>();
-	private final Map<QName, MElementInfo> unmodifiableElementInfosMap = Collections
+	private final Map<QName, MElementInfo<T, C>> elementInfosMap = new HashMap<QName, MElementInfo<T, C>>();
+	private final Map<QName, MElementInfo<T, C>> unmodifiableElementInfosMap = Collections
 			.unmodifiableMap(elementInfosMap);
 
 	public CMModel(MModelInfoOrigin origin) {
@@ -67,44 +66,36 @@ public class CMModel<T, C> implements MModelInfo {
 		return origin;
 	}
 
-	@Override
-	public Collection<MBuiltinLeafInfo> getBuiltinLeafInfos() {
+	public Collection<MBuiltinLeafInfo<T, C>> getBuiltinLeafInfos() {
 		return unmodifiableBuiltinLeafInfos;
 	}
 
-	@Override
-	public Collection<MClassInfo> getClassInfos() {
+	public Collection<MClassInfo<T, C>> getClassInfos() {
 		return unmodifiableClassInfos;
 	}
 
-	@Override
-	public Collection<MEnumLeafInfo> getEnumLeafInfos() {
+	public Collection<MEnumLeafInfo<T, C>> getEnumLeafInfos() {
 		return unmodifiableEnumLeafInfos;
 	}
 
-	@Override
-	public Collection<MElementInfo> getElementInfos() {
+	public Collection<MElementInfo<T, C>> getElementInfos() {
 		return unmodifiableElementInfos;
 	}
 
-	@Override
-	public Map<QName, MElementInfo> getElementInfosMap() {
+	public Map<QName, MElementInfo<T, C>> getElementInfosMap() {
 		return unmodifiableElementInfosMap;
 	}
 
-	@Override
-	public Collection<MTypeInfo> getTypeInfos() {
+	public Collection<MTypeInfo<T, C>> getTypeInfos() {
 		return unmodifiableTypeInfos;
 	}
 
-	@Override
-	public MBuiltinLeafInfo getBuiltinLeafInfo(QName name) {
+	public MBuiltinLeafInfo<T, C> getBuiltinLeafInfo(QName name) {
 		Validate.notNull(name);
 		return this.unmodifiableBuiltinLeafInfosMap.get(name);
 	}
 
-	@Override
-	public void addBuiltinLeafInfo(MBuiltinLeafInfo builtinLeafInfo) {
+	public void addBuiltinLeafInfo(MBuiltinLeafInfo<T, C> builtinLeafInfo) {
 		Validate.notNull(builtinLeafInfo);
 		this.builtinLeafInfos.add(builtinLeafInfo);
 		this.typeInfos.add(builtinLeafInfo);
@@ -112,29 +103,27 @@ public class CMModel<T, C> implements MModelInfo {
 				builtinLeafInfo);
 	}
 
-	@Override
-	public void addEnumLeafInfo(MEnumLeafInfo enumLeafInfo) {
+	public void addEnumLeafInfo(MEnumLeafInfo<T, C> enumLeafInfo) {
 		Validate.notNull(enumLeafInfo);
 		this.enumLeafInfos.add(enumLeafInfo);
 		this.typeInfos.add(enumLeafInfo);
 		final QName elementName = enumLeafInfo.getElementName();
 		if (elementName != null) {
-			final MElementInfo elementInfo = enumLeafInfo.createElementInfo(
-					null, null);
+			final MElementInfo<T, C> elementInfo = enumLeafInfo
+					.createElementInfo(null, null);
 			this.elementInfos.add(elementInfo);
 			this.elementInfosMap.put(elementName, elementInfo);
 		}
 
 	}
 
-	@Override
-	public void removeEnumLeafInfo(MEnumLeafInfo enumLeafInfo) {
+	public void removeEnumLeafInfo(MEnumLeafInfo<T, C> enumLeafInfo) {
 		Validate.notNull(enumLeafInfo);
 		this.enumLeafInfos.remove(enumLeafInfo);
 		this.typeInfos.remove(enumLeafInfo);
 		final QName elementName = enumLeafInfo.getElementName();
 		if (elementName != null) {
-			final MElementInfo elementInfo = this.elementInfosMap
+			final MElementInfo<T, C> elementInfo = this.elementInfosMap
 					.remove(elementName);
 			if (elementInfo != null) {
 				this.elementInfos.remove(elementInfo);
@@ -153,29 +142,27 @@ public class CMModel<T, C> implements MModelInfo {
 		}
 	}
 
-	@Override
-	public void addClassInfo(MClassInfo classInfo) {
+	public void addClassInfo(MClassInfo<T, C> classInfo) {
 		Validate.notNull(classInfo);
 		this.classInfos.add(classInfo);
 		this.typeInfos.add(classInfo);
 
 		final QName elementName = classInfo.getElementName();
 		if (elementName != null) {
-			final MElementInfo elementInfo = classInfo.createElementInfo(null,
-					null);
+			final MElementInfo<T, C> elementInfo = classInfo.createElementInfo(
+					null, null);
 			this.elementInfos.add(elementInfo);
 			this.elementInfosMap.put(elementName, elementInfo);
 		}
 	}
 
-	@Override
-	public void removeClassInfo(MClassInfo classInfo) {
+	public void removeClassInfo(MClassInfo<T, C> classInfo) {
 		Validate.notNull(classInfo);
 		this.classInfos.remove(classInfo);
 		this.typeInfos.remove(classInfo);
 		final QName elementName = classInfo.getElementName();
 		if (elementName != null) {
-			final MElementInfo elementInfo = this.elementInfosMap
+			final MElementInfo<T, C> elementInfo = this.elementInfosMap
 					.remove(elementName);
 			if (elementInfo != null) {
 				this.elementInfos.remove(elementInfo);
@@ -192,8 +179,7 @@ public class CMModel<T, C> implements MModelInfo {
 		}
 	}
 
-	@Override
-	public void addElementInfo(MElementInfo elementInfo) {
+	public void addElementInfo(MElementInfo<T, C> elementInfo) {
 		Validate.notNull(elementInfo);
 		Validate.notNull(elementInfo.getElementName());
 		this.elementInfos.add(elementInfo);
@@ -201,8 +187,7 @@ public class CMModel<T, C> implements MModelInfo {
 
 	}
 
-	@Override
-	public void removeElementInfo(MElementInfo elementInfo) {
+	public void removeElementInfo(MElementInfo<T, C> elementInfo) {
 		Validate.notNull(elementInfo);
 		Validate.notNull(elementInfo.getElementName());
 		this.elementInfos.remove(elementInfo);

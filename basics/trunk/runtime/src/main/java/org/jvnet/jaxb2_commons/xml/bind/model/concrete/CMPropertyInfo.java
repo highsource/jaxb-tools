@@ -5,17 +5,17 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public abstract class CMPropertyInfo implements MPropertyInfo {
+public abstract class CMPropertyInfo<T, C> implements MPropertyInfo<T, C> {
 
 	private MPropertyInfoOrigin origin;
-	private MClassInfo classInfo;
+	private MClassInfo<T, C> classInfo;
 
 	private final String privateName;
 
 	private final boolean collection;
 
-	public CMPropertyInfo(MPropertyInfoOrigin origin, MClassInfo classInfo,
-			String privateName, boolean collection) {
+	public CMPropertyInfo(MPropertyInfoOrigin origin,
+			MClassInfo<T, C> classInfo, String privateName, boolean collection) {
 		Validate.notNull(origin);
 		Validate.notNull(classInfo);
 		Validate.notNull(privateName);
@@ -29,12 +29,17 @@ public abstract class CMPropertyInfo implements MPropertyInfo {
 		return origin;
 	}
 
-	public MClassInfo getClassInfo() {
+	public MClassInfo<T, C> getClassInfo() {
 		return classInfo;
 	}
 
 	public String getPrivateName() {
 		return privateName;
+	}
+
+	public String getPublicName() {
+		// TODO
+		return this.getPrivateName();
 	}
 
 	public boolean isCollection() {

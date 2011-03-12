@@ -11,49 +11,42 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MValuePropertyInfo;
 
-public class DefaultPropertyInfoVisitor<V> implements MPropertyInfoVisitor<V> {
+public class DefaultPropertyInfoVisitor<T, C, V> implements
+		MPropertyInfoVisitor<T, C, V> {
 
-	public V visitPropertyInfo(MPropertyInfo info) {
+	public V visitPropertyInfo(MPropertyInfo<T, C> info) {
 		return null;
 	}
 
-	@Override
-	public V visitElementPropertyInfo(MElementPropertyInfo info) {
+	public V visitElementPropertyInfo(MElementPropertyInfo<T, C> info) {
 		return visitPropertyInfo(info);
 	}
 
-	@Override
-	public V visitElementsPropertyInfo(MElementsPropertyInfo info) {
+	public V visitElementsPropertyInfo(MElementsPropertyInfo<T, C> info) {
 		return visitPropertyInfo(info);
 	}
 
-	@Override
-	public V visitAnyElementPropertyInfo(MAnyElementPropertyInfo info) {
+	public V visitAnyElementPropertyInfo(MAnyElementPropertyInfo<T, C> info) {
 		return visitPropertyInfo(info);
 	}
 
-	@Override
-	public V visitAttributePropertyInfo(MAttributePropertyInfo info) {
+	public V visitAttributePropertyInfo(MAttributePropertyInfo<T, C> info) {
 		return visitPropertyInfo(info);
 	}
 
-	@Override
-	public V visitAnyAttributePropertyInfo(MAnyAttributePropertyInfo info) {
+	public V visitAnyAttributePropertyInfo(MAnyAttributePropertyInfo<T, C> info) {
 		return visitPropertyInfo(info);
 	}
 
-	@Override
-	public V visitValuePropertyInfo(MValuePropertyInfo info) {
+	public V visitValuePropertyInfo(MValuePropertyInfo<T, C> info) {
 		return visitPropertyInfo(info);
 	}
 
-	@Override
-	public V visitElementRefPropertyInfo(MElementRefPropertyInfo info) {
+	public V visitElementRefPropertyInfo(MElementRefPropertyInfo<T, C> info) {
 		return visitPropertyInfo(info);
 	}
 
-	@Override
-	public V visitElementRefsPropertyInfo(MElementRefsPropertyInfo info) {
+	public V visitElementRefsPropertyInfo(MElementRefsPropertyInfo<T, C> info) {
 		return visitPropertyInfo(info);
 	}
 

@@ -22,26 +22,30 @@ import org.jvnet.jaxb2_commons.xml.bind.model.origin.MEnumLeafInfoOrigin;
 import com.sun.xml.bind.v2.model.core.EnumConstant;
 import com.sun.xml.bind.v2.model.core.EnumLeafInfo;
 
-public class CMEnumLeafInfo implements MEnumLeafInfo {
+public class CMEnumLeafInfo<T, C extends T> implements MEnumLeafInfo<T, C> {
 
 	private final MEnumLeafInfoOrigin origin;
+	private final C targetClass;
 	private final MPackageInfo _package;
 	private final String name;
 	private final String localName;
-	private final MTypeInfo baseTypeInfo;
-	private final List<MEnumConstantInfo> constants = new ArrayList<MEnumConstantInfo>();
-	private final List<MEnumConstantInfo> _constants = Collections
+	private final MTypeInfo<T, C> baseTypeInfo;
+	private final List<MEnumConstantInfo<T, C>> constants = new ArrayList<MEnumConstantInfo<T, C>>();
+	private final List<MEnumConstantInfo<T, C>> _constants = Collections
 			.unmodifiableList(constants);
 	private final QName elementName;
 
-	public CMEnumLeafInfo(MEnumLeafInfoOrigin origin, MPackageInfo _package,
-			String localName, MTypeInfo baseTypeInfo, QName elementName) {
+	public CMEnumLeafInfo(MEnumLeafInfoOrigin origin, C targetClass,
+			MPackageInfo _package, String localName,
+			MTypeInfo<T, C> baseTypeInfo, QName elementName) {
 
 		Validate.notNull(origin);
+		Validate.notNull(targetClass);
 		Validate.notNull(_package);
 		Validate.notNull(localName);
 		Validate.notNull(baseTypeInfo);
 		this.origin = origin;
+		this.targetClass = targetClass;
 		this._package = _package;
 		this.localName = localName;
 		this.name = _package.getPackagedName(localName);
@@ -54,51 +58,56 @@ public class CMEnumLeafInfo implements MEnumLeafInfo {
 		return origin;
 	}
 
-	@Override
-	public MElementInfo createElementInfo(MTypeInfo scope,
+	public C getTargetClass() {
+		return targetClass;
+	}
+
+	public T getTargetType() {
+		return targetClass;
+	}
+
+	public MElementInfo<T, C> createElementInfo(MTypeInfo<T, C> scope,
 			QName substitutionHead) {
-		return new CMElementInfo(getOrigin().createElementInfoOrigin(),
-				getPackageInfo(), getElementName(), scope, this, substitutionHead);
+		return new CMElementInfo<T, C>(getOrigin().createElementInfoOrigin(),
+				getPackageInfo(), getElementName(), scope, this,
+				substitutionHead);
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	@Override
 	public String getLocalName() {
 		return localName;
 	}
 
-	@Override
 	public MPackageInfo getPackageInfo() {
 		return _package;
 	}
 
-	@Override
-	public MTypeInfo getBaseTypeInfo() {
+	public MTypeInfo<T, C> getBaseTypeInfo() {
 		return baseTypeInfo;
 	}
 
-	@Override
-	public List<MEnumConstantInfo> getConstants() {
+	public List<MEnumConstantInfo<T, C>> getConstants() {
 		return _constants;
 	}
 
-	public void addEnumConstantInfo(MEnumConstantInfo enumConstantInfo) {
+	public void addEnumConstantInfo(MEnumConstantInfo<T, C> enumConstantInfo) {
 		Validate.notNull(enumConstantInfo);
 		this.constants.add(enumConstantInfo);
 	}
 
-	public void removeEnumConstantInfo(MEnumConstantInfo enumConstantInfo) {
+	@SuppressWarnings("unchecked")
+	public void removeEnumConstantInfo(MEnumConstantInfo<T, C> enumConstantInfo) {
 		Validate.notNull(enumConstantInfo);
 
 		if (getOrigin() instanceof EnumLeafInfoOrigin
 				&& enumConstantInfo.getOrigin() instanceof EnumConstantOrigin) {
 			// TODO
-			EnumLeafInfo eli = (EnumLeafInfo) ((EnumLeafInfoOrigin) getOrigin())
+			EnumLeafInfo<T, C> eli = (EnumLeafInfo<T, C>) ((EnumLeafInfoOrigin) getOrigin())
 					.getSource();
-			EnumConstant ec = (EnumConstant) ((EnumConstantOrigin) enumConstantInfo
+			EnumConstant<T, C> ec = (EnumConstant<T, C>) ((EnumConstantOrigin) enumConstantInfo
 					.getOrigin()).getSource();
 
 			Iterator iterator = eli.getConstants().iterator();
@@ -113,7 +122,6 @@ public class CMEnumLeafInfo implements MEnumLeafInfo {
 
 	}
 
-	@Override
 	public QName getElementName() {
 		return elementName;
 	}
@@ -123,8 +131,7 @@ public class CMEnumLeafInfo implements MEnumLeafInfo {
 		return MessageFormat.format("EnumInfo [{0}]", getBaseTypeInfo());
 	}
 
-	@Override
-	public <V> V acceptTypeInfoVisitor(MTypeInfoVisitor<V> visitor) {
+	public <V> V acceptTypeInfoVisitor(MTypeInfoVisitor<T, C, V> visitor) {
 		return visitor.visitEnumLeafInfo(this);
 	}
 

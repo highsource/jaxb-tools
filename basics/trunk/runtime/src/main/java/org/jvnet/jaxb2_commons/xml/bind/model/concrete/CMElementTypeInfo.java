@@ -6,13 +6,13 @@ import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 
-public class CMElementTypeInfo implements MElementTypeInfo {
+public class CMElementTypeInfo<T, C> implements MElementTypeInfo<T, C> {
 
 	private final QName elementName;
 
-	private final MTypeInfo typeInfo;
+	private final MTypeInfo<T, C> typeInfo;
 
-	public CMElementTypeInfo(QName elementName, MTypeInfo typeInfo) {
+	public CMElementTypeInfo(QName elementName, MTypeInfo<T, C> typeInfo) {
 		Validate.notNull(elementName);
 		Validate.notNull(typeInfo);
 		this.elementName = elementName;
@@ -23,10 +23,10 @@ public class CMElementTypeInfo implements MElementTypeInfo {
 		return elementName;
 	}
 
-	public MTypeInfo getTypeInfo() {
+	public MTypeInfo<T, C> getTypeInfo() {
 		return typeInfo;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Element [" + getElementName() + ":" + getTypeInfo() + "]";

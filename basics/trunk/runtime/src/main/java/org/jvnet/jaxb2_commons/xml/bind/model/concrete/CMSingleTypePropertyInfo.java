@@ -6,20 +6,20 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MSingleTypePropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public abstract class CMSingleTypePropertyInfo extends CMPropertyInfo implements
-		MSingleTypePropertyInfo {
+public abstract class CMSingleTypePropertyInfo<T, C> extends
+		CMPropertyInfo<T, C> implements MSingleTypePropertyInfo<T, C> {
 
-	private final MTypeInfo typeInfo;
+	private final MTypeInfo<T, C> typeInfo;
 
 	public CMSingleTypePropertyInfo(MPropertyInfoOrigin origin,
-			MClassInfo classInfo, String privateName, boolean collection,
-			MTypeInfo typeInfo) {
+			MClassInfo<T, C> classInfo, String privateName, boolean collection,
+			MTypeInfo<T, C> typeInfo) {
 		super(origin, classInfo, privateName, collection);
 		Validate.notNull(typeInfo);
 		this.typeInfo = typeInfo;
 	}
 
-	public MTypeInfo getTypeInfo() {
+	public MTypeInfo<T, C> getTypeInfo() {
 		return typeInfo;
 	}
 

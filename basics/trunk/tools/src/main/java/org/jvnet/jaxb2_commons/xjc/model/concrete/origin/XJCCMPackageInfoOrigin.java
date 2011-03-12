@@ -23,7 +23,6 @@ public class XJCCMPackageInfoOrigin extends CMPackageInfoOrigin implements
 		return source;
 	}
 
-	@Override
 	public MPackageOutlineGenerator createGenerator(Outline outline) {
 		return new CMPackageOutlineGenerator(outline, getSource());
 	}

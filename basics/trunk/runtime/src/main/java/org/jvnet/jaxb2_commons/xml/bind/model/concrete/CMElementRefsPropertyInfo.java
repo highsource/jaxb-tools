@@ -14,13 +14,13 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MElementTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public class CMElementRefsPropertyInfo extends CMPropertyInfo implements
-		MElementRefsPropertyInfo {
+public class CMElementRefsPropertyInfo<T, C> extends CMPropertyInfo<T, C>
+		implements MElementRefsPropertyInfo<T, C> {
 
 	private final QName wrapperElementName;
 
-	private final List<MElementTypeInfo> elementTypeInfos = new ArrayList<MElementTypeInfo>();
-	private final List<MElementTypeInfo> unmodifiableElementTypeInfos = Collections
+	private final List<MElementTypeInfo<T, C>> elementTypeInfos = new ArrayList<MElementTypeInfo<T, C>>();
+	private final List<MElementTypeInfo<T, C>> unmodifiableElementTypeInfos = Collections
 			.unmodifiableList(elementTypeInfos);
 
 	private final boolean mixed;
@@ -28,8 +28,8 @@ public class CMElementRefsPropertyInfo extends CMPropertyInfo implements
 	private final boolean typedObjectAllowed;
 
 	public CMElementRefsPropertyInfo(MPropertyInfoOrigin origin,
-			MClassInfo classInfo, String privateName, boolean collection,
-			Collection<MElementTypeInfo> elementTypeInfos,
+			MClassInfo<T, C> classInfo, String privateName, boolean collection,
+			Collection<MElementTypeInfo<T, C>> elementTypeInfos,
 			QName wrapperElementName, boolean mixed, boolean domAllowed,
 			boolean typedObjectAllowed) {
 		super(origin, classInfo, privateName, collection);
@@ -43,33 +43,27 @@ public class CMElementRefsPropertyInfo extends CMPropertyInfo implements
 		this.typedObjectAllowed = typedObjectAllowed;
 	}
 
-	@Override
-	public List<MElementTypeInfo> getElementTypeInfos() {
+	public List<MElementTypeInfo<T, C>> getElementTypeInfos() {
 		return unmodifiableElementTypeInfos;
 	}
 
-	@Override
 	public QName getWrapperElementName() {
 		return wrapperElementName;
 	}
 
-	@Override
 	public boolean isMixed() {
 		return mixed;
 	}
 
-	@Override
 	public boolean isDomAllowed() {
 		return domAllowed;
 	}
 
-	@Override
 	public boolean isTypedObjectAllowed() {
 		return typedObjectAllowed;
 	}
 
-	@Override
-	public <V> V acceptPropertyInfoVisitor(MPropertyInfoVisitor<V> visitor) {
+	public <V> V acceptPropertyInfoVisitor(MPropertyInfoVisitor<T, C, V> visitor) {
 		return visitor.visitElementRefsPropertyInfo(this);
 	}
 

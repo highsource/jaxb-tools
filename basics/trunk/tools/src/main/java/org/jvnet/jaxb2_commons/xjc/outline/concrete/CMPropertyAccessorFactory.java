@@ -22,7 +22,6 @@ public class CMPropertyAccessorFactory implements MPropertyAccessorFactory {
 		this.fieldOutline = fieldOutline;
 	}
 
-	@Override
 	public MPropertyAccessor createPropertyAccessor(JExpression target) {
 		FieldAccessorEx fieldAccessor = fieldAccessorFactory
 				.createFieldAccessor(fieldOutline, target);

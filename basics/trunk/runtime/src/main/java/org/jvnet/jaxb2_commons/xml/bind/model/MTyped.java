@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.xml.bind.model;
 
-public interface MTyped {
+public interface MTyped<T,C> {
 
-	public MTypeInfo getTypeInfo();
+	public MTypeInfo<T,C> getTypeInfo();
 }

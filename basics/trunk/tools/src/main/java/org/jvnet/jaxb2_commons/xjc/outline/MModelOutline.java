@@ -10,10 +10,10 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTargeted;
 
 import com.sun.codemodel.JCodeModel;
+import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
 
-public interface MModelOutline extends MTargeted<MModelInfo> {
-
-	public MModelInfo getTarget();
+public interface MModelOutline extends MTargeted<MModelInfo<NType, NClass>> {
 
 	public Collection<MPackageOutline> getPackageOutlines();
 
@@ -21,15 +21,15 @@ public interface MModelOutline extends MTargeted<MModelInfo> {
 
 	public Collection<MElementOutline> getElementOutlines();
 
-	public MElementOutline getElementOutline(MElementInfo target);
+	public MElementOutline getElementOutline(MElementInfo<NType, NClass> target);
 
 	public Collection<MClassOutline> getClassOutlines();
 
-	public MClassOutline getClassOutline(MClassInfo target);
+	public MClassOutline getClassOutline(MClassInfo<NType, NClass> target);
 
 	public Collection<MEnumOutline> getEnumOutlines();
 
-	public MEnumOutline getEnumOutline(MEnumLeafInfo target);
+	public MEnumOutline getEnumOutline(MEnumLeafInfo<NType, NClass> target);
 
 	public JCodeModel getCode();
 }

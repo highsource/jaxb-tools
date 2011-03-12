@@ -18,7 +18,6 @@ public class XJCCMElementInfoOrigin extends
 		super(source);
 	}
 
-	@Override
 	public MElementOutlineGenerator createGenerator(Outline outline) {
 		return new CMElementOutlineGenerator(outline, getSource());
 	}

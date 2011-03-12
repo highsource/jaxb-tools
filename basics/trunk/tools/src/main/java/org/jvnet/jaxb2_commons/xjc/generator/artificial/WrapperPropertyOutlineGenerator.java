@@ -10,17 +10,18 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 
 import com.sun.codemodel.JExpression;
+import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
 
 public class WrapperPropertyOutlineGenerator implements
 		MPropertyOutlineGenerator {
 
-	@Override
 	public MPropertyOutline generate(MClassOutline classOutline,
-			MModelInfo modelInfo, MPropertyInfo propertyInfo) {
+			MModelInfo<NType, NClass> modelInfo,
+			MPropertyInfo<NType, NClass> propertyInfo) {
 		return new CMPropertyOutline(classOutline, propertyInfo,
 				new MPropertyAccessorFactory() {
 
-					@Override
 					public MPropertyAccessor createPropertyAccessor(
 							JExpression target) {
 						// TODO

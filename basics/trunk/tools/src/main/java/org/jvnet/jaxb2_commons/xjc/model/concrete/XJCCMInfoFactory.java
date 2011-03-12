@@ -1,6 +1,7 @@
 package org.jvnet.jaxb2_commons.xjc.model.concrete;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jvnet.jaxb2_commons.xjc.model.concrete.origin.XJCCMClassInfoOrigin;
@@ -21,6 +22,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.origin.MModelInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPackageInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
+import com.sun.codemodel.JClass;
 import com.sun.codemodel.JPackage;
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
 import com.sun.tools.xjc.model.CBuiltinLeafInfo;
@@ -39,6 +41,8 @@ import com.sun.tools.xjc.model.CWildcardTypeInfo;
 import com.sun.tools.xjc.model.Model;
 import com.sun.tools.xjc.model.nav.NClass;
 import com.sun.tools.xjc.model.nav.NType;
+import com.sun.tools.xjc.outline.Aspect;
+import com.sun.tools.xjc.outline.Outline;
 
 public class XJCCMInfoFactory
 		extends
@@ -69,12 +73,10 @@ public class XJCCMInfoFactory
 
 		return parent.accept(new Visitor<MPackageInfo>() {
 
-			@Override
 			public MPackageInfo onBean(CClassInfo bean) {
 				return getPackage(bean.parent());
 			}
 
-			@Override
 			public MPackageInfo onPackage(JPackage pkg) {
 				String packageName = pkg.name();
 				MPackageInfo _package = packages.get(packageName);
@@ -86,7 +88,6 @@ public class XJCCMInfoFactory
 				return _package;
 			}
 
-			@Override
 			public MPackageInfo onElement(CElementInfo element) {
 				return getPackage(element.parent);
 			}
@@ -136,5 +137,29 @@ public class XJCCMInfoFactory
 	protected MEnumConstantInfoOrigin createEnumConstantInfoOrigin(
 			CEnumConstant info) {
 		return new XJCCMEnumConstantInfoOrigin(info);
+	}
+
+	@Override
+	protected NType createListType(final NType elementType) {
+
+		return new NClass() {
+
+			public boolean isBoxedType() {
+				return false;
+			}
+
+			public String fullName() {
+				return List.class.getName();
+			}
+
+			public JClass toType(Outline o, Aspect aspect) {
+				return o.getCodeModel().ref(List.class)
+						.narrow(elementType.toType(o, aspect).boxify());
+			}
+
+			public boolean isAbstract() {
+				return false;
+			}
+		};
 	}
 }

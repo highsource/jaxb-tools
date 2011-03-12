@@ -9,6 +9,8 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 
 import com.sun.codemodel.JPackage;
+import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
 import com.sun.tools.xjc.outline.Outline;
 import com.sun.tools.xjc.outline.PackageOutline;
 
@@ -25,9 +27,8 @@ public class CMPackageOutlineGenerator implements MPackageOutlineGenerator {
 		this.packageInfo = packageInfo;
 	}
 
-	@Override
-	public MPackageOutline generate(MModelOutline parent, MModelInfo modelInfo,
-			MPackageInfo packageInfo) {
+	public MPackageOutline generate(MModelOutline parent,
+			MModelInfo<NType, NClass> modelInfo, MPackageInfo packageInfo) {
 		final PackageOutline packageOutline = outline
 				.getPackageContext(this.packageInfo);
 		Validate.notNull(packageOutline);

@@ -1,32 +1,27 @@
 package org.jvnet.jaxb2_commons.xml.bind.model;
 
-public abstract class MPackagedTypeInfoVisitor<V> implements
-		MTypeInfoVisitor<V> {
+public abstract class MPackagedTypeInfoVisitor<T, C, V> implements
+		MTypeInfoVisitor<T, C, V> {
 
-	public abstract V visitPackagedTypeInfo(MPackagedTypeInfo info);
+	public abstract V visitPackagedTypeInfo(MPackagedTypeInfo<T, C> info);
 
-	@Override
-	public V visitList(MList info) {
+	public V visitList(MList<T, C> info) {
 		return null;
 	}
 
-	@Override
-	public V visitBuiltinLeafInfo(MBuiltinLeafInfo info) {
+	public V visitBuiltinLeafInfo(MBuiltinLeafInfo<T, C> info) {
 		return null;
 	}
 
-	@Override
-	public V visitEnumLeafInfo(MEnumLeafInfo info) {
+	public V visitEnumLeafInfo(MEnumLeafInfo<T, C> info) {
 		return visitPackagedTypeInfo(info);
 	}
 
-	@Override
-	public V visitWildcardTypeInfo(MWildcardTypeInfo info) {
+	public V visitWildcardTypeInfo(MWildcardTypeInfo<T, C> info) {
 		return null;
 	}
 
-	@Override
-	public V visitClassInfo(MClassInfo info) {
+	public V visitClassInfo(MClassInfo<T, C> info) {
 		return visitPackagedTypeInfo(info);
 	}
 

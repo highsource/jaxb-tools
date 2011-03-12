@@ -57,7 +57,7 @@ import com.sun.xml.bind.v2.model.core.TypeRef;
 import com.sun.xml.bind.v2.model.core.ValuePropertyInfo;
 import com.sun.xml.bind.v2.model.core.WildcardTypeInfo;
 
-public abstract class CMInfoFactory<T, C, TIS extends TypeInfoSet<T, C, ?, ?>,
+public abstract class CMInfoFactory<T, C extends T, TIS extends TypeInfoSet<T, C, ?, ?>,
 //
 TI extends TypeInfo<T, C>,
 //
@@ -83,13 +83,13 @@ RPI extends ReferencePropertyInfo<T, C>,
 //
 WTI extends WildcardTypeInfo<T, C>> {
 
-	private final Map<BLI, MBuiltinLeafInfo> builtinLeafInfos = new IdentityHashMap<BLI, MBuiltinLeafInfo>();
+	private final Map<BLI, MBuiltinLeafInfo<T, C>> builtinLeafInfos = new IdentityHashMap<BLI, MBuiltinLeafInfo<T, C>>();
 
-	private final Map<CI, MClassInfo> classInfos = new IdentityHashMap<CI, MClassInfo>();
+	private final Map<CI, MClassInfo<T, C>> classInfos = new IdentityHashMap<CI, MClassInfo<T, C>>();
 
-	private final Map<ELI, MEnumLeafInfo> enumLeafInfos = new IdentityHashMap<ELI, MEnumLeafInfo>();
+	private final Map<ELI, MEnumLeafInfo<T, C>> enumLeafInfos = new IdentityHashMap<ELI, MEnumLeafInfo<T, C>>();
 
-	private final Map<EI, MElementInfo> elementInfos = new IdentityHashMap<EI, MElementInfo>();
+	private final Map<EI, MElementInfo<T, C>> elementInfos = new IdentityHashMap<EI, MElementInfo<T, C>>();
 
 	private final TIS typeInfoSet;
 
@@ -100,7 +100,7 @@ WTI extends WildcardTypeInfo<T, C>> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public MModelInfo createModel() {
+	public MModelInfo<T, C> createModel() {
 		final CMModel<T, C> model = new CMModel<T, C>(
 				createModelInfoOrigin(typeInfoSet));
 
@@ -131,19 +131,18 @@ WTI extends WildcardTypeInfo<T, C>> {
 
 	}
 
-	protected MTypeInfo getTypeInfo(PropertyInfo<T, C> propertyInfo,
+	protected MTypeInfo<T, C> getTypeInfo(PropertyInfo<T, C> propertyInfo,
 			TI typeInfo, boolean list, Adapter<T, C> adapter, ID id,
 			MimeType mimeType) {
-		final MTypeInfo ti = getTypeInfo(typeInfo);
+		final MTypeInfo<T, C> ti = getTypeInfo(typeInfo);
 		if (!list) {
 			return ti;
 		} else {
-			return new CMList(ti);
+			return new CMList<T, C>(createListType(ti.getTargetType()), ti);
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	protected MTypeInfo getTypeInfo(TI typeInfo) {
+	protected MTypeInfo<T, C> getTypeInfo(TI typeInfo) {
 		if (typeInfo instanceof BuiltinLeafInfo) {
 			return getTypeInfo((BLI) typeInfo);
 		} else if (typeInfo instanceof EnumLeafInfo) {
@@ -159,8 +158,8 @@ WTI extends WildcardTypeInfo<T, C>> {
 		}
 	}
 
-	private MBuiltinLeafInfo getTypeInfo(BLI typeInfo) {
-		MBuiltinLeafInfo builtinLeafInfo = builtinLeafInfos.get(typeInfo);
+	private MBuiltinLeafInfo<T, C> getTypeInfo(BLI typeInfo) {
+		MBuiltinLeafInfo<T, C> builtinLeafInfo = builtinLeafInfos.get(typeInfo);
 		if (builtinLeafInfo == null) {
 			builtinLeafInfo = createBuiltinLeafInfo(typeInfo);
 			builtinLeafInfos.put(typeInfo, builtinLeafInfo);
@@ -169,7 +168,7 @@ WTI extends WildcardTypeInfo<T, C>> {
 		return builtinLeafInfo;
 	}
 
-	private MTypeInfo getTypeInfo(EI info) {
+	private MTypeInfo<T, C> getTypeInfo(EI info) {
 		@SuppressWarnings("unchecked")
 		EPI p = (EPI) info.getProperty();
 		@SuppressWarnings("unchecked")
@@ -178,9 +177,9 @@ WTI extends WildcardTypeInfo<T, C>> {
 				p.id(), p.getExpectedMimeType());
 	}
 
-	protected MClassInfo getTypeInfo(CI info) {
+	protected MClassInfo<T, C> getTypeInfo(CI info) {
 
-		MClassInfo classInfo = classInfos.get(info);
+		MClassInfo<T, C> classInfo = classInfos.get(info);
 
 		if (classInfo == null) {
 
@@ -200,8 +199,8 @@ WTI extends WildcardTypeInfo<T, C>> {
 		return classInfo;
 	}
 
-	private MEnumLeafInfo getTypeInfo(ELI info) {
-		MEnumLeafInfo enumLeafInfo = enumLeafInfos.get(info);
+	private MEnumLeafInfo<T, C> getTypeInfo(ELI info) {
+		MEnumLeafInfo<T, C> enumLeafInfo = enumLeafInfos.get(info);
 		if (enumLeafInfo == null) {
 			enumLeafInfo = createEnumLeafInfo(info);
 			enumLeafInfos.put(info, enumLeafInfo);
@@ -219,8 +218,8 @@ WTI extends WildcardTypeInfo<T, C>> {
 
 	}
 
-	private MElementInfo getElementInfo(EI info) {
-		MElementInfo mElementInfo = elementInfos.get(info);
+	private MElementInfo<T, C> getElementInfo(EI info) {
+		MElementInfo<T, C> mElementInfo = elementInfos.get(info);
 		if (mElementInfo == null) {
 			mElementInfo = createElementInfo(info);
 			elementInfos.put(info, mElementInfo);
@@ -229,14 +228,16 @@ WTI extends WildcardTypeInfo<T, C>> {
 
 	}
 
-	protected MClassInfo createClassInfo(CI info) {
-		return new CMClassInfo(createClassInfoOrigin(info), getPackage(info),
-				getLocalName(info), info.getBaseClass() == null ? null
-						: getTypeInfo((CI) info.getBaseClass()),
+	protected MClassInfo<T, C> createClassInfo(CI info) {
+		return new CMClassInfo<T, C>(createClassInfoOrigin(info),
+				info.getClazz(), getPackage(info), getLocalName(info),
+				info.getBaseClass() == null ? null : getTypeInfo((CI) info
+						.getBaseClass()),
 				info.isElement() ? info.getElementName() : null);
 	}
 
-	private MPropertyInfo createPropertyInfo(final MClassInfo classInfo, PI p) {
+	private MPropertyInfo<T, C> createPropertyInfo(
+			final MClassInfo<T, C> classInfo, PI p) {
 
 		if (p instanceof AttributePropertyInfo) {
 			@SuppressWarnings("unchecked")
@@ -278,58 +279,60 @@ WTI extends WildcardTypeInfo<T, C>> {
 
 	}
 
-	protected MPropertyInfo createAttributePropertyInfo(
-			final MClassInfo classInfo, final API propertyInfo) {
-		return new CMAttributePropertyInfo(
+	protected MPropertyInfo<T, C> createAttributePropertyInfo(
+			final MClassInfo<T, C> classInfo, final API propertyInfo) {
+		return new CMAttributePropertyInfo<T, C>(
 				createPropertyInfoOrigin((PI) propertyInfo), classInfo,
 				propertyInfo.getName(), getTypeInfo(propertyInfo),
 				propertyInfo.getXmlName());
 	}
 
-	protected MPropertyInfo createValuePropertyInfo(final MClassInfo classInfo,
-			final VPI propertyInfo) {
-		return new CMValuePropertyInfo(
+	protected MPropertyInfo<T, C> createValuePropertyInfo(
+			final MClassInfo<T, C> classInfo, final VPI propertyInfo) {
+		return new CMValuePropertyInfo<T, C>(
 				createPropertyInfoOrigin((PI) propertyInfo), classInfo,
 				propertyInfo.getName(), getTypeInfo(propertyInfo));
 	}
 
-	protected MPropertyInfo createElementPropertyInfo(
-			final MClassInfo classInfo, final EPI ep) {
+	protected MPropertyInfo<T, C> createElementPropertyInfo(
+			final MClassInfo<T, C> classInfo, final EPI ep) {
 		final TypeRef<T, C> typeRef = ep.getTypes().get(0);
-		return new CMElementPropertyInfo(createPropertyInfoOrigin((PI) ep),
-				classInfo, ep.getName(),
+		return new CMElementPropertyInfo<T, C>(
+				createPropertyInfoOrigin((PI) ep), classInfo, ep.getName(),
 				ep.isCollection() && !ep.isValueList(),
 				getTypeInfo(ep, typeRef), typeRef.getTagName(), ep.getXmlName());
 	}
 
-	protected MPropertyInfo createElementsPropertyInfo(
-			final MClassInfo classInfo, final EPI ep) {
+	protected MPropertyInfo<T, C> createElementsPropertyInfo(
+			final MClassInfo<T, C> classInfo, final EPI ep) {
 		List<? extends TypeRef<T, C>> types = ep.getTypes();
-		final Collection<MElementTypeInfo> typedElements = new ArrayList<MElementTypeInfo>(
+		final Collection<MElementTypeInfo<T, C>> typedElements = new ArrayList<MElementTypeInfo<T, C>>(
 				types.size());
 		for (TypeRef<T, C> typeRef : types) {
-			typedElements.add(new CMElementTypeInfo(typeRef.getTagName(),
+			typedElements.add(new CMElementTypeInfo<T, C>(typeRef.getTagName(),
 					getTypeInfo(ep, typeRef)));
 		}
-		return new CMElementsPropertyInfo(createPropertyInfoOrigin((PI) ep),
-				classInfo, ep.getName(),
+		return new CMElementsPropertyInfo<T, C>(
+				createPropertyInfoOrigin((PI) ep), classInfo, ep.getName(),
 				ep.isCollection() && !ep.isValueList(), typedElements,
 				ep.getXmlName());
 	}
 
-	protected MPropertyInfo createAnyElementPropertyInfo(
-			final MClassInfo classInfo, final RPI rp) {
-		return new CMAnyElementPropertyInfo(createPropertyInfoOrigin((PI) rp),
-				classInfo, rp.getName(), rp.isCollection(), rp.isMixed(),
-				rp.getWildcard().allowDom, rp.getWildcard().allowTypedObject);
+	protected MPropertyInfo<T, C> createAnyElementPropertyInfo(
+			final MClassInfo<T, C> classInfo, final RPI rp) {
+		return new CMAnyElementPropertyInfo<T, C>(
+				createPropertyInfoOrigin((PI) rp), classInfo, rp.getName(),
+				rp.isCollection(), rp.isMixed(), rp.getWildcard().allowDom,
+				rp.getWildcard().allowTypedObject);
 	}
 
-	protected MPropertyInfo createElementRefPropertyInfo(
-			final MClassInfo classInfo, final RPI rp) {
+	protected MPropertyInfo<T, C> createElementRefPropertyInfo(
+			final MClassInfo<T, C> classInfo, final RPI rp) {
 		final Element<T, C> element = rp.getElements().iterator().next();
-		return new CMElementRefPropertyInfo(createPropertyInfoOrigin((PI) rp),
-				classInfo, rp.getName(), rp.isCollection(), getTypeInfo(rp,
-						element), element.getElementName(), rp.getXmlName(),
+		return new CMElementRefPropertyInfo<T, C>(
+				createPropertyInfoOrigin((PI) rp), classInfo, rp.getName(),
+				rp.isCollection(), getTypeInfo(rp, element),
+				element.getElementName(), rp.getXmlName(),
 
 				rp.isMixed(), rp.getWildcard() == null ? false
 						: rp.getWildcard().allowDom,
@@ -337,48 +340,49 @@ WTI extends WildcardTypeInfo<T, C>> {
 						: rp.getWildcard().allowTypedObject);
 	}
 
-	protected MPropertyInfo createElementRefsPropertyInfo(
-			final MClassInfo classInfo, final RPI rp) {
-		final List<MElementTypeInfo> typedElements = new ArrayList<MElementTypeInfo>();
+	protected MPropertyInfo<T, C> createElementRefsPropertyInfo(
+			final MClassInfo<T, C> classInfo, final RPI rp) {
+		final List<MElementTypeInfo<T, C>> typedElements = new ArrayList<MElementTypeInfo<T, C>>();
 		for (Element<T, C> element : rp.getElements()) {
-			typedElements.add(new CMElementTypeInfo(element.getElementName(),
-					getTypeInfo(rp, element)));
+			typedElements.add(new CMElementTypeInfo<T, C>(element
+					.getElementName(), getTypeInfo(rp, element)));
 		}
-		return new CMElementRefsPropertyInfo(createPropertyInfoOrigin((PI) rp),
-				classInfo, rp.getName(), rp.isCollection(), typedElements,
-				rp.getXmlName(), rp.isMixed(), rp.getWildcard() == null ? false
+		return new CMElementRefsPropertyInfo<T, C>(
+				createPropertyInfoOrigin((PI) rp), classInfo, rp.getName(),
+				rp.isCollection(), typedElements, rp.getXmlName(),
+				rp.isMixed(), rp.getWildcard() == null ? false
 						: rp.getWildcard().allowDom,
 				rp.getWildcard() == null ? false
 						: rp.getWildcard().allowTypedObject);
 	}
 
-	protected CMAnyAttributePropertyInfo createAnyAttributePropertyInfo(
-			final MClassInfo classInfo) {
-		return new CMAnyAttributePropertyInfo(
+	protected CMAnyAttributePropertyInfo<T, C> createAnyAttributePropertyInfo(
+			final MClassInfo<T, C> classInfo) {
+		return new CMAnyAttributePropertyInfo<T, C>(
 				createAnyAttributePropertyInfoOrigin(), classInfo,
 				"otherAttributes");
 	}
 
-	protected MTypeInfo getTypeInfo(final ValuePropertyInfo<T, C> vp) {
+	protected MTypeInfo<T, C> getTypeInfo(final ValuePropertyInfo<T, C> vp) {
 		return getTypeInfo(vp, (TI) vp.ref().iterator().next(),
 				vp.isCollection(), vp.getAdapter(), vp.id(),
 				vp.getExpectedMimeType());
 	}
 
-	protected MTypeInfo getTypeInfo(final AttributePropertyInfo<T, C> ap) {
+	protected MTypeInfo<T, C> getTypeInfo(final AttributePropertyInfo<T, C> ap) {
 		return getTypeInfo(ap, (TI) ap.ref().iterator().next(),
 				ap.isCollection(), ap.getAdapter(), ap.id(),
 				ap.getExpectedMimeType());
 	}
 
-	protected MTypeInfo getTypeInfo(final ElementPropertyInfo<T, C> ep,
+	protected MTypeInfo<T, C> getTypeInfo(final ElementPropertyInfo<T, C> ep,
 			final TypeRef<T, C> typeRef) {
 		return getTypeInfo(ep, (TI) typeRef.getTarget(),
 
 		ep.isValueList(), ep.getAdapter(), ep.id(), ep.getExpectedMimeType());
 	}
 
-	protected MTypeInfo getTypeInfo(final ReferencePropertyInfo<T, C> rp,
+	protected MTypeInfo<T, C> getTypeInfo(final ReferencePropertyInfo<T, C> rp,
 			Element<T, C> element) {
 		return getTypeInfo(rp, (TI) element, false, rp.getAdapter(), rp.id(),
 				rp.getExpectedMimeType());
@@ -396,42 +400,43 @@ WTI extends WildcardTypeInfo<T, C>> {
 
 	//
 
-	protected MBuiltinLeafInfo createBuiltinLeafInfo(BLI info) {
-		return new CMBuiltinLeafInfo(createBuiltinLeafInfoOrigin(info),
-				info.getTypeName());
+	protected MBuiltinLeafInfo<T, C> createBuiltinLeafInfo(BLI info) {
+		return new CMBuiltinLeafInfo<T, C>(createBuiltinLeafInfoOrigin(info),
+				info.getType(), info.getTypeName());
 	}
 
-	protected MEnumLeafInfo createEnumLeafInfo(final ELI info) {
+	protected MEnumLeafInfo<T, C> createEnumLeafInfo(final ELI info) {
 		@SuppressWarnings("unchecked")
 		final TI baseType = (TI) info.getBaseType();
-		return new CMEnumLeafInfo(createEnumLeafInfoOrigin(info),
-				getPackage(info), getLocalName(info), getTypeInfo(baseType),
-				info.getElementName());
+		return new CMEnumLeafInfo<T, C>(createEnumLeafInfoOrigin(info),
+				info.getClazz(), getPackage(info), getLocalName(info),
+				getTypeInfo(baseType), info.getElementName());
 	}
 
-	protected CMEnumConstantInfo createEnumContantInfo(
-			MEnumLeafInfo enumLeafInfo, EC enumConstant) {
-		return new CMEnumConstantInfo(
+	protected CMEnumConstantInfo<T, C> createEnumContantInfo(
+			MEnumLeafInfo<T, C> enumLeafInfo, EC enumConstant) {
+		return new CMEnumConstantInfo<T, C>(
 				createEnumConstantInfoOrigin(enumConstant), enumLeafInfo,
 				enumConstant.getLexicalValue());
 	}
 
-	protected MElementInfo createElementInfo(EI element) {
+	protected MElementInfo<T, C> createElementInfo(EI element) {
 		@SuppressWarnings("unchecked")
 		final CI scopeCI = (CI) element.getScope();
-		final MClassInfo scope = element.getScope() == null ? null
+		final MClassInfo<T, C> scope = element.getScope() == null ? null
 				: getTypeInfo(scopeCI);
 		final QName substitutionHead = element.getSubstitutionHead() == null ? null
 				: element.getSubstitutionHead().getElementName();
-		final MElementInfo elementInfo = new CMElementInfo(
+		final MElementInfo<T, C> elementInfo = new CMElementInfo<T, C>(
 				createElementInfoOrigin(element), getPackage(element),
 				element.getElementName(), scope, getTypeInfo(element),
 				substitutionHead);
 		return elementInfo;
 	}
 
-	protected MTypeInfo createWildcardTypeInfo(WTI info) {
-		return new CMWildcardTypeInfo(createWildcardTypeInfoOrigin(info));
+	protected MTypeInfo<T, C> createWildcardTypeInfo(WTI info) {
+		return new CMWildcardTypeInfo<T, C>(createWildcardTypeInfoOrigin(info),
+				info.getType());
 	}
 
 	protected MModelInfoOrigin createModelInfoOrigin(TIS info) {
@@ -469,5 +474,7 @@ WTI extends WildcardTypeInfo<T, C>> {
 	protected MWildcardTypeInfoOrigin createWildcardTypeInfoOrigin(WTI info) {
 		return new CMWildcardTypeInfoOrigin<T, C, WTI>(info);
 	}
+
+	protected abstract T createListType(T elementType);
 
 }

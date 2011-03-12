@@ -3,10 +3,11 @@ package org.jvnet.jaxb2_commons.xjc.outline;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTargeted;
 
-public interface MPropertyOutline extends MTargeted<MPropertyInfo>,
-		MPropertyAccessorFactory {
+import com.sun.tools.xjc.model.nav.NClass;
+import com.sun.tools.xjc.model.nav.NType;
 
-	public MPropertyInfo getTarget();
+public interface MPropertyOutline extends
+		MTargeted<MPropertyInfo<NType, NClass>>, MPropertyAccessorFactory {
 
 	public MClassOutline getClassOutline();
 

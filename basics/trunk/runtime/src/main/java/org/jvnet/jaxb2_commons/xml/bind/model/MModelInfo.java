@@ -12,8 +12,6 @@ public interface MModelInfo<T, C> extends MOriginated<MModelInfoOrigin> {
 
 	public Collection<MBuiltinLeafInfo<T, C>> getBuiltinLeafInfos();
 
-	public MBuiltinLeafInfo<T, C> getBuiltinLeafInfo(QName name);
-
 	public Collection<MClassInfo<T, C>> getClassInfos();
 
 	public Collection<MEnumLeafInfo<T, C>> getEnumLeafInfos();
@@ -21,8 +19,6 @@ public interface MModelInfo<T, C> extends MOriginated<MModelInfoOrigin> {
 	public Collection<MTypeInfo<T, C>> getTypeInfos();
 
 	public Collection<MElementInfo<T, C>> getElementInfos();
-
-	public Map<QName, MElementInfo<T, C>> getElementInfosMap();
 
 	public void addBuiltinLeafInfo(MBuiltinLeafInfo<T, C> builtinLeafInfo);
 

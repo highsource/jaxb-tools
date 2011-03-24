@@ -1,0 +1,497 @@
+package org.jvnet.jaxb2_commons.util;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.JAXBIntrospector;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.namespace.QName;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.dom.DOMSource;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
+import com.sun.tools.xjc.model.CAttributePropertyInfo;
+import com.sun.tools.xjc.model.CClassInfo;
+import com.sun.tools.xjc.model.CCustomizable;
+import com.sun.tools.xjc.model.CCustomizations;
+import com.sun.tools.xjc.model.CElement;
+import com.sun.tools.xjc.model.CElementInfo;
+import com.sun.tools.xjc.model.CElementPropertyInfo;
+import com.sun.tools.xjc.model.CEnumConstant;
+import com.sun.tools.xjc.model.CEnumLeafInfo;
+import com.sun.tools.xjc.model.CPluginCustomization;
+import com.sun.tools.xjc.model.CPropertyInfo;
+import com.sun.tools.xjc.model.CPropertyVisitor;
+import com.sun.tools.xjc.model.CReferencePropertyInfo;
+import com.sun.tools.xjc.model.CValuePropertyInfo;
+import com.sun.tools.xjc.model.Model;
+import com.sun.tools.xjc.outline.ClassOutline;
+import com.sun.tools.xjc.outline.ElementOutline;
+import com.sun.tools.xjc.outline.EnumConstantOutline;
+import com.sun.tools.xjc.outline.EnumOutline;
+import com.sun.tools.xjc.outline.FieldOutline;
+import com.sun.tools.xjc.outline.Outline;
+
+public class CustomizationUtils {
+
+	private static final DocumentBuilderFactory DOCUMENT_BUILDER_FACTORY;
+
+	static {
+		DOCUMENT_BUILDER_FACTORY = DocumentBuilderFactory.newInstance();
+		// try {
+		// DOCUMENT_BUILDER = DOCUMENT_BUILDER_FACTORY.newDocumentBuilder();
+		// } catch (ParserConfigurationException pce) {
+		// throw new ExceptionInInitializerError(pce);
+		// }
+	}
+
+	public static DocumentBuilder getDocumentBuilder() {
+		try {
+			return DOCUMENT_BUILDER_FACTORY.newDocumentBuilder();
+		} catch (ParserConfigurationException pce) {
+			throw new AssertionError(pce);
+		}
+	}
+
+	public static CPluginCustomization createCustomization(QName name) {
+		final Document document = getDocumentBuilder().newDocument();
+		final Element element = document.createElementNS(
+				name.getNamespaceURI(), name.getLocalPart());
+		return createCustomization(element);
+	}
+
+	public static CPluginCustomization createCustomization(final Element element) {
+		final CPluginCustomization customization = new CPluginCustomization(
+				element, null);
+		return customization;
+	}
+
+	public static boolean containsCustomization(ClassOutline classOutline,
+			QName name) {
+		final CPluginCustomization customization = findCustomization(
+				classOutline, name);
+		if (customization != null) {
+			customization.markAsAcknowledged();
+		}
+		return customization != null;
+	}
+
+	public static boolean containsCustomization(CClassInfo classInfo, QName name) {
+		final CPluginCustomization customization = findCustomization(classInfo,
+				name);
+		if (customization != null) {
+			customization.markAsAcknowledged();
+		}
+		return customization != null;
+	}
+
+	public static CPluginCustomization findCustomization(
+			ClassOutline classOutline, QName name) {
+		final CCustomizations customizations = CustomizationUtils
+				.getCustomizations(classOutline);
+		final CPluginCustomization customization = customizations.find(name
+				.getNamespaceURI(), name.getLocalPart());
+		if (customization != null) {
+			customization.markAsAcknowledged();
+		}
+		return customization;
+	}
+
+	public static List<CPluginCustomization> findCustomizations(
+			ClassOutline classOutline, QName name) {
+		return findCustomizations(classOutline.target, name);
+	}
+
+	public static List<CPluginCustomization> findCustomizations(
+			CClassInfo classInfo, QName name) {
+		final CCustomizations customizations = CustomizationUtils
+				.getCustomizations(classInfo);
+
+		final List<CPluginCustomization> pluginCustomizations = new LinkedList<CPluginCustomization>();
+
+		for (CPluginCustomization pluginCustomization : customizations) {
+			if (fixNull(pluginCustomization.element.getNamespaceURI()).equals(
+					name.getNamespaceURI())
+					&& fixNull(pluginCustomization.element.getLocalName())
+							.equals(name.getLocalPart())) {
+				pluginCustomization.markAsAcknowledged();
+				pluginCustomizations.add(pluginCustomization);
+			}
+		}
+
+		return pluginCustomizations;
+	}
+
+	public static List<CPluginCustomization> findCustomizations(Model model,
+			QName name) {
+		final CCustomizations customizations = CustomizationUtils
+				.getCustomizations(model);
+
+		final List<CPluginCustomization> pluginCustomizations = new LinkedList<CPluginCustomization>();
+
+		for (CPluginCustomization pluginCustomization : customizations) {
+			if (fixNull(pluginCustomization.element.getNamespaceURI()).equals(
+					name.getNamespaceURI())
+					&& fixNull(pluginCustomization.element.getLocalName())
+							.equals(name.getLocalPart())) {
+				pluginCustomization.markAsAcknowledged();
+				pluginCustomizations.add(pluginCustomization);
+			}
+		}
+
+		return pluginCustomizations;
+	}
+
+	public static CPluginCustomization findCustomization(CClassInfo classInfo,
+			QName name) {
+		final CCustomizations customizations = CustomizationUtils
+				.getCustomizations(classInfo);
+		final CPluginCustomization customization = customizations.find(name
+				.getNamespaceURI(), name.getLocalPart());
+		if (customization != null) {
+			customization.markAsAcknowledged();
+		}
+		return customization;
+	}
+
+	public static boolean containsCustomization(FieldOutline fieldOutline,
+			QName name) {
+		final CPluginCustomization customization = findCustomization(
+				fieldOutline, name);
+		if (customization != null) {
+			customization.markAsAcknowledged();
+		}
+		return customization != null;
+	}
+
+	public static boolean containsCustomization(CPropertyInfo propertyInfo,
+			QName name) {
+		final CPluginCustomization customization = findCustomization(
+				propertyInfo, name);
+		if (customization != null) {
+			customization.markAsAcknowledged();
+		}
+		return customization != null;
+	}
+
+	public static CPluginCustomization findCustomization(
+			FieldOutline fieldOutline, QName name) {
+		final CCustomizations customizations = CustomizationUtils
+				.getCustomizations(fieldOutline);
+		final CPluginCustomization customization = customizations.find(name
+				.getNamespaceURI(), name.getLocalPart());
+		if (customization != null) {
+			customization.markAsAcknowledged();
+		}
+		return customization;
+	}
+
+	public static CPluginCustomization findCustomization(
+			CPropertyInfo propertyInfo, QName name) {
+		final CCustomizations customizations = CustomizationUtils
+				.getCustomizations(propertyInfo);
+		final CPluginCustomization customization = customizations.find(name
+				.getNamespaceURI(), name.getLocalPart());
+		if (customization != null) {
+			customization.markAsAcknowledged();
+		}
+		return customization;
+	}
+
+	public static CPluginCustomization findCustomization(Model model, QName name) {
+		final CCustomizations customizations = CustomizationUtils
+				.getCustomizations(model);
+		final CPluginCustomization customization = customizations.find(name
+				.getNamespaceURI(), name.getLocalPart());
+		if (customization != null) {
+			customization.markAsAcknowledged();
+		}
+		return customization;
+	}
+
+	// public static BIXPluginCustomization getCustomization(JavaItem item,
+	// QName name) {
+	// final BIXPluginCustomization[] customizations = getCustomizations(item,
+	// name);
+	// if (customizations == null || customizations.length < 1) {
+	// return null;
+	// }
+	// else {
+	// return customizations[0];
+	// }
+	// }
+
+	public static FieldOutline findFieldWithCustomization(
+			ClassOutline classOutline, final QName name) {
+
+		for (final FieldOutline fieldOutline : classOutline.getDeclaredFields()) {
+			final CCustomizations customizations = getCustomizations(fieldOutline);
+			final CPluginCustomization customization = customizations.find(name
+					.getNamespaceURI(), name.getLocalPart());
+			if (customization != null)
+				return fieldOutline;
+		}
+		return null;
+
+	}
+
+	public static CPropertyInfo findPropertyWithCustomization(
+			CClassInfo classInfo, final QName name) {
+
+		for (final CPropertyInfo propertyInfo : classInfo.getProperties()) {
+			final CCustomizations customizations = getCustomizations(propertyInfo);
+			final CPluginCustomization customization = customizations.find(name
+					.getNamespaceURI(), name.getLocalPart());
+			if (customization != null)
+				return propertyInfo;
+		}
+		return null;
+	}
+
+	public static FieldOutline findInheritedFieldWithCustomization(
+			ClassOutline classOutline, final QName name) {
+		for (final FieldOutline fieldOutline : classOutline.getDeclaredFields()) {
+			if (containsCustomization(fieldOutline, name)) {
+				return fieldOutline;
+			}
+		}
+		final ClassOutline superClassOutline = classOutline.getSuperClass();
+		if (superClassOutline != null) {
+			return findInheritedFieldWithCustomization(superClassOutline, name);
+		} else {
+			return null;
+		}
+	}
+
+	public static CPropertyInfo findInheritedPropertyWithCustomization(
+			CClassInfo classInfo, final QName name) {
+		for (final CPropertyInfo propertyInfo : classInfo.getProperties()) {
+			if (containsCustomization(propertyInfo, name)) {
+				return propertyInfo;
+			}
+		}
+		final CClassInfo superClassInfo = classInfo.getBaseClass();
+		if (superClassInfo != null) {
+			return findInheritedPropertyWithCustomization(superClassInfo, name);
+		} else {
+			return null;
+		}
+	}
+
+	public static CCustomizations getCustomizations(
+			ElementOutline elementOutline) {
+		return getCustomizations(elementOutline.target);
+	}
+
+	public static CCustomizations getCustomizations(
+			final CElementInfo elementInfo) {
+		return elementInfo.getCustomizations();
+	}
+
+	public static CCustomizations getCustomizations(EnumOutline enumOutline) {
+		return getCustomizations(enumOutline.target);
+	}
+
+	public static CCustomizations getCustomizations(
+			EnumConstantOutline enumConstantOutline) {
+		return getCustomizations(enumConstantOutline.target);
+	}
+
+	public static CCustomizations getCustomizations(FieldOutline fieldOutline) {
+		return getCustomizations(fieldOutline.getPropertyInfo());
+	}
+
+	public static CCustomizations getCustomizations(final Model model) {
+		final CCustomizations main = new CCustomizations(model
+				.getCustomizations());
+		return main;
+	}
+
+	public static CCustomizations getCustomizations(
+			final CPropertyInfo propertyInfo) {
+
+		final CCustomizations main = new CCustomizations(propertyInfo
+				.getCustomizations());
+
+		final Collection<CCustomizations> elementCustomizations = propertyInfo
+				.accept(new CPropertyVisitor<Collection<CCustomizations>>() {
+					public Collection<CCustomizations> onAttribute(
+							CAttributePropertyInfo info) {
+						return Collections.emptyList();
+					}
+
+					public Collection<CCustomizations> onElement(
+							CElementPropertyInfo arg0) {
+						return Collections.emptyList();
+					}
+
+					public Collection<CCustomizations> onReference(
+							CReferencePropertyInfo info) {
+
+						final List<CCustomizations> elementCustomizations = new ArrayList<CCustomizations>(
+								info.getElements().size());
+
+						for (CElement element : info.getElements()) {
+							if (!(element instanceof CElementInfo && ((CElementInfo) element)
+									.hasClass())) {
+								elementCustomizations.add(element
+										.getCustomizations());
+							}
+						}
+
+						return elementCustomizations;
+					}
+
+					public Collection<CCustomizations> onValue(
+							CValuePropertyInfo arg0) {
+						return Collections.emptyList();
+					};
+
+				});
+
+		CCustomizations customizations = main;
+
+		for (CCustomizations e : elementCustomizations) {
+			main.addAll(e);
+		}
+
+		return customizations;
+	}
+
+	public static CCustomizations getCustomizations(ClassOutline classOutline) {
+		return getCustomizations(classOutline.target);
+	}
+
+	public static CCustomizations getCustomizations(final CClassInfo classInfo) {
+		return classInfo.getCustomizations();
+	}
+
+	public static CCustomizations getCustomizations(
+			final CEnumLeafInfo enumLeafInfo) {
+		return enumLeafInfo.getCustomizations();
+	}
+
+	public static CCustomizations getCustomizations(
+			final CEnumConstant enumConstant) {
+		final Object _enumConstant = enumConstant;
+		if (_enumConstant instanceof CCustomizable) {
+			return ((CCustomizable) _enumConstant).getCustomizations();
+		} else {
+			return CCustomizations.EMPTY;
+		}
+	}
+
+	private static String fixNull(String s) {
+		if (s == null) {
+			return "";
+		} else {
+			return s;
+		}
+	}
+
+	public static Object unmarshall(final JAXBContext context,
+			final CPluginCustomization customization) throws AssertionError {
+		if (customization == null) {
+			return null;
+		} else
+
+		{
+			final Unmarshaller unmarshaller;
+			try {
+				unmarshaller = context.createUnmarshaller();
+			} catch (JAXBException ex) {
+				final AssertionError error = new AssertionError(
+						"Unmarshaller could not be created.");
+				error.initCause(ex);
+				throw error;
+			}
+
+			try {
+				final Object result = unmarshaller.unmarshal(new DOMSource(
+						customization.element));
+				final JAXBIntrospector introspector = context
+						.createJAXBIntrospector();
+				if (introspector.isElement(result)) {
+					return JAXBIntrospector.getValue(result);
+				} else {
+					return result;
+				}
+			} catch (JAXBException ex) {
+				throw new IllegalArgumentException(
+						"Could not unmarshal the customization.", ex);
+			}
+
+		}
+	}
+
+	public static CPluginCustomization marshal(final JAXBContext context,
+			final QName name, final Object object) {
+
+		try {
+
+			final JAXBIntrospector introspector = context
+					.createJAXBIntrospector();
+
+			final Object value;
+			{
+				if (introspector.isElement(object)) {
+					value = object;
+				} else {
+					@SuppressWarnings("unchecked")
+					final JAXBElement jaxbElement = new JAXBElement(name,
+							object.getClass(), object);
+					value = jaxbElement;
+				}
+
+			}
+
+			final Marshaller marshaller = context.createMarshaller();
+
+			final DOMResult result = new DOMResult();
+
+			marshaller.marshal(value, result);
+
+			final Node node = result.getNode();
+
+			final Element element;
+			if (node instanceof Element)
+
+			{
+				element = (Element) node;
+			} else if (node instanceof Document) {
+				element = ((Document) node).getDocumentElement();
+			} else {
+				element = null;
+				throw new IllegalArgumentException(
+						"Could not marhsall object into an element.");
+			}
+			return new CPluginCustomization(element, null);
+		} catch (JAXBException jaxbex) {
+			throw new IllegalArgumentException(
+					"Could not marhsall object into an element.", jaxbex);
+
+		}
+	}
+
+	public static CPluginCustomization addCustomization(
+			CCustomizable customizable, JAXBContext context, QName name,
+			Object object) {
+		final CPluginCustomization customization = marshal(context, name,
+				object);
+		customizable.getCustomizations().add(customization);
+		return customization;
+	}
+}

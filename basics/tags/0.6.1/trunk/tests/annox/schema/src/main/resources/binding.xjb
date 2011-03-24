@@ -1,0 +1,20 @@
+<jaxb:bindings
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:annox="http://annox.dev.java.net" 
+	jaxb:extensionBindingPrefixes="annox"
+	jaxb:version="2.1">
+
+	jaxb:extensionBindingPrefixes="annox"
+
+	<jaxb:bindings schemaLocation="schema.xsd" node="/xsd:schema">
+		<jaxb:bindings node="xsd:complexType[@name='OneType']/xsd:sequence/xsd:element[@name='b']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations.Alpha" longField="-1" enumField="SIX" stringField="seven">
+					<annox:annotate annox:field="intField">0</annox:annotate>
+					<annox:annotate annox:field="shortField">3</annox:annotate>
+				</annox:annotate>
+			</annox:annotate>
+		</jaxb:bindings>
+	</jaxb:bindings>
+</jaxb:bindings>

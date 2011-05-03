@@ -102,8 +102,32 @@ public class CustomizationUtils {
 			ClassOutline classOutline, QName name) {
 		final CCustomizations customizations = CustomizationUtils
 				.getCustomizations(classOutline);
-		final CPluginCustomization customization = customizations.find(name
-				.getNamespaceURI(), name.getLocalPart());
+		final CPluginCustomization customization = customizations.find(
+				name.getNamespaceURI(), name.getLocalPart());
+		if (customization != null) {
+			customization.markAsAcknowledged();
+		}
+		return customization;
+	}
+
+	public static CPluginCustomization findCustomization(
+			EnumOutline classOutline, QName name) {
+		final CCustomizations customizations = CustomizationUtils
+				.getCustomizations(classOutline);
+		final CPluginCustomization customization = customizations.find(
+				name.getNamespaceURI(), name.getLocalPart());
+		if (customization != null) {
+			customization.markAsAcknowledged();
+		}
+		return customization;
+	}
+
+	public static CPluginCustomization findCustomization(
+			ElementOutline elementOutline, QName name) {
+		final CCustomizations customizations = CustomizationUtils
+				.getCustomizations(elementOutline);
+		final CPluginCustomization customization = customizations.find(
+				name.getNamespaceURI(), name.getLocalPart());
 		if (customization != null) {
 			customization.markAsAcknowledged();
 		}
@@ -113,6 +137,16 @@ public class CustomizationUtils {
 	public static List<CPluginCustomization> findCustomizations(
 			ClassOutline classOutline, QName name) {
 		return findCustomizations(classOutline.target, name);
+	}
+
+	public static List<CPluginCustomization> findCustomizations(
+			EnumOutline enumOutline, QName name) {
+		return findCustomizations(enumOutline.target, name);
+	}
+
+	public static List<CPluginCustomization> findCustomizations(
+			ElementOutline elementOutline, QName name) {
+		return findCustomizations(elementOutline.target, name);
 	}
 
 	public static List<CPluginCustomization> findCustomizations(
@@ -135,6 +169,46 @@ public class CustomizationUtils {
 		return pluginCustomizations;
 	}
 
+	public static List<CPluginCustomization> findCustomizations(
+			CEnumLeafInfo enumInfo, QName name) {
+		final CCustomizations customizations = CustomizationUtils
+				.getCustomizations(enumInfo);
+
+		final List<CPluginCustomization> pluginCustomizations = new LinkedList<CPluginCustomization>();
+
+		for (CPluginCustomization pluginCustomization : customizations) {
+			if (fixNull(pluginCustomization.element.getNamespaceURI()).equals(
+					name.getNamespaceURI())
+					&& fixNull(pluginCustomization.element.getLocalName())
+							.equals(name.getLocalPart())) {
+				pluginCustomization.markAsAcknowledged();
+				pluginCustomizations.add(pluginCustomization);
+			}
+		}
+
+		return pluginCustomizations;
+	}
+
+	public static List<CPluginCustomization> findCustomizations(
+			CElementInfo elementInfo, QName name) {
+		final CCustomizations customizations = CustomizationUtils
+				.getCustomizations(elementInfo);
+
+		final List<CPluginCustomization> pluginCustomizations = new LinkedList<CPluginCustomization>();
+
+		for (CPluginCustomization pluginCustomization : customizations) {
+			if (fixNull(pluginCustomization.element.getNamespaceURI()).equals(
+					name.getNamespaceURI())
+					&& fixNull(pluginCustomization.element.getLocalName())
+							.equals(name.getLocalPart())) {
+				pluginCustomization.markAsAcknowledged();
+				pluginCustomizations.add(pluginCustomization);
+			}
+		}
+
+		return pluginCustomizations;
+	}
+	
 	public static List<CPluginCustomization> findCustomizations(Model model,
 			QName name) {
 		final CCustomizations customizations = CustomizationUtils
@@ -159,8 +233,32 @@ public class CustomizationUtils {
 			QName name) {
 		final CCustomizations customizations = CustomizationUtils
 				.getCustomizations(classInfo);
-		final CPluginCustomization customization = customizations.find(name
-				.getNamespaceURI(), name.getLocalPart());
+		final CPluginCustomization customization = customizations.find(
+				name.getNamespaceURI(), name.getLocalPart());
+		if (customization != null) {
+			customization.markAsAcknowledged();
+		}
+		return customization;
+	}
+
+	public static CPluginCustomization findCustomization(CEnumLeafInfo enumLeafInfo,
+			QName name) {
+		final CCustomizations customizations = CustomizationUtils
+				.getCustomizations(enumLeafInfo);
+		final CPluginCustomization customization = customizations.find(
+				name.getNamespaceURI(), name.getLocalPart());
+		if (customization != null) {
+			customization.markAsAcknowledged();
+		}
+		return customization;
+	}
+
+	public static CPluginCustomization findCustomization(CElementInfo elementInfo,
+			QName name) {
+		final CCustomizations customizations = CustomizationUtils
+				.getCustomizations(elementInfo);
+		final CPluginCustomization customization = customizations.find(
+				name.getNamespaceURI(), name.getLocalPart());
 		if (customization != null) {
 			customization.markAsAcknowledged();
 		}
@@ -191,8 +289,8 @@ public class CustomizationUtils {
 			FieldOutline fieldOutline, QName name) {
 		final CCustomizations customizations = CustomizationUtils
 				.getCustomizations(fieldOutline);
-		final CPluginCustomization customization = customizations.find(name
-				.getNamespaceURI(), name.getLocalPart());
+		final CPluginCustomization customization = customizations.find(
+				name.getNamespaceURI(), name.getLocalPart());
 		if (customization != null) {
 			customization.markAsAcknowledged();
 		}
@@ -203,8 +301,8 @@ public class CustomizationUtils {
 			CPropertyInfo propertyInfo, QName name) {
 		final CCustomizations customizations = CustomizationUtils
 				.getCustomizations(propertyInfo);
-		final CPluginCustomization customization = customizations.find(name
-				.getNamespaceURI(), name.getLocalPart());
+		final CPluginCustomization customization = customizations.find(
+				name.getNamespaceURI(), name.getLocalPart());
 		if (customization != null) {
 			customization.markAsAcknowledged();
 		}
@@ -214,8 +312,8 @@ public class CustomizationUtils {
 	public static CPluginCustomization findCustomization(Model model, QName name) {
 		final CCustomizations customizations = CustomizationUtils
 				.getCustomizations(model);
-		final CPluginCustomization customization = customizations.find(name
-				.getNamespaceURI(), name.getLocalPart());
+		final CPluginCustomization customization = customizations.find(
+				name.getNamespaceURI(), name.getLocalPart());
 		if (customization != null) {
 			customization.markAsAcknowledged();
 		}
@@ -239,8 +337,8 @@ public class CustomizationUtils {
 
 		for (final FieldOutline fieldOutline : classOutline.getDeclaredFields()) {
 			final CCustomizations customizations = getCustomizations(fieldOutline);
-			final CPluginCustomization customization = customizations.find(name
-					.getNamespaceURI(), name.getLocalPart());
+			final CPluginCustomization customization = customizations.find(
+					name.getNamespaceURI(), name.getLocalPart());
 			if (customization != null)
 				return fieldOutline;
 		}
@@ -253,8 +351,8 @@ public class CustomizationUtils {
 
 		for (final CPropertyInfo propertyInfo : classInfo.getProperties()) {
 			final CCustomizations customizations = getCustomizations(propertyInfo);
-			final CPluginCustomization customization = customizations.find(name
-					.getNamespaceURI(), name.getLocalPart());
+			final CPluginCustomization customization = customizations.find(
+					name.getNamespaceURI(), name.getLocalPart());
 			if (customization != null)
 				return propertyInfo;
 		}
@@ -315,16 +413,16 @@ public class CustomizationUtils {
 	}
 
 	public static CCustomizations getCustomizations(final Model model) {
-		final CCustomizations main = new CCustomizations(model
-				.getCustomizations());
+		final CCustomizations main = new CCustomizations(
+				model.getCustomizations());
 		return main;
 	}
 
 	public static CCustomizations getCustomizations(
 			final CPropertyInfo propertyInfo) {
 
-		final CCustomizations main = new CCustomizations(propertyInfo
-				.getCustomizations());
+		final CCustomizations main = new CCustomizations(
+				propertyInfo.getCustomizations());
 
 		final Collection<CCustomizations> elementCustomizations = propertyInfo
 				.accept(new CPropertyVisitor<Collection<CCustomizations>>() {

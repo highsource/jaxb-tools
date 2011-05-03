@@ -154,7 +154,8 @@ WTI extends WildcardTypeInfo<T, C>> {
 		} else if (typeInfo instanceof ClassInfo) {
 			return getTypeInfo((CI) typeInfo);
 		} else {
-			throw new UnsupportedOperationException();
+			throw new UnsupportedOperationException(typeInfo.getClass()
+					.getName());
 		}
 	}
 

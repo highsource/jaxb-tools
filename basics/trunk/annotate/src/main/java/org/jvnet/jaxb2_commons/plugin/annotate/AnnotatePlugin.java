@@ -38,6 +38,19 @@ import com.sun.tools.xjc.outline.Outline;
 
 public class AnnotatePlugin extends AbstractParameterizablePlugin {
 
+	private static final QName ANNOTATE_PROPERTY_QNAME = new QName(
+			Constants.NAMESPACE_URI, "annotateProperty");
+	private static final QName ANNOTATE_CLASS_QNAME = new QName(
+			Constants.NAMESPACE_URI, "annotateClass");
+	private static final QName ANNOTATE_ELEMENT_QNAME = new QName(
+			Constants.NAMESPACE_URI, "annotateElement");
+	private static final QName ANNOTATE_ENUM_QNAME = new QName(
+			Constants.NAMESPACE_URI, "annotateEnum");
+	private static final QName ANNOTATE_ENUM_CONSTANT_QNAME = new QName(
+			Constants.NAMESPACE_URI, "annotateEnumConstant");
+	private static final QName ANNOTATE_QNAME = new QName(
+			Constants.NAMESPACE_URI, "annotate");
+
 	@Override
 	public String getOptionName() {
 		return "Xannotate";
@@ -113,8 +126,8 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 		final CCustomizations customizations = CustomizationUtils
 				.getCustomizations(elementOutline);
 
-		annotateElementOutline(elementOutline.implClass.owner(), elementOutline,
-				customizations, errorHandler);
+		annotateElementOutline(elementOutline.implClass.owner(),
+				elementOutline, customizations, errorHandler);
 	}
 
 	protected void processEnumOutline(EnumOutline enumOutline, Options options,
@@ -151,8 +164,8 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 			FieldOutline fieldOutline, Options options,
 			ErrorHandler errorHandler) {
 
-		final CCustomizations customizations =
-			CustomizationUtils.getCustomizations(fieldOutline);
+		final CCustomizations customizations = CustomizationUtils
+				.getCustomizations(fieldOutline);
 		annotate(fieldOutline.parent().ref.owner(), fieldOutline,
 				customizations, errorHandler);
 	}
@@ -174,14 +187,18 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 			final ErrorHandler errorHandler) {
 		for (final CPluginCustomization customization : customizations) {
 			final Element element = customization.element;
-			final String namespaceURI = element.getNamespaceURI();
-			if (Constants.NAMESPACE_URI.equals(namespaceURI)) {
+			final QName name = new QName(element.getNamespaceURI(),
+					element.getLocalName());
+			if (Constants.NAMESPACE_URI.equals(name.getNamespaceURI())) {
 				customization.markAsAcknowledged();
+				if (ANNOTATE_QNAME.equals(name)
+						|| ANNOTATE_ELEMENT_QNAME.equals(name)) {
 
-				final JAnnotatable annotatable = elementOutline.implClass;
+					final JAnnotatable annotatable = elementOutline.implClass;
 
-				annotate(codeModel, errorHandler, customization, element,
-						annotatable);
+					annotate(codeModel, errorHandler, customization, element,
+							annotatable);
+				}
 			}
 		}
 	}
@@ -192,14 +209,18 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 			final ErrorHandler errorHandler) {
 		for (final CPluginCustomization customization : customizations) {
 			final Element element = customization.element;
-			final String namespaceURI = element.getNamespaceURI();
-			if (Constants.NAMESPACE_URI.equals(namespaceURI)) {
+			final QName name = new QName(element.getNamespaceURI(),
+					element.getLocalName());
+			if (Constants.NAMESPACE_URI.equals(name.getNamespaceURI())) {
 				customization.markAsAcknowledged();
+				if (ANNOTATE_QNAME.equals(name)
+						|| ANNOTATE_ENUM_QNAME.equals(name)) {
 
-				final JAnnotatable annotatable = enumOutline.clazz;
+					final JAnnotatable annotatable = enumOutline.clazz;
 
-				annotate(codeModel, errorHandler, customization, element,
-						annotatable);
+					annotate(codeModel, errorHandler, customization, element,
+							annotatable);
+				}
 			}
 		}
 	}
@@ -210,14 +231,20 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 			final ErrorHandler errorHandler) {
 		for (final CPluginCustomization customization : customizations) {
 			final Element element = customization.element;
-			final String namespaceURI = element.getNamespaceURI();
-			if (Constants.NAMESPACE_URI.equals(namespaceURI)) {
+			final QName name = new QName(element.getNamespaceURI(),
+					element.getLocalName());
+			if (Constants.NAMESPACE_URI.equals(name.getNamespaceURI())) {
 				customization.markAsAcknowledged();
+				customization.markAsAcknowledged();
+				if (ANNOTATE_QNAME.equals(name)
+						|| ANNOTATE_ENUM_CONSTANT_QNAME.equals(name)) {
 
-				final JAnnotatable annotatable = enumConstantOutline.constRef;
+					final JAnnotatable annotatable = enumConstantOutline.constRef;
 
-				annotate(codeModel, errorHandler, customization, element,
-						annotatable);
+					annotate(codeModel, errorHandler, customization, element,
+							annotatable);
+
+				}
 			}
 		}
 	}
@@ -227,14 +254,20 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 			final CCustomizations customizations, ErrorHandler errorHandler) {
 		for (final CPluginCustomization customization : customizations) {
 			final Element element = customization.element;
-			final String namespaceURI = element.getNamespaceURI();
-			if (Constants.NAMESPACE_URI.equals(namespaceURI)) {
+			final QName name = new QName(element.getNamespaceURI(),
+					element.getLocalName());
+			if (Constants.NAMESPACE_URI.equals(name.getNamespaceURI())) {
 				customization.markAsAcknowledged();
 
-				final JAnnotatable annotatable = classOutline.ref;
+				customization.markAsAcknowledged();
+				if (ANNOTATE_CLASS_QNAME.equals(name)
+						|| ANNOTATE_QNAME.equals(name)) {
 
-				annotate(codeModel, errorHandler, customization, element,
-						annotatable);
+					final JAnnotatable annotatable = classOutline.ref;
+
+					annotate(codeModel, errorHandler, customization, element,
+							annotatable);
+				}
 			}
 		}
 	}
@@ -244,105 +277,97 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 			final CCustomizations customizations, ErrorHandler errorHandler) {
 		for (final CPluginCustomization customization : customizations) {
 			final Element element = customization.element;
-			final String namespaceURI = element.getNamespaceURI();
-			if (Constants.NAMESPACE_URI.equals(namespaceURI)) {
+			final QName name = new QName(element.getNamespaceURI(),
+					element.getLocalName());
+			if (Constants.NAMESPACE_URI.equals(name.getNamespaceURI())) {
 				customization.markAsAcknowledged();
+				customization.markAsAcknowledged();
+				if (ANNOTATE_QNAME.equals(name)
+						|| ANNOTATE_PROPERTY_QNAME.equals(name)) {
 
-				final JAnnotatable annotatable;
+					final JAnnotatable annotatable;
 
-				final String draftTarget = element.getAttribute("target");
+					final String draftTarget = element.getAttribute("target");
 
-				final String target;
+					final String target;
 
-				if (draftTarget == null || "".equals(draftTarget)) {
-					target = getDefaultFieldTarget();
-				} else {
-					target = draftTarget;
-				}
-
-				if ("class".equals(target)) {
-					annotatable = fieldOutline.parent().ref;
-				} else if ("getter".equals(target)) {
-					final JMethod _getter = FieldAccessorUtils
-							.getter(fieldOutline);
-					if (_getter == null) {
-						logger
-								.error(MessageFormat
-										.format(
-												"Could not annotate the getter of the field outline [{0}], getter method could not be found.",
-
-												OutlineUtils
-														.getFieldName(fieldOutline)));
-
-					}
-					annotatable = _getter;
-				} else if ("setter".equals(target)) {
-					final JMethod _setter = FieldAccessorUtils
-							.setter(fieldOutline);
-					if (_setter == null) {
-						logger
-								.error(MessageFormat
-										.format(
-												"Could not annotate the setter of the field outline [{0}], setter method could not be found.",
-
-												OutlineUtils
-														.getFieldName(fieldOutline)));
-					}
-					annotatable = _setter;
-				} else if ("setter-parameter".equals(target)) {
-					final JMethod _setter = FieldAccessorUtils
-							.setter(fieldOutline);
-
-					if (_setter == null) {
-						logger
-								.error(MessageFormat
-										.format(
-												"Could not annotate the setter parameter of the field outline [{0}], setter method could not be found.",
-
-												OutlineUtils
-														.getFieldName(fieldOutline)));
-						annotatable = null;
+					if (draftTarget == null || "".equals(draftTarget)) {
+						target = getDefaultFieldTarget();
 					} else {
-						final JVar[] params = _setter.listParams();
-						if (params.length != 1) {
-							logger
-									.error(MessageFormat
-											.format(
-													"Could not annotate the setter parameter of the field outline [{0}], setter method must have a single parameter(this setter has {1}).",
+						target = draftTarget;
+					}
 
-													OutlineUtils
-															.getFieldName(fieldOutline),
-													params.length));
+					if ("class".equals(target)) {
+						annotatable = fieldOutline.parent().ref;
+					} else if ("getter".equals(target)) {
+						final JMethod _getter = FieldAccessorUtils
+								.getter(fieldOutline);
+						if (_getter == null) {
+							logger.error(MessageFormat
+									.format("Could not annotate the getter of the field outline [{0}], getter method could not be found.",
+
+									OutlineUtils.getFieldName(fieldOutline)));
+
+						}
+						annotatable = _getter;
+					} else if ("setter".equals(target)) {
+						final JMethod _setter = FieldAccessorUtils
+								.setter(fieldOutline);
+						if (_setter == null) {
+							logger.error(MessageFormat
+									.format("Could not annotate the setter of the field outline [{0}], setter method could not be found.",
+
+									OutlineUtils.getFieldName(fieldOutline)));
+						}
+						annotatable = _setter;
+					} else if ("setter-parameter".equals(target)) {
+						final JMethod _setter = FieldAccessorUtils
+								.setter(fieldOutline);
+
+						if (_setter == null) {
+							logger.error(MessageFormat
+									.format("Could not annotate the setter parameter of the field outline [{0}], setter method could not be found.",
+
+									OutlineUtils.getFieldName(fieldOutline)));
 							annotatable = null;
 						} else {
-							annotatable = FieldAccessorUtils.setter(
-									fieldOutline).listParams()[0];
-						}
-					}
-				} else if ("field".equals(target)) {
-					// Ok
-					final JFieldVar _field = FieldAccessorUtils
-							.field(fieldOutline);
-					if (_field == null) {
-						logger
-								.error(MessageFormat
-										.format(
-												"Could not annotate the field of the field outline [{0}] since it could not be found.",
+							final JVar[] params = _setter.listParams();
+							if (params.length != 1) {
+								logger.error(MessageFormat
+										.format("Could not annotate the setter parameter of the field outline [{0}], setter method must have a single parameter(this setter has {1}).",
 
 												OutlineUtils
-														.getFieldName(fieldOutline)));
+														.getFieldName(fieldOutline),
+												params.length));
+								annotatable = null;
+							} else {
+								annotatable = FieldAccessorUtils.setter(
+										fieldOutline).listParams()[0];
+							}
+						}
+					} else if ("field".equals(target)) {
+						// Ok
+						final JFieldVar _field = FieldAccessorUtils
+								.field(fieldOutline);
+						if (_field == null) {
+							logger.error(MessageFormat
+									.format("Could not annotate the field of the field outline [{0}] since it could not be found.",
+
+									OutlineUtils.getFieldName(fieldOutline)));
+						}
+						annotatable = _field;
+
+					} else {
+						logger.error("Invalid annotation target [" + target
+								+ "].");
+						annotatable = null;
 					}
-					annotatable = _field;
 
-				} else {
-					logger.error("Invalid annotation target [" + target + "].");
-					annotatable = null;
-				}
+					if (annotatable != null) {
 
-				if (annotatable != null) {
-
-					annotate(codeModel, errorHandler, customization, element,
-							annotatable);
+						annotate(codeModel, errorHandler, customization,
+								element, annotatable);
+					}
 				}
 			}
 		}
@@ -377,7 +402,8 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 
 	@Override
 	public Collection<QName> getCustomizationElementNames() {
-		return Arrays.asList(new QName(Constants.NAMESPACE_URI, "annotate"));
+		return Arrays.asList(ANNOTATE_QNAME, ANNOTATE_CLASS_QNAME,
+				ANNOTATE_ELEMENT_QNAME, ANNOTATE_PROPERTY_QNAME);
 	}
 
 }

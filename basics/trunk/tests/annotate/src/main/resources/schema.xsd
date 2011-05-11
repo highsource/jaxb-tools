@@ -105,7 +105,7 @@
 		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:element name="issueJIIB38A" type="issueJIIB39AType"/>
+	<xsd:element name="issueJIIB39A" type="issueJIIB39AType"/>
 
 	<xsd:complexType name="issueJIIB39BType">
 		<xsd:sequence>
@@ -113,6 +113,13 @@
 		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:element name="issueJIIB38B" type="issueJIIB39BType"/>
+	<xsd:element name="issueJIIB39B" type="issueJIIB39BType"/>
+
+	<xsd:complexType name="issueJIIB39CType" mixed="true">
+		<xsd:sequence>
+			<xsd:any namespace="##any" processContents="lax"/>
+		</xsd:sequence>
+		<xsd:attribute name="test" type="xsd:string"/>
+	</xsd:complexType>
 
 </xsd:schema>

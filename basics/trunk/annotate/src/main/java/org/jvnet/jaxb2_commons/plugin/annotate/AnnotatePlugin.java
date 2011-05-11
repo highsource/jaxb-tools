@@ -152,7 +152,6 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 			ErrorHandler errorHandler) {
 
 		final CCustomizations customizations =
-//			fieldOutline.getPropertyInfo().getCustomizations();
 			CustomizationUtils.getCustomizations(fieldOutline);
 		annotate(fieldOutline.parent().ref.owner(), fieldOutline,
 				customizations, errorHandler);

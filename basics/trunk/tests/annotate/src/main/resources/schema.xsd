@@ -91,4 +91,28 @@
 			</xsd:enumeration>
 		</xsd:restriction>
 	</xsd:simpleType> 
+
+	<xsd:complexType name="issueJIIB39AType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<annox:annotate >
+					<annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement" name="literal"/>
+				</annox:annotate>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="a" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="issueJIIB38A" type="issueJIIB39AType"/>
+
+	<xsd:complexType name="issueJIIB39BType">
+		<xsd:sequence>
+			<xsd:element name="b" type="issueJIIB39AType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="issueJIIB38B" type="issueJIIB39BType"/>
+
 </xsd:schema>

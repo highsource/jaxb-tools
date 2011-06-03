@@ -2,6 +2,7 @@ package org.jvnet.jaxb2.maven2;
 
 import java.io.File;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -141,6 +142,47 @@ public class OptionsConfiguration {
 
 	public List<URL> getPlugins() {
 		return plugins;
+	}
+
+	@Override
+	public String toString() {
+		return MessageFormat.format("OptionsConfiguration [" +
+		//
+
+				"specVersion={0}\n " +
+				//
+				"generateDirectory={1}\n " +
+				//
+				"generatePackage={2}\n " +
+				//
+				"schemaLanguage={3}\n " +
+				//
+				"schemas={4}\n " +
+				//
+				"bindings={5}\n " +
+				//
+				"plugins={6}\n " +
+				//
+				"catalog={7}\n " +
+				//
+				"catalogResolver={8}\n " +
+				//
+				"readOnly={9}\n " +
+				//
+				"extension={10}\n " +
+				//
+				"strict={11}\n " +
+				//
+				"verbose={12}\n " +
+				//
+				"debugMode={13}\n " +
+				//
+				"arguments={14}" +
+				//
+				"]", specVersion, generateDirectory, generatePackage,
+				schemaLanguage, schemas, bindings, plugins, catalog,
+				catalogResolver, readOnly, extension, strict, verbose,
+				debugMode, arguments);
 	}
 
 }

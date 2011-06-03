@@ -38,7 +38,6 @@ import org.codehaus.plexus.util.FileUtils;
 import org.jvnet.jaxb2.maven2.util.ArtifactUtils;
 import org.jvnet.jaxb2.maven2.util.CollectionUtils;
 import org.jvnet.jaxb2.maven2.util.IOUtils;
-import org.xml.sax.InputSource;
 
 import com.sun.org.apache.xml.internal.resolver.CatalogManager;
 import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
@@ -86,13 +85,13 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		return schemaFiles;
 	}
 
-	public List<URL> getSchemas() throws MojoExecutionException {
+	protected List<URL> getSchemaUrls() throws MojoExecutionException {
+		final List<URL> schemaUrls = new ArrayList<URL>(schemaFiles.size());
 		final List<File> schemaFiles = getSchemaFiles();
-		final List<URL> schemas = new ArrayList<URL>(schemaFiles.size());
 		for (final File schemaFile : schemaFiles) {
 			try {
 				final URL schema = schemaFile.toURI().toURL();
-				schemas.add(schema);
+				schemaUrls.add(schema);
 			} catch (MalformedURLException murlex) {
 				throw new MojoExecutionException(
 						MessageFormat.format(
@@ -100,7 +99,15 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 								schemaFile), murlex);
 			}
 		}
-		return schemas;
+
+		if (getSchemas() != null) {
+			for (ResourceEntry resourceEntry : getSchemas()) {
+				schemaUrls.addAll(createResourceEntryUrls(resourceEntry,
+						getSchemaDirectory().getAbsolutePath(),
+						getSchemaIncludes(), getSchemaExcludes()));
+			}
+		}
+		return schemaUrls;
 	}
 
 	private List<File> bindingFiles;
@@ -251,8 +258,12 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		if (getVerbose()) {
 			logConfiguration();
 		}
-
+		
 		final OptionsConfiguration optionsConfiguration = createOptionsConfiguration();
+
+		if (getVerbose()) {
+			getLog().info("optionsConfiguration:" + optionsConfiguration);
+		}
 
 		if (optionsConfiguration.getGrammars().isEmpty()) {
 			getLog().warn("Skipped XJC execution. Nothing to compile.");
@@ -434,31 +445,14 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	 * *
 	 */
 
-	/**
-	 * Returns the internal schema language as enum, or <code>null</code> for
-	 * autodetect.
-	 * 
-	 * @return Internal schema language.
-	 */
-
-	protected List<InputSource> getGrammars() throws MojoExecutionException {
-		final List<File> schemaFiles = getSchemaFiles();
-		final List<InputSource> grammars = new ArrayList<InputSource>(
-				schemaFiles.size());
-		for (final File schemaFile : schemaFiles) {
-			grammars.add(IOUtils.getInputSource(schemaFile));
-		}
-		return grammars;
-	}
-
-	protected List<URL> getBindings() throws MojoExecutionException {
+	protected List<URL> getBindingUrls() throws MojoExecutionException {
 		final List<File> bindingFiles = getBindingFiles();
-		final List<URL> bindings = new ArrayList<URL>(bindingFiles.size());
+		final List<URL> bindingUrls = new ArrayList<URL>(bindingFiles.size());
 		for (final File bindingFile : bindingFiles) {
 			URL url;
 			try {
 				url = bindingFile.toURI().toURL();
-				bindings.add(url);
+				bindingUrls.add(url);
 			} catch (MalformedURLException murlex) {
 				throw new MojoExecutionException(
 						MessageFormat.format(
@@ -466,7 +460,15 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 								bindingFile), murlex);
 			}
 		}
-		return bindings;
+		if (getBindings() != null) {
+			for (ResourceEntry resourceEntry : getBindings()) {
+				bindingUrls.addAll(createResourceEntryUrls(resourceEntry,
+						getBindingDirectory().getAbsolutePath(),
+						getBindingIncludes(), getBindingExcludes()));
+			}
+		}
+
+		return bindingUrls;
 
 	}
 
@@ -579,7 +581,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	public OptionsConfiguration createOptionsConfiguration()
 			throws MojoExecutionException {
 		final OptionsConfiguration optionsConfiguration = new OptionsConfiguration(
-				getSchemaLanguage(), getSchemas(), getBindings(),
+				getSchemaLanguage(), getSchemaUrls(), getBindingUrls(),
 				getCatalogURL(), createCatalogResolver(), getGeneratePackage(),
 				getGenerateDirectory(), getReadOnly(), getExtension(),
 				getStrict(), getVerbose(), getDebug(), getArguments(),

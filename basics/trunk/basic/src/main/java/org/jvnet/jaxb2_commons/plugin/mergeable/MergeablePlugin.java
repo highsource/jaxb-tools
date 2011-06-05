@@ -5,8 +5,6 @@ import java.util.Collection;
 
 import javax.xml.namespace.QName;
 
-import org.jvnet.jaxb2_commons.util.ClassUtils;
-import org.jvnet.jaxb2_commons.util.FieldAccessorFactory;
 import org.jvnet.jaxb2_commons.lang.JAXBMergeStrategy;
 import org.jvnet.jaxb2_commons.lang.MergeFrom;
 import org.jvnet.jaxb2_commons.lang.MergeStrategy;
@@ -18,6 +16,8 @@ import org.jvnet.jaxb2_commons.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb2_commons.plugin.Ignoring;
 import org.jvnet.jaxb2_commons.plugin.util.FieldOutlineUtils;
 import org.jvnet.jaxb2_commons.plugin.util.StrategyClassUtils;
+import org.jvnet.jaxb2_commons.util.ClassUtils;
+import org.jvnet.jaxb2_commons.util.FieldAccessorFactory;
 import org.jvnet.jaxb2_commons.util.PropertyFieldAccessorFactory;
 import org.jvnet.jaxb2_commons.xjc.outline.FieldAccessorEx;
 import org.xml.sax.ErrorHandler;
@@ -229,19 +229,22 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 
 					final FieldAccessorEx targetFieldAccessor = getFieldAccessorFactory()
 							.createFieldAccessor(fieldOutline, target);
-					targetFieldAccessor.fromRawValue(
-							block,
-							"unique"
+					final JExpression mergedValue = JExpr.cast(
+							targetFieldAccessor.getType(),
+							mergeStrategy.invoke("merge").arg(leftFieldLocator)
+									.arg(rightFieldLocator).arg(leftField)
+									.arg(rightField));
+
+					final JVar merged = block.decl(
+							rightFieldAccessor.getType(),
+							"merged"
 									+ fieldOutline.getPropertyInfo().getName(
-											true),
+											true), mergedValue);
 
-							JExpr.cast(
-									targetFieldAccessor.getType(),
+					targetFieldAccessor.fromRawValue(block, "unique"
+							+ fieldOutline.getPropertyInfo().getName(true),
 
-									mergeStrategy.invoke("merge")
-											.arg(leftFieldLocator)
-											.arg(rightFieldLocator)
-											.arg(leftField).arg(rightField)));
+					merged);
 				}
 			}
 		}

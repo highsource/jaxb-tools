@@ -42,6 +42,16 @@
 			<url>${sftp.static.highsource.org}/mjiip</url>
 		</site>
 	</distributionManagement>
+	<!-- Development only, uncomment for releases -->
+	<repositories>
+        	<repository>
+			<id>maven2-repository.dev.java.net</id>
+			<url>http://download.java.net/maven/2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 	<modules>
 		<module>plugin-core</module>
 		<module>plugin-2.0</module>

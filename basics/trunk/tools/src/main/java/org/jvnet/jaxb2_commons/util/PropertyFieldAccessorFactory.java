@@ -129,7 +129,13 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 				block.invoke(targetObject, setter).arg($var);
 			} else {
 				unsetValues(block);
-				fieldAccessor.fromRawValue(block, uniqueName, $var);
+				if (fieldOutline.getPropertyInfo().isCollection()) {
+					fieldAccessor.fromRawValue(block
+							._if($var.ne(JExpr._null()))._then(), uniqueName,
+							$var);
+				} else {
+					fieldAccessor.fromRawValue(block, uniqueName, $var);
+				}
 			}
 		}
 

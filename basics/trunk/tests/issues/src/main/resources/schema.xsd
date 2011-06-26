@@ -19,7 +19,13 @@
 				fixedAttributeAsConstantProperty="true"/>
 			<jaxb:schemaBindings>
 				<jaxb:package name="org.jvnet.jaxb2_commons.tests.issues" />
+
+
 			</jaxb:schemaBindings>
+
+			<inheritance:objectFactory packageName="org.jvnet.jaxb2_commons.tests.issues">
+				<inheritance:implements>java.lang.Cloneable</inheritance:implements>
+			</inheritance:objectFactory>
 		</xs:appinfo>
 	</xs:annotation>
 

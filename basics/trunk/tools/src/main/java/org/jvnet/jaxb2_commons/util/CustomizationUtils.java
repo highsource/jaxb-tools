@@ -208,7 +208,12 @@ public class CustomizationUtils {
 
 		return pluginCustomizations;
 	}
-	
+
+	public static List<CPluginCustomization> findCustomizations(Outline outline,
+			QName name) {
+		return findCustomizations(outline.getModel(), name);
+	}
+
 	public static List<CPluginCustomization> findCustomizations(Model model,
 			QName name) {
 		final CCustomizations customizations = CustomizationUtils

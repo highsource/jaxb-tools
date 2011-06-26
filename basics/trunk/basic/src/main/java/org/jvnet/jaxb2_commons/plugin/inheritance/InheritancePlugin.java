@@ -19,6 +19,7 @@ import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.ElementOutline;
 import com.sun.tools.xjc.outline.EnumOutline;
 import com.sun.tools.xjc.outline.Outline;
+import com.sun.tools.xjc.outline.PackageOutline;
 
 public class InheritancePlugin extends AbstractParameterizablePlugin {
 
@@ -35,7 +36,7 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 	@Override
 	public Collection<QName> getCustomizationElementNames() {
 		return Arrays.asList(Customizations.EXTENDS_ELEMENT_NAME,
-				Customizations.IMPLEMENTS_ELEMENT_NAME);
+				Customizations.IMPLEMENTS_ELEMENT_NAME, Customizations.OBJECT_FACTORY_ELEMENT_NAME);
 	}
 
 	@Override
@@ -53,8 +54,8 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 			if (elementOutline != null) {
 				processElementOutline(elementOutline);
 			}
-
 		}
+		processPackageOutlines(outline);
 		return true;
 	}
 
@@ -77,6 +78,45 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 		generateExtends(elementOutline);
 		generateImplements(elementOutline);
 
+	}
+
+	private void processPackageOutlines(Outline outline) {
+		List<CPluginCustomization> customizations = CustomizationUtils
+				.findCustomizations(outline,
+						Customizations.OBJECT_FACTORY_ELEMENT_NAME);
+
+		for (CPluginCustomization customization : customizations) {
+			final ObjectFactoryCustomization objectFactoryCustomization = (ObjectFactoryCustomization) CustomizationUtils
+					.unmarshall(Customizations.getContext(), customization);
+
+			final String packageName = objectFactoryCustomization
+					.getPackageName();
+
+			if (packageName != null) {
+				for (PackageOutline packageOutline : outline
+						.getAllPackageContexts()) {
+					final JDefinedClass theClass = packageOutline
+							.objectFactory();
+					if (packageName.equals(packageOutline._package().name())) {
+						ExtendsClass extendsClass = objectFactoryCustomization
+								.getExtendsClass();
+						if (extendsClass != null) {
+							generateExtends(theClass, extendsClass);
+						}
+						List<ImplementsInterface> implementsInterfaces = objectFactoryCustomization
+								.getImplementsInterface();
+						if (implementsInterfaces != null) {
+							for (ImplementsInterface implementsInterface : implementsInterfaces) {
+								if (implementsInterface != null) {
+									generateImplements(theClass,
+											implementsInterface);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	private void generateExtends(ClassOutline classOutline) {
@@ -112,6 +152,13 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 					.unmarshall(Customizations.getContext(),
 							extendsClassCustomization);
 
+			generateExtends(theClass, extendsClass);
+		}
+	}
+
+	private void generateExtends(final JDefinedClass theClass,
+			final ExtendsClass extendsClass) {
+		if (extendsClass.getClassName() != null) {
 			final String name = extendsClass.getClassName();
 			final JClass targetClass = theClass.owner().ref(name);
 			theClass._extends(targetClass);
@@ -151,12 +198,18 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 				final ImplementsInterface implementsInterface = (ImplementsInterface) org.jvnet.jaxb2_commons.util.CustomizationUtils
 						.unmarshall(Customizations.getContext(),
 								implementsInterfaceCustomization);
-				if (implementsInterface.getInterfaceName() != null) {
-					final JClass targetClass = theClass.owner().ref(
-							implementsInterface.getInterfaceName());
-					theClass._implements(targetClass);
-				}
+				generateImplements(theClass, implementsInterface);
 			}
+		}
+	}
+
+	private void generateImplements(final JDefinedClass theClass,
+			final ImplementsInterface implementsInterface) {
+
+		if (implementsInterface.getInterfaceName() != null) {
+			final JClass targetClass = theClass.owner().ref(
+					implementsInterface.getInterfaceName());
+			theClass._implements(targetClass);
 		}
 	}
 }

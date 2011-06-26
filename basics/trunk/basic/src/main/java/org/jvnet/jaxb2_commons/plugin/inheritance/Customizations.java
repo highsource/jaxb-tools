@@ -13,6 +13,9 @@ public class Customizations {
 
 	public static String NAMESPACE_URI = "http://jaxb2-commons.dev.java.net/basic/inheritance";
 
+	public static QName OBJECT_FACTORY_ELEMENT_NAME = new QName(NAMESPACE_URI,
+		"objectFactory");
+
 	public static QName EXTENDS_ELEMENT_NAME = new QName(NAMESPACE_URI,
 			"extends");
 

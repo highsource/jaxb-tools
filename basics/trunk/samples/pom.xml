@@ -18,6 +18,21 @@
 		<module>modular-ant</module>
 		<module>annotate</module>
 	</modules>
+	<distributionManagement>
+		<repository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>org.highsource.repository.maven2.releases</id>
+			<url>${sftp.repository.highsource.org}/maven2/releases</url>
+		</repository>
+		<snapshotRepository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>org.highsource.repository.maven2.snapshots</id>
+			<url>${sftp.repository.highsource.org}/maven2/snapshots</url>
+		</snapshotRepository>
+		<site>
+			<url>${sftp.static.highsource.org}/jaxb2-basics/samples</url>
+		</site>
+	</distributionManagement>
 	<build>
 		<defaultGoal>install</defaultGoal>
 		<plugins>

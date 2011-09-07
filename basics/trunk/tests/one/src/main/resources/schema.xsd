@@ -5,7 +5,7 @@
 
 	<xs:annotation>
 		<xs:appinfo>
-			<jaxb:globalBindings choiceContentProperty="true" generateIsSetMethod="true" generateElementProperty="true" generateElementClass="true">
+			<jaxb:globalBindings choiceContentProperty="true" generateIsSetMethod="true" generateElementClass="true">
 				<!--xjc:noValidator />
 				<xjc:noValidatingUnmarshaller /-->
 			</jaxb:globalBindings>
@@ -251,5 +251,11 @@
 				</xs:sequence>
 		    </xs:extension>
 		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="customizedPropertiesType">
+		<xs:sequence>
+			<xs:element name="customizedAdaptedProperty" type="xs:string" minOccurs="0"/>
+			<xs:element name="annotatedAdaptedProperty" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
 	</xs:complexType>
 </xs:schema>

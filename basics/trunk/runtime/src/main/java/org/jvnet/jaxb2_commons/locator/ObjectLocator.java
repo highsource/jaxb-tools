@@ -23,6 +23,11 @@ public interface ObjectLocator extends ValidationEventLocator, Reportable {
 	public ObjectLocator[] getPath();
 
 	/**
+	 * @return Path to this locator in string form;
+	 */
+	public String getPathAsString();
+
+	/**
 	 * Creates a locator for the property, relative to this locator.
 	 * 
 	 * @param propertyName

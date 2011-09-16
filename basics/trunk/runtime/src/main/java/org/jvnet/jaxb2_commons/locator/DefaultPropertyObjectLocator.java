@@ -31,8 +31,6 @@ public final class DefaultPropertyObjectLocator extends AbstractObjectLocator
 		this.propertyName = propertyName;
 	}
 
-	
-
 	public String getPropertyName() {
 		return propertyName;
 	}
@@ -50,6 +48,11 @@ public final class DefaultPropertyObjectLocator extends AbstractObjectLocator
 	protected String getDefaultMessage() {
 		return MessageFormat.format("Field: {1}\nField value: {0}.",
 				getMessageParameters());
+	}
+
+	@Override
+	protected String getStepAsString() {
+		return "." + getPropertyName();
 	}
 
 }

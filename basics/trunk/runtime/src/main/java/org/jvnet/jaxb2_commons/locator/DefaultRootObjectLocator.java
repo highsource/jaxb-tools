@@ -19,4 +19,8 @@ public final class DefaultRootObjectLocator extends AbstractObjectLocator
 				.format("Root object: {0}.", getMessageParameters());
 	}
 
+	@Override
+	protected String getStepAsString() {
+		return "@";
+	}
 }

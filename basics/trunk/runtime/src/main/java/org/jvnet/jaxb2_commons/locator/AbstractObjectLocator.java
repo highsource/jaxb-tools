@@ -53,6 +53,15 @@ public abstract class AbstractObjectLocator implements ObjectLocator {
 		return path;
 	}
 
+	public String getPathAsString() {
+		final String stepAsString = getStepAsString();
+		final ObjectLocator parentLocator = getParentLocator();
+		return parentLocator == null ? stepAsString : parentLocator
+				.getPathAsString() + stepAsString;
+	}
+
+	protected abstract String getStepAsString();
+
 	private void fillPath(ObjectLocator locator, ObjectLocator[] path, int index) {
 		path[index] = locator;
 		final ObjectLocator parent = locator.getParentLocator();
@@ -110,13 +119,13 @@ public abstract class AbstractObjectLocator implements ObjectLocator {
 	public String getMessageCode() {
 		return getClass().getName();
 	}
-	
+
 	protected abstract String getDefaultMessage();
 
-//	public Object[] getMessageParameters() {
-//		return new Object[] { getObject() };
-//	}
-//
+	// public Object[] getMessageParameters() {
+	// return new Object[] { getObject() };
+	// }
+	//
 	public String getMessage(ResourceBundle bundle) {
 		try {
 			final String messageTemplate = bundle.getString(getMessageCode());
@@ -134,14 +143,13 @@ public abstract class AbstractObjectLocator implements ObjectLocator {
 	 */
 	public String getMessage() {
 		return getMessage(ResourceBundle.getBundle(getClass().getPackage()
-				.getName()
-				+ ".messages"));
+				.getName() + ".messages"));
 	}
 
-//	public int hashCode() {
-//		int hashCode = getObject().hashCode();
-//		return hashCode;
-//	}
+	// public int hashCode() {
+	// int hashCode = getObject().hashCode();
+	// return hashCode;
+	// }
 
 	public ItemObjectLocator item(int index, Object value) {
 		return new DefaultItemObjectLocator(this, index, value);

@@ -47,4 +47,8 @@ public final class DefaultItemObjectLocator extends AbstractObjectLocator
 				getMessageParameters());
 	}
 
+	@Override
+	protected String getStepAsString() {
+		return "[" + getIndex() + "]";
+	}
 }

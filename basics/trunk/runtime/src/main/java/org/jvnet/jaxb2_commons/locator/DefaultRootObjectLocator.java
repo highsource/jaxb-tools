@@ -21,6 +21,6 @@ public final class DefaultRootObjectLocator extends AbstractObjectLocator
 
 	@Override
 	protected String getStepAsString() {
-		return "@";
+		return "<root>";
 	}
 }

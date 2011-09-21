@@ -60,14 +60,14 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 		this.fieldAccessorFactory = fieldAccessorFactory;
 	}
 
-	private Class<? extends EqualsStrategy> equalsStrategyClass = JAXBEqualsStrategy.class;
+	private String equalsStrategyClass = JAXBEqualsStrategy.class.getName();
 
 	public void setEqualsStrategyClass(
-			Class<? extends EqualsStrategy> equalsStrategyClass) {
+			String equalsStrategyClass) {
 		this.equalsStrategyClass = equalsStrategyClass;
 	}
 
-	public Class<? extends EqualsStrategy> getEqualsStrategyClass() {
+	public String getEqualsStrategyClass() {
 		return equalsStrategyClass;
 	}
 

@@ -59,14 +59,14 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 		this.fieldAccessorFactory = fieldAccessorFactory;
 	}
 
-	private Class<? extends MergeStrategy> mergeStrategyClass = JAXBMergeStrategy.class;
+	private String mergeStrategyClass = JAXBMergeStrategy.class.getName();
 
 	public void setMergeStrategyClass(
-			final Class<? extends MergeStrategy> mergeStrategyClass) {
+			final String mergeStrategyClass) {
 		this.mergeStrategyClass = mergeStrategyClass;
 	}
 
-	public Class<? extends MergeStrategy> getMergeStrategyClass() {
+	public String getMergeStrategyClass() {
 		return mergeStrategyClass;
 	}
 

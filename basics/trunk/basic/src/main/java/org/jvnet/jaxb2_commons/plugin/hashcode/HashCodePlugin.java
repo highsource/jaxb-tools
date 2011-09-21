@@ -59,14 +59,14 @@ public class HashCodePlugin extends AbstractParameterizablePlugin {
 	}
 
 
-	private Class<? extends HashCodeStrategy> hashCodeStrategyClass = JAXBHashCodeStrategy.class;
+	private String hashCodeStrategyClass = JAXBHashCodeStrategy.class.getName();
 
 	public void setHashCodeStrategyClass(
-			Class<? extends HashCodeStrategy> hashCodeStrategy) {
+			String hashCodeStrategy) {
 		this.hashCodeStrategyClass = hashCodeStrategy;
 	}
 
-	public Class<? extends HashCodeStrategy> getHashCodeStrategyClass() {
+	public String getHashCodeStrategyClass() {
 		return hashCodeStrategyClass;
 	}
 

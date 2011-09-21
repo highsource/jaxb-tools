@@ -15,35 +15,42 @@ import com.sun.tools.xjc.outline.ClassOutline;
 public class StrategyClassUtils {
 	public static <T> JExpression createStrategyInstanceExpression(
 			JCodeModel codeModel, final Class<? extends T> strategyInterface,
-			final Class<? extends T> strategyClass) {
-		final JClass strategyJClass = codeModel.ref(strategyClass);
+			final String strategyClassName) {
+		
 		try {
-			final Method getInstanceMethod = strategyClass.getMethod(
-					"getInstance", new Class<?>[0]);
-			if (getInstanceMethod != null
-					&& strategyInterface.isAssignableFrom(getInstanceMethod
-							.getReturnType())
-					&& Modifier.isStatic(getInstanceMethod.getModifiers())
-					&& Modifier.isPublic(getInstanceMethod.getModifiers())) {
-				return strategyJClass.staticInvoke("getInstance");
-			}
+			final Class<?> strategyClass = Class.forName(strategyClassName);
+			final JClass strategyJClass = codeModel.ref(strategyClass);
+			try {
+				final Method getInstanceMethod = strategyClass.getMethod(
+						"getInstance", new Class<?>[0]);
+				if (getInstanceMethod != null
+						&& strategyInterface.isAssignableFrom(getInstanceMethod
+								.getReturnType())
+						&& Modifier.isStatic(getInstanceMethod.getModifiers())
+						&& Modifier.isPublic(getInstanceMethod.getModifiers())) {
+					return strategyJClass.staticInvoke("getInstance");
+				}
 
-		} catch (Exception ignored) {
-			// Nothing to do
-		}
-		try {
-			final Field instanceField = strategyClass.getField("INSTANCE");
-			if (instanceField != null
-					&& strategyInterface.isAssignableFrom(instanceField
-							.getType())
-					&& Modifier.isStatic(instanceField.getModifiers())
-					&& Modifier.isPublic(instanceField.getModifiers())) {
-				return strategyJClass.staticRef("INSTANCE");
+			} catch (Exception ignored) {
+				// Nothing to do
 			}
-		} catch (Exception ignored) {
-			// Nothing to do
+			try {
+				final Field instanceField = strategyClass.getField("INSTANCE");
+				if (instanceField != null
+						&& strategyInterface.isAssignableFrom(instanceField
+								.getType())
+						&& Modifier.isStatic(instanceField.getModifiers())
+						&& Modifier.isPublic(instanceField.getModifiers())) {
+					return strategyJClass.staticRef("INSTANCE");
+				}
+			} catch (Exception ignored) {
+				// Nothing to do
+			}
+			return JExpr._new(strategyJClass);
+		} catch (ClassNotFoundException cnfex) {
+			final JClass strategyJClass = codeModel.ref(strategyClassName);
+			return JExpr._new(strategyJClass);
 		}
-		return JExpr._new(strategyJClass);
 	}
 
 	public static <T> Boolean superClassImplements(ClassOutline classOutline,

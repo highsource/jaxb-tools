@@ -58,17 +58,14 @@ public class ToStringPlugin extends AbstractParameterizablePlugin {
 	}
 
 
-	private Class<? extends ToStringStrategy> toStringStrategyClass = JAXBToStringStrategy.class;
+	private String toStringStrategyClass = JAXBToStringStrategy.class.getName();
 
 	public void setToStringStrategyClass(
-			Class<? extends ToStringStrategy> toStringStrategy) {
-		if (!ToStringStrategy.class.isAssignableFrom(toStringStrategy))
-			throw new IllegalArgumentException("The class must extend ["
-					+ ToStringStrategy.class.getName() + "].");
+			String toStringStrategy) {
 		this.toStringStrategyClass = toStringStrategy;
 	}
 
-	public Class<? extends ToStringStrategy> getToStringStrategyClass() {
+	public String getToStringStrategyClass() {
 		return toStringStrategyClass;
 	}
 

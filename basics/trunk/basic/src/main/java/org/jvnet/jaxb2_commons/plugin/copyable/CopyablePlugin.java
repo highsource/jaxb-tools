@@ -62,13 +62,13 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 		this.fieldAccessorFactory = fieldAccessorFactory;
 	}
 
-	private Class<? extends CopyStrategy> copyStrategyClass = JAXBCopyStrategy.class;
+	private String copyStrategyClass = JAXBCopyStrategy.class.getName();
 
-	public void setCopyStrategyClass(final Class<? extends CopyStrategy> copyStrategy) {
+	public void setCopyStrategyClass(final String copyStrategy) {
 		this.copyStrategyClass = copyStrategy;
 	}
 
-	public Class<? extends CopyStrategy> getCopyStrategyClass() {
+	public String getCopyStrategyClass() {
 		return copyStrategyClass;
 	}
 

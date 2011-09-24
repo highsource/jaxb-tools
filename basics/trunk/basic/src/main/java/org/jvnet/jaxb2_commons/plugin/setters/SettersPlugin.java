@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.xml.namespace.QName;
 
+import org.apache.commons.lang.Validate;
 import org.jvnet.jaxb2_commons.plugin.AbstractParameterizablePlugin;
 import org.jvnet.jaxb2_commons.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb2_commons.plugin.Ignoring;
@@ -13,6 +14,7 @@ import org.xml.sax.ErrorHandler;
 
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JExpr;
+import com.sun.codemodel.JFieldVar;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
 import com.sun.codemodel.JType;
@@ -53,6 +55,61 @@ public class SettersPlugin extends AbstractParameterizablePlugin {
 
 	}
 
+	public static enum Mode {
+
+		accessor {
+
+			@Override
+			public void generateSetter(FieldOutline fieldOutline,
+					JDefinedClass theClass, JMethod setter, JVar value) {
+				final FieldAccessor accessor = fieldOutline.create(JExpr
+						._this());
+				accessor.unsetValues(setter.body());
+				accessor.fromRawValue(setter.body(), "draft", value);
+			}
+		},
+		direct {
+			@Override
+			public void generateSetter(FieldOutline fieldOutline,
+					JDefinedClass theClass, JMethod setter, JVar value) {
+
+				final JFieldVar field = theClass.fields().get(
+						fieldOutline.getPropertyInfo().getName(false));
+
+				if (field != null) {
+					setter.body().assign(JExpr._this().ref(field), value);
+				} else {
+					// Fallback to the accessor
+					Mode.accessor.generateSetter(fieldOutline, theClass,
+							setter, value);
+				}
+			}
+		};
+		public abstract void generateSetter(FieldOutline fieldOutline,
+				JDefinedClass theClass, JMethod setter, JVar value);
+	}
+
+	private Mode mode = Mode.accessor;
+
+	public String getMode() {
+		return mode.name();
+
+	}
+
+	public void setMode(String mode) {
+		Validate.notNull(mode);
+		try {
+			this.mode = Mode.valueOf(mode);
+		} catch (IllegalArgumentException iaex) {
+			throw new IllegalArgumentException(
+					"Unsupported mode ["
+							+ mode
+							+ "]."
+							+ " Supported modes are [accessor] (uses JAXB-generated accessors, default)"
+							+ " and [direct] (assigns the value to the field directly).");
+		}
+	}
+
 	private void generateSetters(ClassOutline classOutline,
 			JDefinedClass theClass) {
 
@@ -83,11 +140,9 @@ public class SettersPlugin extends AbstractParameterizablePlugin {
 					final JMethod generatedSetter = theClass.method(
 							JMod.PUBLIC, theClass.owner().VOID, setterName);
 					final JVar value = generatedSetter.param(type, "value");
-					final FieldAccessor accessor = fieldOutline.create(JExpr
-							._this());
-					accessor.unsetValues(generatedSetter.body());
-					accessor.fromRawValue(generatedSetter.body(), "draft",
-							value);
+
+					mode.generateSetter(fieldOutline, theClass,
+							generatedSetter, value);
 				}
 			}
 		}

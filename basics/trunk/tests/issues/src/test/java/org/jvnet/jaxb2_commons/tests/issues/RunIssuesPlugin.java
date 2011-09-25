@@ -26,15 +26,14 @@ public class RunIssuesPlugin extends RunXJC2Mojo {
 		args.add("-Xmergeable");
 		args.add("-Xinheritance");
 		args.add("-Xsetters");
-//		args.add("-Xsetters-mode=direct");
+		args.add("-Xsetters-mode=direct");
 		args.add("-Xwildcard");
 		args.add("-XautoInheritance");
-		args
-				.add("-XautoInheritance-globalElementsExtend=org.jvnet.jaxb2_commons.tests.issues.IssueJIIB14BaseClass");
-		args
-				.add("-XautoInheritance-globalElementsImplement=org.jvnet.jaxb2_commons.tests.issues.IssueJIIB14BaseInterfaceOne");
-		args
-				.add("-XautoInheritance-globalElementsImplement=org.jvnet.jaxb2_commons.tests.issues.IssueJIIB14BaseInterfaceTwo");
+		args.add("-XautoInheritance-xmlRootElementsExtend=org.jvnet.jaxb2_commons.tests.issues.IssueJIIB14BaseClass");
+		args.add("-XautoInheritance-xmlRootElementsImplement=org.jvnet.jaxb2_commons.tests.issues.IssueJIIB14BaseInterfaceOne");
+		args.add("-XautoInheritance-xmlRootElementsImplement=org.jvnet.jaxb2_commons.tests.issues.IssueJIIB14BaseInterfaceTwo");
+		args.add("-XautoInheritance-jaxbElementsImplement=org.jvnet.jaxb2_commons.tests.issues.IssueJIIB14BaseInterfaceThree");
+		args.add("-XautoInheritance-jaxbElementsImplement=org.jvnet.jaxb2_commons.tests.issues.IssueJIIB14BaseInterfaceFour");
 
 		return args;
 	}

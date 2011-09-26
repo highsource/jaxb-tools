@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.jvnet.annox.model.XAnnotation;
 import org.jvnet.annox.model.XAnnotationField;
-import org.jvnet.annox.model.XAnnotationVisitor;
 import org.jvnet.annox.model.XAnnotationField.XAnnotationArray;
 import org.jvnet.annox.model.XAnnotationField.XBoolean;
 import org.jvnet.annox.model.XAnnotationField.XBooleanArray;
@@ -30,12 +29,14 @@ import org.jvnet.annox.model.XAnnotationField.XShort;
 import org.jvnet.annox.model.XAnnotationField.XShortArray;
 import org.jvnet.annox.model.XAnnotationField.XString;
 import org.jvnet.annox.model.XAnnotationField.XStringArray;
+import org.jvnet.annox.model.XAnnotationVisitor;
 import org.jvnet.jaxb2_commons.util.CodeModelUtils;
 
 import com.sun.codemodel.JAnnotatable;
 import com.sun.codemodel.JAnnotationArrayMember;
 import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JAnnotationValue;
+import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JFormatter;
 import com.sun.codemodel.JType;
@@ -55,8 +56,17 @@ public class Annotator {
 
 	public void annotate(JCodeModel codeModel, JAnnotatable annotatable,
 			XAnnotation xannotation) {
-		final JAnnotationUse annotationUse = annotatable.annotate(xannotation
+		final JClass annotationClass = codeModel.ref(xannotation
 				.getAnnotationClass());
+		JAnnotationUse annotationUse = null;
+		for (JAnnotationUse annotation : annotatable.annotations()) {
+			if (annotationClass.equals(annotation.getAnnotationClass())) {
+				annotationUse = annotation;
+			}
+		}
+		if (annotationUse == null) {
+			annotationUse = annotatable.annotate(annotationClass);
+		}
 		final XAnnotationVisitor<JAnnotationUse> visitor = createAnnotationFieldVisitor(
 				codeModel, annotationUse);
 		xannotation.accept(visitor);
@@ -199,8 +209,8 @@ public class Annotator {
 
 				final JAnnotationValue annotationValue = new JAnnotationValue() {
 					public void generate(JFormatter f) {
-						f.t(codeModel.ref(value.getDeclaringClass())).p('.').p(
-								value.name());
+						f.t(codeModel.ref(value.getDeclaringClass())).p('.')
+								.p(value.name());
 					}
 				};
 
@@ -291,8 +301,8 @@ public class Annotator {
 
 		public JAnnotationUse visitAnnotationField(
 				org.jvnet.annox.model.XAnnotationField.XAnnotation field) {
-			final JAnnotationUse annotationUse = use.annotationParam(field
-					.getName(), field.getAnnotationClass());
+			final JAnnotationUse annotationUse = use.annotationParam(
+					field.getName(), field.getAnnotationClass());
 
 			final AnnotatingFieldVisitor visitor = new AnnotatingFieldVisitor(
 					codeModel, annotationUse);

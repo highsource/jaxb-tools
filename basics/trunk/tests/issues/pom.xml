@@ -21,6 +21,10 @@
 			<groupId>org.jvnet.jaxb2_commons</groupId>
 			<artifactId>jaxb2-basics</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.jvnet.jaxb2_commons</groupId>
+			<artifactId>jaxb2-basics-annotate</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<defaultGoal>test</defaultGoal>
@@ -48,11 +52,16 @@
 						<arg>-XautoInheritance-xmlRootElementsImplement=org.jvnet.jaxb2_commons.tests.issues.IssueJIIB14BaseInterfaceTwo</arg>
 						<arg>-XautoInheritance-jaxbElementsImplement=org.jvnet.jaxb2_commons.tests.issues.IssueJIIB14BaseInterfaceThree</arg>
 						<arg>-XautoInheritance-jaxbElementsImplement=org.jvnet.jaxb2_commons.tests.issues.IssueJIIB14BaseInterfaceFour</arg>
+						<arg>-Xannotate</arg>
 					</args>
 					<plugins>
 						<plugin>
 							<groupId>org.jvnet.jaxb2_commons</groupId>
 							<artifactId>jaxb2-basics</artifactId>
+						</plugin>
+						<plugin>
+							<groupId>org.jvnet.jaxb2_commons</groupId>
+							<artifactId>jaxb2-basics-annotate</artifactId>
 						</plugin>
 					</plugins>
 				</configuration>

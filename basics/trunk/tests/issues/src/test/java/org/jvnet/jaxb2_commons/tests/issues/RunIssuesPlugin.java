@@ -18,7 +18,7 @@ public class RunIssuesPlugin extends RunXJC2Mojo {
 	@Override
 	public List<String> getArgs() {
 		final List<String> args = new ArrayList<String>(super.getArgs());
-		args.add("-XelementWrapper");
+//		args.add("-XelementWrapper");
 		args.add("-XtoString");
 		args.add("-Xequals");
 		args.add("-XhashCode");
@@ -35,6 +35,7 @@ public class RunIssuesPlugin extends RunXJC2Mojo {
 		args.add("-XautoInheritance-jaxbElementsImplement=org.jvnet.jaxb2_commons.tests.issues.IssueJIIB14BaseInterfaceThree");
 		args.add("-XautoInheritance-jaxbElementsImplement=org.jvnet.jaxb2_commons.tests.issues.IssueJIIB14BaseInterfaceFour");
 		args.add("-Xannotate");
+		args.add("-Xsimplify");
 		return args;
 	}
 

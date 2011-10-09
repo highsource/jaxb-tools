@@ -2,6 +2,7 @@ package org.jvnet.mjiip.v_2_2;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.List;
 
 import org.apache.maven.plugin.MojoExecutionException;
@@ -47,21 +48,22 @@ public class OptionsFactory implements
 		options.entityResolver = optionsConfiguration.getCatalogResolver();
 
 		// Setup Catalog files (XML Entity Resolver).
-		final URL catalog = optionsConfiguration.getCatalog();
-		if (catalog != null) {
-			try {
-				if (options.entityResolver == null) {
-					CatalogManager.getStaticManager()
-							.setIgnoreMissingProperties(true);
-					options.entityResolver = new CatalogResolver(true);
+		for (URL catalog : optionsConfiguration.getCatalogs()) {
+			if (catalog != null) {
+				try {
+					if (options.entityResolver == null) {
+						CatalogManager.getStaticManager()
+								.setIgnoreMissingProperties(true);
+						options.entityResolver = new CatalogResolver(true);
+					}
+					((CatalogResolver) options.entityResolver).getCatalog()
+							.parseCatalog(catalog);
+					// options.addCatalog(catalog);
+				} catch (IOException ioex) {
+					throw new MojoExecutionException(MessageFormat.format(
+							"Error parsing catalog [{0}].",
+							catalog.toExternalForm()), ioex);
 				}
-				((CatalogResolver) options.entityResolver).getCatalog()
-						.parseCatalog(catalog);
-				// options.addCatalog(catalog);
-			} catch (IOException ioex) {
-				throw new MojoExecutionException(
-						"Error while setting the catalog to ["
-								+ catalog.toExternalForm() + "].", ioex);
 			}
 		}
 

@@ -230,14 +230,29 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo {
 		this.catalog = catalog;
 	}
 
-	protected URL getCatalogURL() throws MojoExecutionException {
-		if (catalog == null) {
-			return null;
-		} else {
-			URL catalogURL;
+	private ResourceEntry[] catalogs = new ResourceEntry[0];
+
+	/**
+	 * A list of catalog resources which could includes file sets, URLs, Maven
+	 * artifact resources.
+	 */
+	@MojoParameter(description = "Specifies catalogs as filesets, URLs or Maven artifact resources.")
+	public ResourceEntry[] getCatalogs() {
+		return catalogs;
+	}
+
+	public void setCatalogs(ResourceEntry[] catalogs) {
+		this.catalogs = catalogs;
+	}
+
+	protected List<URL> getCatalogUrls() throws MojoExecutionException {
+		final File catalog = getCatalog();
+		final ResourceEntry[] catalogs = getCatalogs();
+		final List<URL> catalogUrls = new ArrayList<URL>((catalog == null ? 0
+				: 1) + catalogs.length);
+		if (catalog != null) {
 			try {
-				catalogURL = getCatalog().toURI().toURL();
-				return catalogURL;
+				catalogUrls.add(getCatalog().toURI().toURL());
 			} catch (MalformedURLException murlex) {
 				throw new MojoExecutionException(
 						MessageFormat.format(
@@ -246,6 +261,12 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo {
 
 			}
 		}
+		for (ResourceEntry resourceEntry : catalogs) {
+			catalogUrls.addAll(createResourceEntryUrls(resourceEntry,
+					getSchemaDirectory().getAbsolutePath(),
+					getSchemaIncludes(), getSchemaExcludes()));
+		}
+		return catalogUrls;
 	}
 
 	protected String catalogResolver = CatalogResolver.class.getName();

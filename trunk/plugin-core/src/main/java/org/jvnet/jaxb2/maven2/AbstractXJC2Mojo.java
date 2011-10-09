@@ -600,7 +600,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo {
 
 	private boolean useDependenciesAsEpisodes = false;
 
-	@MojoParameter(description = "Use all of the project dependencies as episode artifacts. "
+	@MojoParameter(description = "Use all of the compile-scope project dependencies as episode artifacts. "
 			+ "It is assumed that episode artifacts contain an appropriate META-INF/sun-jaxb.episode resource. "
 			+ "Default is false.")
 	public boolean getUseDependenciesAsEpisodes() {

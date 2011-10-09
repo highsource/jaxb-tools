@@ -16,7 +16,7 @@ public class OptionsConfiguration {
 	private final String schemaLanguage;
 	private final List<URL> schemas;
 	private final List<URL> bindings;
-	private final URL catalog;
+	private final List<URL> catalogs;
 
 	private final CatalogResolver catalogResolver;
 
@@ -41,7 +41,7 @@ public class OptionsConfiguration {
 	private final String specVersion;
 
 	public OptionsConfiguration(String schemaLanguage, List<URL> schemas,
-			List<URL> bindings, URL catalog, CatalogResolver catalogResolver,
+			List<URL> bindings, List<URL> catalogs, CatalogResolver catalogResolver,
 			String generatePackage, File generateDirectory, boolean readOnly,
 			boolean extension, boolean strict, boolean verbose,
 			boolean debugMode, List<String> arguments, List<URL> plugins,
@@ -50,7 +50,7 @@ public class OptionsConfiguration {
 		this.schemaLanguage = schemaLanguage;
 		this.schemas = schemas;
 		this.bindings = bindings;
-		this.catalog = catalog;
+		this.catalogs = catalogs;
 		this.catalogResolver = catalogResolver;
 		this.generatePackage = generatePackage;
 		this.generateDirectory = generateDirectory;
@@ -96,8 +96,8 @@ public class OptionsConfiguration {
 		return bindFiles;
 	}
 
-	public URL getCatalog() {
-		return catalog;
+	public List<URL> getCatalogs() {
+		return catalogs;
 	}
 
 	public CatalogResolver getCatalogResolver() {
@@ -163,7 +163,7 @@ public class OptionsConfiguration {
 				//
 				"plugins={6}\n " +
 				//
-				"catalog={7}\n " +
+				"catalogs={7}\n " +
 				//
 				"catalogResolver={8}\n " +
 				//
@@ -180,7 +180,7 @@ public class OptionsConfiguration {
 				"arguments={14}" +
 				//
 				"]", specVersion, generateDirectory, generatePackage,
-				schemaLanguage, schemas, bindings, plugins, catalog,
+				schemaLanguage, schemas, bindings, plugins, catalogs,
 				catalogResolver, readOnly, extension, strict, verbose,
 				debugMode, arguments);
 	}

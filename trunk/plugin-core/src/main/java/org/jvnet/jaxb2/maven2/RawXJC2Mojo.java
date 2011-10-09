@@ -22,6 +22,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -258,7 +259,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		if (getVerbose()) {
 			logConfiguration();
 		}
-		
+
 		final OptionsConfiguration optionsConfiguration = createOptionsConfiguration();
 
 		if (getVerbose()) {
@@ -266,7 +267,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 
 		if (optionsConfiguration.getGrammars().isEmpty()) {
-			getLog().warn("Skipped XJC execution. Nothing to compile.");
+			getLog().info("Skipped XJC execution. No schemas to compile.");
 
 		} else {
 
@@ -377,9 +378,21 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 	protected void setupSchemaFiles() throws MojoExecutionException {
 		try {
-			this.schemaFiles = IOUtils.scanDirectoryForFiles(
-					getSchemaDirectory(), getSchemaIncludes(),
-					getSchemaExcludes(), !getDisableDefaultExcludes());
+			final File schemaDirectory = getSchemaDirectory();
+			if (schemaDirectory == null || !schemaDirectory.exists()) {
+				this.schemaFiles = Collections.emptyList();
+			} else if (schemaDirectory.isDirectory()) {
+				this.schemaFiles = IOUtils.scanDirectoryForFiles(
+						schemaDirectory, getSchemaIncludes(),
+						getSchemaExcludes(), !getDisableDefaultExcludes());
+
+			} else {
+				this.schemaFiles = Collections.emptyList();
+				getLog().warn(
+						MessageFormat.format(
+								"Schema directory [{0}] is not a directory.",
+								schemaDirectory.getPath()));
+			}
 		} catch (IOException ioex) {
 			throw new MojoExecutionException("Could not setup schema files.",
 					ioex);
@@ -388,11 +401,22 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 	protected void setupBindingFiles() throws MojoExecutionException {
 		try {
-			this.bindingFiles = IOUtils.scanDirectoryForFiles(
-					getBindingDirectory(), getBindingIncludes(),
-					getBindingExcludes(), !getDisableDefaultExcludes());
+			final File bindingDirectory = getBindingDirectory();
+			if (bindingDirectory == null || !bindingDirectory.exists()) {
+				this.bindingFiles = Collections.emptyList();
+			} else if (bindingDirectory.isDirectory()) {
+				this.bindingFiles = IOUtils.scanDirectoryForFiles(
+						bindingDirectory, getBindingIncludes(),
+						getBindingExcludes(), !getDisableDefaultExcludes());
+			} else {
+				this.bindingFiles = Collections.emptyList();
+				getLog().warn(
+						MessageFormat.format(
+								"Binding directory [{0}] is not a directory.",
+								bindingDirectory.getPath()));
+			}
 		} catch (IOException ioex) {
-			throw new MojoExecutionException("Could not setup schema files.",
+			throw new MojoExecutionException("Could not setup binding files.",
 					ioex);
 		}
 	}

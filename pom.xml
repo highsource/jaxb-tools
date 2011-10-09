@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jvnet.jaxb2.maven2</groupId>
 	<artifactId>maven-jaxb2-plugin-project</artifactId>
-	<version>0.8.0</version>
+	<version>0.8.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Maven JAXB 2.x Plugin Project</name>
 	<description>Maven2 plugin for JAXB 2.x XJC compiler to generate Java sources from XML Schemas.</description>
@@ -88,18 +88,6 @@
 			</activation>
 			<modules>
 				<module>tests</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>release</id>
-			<activation>
-				<property>
-					<name>performRelease</name>
-					<value>true</value>
-				</property>
-			</activation>
-			<modules>
-				<module>samples</module>
 			</modules>
 		</profile>
 	</profiles>
@@ -215,16 +203,6 @@
 					<configuration>
 						<source>1.5</source>
 						<target>1.5</target>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-release-plugin</artifactId>
-					<version>2.1</version>
-					<configuration>
-						<mavenExecutorId>forked-path</mavenExecutorId>
-						<useReleaseProfile>false</useReleaseProfile>
-						<arguments>-Psonatype-oss-release -Psamples -Ptests -DperformRelease</arguments>
 					</configuration>
 				</plugin>
 			</plugins>

@@ -82,7 +82,6 @@ public class ArtifactUtils {
 			project.getRemoteArtifactRepositories(), localRepository);
 		}
 
-		@SuppressWarnings("unchecked")
 		final Set<Artifact> resolvedArtifacts = artifacts;
 		return resolvedArtifacts;
 	}

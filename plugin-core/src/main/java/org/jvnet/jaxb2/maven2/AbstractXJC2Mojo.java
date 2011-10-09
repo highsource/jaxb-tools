@@ -573,8 +573,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo {
 		this.plugins = plugins;
 	}
 
-	private Dependency[] episodes;
-
 	private MavenProject project;
 
 	private ArtifactResolver artifactResolver;
@@ -589,13 +587,28 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo {
 
 	private List<org.apache.maven.artifact.Artifact> pluginArtifacts;
 
-	@MojoParameter(description = " If you want to use existing artifacts as episodes for separate compilation, configure them as episodes/episode elements. It is assumed that episode artifacts contain an appropriate META-INF/sun-jaxb.episode resource.")
+	private Dependency[] episodes;
+
+	@MojoParameter(description = "If you want to use existing artifacts as episodes for separate compilation, configure them as episodes/episode elements. It is assumed that episode artifacts contain an appropriate META-INF/sun-jaxb.episode resource.")
 	public Dependency[] getEpisodes() {
 		return episodes;
 	}
 
 	public void setEpisodes(Dependency[] episodes) {
 		this.episodes = episodes;
+	}
+
+	private boolean useDependenciesAsEpisodes = false;
+
+	@MojoParameter(description = "Use all of the project dependencies as episode artifacts. "
+			+ "It is assumed that episode artifacts contain an appropriate META-INF/sun-jaxb.episode resource. "
+			+ "Default is false.")
+	public boolean getUseDependenciesAsEpisodes() {
+		return useDependenciesAsEpisodes;
+	}
+
+	public void setUseDependenciesAsEpisodes(boolean useDependenciesAsEpisodes) {
+		this.useDependenciesAsEpisodes = useDependenciesAsEpisodes;
 	}
 
 	private String specVersion = "2.1";
@@ -647,6 +660,8 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo {
 		getLog().info("classpathElements:" + getClasspathElements());
 		getLog().info("plugins:" + Arrays.toString(getPlugins()));
 		getLog().info("episodes:" + Arrays.toString(getEpisodes()));
+		getLog().info(
+				"useDependenciesAsEpisodes:" + getUseDependenciesAsEpisodes());
 		getLog().info("xjcPlugins:" + Arrays.toString(getPlugins()));
 		getLog().info("episodes:" + Arrays.toString(getEpisodes()));
 	}

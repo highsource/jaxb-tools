@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -227,9 +228,21 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	protected void resolveEpisodeArtifacts()
 			throws ArtifactResolutionException, ArtifactNotFoundException,
 			InvalidDependencyVersionException {
-		this.episodeArtifacts = ArtifactUtils.resolve(getArtifactFactory(),
-				getArtifactResolver(), getLocalRepository(),
-				getArtifactMetadataSource(), getEpisodes(), getProject());
+		this.episodeArtifacts = new LinkedHashSet<Artifact>();
+		{
+			final Collection<Artifact> episodeArtifacts = ArtifactUtils
+					.resolve(getArtifactFactory(), getArtifactResolver(),
+							getLocalRepository(), getArtifactMetadataSource(),
+							getEpisodes(), getProject());
+			this.episodeArtifacts.addAll(episodeArtifacts);
+		}
+		{
+			if (getUseDependenciesAsEpisodes()) {
+				@SuppressWarnings("unchecked")
+				final Collection<Artifact> projectArtifacts = getProject().getArtifacts();
+				this.episodeArtifacts.addAll(projectArtifacts);
+			}
+		}
 		this.episodeFiles = ArtifactUtils.getFiles(this.episodeArtifacts);
 	}
 

@@ -12,6 +12,21 @@
 		<version>0.6.3-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
+	<distributionManagement>
+		<repository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>org.highsource.repository.maven2.releases</id>
+			<url>${sftp.repository.highsource.org}/maven2/releases</url>
+		</repository>
+		<snapshotRepository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>org.highsource.repository.maven2.snapshots</id>
+			<url>${sftp.repository.highsource.org}/maven2/snapshots</url>
+		</snapshotRepository>
+		<site>
+			<url>${sftp.static.highsource.org}/jaxb2-basics/dist</url>
+		</site>
+	</distributionManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.jvnet.jaxb2_commons</groupId>

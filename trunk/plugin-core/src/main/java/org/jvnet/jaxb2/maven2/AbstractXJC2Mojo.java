@@ -34,7 +34,8 @@ import org.jvnet.jaxb2.maven2.util.IOUtils;
 
 import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
 
-public abstract class AbstractXJC2Mojo<O> extends AbstractMojo {
+public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
+		DependencyResourceResolver {
 
 	private String schemaLanguage;
 
@@ -269,14 +270,14 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo {
 		return catalogUrls;
 	}
 
-	protected String catalogResolver = CatalogResolver.class.getName();
+	protected String catalogResolver = null;
 
 	/**
 	 * Provides the class name of the catalog resolver.
 	 * 
 	 * @return Class name of the catalog resolver.
 	 */
-	@MojoParameter(expression = "${maven.xjc2.catalogResolver}", defaultValue = "com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver", description = "Class name of the catalog resolver.")
+	@MojoParameter(expression = "${maven.xjc2.catalogResolver}", description = "Class name of the catalog resolver.")
 	public String getCatalogResolver() {
 		return catalogResolver;
 	}
@@ -833,15 +834,14 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo {
 				urls.add(createUrl(urlDraft));
 			}
 			if (resourceEntry.getDependencyResource() != null) {
-				urls.add(createUrlForDependencyResource(resourceEntry
+				urls.add(resolveDependencyResource(resourceEntry
 						.getDependencyResource()));
 			}
 			return urls;
 		}
 	}
 
-	private URL createUrlForDependencyResource(
-			DependencyResource dependencyResource)
+	public URL resolveDependencyResource(DependencyResource dependencyResource)
 			throws MojoExecutionException {
 
 		if (dependencyResource.getGroupId() == null) {
@@ -860,13 +860,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo {
 		if (dependencyResource.getType() == null) {
 			throw new MojoExecutionException(MessageFormat.format(
 					"Dependency resource [{0}] does not define the type.",
-					dependencyResource));
-		}
-
-		String resource = dependencyResource.getResource();
-		if (resource == null) {
-			throw new MojoExecutionException(MessageFormat.format(
-					"Dependency resource [{0}] does not define the resource.",
 					dependencyResource));
 		}
 
@@ -902,7 +895,13 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo {
 			getArtifactResolver().resolve(artifact,
 					getProject().getRemoteArtifactRepositories(),
 					getLocalRepository());
-
+			final String resource = dependencyResource.getResource();
+			if (resource == null) {
+				throw new MojoExecutionException(
+						MessageFormat
+								.format("Dependency resource [{0}] does not define the resource.",
+										dependencyResource));
+			}
 			return createArtifactResourceUrl(artifact, resource);
 		} catch (ArtifactNotFoundException anfex) {
 			throw new MojoExecutionException(MessageFormat.format(

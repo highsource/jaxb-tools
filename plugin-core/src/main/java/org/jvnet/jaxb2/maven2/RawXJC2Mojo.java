@@ -40,6 +40,7 @@ import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.artifact.InvalidDependencyVersionException;
 import org.codehaus.plexus.util.FileUtils;
+import org.jvnet.jaxb2.maven2.resolver.tools.MavenCatalogResolver;
 import org.jvnet.jaxb2.maven2.util.ArtifactUtils;
 import org.jvnet.jaxb2.maven2.util.CollectionUtils;
 import org.jvnet.jaxb2.maven2.util.IOUtils;
@@ -527,13 +528,12 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	 */
 	protected CatalogResolver createCatalogResolver()
 			throws MojoExecutionException {
+		final CatalogManager catalogManager = CatalogManager.getStaticManager();
+		catalogManager.setIgnoreMissingProperties(true);
 		if (getCatalogResolver() == null) {
-			return null;
+			return new MavenCatalogResolver(catalogManager, this);
 		} else {
-
 			try {
-				CatalogManager.getStaticManager().setIgnoreMissingProperties(
-						true);
 				final String catalogResolverClassName = getCatalogResolver()
 						.trim();
 				final Class<?> draftCatalogResolverClass = Thread
@@ -629,10 +629,10 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			throws MojoExecutionException {
 		final OptionsConfiguration optionsConfiguration = new OptionsConfiguration(
 				getSchemaLanguage(), getSchemaUrls(), getBindingUrls(),
-				getCatalogUrls(), createCatalogResolver(), getGeneratePackage(),
-				getGenerateDirectory(), getReadOnly(), getExtension(),
-				getStrict(), getVerbose(), getDebug(), getArguments(),
-				getXjcPluginURLs(), getSpecVersion());
+				getCatalogUrls(), createCatalogResolver(),
+				getGeneratePackage(), getGenerateDirectory(), getReadOnly(),
+				getExtension(), getStrict(), getVerbose(), getDebug(),
+				getArguments(), getXjcPluginURLs(), getSpecVersion());
 		return optionsConfiguration;
 	}
 }

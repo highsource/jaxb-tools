@@ -13,6 +13,8 @@ import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
 
 public class OptionsConfiguration {
 
+	private final String encoding;
+
 	private final String schemaLanguage;
 	private final List<URL> schemas;
 	private final List<URL> bindings;
@@ -40,13 +42,14 @@ public class OptionsConfiguration {
 
 	private final String specVersion;
 
-	public OptionsConfiguration(String schemaLanguage, List<URL> schemas,
-			List<URL> bindings, List<URL> catalogs, CatalogResolver catalogResolver,
-			String generatePackage, File generateDirectory, boolean readOnly,
-			boolean extension, boolean strict, boolean verbose,
-			boolean debugMode, List<String> arguments, List<URL> plugins,
-			String specVersion) {
+	public OptionsConfiguration(String encoding, String schemaLanguage,
+			List<URL> schemas, List<URL> bindings, List<URL> catalogs,
+			CatalogResolver catalogResolver, String generatePackage,
+			File generateDirectory, boolean readOnly, boolean extension,
+			boolean strict, boolean verbose, boolean debugMode,
+			List<String> arguments, List<URL> plugins, String specVersion) {
 		super();
+		this.encoding = encoding;
 		this.schemaLanguage = schemaLanguage;
 		this.schemas = schemas;
 		this.bindings = bindings;
@@ -62,6 +65,10 @@ public class OptionsConfiguration {
 		this.arguments = arguments;
 		this.plugins = plugins;
 		this.specVersion = specVersion;
+	}
+
+	public String getEncoding() {
+		return encoding;
 	}
 
 	public String getSchemaLanguage() {

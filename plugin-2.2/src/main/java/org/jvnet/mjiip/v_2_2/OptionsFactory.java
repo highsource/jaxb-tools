@@ -2,6 +2,8 @@ package org.jvnet.mjiip.v_2_2;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -34,6 +36,10 @@ public class OptionsFactory implements
 
 		options.target = SpecVersion.V2_2;
 
+		final String encoding = optionsConfiguration.getEncoding();
+		if (encoding != null) {
+			options.encoding = createEncoding(encoding);
+		}
 		options.setSchemaLanguage(createLanguage(optionsConfiguration
 				.getSchemaLanguage()));
 
@@ -93,6 +99,24 @@ public class OptionsFactory implements
 		return options;
 	}
 
+	private String createEncoding(String encoding)
+			throws MojoExecutionException {
+		if (encoding == null) {
+			return null;
+		}
+		try {
+			if (!Charset.isSupported(encoding)) {
+				throw new MojoExecutionException(MessageFormat.format(
+						"Unsupported encoding [{0}].", encoding));
+			}
+			return encoding;
+		} catch (IllegalCharsetNameException icne) {
+			throw new MojoExecutionException(MessageFormat.format(
+					"Unsupported encoding [{0}].", encoding));
+		}
+
+	}
+
 	private Language createLanguage(String schemaLanguage)
 			throws MojoExecutionException {
 		if (StringUtils.isEmpty(schemaLanguage)) {
@@ -111,7 +135,7 @@ public class OptionsFactory implements
 			return Language.WSDL;
 		else {
 			throw new MojoExecutionException("Unknown schemaLanguage ["
-					+ schemaLanguage + "]");
+					+ schemaLanguage + "].");
 		}
 	}
 }

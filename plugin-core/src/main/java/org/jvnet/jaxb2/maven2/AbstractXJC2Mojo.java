@@ -32,10 +32,23 @@ import org.jfrog.maven.annomojo.annotations.MojoParameter;
 import org.jvnet.jaxb2.maven2.util.ArtifactUtils;
 import org.jvnet.jaxb2.maven2.util.IOUtils;
 
-import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
-
 public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		DependencyResourceResolver {
+
+	private String encoding;
+
+	/**
+	 * Encoding for the generated sources, defaults to
+	 * ${project.build.sourceEncoding}.
+	 */
+	@MojoParameter(expression = "${encoding}", defaultValue = "${project.build.sourceEncoding}", description = "Encoding for the generated sources, defaults to ${project.build.sourceEncoding}.")
+	public String getEncoding() {
+		return encoding;
+	}
+
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
+	}
 
 	private String schemaLanguage;
 
@@ -650,6 +663,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 
 		getLog().info("pluginArtifacts:" + getPluginArtifacts());
 		getLog().info("specVersion:" + getSpecVersion());
+		getLog().info("encoding:" + getEncoding());
 		getLog().info("schemaLanguage:" + getSchemaLanguage());
 		getLog().info("schemaDirectory:" + getSchemaDirectory());
 		getLog().info("schemaIncludes:" + Arrays.toString(getSchemaIncludes()));

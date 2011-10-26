@@ -628,8 +628,8 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	public OptionsConfiguration createOptionsConfiguration()
 			throws MojoExecutionException {
 		final OptionsConfiguration optionsConfiguration = new OptionsConfiguration(
-				getSchemaLanguage(), getSchemaUrls(), getBindingUrls(),
-				getCatalogUrls(), createCatalogResolver(),
+				getEncoding(), getSchemaLanguage(), getSchemaUrls(),
+				getBindingUrls(), getCatalogUrls(), createCatalogResolver(),
 				getGeneratePackage(), getGenerateDirectory(), getReadOnly(),
 				getExtension(), getStrict(), getVerbose(), getDebug(),
 				getArguments(), getXjcPluginURLs(), getSpecVersion());

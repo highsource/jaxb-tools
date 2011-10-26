@@ -107,8 +107,8 @@ public class OptionsFactory implements
 		else if ("WSDL".equalsIgnoreCase(schemaLanguage))
 			return Language.WSDL;
 		else {
-			throw new MojoExecutionException("Unknown schemaLanguage ["
-					+ schemaLanguage + "]");
+			throw new MojoExecutionException(MessageFormat.format(
+					"Unknown schemaLanguage [{0}].", schemaLanguage));
 		}
 	}
 }

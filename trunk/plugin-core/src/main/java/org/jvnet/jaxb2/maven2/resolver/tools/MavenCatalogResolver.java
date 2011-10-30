@@ -33,9 +33,6 @@ public class MavenCatalogResolver extends
 		final String result = super.getResolvedEntity(publicId, systemId);
 
 		if (result == null) {
-			System.err.println(MessageFormat.format(
-					"Could not resolve publicId [{0}], systemId [{1}]",
-					publicId, systemId));
 			return null;
 		}
 

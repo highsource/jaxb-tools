@@ -173,6 +173,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		if (dependencies != null) {
 			final Map<String, Dependency> dependencyMap = new TreeMap<String, Dependency>();
 			for (final Dependency dependency : dependencies) {
+				if (dependency.getScope() == null) {
+					dependency.setScope(Artifact.SCOPE_RUNTIME);
+				}
 				dependencyMap.put(dependency.getManagementKey(), dependency);
 			}
 
@@ -542,10 +545,10 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 				if (!CatalogResolver.class
 						.isAssignableFrom(draftCatalogResolverClass)) {
 					throw new MojoExecutionException(
-							"Specified catalog resolver class ["
-									+ catalogResolver
-									+ "] could not be casted to ["
-									+ CatalogResolver.class + "].");
+							MessageFormat
+									.format("Specified catalog resolver class [{0}] could not be casted to [{1}].",
+											catalogResolver,
+											CatalogResolver.class));
 				} else {
 					@SuppressWarnings("unchecked")
 					final Class<? extends CatalogResolver> catalogResolverClass = (Class<? extends CatalogResolver>) draftCatalogResolverClass;
@@ -555,16 +558,17 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 				}
 			} catch (ClassNotFoundException cnfex) {
 				throw new MojoExecutionException(
-						"Could not find specified catalog resolver class ["
-								+ catalogResolver + "].", cnfex);
+						MessageFormat.format(
+								"Could not find specified catalog resolver class [{0}].",
+								catalogResolver), cnfex);
 			} catch (InstantiationException iex) {
-				throw new MojoExecutionException(
-						"Could not instantiate catalog resolver class ["
-								+ catalogResolver + "].", iex);
+				throw new MojoExecutionException(MessageFormat.format(
+						"Could not instantiate catalog resolver class [{0}].",
+						catalogResolver), iex);
 			} catch (IllegalAccessException iaex) {
-				throw new MojoExecutionException(
-						"Could not instantiate catalog resolver class ["
-								+ catalogResolver + "].", iaex);
+				throw new MojoExecutionException(MessageFormat.format(
+						"Could not instantiate catalog resolver class [{0}].",
+						catalogResolver), iaex);
 			}
 
 		}

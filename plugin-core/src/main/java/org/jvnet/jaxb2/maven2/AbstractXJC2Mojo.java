@@ -895,10 +895,14 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 			@SuppressWarnings("unchecked")
 			final Set<Artifact> artifacts = MavenMetadataSource
 					.createArtifacts(getArtifactFactory(),
-							Arrays.asList(dependencyResource), "runtime", null,
-							getProject());
+							Arrays.asList(dependencyResource),
+							Artifact.SCOPE_RUNTIME, null, getProject());
 
 			if (artifacts.size() != 1) {
+				getLog().error(
+						MessageFormat
+								.format("Resolved dependency resource [{0}] to artifacts [{1}].",
+										dependencyResource, artifacts));
 				throw new MojoExecutionException(MessageFormat.format(
 						"Could not create artifact for dependency [{0}].",
 						dependencyResource));
@@ -909,6 +913,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 			getArtifactResolver().resolve(artifact,
 					getProject().getRemoteArtifactRepositories(),
 					getLocalRepository());
+
 			final String resource = dependencyResource.getResource();
 			if (resource == null) {
 				throw new MojoExecutionException(
@@ -916,7 +921,13 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 								.format("Dependency resource [{0}] does not define the resource.",
 										dependencyResource));
 			}
-			return createArtifactResourceUrl(artifact, resource);
+			final URL resourceURL = createArtifactResourceUrl(artifact,
+					resource);
+			getLog().debug(
+					MessageFormat
+							.format("Resolved dependency resource [{0}] to resource URL [{1}].",
+									dependencyResource, resourceURL));
+			return resourceURL;
 		} catch (ArtifactNotFoundException anfex) {
 			throw new MojoExecutionException(MessageFormat.format(
 					"Could not find artifact for dependency [{0}].",

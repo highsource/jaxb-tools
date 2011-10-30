@@ -2,6 +2,7 @@ package org.jvnet.jaxb2.maven2;
 
 import java.text.MessageFormat;
 
+import org.apache.maven.artifact.Artifact;
 import org.apache.maven.model.Dependency;
 import org.jvnet.jaxb2.maven2.util.StringUtils;
 
@@ -16,6 +17,10 @@ public class DependencyResource extends Dependency {
 
 	public void setResource(String resource) {
 		this.resource = resource;
+	}
+
+	public DependencyResource() {
+		setScope(Artifact.SCOPE_RUNTIME);
 	}
 
 	public String toString() {
@@ -80,7 +85,7 @@ public class DependencyResource extends Dependency {
 		} else {
 			classifier = null;
 		}
-		
+
 		if (dependencyParts.length > 4) {
 			version = (dependencyParts[4] == null || dependencyParts[4]
 					.length() == 0) ? null : dependencyParts[4];

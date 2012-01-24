@@ -31,6 +31,7 @@ import org.jfrog.maven.annomojo.annotations.MojoComponent;
 import org.jfrog.maven.annomojo.annotations.MojoParameter;
 import org.jvnet.jaxb2.maven2.util.ArtifactUtils;
 import org.jvnet.jaxb2.maven2.util.IOUtils;
+import org.sonatype.plexus.build.incremental.BuildContext;
 
 public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		DependencyResourceResolver {
@@ -620,6 +621,8 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 
 	private MavenProjectBuilder mavenProjectBuilder;
 
+	private BuildContext buildContext;
+
 	private List<org.apache.maven.artifact.Artifact> pluginArtifacts;
 
 	private Dependency[] episodes;
@@ -778,6 +781,15 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 
 	public void setMavenProjectBuilder(MavenProjectBuilder mavenProjectBuilder) {
 		this.mavenProjectBuilder = mavenProjectBuilder;
+	}
+
+	@MojoComponent
+	public BuildContext getBuildContext() {
+		return buildContext;
+	}
+
+	public void setBuildContext(BuildContext buildContext) {
+		this.buildContext = buildContext;
 	}
 
 	protected void logApiConfiguration() {
@@ -1009,9 +1021,9 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		String[] includesArray = includes.toArray(new String[includes.size()]);
 		String[] excludesArray = excludes.toArray(new String[excludes.size()]);
 		try {
-			final List<File> files = IOUtils.scanDirectoryForFiles(new File(
-					directory), includesArray, excludesArray,
-					!getDisableDefaultExcludes());
+			final List<File> files = IOUtils.scanDirectoryForFiles(
+					getBuildContext(), new File(directory), includesArray,
+					excludesArray, !getDisableDefaultExcludes());
 
 			final List<URL> urls = new ArrayList<URL>(files.size());
 

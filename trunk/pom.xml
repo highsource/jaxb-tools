@@ -61,10 +61,11 @@
 		<module>testing</module>
 	</modules>
 	<properties>
+		<maven.version>2.0.6</maven.version>
 		<jaxb20.version>2.0.5</jaxb20.version>
 		<jaxb21.version>2.1.13</jaxb21.version>
-		<jaxb22.version>2.2.5-SNAPSHOT</jaxb22.version>
-		<jaxb.version>2.2.5-SNAPSHOT</jaxb.version>
+		<jaxb22.version>2.2.5-b10</jaxb22.version>
+		<jaxb.version>2.2.5-b10</jaxb.version>
 		<jaxb2-basics.version>0.6.0</jaxb2-basics.version>
 	</properties>
 	<profiles>
@@ -136,21 +137,36 @@
 				<artifactId>maven-plugin-anno</artifactId>
 				<version>1.3.1</version>
 			</dependency>
+			<dependency>
+				<groupId>org.jfrog.maven.annomojo</groupId>
+				<artifactId>maven-plugin-tools-anno</artifactId>
+				<version>1.3.1</version>
+			</dependency>
 			<!-- Maven plugin and api classes -->
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-plugin-api</artifactId>
-				<version>2.2.1</version>
+				<version>${maven.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-project</artifactId>
-				<version>2.2.1</version>
+				<version>${maven.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.maven.shared</groupId>
+				<groupId>org.sonatype.plexus</groupId>
+				<artifactId>plexus-build-api</artifactId>
+				<version>0.0.7</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.plexus</groupId>
+				<artifactId>plexus-utils</artifactId>
+				<version>1.5.15</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.maven.plugin-testing</groupId>
 				<artifactId>maven-plugin-testing-harness</artifactId>
-				<version>1.1</version>
+				<version>1.2</version>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>

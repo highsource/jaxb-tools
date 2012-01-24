@@ -7,8 +7,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.codehaus.plexus.util.DirectoryScanner;
+import org.codehaus.plexus.util.Scanner;
 import org.jvnet.jaxb2.maven2.util.CollectionUtils.Function;
+import org.sonatype.plexus.build.incremental.BuildContext;
 import org.xml.sax.InputSource;
 
 public class IOUtils {
@@ -73,11 +74,13 @@ public class IOUtils {
 	 * @return Files from the given directory which satisfy given patterns. The
 	 *         files are {@link File#getCanonicalFile() canonical}.
 	 */
-	public static List<File> scanDirectoryForFiles(final File directory,
-			final String[] includes, final String[] excludes,
-			boolean defaultExcludes) throws IOException {
-		final DirectoryScanner scanner = new DirectoryScanner();
-		scanner.setBasedir(directory.getAbsoluteFile());
+	public static List<File> scanDirectoryForFiles(BuildContext buildContext,
+			final File directory, final String[] includes,
+			final String[] excludes, boolean defaultExcludes)
+			throws IOException {
+		final Scanner scanner = buildContext.newScanner(directory, true);
+//		final DirectoryScanner scanner = new DirectoryScanner();
+//		scanner.setBasedir(directory.getAbsoluteFile());
 		scanner.setIncludes(includes);
 		scanner.setExcludes(excludes);
 		if (defaultExcludes) {

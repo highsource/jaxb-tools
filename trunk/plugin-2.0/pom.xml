@@ -10,10 +10,17 @@
 		<version>0.8.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
+	<prerequisites>
+		<maven>${maven.version}</maven>
+	</prerequisites>
 	<dependencies>
 		<dependency>
 			<groupId>org.jvnet.jaxb2.maven2</groupId>
 			<artifactId>maven-jaxb2-plugin-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-utils</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
@@ -26,7 +33,7 @@
 			<version>${jaxb20.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.maven.shared</groupId>
+			<groupId>org.apache.maven.plugin-testing</groupId>
 			<artifactId>maven-plugin-testing-harness</artifactId>
 			<scope>test</scope>
 		</dependency>
@@ -36,7 +43,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-plugin-plugin</artifactId>
-				<version>2.3</version>
 			</plugin>
 		</plugins>
 	</reporting>
@@ -51,7 +57,7 @@
 						<groupId>org.jfrog.maven.annomojo</groupId>
 						<artifactId>maven-plugin-tools-anno</artifactId>
 						<version>1.3.1</version>
-						<scope>runtime</scope>
+						<!--scope>runtime</scope-->
 					</dependency>
 				</dependencies>
 			</plugin>

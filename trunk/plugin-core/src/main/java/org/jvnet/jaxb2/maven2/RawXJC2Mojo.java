@@ -307,9 +307,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 				return;
 			}
 			doExecute(options);
-			getLog().info("Refreshing.");
-			getBuildContext().refresh(getGenerateDirectory());
-			getBuildContext().addMessage(getGenerateDirectory(), 0, 0, "refreshing", 1, null);
+//			getBuildContext().refresh(getGenerateDirectory());
 		}
 
 		if (getVerbose()) {

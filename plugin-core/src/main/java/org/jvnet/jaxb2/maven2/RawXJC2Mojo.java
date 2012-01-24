@@ -306,8 +306,10 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 						"Skipped XJC execution. Generated sources were up-to-date.");
 				return;
 			}
-
 			doExecute(options);
+			getLog().info("Refreshing.");
+			getBuildContext().refresh(getGenerateDirectory());
+			getBuildContext().addMessage(getGenerateDirectory(), 0, 0, "refreshing", 1, null);
 		}
 
 		if (getVerbose()) {
@@ -410,8 +412,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 				this.schemaFiles = Collections.emptyList();
 			} else if (schemaDirectory.isDirectory()) {
 				this.schemaFiles = IOUtils.scanDirectoryForFiles(
-						schemaDirectory, getSchemaIncludes(),
-						getSchemaExcludes(), !getDisableDefaultExcludes());
+						getBuildContext(), schemaDirectory,
+						getSchemaIncludes(), getSchemaExcludes(),
+						!getDisableDefaultExcludes());
 
 			} else {
 				this.schemaFiles = Collections.emptyList();
@@ -433,8 +436,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 				this.bindingFiles = Collections.emptyList();
 			} else if (bindingDirectory.isDirectory()) {
 				this.bindingFiles = IOUtils.scanDirectoryForFiles(
-						bindingDirectory, getBindingIncludes(),
-						getBindingExcludes(), !getDisableDefaultExcludes());
+						getBuildContext(), bindingDirectory,
+						getBindingIncludes(), getBindingExcludes(),
+						!getDisableDefaultExcludes());
 			} else {
 				this.bindingFiles = Collections.emptyList();
 				getLog().warn(
@@ -467,8 +471,8 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	protected void setupProducesFiles() throws MojoExecutionException {
 		try {
 			this.producesFiles = IOUtils.scanDirectoryForFiles(
-					getGenerateDirectory(), getProduces(), new String[0],
-					!getDisableDefaultExcludes());
+					getBuildContext(), getGenerateDirectory(), getProduces(),
+					new String[0], !getDisableDefaultExcludes());
 		} catch (IOException ioex) {
 			throw new MojoExecutionException("Could not setup produced files.",
 					ioex);

@@ -1,6 +1,9 @@
 package org.jvnet.mjiip.v_2_1;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.Iterator;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.jfrog.maven.annomojo.annotations.MojoGoal;
@@ -9,6 +12,7 @@ import org.jvnet.jaxb2.maven2.RawXJC2Mojo;
 
 import com.sun.codemodel.CodeWriter;
 import com.sun.codemodel.JCodeModel;
+import com.sun.codemodel.JPackage;
 import com.sun.tools.xjc.ModelLoader;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.Model;
@@ -72,23 +76,57 @@ public class XJC21Mojo extends RawXJC2Mojo<Options> {
 	protected void writeCode(Outline outline) throws MojoExecutionException {
 
 		if (getWriteCode()) {
-			if (getVerbose())
+			final Model model = outline.getModel();
+			final JCodeModel codeModel = model.codeModel;
+			final File targetDirectory = model.options.targetDir;
+			if (getVerbose()) {
 				getLog().info(
-						"Writing output to ["
-								+ outline.getModel().options.targetDir
-										.getAbsolutePath() + "].");
-
+						MessageFormat.format("Writing output to [{0}].",
+								targetDirectory.getAbsolutePath()));
+			}
 			try {
+				if (getCleanPackageDirectories()) {
+					if (getVerbose()) {
+						getLog().info("Cleaning package directories.");
+					}
+					cleanPackageDirectories(targetDirectory, codeModel);
+				}
 				final CodeWriter codeWriter = new LoggingCodeWriter(
-						outline.getModel().options.createCodeWriter(),
-						getLog(), getVerbose());
-				outline.getModel().codeModel.build(codeWriter);
+						model.options.createCodeWriter(), getLog(),
+						getVerbose());
+				codeModel.build(codeWriter);
 			} catch (IOException e) {
 				throw new MojoExecutionException("Unable to write files: "
 						+ e.getMessage(), e);
 			}
 		} else {
-			getLog().info("Code will not be written.");
+			getLog().info(
+					"The [writeCode] setting is set to false, the code will not be written.");
+		}
+	}
+
+	private void cleanPackageDirectories(File targetDirectory,
+			JCodeModel codeModel) {
+		for (Iterator<JPackage> packages = codeModel.packages(); packages
+				.hasNext();) {
+			final JPackage _package = packages.next();
+			final File packageDirectory;
+			if (_package.isUnnamed()) {
+				packageDirectory = targetDirectory;
+			} else {
+				packageDirectory = new File(targetDirectory, _package.name()
+						.replace('.', File.separatorChar));
+			}
+			if (packageDirectory.isDirectory()) {
+				if (getVerbose()) {
+					getLog().info(
+							MessageFormat
+									.format("Cleaning directory [{0}] of the package [{1}].",
+											targetDirectory.getAbsolutePath(),
+											_package.name()));
+				}
+				cleanPackageDirectory(packageDirectory);
+			}
 		}
 	}
 

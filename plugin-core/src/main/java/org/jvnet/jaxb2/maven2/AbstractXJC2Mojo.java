@@ -1,6 +1,7 @@
 package org.jvnet.jaxb2.maven2;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -527,6 +528,24 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 
 	public void setRemoveOldOutput(boolean removeOldOutput) {
 		this.removeOldOutput = removeOldOutput;
+	}
+
+	private boolean cleanPackageDirectories = true;
+
+	/**
+	 * <p>
+	 * If 'true', package directories will be cleaned before the XJC binding
+	 * compiler generates the source files.
+	 * </p>
+	 * 
+	 */
+	@MojoParameter(defaultValue = "true", expression = "${maven.xjc2.removeOldPackages}", description = "If true (default), package directories will be cleaned before the XJC binding compiler generates the source files.")
+	public boolean getCleanPackageDirectories() {
+		return cleanPackageDirectories;
+	}
+
+	public void setCleanPackageDirectories(boolean removeOldPackages) {
+		this.cleanPackageDirectories = removeOldPackages;
 	}
 
 	private String[] produces = new String[] { "**/*.*", "**/*.java",
@@ -1060,5 +1079,20 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	}
 
 	protected abstract OptionsFactory<O> getOptionsFactory();
+
+	protected void cleanPackageDirectory(final File packageDirectory) {
+		final File[] files = packageDirectory.listFiles(new FileFilter() {
+
+			@Override
+			public boolean accept(File file) {
+				return file.isFile();
+			}
+		});
+		if (files != null) {
+			for (File file : files) {
+				file.delete();
+			}
+		}
+	}
 
 }

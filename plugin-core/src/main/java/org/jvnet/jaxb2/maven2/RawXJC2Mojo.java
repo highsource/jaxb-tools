@@ -585,24 +585,47 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		final List<File> dependsFiles = getDependsFiles();
 		final List<File> producesFiles = getProducesFiles();
 
-		if (getVerbose())
-			getLog().info("Checking up-to-date depends [" + dependsFiles + "].");
-
-		if (getVerbose())
+		boolean delta = false;
+		{
+			for (File dependsFile : dependsFiles) {
+				if (getBuildContext().hasDelta(dependsFile)) {
+					if (getVerbose()) {
+						getLog().info(
+								"File [" + dependsFile.getAbsolutePath()
+										+ "] was changed since the last build.");
+					}
+					delta = true;
+				}
+			}
+		}
+		if (!delta) {
+			if (getVerbose()) {
+				getLog().info("No files were changed since the last build.");
+			}
+			return true;
+		}
+		if (getVerbose()) {
 			getLog().info(
-					"Checking up-to-date produces [" + producesFiles + "].");
+					MessageFormat.format("Checking up-to-date depends [{0}].",
+							dependsFiles));
+		}
+		if (getVerbose()) {
+			getLog().info(
+					MessageFormat.format("Checking up-to-date produces [{0}].",
+							producesFiles));
+		}
 
 		final Long dependsTimestamp = CollectionUtils.bestValue(dependsFiles,
 				IOUtils.LAST_MODIFIED, CollectionUtils.<Long> gt());
 		final Long producesTimestamp = CollectionUtils.bestValue(producesFiles,
 				IOUtils.LAST_MODIFIED, CollectionUtils.<Long> lt());
 
-		if (getVerbose())
+		if (getVerbose()) {
 			getLog().info(
-					"Depends timestamp [" + dependsTimestamp
-							+ "], produces timestamp [" + producesTimestamp
-							+ "].");
-
+					MessageFormat
+							.format("Depends timestamp [{0}], produces timestamp [{1}].",
+									dependsTimestamp, producesTimestamp));
+		}
 		return producesTimestamp != null
 				&& CollectionUtils.<Long> lt().compare(dependsTimestamp,
 						producesTimestamp) > 0;

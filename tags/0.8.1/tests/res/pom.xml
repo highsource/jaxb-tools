@@ -1,0 +1,79 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jvnet.jaxb2.maven2</groupId>
+	<artifactId>maven-jaxb2-plugin-tests-res</artifactId>
+	<parent>
+		<groupId>org.jvnet.jaxb2.maven2</groupId>
+		<artifactId>maven-jaxb2-plugin-tests</artifactId>
+		<version>0.8.1</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<packaging>jar</packaging>
+	<name>Maven JAXB 2.x Plugin Tests [res]</name>
+	<dependencies>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>${jaxb.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jvnet.jaxb2.maven2</groupId>
+			<artifactId>maven-jaxb2-plugin-tests-po</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin-tests-po</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<forceRegenerate>true</forceRegenerate>
+							<schemas>
+								<schema>
+									<fileset>
+										<!-- Defaults to schemaDirectory -->
+										<directory>${basedir}/src/main/schemas</directory>
+										<!-- Defaults to schemaIncludes -->
+										<includes>
+											<include>*.*</include>
+										</includes>
+										<!-- Defaults to schemaExcludes -->
+										<excludes>
+											<exclude>*.xs</exclude>
+										</excludes>
+									</fileset>
+									<url>http://schemas.opengis.net/wms/1.3.0/capabilities_1_3_0.xsd</url>
+									<dependencyResource>
+										<groupId>org.jvnet.jaxb2.maven2</groupId>
+										<artifactId>maven-jaxb2-plugin-tests-po</artifactId>
+										<!-- Can be defined in project dependencies or dependency management -->
+										<version>${project.version}</version>
+										<resource>purchaseorder.xsd</resource>
+									</dependencyResource>
+								</schema>
+							</schemas>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

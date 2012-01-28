@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.codehaus.plexus.util.Scanner;
@@ -78,9 +79,12 @@ public class IOUtils {
 			final File directory, final String[] includes,
 			final String[] excludes, boolean defaultExcludes)
 			throws IOException {
+		if (!directory.exists()) {
+			return Collections.emptyList();
+		}
 		final Scanner scanner = buildContext.newScanner(directory, true);
-//		final DirectoryScanner scanner = new DirectoryScanner();
-//		scanner.setBasedir(directory.getAbsoluteFile());
+		// final DirectoryScanner scanner = new DirectoryScanner();
+		// scanner.setBasedir(directory.getAbsoluteFile());
 		scanner.setIncludes(includes);
 		scanner.setExcludes(excludes);
 		if (defaultExcludes) {

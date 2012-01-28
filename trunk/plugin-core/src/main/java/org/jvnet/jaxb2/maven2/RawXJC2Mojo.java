@@ -281,7 +281,6 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		if (getVerbose())
 			getLog().info("Started execution.");
 		setupMavenPaths();
-		setupDirectories();
 		setupFiles();
 		if (getVerbose()) {
 			logConfiguration();
@@ -306,6 +305,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 						"Skipped XJC execution. Generated sources were up-to-date.");
 				return;
 			}
+			setupDirectories();
 			doExecute(options);
 			getBuildContext().refresh(getGenerateDirectory());
 		}

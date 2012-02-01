@@ -12,6 +12,7 @@ import org.jvnet.jaxb2_commons.util.CustomizationUtils;
 import org.xml.sax.ErrorHandler;
 
 import com.sun.codemodel.JClass;
+import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CElementInfo;
@@ -37,7 +38,8 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 	@Override
 	public Collection<QName> getCustomizationElementNames() {
 		return Arrays.asList(Customizations.EXTENDS_ELEMENT_NAME,
-				Customizations.IMPLEMENTS_ELEMENT_NAME, Customizations.OBJECT_FACTORY_ELEMENT_NAME);
+				Customizations.IMPLEMENTS_ELEMENT_NAME,
+				Customizations.OBJECT_FACTORY_ELEMENT_NAME);
 	}
 
 	@Override
@@ -160,8 +162,8 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 	private void generateExtends(final JDefinedClass theClass,
 			final ExtendsClass extendsClass) {
 		if (extendsClass.getClassName() != null) {
-			final String name = extendsClass.getClassName();
-			final JClass targetClass = theClass.owner().ref(name);
+			final String _class = extendsClass.getClassName();
+			final JClass targetClass = parseClass(_class, theClass.owner());
 			theClass._extends(targetClass);
 		}
 	}
@@ -207,13 +209,17 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 	private void generateImplements(final JDefinedClass theClass,
 			final ImplementsInterface implementsInterface) {
 
-		if (implementsInterface.getInterfaceName() != null) {
-			final JClass targetClass = theClass.owner().ref(
-					implementsInterface.getInterfaceName());
+		String _interface = implementsInterface.getInterfaceName();
+		if (_interface != null) {
+			final JClass targetClass = parseClass(_interface, theClass.owner());
 			theClass._implements(targetClass);
 		}
 	}
-	
+
 	private final JavaTypeParser javaTypeParser = new JavaTypeParser();
-	
+
+	private JClass parseClass(String _class, JCodeModel codeModel) {
+		return javaTypeParser.parseClass(_class, codeModel);
+	}
+
 }

@@ -1,14 +1,12 @@
 package org.jvnet.jaxb2_commons.xml.bind.model;
 
 import java.util.Collection;
-import java.util.Map;
-
-import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MModelInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MOriginated;
 
-public interface MModelInfo<T, C> extends MOriginated<MModelInfoOrigin> {
+public interface MModelInfo<T, C> extends MCustomizable,
+		MOriginated<MModelInfoOrigin> {
 
 	public Collection<MBuiltinLeafInfo<T, C>> getBuiltinLeafInfos();
 

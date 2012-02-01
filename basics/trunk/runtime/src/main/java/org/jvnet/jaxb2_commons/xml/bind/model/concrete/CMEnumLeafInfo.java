@@ -9,6 +9,8 @@ import java.util.List;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
+import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizable;
+import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizations;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumConstantInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumLeafInfo;
@@ -22,9 +24,11 @@ import org.jvnet.jaxb2_commons.xml.bind.model.origin.MEnumLeafInfoOrigin;
 import com.sun.xml.bind.v2.model.core.EnumConstant;
 import com.sun.xml.bind.v2.model.core.EnumLeafInfo;
 
-public class CMEnumLeafInfo<T, C extends T> implements MEnumLeafInfo<T, C> {
+public class CMEnumLeafInfo<T, C extends T> implements MEnumLeafInfo<T, C>,
+		MCustomizable {
 
 	private final MEnumLeafInfoOrigin origin;
+	private final CMCustomizations customizations = new CMCustomizations();
 	private final C targetClass;
 	private final MPackageInfo _package;
 	private final String name;
@@ -52,6 +56,10 @@ public class CMEnumLeafInfo<T, C extends T> implements MEnumLeafInfo<T, C> {
 		this.baseTypeInfo = baseTypeInfo;
 		// May be null
 		this.elementName = elementName;
+	}
+
+	public MCustomizations getCustomizations() {
+		return customizations;
 	}
 
 	public MEnumLeafInfoOrigin getOrigin() {

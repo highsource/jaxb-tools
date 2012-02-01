@@ -8,6 +8,7 @@ import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizations;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
@@ -23,6 +24,7 @@ import com.sun.xml.bind.v2.model.core.PropertyInfo;
 public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 
 	private final MClassInfoOrigin origin;
+	private CMCustomizations customizations = new CMCustomizations();
 	private final C targetClass;
 	private final MPackageInfo _package;
 	private final String name;
@@ -49,6 +51,10 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 		this._package = _package;
 		this.baseTypeInfo = baseTypeInfo;
 		this.elementName = elementName;
+	}
+
+	public MCustomizations getCustomizations() {
+		return customizations;
 	}
 
 	public MClassInfoOrigin getOrigin() {

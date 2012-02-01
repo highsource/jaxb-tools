@@ -11,6 +11,7 @@ import javax.xml.namespace.QName;
 import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MBuiltinLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizations;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
@@ -29,6 +30,8 @@ import com.sun.xml.bind.v2.model.core.TypeInfoSet;
 public class CMModel<T, C> implements MModelInfo<T, C> {
 
 	private final MModelInfoOrigin origin;
+
+	private final CMCustomizations customizations = new CMCustomizations();
 
 	private final Collection<MBuiltinLeafInfo<T, C>> builtinLeafInfos = new ArrayList<MBuiltinLeafInfo<T, C>>();
 	private final Collection<MBuiltinLeafInfo<T, C>> unmodifiableBuiltinLeafInfos = Collections
@@ -60,6 +63,10 @@ public class CMModel<T, C> implements MModelInfo<T, C> {
 	public CMModel(MModelInfoOrigin origin) {
 		Validate.notNull(origin);
 		this.origin = origin;
+	}
+
+	public MCustomizations getCustomizations() {
+		return customizations;
 	}
 
 	public MModelInfoOrigin getOrigin() {

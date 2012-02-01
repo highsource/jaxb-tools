@@ -22,7 +22,7 @@ public interface MClassInfo<T, C> extends MPackagedTypeInfo<T, C>,
 
 	public QName getElementName();
 
-	public MElementInfo<T,C> createElementInfo(MTypeInfo<T, C> scope,
+	public MElementInfo<T, C> createElementInfo(MTypeInfo<T, C> scope,
 			QName substitutionHead);
 
 	public void addProperty(MPropertyInfo<T, C> propertyInfo);

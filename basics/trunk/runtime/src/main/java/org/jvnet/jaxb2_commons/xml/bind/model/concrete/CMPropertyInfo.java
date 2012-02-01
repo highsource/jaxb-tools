@@ -2,11 +2,15 @@ package org.jvnet.jaxb2_commons.xml.bind.model.concrete;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizable;
+import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizations;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public abstract class CMPropertyInfo<T, C> implements MPropertyInfo<T, C> {
+public abstract class CMPropertyInfo<T, C> implements MPropertyInfo<T, C>,
+		MCustomizable {
 
+	private CMCustomizations customizations = new CMCustomizations();
 	private MPropertyInfoOrigin origin;
 	private MClassInfo<T, C> classInfo;
 
@@ -23,6 +27,10 @@ public abstract class CMPropertyInfo<T, C> implements MPropertyInfo<T, C> {
 		this.classInfo = classInfo;
 		this.privateName = privateName;
 		this.collection = collection;
+	}
+
+	public MCustomizations getCustomizations() {
+		return customizations;
 	}
 
 	public MPropertyInfoOrigin getOrigin() {

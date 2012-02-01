@@ -7,6 +7,7 @@ import java.util.List;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.plugin.AbstractParameterizablePlugin;
+import org.jvnet.jaxb2_commons.plugin.inheritance.util.JavaTypeParser;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
 import org.xml.sax.ErrorHandler;
 
@@ -212,4 +213,7 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 			theClass._implements(targetClass);
 		}
 	}
+	
+	private final JavaTypeParser javaTypeParser = new JavaTypeParser();
+	
 }

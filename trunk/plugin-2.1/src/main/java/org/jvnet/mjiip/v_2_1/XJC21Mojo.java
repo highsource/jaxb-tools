@@ -12,6 +12,7 @@ import org.jvnet.jaxb2.maven2.RawXJC2Mojo;
 
 import com.sun.codemodel.CodeWriter;
 import com.sun.codemodel.JCodeModel;
+import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JPackage;
 import com.sun.tools.xjc.ModelLoader;
 import com.sun.tools.xjc.Options;
@@ -105,7 +106,7 @@ public class XJC21Mojo extends RawXJC2Mojo<Options> {
 		}
 	}
 
-	private void cleanPackageDirectories(File targetDirectory,
+	protected final void cleanPackageDirectories(File targetDirectory,
 			JCodeModel codeModel) {
 		for (Iterator<JPackage> packages = codeModel.packages(); packages
 				.hasNext();) {
@@ -118,16 +119,40 @@ public class XJC21Mojo extends RawXJC2Mojo<Options> {
 						.replace('.', File.separatorChar));
 			}
 			if (packageDirectory.isDirectory()) {
-				if (getVerbose()) {
-					getLog().info(
-							MessageFormat
-									.format("Cleaning directory [{0}] of the package [{1}].",
-											targetDirectory.getAbsolutePath(),
-											_package.name()));
+				if (isRelevantPackage(_package)) {
+					if (getVerbose()) {
+						getLog().info(
+								MessageFormat
+										.format("Cleaning directory [{0}] of the package [{1}].",
+												packageDirectory
+														.getAbsolutePath(),
+												_package.name()));
+					}
+					cleanPackageDirectory(packageDirectory);
+				} else {
+					if (getVerbose()) {
+						getLog().info(
+								MessageFormat
+										.format("Skipping directory [{0}] of the package [{1}] as it does not contain generated classes or resources.",
+												packageDirectory
+														.getAbsolutePath(),
+												_package.name()));
+					}
 				}
-				cleanPackageDirectory(packageDirectory);
 			}
 		}
 	}
-
+	private boolean isRelevantPackage(JPackage _package) {
+		if (_package.propertyFiles().hasNext()) {
+			return true;
+		}
+		Iterator<JDefinedClass> classes = _package.classes();
+		for (; classes.hasNext();) {
+			JDefinedClass _class = (JDefinedClass) classes.next();
+			if (!_class.isHidden()) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

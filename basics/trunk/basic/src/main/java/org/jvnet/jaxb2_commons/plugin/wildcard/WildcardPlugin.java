@@ -29,38 +29,56 @@ public class WildcardPlugin extends AbstractParameterizablePlugin {
 
 	@Override
 	public void postProcessModel(Model model, ErrorHandler errorHandler) {
+		final boolean laxModel = CustomizationUtils.containsCustomization(
+				model, Customizations.LAX_ELEMENT_NAME);
+		final boolean skipModel = CustomizationUtils.containsCustomization(
+				model, Customizations.SKIP_ELEMENT_NAME);
+		final boolean strictModel = CustomizationUtils.containsCustomization(
+				model, Customizations.STRICT_ELEMENT_NAME);
 		for (CClassInfo classInfo : model.beans().values()) {
+			final boolean laxClassInfo = CustomizationUtils
+					.containsCustomization(classInfo,
+							Customizations.LAX_ELEMENT_NAME);
+			final boolean skipClassInfo = CustomizationUtils
+					.containsCustomization(classInfo,
+							Customizations.SKIP_ELEMENT_NAME);
+			final boolean strictClassInfo = CustomizationUtils
+					.containsCustomization(classInfo,
+							Customizations.STRICT_ELEMENT_NAME);
 			for (CPropertyInfo propertyInfo : classInfo.getProperties()) {
 				if (propertyInfo instanceof CReferencePropertyInfo) {
 					final CReferencePropertyInfo referencePropertyInfo = (CReferencePropertyInfo) propertyInfo;
+					final boolean laxPropertyInfo = CustomizationUtils
+							.containsCustomization(referencePropertyInfo,
+									Customizations.LAX_ELEMENT_NAME);
+					final boolean skipPropertyInfo = CustomizationUtils
+							.containsCustomization(referencePropertyInfo,
+									Customizations.SKIP_ELEMENT_NAME);
+					final boolean strictPropertyInfo = CustomizationUtils
+							.containsCustomization(referencePropertyInfo,
+									Customizations.STRICT_ELEMENT_NAME);
 
-					if (CustomizationUtils.containsCustomization(
-							classInfo, Customizations.LAX_ELEMENT_NAME)) {
+					if (laxModel) {
 						referencePropertyInfo.setWildcard(WildcardMode.LAX);
-
-					} else if (CustomizationUtils.containsCustomization(
-							classInfo, Customizations.SKIP_ELEMENT_NAME)) {
+					} else if (skipModel) {
 						referencePropertyInfo.setWildcard(WildcardMode.SKIP);
-
-					} else if (CustomizationUtils.containsCustomization(
-							classInfo, Customizations.STRICT_ELEMENT_NAME)) {
+					} else if (strictModel) {
 						referencePropertyInfo.setWildcard(WildcardMode.STRICT);
 					}
 
-					
-					if (CustomizationUtils.containsCustomization(
-							referencePropertyInfo,
-							Customizations.LAX_ELEMENT_NAME)) {
+					if (laxClassInfo) {
 						referencePropertyInfo.setWildcard(WildcardMode.LAX);
-
-					} else if (CustomizationUtils.containsCustomization(
-							referencePropertyInfo,
-							Customizations.SKIP_ELEMENT_NAME)) {
+					} else if (skipClassInfo) {
 						referencePropertyInfo.setWildcard(WildcardMode.SKIP);
+					} else if (strictClassInfo) {
+						referencePropertyInfo.setWildcard(WildcardMode.STRICT);
+					}
 
-					} else if (CustomizationUtils.containsCustomization(
-							referencePropertyInfo,
-							Customizations.STRICT_ELEMENT_NAME)) {
+					if (laxPropertyInfo) {
+						referencePropertyInfo.setWildcard(WildcardMode.LAX);
+					} else if (skipPropertyInfo) {
+						referencePropertyInfo.setWildcard(WildcardMode.SKIP);
+					} else if (strictPropertyInfo) {
 						referencePropertyInfo.setWildcard(WildcardMode.STRICT);
 					}
 				}
@@ -71,8 +89,7 @@ public class WildcardPlugin extends AbstractParameterizablePlugin {
 	@Override
 	public Collection<QName> getCustomizationElementNames() {
 		return Arrays
-				.asList(
-						org.jvnet.jaxb2_commons.plugin.wildcard.Customizations.LAX_ELEMENT_NAME,
+				.asList(org.jvnet.jaxb2_commons.plugin.wildcard.Customizations.LAX_ELEMENT_NAME,
 						org.jvnet.jaxb2_commons.plugin.wildcard.Customizations.SKIP_ELEMENT_NAME,
 						org.jvnet.jaxb2_commons.plugin.wildcard.Customizations.STRICT_ELEMENT_NAME);
 	}

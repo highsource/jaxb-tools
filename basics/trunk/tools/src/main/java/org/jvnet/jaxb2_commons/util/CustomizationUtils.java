@@ -79,6 +79,24 @@ public class CustomizationUtils {
 		return customization;
 	}
 
+	public static boolean containsCustomization(Outline outline, QName name) {
+		final CPluginCustomization customization = findCustomization(outline,
+				name);
+		if (customization != null) {
+			customization.markAsAcknowledged();
+		}
+		return customization != null;
+	}
+
+	public static boolean containsCustomization(Model model, QName name) {
+		final CPluginCustomization customization = findCustomization(model,
+				name);
+		if (customization != null) {
+			customization.markAsAcknowledged();
+		}
+		return customization != null;
+	}
+
 	public static boolean containsCustomization(ClassOutline classOutline,
 			QName name) {
 		final CPluginCustomization customization = findCustomization(
@@ -209,8 +227,8 @@ public class CustomizationUtils {
 		return pluginCustomizations;
 	}
 
-	public static List<CPluginCustomization> findCustomizations(Outline outline,
-			QName name) {
+	public static List<CPluginCustomization> findCustomizations(
+			Outline outline, QName name) {
 		return findCustomizations(outline.getModel(), name);
 	}
 
@@ -246,8 +264,8 @@ public class CustomizationUtils {
 		return customization;
 	}
 
-	public static CPluginCustomization findCustomization(CEnumLeafInfo enumLeafInfo,
-			QName name) {
+	public static CPluginCustomization findCustomization(
+			CEnumLeafInfo enumLeafInfo, QName name) {
 		final CCustomizations customizations = CustomizationUtils
 				.getCustomizations(enumLeafInfo);
 		final CPluginCustomization customization = customizations.find(
@@ -258,8 +276,8 @@ public class CustomizationUtils {
 		return customization;
 	}
 
-	public static CPluginCustomization findCustomization(CElementInfo elementInfo,
-			QName name) {
+	public static CPluginCustomization findCustomization(
+			CElementInfo elementInfo, QName name) {
 		final CCustomizations customizations = CustomizationUtils
 				.getCustomizations(elementInfo);
 		final CPluginCustomization customization = customizations.find(
@@ -306,6 +324,18 @@ public class CustomizationUtils {
 			CPropertyInfo propertyInfo, QName name) {
 		final CCustomizations customizations = CustomizationUtils
 				.getCustomizations(propertyInfo);
+		final CPluginCustomization customization = customizations.find(
+				name.getNamespaceURI(), name.getLocalPart());
+		if (customization != null) {
+			customization.markAsAcknowledged();
+		}
+		return customization;
+	}
+
+	public static CPluginCustomization findCustomization(Outline outline,
+			QName name) {
+		final CCustomizations customizations = CustomizationUtils
+				.getCustomizations(outline);
 		final CPluginCustomization customization = customizations.find(
 				name.getNamespaceURI(), name.getLocalPart());
 		if (customization != null) {
@@ -415,6 +445,10 @@ public class CustomizationUtils {
 
 	public static CCustomizations getCustomizations(FieldOutline fieldOutline) {
 		return getCustomizations(fieldOutline.getPropertyInfo());
+	}
+
+	public static CCustomizations getCustomizations(final Outline outline) {
+		return getCustomizations(outline.getModel());
 	}
 
 	public static CCustomizations getCustomizations(final Model model) {

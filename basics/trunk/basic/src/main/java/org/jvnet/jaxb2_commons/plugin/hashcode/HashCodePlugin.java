@@ -32,6 +32,7 @@ import com.sun.codemodel.JMod;
 import com.sun.codemodel.JVar;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.ClassOutline;
+import com.sun.tools.xjc.outline.EnumOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.outline.Outline;
 
@@ -46,23 +47,21 @@ public class HashCodePlugin extends AbstractParameterizablePlugin {
 	public String getUsage() {
 		return "TBD";
 	}
-	
+
 	private FieldAccessorFactory fieldAccessorFactory = PropertyFieldAccessorFactory.INSTANCE;
-	
+
 	public FieldAccessorFactory getFieldAccessorFactory() {
 		return fieldAccessorFactory;
 	}
-	
+
 	public void setFieldAccessorFactory(
 			FieldAccessorFactory fieldAccessorFactory) {
 		this.fieldAccessorFactory = fieldAccessorFactory;
 	}
 
-
 	private String hashCodeStrategyClass = JAXBHashCodeStrategy.class.getName();
 
-	public void setHashCodeStrategyClass(
-			String hashCodeStrategy) {
+	public void setHashCodeStrategyClass(String hashCodeStrategy) {
 		this.hashCodeStrategyClass = hashCodeStrategy;
 	}
 
@@ -91,19 +90,23 @@ public class HashCodePlugin extends AbstractParameterizablePlugin {
 	@Override
 	public Collection<QName> getCustomizationElementNames() {
 		return Arrays
-				.asList(
-						org.jvnet.jaxb2_commons.plugin.hashcode.Customizations.IGNORED_ELEMENT_NAME,
+				.asList(org.jvnet.jaxb2_commons.plugin.hashcode.Customizations.IGNORED_ELEMENT_NAME,
 						Customizations.IGNORED_ELEMENT_NAME,
 						Customizations.GENERATED_ELEMENT_NAME);
 	}
 
 	@Override
 	public boolean run(Outline outline, Options opt, ErrorHandler errorHandler) {
-		for (final ClassOutline classOutline : outline.getClasses())
+		for (final ClassOutline classOutline : outline.getClasses()) {
 			if (!getIgnoring().isIgnored(classOutline)) {
-
 				processClassOutline(classOutline);
 			}
+		}
+		for (final EnumOutline enumOutline : outline.getEnums()) {
+			if (!getIgnoring().isIgnored(enumOutline)) {
+				processEnumOutline(enumOutline);
+			}
+		}
 		return true;
 	}
 
@@ -122,21 +125,44 @@ public class HashCodePlugin extends AbstractParameterizablePlugin {
 				theClass);
 	}
 
+	protected void processEnumOutline(EnumOutline enumOutline) {
+		final JDefinedClass theClass = enumOutline.clazz;
+		ClassUtils._implements(theClass, theClass.owner().ref(HashCode.class));
+
+		// @SuppressWarnings("unused")
+		// final JMethod hashCode$hashCode0 = generateHashCode$hashCode0(
+		// classOutline, theClass);
+		@SuppressWarnings("unused")
+		final JMethod hashCode$hashCode = generateHashCode$hashCode(
+				enumOutline, theClass);
+//		@SuppressWarnings("unused")
+//		final JMethod object$hashCode = generateObject$hashCode(enumOutline,
+//				theClass);
+	}
+
 	protected JMethod generateObject$hashCode(final ClassOutline classOutline,
 			final JDefinedClass theClass) {
-		final JMethod object$hashCode = theClass.method(JMod.PUBLIC, theClass
-				.owner().INT, "hashCode");
+		return generateObject$hashCode(theClass);
+	}
+
+//	protected JMethod generateObject$hashCode(final EnumOutline enumOutline,
+//			final JDefinedClass theClass) {
+//		return generateObject$hashCode(theClass);
+//	}
+
+	private JMethod generateObject$hashCode(final JDefinedClass theClass) {
+		final JMethod object$hashCode = theClass.method(JMod.PUBLIC,
+				theClass.owner().INT, "hashCode");
 		{
 			final JBlock body = object$hashCode.body();
-			final JVar hashCodeStrategy = body.decl(JMod.FINAL, theClass.owner()
-					.ref(HashCodeStrategy.class), "strategy",
+			final JVar hashCodeStrategy = body.decl(JMod.FINAL, theClass
+					.owner().ref(HashCodeStrategy.class), "strategy",
 					createHashCodeStrategy(theClass.owner()));
 			body._return(JExpr._this().invoke("hashCode").arg(JExpr._null())
 					.arg(hashCodeStrategy));
 		}
 		return object$hashCode;
 	}
-
 
 	protected JMethod generateHashCode$hashCode(ClassOutline classOutline,
 			final JDefinedClass theClass) {
@@ -182,24 +208,52 @@ public class HashCodePlugin extends AbstractParameterizablePlugin {
 					}
 					final JBlock block = body.block();
 
-					final JVar theValue = block.decl(fieldAccessor.getType(),
+					final JVar theValue = block.decl(
+							fieldAccessor.getType(),
 							"the"
 									+ fieldOutline.getPropertyInfo().getName(
 											true));
 
 					fieldAccessor.toRawValue(block, theValue);
 
-					block.assign(currentHashCode, hashCodeStrategy.invoke(
-							"hashCode").arg(
-							codeModel.ref(LocatorUtils.class).staticInvoke(
-									"property").arg(locator).arg(
-									fieldOutline.getPropertyInfo().getName(
-											false)).arg(theValue)).arg(
-							currentHashCode).arg(theValue));
+					block.assign(
+							currentHashCode,
+							hashCodeStrategy
+									.invoke("hashCode")
+									.arg(codeModel
+											.ref(LocatorUtils.class)
+											.staticInvoke("property")
+											.arg(locator)
+											.arg(fieldOutline.getPropertyInfo()
+													.getName(false))
+											.arg(theValue))
+									.arg(currentHashCode).arg(theValue));
 				}
 			}
 			body._return(currentHashCode);
 		}
+		return hashCode$hashCode;
+	}
+
+	protected JMethod generateHashCode$hashCode(EnumOutline enumOutline,
+			final JDefinedClass theClass) {
+
+		JCodeModel codeModel = theClass.owner();
+		final JMethod hashCode$hashCode = theClass.method(JMod.PUBLIC,
+				codeModel.INT, "hashCode");
+		final JVar locator = hashCode$hashCode.param(ObjectLocator.class,
+				"locator");
+		final JVar hashCodeStrategy = hashCode$hashCode.param(
+				HashCodeStrategy.class, "strategy");
+		final JBlock body = hashCode$hashCode.body();
+
+		body._return(hashCodeStrategy
+				.invoke("hashCode")
+				.arg(codeModel.ref(LocatorUtils.class).staticInvoke("property")
+						.arg(locator).arg("value")
+						.arg(JExpr._this().ref("value"))).arg(JExpr.lit(1))
+				.arg(JExpr._this().ref("value")));
+
 		return hashCode$hashCode;
 	}
 }

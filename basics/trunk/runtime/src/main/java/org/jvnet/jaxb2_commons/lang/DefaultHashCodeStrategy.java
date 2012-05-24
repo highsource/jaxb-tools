@@ -38,6 +38,17 @@ public class DefaultHashCodeStrategy implements HashCodeStrategy {
 		}
 	}
 
+	@Override
+	public int hashCode(ObjectLocator locator, int hashCode, Enum<?> value) {
+		if (value == null) {
+			return hashCode * iConstant;
+//		} else if (value instanceof HashCode) {
+//			return hashCode(locator, hashCode, (HashCode) value); 
+		} else {
+			return hashCode * iConstant + value.hashCode();
+		}
+	}
+
 	public int hashCode(ObjectLocator locator, int hashCode, Object object) {
 		if (object == null) {
 			return hashCode * iConstant;
@@ -64,6 +75,8 @@ public class DefaultHashCodeStrategy implements HashCodeStrategy {
 					return hashCode(locator, hashCode, (float[]) object);
 				} else if (object instanceof boolean[]) {
 					return hashCode(locator, hashCode, (boolean[]) object);
+				} else if (object instanceof HashCode[]) {
+					return hashCode(locator, hashCode, (HashCode[]) object);
 				} else {
 					// Not an array of primitives
 					return hashCode(locator, hashCode, (Object[]) object);
@@ -72,7 +85,43 @@ public class DefaultHashCodeStrategy implements HashCodeStrategy {
 		}
 	}
 
+	public int hashCode(ObjectLocator locator, int hashCode, HashCode object) {
+		if (object == null) {
+			return hashCode * iConstant;
+
+		} else {
+			return hashCode * iConstant + object.hashCode(locator, this);
+		}
+	}
+
 	public int hashCode(ObjectLocator locator, int hashCode, Object[] value) {
+		if (value == null) {
+			return hashCode * iConstant;
+		} else {
+			int currentHashCode = hashCode * iConstant + 1;
+			for (int i = 0; i < value.length; i++) {
+				currentHashCode = hashCode(item(locator, i, value[i]),
+						currentHashCode, value[i]);
+			}
+			return currentHashCode;
+		}
+	}
+	
+	public int hashCode(ObjectLocator locator, int hashCode, Enum<?>[] value) {
+		if (value == null) {
+			return hashCode * iConstant;
+		} else {
+			int currentHashCode = hashCode * iConstant + 1;
+			for (int i = 0; i < value.length; i++) {
+				currentHashCode = hashCode(item(locator, i, value[i]),
+						currentHashCode, value[i]);
+			}
+			return currentHashCode;
+		}
+	}
+	
+
+	public int hashCode(ObjectLocator locator, int hashCode, HashCode[] value) {
 		if (value == null) {
 			return hashCode * iConstant;
 		} else {

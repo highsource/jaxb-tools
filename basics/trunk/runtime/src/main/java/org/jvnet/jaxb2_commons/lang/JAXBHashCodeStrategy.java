@@ -52,13 +52,18 @@ public class JAXBHashCodeStrategy extends DefaultHashCodeStrategy {
 
 	protected int hashCodeInternal(ObjectLocator locator, int hashCode,
 			final List<?> list) {
-		int currentHashCode = hashCode;
-		for (int index = 0; index < list.size(); index++) {
-			final Object item = list.get(index);
-			currentHashCode = hashCode(item(locator, index, item),
-					currentHashCode, item);
+		// Treat empty lists as nulls
+		if (list.isEmpty()) {
+			return super.hashCode(locator, hashCode, (Object) null);
+		} else {
+			int currentHashCode = hashCode;
+			for (int index = 0; index < list.size(); index++) {
+				final Object item = list.get(index);
+				currentHashCode = hashCode(item(locator, index, item),
+						currentHashCode, item);
+			}
+			return currentHashCode;
 		}
-		return currentHashCode;
 	}
 
 	public static HashCodeStrategy INSTANCE = new JAXBHashCodeStrategy();

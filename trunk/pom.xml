@@ -42,23 +42,6 @@
 			<url>${sftp.static.highsource.org}/mjiip</url>
 		</site>
 	</distributionManagement>
-	<!-- Development only, uncomment for releases -->
-	<repositories>
-        	<repository>
-			<id>net.java.maven.content.repositories.snapshots</id>
-			<url>https://maven.java.net/content/repositories/snapshots</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>jfrog-plugins</id>
-			<name>jfrog-plugins-dist</name>
-			<url>http://repo.jfrog.org/artifactory/plugins-releases</url>
-		</pluginRepository>
-	</pluginRepositories>
 	<modules>
 		<module>plugin-core</module>
 		<module>plugin-2.0</module>
@@ -140,13 +123,13 @@
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.jfrog.maven.annomojo</groupId>
-				<artifactId>maven-plugin-anno</artifactId>
+				<groupId>br.com.ingenieux.maven.annomojo</groupId>
+				<artifactId>org.jfrog.maven.maven-plugin-anno</artifactId>
 				<version>1.4.1</version>
 			</dependency>
 			<dependency>
-				<groupId>org.jfrog.maven.annomojo</groupId>
-				<artifactId>maven-plugin-tools-anno</artifactId>
+				<groupId>br.com.ingenieux.maven.annomojo</groupId>
+				<artifactId>org.jfrog.maven.maven-plugin-tools-anno</artifactId>
 				<version>1.4.1</version>
 			</dependency>
 			<!-- Maven plugin and api classes -->

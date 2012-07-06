@@ -44,6 +44,7 @@ import org.jvnet.jaxb2.maven2.resolver.tools.MavenCatalogResolver;
 import org.jvnet.jaxb2.maven2.util.ArtifactUtils;
 import org.jvnet.jaxb2.maven2.util.CollectionUtils;
 import org.jvnet.jaxb2.maven2.util.IOUtils;
+import org.sonatype.plexus.build.incremental.BuildContext;
 
 import com.sun.org.apache.xml.internal.resolver.CatalogManager;
 import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
@@ -134,27 +135,31 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		return producesFiles;
 	}
 
+	private static final Object lock = new Object();
+
 	/**
 	 * Execute the maven2 mojo to invoke the xjc2 compiler based on any
 	 * configuration settings.
 	 */
 	public void execute() throws MojoExecutionException {
+		synchronized (lock) {
+			injectDependencyDefaults();
+			resolveArtifacts();
 
-		injectDependencyDefaults();
-		resolveArtifacts();
+			// Install project dependencies into classloader's class path
+			// and execute xjc2.
+			final ClassLoader currentClassLoader = Thread.currentThread()
+					.getContextClassLoader();
+			final ClassLoader classLoader = createClassLoader(currentClassLoader);
+			Thread.currentThread().setContextClassLoader(classLoader);
+			try {
+				doExecute();
 
-		// Install project dependencies into classloader's class path
-		// and execute xjc2.
-		final ClassLoader currentClassLoader = Thread.currentThread()
-				.getContextClassLoader();
-		final ClassLoader classLoader = createClassLoader(currentClassLoader);
-		Thread.currentThread().setContextClassLoader(classLoader);
-		try {
-			doExecute();
-
-		} finally {
-			// Set back the old classloader
-			Thread.currentThread().setContextClassLoader(currentClassLoader);
+			} finally {
+				// Set back the old classloader
+				Thread.currentThread()
+						.setContextClassLoader(currentClassLoader);
+			}
 		}
 	}
 
@@ -307,7 +312,11 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			}
 			setupDirectories();
 			doExecute(options);
-			getBuildContext().refresh(getGenerateDirectory());
+			final BuildContext buildContext = getBuildContext();
+			if (buildContext != null) {
+				buildContext.refresh(getGenerateDirectory());
+			}
+
 		}
 
 		if (getVerbose()) {

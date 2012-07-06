@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.Scanner;
 import org.jvnet.jaxb2.maven2.util.CollectionUtils.Function;
 import org.sonatype.plexus.build.incremental.BuildContext;
@@ -82,9 +83,15 @@ public class IOUtils {
 		if (!directory.exists()) {
 			return Collections.emptyList();
 		}
-		final Scanner scanner = buildContext.newScanner(directory, true);
-		// final DirectoryScanner scanner = new DirectoryScanner();
-		// scanner.setBasedir(directory.getAbsoluteFile());
+		final Scanner scanner;
+
+		if (buildContext != null) {
+			scanner = buildContext.newScanner(directory, true);
+		} else {
+			final DirectoryScanner directoryScanner = new DirectoryScanner();
+			directoryScanner.setBasedir(directory.getAbsoluteFile());
+			scanner = directoryScanner;
+		}
 		scanner.setIncludes(includes);
 		scanner.setExcludes(excludes);
 		if (defaultExcludes) {

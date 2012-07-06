@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.jvnet.jaxb2.maven2</groupId>
 		<artifactId>maven-jaxb2-plugin-tests</artifactId>
-		<version>0.8.2-SNAPSHOT</version>
+		<version>0.8.2</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<packaging>jar</packaging>
@@ -45,17 +45,16 @@
 							<goal>generate</goal>
 						</goals>
 						<configuration>
+							<extension>true</extension>
 							<forceRegenerate>true</forceRegenerate>
+							<catalog>src/main/resources/catalog.cat</catalog>
 							<schemas>
 								<schema>
 									<fileset>
-										<!-- Defaults to schemaDirectory -->
 										<directory>${basedir}/src/main/schemas</directory>
-										<!-- Defaults to schemaIncludes -->
 										<includes>
 											<include>*.*</include>
 										</includes>
-										<!-- Defaults to schemaExcludes -->
 										<excludes>
 											<exclude>*.xs</exclude>
 										</excludes>
@@ -65,6 +64,12 @@
 										<groupId>org.jvnet.jaxb2.maven2</groupId>
 										<artifactId>maven-jaxb2-plugin-tests-po</artifactId>
 										<!-- Can be defined in project dependencies or dependency management -->
+										<version>${project.version}</version>
+										<resource>purchaseorder.xsd</resource>
+									</dependencyResource>
+									<dependencyResource>
+										<groupId>org.jvnet.jaxb2.maven2</groupId>
+										<artifactId>maven-jaxb2-plugin-tests-po-scd</artifactId>
 										<version>${project.version}</version>
 										<resource>purchaseorder.xsd</resource>
 									</dependencyResource>

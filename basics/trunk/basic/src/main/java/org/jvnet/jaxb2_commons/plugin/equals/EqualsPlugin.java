@@ -62,8 +62,7 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 
 	private String equalsStrategyClass = JAXBEqualsStrategy.class.getName();
 
-	public void setEqualsStrategyClass(
-			String equalsStrategyClass) {
+	public void setEqualsStrategyClass(String equalsStrategyClass) {
 		this.equalsStrategyClass = equalsStrategyClass;
 	}
 
@@ -99,11 +98,16 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 
 	@Override
 	public boolean run(Outline outline, Options opt, ErrorHandler errorHandler) {
-		for (final ClassOutline classOutline : outline.getClasses())
+		for (final ClassOutline classOutline : outline.getClasses()) {
 			if (!getIgnoring().isIgnored(classOutline)) {
-
 				processClassOutline(classOutline);
 			}
+		}
+		// for (final EnumOutline enumOutline : outline.getEnums()) {
+		// if (!getIgnoring().isIgnored(enumOutline)) {
+		// processEnumOutline(enumOutline);
+		// }
+		// }
 		return true;
 	}
 
@@ -120,6 +124,15 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 		final JMethod objectEquals = generateObject$equals(classOutline,
 				theClass);
 	}
+
+	// protected void processEnumOutline(EnumOutline enumOutline) {
+	// final JDefinedClass theClass = enumOutline.clazz;
+	// ClassUtils._implements(theClass, theClass.owner().ref(Equals.class));
+	//
+	// @SuppressWarnings("unused")
+	// final JMethod equals$equals = generateEquals$equals(enumOutline,
+	// theClass);
+	// }
 
 	protected JMethod generateObject$equals(final ClassOutline classOutline,
 			final JDefinedClass theClass) {
@@ -252,4 +265,35 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 		}
 		return equals;
 	}
+
+	// protected JMethod generateEquals$equals(EnumOutline enumOutline,
+	// final JDefinedClass theClass) {
+	//
+	// final JCodeModel codeModel = theClass.owner();
+	// final JMethod equals = theClass.method(JMod.PUBLIC, codeModel.BOOLEAN,
+	// "equals");
+	//
+	// {
+	// final JBlock body = equals.body();
+	// final JVar leftLocator = equals.param(ObjectLocator.class,
+	// "thisLocator");
+	// final JVar rightLocator = equals.param(ObjectLocator.class,
+	// "thatLocator");
+	// final JVar object = equals.param(Object.class, "object");
+	// final JVar equalsStrategy = equals.param(EqualsStrategy.class,
+	// "strategy");
+	//
+	// body._return(equalsStrategy
+	// .invoke("equals")
+	// .arg(codeModel.ref(LocatorUtils.class)
+	// .staticInvoke("property").arg(leftLocator)
+	// .arg("value").arg(JExpr._this().ref("value")))
+	// .arg(codeModel.ref(LocatorUtils.class)
+	// .staticInvoke("property").arg(rightLocator)
+	// .arg("value").arg(object.ref("value")))
+	// .arg(JExpr._this().ref("value")).arg(object.ref("value")));
+	//
+	// }
+	// return equals;
+	// }
 }

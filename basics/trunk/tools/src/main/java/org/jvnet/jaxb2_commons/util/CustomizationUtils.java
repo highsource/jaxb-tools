@@ -107,6 +107,16 @@ public class CustomizationUtils {
 		return customization != null;
 	}
 
+	public static boolean containsCustomization(EnumOutline enumOutline,
+			QName name) {
+		final CPluginCustomization customization = findCustomization(
+				enumOutline, name);
+		if (customization != null) {
+			customization.markAsAcknowledged();
+		}
+		return customization != null;
+	}
+
 	public static boolean containsCustomization(CClassInfo classInfo, QName name) {
 		final CPluginCustomization customization = findCustomization(classInfo,
 				name);
@@ -292,6 +302,16 @@ public class CustomizationUtils {
 			QName name) {
 		final CPluginCustomization customization = findCustomization(
 				fieldOutline, name);
+		if (customization != null) {
+			customization.markAsAcknowledged();
+		}
+		return customization != null;
+	}
+
+	public static boolean containsCustomization(CEnumLeafInfo enumLeafInfo,
+			QName name) {
+		final CPluginCustomization customization = findCustomization(
+				enumLeafInfo, name);
 		if (customization != null) {
 			customization.markAsAcknowledged();
 		}

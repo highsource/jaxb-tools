@@ -1,11 +1,11 @@
-package org.jvnet.jaxb2_commons.plugin.enumerated;
+package org.jvnet.jaxb2_commons.plugin.enumvalue;
 
 import java.util.Arrays;
 import java.util.Collection;
 
 import javax.xml.namespace.QName;
 
-import org.jvnet.jaxb2_commons.lang.Enumerated;
+import org.jvnet.jaxb2_commons.lang.EnumValue;
 import org.jvnet.jaxb2_commons.plugin.AbstractParameterizablePlugin;
 import org.jvnet.jaxb2_commons.plugin.Customizations;
 import org.jvnet.jaxb2_commons.plugin.CustomizedIgnoring;
@@ -24,16 +24,16 @@ import com.sun.tools.xjc.outline.Aspect;
 import com.sun.tools.xjc.outline.EnumOutline;
 import com.sun.tools.xjc.outline.Outline;
 
-public class EnumeratedPlugin extends AbstractParameterizablePlugin {
+public class EnumValuePlugin extends AbstractParameterizablePlugin {
 
 	@Override
 	public String getOptionName() {
-		return "Xenumerated";
+		return "XenumValue";
 	}
 
 	@Override
 	public String getUsage() {
-		return "Forces generated @XmlEnums implement the org.jvnet.jaxb2_commons.lang.Enumerated<T> interface.";
+		return "Forces generated @XmlEnums implement the org.jvnet.jaxb2_commons.lang.EnumValue<T> interface.";
 	}
 
 	private Ignoring ignoring = new CustomizedIgnoring(
@@ -74,11 +74,11 @@ public class EnumeratedPlugin extends AbstractParameterizablePlugin {
 
 		final JDefinedClass theClass = enumOutline.clazz;
 
-		ClassUtils._implements(theClass, theClass.owner().ref(Enumerated.class)
+		ClassUtils._implements(theClass, theClass.owner().ref(EnumValue.class)
 				.narrow(enumType));
 
-		final JMethod enumerated$enumValue = theClass.method(JMod.PUBLIC,
+		final JMethod enumValue$enumValue = theClass.method(JMod.PUBLIC,
 				enumType, "enumValue");
-		enumerated$enumValue.body()._return(JExpr._this().invoke("value"));
+		enumValue$enumValue.body()._return(JExpr._this().invoke("value"));
 	}
 }

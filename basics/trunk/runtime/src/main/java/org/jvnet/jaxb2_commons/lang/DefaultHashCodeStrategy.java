@@ -23,36 +23,11 @@ public class DefaultHashCodeStrategy implements HashCodeStrategy {
 					"HashCodeStrategy requires an odd multiplier.");
 		}
 		this.iConstant = multiplierNonZeroOddNumber;
-
 	}
-
-	protected int hashCodeInternal(ObjectLocator locator, int hashCode,
-			Object value) {
-		if (value == null) {
-			return hashCode * iConstant;
-		} else if (value instanceof HashCode) {
-			return hashCode * iConstant
-					+ ((HashCode) value).hashCode(locator, this);
-		} else {
-			return hashCode * iConstant + value.hashCode();
-		}
-	}
-
-	@Override
-	public int hashCode(ObjectLocator locator, int hashCode, Enum<?> value) {
-		if (value == null) {
-			return hashCode * iConstant;
-//		} else if (value instanceof HashCode) {
-//			return hashCode(locator, hashCode, (HashCode) value); 
-		} else {
-			return hashCode * iConstant + value.hashCode();
-		}
-	}
-
+	
 	public int hashCode(ObjectLocator locator, int hashCode, Object object) {
 		if (object == null) {
 			return hashCode * iConstant;
-
 		} else {
 			if (object.getClass().isArray() == false) {
 				return hashCodeInternal(locator, hashCode, object);
@@ -76,7 +51,9 @@ public class DefaultHashCodeStrategy implements HashCodeStrategy {
 				} else if (object instanceof boolean[]) {
 					return hashCode(locator, hashCode, (boolean[]) object);
 				} else if (object instanceof HashCode[]) {
-					return hashCode(locator, hashCode, (HashCode[]) object);
+					return hashCodeInternal(locator, hashCode, (HashCode[]) object);
+				} else if (object instanceof Enum[]) {
+					return hashCodeInternal(locator, hashCode, (Enum<?>[]) object);
 				} else {
 					// Not an array of primitives
 					return hashCode(locator, hashCode, (Object[]) object);
@@ -85,14 +62,37 @@ public class DefaultHashCodeStrategy implements HashCodeStrategy {
 		}
 	}
 
-	public int hashCode(ObjectLocator locator, int hashCode, HashCode object) {
+	protected int hashCodeInternal(ObjectLocator locator, int hashCode,
+			Object value) {
+		if (value == null) {
+			return hashCode * iConstant;
+		} else if (value instanceof HashCode) {
+			return hashCodeInternal(locator, hashCode, (HashCode) value);
+		} else if (value instanceof Enum) {
+			return hashCodeInternal(locator, hashCode, (Enum<?>) value);
+		} else {
+			return hashCode * iConstant + value.hashCode();
+		}
+	}
+
+	protected int hashCodeInternal(ObjectLocator locator, int hashCode, Enum<?> value) {
+		if (value == null) {
+			return hashCode * iConstant;
+		} else if (value instanceof HashCode) {
+			return hashCodeInternal(locator, hashCode, (HashCode) value); 
+		} else {
+			return hashCode * iConstant + value.hashCode();
+		}
+	}
+	
+	protected int hashCodeInternal(ObjectLocator locator, int hashCode, HashCode object) {
 		if (object == null) {
 			return hashCode * iConstant;
-
 		} else {
 			return hashCode * iConstant + object.hashCode(locator, this);
 		}
 	}
+
 
 	public int hashCode(ObjectLocator locator, int hashCode, Object[] value) {
 		if (value == null) {
@@ -107,13 +107,13 @@ public class DefaultHashCodeStrategy implements HashCodeStrategy {
 		}
 	}
 	
-	public int hashCode(ObjectLocator locator, int hashCode, Enum<?>[] value) {
+	protected int hashCodeInternal(ObjectLocator locator, int hashCode, Enum<?>[] value) {
 		if (value == null) {
 			return hashCode * iConstant;
 		} else {
 			int currentHashCode = hashCode * iConstant + 1;
 			for (int i = 0; i < value.length; i++) {
-				currentHashCode = hashCode(item(locator, i, value[i]),
+				currentHashCode = hashCodeInternal(item(locator, i, value[i]),
 						currentHashCode, value[i]);
 			}
 			return currentHashCode;
@@ -121,13 +121,13 @@ public class DefaultHashCodeStrategy implements HashCodeStrategy {
 	}
 	
 
-	public int hashCode(ObjectLocator locator, int hashCode, HashCode[] value) {
+	protected int hashCodeInternal(ObjectLocator locator, int hashCode, HashCode[] value) {
 		if (value == null) {
 			return hashCode * iConstant;
 		} else {
 			int currentHashCode = hashCode * iConstant + 1;
 			for (int i = 0; i < value.length; i++) {
-				currentHashCode = hashCode(item(locator, i, value[i]),
+				currentHashCode = hashCodeInternal(item(locator, i, value[i]),
 						currentHashCode, value[i]);
 			}
 			return currentHashCode;

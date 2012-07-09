@@ -6,21 +6,6 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
 public class DefaultEqualsStrategy implements EqualsStrategy {
 
-	protected boolean equalsInternal(ObjectLocator leftLocator,
-			ObjectLocator rightLocator, Object lhs, Object rhs) {
-		if (lhs == rhs) {
-			return true;
-		}
-		if (lhs == null || rhs == null) {
-			return false;
-		}
-		if (lhs instanceof Equals) {
-			return ((Equals) lhs).equals(leftLocator, rightLocator, rhs, this);
-		} else {
-			return lhs.equals(rhs);
-		}
-	}
-
 	public boolean equals(ObjectLocator leftLocator,
 			ObjectLocator rightLocator, Object lhs, Object rhs) {
 
@@ -60,13 +45,62 @@ public class DefaultEqualsStrategy implements EqualsStrategy {
 		} else if (lhs instanceof boolean[]) {
 			return equals(leftLocator, rightLocator, (boolean[]) lhs,
 					(boolean[]) rhs);
+		} else if (lhs instanceof Equals[]) {
+			return equalsInternal(leftLocator, rightLocator, (Equals[]) lhs,
+					(Equals[]) rhs);
+		} else if (lhs instanceof Enum[]) {
+			return equalsInternal(leftLocator, rightLocator, (Enum<?>[]) lhs,
+					(Enum<?>[]) rhs);
 		} else {
 			// Not an array of primitives
 			return equals(leftLocator, rightLocator, (Object[]) lhs,
 					(Object[]) rhs);
 		}
 	}
+	
+	protected boolean equalsInternal(ObjectLocator leftLocator,
+			ObjectLocator rightLocator, Object lhs, Object rhs) {
+		if (lhs == rhs) {
+			return true;
+		}
+		if (lhs == null || rhs == null) {
+			return false;
+		}
+		if (lhs instanceof Equals) {
+			return equalsInternal(leftLocator, rightLocator, (Equals) lhs, (Equals) rhs);
+		} else if (lhs instanceof Enum<?>) {
+			return equalsInternal(leftLocator, rightLocator, (Enum<?>) lhs, (Enum<?>) rhs);
+		} else {
+			return lhs.equals(rhs);
+		}
+	}
 
+	protected boolean equalsInternal(ObjectLocator leftLocator,
+			ObjectLocator rightLocator, Enum<?> lhs, Enum<?> rhs) {
+		if (lhs == rhs) {
+			return true;
+		}
+		if (lhs == null || rhs == null) {
+			return false;
+		}
+		if (lhs instanceof Equals) {
+			return equalsInternal(leftLocator, rightLocator, (Equals) lhs, (Equals) rhs);
+		} else {
+			return lhs.equals(rhs);
+		}
+	}
+
+	protected boolean equalsInternal(ObjectLocator leftLocator,
+			ObjectLocator rightLocator, Equals lhs, Equals rhs) {
+		if (lhs == rhs) {
+			return true;
+		}
+		if (lhs == null || rhs == null) {
+			return false;
+		}
+		return lhs.equals(leftLocator, rightLocator, rhs, this);
+	}
+	
 	public boolean equals(ObjectLocator leftLocator,
 			ObjectLocator rightLocator, boolean left, boolean right) {
 		return left == right;
@@ -123,8 +157,50 @@ public class DefaultEqualsStrategy implements EqualsStrategy {
 			return false;
 		}
 		for (int i = 0; i < left.length; ++i) {
-			if (!equals(item(leftLocator, i, left[i]), item(rightLocator, i,
-					right[i]), left[i], right[i])) {
+			if (!equals(item(leftLocator, i, left[i]),
+					item(rightLocator, i, right[i]), left[i], right[i])) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	protected boolean equalsInternal(ObjectLocator leftLocator,
+			ObjectLocator rightLocator, Equals[] left, Equals[] right) {
+
+		if (left == right) {
+			return true;
+		}
+		if (left == null || right == null) {
+			return false;
+		}
+		if (left.length != right.length) {
+			return false;
+		}
+		for (int i = 0; i < left.length; ++i) {
+			if (!equalsInternal(item(leftLocator, i, left[i]),
+					item(rightLocator, i, right[i]), left[i], right[i])) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	protected boolean equalsInternal(ObjectLocator leftLocator,
+			ObjectLocator rightLocator, Enum<?>[] left, Enum<?>[] right) {
+
+		if (left == right) {
+			return true;
+		}
+		if (left == null || right == null) {
+			return false;
+		}
+		if (left.length != right.length) {
+			return false;
+		}
+		for (int i = 0; i < left.length; ++i) {
+			if (!equalsInternal(item(leftLocator, i, left[i]),
+					item(rightLocator, i, right[i]), left[i], right[i])) {
 				return false;
 			}
 		}
@@ -143,8 +219,8 @@ public class DefaultEqualsStrategy implements EqualsStrategy {
 			return false;
 		}
 		for (int i = 0; i < left.length; ++i) {
-			if (!equals(item(leftLocator, i, left[i]), item(rightLocator, i,
-					right[i]), left[i], right[i])) {
+			if (!equals(item(leftLocator, i, left[i]),
+					item(rightLocator, i, right[i]), left[i], right[i])) {
 				return false;
 			}
 		}
@@ -163,8 +239,8 @@ public class DefaultEqualsStrategy implements EqualsStrategy {
 			return false;
 		}
 		for (int i = 0; i < left.length; ++i) {
-			if (!equals(item(leftLocator, i, left[i]), item(rightLocator, i,
-					right[i]), left[i], right[i])) {
+			if (!equals(item(leftLocator, i, left[i]),
+					item(rightLocator, i, right[i]), left[i], right[i])) {
 				return false;
 			}
 		}
@@ -183,8 +259,8 @@ public class DefaultEqualsStrategy implements EqualsStrategy {
 			return false;
 		}
 		for (int i = 0; i < left.length; ++i) {
-			if (!equals(item(leftLocator, i, left[i]), item(rightLocator, i,
-					right[i]), left[i], right[i])) {
+			if (!equals(item(leftLocator, i, left[i]),
+					item(rightLocator, i, right[i]), left[i], right[i])) {
 				return false;
 			}
 		}
@@ -203,8 +279,8 @@ public class DefaultEqualsStrategy implements EqualsStrategy {
 			return false;
 		}
 		for (int i = 0; i < left.length; ++i) {
-			if (!equals(item(leftLocator, i, left[i]), item(rightLocator, i,
-					right[i]), left[i], right[i])) {
+			if (!equals(item(leftLocator, i, left[i]),
+					item(rightLocator, i, right[i]), left[i], right[i])) {
 				return false;
 			}
 		}
@@ -223,8 +299,8 @@ public class DefaultEqualsStrategy implements EqualsStrategy {
 			return false;
 		}
 		for (int i = 0; i < left.length; ++i) {
-			if (!equals(item(leftLocator, i, left[i]), item(rightLocator, i,
-					right[i]), left[i], right[i])) {
+			if (!equals(item(leftLocator, i, left[i]),
+					item(rightLocator, i, right[i]), left[i], right[i])) {
 				return false;
 			}
 		}
@@ -243,8 +319,8 @@ public class DefaultEqualsStrategy implements EqualsStrategy {
 			return false;
 		}
 		for (int i = 0; i < left.length; ++i) {
-			if (!equals(item(leftLocator, i, left[i]), item(rightLocator, i,
-					right[i]), left[i], right[i])) {
+			if (!equals(item(leftLocator, i, left[i]),
+					item(rightLocator, i, right[i]), left[i], right[i])) {
 				return false;
 			}
 		}
@@ -263,8 +339,8 @@ public class DefaultEqualsStrategy implements EqualsStrategy {
 			return false;
 		}
 		for (int i = 0; i < left.length; ++i) {
-			if (!equals(item(leftLocator, i, left[i]), item(rightLocator, i,
-					right[i]), left[i], right[i])) {
+			if (!equals(item(leftLocator, i, left[i]),
+					item(rightLocator, i, right[i]), left[i], right[i])) {
 				return false;
 			}
 		}
@@ -283,8 +359,8 @@ public class DefaultEqualsStrategy implements EqualsStrategy {
 			return false;
 		}
 		for (int i = 0; i < left.length; ++i) {
-			if (!equals(item(leftLocator, i, left[i]), item(rightLocator, i,
-					right[i]), left[i], right[i])) {
+			if (!equals(item(leftLocator, i, left[i]),
+					item(rightLocator, i, right[i]), left[i], right[i])) {
 				return false;
 			}
 		}

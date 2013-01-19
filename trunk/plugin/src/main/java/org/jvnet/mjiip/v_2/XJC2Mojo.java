@@ -14,7 +14,7 @@ import com.sun.tools.xjc.Options;
  */
 @MojoGoal("generate")
 @MojoPhase("generate-sources")
-@MojoRequiresDependencyResolution
+@MojoRequiresDependencyResolution("compile")
 public class XJC2Mojo extends XJC22Mojo {
 
 	private final org.jvnet.jaxb2.maven2.OptionsFactory<Options> optionsFactory = new OptionsFactory();

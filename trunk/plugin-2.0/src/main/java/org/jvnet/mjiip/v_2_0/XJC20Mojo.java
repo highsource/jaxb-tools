@@ -29,7 +29,7 @@ import com.sun.tools.xjc.outline.Outline;
  */
 @MojoGoal("generate")
 @MojoPhase("generate-sources")
-@MojoRequiresDependencyResolution
+@MojoRequiresDependencyResolution("compile")
 public class XJC20Mojo extends RawXJC2Mojo<Options> {
 
 	private final org.jvnet.jaxb2.maven2.OptionsFactory<Options> optionsFactory = new OptionsFactory();

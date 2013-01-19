@@ -670,7 +670,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 
 	private boolean scanDependenciesForBindings = false;
 
-	@MojoParameter(description = "Scan all compile-scoped project dependencies for XML binding files.")
+	@MojoParameter(description = "Scan all compile-scoped project dependencies for XML binding files.", defaultValue = "false")
 	public boolean getScanDependenciesForBindings() {
 		return scanDependenciesForBindings;
 	}

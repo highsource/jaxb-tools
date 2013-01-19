@@ -18,15 +18,19 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.DefaultArtifact;
@@ -499,7 +503,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		getLog().info("xjcPluginFiles (resolved):" + getXjcPluginFiles());
 		getLog().info("xjcPluginURLs (resolved):" + getXjcPluginURLs());
 		getLog().info("episodeArtifacts (resolved):" + getEpisodeArtifacts());
-		getLog().info("episodeFiles (resolved):" + getEpisodeArtifacts());
+		getLog().info("episodeFiles (resolved):" + getEpisodeFiles());
 	}
 
 	/**
@@ -530,8 +534,67 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			}
 		}
 
+		if (getScanDependenciesForBindings()) {
+			collectBindingUrlsFromDependencies(bindingUrls);
+		}
+
 		return bindingUrls;
 
+	}
+
+	private void collectBindingUrlsFromDependencies(List<URL> bindingUrls)
+			throws MojoExecutionException {
+		@SuppressWarnings("unchecked")
+		final Collection<Artifact> projectArtifacts = getProject()
+				.getArtifacts();
+		final List<Artifact> compileScopeArtifacts = new ArrayList<Artifact>(
+				projectArtifacts.size());
+		final ArtifactFilter filter = new ScopeArtifactFilter(
+				DefaultArtifact.SCOPE_COMPILE);
+		for (Artifact artifact : projectArtifacts) {
+			if (filter.include(artifact)) {
+				compileScopeArtifacts.add(artifact);
+			}
+		}
+
+		for (Artifact artifact : compileScopeArtifacts) {
+			getLog().debug(
+					"Scanning artifact [" + artifact
+							+ "] for JAXB binding files.");
+			final File file = artifact.getFile();
+			ClassLoader classLoader = null;
+			try {
+				classLoader = new URLClassLoader(new URL[] { file.toURI()
+						.toURL() });
+			} catch (IOException ioex) {
+				throw new MojoExecutionException(
+						"Unable to create a classloader for the artifact file ["
+								+ file.getAbsolutePath() + "].", ioex);
+			}
+			JarFile jarFile = null;
+			try {
+				jarFile = new JarFile(file);
+				final Enumeration<JarEntry> jarFileEntries = jarFile.entries();
+				while (jarFileEntries.hasMoreElements()) {
+					JarEntry entry = jarFileEntries.nextElement();
+					if (entry.getName().endsWith(".xjb")) {
+						bindingUrls
+								.add(classLoader.getResource(entry.getName()));
+					}
+				}
+			} catch (IOException ioex) {
+				throw new MojoExecutionException(
+						"Unable to read the artifact JAR file ["
+								+ file.getAbsolutePath() + "].", ioex);
+			} finally {
+				if (jarFile != null) {
+					try {
+						jarFile.close();
+					} catch (IOException ignored) {
+					}
+				}
+			}
+		}
 	}
 
 	/**

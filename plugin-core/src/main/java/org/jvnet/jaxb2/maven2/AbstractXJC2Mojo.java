@@ -668,6 +668,18 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.useDependenciesAsEpisodes = useDependenciesAsEpisodes;
 	}
 
+	private boolean scanDependenciesForBindings = false;
+
+	@MojoParameter(description = "Scan all compile-scoped project dependencies for XML binding files.")
+	public boolean getScanDependenciesForBindings() {
+		return scanDependenciesForBindings;
+	}
+
+	public void setScanDependenciesForBindings(
+			boolean scanDependenciesForBindings) {
+		this.scanDependenciesForBindings = scanDependenciesForBindings;
+	}
+
 	private String specVersion = "2.1";
 
 	@MojoParameter(defaultValue = "2.1", description = "Version of the JAXB specification (ex. 2.0, 2.1 or 2.2).")
@@ -720,6 +732,9 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		getLog().info("episodes:" + Arrays.toString(getEpisodes()));
 		getLog().info(
 				"useDependenciesAsEpisodes:" + getUseDependenciesAsEpisodes());
+		getLog().info(
+				"scanDependenciesForBindings:"
+						+ getScanDependenciesForBindings());
 		getLog().info("xjcPlugins:" + Arrays.toString(getPlugins()));
 		getLog().info("episodes:" + Arrays.toString(getEpisodes()));
 	}
@@ -1083,7 +1098,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	protected void cleanPackageDirectory(final File packageDirectory) {
 		final File[] files = packageDirectory.listFiles(new FileFilter() {
 
-			@Override
+			// @Override
 			public boolean accept(File file) {
 				return file.isFile();
 			}

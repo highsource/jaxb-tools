@@ -11,6 +11,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.jfrog.maven.annomojo.annotations.MojoGoal;
 import org.jfrog.maven.annomojo.annotations.MojoPhase;
 import org.jfrog.maven.annomojo.annotations.MojoRequiresDependencyResolution;
+import org.jfrog.maven.annomojo.annotations.MojoThreadSafe;
 import org.jvnet.jaxb2.maven2.RawXJC2Mojo;
 
 import com.sun.codemodel.CodeWriter;
@@ -30,6 +31,7 @@ import com.sun.tools.xjc.outline.Outline;
 @MojoGoal("generate")
 @MojoPhase("generate-sources")
 @MojoRequiresDependencyResolution("compile")
+@MojoThreadSafe
 public class XJC20Mojo extends RawXJC2Mojo<Options> {
 
 	private final org.jvnet.jaxb2.maven2.OptionsFactory<Options> optionsFactory = new OptionsFactory();

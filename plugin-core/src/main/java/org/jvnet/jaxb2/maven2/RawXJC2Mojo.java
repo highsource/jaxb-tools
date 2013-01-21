@@ -720,6 +720,10 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			arguments.add(getEpisodeFile().getAbsolutePath());
 		}
 
+		if (getMarkGenerated()) {
+			arguments.add("-mark-generated");
+		}
+
 		for (final File episodeFile : getEpisodeFiles()) {
 			arguments.add(episodeFile.getAbsolutePath());
 		}

@@ -601,7 +601,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	
 	private boolean markGenerated = false;
 	
-	@MojoParameter(expression = "${maven.xjc2.markGenerated}", defaultValue = "true", description = "If true, marks generated classes using a @Generated annotation - i.e. turns on XJC -mark-generated option. Default is false.")
+	@MojoParameter(expression = "${maven.xjc2.markGenerated}", defaultValue = "false", description = "If true, marks generated classes using a @Generated annotation - i.e. turns on XJC -mark-generated option. Default is false.")
 	public boolean getMarkGenerated() {
 		return markGenerated;
 	}

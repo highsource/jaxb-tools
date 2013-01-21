@@ -594,9 +594,20 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	public boolean getEpisode() {
 		return episode;
 	}
-
+	
 	public void setEpisode(boolean episode) {
 		this.episode = episode;
+	}
+	
+	private boolean markGenerated = false;
+	
+	@MojoParameter(expression = "${maven.xjc2.markGenerated}", defaultValue = "true", description = "If true, marks generated classes using a @Generated annotation - i.e. turns on XJC -mark-generated option. Default is false.")
+	public boolean getMarkGenerated() {
+		return markGenerated;
+	}
+	
+	public void setMarkGenerated(boolean markGenerated) {
+		this.markGenerated = markGenerated;
 	}
 
 	private List classpathElements;

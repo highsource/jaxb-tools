@@ -1,0 +1,47 @@
+<xsd:schema
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:episode_a="http://maven-jaxb2-plugin/samples/episode/a"
+	xmlns:b="http://maven-jaxb2-plugin/samples/episode/b"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+    jaxb:version="2.0"
+    targetNamespace="http://maven-jaxb2-plugin/samples/episode/b"
+	elementFormDefault="qualified">
+
+	<xsd:import namespace="http://maven-jaxb2-plugin/samples/episode/a"/>
+	<!--xsd:import namespace="http://maven-jaxb2-plugin/samples/episode/a" schemaLocation="a.xsd"/-->
+
+	<xsd:element name="b" type="b:BType"/>
+
+	<xsd:complexType name="BType">
+		<xsd:complexContent>
+		    <xsd:extension base="episode_a:AType">
+				<xsd:sequence>
+					<xsd:element name="b" type="b:B1Type"/>
+				</xsd:sequence>
+		    </xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="B1Type">
+		<xsd:complexContent>
+		    <xsd:extension base="episode_a:A1Type">
+				<xsd:sequence>
+					<xsd:element name="b1" type="xsd:string"/>
+				</xsd:sequence>
+		    </xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+  
+    <xsd:element name="b2" type="b:B2Type"/>
+
+  <xsd:complexType name="B2Type">
+    <!-- 
+    <xsd:annotation><xsd:appinfo>
+      <jaxb:class>
+      </jaxb:class>
+    </xsd:appinfo></xsd:annotation>         
+    -->
+    <xsd:attribute name="b2attribute" type="episode_a:A2EnumType" use="required"/>
+  </xsd:complexType>
+
+</xsd:schema>

@@ -392,7 +392,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * -extension option). Otherwise, it will run in the strict conformance
 	 * mode.
 	 */
-	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.extension}", description = " If true, the XJC binding compiler will run in the extension mode (XJC's -extension option). Otherwise, it will run in the strict conformance mode. Please note that you must enable the extension mode if you use vendor extensions in your bindings.")
+	@MojoParameter(defaultValue = "true", expression = "${maven.xjc2.extension}", description = "If true, the XJC binding compiler will run in the extension mode (XJC's -extension option). Otherwise, it will run in the strict conformance mode. Please note that you must enable the extension mode if you use vendor extensions in your bindings. Default is true.")
 	public boolean getExtension() {
 		return extension;
 	}

@@ -12,6 +12,14 @@ public abstract class MPackagedTypeInfoVisitor<T, C, V> implements
 	public V visitBuiltinLeafInfo(MBuiltinLeafInfo<T, C> info) {
 		return null;
 	}
+	
+	public V visitID(MID<T, C> info) {
+		return null;
+	}
+	
+	public V visitIDREF(MIDREF<T, C> info) {
+		return null;
+	}
 
 	public V visitEnumLeafInfo(MEnumLeafInfo<T, C> info) {
 		return visitPackagedTypeInfo(info);

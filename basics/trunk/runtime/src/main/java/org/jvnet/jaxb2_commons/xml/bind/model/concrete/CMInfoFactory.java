@@ -134,7 +134,19 @@ WTI extends WildcardTypeInfo<T, C>> {
 	protected MTypeInfo<T, C> getTypeInfo(PropertyInfo<T, C> propertyInfo,
 			TI typeInfo, boolean list, Adapter<T, C> adapter, ID id,
 			MimeType mimeType) {
-		final MTypeInfo<T, C> ti = getTypeInfo(typeInfo);
+		final MTypeInfo<T, C> draftTI = getTypeInfo(typeInfo);
+		final MTypeInfo<T, C> ti;
+		switch (id) {
+		case ID:
+			ti = new CMID<T, C>(draftTI.getTargetType(), draftTI);
+			break;
+		case IDREF:
+			ti = new CMIDREF<T, C>(draftTI.getTargetType(), draftTI);
+			break;
+		default:
+			ti = draftTI;
+			break;
+		}
 		if (!list) {
 			return ti;
 		} else {

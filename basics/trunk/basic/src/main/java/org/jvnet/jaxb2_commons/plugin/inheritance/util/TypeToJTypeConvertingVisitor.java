@@ -1,8 +1,5 @@
 package org.jvnet.jaxb2_commons.plugin.inheritance.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import japa.parser.ast.type.ClassOrInterfaceType;
 import japa.parser.ast.type.PrimitiveType;
 import japa.parser.ast.type.ReferenceType;
@@ -11,6 +8,12 @@ import japa.parser.ast.type.VoidType;
 import japa.parser.ast.type.WildcardType;
 import japa.parser.ast.visitor.GenericVisitorAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.Validate;
+
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JType;
@@ -18,7 +21,12 @@ import com.sun.codemodel.JType;
 public class TypeToJTypeConvertingVisitor extends
 		GenericVisitorAdapter<JType, JCodeModel> {
 
-	public static TypeToJTypeConvertingVisitor INSTANCE = new TypeToJTypeConvertingVisitor();
+	private final Map<String, JClass> knownClasses;
+
+	public TypeToJTypeConvertingVisitor(Map<String, JClass> knownClasses) {
+		Validate.notNull(knownClasses);
+		this.knownClasses = knownClasses;
+	}
 
 	@Override
 	public JType visit(VoidType type, JCodeModel codeModel) {
@@ -87,7 +95,10 @@ public class TypeToJTypeConvertingVisitor extends
 
 	@Override
 	public JType visit(ClassOrInterfaceType type, JCodeModel codeModel) {
-		final JClass jclass = codeModel.ref(getName(type));
+		final String name = getName(type);
+		final JClass knownClass = this.knownClasses.get(name);
+		final JClass jclass = knownClass != null ? knownClass : codeModel
+				.ref(name);
 		final List<Type> typeArgs = type.getTypeArgs();
 		if (typeArgs == null || typeArgs.isEmpty()) {
 			return jclass;

@@ -9,7 +9,11 @@ import japa.parser.ast.type.ClassOrInterfaceType;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.Validate;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
@@ -19,6 +23,19 @@ public class JavaTypeParser {
 
 	static {
 		JavaParser.setCacheParser(false);
+	}
+
+	private final TypeToJTypeConvertingVisitor typeToJTypeConvertingVisitor;
+
+	public JavaTypeParser() {
+		this(Collections.<String, JClass> emptyMap());
+	}
+
+	public JavaTypeParser(Map<String, JClass> knownClasses) {
+		Validate.notNull(knownClasses);
+		this.typeToJTypeConvertingVisitor = new TypeToJTypeConvertingVisitor(
+				knownClasses);
+
 	}
 
 	public JClass parseClass(String _class, JCodeModel codeModel) {
@@ -45,7 +62,7 @@ public class JavaTypeParser {
 			final ClassOrInterfaceType classOrInterfaceType = _extended.get(0);
 
 			return classOrInterfaceType.accept(
-					TypeToJTypeConvertingVisitor.INSTANCE, codeModel);
+					this.typeToJTypeConvertingVisitor, codeModel);
 		} catch (ParseException pex) {
 			throw new IllegalArgumentException(
 					"Could not parse the type definition [" + type + "].", pex);

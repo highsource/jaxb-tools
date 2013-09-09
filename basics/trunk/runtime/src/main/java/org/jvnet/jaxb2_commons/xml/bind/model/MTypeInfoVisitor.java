@@ -8,6 +8,8 @@ public interface MTypeInfoVisitor<T, C, V> {
 
 	public V visitIDREF(MIDREF<T, C> info);
 
+	public V visitIDREFS(MIDREFS<T, C> info);
+
 	public V visitBuiltinLeafInfo(MBuiltinLeafInfo<T, C> info);
 
 	public V visitEnumLeafInfo(MEnumLeafInfo<T, C> info);

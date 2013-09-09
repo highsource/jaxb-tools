@@ -5,6 +5,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MID;
 import org.jvnet.jaxb2_commons.xml.bind.model.MIDREF;
+import org.jvnet.jaxb2_commons.xml.bind.model.MIDREFS;
 import org.jvnet.jaxb2_commons.xml.bind.model.MList;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
@@ -20,12 +21,16 @@ public class DefaultTypeInfoVisitor<T, C, V> implements
 	public V visitList(MList<T, C> info) {
 		return visitTypeInfo(info);
 	}
-	
+
 	public V visitID(MID<T, C> info) {
 		return visitTypeInfo(info);
 	}
 
 	public V visitIDREF(MIDREF<T, C> info) {
+		return visitTypeInfo(info);
+	}
+
+	public V visitIDREFS(MIDREFS<T, C> info) {
 		return visitTypeInfo(info);
 	}
 

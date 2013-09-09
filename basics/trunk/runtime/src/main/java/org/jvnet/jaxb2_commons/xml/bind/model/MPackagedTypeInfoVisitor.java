@@ -21,6 +21,10 @@ public abstract class MPackagedTypeInfoVisitor<T, C, V> implements
 		return null;
 	}
 
+	public V visitIDREFS(MIDREFS<T, C> info) {
+		return null;
+	}
+
 	public V visitEnumLeafInfo(MEnumLeafInfo<T, C> info) {
 		return visitPackagedTypeInfo(info);
 	}

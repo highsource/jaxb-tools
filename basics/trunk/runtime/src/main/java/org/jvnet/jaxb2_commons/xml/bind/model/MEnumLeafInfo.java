@@ -8,7 +8,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.origin.MEnumLeafInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MOriginated;
 
 public interface MEnumLeafInfo<T, C> extends MPackagedTypeInfo<T, C>,
-		MOriginated<MEnumLeafInfoOrigin> {
+		MOriginated<MEnumLeafInfoOrigin>, MContained {
 
 	public C getTargetClass();
 

@@ -5,6 +5,7 @@ import java.text.MessageFormat;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
+import org.jvnet.jaxb2_commons.xml.bind.model.MContainer;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
@@ -16,6 +17,10 @@ public class CMElementInfo<T, C> implements MElementInfo<T, C> {
 
 	private final MPackageInfo _package;
 
+	private final MContainer container;
+
+	private final String localName;
+
 	private final QName elementName;
 
 	private final MTypeInfo<T, C> scope;
@@ -25,7 +30,8 @@ public class CMElementInfo<T, C> implements MElementInfo<T, C> {
 	private final QName substitutionHead;
 
 	public CMElementInfo(MElementInfoOrigin origin, MPackageInfo _package,
-			QName elementName, MTypeInfo<T, C> scope, MTypeInfo<T, C> typeInfo,
+			MContainer container, String localName, QName elementName,
+			MTypeInfo<T, C> scope, MTypeInfo<T, C> typeInfo,
 			QName substitutionHead) {
 		super();
 		Validate.notNull(origin);
@@ -33,6 +39,8 @@ public class CMElementInfo<T, C> implements MElementInfo<T, C> {
 		Validate.notNull(_package);
 		this.origin = origin;
 		this._package = _package;
+		this.container = container;
+		this.localName = localName;
 		this.elementName = elementName;
 		this.scope = scope;
 		this.typeInfo = typeInfo;
@@ -45,6 +53,31 @@ public class CMElementInfo<T, C> implements MElementInfo<T, C> {
 
 	public MPackageInfo getPackageInfo() {
 		return _package;
+	}
+
+	public MContainer getContainer() {
+		return container;
+	}
+
+	public String getLocalName() {
+		return localName;
+	}
+
+	public String getContainerLocalName(String delimiter) {
+		final String localName = getLocalName();
+		if (localName == null) {
+			return null;
+		} else {
+			final MContainer container = getContainer();
+			if (container == null) {
+				return localName;
+			} else {
+				final String containerLocalName = container
+						.getContainerLocalName(delimiter);
+				return containerLocalName == null ? localName
+						: containerLocalName + delimiter + localName;
+			}
+		}
 	}
 
 	public QName getElementName() {

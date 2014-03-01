@@ -33,4 +33,16 @@ public class CMPackageInfo implements MPackageInfo {
 		}
 	}
 
+	public String getLocalName() {
+		return null;
+	}
+
+	public String getContainerLocalName(String delimiter) {
+		return null;
+	}
+
+	public MPackageInfo getPackageInfo() {
+		return this;
+	}
+
 }

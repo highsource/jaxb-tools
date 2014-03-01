@@ -8,6 +8,7 @@ import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MContainer;
 import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizations;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
@@ -29,6 +30,7 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 	private final MPackageInfo _package;
 	private final String name;
 	private final String localName;
+	private final MContainer container;
 	private final MClassInfo<T, C> baseTypeInfo;
 	private final QName elementName;
 
@@ -37,7 +39,7 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 			.unmodifiableList(properties);
 
 	public CMClassInfo(MClassInfoOrigin origin, C targetClass,
-			MPackageInfo _package, String localName,
+			MPackageInfo _package, MContainer container, String localName,
 			MClassInfo<T, C> baseTypeInfo, QName elementName) {
 		super();
 		Validate.notNull(origin);
@@ -49,6 +51,7 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 		this.name = _package.getPackagedName(localName);
 		this.localName = localName;
 		this._package = _package;
+		this.container = container;
 		this.baseTypeInfo = baseTypeInfo;
 		this.elementName = elementName;
 	}
@@ -72,8 +75,8 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 	public MElementInfo<T, C> createElementInfo(MTypeInfo<T, C> scope,
 			QName substitutionHead) {
 		return new CMElementInfo<T, C>(getOrigin().createElementInfoOrigin(),
-				getPackageInfo(), getElementName(), scope, this,
-				substitutionHead);
+				getPackageInfo(), getContainer(), getLocalName(),
+				getElementName(), scope, this, substitutionHead);
 	}
 
 	public MPackageInfo getPackageInfo() {
@@ -86,6 +89,31 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 
 	public String getLocalName() {
 		return localName;
+	}
+
+	public MContainer getContainer() {
+		return container;
+	}
+
+	public String getContainerLocalName(String delimiter) {
+		final String localName = getLocalName();
+		if (localName == null) {
+			return null;
+		} else {
+			final MContainer container = getContainer();
+			if (container == null) {
+				return localName;
+			} else {
+				final String containerLocalName = container
+						.getContainerLocalName(delimiter);
+				return containerLocalName == null ? localName
+						: containerLocalName + delimiter + localName;
+			}
+		}
+	}
+
+	public MContainer getScope() {
+		return container;
 	}
 
 	public MClassInfo<T, C> getBaseTypeInfo() {

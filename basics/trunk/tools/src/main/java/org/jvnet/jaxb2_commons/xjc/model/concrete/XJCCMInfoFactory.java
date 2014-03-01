@@ -11,6 +11,8 @@ import org.jvnet.jaxb2_commons.xjc.model.concrete.origin.XJCCMEnumLeafInfoOrigin
 import org.jvnet.jaxb2_commons.xjc.model.concrete.origin.XJCCMModelInfoOrigin;
 import org.jvnet.jaxb2_commons.xjc.model.concrete.origin.XJCCMPackageInfoOrigin;
 import org.jvnet.jaxb2_commons.xjc.model.concrete.origin.XJCCMPropertyInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MContainer;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.concrete.CMInfoFactory;
 import org.jvnet.jaxb2_commons.xml.bind.model.concrete.CMPackageInfo;
@@ -67,7 +69,42 @@ public class XJCCMInfoFactory
 		return getPackage(info.parent);
 	}
 
+	@Override
+	protected MContainer getContainer(CClassInfo info) {
+		final CClassInfoParent parent = info.parent();
+		return parent == null ? null : getContainer(parent);
+	}
+
+	@Override
+	protected MContainer getContainer(CElementInfo info) {
+		final CClassInfoParent parent = info.parent;
+		return parent == null ? null : getContainer(parent);
+	}
+
+	@Override
+	protected MContainer getContainer(CEnumLeafInfo info) {
+		final CClassInfoParent parent = info.parent;
+		return parent == null ? null : getContainer(parent);
+	}
+
 	private final Map<String, MPackageInfo> packages = new HashMap<String, MPackageInfo>();
+
+	private MContainer getContainer(CClassInfoParent parent) {
+		return parent.accept(new Visitor<MContainer>() {
+
+			public MContainer onBean(CClassInfo bean) {
+				return getTypeInfo(bean);
+			}
+
+			public MContainer onPackage(JPackage pkg) {
+				return getPackage(pkg);
+			}
+
+			public MContainer onElement(CElementInfo element) {
+				return getElementInfo(element);
+			}
+		});
+	}
 
 	private MPackageInfo getPackage(CClassInfoParent parent) {
 
@@ -78,14 +115,7 @@ public class XJCCMInfoFactory
 			}
 
 			public MPackageInfo onPackage(JPackage pkg) {
-				String packageName = pkg.name();
-				MPackageInfo _package = packages.get(packageName);
-				if (_package == null) {
-					_package = new CMPackageInfo(createPackageInfoOrigin(pkg),
-							packageName);
-					packages.put(packageName, _package);
-				}
-				return _package;
+				return getPackage(pkg);
 			}
 
 			public MPackageInfo onElement(CElementInfo element) {
@@ -96,6 +126,11 @@ public class XJCCMInfoFactory
 	}
 
 	@Override
+	protected MClassInfo<NType, NClass> getScope(CClassInfo info) {
+		return info.getScope() == null ? null : getTypeInfo(info.getScope());
+	}
+
+	@Override
 	protected String getLocalName(CClassInfo info) {
 		return info.shortName;
 	}
@@ -103,6 +138,11 @@ public class XJCCMInfoFactory
 	@Override
 	protected String getLocalName(CEnumLeafInfo info) {
 		return info.shortName;
+	}
+
+	@Override
+	protected String getLocalName(CElementInfo info) {
+		return info.shortName();
 	}
 
 	@Override
@@ -161,5 +201,16 @@ public class XJCCMInfoFactory
 				return false;
 			}
 		};
+	}
+
+	private MPackageInfo getPackage(JPackage pkg) {
+		String packageName = pkg.name();
+		MPackageInfo _package = packages.get(packageName);
+		if (_package == null) {
+			_package = new CMPackageInfo(createPackageInfoOrigin(pkg),
+					packageName);
+			packages.put(packageName, _package);
+		}
+		return _package;
 	}
 }

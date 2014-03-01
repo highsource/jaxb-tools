@@ -9,6 +9,7 @@ import java.util.List;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
+import org.jvnet.jaxb2_commons.xml.bind.model.MContainer;
 import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizable;
 import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizations;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
@@ -31,6 +32,7 @@ public class CMEnumLeafInfo<T, C extends T> implements MEnumLeafInfo<T, C>,
 	private final CMCustomizations customizations = new CMCustomizations();
 	private final C targetClass;
 	private final MPackageInfo _package;
+	private final MContainer container;
 	private final String name;
 	private final String localName;
 	private final MTypeInfo<T, C> baseTypeInfo;
@@ -40,7 +42,7 @@ public class CMEnumLeafInfo<T, C extends T> implements MEnumLeafInfo<T, C>,
 	private final QName elementName;
 
 	public CMEnumLeafInfo(MEnumLeafInfoOrigin origin, C targetClass,
-			MPackageInfo _package, String localName,
+			MPackageInfo _package, MContainer container, String localName,
 			MTypeInfo<T, C> baseTypeInfo, QName elementName) {
 
 		Validate.notNull(origin);
@@ -51,6 +53,7 @@ public class CMEnumLeafInfo<T, C extends T> implements MEnumLeafInfo<T, C>,
 		this.origin = origin;
 		this.targetClass = targetClass;
 		this._package = _package;
+		this.container = container;
 		this.localName = localName;
 		this.name = _package.getPackagedName(localName);
 		this.baseTypeInfo = baseTypeInfo;
@@ -77,7 +80,10 @@ public class CMEnumLeafInfo<T, C extends T> implements MEnumLeafInfo<T, C>,
 	public MElementInfo<T, C> createElementInfo(MTypeInfo<T, C> scope,
 			QName substitutionHead) {
 		return new CMElementInfo<T, C>(getOrigin().createElementInfoOrigin(),
-				getPackageInfo(), getElementName(), scope, this,
+				getPackageInfo(), 
+				getContainer(),
+				getLocalName(),
+				getElementName(), scope, this,
 				substitutionHead);
 	}
 
@@ -89,8 +95,30 @@ public class CMEnumLeafInfo<T, C extends T> implements MEnumLeafInfo<T, C>,
 		return localName;
 	}
 
+
 	public MPackageInfo getPackageInfo() {
 		return _package;
+	}
+
+	public MContainer getContainer() {
+		return container;
+	}
+
+	public String getContainerLocalName(String delimiter) {
+		final String localName = getLocalName();
+		if (localName == null) {
+			return null;
+		} else {
+			final MContainer container = getContainer();
+			if (container == null) {
+				return localName;
+			} else {
+				final String containerLocalName = container
+						.getContainerLocalName(delimiter);
+				return containerLocalName == null ? localName
+						: containerLocalName + delimiter + localName;
+			}
+		}
 	}
 
 	public MTypeInfo<T, C> getBaseTypeInfo() {

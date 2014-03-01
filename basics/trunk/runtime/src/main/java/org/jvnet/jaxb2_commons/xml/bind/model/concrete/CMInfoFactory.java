@@ -13,6 +13,7 @@ import javax.xml.namespace.QName;
 import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MBuiltinLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MContainer;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumLeafInfo;
@@ -239,7 +240,7 @@ WTI extends WildcardTypeInfo<T, C>> {
 
 	}
 
-	private MElementInfo<T, C> getElementInfo(EI info) {
+	protected MElementInfo<T, C> getElementInfo(EI info) {
 		MElementInfo<T, C> mElementInfo = elementInfos.get(info);
 		if (mElementInfo == null) {
 			mElementInfo = createElementInfo(info);
@@ -251,7 +252,7 @@ WTI extends WildcardTypeInfo<T, C>> {
 
 	protected MClassInfo<T, C> createClassInfo(CI info) {
 		return new CMClassInfo<T, C>(createClassInfoOrigin(info),
-				info.getClazz(), getPackage(info), getLocalName(info),
+				info.getClazz(), getPackage(info), getContainer(info), getLocalName(info),
 				info.getBaseClass() == null ? null : getTypeInfo((CI) info
 						.getBaseClass()),
 				info.isElement() ? info.getElementName() : null);
@@ -413,11 +414,21 @@ WTI extends WildcardTypeInfo<T, C>> {
 
 	protected abstract String getLocalName(CI info);
 
+	protected abstract MClassInfo<T, C> getScope(CI info);
+
 	protected abstract MPackageInfo getPackage(ELI info);
 
 	protected abstract String getLocalName(ELI info);
 
+	protected abstract String getLocalName(EI info);
+
 	protected abstract MPackageInfo getPackage(EI info);
+
+	protected abstract MContainer getContainer(CI info);
+
+	protected abstract MContainer getContainer(EI info);
+
+	protected abstract MContainer getContainer(ELI info);
 
 	//
 
@@ -430,8 +441,9 @@ WTI extends WildcardTypeInfo<T, C>> {
 		@SuppressWarnings("unchecked")
 		final TI baseType = (TI) info.getBaseType();
 		return new CMEnumLeafInfo<T, C>(createEnumLeafInfoOrigin(info),
-				info.getClazz(), getPackage(info), getLocalName(info),
-				getTypeInfo(baseType), info.getElementName());
+				info.getClazz(), getPackage(info), getContainer(info),
+				getLocalName(info), getTypeInfo(baseType),
+				info.getElementName());
 	}
 
 	protected CMEnumConstantInfo<T, C> createEnumContantInfo(
@@ -450,6 +462,7 @@ WTI extends WildcardTypeInfo<T, C>> {
 				: element.getSubstitutionHead().getElementName();
 		final MElementInfo<T, C> elementInfo = new CMElementInfo<T, C>(
 				createElementInfoOrigin(element), getPackage(element),
+				getContainer(element), getLocalName(element),
 				element.getElementName(), scope, getTypeInfo(element),
 				substitutionHead);
 		return elementInfo;

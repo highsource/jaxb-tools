@@ -8,7 +8,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.origin.MClassInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MOriginated;
 
 public interface MClassInfo<T, C> extends MPackagedTypeInfo<T, C>,
-		MOriginated<MClassInfoOrigin>, MContained, MContainer {
+		MOriginated<MClassInfoOrigin>, MContainer {
 
 	public C getTargetClass();
 

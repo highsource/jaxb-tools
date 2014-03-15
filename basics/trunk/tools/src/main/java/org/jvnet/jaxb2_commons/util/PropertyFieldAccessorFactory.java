@@ -186,8 +186,12 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 					throw new UnsupportedOperationException();
 				}
 				if (getter != null) {
-					block.assign($var, JOp.cond(hasSetValue(),
-							targetObject.invoke(getter), defaultExpression));
+					if (hasSetValue() == JExpr.TRUE) {
+						block.assign($var, targetObject.invoke(getter));
+					} else {
+						block.assign($var, JOp.cond(hasSetValue(),
+								targetObject.invoke(getter), defaultExpression));
+					}
 				} else {
 					final JConditional _if = block._if(hasSetValue());
 					fieldAccessor.toRawValue(_if._then(), $var);

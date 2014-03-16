@@ -99,6 +99,14 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 		public CPropertyInfo getPropertyInfo() {
 			return fieldOutline.getPropertyInfo();
 		}
+		
+		public boolean isAlwaysSet() {
+			if (constantField != null) {
+				return true;
+			} else {
+				return JExpr.TRUE == fieldAccessor.hasSetValue();
+			}
+		}
 
 		public JExpression hasSetValue() {
 			if (constantField != null) {
@@ -186,7 +194,7 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 					throw new UnsupportedOperationException();
 				}
 				if (getter != null) {
-					if (hasSetValue() == JExpr.TRUE) {
+					if (isAlwaysSet()) {
 						block.assign($var, targetObject.invoke(getter));
 					} else {
 						block.assign($var, JOp.cond(hasSetValue(),

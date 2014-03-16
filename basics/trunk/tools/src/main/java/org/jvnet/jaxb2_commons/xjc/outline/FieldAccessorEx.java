@@ -10,4 +10,6 @@ public interface FieldAccessorEx extends FieldAccessor {
 	public boolean isConstant();
 	
 	public boolean isVirtual();
+	
+	public boolean isAlwaysSet();
 }

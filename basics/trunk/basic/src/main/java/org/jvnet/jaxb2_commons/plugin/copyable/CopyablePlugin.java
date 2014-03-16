@@ -50,13 +50,13 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 	public String getUsage() {
 		return "TBD";
 	}
-	
+
 	private FieldAccessorFactory fieldAccessorFactory = PropertyFieldAccessorFactory.INSTANCE;
-	
+
 	public FieldAccessorFactory getFieldAccessorFactory() {
 		return fieldAccessorFactory;
 	}
-	
+
 	public void setFieldAccessorFactory(
 			FieldAccessorFactory fieldAccessorFactory) {
 		this.fieldAccessorFactory = fieldAccessorFactory;
@@ -93,8 +93,7 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 	@Override
 	public Collection<QName> getCustomizationElementNames() {
 		return Arrays
-				.asList(
-						org.jvnet.jaxb2_commons.plugin.copyable.Customizations.IGNORED_ELEMENT_NAME,
+				.asList(org.jvnet.jaxb2_commons.plugin.copyable.Customizations.IGNORED_ELEMENT_NAME,
 						Customizations.IGNORED_ELEMENT_NAME,
 						Customizations.GENERATED_ELEMENT_NAME);
 	}
@@ -182,14 +181,14 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 			final JDefinedClass theClass) {
 
 		final JCodeModel codeModel = theClass.owner();
-		final JMethod copyTo$copyTo = theClass.method(JMod.PUBLIC, codeModel
-				.ref(Object.class), "copyTo");
+		final JMethod copyTo$copyTo = theClass.method(JMod.PUBLIC,
+				codeModel.ref(Object.class), "copyTo");
 		{
 			final JVar target = copyTo$copyTo.param(Object.class, "target");
 
 			final JBlock body = copyTo$copyTo.body();
-			final JVar copyStrategy = body.decl(JMod.FINAL, codeModel
-					.ref(CopyStrategy.class), "strategy",
+			final JVar copyStrategy = body.decl(JMod.FINAL,
+					codeModel.ref(CopyStrategy.class), "strategy",
 					createCopyStrategy(codeModel));
 
 			body._return(JExpr.invoke("copyTo").arg(JExpr._null()).arg(target)
@@ -214,24 +213,20 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 
 			final JVar draftCopy;
 			if (!classOutline.target.isAbstract()) {
-				draftCopy = body.decl(JMod.FINAL, theClass.owner().ref(
-						Object.class), "draftCopy",
+				draftCopy = body.decl(
+						JMod.FINAL,
+						theClass.owner().ref(Object.class),
+						"draftCopy",
 
-				JOp.cond(JOp.eq(target, JExpr._null()), JExpr
-						.invoke("createNewInstance"), target));
+						JOp.cond(JOp.eq(target, JExpr._null()),
+								JExpr.invoke("createNewInstance"), target));
 			} else {
-				body
-						._if(JExpr._null().eq(target))
+				body._if(JExpr._null().eq(target))
 						._then()
-						._throw(
-								JExpr
-										._new(
-												theClass
-														.owner()
-														.ref(
-																IllegalArgumentException.class))
-										.arg(
-												"Target argument must not be null for abstract copyable classes."));
+						._throw(JExpr
+								._new(theClass.owner().ref(
+										IllegalArgumentException.class))
+								.arg("Target argument must not be null for abstract copyable classes."));
 				draftCopy = target;
 			}
 
@@ -242,8 +237,8 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 			if (superClassImplementsCopyTo == null) {
 
 			} else if (superClassImplementsCopyTo.booleanValue()) {
-				body.invoke(JExpr._super(), "copyTo").arg(locator).arg(
-						draftCopy).arg(copyStrategy);
+				body.invoke(JExpr._super(), "copyTo").arg(locator)
+						.arg(draftCopy).arg(copyStrategy);
 
 			} else {
 
@@ -257,8 +252,8 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 				final JBlock bl = body._if(draftCopy._instanceof(theClass))
 						._then();
 
-				final JVar copy = bl.decl(JMod.FINAL, theClass, "copy", JExpr
-						.cast(theClass, draftCopy));
+				final JVar copy = bl.decl(JMod.FINAL, theClass, "copy",
+						JExpr.cast(theClass, draftCopy));
 
 				for (final FieldOutline fieldOutline : declaredFields) {
 
@@ -279,7 +274,8 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 					final JExpression valueIsSet = sourceFieldAccessor
 							.hasSetValue();
 
-					if (valueIsSet != null) {
+					if (!sourceFieldAccessor.isAlwaysSet()
+							&& valueIsSet != null) {
 						final JConditional ifValueIsSet = block._if(valueIsSet);
 						setValueBlock = ifValueIsSet._then();
 						unsetValueBlock = ifValueIsSet._else();
@@ -298,19 +294,21 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 												.getName(true));
 						sourceFieldAccessor.toRawValue(setValueBlock,
 								sourceField);
-						final JExpression builtCopy = JExpr.invoke(
-								copyStrategy, "copy").arg(
-								theClass.owner().ref(LocatorUtils.class)
-										.staticInvoke("property").arg(locator)
-										.arg(
-												fieldOutline.getPropertyInfo()
-														.getName(false)).arg(
-												sourceField)).arg(sourceField);
+						final JExpression builtCopy = JExpr
+								.invoke(copyStrategy, "copy")
+								.arg(theClass
+										.owner()
+										.ref(LocatorUtils.class)
+										.staticInvoke("property")
+										.arg(locator)
+										.arg(fieldOutline.getPropertyInfo()
+												.getName(false))
+										.arg(sourceField)).arg(sourceField);
 						final JVar copyField = setValueBlock.decl(
 								copyFieldType, "copy"
 										+ fieldOutline.getPropertyInfo()
-												.getName(true), copyFieldType
-										.isPrimitive() ? builtCopy :
+												.getName(true),
+								copyFieldType.isPrimitive() ? builtCopy :
 
 								JExpr.cast(copyFieldType, builtCopy));
 						if (copyFieldType instanceof JClass

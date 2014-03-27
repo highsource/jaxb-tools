@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jvnet.jaxb2.maven2</groupId>
 	<artifactId>maven-jaxb2-plugin-project</artifactId>
-	<version>0.8.3</version>
+	<version>0.9.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Maven JAXB 2.x Plugin Project</name>
 	<description>Maven2 plugin for JAXB 2.x XJC compiler to generate Java sources from XML Schemas.</description>
@@ -51,12 +51,15 @@
 		<module>testing</module>
 	</modules>
 	<properties>
-		<maven.version>2.0.6</maven.version>
+		<maven.version>2.0.9</maven.version>
 		<jaxb20.version>2.0.5</jaxb20.version>
-		<jaxb21.version>2.1.13</jaxb21.version>
-		<jaxb22.version>2.2.6</jaxb22.version>
-		<jaxb.version>2.2.6</jaxb.version>
+		<jaxb21.version>2.1.14</jaxb21.version>
+		<jaxb22.version>2.2.7</jaxb22.version>
+		<jaxb.version>2.2.7</jaxb.version>
 		<jaxb2-basics.version>0.6.4</jaxb2-basics.version>
+		<maven.plugin.testing.version>2.1</maven.plugin.testing.version>
+		<maven.plugin.plugin.version>3.2</maven.plugin.plugin.version>
+		<!--maven.site.path>plugins-archives/${project.artifactId}-LATEST</maven.site.path-->
 	</properties>
 	<profiles>
 		<profile>
@@ -122,17 +125,22 @@
 				<artifactId>maven-jaxb2-plugin-testing</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			<dependency>
+			<!--dependency>
 				<groupId>br.com.ingenieux.maven.annomojo</groupId>
 				<artifactId>org.jfrog.maven.maven-plugin-anno</artifactId>
 				<version>1.4.1</version>
-			</dependency>
-			<dependency>
+			</dependency-->
+			<!--dependency>
 				<groupId>br.com.ingenieux.maven.annomojo</groupId>
 				<artifactId>org.jfrog.maven.maven-plugin-tools-anno</artifactId>
 				<version>1.4.1</version>
-			</dependency>
+			</dependency-->
 			<!-- Maven plugin and api classes -->
+			<dependency>
+				<groupId>org.apache.maven</groupId>
+				<artifactId>maven-artifact</artifactId>
+				<version>${maven.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-plugin-api</artifactId>
@@ -143,6 +151,96 @@
 				<artifactId>maven-project</artifactId>
 				<version>${maven.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.apache.maven</groupId>
+				<artifactId>maven-model</artifactId>
+				<version>${maven.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.maven</groupId>
+				<artifactId>maven-core</artifactId>
+				<version>${maven.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.maven</groupId>
+				<artifactId>maven-artifact-manager</artifactId>
+				<version>${maven.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.maven</groupId>
+				<artifactId>maven-repository-metadata</artifactId>
+				<version>${maven.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.maven.plugin-tools</groupId>
+				<artifactId>maven-plugin-annotations</artifactId>
+				<version>${maven.plugin.plugin.version}</version>
+			</dependency>
+
+
+    <!--dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-archiver</artifactId>
+      <version>2.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-utils</artifactId>
+      <version>3.0.9</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.shared</groupId>
+      <artifactId>file-management</artifactId>
+      <version>1.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-container-default</artifactId>
+      <version>1.0-alpha-9-stable-1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-io</artifactId>
+      <version>2.0.6</version>
+    </dependency-->
+
+
+
+
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.8.1</version>
+			</dependency>
+
+    <dependency> <!-- this seems to be a critical dependency, 
+      must be declared before org.apache.maven.plugin-testing so it's first on the classpath -->
+      <groupId>org.apache.maven.shared</groupId>
+      <artifactId>maven-plugin-testing-harness</artifactId>
+      <version>1.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.plugin-testing</groupId>
+      <artifactId>maven-plugin-testing-tools</artifactId>
+      <version>${maven.plugin.testing.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.plugin-testing</groupId>
+      <artifactId>maven-plugin-testing-harness</artifactId>
+      <version>${maven.plugin.testing.version}</version>
+      <scope>test</scope>
+    </dependency>
+   <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-interpolation</artifactId>
+      <version>1.9</version>
+      <scope>test</scope>
+    </dependency>
+
+
 			<dependency>
 				<groupId>org.sonatype.plexus</groupId>
 				<artifactId>plexus-build-api</artifactId>
@@ -157,11 +255,6 @@
 				<groupId>org.apache.maven.plugin-testing</groupId>
 				<artifactId>maven-plugin-testing-harness</artifactId>
 				<version>1.2</version>
-			</dependency>
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>4.8.1</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-logging</groupId>
@@ -201,7 +294,26 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-plugin-plugin</artifactId>
-					<version>2.6</version>
+					<version>${maven.plugin.plugin.version}</version>
+					<configuration>
+						<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+					</configuration>
+					<executions>
+						<execution>
+							<id>mojo-descriptor</id>
+							<phase>process-classes</phase>
+							<goals>
+								<goal>descriptor</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>help-goal</id>
+							<goals>
+								<goal>helpmojo</goal>
+							</goals>
+						</execution>
+					</executions>
+
 				</plugin>
 				<plugin>
 					<inherited>true</inherited>

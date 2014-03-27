@@ -24,12 +24,12 @@ import org.apache.maven.model.Dependency;
 import org.apache.maven.model.FileSet;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Component;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectBuilder;
 import org.apache.maven.project.artifact.InvalidDependencyVersionException;
 import org.apache.maven.project.artifact.MavenMetadataSource;
-import org.jfrog.maven.annomojo.annotations.MojoComponent;
-import org.jfrog.maven.annomojo.annotations.MojoParameter;
 import org.jvnet.jaxb2.maven2.util.ArtifactUtils;
 import org.jvnet.jaxb2.maven2.util.IOUtils;
 import org.sonatype.plexus.build.incremental.BuildContext;
@@ -37,13 +37,13 @@ import org.sonatype.plexus.build.incremental.BuildContext;
 public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		DependencyResourceResolver {
 
-	private String encoding;
-
 	/**
 	 * Encoding for the generated sources, defaults to
 	 * ${project.build.sourceEncoding}.
 	 */
-	@MojoParameter(expression = "${encoding}", defaultValue = "${project.build.sourceEncoding}", description = "Encoding for the generated sources, defaults to ${project.build.sourceEncoding}.")
+	@Parameter(property = "encoding", defaultValue = "${project.build.sourceEncoding}")
+	private String encoding;
+
 	public String getEncoding() {
 		return encoding;
 	}
@@ -52,14 +52,14 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.encoding = encoding;
 	}
 
-	private String schemaLanguage;
-
 	/**
 	 * Type of input schema language. One of: DTD, XMLSCHEMA, RELAXNG,
 	 * RELAXNG_COMPACT, WSDL, AUTODETECT. If unspecified, it is assumed
 	 * AUTODETECT.
 	 */
-	@MojoParameter(expression = "${maven.xjc2.schemaLanguage}", description = "Type of input schema language. One of: DTD, XMLSCHEMA, RELAXNG, RELAXNG_COMPACT, WSDL, AUTODETECT. If unspecified, it is assumed AUTODETECT.")
+	@Parameter(property = "maven.xjc2.schemaLanguage")
+	private String schemaLanguage;
+
 	public String getSchemaLanguage() {
 		return schemaLanguage;
 	}
@@ -68,14 +68,13 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.schemaLanguage = schemaLanguage;
 	}
 
-	private File schemaDirectory;
-
 	/**
 	 * The source directory containing *.xsd schema files. Notice that binding
 	 * files are searched by default in this directory.
-	 * 
 	 */
-	@MojoParameter(defaultValue = "src/main/resources", expression = "${maven.xjc2.schemaDirectory}", required = true, description = "Specifies the schema directory.")
+	@Parameter(defaultValue = "src/main/resources", property = "maven.xjc2.schemaDirectory", required = true)
+	private File schemaDirectory;
+
 	public File getSchemaDirectory() {
 		return schemaDirectory;
 	}
@@ -84,8 +83,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.schemaDirectory = schemaDirectory;
 	}
 
-	private String[] schemaIncludes = new String[] { "*.xsd" };
-
 	/**
 	 * <p>
 	 * A list of regular expression file search patterns to specify the schemas
@@ -93,12 +90,13 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * <code>schemaDirectory</code>.
 	 * </p>
 	 * <p>
-	 * If left udefined, then all *.xsd files in schemaDirectory will be
-	 * processed.
+	 * If left undefined, then all <code>*.xsd</code> files in
+	 * <code>schemaDirectory</code> will be processed.
 	 * </p>
-	 * 
 	 */
-	@MojoParameter(description = "Specifies file patterns to include as schemas. Default value is *.xsd.")
+	@Parameter
+	private String[] schemaIncludes = new String[] { "*.xsd" };
+
 	public String[] getSchemaIncludes() {
 		return schemaIncludes;
 	}
@@ -107,15 +105,14 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.schemaIncludes = schemaIncludes;
 	}
 
-	private String[] schemaExcludes;
-
 	/**
 	 * A list of regular expression file search patterns to specify the schemas
 	 * to be excluded from the <code>schemaIncludes</code> list. Searching is
 	 * based from the root of schemaDirectory.
-	 * 
 	 */
-	@MojoParameter(description = "Specifies file patterns of schemas to exclude. By default, nothing is excluded.")
+	@Parameter
+	private String[] schemaExcludes;
+
 	public String[] getSchemaExcludes() {
 		return schemaExcludes;
 	}
@@ -124,25 +121,19 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.schemaExcludes = schemaExcludes;
 	}
 
-	private ResourceEntry[] schemas = new ResourceEntry[0];
-
 	/**
 	 * A list of schema resources which could includes file sets, URLs, Maven
 	 * artifact resources.
 	 */
-	@MojoParameter(description = "Specifies schema resources.")
+	@Parameter
+	private ResourceEntry[] schemas = new ResourceEntry[0];
+
 	public ResourceEntry[] getSchemas() {
 		return schemas;
 	}
 
 	public void setSchemas(ResourceEntry[] schemas) {
 		this.schemas = schemas;
-	}
-
-	private File bindingDirectory;
-
-	public void setBindingDirectory(File bindingDirectory) {
-		this.bindingDirectory = bindingDirectory;
 	}
 
 	/**
@@ -153,13 +144,17 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * If left undefined, then the <code>schemaDirectory</code> is assumed.
 	 * </p>
 	 */
-	@MojoParameter(expression = "${maven.xjc2.bindingDirectory}", description = "Specifies the binding directory, defaults to the schema directory.")
+	@Parameter(property = "maven.xjc2.bindingDirectory")
+	private File bindingDirectory;
+
+	public void setBindingDirectory(File bindingDirectory) {
+		this.bindingDirectory = bindingDirectory;
+	}
+
 	public File getBindingDirectory() {
 		return bindingDirectory != null ? bindingDirectory
 				: getSchemaDirectory();
 	}
-
-	private String[] bindingIncludes = new String[] { "*.xjb" };
 
 	/**
 	 * <p>
@@ -172,7 +167,9 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * processed.
 	 * </p>
 	 */
-	@MojoParameter(description = "Specifies file patterns to include as bindings. Default value is *.xjb.")
+	@Parameter
+	private String[] bindingIncludes = new String[] { "*.xjb" };
+
 	public String[] getBindingIncludes() {
 		return bindingIncludes;
 	}
@@ -181,14 +178,14 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.bindingIncludes = bindingIncludes;
 	}
 
-	private String[] bindingExcludes;
-
 	/**
 	 * A list of regular expression file search patterns to specify the binding
 	 * files to be excluded from the <code>bindingIncludes</code>. Searching is
 	 * based from the root of bindingDirectory.
 	 */
-	@MojoParameter(description = "Specifies file patterns of bindings to exclude. By default, nothing is excluded.")
+	@Parameter
+	private String[] bindingExcludes;
+
 	public String[] getBindingExcludes() {
 		return bindingExcludes;
 	}
@@ -197,13 +194,13 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.bindingExcludes = bindingExcludes;
 	}
 
-	private ResourceEntry[] bindings = new ResourceEntry[0];
-
 	/**
 	 * A list of binding resources which could includes file sets, URLs, Maven
 	 * artifact resources.
 	 */
-	@MojoParameter(description = "Specifies binding resources.")
+	@Parameter
+	private ResourceEntry[] bindings = new ResourceEntry[0];
+
 	public ResourceEntry[] getBindings() {
 		return bindings;
 	}
@@ -212,13 +209,13 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.bindings = bindings;
 	}
 
-	private boolean disableDefaultExcludes;
-
 	/**
 	 * If 'true', maven's default exludes are NOT added to all the excludes
 	 * lists.
 	 */
-	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.disableDefaultExcludes}", description = "If set to true, Maven default exludes are NOT added to all the excludes lists.")
+	@Parameter(defaultValue = "false", property = "maven.xjc2.disableDefaultExcludes")
+	private boolean disableDefaultExcludes;
+
 	public boolean getDisableDefaultExcludes() {
 		return disableDefaultExcludes;
 	}
@@ -226,8 +223,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	public void setDisableDefaultExcludes(boolean disableDefaultExcludes) {
 		this.disableDefaultExcludes = disableDefaultExcludes;
 	}
-
-	private File catalog;
 
 	/**
 	 * Specify the catalog file to resolve external entity references (xjc's
@@ -237,7 +232,9 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * catalog-resolver sample and this article for details.
 	 * </p>
 	 */
-	@MojoParameter(expression = "${maven.xjc2.catalog}", description = "Specify the catalog file to resolve external entity references (XJC -catalog option).")
+	@Parameter(property = "maven.xjc2.catalog")
+	private File catalog;
+
 	public File getCatalog() {
 		return catalog;
 	}
@@ -246,13 +243,13 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.catalog = catalog;
 	}
 
-	private ResourceEntry[] catalogs = new ResourceEntry[0];
-
 	/**
 	 * A list of catalog resources which could includes file sets, URLs, Maven
 	 * artifact resources.
 	 */
-	@MojoParameter(description = "Specifies catalogs as filesets, URLs or Maven artifact resources.")
+	@Parameter
+	private ResourceEntry[] catalogs = new ResourceEntry[0];
+
 	public ResourceEntry[] getCatalogs() {
 		return catalogs;
 	}
@@ -285,14 +282,12 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		return catalogUrls;
 	}
 
-	protected String catalogResolver = null;
-
 	/**
 	 * Provides the class name of the catalog resolver.
-	 * 
-	 * @return Class name of the catalog resolver.
 	 */
-	@MojoParameter(expression = "${maven.xjc2.catalogResolver}", description = "Class name of the catalog resolver.")
+	@Parameter(property = "maven.xjc2.catalogResolver")
+	protected String catalogResolver = null;
+
 	public String getCatalogResolver() {
 		return catalogResolver;
 	}
@@ -300,8 +295,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	public void setCatalogResolver(String catalogResolver) {
 		this.catalogResolver = catalogResolver;
 	}
-
-	private String generatePackage;
 
 	/**
 	 * <p>
@@ -312,7 +305,9 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * If left unspecified, the package will be derived from the schemas only.
 	 * </p>
 	 */
-	@MojoParameter(expression = "${maven.xjc2.generatePackage}", description = "The generated classes will all be placed under this Java package, unless otherwise specified in the schemas. If left unspecified, the package will be derived from the schemas only.")
+	@Parameter(property = "maven.xjc2.generatePackage")
+	private String generatePackage;
+
 	public String getGeneratePackage() {
 		return generatePackage;
 	}
@@ -320,8 +315,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	public void setGeneratePackage(String generatePackage) {
 		this.generatePackage = generatePackage;
 	}
-
-	private File generateDirectory;
 
 	/**
 	 * <p>
@@ -333,7 +326,9 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * <code>doe/ray/org/here</code>.
 	 * </p>
 	 */
-	@MojoParameter(defaultValue = "${project.build.directory}/generated-sources/xjc", expression = "${maven.xjc2.generateDirectory}", required = true, description = "Target directory for the generated code.")
+	@Parameter(defaultValue = "${project.build.directory}/generated-sources/xjc", property = "maven.xjc2.generateDirectory", required = true)
+	private File generateDirectory;
+
 	public File getGenerateDirectory() {
 		return generateDirectory;
 	}
@@ -348,9 +343,13 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		}
 	}
 
+	/**
+	 * If set to true (default), adds target directory as a compile source root
+	 * of this Maven project.
+	 */
+	@Parameter(defaultValue = "true", property = "maven.xjc2.addCompileSourceRoot", required = false)
 	private boolean addCompileSourceRoot = true;
 
-	@MojoParameter(defaultValue = "true", expression = "${maven.xjc2.addCompileSourceRoot}", required = false, description = "If set to true (default), adds target directory as a compile source root of this Maven project.")
 	public boolean getAddCompileSourceRoot() {
 		return addCompileSourceRoot;
 	}
@@ -359,9 +358,13 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.addCompileSourceRoot = addCompileSourceRoot;
 	}
 
+	/**
+	 * If set to true, adds target directory as a test compile source root of
+	 * this Maven project. Default value is false.
+	 */
+	@Parameter(defaultValue = "false", property = "maven.xjc2.addTestCompileSourceRoot", required = false)
 	private boolean addTestCompileSourceRoot = false;
 
-	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.addTestCompileSourceRoot}", required = false, description = "If set to true, adds target directory as a test compile source root of this Maven project. Default value is false.")
 	public boolean getAddTestCompileSourceRoot() {
 		return addTestCompileSourceRoot;
 	}
@@ -370,13 +373,13 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.addTestCompileSourceRoot = addTestCompileSourceRoot;
 	}
 
-	private boolean readOnly;
-
 	/**
 	 * If 'true', the generated Java source files are set as read-only (xjc's
 	 * -readOnly option).
 	 */
-	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.readOnly}", description = "If true, the generated Java source files are set as read-only (XJC's -readOnly option).")
+	@Parameter(defaultValue = "false", property = "maven.xjc2.readOnly")
+	private boolean readOnly;
+
 	public boolean getReadOnly() {
 		return readOnly;
 	}
@@ -385,14 +388,14 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.readOnly = readOnly;
 	}
 
-	private boolean extension;
-
 	/**
 	 * If 'true', the XJC binding compiler will run in the extension mode (xjc's
 	 * -extension option). Otherwise, it will run in the strict conformance
 	 * mode.
 	 */
-	@MojoParameter(defaultValue = "true", expression = "${maven.xjc2.extension}", description = "If true, the XJC binding compiler will run in the extension mode (XJC's -extension option). Otherwise, it will run in the strict conformance mode. Please note that you must enable the extension mode if you use vendor extensions in your bindings. Default is true.")
+	@Parameter(defaultValue = "true", property = "maven.xjc2.extension")
+	private boolean extension;
+
 	public boolean getExtension() {
 		return extension;
 	}
@@ -401,13 +404,13 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.extension = extension;
 	}
 
-	private boolean strict = true;
-
 	/**
 	 * If 'true', Perform strict validation of the input schema (xjc's -nv
 	 * option).
 	 */
-	@MojoParameter(defaultValue = "true", expression = "${maven.xjc2.strict}", description = "If true, XJC will perform strict validation of the input schema. If strict is set to false XJC will be run with -nv, this disables strict validation of schemas.")
+	@Parameter(defaultValue = "true", property = "maven.xjc2.strict")
+	private boolean strict = true;
+
 	public boolean getStrict() {
 		return strict;
 	}
@@ -416,12 +419,12 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.strict = strict;
 	}
 
-	private boolean writeCode = true;
-
 	/**
 	 * If 'false', the plugin will not write the generated code to disk.
 	 */
-	@MojoParameter(defaultValue = "true", expression = "${maven.xjc2.writeCode}", description = "If set to false, the plugin will not write the generated code to disk.")
+	@Parameter(defaultValue = "true", property = "maven.xjc2.writeCode")
+	private boolean writeCode = true;
+
 	public boolean getWriteCode() {
 		return writeCode;
 	}
@@ -429,8 +432,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	public void setWriteCode(boolean writeCode) {
 		this.writeCode = writeCode;
 	}
-
-	private boolean verbose;
 
 	/**
 	 * <p>
@@ -442,7 +443,9 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * -X option).
 	 * </p>
 	 */
-	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.verbose}", description = "If true, the plugin and the XJC compiler are both set to verbose mode (XJC's -verbose option). It is automatically set to true when Maven is run in debug mode (mvn's -X option).")
+	@Parameter(defaultValue = "false", property = "maven.xjc2.verbose")
+	private boolean verbose;
+
 	public boolean getVerbose() {
 		return verbose;
 	}
@@ -450,8 +453,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	public void setVerbose(boolean verbose) {
 		this.verbose = verbose;
 	}
-
-	private boolean debug;
 
 	/**
 	 * <p>
@@ -462,7 +463,9 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * -X option).
 	 * </p>
 	 */
-	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.debug}", description = "If true, the XJC compiler is set to debug mode (XJC's -debug option).")
+	@Parameter(defaultValue = "false", property = "maven.xjc2.debug")
+	private boolean debug;
+
 	public boolean getDebug() {
 		return debug;
 	}
@@ -471,18 +474,18 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.debug = debug;
 	}
 
-	private List<String> args = new LinkedList<String>();
-
 	/**
 	 * <p>
 	 * A list of extra XJC's command-line arguments (items must include the dash
-	 * '-').
+	 * '-'). Use this argument to enable the JAXB2 plugins you want to use.
 	 * </p>
 	 * <p>
 	 * Arguments set here take precedence over other mojo parameters.
 	 * </p>
 	 */
-	@MojoParameter(description = "A list of extra XJC's command-line arguments (items must include the dash \"-\"). Use this argument to enable the JAXB2 plugins you want to use.")
+	@Parameter
+	private List<String> args = new LinkedList<String>();
+
 	public List<String> getArgs() {
 		return args;
 	}
@@ -491,14 +494,15 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.args.addAll(args);
 	}
 
-	private boolean forceRegenerate;
-
 	/**
-	 * If 'true', no up-to-date check is performed and the XJC always
-	 * re-generates the sources.
+	 * If true, no up-to-date check is performed and the XJC always re-generates
+	 * the sources. Otherwise schemas will only be recompiled if anything has
+	 * changed.
 	 * 
 	 */
-	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.forceRegenerate}", description = "If true, no up-to-date check is performed and the XJC always re-generates the sources. Otherwise schemas will only be recompiled if anything has changed.")
+	@Parameter(defaultValue = "false", property = "maven.xjc2.forceRegenerate")
+	private boolean forceRegenerate;
+
 	public boolean getForceRegenerate() {
 		return forceRegenerate;
 	}
@@ -507,12 +511,10 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.forceRegenerate = forceRegenerate;
 	}
 
-	private boolean removeOldOutput;
-
 	/**
 	 * <p>
-	 * If 'true', the [generateDirectory] dir will be deleted before the XJC
-	 * binding compiler recompiles the source files.
+	 * If 'true', the generateDirectory will be deleted before the XJC binding
+	 * compiler recompiles the source files. Default is false.
 	 * </p>
 	 * <p>
 	 * Note that if set to 'false', the up-to-date check might not work, since
@@ -521,7 +523,9 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * </p>
 	 * 
 	 */
-	@MojoParameter(defaultValue = "false", expression = "${maven.xjc2.removeOldOutput}", description = "If true, the generateDirectory will be deleted before the XJC binding compiler recompiles the source files. Default is false.")
+	@Parameter(defaultValue = "false", property = "maven.xjc2.removeOldOutput")
+	private boolean removeOldOutput;
+
 	public boolean getRemoveOldOutput() {
 		return removeOldOutput;
 	}
@@ -530,8 +534,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.removeOldOutput = removeOldOutput;
 	}
 
-	private boolean cleanPackageDirectories = true;
-
 	/**
 	 * <p>
 	 * If 'true', package directories will be cleaned before the XJC binding
@@ -539,7 +541,9 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * </p>
 	 * 
 	 */
-	@MojoParameter(defaultValue = "true", expression = "${maven.xjc2.removeOldPackages}", description = "If true (default), package directories will be cleaned before the XJC binding compiler generates the source files.")
+	@Parameter(defaultValue = "true", property = "maven.xjc2.removeOldPackages")
+	private boolean cleanPackageDirectories = true;
+
 	public boolean getCleanPackageDirectories() {
 		return cleanPackageDirectories;
 	}
@@ -548,10 +552,15 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.cleanPackageDirectories = removeOldPackages;
 	}
 
+	/**
+	 * Specifies patters of files produced by this plugin. This is used to check
+	 * if produced files are up-to-date. Default value is ** /*.*, ** /*.java,
+	 * ** /bgm.ser, ** /jaxb.properties.
+	 */
+	@Parameter
 	private String[] produces = new String[] { "**/*.*", "**/*.java",
 			"**/bgm.ser", "**/jaxb.properties" };
 
-	@MojoParameter(description = "Specifies patters of files produced by this plugin. This is used to check if produced files are up-to-date. Default value is **/*.*, **/*.java, **/bgm.ser, **/jaxb.properties.")
 	public String[] getProduces() {
 		return produces;
 	}
@@ -560,15 +569,15 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.produces = produces;
 	}
 
-	private File[] otherDepends;
-
 	/**
 	 * A list of of input files or URLs to consider during the up-to-date. By
 	 * default it always considers: 1. schema files, 2. binding files, 3.
 	 * catalog file, and 4. the pom.xml file of the project executing this
 	 * plugin.
 	 */
-	@MojoParameter(description = "A list of of input files or URLs to consider during the up-to-date. By  default it always considers: 1. schema files, 2. binding files, 3. catalog file, and 4. the pom.xml file of the project executing this plugin.")
+	@Parameter
+	private File[] otherDepends;
+
 	public File[] getOtherDepends() {
 		return otherDepends;
 	}
@@ -577,9 +586,15 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.otherDepends = otherDepends;
 	}
 
+	/**
+	 * Target location of the episode file. By default it is
+	 * target/generated-sources/xjc/META-INF/sun-jaxb.episode so that the
+	 * episode file will appear as META-INF/sun-jaxb.episode in the JAR - just
+	 * as XJC wants it.
+	 */
+	@Parameter(property = "maven.xjc2.episodeFile")
 	private File episodeFile;
 
-	@MojoParameter(expression = "${maven.xjc2.episodeFile}", description = "Target location of the episode file. By default it is target/generated-sources/xjc/META-INF/sun-jaxb.episode so that the episode file will appear as META-INF/sun-jaxb.episode in the JAR - just as XJC wants it.")
 	public File getEpisodeFile() {
 		return episodeFile;
 	}
@@ -588,34 +603,42 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.episodeFile = episodeFile;
 	}
 
+	/**
+	 * If true, the episode file (describing mapping of elements and types to
+	 * classes for the compiled schema) will be generated.
+	 */
+	@Parameter(property = "maven.xjc2.episode", defaultValue = "true")
 	private boolean episode = true;
 
-	@MojoParameter(expression = "${maven.xjc2.episode}", defaultValue = "true", description = "If true, the episode file (describing mapping of elements and types to classes for the compiled schema) will be generated.")
 	public boolean getEpisode() {
 		return episode;
 	}
-	
+
 	public void setEpisode(boolean episode) {
 		this.episode = episode;
 	}
-	
+
+	/**
+	 * If true, marks generated classes using a @Generated annotation - i.e.
+	 * turns on XJC -mark-generated option. Default is false.
+	 */
+	@Parameter(property = "maven.xjc2.markGenerated", defaultValue = "false")
 	private boolean markGenerated = false;
-	
-	@MojoParameter(expression = "${maven.xjc2.markGenerated}", defaultValue = "false", description = "If true, marks generated classes using a @Generated annotation - i.e. turns on XJC -mark-generated option. Default is false.")
+
 	public boolean getMarkGenerated() {
 		return markGenerated;
 	}
-	
+
 	public void setMarkGenerated(boolean markGenerated) {
 		this.markGenerated = markGenerated;
 	}
 
-	private List classpathElements;
-
 	/**
 	 * Project classpath. Used internally when runing the XJC compiler.
 	 */
-	@MojoParameter(expression = "${project.compileClasspathElements}", required = true, readonly = true, description = "Internal use.")
+	@Parameter(property = "project.compileClasspathElements", required = true, readonly = true)
+	private List classpathElements;
+
 	public List getClasspathElements() {
 		return classpathElements;
 	}
@@ -624,13 +647,13 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.classpathElements = classpathElements;
 	}
 
-	protected Dependency[] plugins;
-
 	/**
 	 * XJC plugins to be made available to XJC. They still need to be activated
-	 * by using &lt;args> and enable plugin activation option.
+	 * by using &lt;args/> and enable plugin activation option.
 	 */
-	@MojoParameter(description = "Configures artifacts of the custom JAXB2 plugins you want to use.")
+	@Parameter
+	protected Dependency[] plugins;
+
 	public Dependency[] getPlugins() {
 		return plugins;
 	}
@@ -639,25 +662,48 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.plugins = plugins;
 	}
 
+	@Component
 	private MavenProject project;
 
+	@Component
 	private ArtifactResolver artifactResolver;
 
+	@Component
 	private ArtifactMetadataSource artifactMetadataSource;
 
+	@Component
 	private ArtifactFactory artifactFactory;
 
+	/**
+	 * Location of the local repository.
+	 */
+	@Parameter(defaultValue = "${localRepository}", required = true)
 	private ArtifactRepository localRepository;
 
+	/**
+	 * Artifact factory, needed to download source jars.
+	 */
+	@Component(role = org.apache.maven.project.MavenProjectBuilder.class)
 	private MavenProjectBuilder mavenProjectBuilder;
 
+	@Component
 	private BuildContext buildContext;
 
+	/**
+	 * Plugin artifacts.
+	 */
+	@Parameter(defaultValue = "${plugin.artifacts}", required = true)
 	private List<org.apache.maven.artifact.Artifact> pluginArtifacts;
 
+	/**
+	 * If you want to use existing artifacts as episodes for separate
+	 * compilation, configure them as episodes/episode elements. It is assumed
+	 * that episode artifacts contain an appropriate META-INF/sun-jaxb.episode
+	 * resource.
+	 */
+	@Parameter
 	private Dependency[] episodes;
 
-	@MojoParameter(description = "If you want to use existing artifacts as episodes for separate compilation, configure them as episodes/episode elements. It is assumed that episode artifacts contain an appropriate META-INF/sun-jaxb.episode resource.")
 	public Dependency[] getEpisodes() {
 		return episodes;
 	}
@@ -666,11 +712,14 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.episodes = episodes;
 	}
 
+	/**
+	 * Use all of the compile-scope project dependencies as episode artifacts.
+	 * It is assumed that episode artifacts contain an appropriate
+	 * META-INF/sun-jaxb.episode resource. Default is false.
+	 */
+	@Parameter
 	private boolean useDependenciesAsEpisodes = false;
 
-	@MojoParameter(description = "Use all of the compile-scope project dependencies as episode artifacts. "
-			+ "It is assumed that episode artifacts contain an appropriate META-INF/sun-jaxb.episode resource. "
-			+ "Default is false.")
 	public boolean getUseDependenciesAsEpisodes() {
 		return useDependenciesAsEpisodes;
 	}
@@ -679,9 +728,12 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.useDependenciesAsEpisodes = useDependenciesAsEpisodes;
 	}
 
+	/**
+	 * Scan all compile-scoped project dependencies for XML binding files.
+	 */
+	@Parameter(defaultValue = "false")
 	private boolean scanDependenciesForBindings = false;
 
-	@MojoParameter(description = "Scan all compile-scoped project dependencies for XML binding files.", defaultValue = "false")
 	public boolean getScanDependenciesForBindings() {
 		return scanDependenciesForBindings;
 	}
@@ -691,9 +743,12 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.scanDependenciesForBindings = scanDependenciesForBindings;
 	}
 
-	private String specVersion = "2.1";
+	/**
+	 * Version of the JAXB specification (ex. 2.0, 2.1 or 2.2).
+	 */
+	@Parameter(defaultValue = "2.2")
+	private String specVersion = "2.2";
 
-	@MojoParameter(defaultValue = "2.1", description = "Version of the JAXB specification (ex. 2.0, 2.1 or 2.2).")
 	public String getSpecVersion() {
 		return specVersion;
 	}
@@ -752,7 +807,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 
 	private static final String XML_SCHEMA_CLASS_NAME = "XmlSchema";
 
-	@MojoParameter(expression = "${project}", required = true, readonly = true, description = "Internal use.")
 	public MavenProject getProject() {
 		return project;
 	}
@@ -764,7 +818,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	private static final String XML_SCHEMA_CLASS_QNAME = "javax.xml.bind.annotation."
 			+ XML_SCHEMA_CLASS_NAME;
 
-	@MojoComponent
 	public ArtifactResolver getArtifactResolver() {
 		return artifactResolver;
 	}
@@ -776,7 +829,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	private static final String XML_SCHEMA_RESOURCE_NAME = XML_SCHEMA_CLASS_NAME
 			+ ".class";
 
-	@MojoComponent
 	public ArtifactMetadataSource getArtifactMetadataSource() {
 		return artifactMetadataSource;
 	}
@@ -789,10 +841,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	private static final String XML_SCHEMA_RESOURCE_QNAME = "/javax/xml/bind/annotation/"
 			+ XML_SCHEMA_RESOURCE_NAME;
 
-	/**
-	 * Used internally to resolve {@link #plugins} to their jar files.
-	 */
-	@MojoComponent
 	public ArtifactFactory getArtifactFactory() {
 		return artifactFactory;
 	}
@@ -803,7 +851,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 
 	private static final String XML_ELEMENT_REF_CLASS_NAME = "XmlElementRef";
 
-	@MojoParameter(expression = "${localRepository}", required = true, description = "Internal use.")
 	public ArtifactRepository getLocalRepository() {
 		return localRepository;
 	}
@@ -815,11 +862,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	private static final String XML_ELEMENT_REF_CLASS_QNAME = "javax.xml.bind.annotation."
 			+ XML_ELEMENT_REF_CLASS_NAME;
 
-	/**
-	 * Artifact factory, needed to download source jars.
-	 * 
-	 */
-	@MojoComponent(role = "org.apache.maven.project.MavenProjectBuilder")
 	public MavenProjectBuilder getMavenProjectBuilder() {
 		return mavenProjectBuilder;
 	}
@@ -828,7 +870,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.mavenProjectBuilder = mavenProjectBuilder;
 	}
 
-	@MojoComponent
 	public BuildContext getBuildContext() {
 		return buildContext;
 	}
@@ -878,7 +919,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		}
 	}
 
-	@MojoParameter(expression = "${plugin.artifacts}", required = true, description = "Internal use.")
 	public List<org.apache.maven.artifact.Artifact> getPluginArtifacts() {
 		return pluginArtifacts;
 	}

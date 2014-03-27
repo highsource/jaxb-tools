@@ -1,9 +1,8 @@
 package org.jvnet.mjiip.v_2;
 
-import org.jfrog.maven.annomojo.annotations.MojoGoal;
-import org.jfrog.maven.annomojo.annotations.MojoPhase;
-import org.jfrog.maven.annomojo.annotations.MojoRequiresDependencyResolution;
-import org.jfrog.maven.annomojo.annotations.MojoThreadSafe;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.jvnet.mjiip.v_2_2.XJC22Mojo;
 
 import com.sun.tools.xjc.Options;
@@ -13,10 +12,7 @@ import com.sun.tools.xjc.Options;
  * 
  * @author Aleksei Valikov (valikov@gmx.net)
  */
-@MojoGoal("generate")
-@MojoPhase("generate-sources")
-@MojoRequiresDependencyResolution("compile")
-@MojoThreadSafe
+@Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.COMPILE, threadSafe = true)
 public class XJC2Mojo extends XJC22Mojo {
 
 	private final org.jvnet.jaxb2.maven2.OptionsFactory<Options> optionsFactory = new OptionsFactory();

@@ -6,10 +6,9 @@ import java.text.MessageFormat;
 import java.util.Iterator;
 
 import org.apache.maven.plugin.MojoExecutionException;
-import org.jfrog.maven.annomojo.annotations.MojoGoal;
-import org.jfrog.maven.annomojo.annotations.MojoPhase;
-import org.jfrog.maven.annomojo.annotations.MojoRequiresDependencyResolution;
-import org.jfrog.maven.annomojo.annotations.MojoThreadSafe;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.jvnet.jaxb2.maven2.RawXJC2Mojo;
 
 import com.sun.codemodel.CodeWriter;
@@ -26,10 +25,7 @@ import com.sun.tools.xjc.outline.Outline;
  * 
  * @author Aleksei Valikov (valikov@gmx.net)
  */
-@MojoGoal("generate")
-@MojoPhase("generate-sources")
-@MojoRequiresDependencyResolution("compile")
-@MojoThreadSafe
+@Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.COMPILE, threadSafe = true)
 public class XJC22Mojo extends RawXJC2Mojo<Options> {
 
 	private final org.jvnet.jaxb2.maven2.OptionsFactory<Options> optionsFactory = new OptionsFactory();

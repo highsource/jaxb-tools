@@ -12,7 +12,9 @@ public class ClasspathCatalogResolver extends
 
 	@Override
 	public String getResolvedEntity(String publicId, String systemId) {
+		System.out.println("Resolving [" + publicId + "], [" + systemId + "].");
 		final String result = super.getResolvedEntity(publicId, systemId);
+		System.out.println("Resolved to [" + result+ "].");
 
 		if (result == null) {
 			System.err.println(MessageFormat.format(
@@ -25,20 +27,24 @@ public class ClasspathCatalogResolver extends
 			final URI uri = new URI(result);
 			if (URI_SCHEME_CLASSPATH.equals(uri.getScheme())) {
 				final String schemeSpecificPart = uri.getSchemeSpecificPart();
+				System.out.println("Resolve [" + schemeSpecificPart + "].");
 
 				final URL resource = Thread.currentThread()
 						.getContextClassLoader()
 						.getResource(schemeSpecificPart);
 				if (resource == null) {
+					System.out.println("Returning [" + null + "].");
 					return null;
 				} else {
+					System.out.println("Returning to [" + resource.toString()+ "].");
 					return resource.toString();
 				}
 			} else {
+				System.out.println("Returning to [" + result+ "].");
 				return result;
 			}
 		} catch (URISyntaxException urisex) {
-
+			System.out.println("Returning to [" + result+ "].");
 			return result;
 		}
 	}

@@ -81,6 +81,23 @@ public class OptionsFactory implements
 
 		options.strictCheck = optionsConfiguration.isStrict();
 		options.readOnly = optionsConfiguration.isReadOnly();
+		options.packageLevelAnnotations = optionsConfiguration
+				.isPackageLevelAnnotations();
+		options.noFileHeader = optionsConfiguration.isNoFileHeader();
+		options.enableIntrospection = optionsConfiguration
+				.isEnableIntrospection();
+		options.disableXmlSecurity = optionsConfiguration
+				.isDisableXmlSecurity();
+		if (optionsConfiguration.getAccessExternalSchema() != null) {
+			System.setProperty("javax.xml.accessExternalSchema",
+					optionsConfiguration.getAccessExternalSchema());
+		}
+		if (optionsConfiguration.getAccessExternalDTD() != null) {
+			System.setProperty("javax.xml.accessExternalDTD",
+					optionsConfiguration.getAccessExternalDTD());
+		}
+		options.contentForWildcard = optionsConfiguration
+				.isContentForWildcard();
 
 		if (optionsConfiguration.isExtension()) {
 			options.compatibilityMode = Options.EXTENSION;

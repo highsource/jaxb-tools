@@ -28,6 +28,14 @@ public class OptionsConfiguration {
 
 	private final boolean readOnly;
 
+	private final boolean packageLevelAnnotations;
+	private final boolean noFileHeader;
+	private final boolean enableIntrospection;
+	private final boolean disableXmlSecurity;
+	private final String accessExternalSchema;
+	private final String accessExternalDTD;
+	private final boolean contentForWildcard;
+
 	private final boolean extension;
 
 	private final boolean strict;
@@ -45,9 +53,15 @@ public class OptionsConfiguration {
 	public OptionsConfiguration(String encoding, String schemaLanguage,
 			List<URL> schemas, List<URL> bindings, List<URL> catalogs,
 			CatalogResolver catalogResolver, String generatePackage,
-			File generateDirectory, boolean readOnly, boolean extension,
-			boolean strict, boolean verbose, boolean debugMode,
-			List<String> arguments, List<URL> plugins, String specVersion) {
+			File generateDirectory, boolean readOnly,
+			boolean packageLevelAnnotations, boolean noFileHeader,
+			boolean enableIntrospection, boolean disableXmlSecurity,
+			String accessExternalSchema, String accessExternalDTD,
+			boolean contentForWildcard,
+
+			boolean extension, boolean strict, boolean verbose,
+			boolean debugMode, List<String> arguments, List<URL> plugins,
+			String specVersion) {
 		super();
 		this.encoding = encoding;
 		this.schemaLanguage = schemaLanguage;
@@ -58,6 +72,13 @@ public class OptionsConfiguration {
 		this.generatePackage = generatePackage;
 		this.generateDirectory = generateDirectory;
 		this.readOnly = readOnly;
+		this.packageLevelAnnotations = packageLevelAnnotations;
+		this.noFileHeader = noFileHeader;
+		this.enableIntrospection = enableIntrospection;
+		this.disableXmlSecurity = disableXmlSecurity;
+		this.accessExternalSchema = accessExternalSchema;
+		this.accessExternalDTD = accessExternalDTD;
+		this.contentForWildcard = contentForWildcard;
 		this.extension = extension;
 		this.strict = strict;
 		this.verbose = verbose;
@@ -123,6 +144,34 @@ public class OptionsConfiguration {
 		return readOnly;
 	}
 
+	public boolean isPackageLevelAnnotations() {
+		return packageLevelAnnotations;
+	}
+
+	public boolean isNoFileHeader() {
+		return noFileHeader;
+	}
+
+	public boolean isEnableIntrospection() {
+		return enableIntrospection;
+	}
+
+	public boolean isDisableXmlSecurity() {
+		return disableXmlSecurity;
+	}
+	
+	public String getAccessExternalSchema() {
+		return accessExternalSchema;
+	}
+	
+	public String getAccessExternalDTD() {
+		return accessExternalDTD;
+	}
+
+	public boolean isContentForWildcard() {
+		return contentForWildcard;
+	}
+
 	public boolean isExtension() {
 		return extension;
 	}
@@ -176,20 +225,38 @@ public class OptionsConfiguration {
 				//
 				"readOnly={9}\n " +
 				//
-				"extension={10}\n " +
+				"packageLevelAnnotations={10}\n " +
 				//
-				"strict={11}\n " +
+				"noFileHeader={11}\n " +
 				//
-				"verbose={12}\n " +
+				"enableIntrospection={12}\n " +
 				//
-				"debugMode={13}\n " +
+				"disableXmlSecurity={13}\n " +
 				//
-				"arguments={14}" +
+				"accessExternalSchema={14}\n " +
+				//
+				"accessExternalDTD={15}\n " +
+
+				//
+				"contentForWildcard={16}\n " +
+				//
+				"extension={17}\n " +
+				//
+				"strict={18}\n " +
+				//
+				"verbose={19}\n " +
+				//
+				"debugMode={20}\n " +
+				//
+				"arguments={19}" +
 				//
 				"]", specVersion, generateDirectory, generatePackage,
 				schemaLanguage, schemas, bindings, plugins, catalogs,
-				catalogResolver, readOnly, extension, strict, verbose,
-				debugMode, arguments);
+				catalogResolver, readOnly, packageLevelAnnotations,
+				noFileHeader, enableIntrospection, disableXmlSecurity,
+				accessExternalSchema, accessExternalDTD, contentForWildcard,
+				extension, strict, verbose, debugMode, arguments);
+
 	}
 
 }

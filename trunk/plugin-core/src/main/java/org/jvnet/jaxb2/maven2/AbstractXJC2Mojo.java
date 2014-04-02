@@ -389,6 +389,116 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	}
 
 	/**
+	 * If 'false', suppresses generation of package level annotations
+	 * (package-info.java), xjc's -npa option.
+	 */
+	@Parameter(defaultValue = "true", property = "maven.xjc2.packageLevelAnnotations")
+	private boolean packageLevelAnnotations = true;
+
+	public boolean getPackageLevelAnnotations() {
+		return packageLevelAnnotations;
+	}
+
+	public void setPackageLevelAnnotations(boolean packageLevelAnnotations) {
+		this.packageLevelAnnotations = packageLevelAnnotations;
+	}
+
+	/**
+	 * If 'true', suppresses generation of a file header with timestamp, xjc's
+	 * -no-header option.
+	 */
+	@Parameter(defaultValue = "false", property = "maven.xjc2.noFileHeader")
+	private boolean noFileHeader = false;
+
+	public boolean getNoFileHeader() {
+		return noFileHeader;
+	}
+
+	public void setNoFileHeader(boolean noFileHeader) {
+		this.noFileHeader = noFileHeader;
+	}
+
+	/**
+	 * If 'true', enables correct generation of Boolean getters/setters to
+	 * enable Bean Introspection apis; xjc's -enableIntrospection option.
+	 */
+	@Parameter(defaultValue = "false", property = "maven.xjc2.enableIntrospection")
+	private boolean enableIntrospection = false;
+
+	public boolean getEnableIntrospection() {
+		return enableIntrospection;
+	}
+
+	public void setEnableIntrospection(boolean enableIntrospection) {
+		this.enableIntrospection = enableIntrospection;
+	}
+
+	/**
+	 * If 'true', disables XML security features when parsing XML documents;
+	 * xjc's -disableXmlSecurity option.
+	 */
+	@Parameter(defaultValue = "true", property = "maven.xjc2.disableXmlSecurity")
+	private boolean disableXmlSecurity = true;
+
+	public boolean getDisableXmlSecurity() {
+		return disableXmlSecurity;
+	}
+
+	public void setDisableXmlSecurity(boolean disableXmlSecurity) {
+		this.disableXmlSecurity = disableXmlSecurity;
+	}
+
+	/**
+	 * Restrict access to the protocols specified for external reference set by
+	 * the schemaLocation attribute, Import and Include element. Value: a list
+	 * of protocols separated by comma. A protocol is the scheme portion of a
+	 * {@link java.net.URI}, or in the case of the JAR protocol, "jar" plus the
+	 * scheme portion separated by colon. The keyword "all" to grant permission
+	 * to all protocols.
+	 */
+	private String accessExternalSchema = "all";
+	
+	public String getAccessExternalSchema() {
+		return accessExternalSchema;
+	}
+	
+	public void setAccessExternalSchema(String accessExternalSchema) {
+		this.accessExternalSchema = accessExternalSchema;
+	}
+
+	/**
+	 * Restricts access to external DTDs and external Entity References to the
+	 * protocols specified. Value: a list of protocols separated by comma. A
+	 * protocol is the scheme portion of a {@link java.net.URI}, or in the case
+	 * of the JAR protocol, "jar" plus the scheme portion separated by colon.
+	 * The keyword "all" to grant permission to all protocols.
+	 */
+	@Parameter(defaultValue = "all", property = "maven.xjc2.accessExternalDTD")
+	private String accessExternalDTD = "all";
+
+	public String getAccessExternalDTD() {
+		return accessExternalDTD;
+	}
+
+	public void setAccessExternalDTD(String accessExternalDTD) {
+		this.accessExternalDTD = accessExternalDTD;
+	}
+
+	/**
+	 * If 'true', generates content property for types with multiple xs:any
+	 * derived elements; xjc's -contentForWildcard option.
+	 */
+	private boolean contentForWildcard;
+
+	public boolean getContentForWildcard() {
+		return contentForWildcard;
+	}
+
+	public void setContentForWildcard(boolean contentForWildcard) {
+		this.contentForWildcard = contentForWildcard;
+	}
+
+	/**
 	 * If 'true', the XJC binding compiler will run in the extension mode (xjc's
 	 * -extension option). Otherwise, it will run in the strict conformance
 	 * mode.
@@ -405,8 +515,8 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	}
 
 	/**
-	 * If 'true', Perform strict validation of the input schema (xjc's -nv
-	 * option).
+	 * If 'true', Perform strict validation of the input schema (disabled by the
+	 * xjc's -nv option).
 	 */
 	@Parameter(defaultValue = "true", property = "maven.xjc2.strict")
 	private boolean strict = true;

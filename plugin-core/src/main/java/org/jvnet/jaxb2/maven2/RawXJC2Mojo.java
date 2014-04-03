@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -309,15 +310,26 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			final O options = getOptionsFactory().createOptions(
 					optionsConfiguration);
 
-			if (!this.getForceRegenerate() && isUpToDate()) {
+			if (isUpToDate() && getForceRegenerate()) {
 				getLog().info(
-						"Skipped XJC execution. Generated sources were up-to-date.");
+						"Sources are up-to-date, but the [forceRegenerate] switch is turned on; XJC execution will not be skipped.");
+			} else if (!isUpToDate()) {
+				getLog().info(
+						"Sources are not up-to-date; XJC execution will be executed.");
+
+			} else {
+				getLog().info(
+						"Generated sources are up-to-date; XJC execution will be skipped.");
 				return;
 			}
 			setupDirectories();
 			doExecute(options);
 			final BuildContext buildContext = getBuildContext();
 			if (buildContext != null) {
+				getLog().debug(
+						MessageFormat.format(
+								"Refreshing generated directory [{0}].",
+								getGenerateDirectory().getAbsolutePath()));
 				buildContext.refresh(getGenerateDirectory());
 			}
 
@@ -512,7 +524,27 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	 */
 
 	protected List<URL> getBindingUrls() throws MojoExecutionException {
-		final List<File> bindingFiles = getBindingFiles();
+		final List<File> bindingFiles = new LinkedList<File>();
+		bindingFiles.addAll(getBindingFiles());
+
+		for (final File episodeFile : getEpisodeFiles()) {
+			getLog().debug(
+					MessageFormat.format("Checking episode file [{0}].",
+							episodeFile.getAbsolutePath()));
+			if (episodeFile.isDirectory()) {
+				final File episodeMetaInfFile = new File(episodeFile,
+						"META-INF");
+				if (episodeMetaInfFile.isDirectory())
+				{
+					final File episodeBindingsFile = new File(
+							episodeMetaInfFile, "sun-jaxb.episode");
+					if (episodeBindingsFile.isFile()) {
+						bindingFiles.add(episodeBindingsFile);
+					}
+				}
+			}
+		}
+
 		final List<URL> bindingUrls = new ArrayList<URL>(bindingFiles.size());
 		for (final File bindingFile : bindingFiles) {
 			URL url;
@@ -663,8 +695,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 				if (getBuildContext().hasDelta(dependsFile)) {
 					if (getVerbose()) {
 						getLog().info(
-								"File [" + dependsFile.getAbsolutePath()
-										+ "] was changed since the last build.");
+								"File ["
+										+ dependsFile.getAbsolutePath()
+										+ "] might have been changed since the last build.");
 					}
 					delta = true;
 				}
@@ -725,7 +758,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 
 		for (final File episodeFile : getEpisodeFiles()) {
-			arguments.add(episodeFile.getAbsolutePath());
+			if (episodeFile.isFile()) {
+				arguments.add(episodeFile.getAbsolutePath());
+			}
 		}
 		return arguments;
 	}
@@ -738,8 +773,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 				getGeneratePackage(), getGenerateDirectory(), getReadOnly(),
 				getPackageLevelAnnotations(), getNoFileHeader(),
 				getEnableIntrospection(), getDisableXmlSecurity(),
-				getAccessExternalSchema(),
-				getAccessExternalDTD(),
+				getAccessExternalSchema(), getAccessExternalDTD(),
 				getContentForWildcard(), getExtension(), getStrict(),
 				getVerbose(), getDebug(), getArguments(), getXjcPluginURLs(),
 				getSpecVersion());

@@ -453,7 +453,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * the schemaLocation attribute, Import and Include element. Value: a list
 	 * of protocols separated by comma. A protocol is the scheme portion of a
 	 * {@link java.net.URI}, or in the case of the JAR protocol, "jar" plus the
-	 * scheme portion separated by colon. The keyword "all" to grant permission
+	 * scheme portion separated by colon. The keyword "all" grants permission
 	 * to all protocols.
 	 */
 	private String accessExternalSchema = "all";
@@ -471,7 +471,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * protocols specified. Value: a list of protocols separated by comma. A
 	 * protocol is the scheme portion of a {@link java.net.URI}, or in the case
 	 * of the JAR protocol, "jar" plus the scheme portion separated by colon.
-	 * The keyword "all" to grant permission to all protocols.
+	 * The keyword "all" grants permission to all protocols.
 	 */
 	@Parameter(defaultValue = "all", property = "maven.xjc2.accessExternalDTD")
 	private String accessExternalDTD = "all";

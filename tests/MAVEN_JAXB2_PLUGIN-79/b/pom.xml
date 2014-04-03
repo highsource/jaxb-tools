@@ -1,0 +1,41 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jvnet.jaxb2.maven2</groupId>
+		<artifactId>maven-jaxb2-plugin-tests-episodes</artifactId>
+		<version>0.9.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>maven-jaxb2-plugin-tests-MAVEN_JAXB2_PLUGIN-79-b</artifactId>
+	<packaging>jar</packaging>
+	<name>Maven JAXB 2.x Plugin Tests [MAVEN_JAXB2_PLUGIN-79:b]</name>
+	<dependencies>
+		<dependency>
+			<groupId>org.jvnet.jaxb2.maven2</groupId>
+			<artifactId>maven-jaxb2-plugin-tests-MAVEN_JAXB2_PLUGIN-79-a</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<defaultGoal>test</defaultGoal>
+		<plugins>
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<configuration>
+					<extension>true</extension>
+					<episodes>
+						<episode>
+							<groupId>org.jvnet.jaxb2.maven2</groupId>
+							<artifactId>maven-jaxb2-plugin-tests-MAVEN_JAXB2_PLUGIN-79-a</artifactId>
+						</episode>
+					</episodes>
+					<catalog>src/main/resources/catalog.cat</catalog>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jvnet.jaxb2.maven2</groupId>
+		<artifactId>maven-jaxb2-plugin-tests</artifactId>
+		<version>0.9.0</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>maven-jaxb2-plugin-tests-episodes</artifactId>
+	<packaging>pom</packaging>
+	<name>Maven JAXB 2.x Plugin Tests [episodes]</name>
+	<modules>
+		<module>a</module>
+		<module>b</module>
+		<module>c</module>
+		<module>d</module>
+		<module>e</module>
+	</modules>
+	<dependencies>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>${jaxb.version}</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<defaultGoal>test</defaultGoal>
+	</build>
+</project>

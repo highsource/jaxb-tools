@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.jvnet.jaxb2.maven2</groupId>
 		<artifactId>maven-jaxb2-plugin-project</artifactId>
-		<version>0.9.0-SNAPSHOT</version>
+		<version>0.9.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<modules>
@@ -35,6 +35,20 @@
 		<module>MAVEN_JAXB2_PLUGIN-77</module>
 		<module>MAVEN_JAXB2_PLUGIN-79</module>
 	</modules>
+	<profiles>
+		<profile>
+			<id>tests-versions</id>
+			<activation>
+				<property>
+					<name>versions</name>
+				</property>
+			</activation>
+			<modules>
+				<module>MAVEN_JAXB2_PLUGIN-53</module>
+			</modules>
+		</profile>
+	</profiles>
+
 	<!--distributionManagement>
 		<repository>
 			<uniqueVersion>false</uniqueVersion>
@@ -105,6 +119,13 @@
 							</goals>
 						</execution>
 					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<configuration>
+						<skip>true</skip>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>

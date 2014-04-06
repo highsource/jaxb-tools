@@ -759,7 +759,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 
 	/**
 	 * XJC plugins to be made available to XJC. They still need to be activated
-	 * by using &lt;args/> and enable plugin activation option.
+	 * by using &lt;args/&gt; and enable plugin activation option.
 	 */
 	@Parameter
 	protected Dependency[] plugins;

@@ -270,15 +270,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		this.episodeFiles = ArtifactUtils.getFiles(this.episodeArtifacts);
 	}
 
-	/**
-	 * @param parent
-	 *            the returned classLoader will be a descendant of this one.
-	 * @return a context class loader with a classPath containing the project
-	 *         dependencies.
-	 * @throws MojoExecutionException
-	 */
-	protected ClassLoader createClassLoader(ClassLoader parent)
-			throws MojoExecutionException {
+	protected ClassLoader createClassLoader(ClassLoader parent) {
 
 		final Collection<URL> xjcPluginURLs = getXjcPluginURLs();
 
@@ -518,11 +510,6 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		getLog().info("episodeFiles (resolved):" + getEpisodeFiles());
 	}
 
-	/**
-	 * *************************************************************************
-	 * *
-	 */
-
 	protected List<URL> getBindingUrls() throws MojoExecutionException {
 		final List<File> bindingFiles = new LinkedList<File>();
 		bindingFiles.addAll(getBindingFiles());
@@ -534,8 +521,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			if (episodeFile.isDirectory()) {
 				final File episodeMetaInfFile = new File(episodeFile,
 						"META-INF");
-				if (episodeMetaInfFile.isDirectory())
-				{
+				if (episodeMetaInfFile.isDirectory()) {
 					final File episodeBindingsFile = new File(
 							episodeMetaInfFile, "sun-jaxb.episode");
 					if (episodeBindingsFile.isFile()) {

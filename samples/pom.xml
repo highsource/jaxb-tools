@@ -17,7 +17,7 @@
 		<module>jaxbplugins</module>
 		<module>po</module>
 	</modules>
-	<distributionManagement>
+	<!--distributionManagement>
 		<repository>
 			<uniqueVersion>false</uniqueVersion>
 			<id>org.highsource.repository.maven2.releases</id>
@@ -31,7 +31,7 @@
 		<site>
 			<url>${sftp.static.highsource.org}/mjiip/samples</url>
 		</site>
-	</distributionManagement>
+	</distributionManagement-->
 	<build>
 		<plugins>
 			<plugin>
@@ -92,6 +92,13 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

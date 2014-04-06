@@ -4,6 +4,7 @@
 	<artifactId>maven-jaxb2-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
 	<name>Maven JAXB 2.x Plugin</name>
+	<url>https://github.com/highsource/maven-jaxb2-plugin</url>
 	<parent>
 		<groupId>org.jvnet.jaxb2.maven2</groupId>
 		<artifactId>maven-jaxb2-plugin-project</artifactId>
@@ -73,6 +74,24 @@
 					<source>1.5</source>
 					<target>1.5</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<configuration>
+						<!-- Plugin configuration ges here -->
+						<server>github</server>
+						<!-- The commit message -->
+						<message>Site build</message>
+						<!-- The location where the site is uploaded -->
+						<path></path>
+						<!-- Use merge or override the content -->
+						<merge>true</merge>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>

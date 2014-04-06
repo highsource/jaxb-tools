@@ -12,7 +12,7 @@ call mvn scm:checkin -Dmessage="Version %1"
 pause
 call mvn scm:tag -Dtag=%1
 pause
-call mvn clean deploy -Psamples,sonatype-oss-release
+call mvn clean deploy -Psonatype-oss-release
 pause
 call mvn versions:set -Dversions -DnewVersion=%2
 pause

@@ -1,10 +1,10 @@
-call mvn clean install -Psamples
+call mvn clean install -Psamples,tests
 pause
 call mvn versions:set -Dversions -DnewVersion=%1
 pause
 call mvn versions:commit -Dversions
 pause
-call mvn clean install -Psamples
+call mvn clean install -Psamples,tests
 pause
 call mvn clean install -Psamples,sonatype-oss-release
 pause

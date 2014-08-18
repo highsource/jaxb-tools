@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations;
 
 import java.lang.annotation.Retention;

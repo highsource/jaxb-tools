@@ -87,7 +87,7 @@ Or in binding files:
 </jaxb:bindings>
 ````
 
-You can use the following customization elements:
+You can use the following customization elements in the `http://annox.dev.java.net` namespace:
 * `annotate` with the optional `target` attribute
  * `package`
  * `class`
@@ -101,6 +101,11 @@ You can use the following customization elements:
 * `annotateElement`
 * `annotateEnum`
 * `annotateEnumConstant`
+
+The `http://annox.dev.java.net` namespace must be declared in the `jaxb:extensionBindingPrefixes` attribute.
+
+Note: yes, I know that `http://annox.dev.java.net` no longer exists. Changing this namespace would break old builds.
+This is just a namespace, there must not necessarily be content there. Treat it as a logical identifier, nothing else.
 
 Using JAXB2 Annotate Plugin with Maven
 --------------------------------------

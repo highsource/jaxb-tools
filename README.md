@@ -22,6 +22,8 @@ You can annotate your schema-derived elements using normal Java annotation synta
 If you want to use your own annotations, you have to pre-compile them and add your annotation classes to the XJC classpath.
 * As a consequence, currently you can't use schema-derived enums in your annotations. Since you have to compile annotations
 before compiling the schema - and as your enums are first generated from the schema, this is a chicken-and-egg-problem.
+* All class names (classes of annotations or classes you use as values in annotations) must be fully qualified.
+Inner classes should use the dot (`.`) as delimiter (not `$`).
 
 You can put your annotations directly in schema:
 

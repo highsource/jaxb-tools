@@ -86,14 +86,15 @@ Or in binding files:
 
 </jaxb:bindings>
 ````
-You can use the following elements:
+
+You can use the following customization elements:
 * `annotate` with the optional `target` attribute
-** `package`
-** `class`
-** `getter`
-** `setter`
-** `setter-parameter`
-** `field`
+ * `package`
+ * `class`
+ * `getter`
+ * `setter`
+ * `setter-parameter`
+ * `field`
 * `annotateProperty`
 * `annotatePackage`
 * `annotateClass`
@@ -108,26 +109,26 @@ See [this example](https://github.com/highsource/jaxb2-annotate-plugin/tree/mast
 Note that annotations are first compiled in the `annotations` module and the added to the classpath of the `maven-jaxb2-plugin` in the `schema` module:
 
 ````xml
+<plugin>
+	<groupId>org.jvnet.jaxb2.maven2</groupId>
+	<artifactId>maven-jaxb2-plugin</artifactId>
+	<configuration>
+		<extension>true</extension>
+		<args>
+			<arg>-Xannotate</arg>
+		</args>
+		<plugins>
 			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
-				<configuration>
-					<extension>true</extension>
-					<args>
-						<arg>-Xannotate</arg>
-					</args>
-					<plugins>
-						<plugin>
-							<groupId>org.jvnet.jaxb2_commons</groupId>
-							<artifactId>jaxb2-basics-annotate</artifactId>
-						</plugin>
-						<plugin>
-							<groupId>org.jvnet.jaxb2_commons</groupId>
-							<artifactId>jaxb2-annotate-plugin-test-annox-annotations</artifactId>
-						</plugin>
-					</plugins>
-				</configuration>
+				<groupId>org.jvnet.jaxb2_commons</groupId>
+				<artifactId>jaxb2-basics-annotate</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.jvnet.jaxb2_commons</groupId>
+				<artifactId>jaxb2-annotate-plugin-test-annox-annotations</artifactId>
+			</plugin>
+		</plugins>
+	</configuration>
+</plugin>
 ````
 
 Using JAXB2 Annotate Plugin with Ant

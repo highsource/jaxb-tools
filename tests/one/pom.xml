@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jvnet.jaxb2_commons</groupId>
+		<artifactId>jaxb2-annotate-plugin-tests</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>jaxb2-annotate-plugin-test-one</artifactId>
+	<packaging>jar</packaging>
+	<name>JAXB2 Annotate Plugin - Test [one]</name>
+	<dependencies>
+		<dependency>
+			<groupId>org.jvnet.jaxb2.maven2</groupId>
+			<artifactId>maven-jaxb2-plugin-testing</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jvnet.jaxb2_commons</groupId>
+			<artifactId>jaxb2-basics-annotate</artifactId>
+		</dependency>
+	</dependencies>
+	<build>
+		<defaultGoal>test</defaultGoal>
+		<plugins>
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<configuration>
+					<extension>true</extension>
+					<args>
+						<arg>-Xannotate</arg>
+					</args>
+					<plugins>
+						<plugin>
+							<groupId>org.jvnet.jaxb2_commons</groupId>
+							<artifactId>jaxb2-basics-annotate</artifactId>
+						</plugin>
+                                       </plugins>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

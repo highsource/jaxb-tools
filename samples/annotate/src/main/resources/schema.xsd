@@ -1,0 +1,51 @@
+<xsd:schema
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	jaxb:version="2.1" 
+	xmlns:annox="http://annox.dev.java.net" 
+	xmlns:s="http://annox.dev.java.net/org.hibernate.search.annotations"
+	jaxb:extensionBindingPrefixes="annox">
+
+	<xsd:element name="foo" type="FooType"/>
+	<xsd:complexType name="FooType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<annox:annotate>
+					<s:Indexed/>
+				</annox:annotate>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="bar" type="xsd:string"/>
+			<xsd:element name="foobar" type="xsd:string">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<annox:annotate>
+							<s:Field store="COMPRESS"/>
+						</annox:annotate>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="two">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<annox:annotate>
+					<s:Indexed/>
+				</annox:annotate>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="alpha">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<annox:annotate>
+							<s:Field store="NO"/>
+						</annox:annotate>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType> 
+</xsd:schema>

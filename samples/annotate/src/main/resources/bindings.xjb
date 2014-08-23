@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings
+	version="2.1"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:annox="http://annox.dev.java.net" 
+
+	jaxb:extensionBindingPrefixes="annox">
+
+	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+		<jaxb:schemaBindings>
+			<jaxb:package name="org.jvnet.jaxb2_commons.basics.sample.annotate"/>
+		</jaxb:schemaBindings>
+
+		<jaxb:bindings node="xs:complexType[@name='FooType']/xs:sequence/xs:element[@name='bar']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.search.annotations.Field" store="COMPRESS"/>
+			</annox:annotate>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+
+</jaxb:bindings>

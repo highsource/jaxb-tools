@@ -1,0 +1,269 @@
+<xsd:schema
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	jaxb:version="2.1" 
+	xmlns:annox="http://annox.dev.java.net" 
+	jaxb:extensionBindingPrefixes="annox"
+	xmlns:a="http://annox.dev.java.net/org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations">
+
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.jvnet.jaxb2_commons.plugin.annotate.test.annox.schema"/>
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+
+	<xsd:element name="zero" type="zero"/>
+
+	<xsd:complexType name="zero">
+		<xsd:sequence>
+			<xsd:element name="a" type="xsd:string">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<annox:annotate>
+							<a:Alpha longField="-1" enumField="SIX" stringField="seven">
+								<intField>0</intField>
+								<shortField>3</shortField>
+							</a:Alpha>
+						</annox:annotate>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="b" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="one" type="one"/>
+	<xsd:complexType name="one">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<annox:annotate>
+				<A
+					xmlns="http://annox.dev.java.net/org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations"
+					booleanField="false" byteField="0" charField="a"
+					classField="java.lang.String" anotherClassField="org.jvnet.jaxb2_commons.plugin.annotate.test.annox.schema.One" doubleField="1" enumField="ONE"
+					floatField="2.3" intField="4" longField="5" shortField="6"
+					stringField="7">
+					<annotationField>
+						<B booleanArrayField="false true" byteArrayField="0 1"
+							charArrayField="a b"
+							classArrayField="java.lang.String java.lang.Boolean"
+							anotherClassArrayField="org.jvnet.jaxb2_commons.plugin.annotate.test.annox.schema.One org.jvnet.jaxb2_commons.plugin.annotate.test.annox.schema.Two"
+							doubleArrayField="2 3" enumArrayField="ONE TWO"
+							floatArrayField="4.5 6.7" intArrayField="8 9"
+							longArrayField="10 11" shortArrayField="12 13"
+							stringArrayField="14 15">
+							<stringArrayField>16</stringArrayField>
+							<stringArrayField>17</stringArrayField>
+							<annotationArrayField>
+								<C
+									annox:class="org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations.B$C"/>
+								<C
+									annox:class="org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations.B$C"/>
+							</annotationArrayField>
+						</B>
+					</annotationField>
+				</A>
+					</annox:annotate>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="two" type="xsd:string">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<annox:annotate>
+							
+							<A
+								xmlns="http://annox.dev.java.net/org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations"
+								booleanField="false" byteField="0" charField="a"
+								classField="java.lang.String" doubleField="1"
+								enumField="ONE" floatField="2.3" intField="4"
+								longField="5" shortField="6" stringField="7">
+								<annotationField>
+									<B booleanArrayField="false true"
+										byteArrayField="0 1" charArrayField="a b"
+										classArrayField="java.lang.String java.lang.Boolean"
+										anotherClassArrayField="org.jvnet.jaxb2_commons.plugin.annotate.test.annox.schema.Two org.jvnet.jaxb2_commons.plugin.annotate.test.annox.schema.One"
+										doubleArrayField="2 3"
+										enumArrayField="ONE TWO"
+										floatArrayField="4.5 6.7"
+										intArrayField="8 9"
+										longArrayField="10 11"
+										shortArrayField="12 13"
+										stringArrayField="14 15">
+										<stringArrayField>16</stringArrayField>
+										<stringArrayField>17</stringArrayField>
+										<annotationArrayField>
+											<C
+												annox:class="org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations.B$C"/>
+											<C
+												annox:class="org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations.B$C"/>
+										</annotationArrayField>
+									</B>
+								</annotationField>
+							</A>
+						</annox:annotate>
+						<annox:annotate target="field">
+						    <A
+								xmlns="http://annox.dev.java.net/org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations"
+								booleanField="false" byteField="0" charField="a"
+								classField="java.lang.String" doubleField="1"
+								enumField="ONE" floatField="2.3" intField="4"
+								longField="5" shortField="6" stringField="7">
+								<annotationField>
+									<B booleanArrayField="false true"
+										byteArrayField="0 1" charArrayField="a b"
+										classArrayField="java.lang.String java.lang.Boolean"
+										anotherClassArrayField="org.jvnet.jaxb2_commons.plugin.annotate.test.annox.schema.Two org.jvnet.jaxb2_commons.plugin.annotate.test.annox.schema.One"
+										doubleArrayField="2 3"
+										enumArrayField="ONE TWO"
+										floatArrayField="4.5 6.7"
+										intArrayField="8 9"
+										longArrayField="10 11"
+										shortArrayField="12 13"
+										stringArrayField="14 15">
+										<stringArrayField>16</stringArrayField>
+										<stringArrayField>17</stringArrayField>
+										<annotationArrayField>
+											<C
+												annox:class="org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations.B$C"/>
+											<C
+												annox:class="org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations.B$C"/>
+										</annotationArrayField>
+									</B>
+								</annotationField>
+							</A>
+						</annox:annotate>
+						<annox:annotate target="setter">
+							<A
+								xmlns="http://annox.dev.java.net/org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations"
+								booleanField="false" byteField="0" charField="a"
+								classField="java.lang.String" doubleField="1"
+								enumField="ONE" floatField="2.3" intField="4"
+								longField="5" shortField="6" stringField="7">
+								<annotationField>
+									<B booleanArrayField="false true"
+										byteArrayField="0 1" charArrayField="a b"
+										classArrayField="java.lang.String java.lang.Boolean"
+										anotherClassArrayField="org.jvnet.jaxb2_commons.plugin.annotate.test.annox.schema.Two org.jvnet.jaxb2_commons.plugin.annotate.test.annox.schema.One"
+										doubleArrayField="2 3"
+										enumArrayField="ONE TWO"
+										floatArrayField="4.5 6.7"
+										intArrayField="8 9"
+										longArrayField="10 11"
+										shortArrayField="12 13"
+										stringArrayField="14 15">
+										<stringArrayField>16</stringArrayField>
+										<stringArrayField>17</stringArrayField>
+										<annotationArrayField>
+											<C
+												annox:class="org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations.B$C"/>
+											<C
+												annox:class="org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations.B$C"/>
+										</annotationArrayField>
+									</B>
+								</annotationField>
+							</A>
+						</annox:annotate>
+						<annox:annotate target="class">
+							<A
+								xmlns="http://annox.dev.java.net/org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations"
+								booleanField="false" byteField="0" charField="a"
+								classField="java.lang.String" doubleField="1"
+								enumField="ONE" floatField="2.3" intField="4"
+								longField="5" shortField="6" stringField="7">
+								<annotationField>
+									<B booleanArrayField="false true"
+										byteArrayField="0 1" charArrayField="a b"
+										classArrayField="java.lang.String java.lang.Boolean"
+										anotherClassArrayField="org.jvnet.jaxb2_commons.plugin.annotate.test.annox.schema.Two org.jvnet.jaxb2_commons.plugin.annotate.test.annox.schema.One"
+										doubleArrayField="2 3"
+										enumArrayField="ONE TWO"
+										floatArrayField="4.5 6.7"
+										intArrayField="8 9"
+										longArrayField="10 11"
+										shortArrayField="12 13"
+										stringArrayField="14 15">
+										<stringArrayField>16</stringArrayField>
+										<stringArrayField>17</stringArrayField>
+										<annotationArrayField>
+											<C
+												annox:class="org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations.B$C"/>
+											<C
+												annox:class="org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations.B$C"/>
+										</annotationArrayField>
+									</B>
+								</annotationField>
+							</A>
+						</annox:annotate>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	
+	
+	<xsd:simpleType name="two">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<annox:annotate>
+					<F xmlns="http://annox.dev.java.net/org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations" value="enum type" />
+				</annox:annotate>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="alpha">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<annox:annotate>
+							<F xmlns="http://annox.dev.java.net/org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations" value="enum constant" />
+						</annox:annotate>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:element name="three" type="three"/>
+	<xsd:complexType name="three">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<annox:annotate>
+				@org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations.A(
+					booleanField = false,
+					byteField = 0,
+					charField = 'a',
+					classField = java.lang.String[][][].class,
+					anotherClassField=org.jvnet.jaxb2_commons.plugin.annotate.test.annox.schema.One.class,
+					doubleField = 1,
+					enumField = org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations.E.ONE,
+					floatField = 2.3f,
+					intField = 4,
+					longField = 5,
+					shortField = 6,
+					stringField = "7",
+					annotationField = @org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations.B(
+						booleanArrayField = { false, true },
+						byteArrayField = { 0, 1 },
+						charArrayField = { 'a', 'b' },
+						classArrayField = { java.lang.String.class, java.lang.Boolean.class },
+						anotherClassArrayField= {org.jvnet.jaxb2_commons.plugin.annotate.test.annox.schema.One.class, org.jvnet.jaxb2_commons.plugin.annotate.test.annox.schema.Two.class },
+						doubleArrayField = { 2, 3 },
+						enumArrayField = { org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations.E.ONE, org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations.E.TWO },
+						floatArrayField = { 4.5f, 6.7f },
+						intArrayField = { 8, 9 },
+						longArrayField = { 10, -9223372036854775808L },
+						shortArrayField = { 12, 13 },
+						stringArrayField = { "14", "15", "16", "17" },
+						annotationArrayField = { @org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations.B.C, @org.jvnet.jaxb2_commons.plugin.annotate.test.annox.annotations.B.C }))
+					</annox:annotate>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="four" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

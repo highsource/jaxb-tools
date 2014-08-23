@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	jaxb:version="2.1">
+
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:globalBindings generateIsSetMethod="true"
+				localScoping="toplevel"
+				fixedAttributeAsConstantProperty="true"/>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.jvnet.jaxb2_commons.tests.issues" />
+
+
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+	<xs:complexType name="issueJIIB43Type" mixed="true">
+		<xs:sequence>
+			<xs:element type="issueJIIB43Type" name="someElement" maxOccurs="unbounded" minOccurs="0"/>
+		</xs:sequence> 
+	</xs:complexType>
+</xs:schema>

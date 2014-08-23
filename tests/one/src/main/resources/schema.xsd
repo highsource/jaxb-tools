@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	jaxb:version="1.0">
+
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:globalBindings choiceContentProperty="true" generateIsSetMethod="true" generateElementClass="true">
+				<!--xjc:noValidator />
+				<xjc:noValidatingUnmarshaller /-->
+			</jaxb:globalBindings>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.jvnet.jaxb2_commons.tests.one"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+
+	<xs:complexType name="customizedPropertiesType">
+		<xs:sequence>
+			<xs:element name="customizedAdaptedProperty" type="xs:string" minOccurs="0"/>
+			<xs:element name="annotatedAdaptedProperty" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

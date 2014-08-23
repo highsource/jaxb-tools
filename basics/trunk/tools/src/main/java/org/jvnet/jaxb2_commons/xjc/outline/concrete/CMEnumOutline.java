@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb2_commons.xjc.outline.MEnumConstantOutline;
 import org.jvnet.jaxb2_commons.xjc.outline.MEnumOutline;
 import org.jvnet.jaxb2_commons.xjc.outline.MModelOutline;

@@ -31,8 +31,10 @@ public @interface B {
 
 	Class<?>[] classArrayField();
 
+	Class<?>[] anotherClassArrayField() default { String.class, Boolean.class };
+
 	B.C[] annotationArrayField();
-	
+
 	@Retention(RetentionPolicy.RUNTIME)
 	public static @interface C {
 	}

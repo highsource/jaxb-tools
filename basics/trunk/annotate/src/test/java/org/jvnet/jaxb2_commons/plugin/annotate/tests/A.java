@@ -30,5 +30,7 @@ public @interface A {
 
 	Class<?> classField();
 
+	Class<?> anotherClassField() default String.class;
+
 	B annotationField();
 }

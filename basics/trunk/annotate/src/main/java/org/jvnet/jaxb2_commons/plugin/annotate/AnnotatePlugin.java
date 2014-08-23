@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import javax.xml.namespace.QName;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jvnet.annox.Constants;
 import org.jvnet.annox.model.XAnnotation;
 import org.jvnet.annox.parser.XAnnotationParser;
@@ -78,7 +79,7 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 		}
 	}
 
-	private XAnnotationParser annotationParser = XAnnotationParser.GENERIC;
+	private XAnnotationParser annotationParser = XAnnotationParser.INSTANCE;
 
 	public XAnnotationParser getAnnotationParser() {
 		return annotationParser;
@@ -384,8 +385,8 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 				final Element child = (Element) node;
 
 				try {
-					final XAnnotation annotation = getAnnotationParser().parse(
-							child);
+					final XAnnotation<?> annotation = getAnnotationParser()
+							.parse(child);
 					getAnnotator().annotate(codeModel, annotatable, annotation);
 				} catch (Exception ex) {
 					try {
@@ -394,6 +395,25 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 								customization.locator, ex));
 					} catch (SAXException ignored) {
 						// Nothing to do
+					}
+				}
+			} else if (node.getNodeType() == Node.TEXT_NODE) {
+				final String nodeValue = node.getNodeValue();
+				if (nodeValue != null && StringUtils.isNotBlank(nodeValue)) {
+					try {
+						final XAnnotation<?> annotation = getAnnotationParser()
+								.parse(nodeValue);
+						getAnnotator().annotate(codeModel, annotatable,
+								annotation);
+
+					} catch (Exception ex) {
+						try {
+							errorHandler.error(new SAXParseException(
+									"Error parsing annotation.",
+									customization.locator, ex));
+						} catch (SAXException ignored) {
+							// Nothing to do
+						}
 					}
 				}
 			}

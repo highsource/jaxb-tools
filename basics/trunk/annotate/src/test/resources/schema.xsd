@@ -17,21 +17,22 @@
 		</xs:appinfo>
 	</xs:annotation>
 	
-	<xs:element name="one" type="oneType"/>
-	<xs:complexType name="oneType">
+	<xs:element name="one" type="one"/>
+	<xs:complexType name="one">
 		<xs:annotation>
 			<xs:appinfo>
 				<annox:annotate>
 				<A
 					xmlns="http://annox.dev.java.net/org.jvnet.jaxb2_commons.plugin.annotate.tests"
 					booleanField="false" byteField="0" charField="a"
-					classField="java.lang.String" doubleField="1" enumField="ONE"
+					classField="java.lang.String" anotherClassField="org.jvnet.jaxb2_commons.plugin.annotate.tests.One" doubleField="1" enumField="ONE"
 					floatField="2.3" intField="4" longField="5" shortField="6"
 					stringField="7">
 					<annotationField>
 						<B booleanArrayField="false true" byteArrayField="0 1"
 							charArrayField="a b"
 							classArrayField="java.lang.String java.lang.Boolean"
+							anotherClassArrayField="org.jvnet.jaxb2_commons.plugin.annotate.tests.One org.jvnet.jaxb2_commons.plugin.annotate.tests.Two"
 							doubleArrayField="2 3" enumArrayField="ONE TWO"
 							floatArrayField="4.5 6.7" intArrayField="8 9"
 							longArrayField="10 11" shortArrayField="12 13"
@@ -55,6 +56,7 @@
 				<xs:annotation>
 					<xs:appinfo>
 						<annox:annotate>
+							
 							<A
 								xmlns="http://annox.dev.java.net/org.jvnet.jaxb2_commons.plugin.annotate.tests"
 								booleanField="false" byteField="0" charField="a"
@@ -65,6 +67,7 @@
 									<B booleanArrayField="false true"
 										byteArrayField="0 1" charArrayField="a b"
 										classArrayField="java.lang.String java.lang.Boolean"
+										anotherClassArrayField="org.jvnet.jaxb2_commons.plugin.annotate.tests.Two org.jvnet.jaxb2_commons.plugin.annotate.tests.One"
 										doubleArrayField="2 3"
 										enumArrayField="ONE TWO"
 										floatArrayField="4.5 6.7"
@@ -85,7 +88,7 @@
 							</A>
 						</annox:annotate>
 						<annox:annotate target="field">
-							<A
+						    <A
 								xmlns="http://annox.dev.java.net/org.jvnet.jaxb2_commons.plugin.annotate.tests"
 								booleanField="false" byteField="0" charField="a"
 								classField="java.lang.String" doubleField="1"
@@ -95,6 +98,7 @@
 									<B booleanArrayField="false true"
 										byteArrayField="0 1" charArrayField="a b"
 										classArrayField="java.lang.String java.lang.Boolean"
+										anotherClassArrayField="org.jvnet.jaxb2_commons.plugin.annotate.tests.Two org.jvnet.jaxb2_commons.plugin.annotate.tests.One"
 										doubleArrayField="2 3"
 										enumArrayField="ONE TWO"
 										floatArrayField="4.5 6.7"
@@ -125,6 +129,7 @@
 									<B booleanArrayField="false true"
 										byteArrayField="0 1" charArrayField="a b"
 										classArrayField="java.lang.String java.lang.Boolean"
+										anotherClassArrayField="org.jvnet.jaxb2_commons.plugin.annotate.tests.Two org.jvnet.jaxb2_commons.plugin.annotate.tests.One"
 										doubleArrayField="2 3"
 										enumArrayField="ONE TWO"
 										floatArrayField="4.5 6.7"
@@ -155,6 +160,7 @@
 									<B booleanArrayField="false true"
 										byteArrayField="0 1" charArrayField="a b"
 										classArrayField="java.lang.String java.lang.Boolean"
+										anotherClassArrayField="org.jvnet.jaxb2_commons.plugin.annotate.tests.Two org.jvnet.jaxb2_commons.plugin.annotate.tests.One"
 										doubleArrayField="2 3"
 										enumArrayField="ONE TWO"
 										floatArrayField="4.5 6.7"
@@ -180,6 +186,8 @@
 		</xs:sequence>
 	</xs:complexType>
 	
+	
+	
 	<xs:simpleType name="two">
 		<xs:annotation>
 			<xs:appinfo>
@@ -199,5 +207,45 @@
 				</xs:annotation>
 			</xs:enumeration>
 		</xs:restriction>
-	</xs:simpleType> 
+	</xs:simpleType>
+	
+	<xs:element name="three" type="three"/>
+	<xs:complexType name="three">
+		<xs:annotation>
+			<xs:appinfo>
+				<annox:annotate>
+				@org.jvnet.jaxb2_commons.plugin.annotate.tests.A(
+					booleanField = false,
+					byteField = 0,
+					charField = 'a',
+					classField = java.lang.String[][][].class,
+					anotherClassField=org.jvnet.jaxb2_commons.plugin.annotate.tests.One.class,
+					doubleField = 1,
+					enumField = org.jvnet.jaxb2_commons.plugin.annotate.tests.E.ONE,
+					floatField = 2.3f,
+					intField = 4,
+					longField = 5,
+					shortField = 6,
+					stringField = "7",
+					annotationField = @org.jvnet.jaxb2_commons.plugin.annotate.tests.B(
+						booleanArrayField = { false, true },
+						byteArrayField = { 0, 1 },
+						charArrayField = { 'a', 'b' },
+						classArrayField = {	java.lang.String.class, java.lang.Boolean.class },
+						anotherClassArrayField= {org.jvnet.jaxb2_commons.plugin.annotate.tests.One.class, org.jvnet.jaxb2_commons.plugin.annotate.tests.Two.class },
+						doubleArrayField = { 2, 3 },
+						enumArrayField = { org.jvnet.jaxb2_commons.plugin.annotate.tests.E.ONE, org.jvnet.jaxb2_commons.plugin.annotate.tests.E.TWO },
+						floatArrayField = { 4.5f, 6.7f },
+						intArrayField = { 8, 9 },
+						longArrayField = { 10, -9223372036854775808L },
+						shortArrayField = { 12, 13 },
+						stringArrayField = { "14", "15", "16", "17" },
+						annotationArrayField = { @org.jvnet.jaxb2_commons.plugin.annotate.tests.B.C, @org.jvnet.jaxb2_commons.plugin.annotate.tests.B.C }))
+					</annox:annotate>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="four" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
 </xs:schema>

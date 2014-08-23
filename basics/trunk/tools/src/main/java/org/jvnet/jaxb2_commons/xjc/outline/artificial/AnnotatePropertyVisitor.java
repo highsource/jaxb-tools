@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlValue;
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MAnyAttributePropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MAnyElementPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MAttributePropertyInfo;

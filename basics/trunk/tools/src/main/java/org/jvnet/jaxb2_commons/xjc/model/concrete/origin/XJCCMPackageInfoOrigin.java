@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.xjc.model.concrete.origin;
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb2_commons.xjc.generator.MPackageOutlineGenerator;
 import org.jvnet.jaxb2_commons.xjc.generator.concrete.CMPackageOutlineGenerator;
 import org.jvnet.jaxb2_commons.xjc.generator.concrete.PackageOutlineGeneratorFactory;

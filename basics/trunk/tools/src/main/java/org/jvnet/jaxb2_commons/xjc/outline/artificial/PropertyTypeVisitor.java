@@ -4,7 +4,7 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb2_commons.xjc.outline.MModelOutline;
 import org.jvnet.jaxb2_commons.xml.bind.model.MAnyAttributePropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MAnyElementPropertyInfo;

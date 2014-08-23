@@ -13,9 +13,7 @@
 		</jaxb:schemaBindings>
 
 		<jaxb:bindings node="xs:complexType[@name='FooType']/xs:sequence/xs:element[@name='bar']">
-			<annox:annotate>
-				<annox:annotate annox:class="org.hibernate.search.annotations.Field" store="COMPRESS"/>
-			</annox:annotate>
+			<annox:annotate>@org.hibernate.search.annotations.Field(store=org.hibernate.search.annotations.Store.COMPRESS)</annox:annotate>
 		</jaxb:bindings>
 	</jaxb:bindings>
 

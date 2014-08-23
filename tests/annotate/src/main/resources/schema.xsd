@@ -16,12 +16,12 @@
 			</xsd:appinfo>
 		</xsd:annotation>
 	</xsd:element>
+
 	<xsd:complexType name="FooType">
 		<xsd:annotation>
 			<xsd:appinfo>
-				<annox:annotate>
-					<jl:SuppressWarnings/>
-				</annox:annotate>
+				<annox:annotate>@java.lang.SuppressWarnings({"unchecked","rawtypes"})</annox:annotate>
+				<annox:annotate target="package">@javax.annotation.Generated({"XJC","JAXB2 Annotate Plugin"})</annox:annotate>
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:sequence>
@@ -30,45 +30,17 @@
 				<xsd:annotation>
 					<xsd:appinfo>
 						<annox:annotate>@java.lang.SuppressWarnings({"unchecked","rawtypes"})</annox:annotate>
-						<annox:annotate target="setter">
-							<jl:Deprecated/>
-						</annox:annotate>
-						<annox:annotate target="setter-parameter">
-							<jl:Deprecated/>
-						</annox:annotate>
-						<annox:annotate target="getter">
-							<jl:Deprecated/>
-						</annox:annotate>
-						<annox:annotate target="field">
-							<jl:Deprecated/>
-						</annox:annotate>
-						<annox:annotate target="class">
-							<jl:Deprecated/>
-						</annox:annotate>
-					</xsd:appinfo>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element name="fooType" type="FooType"/>
-			<xsd:element name="barfoo" type="xsd:string" minOccurs="0" nillable="true">
-				<xsd:annotation>
-					<xsd:appinfo>
-						<annox:annotate>
-							<jl:SuppressWarnings/>
-						</annox:annotate>
-					</xsd:appinfo>
-				</xsd:annotation>
-			</xsd:element>
-			<xsd:element ref="foo">
-				<xsd:annotation>
-					<xsd:appinfo>
-						<annox:annotate>
-							<jl:SuppressWarnings/>
-						</annox:annotate>
+						<annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+						<annox:annotate target="setter-parameter">@java.lang.Deprecated</annox:annotate>
+						<annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+						<annox:annotate target="field">@java.lang.Deprecated</annox:annotate>
+						<annox:annotate target="class">@java.lang.Deprecated</annox:annotate>
 					</xsd:appinfo>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
+
 	<xsd:simpleType name="two">
 		<xsd:annotation>
 			<xsd:appinfo>

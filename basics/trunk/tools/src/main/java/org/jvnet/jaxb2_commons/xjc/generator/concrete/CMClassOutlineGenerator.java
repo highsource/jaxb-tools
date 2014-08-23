@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.xjc.generator.concrete;
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb2_commons.xjc.generator.MClassOutlineGenerator;
 import org.jvnet.jaxb2_commons.xjc.generator.MPropertyOutlineGenerator;
 import org.jvnet.jaxb2_commons.xjc.outline.MClassOutline;

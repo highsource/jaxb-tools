@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.xjc.generator.concrete;
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb2_commons.xjc.generator.MEnumConstantOutlineGenerator;
 import org.jvnet.jaxb2_commons.xjc.generator.MEnumOutlineGenerator;
 import org.jvnet.jaxb2_commons.xjc.outline.MEnumConstantOutline;

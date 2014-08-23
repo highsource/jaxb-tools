@@ -5,7 +5,7 @@
 	<groupId>org.jvnet.jaxb2_commons</groupId>
 	<artifactId>jaxb2-basics-project</artifactId>
 	<packaging>pom</packaging>
-	<version>0.6.5</version>
+	<version>0.6.6-SNAPSHOT</version>
 	<name>JAXB2 Basics - Project</name>
 	<url>http://static.highsource.org/jaxb2-basics</url>
 	<description>JAXB2 Basics is a part of JAXB2 Commons project which implements plugins and tools for JAXB 2.x reference implementation.</description>
@@ -14,17 +14,6 @@
 		<artifactId>oss-parent</artifactId>
 		<version>7</version>
 	</parent>
-	<distributionManagement>
-		<snapshotRepository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>org.highsource.repository.maven2.snapshots</id>
-			<url>${sftp.repository.highsource.org}/maven2/snapshots</url>
-		</snapshotRepository>
-		<site>
-			<id>org.highsource.static.jaxb2-basics</id>
-			<url>${sftp.static.highsource.org}/jaxb2-basics</url>
-		</site>
-	</distributionManagement>
 	<issueManagement>
 		<system>JIRA</system>
 		<url>http://jira.highsource.org/browse/JIIB</url>
@@ -79,7 +68,6 @@
 		<module>tools</module>
 		<module>testing</module>
 		<module>basic</module>
-		<module>annotate</module>
 	</modules>
 	<profiles>
 		<profile>
@@ -155,11 +143,6 @@
 				<artifactId>jaxb2-basics</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>org.jvnet.jaxb2_commons</groupId>
-				<artifactId>jaxb2-basics-annotate</artifactId>
-				<version>${project.version}</version>
-			</dependency>
 			<!-- Maven JAXB2 Plugin -->
 			<dependency>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
@@ -170,12 +153,6 @@
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin-testing</artifactId>
 				<version>${maven-jaxb2-plugin.version}</version>
-			</dependency>
-			<!-- Annox -->
-			<dependency>
-				<groupId>org.jvnet.annox</groupId>
-				<artifactId>annox</artifactId>
-				<version>0.5.0</version>
 			</dependency>
 			<!-- JAXB -->
 			<dependency>
@@ -201,9 +178,9 @@
 			</dependency>
 			<!-- Commons -->
 			<dependency>
-				<groupId>commons-lang</groupId>
-				<artifactId>commons-lang</artifactId>
-				<version>2.2</version>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.2.1</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-io</groupId>

@@ -102,7 +102,12 @@ You can use the following customization elements in the `http://annox.dev.java.n
 * `annotateEnum`
 * `annotateEnumConstant`
 
-The `http://annox.dev.java.net` namespace must be declared in the `jaxb:extensionBindingPrefixes` attribute.
+The `http://annox.dev.java.net` namespace must be declared in the `jaxb:extensionBindingPrefixes` attribute via prefix, ex.:
+
+````
+xmlns:annox="http://annox.dev.java.net"
+jaxb:extensionBindingPrefixes="xjc annox"
+````
 
 Note: yes, I know that `http://annox.dev.java.net` no longer exists. Changing this namespace would break old builds.
 This is just a namespace, there must not necessarily be content there. Treat it as a logical identifier, nothing else.

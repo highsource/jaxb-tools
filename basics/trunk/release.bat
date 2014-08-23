@@ -37,13 +37,13 @@ pause
 
 echo Checking in version %1.
 pause
-mvn scm:checkin -Dmessage="Version %1"
+call mvn scm:checkin -Dmessage="Version %1"
 echo Version %1 was checked in.
 pause
 
 echo Tagging version %1.
 pause
-mvn scm:tag -Dtag=%1
+call mvn scm:tag -Dtag=%1
 echo Version %1 was tagged.
 pause
 
@@ -69,7 +69,7 @@ pause
 
 echo Checking in version %2.
 pause
-mvn scm:checkin -Dmessage="Version %2"
+call mvn scm:checkin -Dmessage="Version %2"
 echo Version %2 was checked in.
 pause
 

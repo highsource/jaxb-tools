@@ -1,4 +1,4 @@
 setlocal
 set JAVA_HOME=%JAVA6_HOME%
-call mvn -X -DperformRelease -P samples,tests clean install >std 2>err
+call mvn -X -DperformRelease -Psamples,tests,dist clean install >std 2>err
 endlocal

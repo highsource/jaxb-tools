@@ -41,6 +41,8 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 
 	private static final QName ANNOTATE_PROPERTY_QNAME = new QName(
 			Constants.NAMESPACE_URI, "annotateProperty");
+	private static final QName ANNOTATE_PACKAGE_QNAME = new QName(
+			Constants.NAMESPACE_URI, "annotatePackage");
 	private static final QName ANNOTATE_CLASS_QNAME = new QName(
 			Constants.NAMESPACE_URI, "annotateClass");
 	private static final QName ANNOTATE_ELEMENT_QNAME = new QName(
@@ -264,7 +266,24 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 				if (ANNOTATE_CLASS_QNAME.equals(name)
 						|| ANNOTATE_QNAME.equals(name)) {
 
-					final JAnnotatable annotatable = classOutline.ref;
+					final String draftTarget = element.getAttribute("target");
+
+					final String target;
+
+					if (draftTarget == null || "".equals(draftTarget)) {
+						target = null;
+					} else {
+						target = draftTarget;
+					}
+
+					final JAnnotatable annotatable;
+
+					if ("package".equals(target)) {
+						annotatable = classOutline.ref._package();
+					} else {
+						annotatable = classOutline.ref;
+
+					}
 
 					annotate(codeModel, errorHandler, customization, element,
 							annotatable);
@@ -298,7 +317,9 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 						target = draftTarget;
 					}
 
-					if ("class".equals(target)) {
+					if ("package".equals(target)) {
+						annotatable = fieldOutline.parent().ref._package();
+					} else if ("class".equals(target)) {
 						annotatable = fieldOutline.parent().ref;
 					} else if ("getter".equals(target)) {
 						final JMethod _getter = FieldAccessorUtils
@@ -422,8 +443,9 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 
 	@Override
 	public Collection<QName> getCustomizationElementNames() {
-		return Arrays.asList(ANNOTATE_QNAME, ANNOTATE_CLASS_QNAME,
-				ANNOTATE_ELEMENT_QNAME, ANNOTATE_PROPERTY_QNAME);
+		return Arrays.asList(ANNOTATE_QNAME, ANNOTATE_PACKAGE_QNAME,
+				ANNOTATE_CLASS_QNAME, ANNOTATE_ELEMENT_QNAME,
+				ANNOTATE_PROPERTY_QNAME);
 	}
 
 }

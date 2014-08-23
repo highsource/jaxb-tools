@@ -1,4 +1,4 @@
-package org.jvnet.jaxb2_commons.tests.issues;
+package org.jvnet.jaxb2_commons.tests.issues.tests;
 
 import java.util.ArrayList;
 import java.util.List;

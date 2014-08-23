@@ -8,9 +8,9 @@
 
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xsd:schema">
 		<jaxb:bindings node="xsd:complexType[@name='issueJIIB43Type']">
-			<annox:annotate target="class">
-				<annox:annotate annox:class="javax.xml.bind.annotation.XmlRootElement" name="someElement"/>
-			</annox:annotate>
+			<annox:annotate target="class">@javax.xml.bind.annotation.XmlRootElement("someElement")</annox:annotate>
+			<annox:annotate target="package">@javax.xml.bind.annotation.XmlSchema(elementFormDefault=javax.xml.bind.annotation.XmlNsForm.QUALIFIED)</annox:annotate>
+			<annox:annotatePackage>@javax.annotation.Generated({"XJC"})</annox:annotatePackage>
 		</jaxb:bindings>
 	</jaxb:bindings>
 </jaxb:bindings>

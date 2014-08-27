@@ -18,4 +18,5 @@ public interface MTypeInfoVisitor<T, C, V> {
 
 	public V visitClassInfo(MClassInfo<T, C> info);
 
+	public V visitClassRef(MClassRef<T, C> info);
 }

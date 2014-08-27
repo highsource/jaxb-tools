@@ -12,10 +12,14 @@ import org.jvnet.jaxb2_commons.xjc.model.concrete.origin.XJCCMModelInfoOrigin;
 import org.jvnet.jaxb2_commons.xjc.model.concrete.origin.XJCCMPackageInfoOrigin;
 import org.jvnet.jaxb2_commons.xjc.model.concrete.origin.XJCCMPropertyInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MClassRef;
 import org.jvnet.jaxb2_commons.xml.bind.model.MContainer;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.CMClassRef;
 import org.jvnet.jaxb2_commons.xml.bind.model.concrete.CMInfoFactory;
 import org.jvnet.jaxb2_commons.xml.bind.model.concrete.CMPackageInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMPackageInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MClassInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MElementInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MEnumConstantInfoOrigin;
@@ -31,6 +35,7 @@ import com.sun.tools.xjc.model.CBuiltinLeafInfo;
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CClassInfoParent;
 import com.sun.tools.xjc.model.CClassInfoParent.Visitor;
+import com.sun.tools.xjc.model.CClassRef;
 import com.sun.tools.xjc.model.CElementInfo;
 import com.sun.tools.xjc.model.CElementPropertyInfo;
 import com.sun.tools.xjc.model.CEnumConstant;
@@ -54,9 +59,108 @@ public class XJCCMInfoFactory
 		super(model);
 	}
 
+	protected NClass getClazz(CClassRef info) {
+		return info;
+	}
+
+	protected NClass getClazz(final Class<?> _clas) {
+		return new NClass() {
+
+			@Override
+			public boolean isBoxedType() {
+				return false;
+			}
+
+			@Override
+			public String fullName() {
+				return _clas.getName();
+			}
+
+			@Override
+			public JClass toType(Outline o, Aspect aspect) {
+				return o.getCodeModel().ref(_clas);
+			}
+
+			@Override
+			public boolean isAbstract() {
+				return false;
+			}
+		};
+	}
+
+	protected NClass getClazz(final String className) {
+		return new NClass() {
+
+			@Override
+			public boolean isBoxedType() {
+				return false;
+			}
+
+			@Override
+			public String fullName() {
+				return className;
+			}
+
+			@Override
+			public JClass toType(Outline o, Aspect aspect) {
+				return o.getCodeModel().ref(className);
+			}
+
+			@Override
+			public boolean isAbstract() {
+				return false;
+			}
+		};
+	}
+
+	protected MClassRef<NType, NClass> createClassRef(Class<?> _class) {
+		return new CMClassRef<NType, NClass>(getClazz(_class),
+				getPackage(_class), getContainer(_class), getLocalName(_class));
+	}
+
+	protected MClassRef<NType, NClass> createClassRef(CClassRef info) {
+		return new CMClassRef<NType, NClass>(getClazz(info), getPackage(info),
+				getContainer(info), getLocalName(info));
+	}
+
+	@Override
+	protected MTypeInfo<NType, NClass> getTypeInfo(CTypeInfo typeInfo) {
+		if (typeInfo instanceof CClassRef) {
+			return createClassRef((CClassRef) typeInfo);
+		} else {
+			return super.getTypeInfo(typeInfo);
+		}
+	}
+
 	@Override
 	protected MPackageInfo getPackage(CClassInfo info) {
 		return getPackage(info.parent());
+	}
+
+	protected MPackageInfo getPackage(CClassRef info) {
+		final String fullName = info.fullName();
+		return getPackage(fullName);
+	}
+
+	private MPackageInfo getPackage(final String fullName) {
+		try {
+			final Class<?> _class = Class.forName(fullName);
+			return getPackage(_class);
+		} catch (ClassNotFoundException cnfex) {
+			final String packageName;
+			final int lastIndexOfDot = fullName.lastIndexOf('.');
+			if (lastIndexOfDot != -1) {
+				packageName = fullName.substring(0, lastIndexOfDot);
+			} else {
+				packageName = "";
+			}
+			return new CMPackageInfo(new CMPackageInfoOrigin(), packageName);
+		}
+	}
+
+	private MPackageInfo getPackage(final Class _class) {
+		final Package _package = _class.getPackage();
+		return new CMPackageInfo(new CMPackageInfoOrigin(), _package.getName());
 	}
 
 	@Override
@@ -85,6 +189,25 @@ public class XJCCMInfoFactory
 	protected MContainer getContainer(CEnumLeafInfo info) {
 		final CClassInfoParent parent = info.parent;
 		return parent == null ? null : getContainer(parent);
+	}
+
+	protected MContainer getContainer(CClassRef info) {
+		final String fullName = info.fullName();
+		try {
+			final Class<?> _class = Class.forName(fullName);
+			return getContainer(_class);
+		} catch (ClassNotFoundException cnfex) {
+			return getPackage(info);
+		}
+	}
+
+	private MContainer getContainer(final Class<?> _class) {
+		final Class<?> enclosingClass = _class.getEnclosingClass();
+		if (enclosingClass == null) {
+			return getPackage(_class);
+		} else {
+			return createClassRef(enclosingClass);
+		}
 	}
 
 	private final Map<String, MPackageInfo> packages = new HashMap<String, MPackageInfo>();
@@ -133,6 +256,32 @@ public class XJCCMInfoFactory
 	@Override
 	protected String getLocalName(CClassInfo info) {
 		return info.shortName;
+	}
+
+	protected String getLocalName(CClassRef info) {
+		final String fullName = info.fullName();
+		try {
+			final Class<?> _class = Class.forName(fullName);
+			return getLocalName(_class);
+		} catch (ClassNotFoundException cnfex) {
+			return getLocalName(fullName);
+		}
+	}
+
+	private String getLocalName(final String fullName) {
+		final int lastIndexOfDollar = fullName.lastIndexOf('$');
+		if (lastIndexOfDollar != -1) {
+			return fullName.substring(lastIndexOfDollar + 1);
+		}
+		final int lastIndexOfDot = fullName.lastIndexOf('.');
+		if (lastIndexOfDot != -1) {
+			return fullName.substring(lastIndexOfDollar + 1);
+		}
+		return fullName;
+	}
+
+	private String getLocalName(final Class<?> _class) {
+		return _class.getSimpleName();
 	}
 
 	@Override

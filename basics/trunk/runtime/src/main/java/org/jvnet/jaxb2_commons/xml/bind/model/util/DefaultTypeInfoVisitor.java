@@ -2,6 +2,7 @@ package org.jvnet.jaxb2_commons.xml.bind.model.util;
 
 import org.jvnet.jaxb2_commons.xml.bind.model.MBuiltinLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MClassRef;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MID;
 import org.jvnet.jaxb2_commons.xml.bind.model.MIDREF;
@@ -47,6 +48,10 @@ public class DefaultTypeInfoVisitor<T, C, V> implements
 	}
 
 	public V visitClassInfo(MClassInfo<T, C> info) {
+		return visitTypeInfo(info);
+	}
+	
+	public V visitClassRef(MClassRef<T, C> info) {
 		return visitTypeInfo(info);
 	}
 }

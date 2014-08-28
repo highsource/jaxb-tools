@@ -275,7 +275,7 @@ public class XJCCMInfoFactory
 		}
 		final int lastIndexOfDot = fullName.lastIndexOf('.');
 		if (lastIndexOfDot != -1) {
-			return fullName.substring(lastIndexOfDollar + 1);
+			return fullName.substring(lastIndexOfDot + 1);
 		}
 		return fullName;
 	}

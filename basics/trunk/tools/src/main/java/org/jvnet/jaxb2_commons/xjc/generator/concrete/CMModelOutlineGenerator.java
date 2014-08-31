@@ -13,6 +13,8 @@ import org.jvnet.jaxb2_commons.xjc.outline.MModelOutline;
 import org.jvnet.jaxb2_commons.xjc.outline.MPackageOutline;
 import org.jvnet.jaxb2_commons.xjc.outline.concrete.CMModelOutline;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MClassRef;
+import org.jvnet.jaxb2_commons.xml.bind.model.MClassTypeInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
@@ -89,12 +91,24 @@ public class CMModelOutlineGenerator implements MModelOutlineGenerator {
 		}
 	}
 
-	private void generateClassOutline(CMModelOutline modelOutline,
-			MModelInfo<NType, NClass> modelInfo,
+	private void generateClassOutline(final CMModelOutline modelOutline,
+			final MModelInfo<NType, NClass> modelInfo,
 			MClassInfo<NType, NClass> classInfo) {
 		if (classInfo.getBaseTypeInfo() != null) {
-			generateClassOutline(modelOutline, modelInfo,
-					classInfo.getBaseTypeInfo());
+			classInfo.getBaseTypeInfo().acceptClassTypeInfoVisitor(
+					new MClassTypeInfoVisitor<NType, NClass, Void>() {
+						@Override
+						public Void visitClassInfo(
+								MClassInfo<NType, NClass> info) {
+							generateClassOutline(modelOutline, modelInfo, info);
+							return null;
+						}
+
+						@Override
+						public Void visitClassRef(MClassRef<NType, NClass> info) {
+							return null;
+						}
+					});
 		}
 
 		if (classInfo.getOrigin() instanceof ClassOutlineGeneratorFactory) {

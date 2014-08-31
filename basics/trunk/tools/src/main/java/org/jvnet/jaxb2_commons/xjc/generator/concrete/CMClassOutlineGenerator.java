@@ -8,6 +8,8 @@ import org.jvnet.jaxb2_commons.xjc.outline.MPackageOutline;
 import org.jvnet.jaxb2_commons.xjc.outline.MPropertyOutline;
 import org.jvnet.jaxb2_commons.xjc.outline.concrete.CMClassOutline;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MClassRef;
+import org.jvnet.jaxb2_commons.xml.bind.model.MClassTypeInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 
@@ -30,7 +32,7 @@ public class CMClassOutlineGenerator implements MClassOutlineGenerator {
 		this.classInfo = classInfo;
 	}
 
-	public MClassOutline generate(MPackageOutline parent,
+	public MClassOutline generate(final MPackageOutline parent,
 			MModelInfo<NType, NClass> modelInfo,
 			MClassInfo<NType, NClass> classInfo) {
 
@@ -38,8 +40,23 @@ public class CMClassOutlineGenerator implements MClassOutlineGenerator {
 
 		final MClassOutline superClassOutline;
 		if (classInfo.getBaseTypeInfo() != null) {
-			superClassOutline = parent.getParent().getClassOutline(
-					classInfo.getBaseTypeInfo());
+			superClassOutline = classInfo
+					.getBaseTypeInfo()
+					.acceptClassTypeInfoVisitor(
+							new MClassTypeInfoVisitor<NType, NClass, MClassOutline>() {
+								@Override
+								public MClassOutline visitClassInfo(
+										MClassInfo<NType, NClass> info) {
+									return parent.getParent().getClassOutline(
+											info);
+								}
+
+								@Override
+								public MClassOutline visitClassRef(
+										MClassRef<NType, NClass> info) {
+									return null;
+								}
+							});
 		} else {
 			superClassOutline = null;
 		}

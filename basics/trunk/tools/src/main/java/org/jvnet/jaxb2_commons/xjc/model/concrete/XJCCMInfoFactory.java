@@ -1,6 +1,7 @@
 package org.jvnet.jaxb2_commons.xjc.model.concrete;
 
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.jvnet.jaxb2_commons.xjc.model.concrete.origin.XJCCMPackageInfoOrigin;
 import org.jvnet.jaxb2_commons.xjc.model.concrete.origin.XJCCMPropertyInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassRef;
+import org.jvnet.jaxb2_commons.xml.bind.model.MClassTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MContainer;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
@@ -54,6 +56,10 @@ import com.sun.tools.xjc.outline.Outline;
 public class XJCCMInfoFactory
 		extends
 		CMInfoFactory<NType, NClass, Model, CTypeInfo, CBuiltinLeafInfo, CElementInfo, CEnumLeafInfo, CEnumConstant, CClassInfo, CPropertyInfo, CAttributePropertyInfo, CValuePropertyInfo, CElementPropertyInfo, CReferencePropertyInfo, CWildcardTypeInfo> {
+
+	private final Map<CClassRef, MClassRef<NType, NClass>> classRefs =
+
+	new IdentityHashMap<CClassRef, MClassRef<NType, NClass>>();
 
 	public XJCCMInfoFactory(Model model) {
 		super(model);
@@ -118,6 +124,18 @@ public class XJCCMInfoFactory
 				getPackage(_class), getContainer(_class), getLocalName(_class));
 	}
 
+	protected MClassRef<NType, NClass> getTypeInfo(CClassRef info) {
+
+		MClassRef<NType, NClass> classInfo = classRefs.get(info);
+
+		if (classInfo == null) {
+
+			classInfo = createClassRef(info);
+			classRefs.put(info, classInfo);
+		}
+		return classInfo;
+	}
+
 	protected MClassRef<NType, NClass> createClassRef(CClassRef info) {
 		return new CMClassRef<NType, NClass>(getClazz(info), getPackage(info),
 				getContainer(info), getLocalName(info));
@@ -126,7 +144,7 @@ public class XJCCMInfoFactory
 	@Override
 	protected MTypeInfo<NType, NClass> getTypeInfo(CTypeInfo typeInfo) {
 		if (typeInfo instanceof CClassRef) {
-			return createClassRef((CClassRef) typeInfo);
+			return getTypeInfo((CClassRef) typeInfo);
 		} else {
 			return super.getTypeInfo(typeInfo);
 		}
@@ -361,5 +379,16 @@ public class XJCCMInfoFactory
 			packages.put(packageName, _package);
 		}
 		return _package;
+	}
+
+	@Override
+	protected MClassTypeInfo<NType, NClass> createBaseTypeInfo(CClassInfo info) {
+		if (info.getBaseClass() != null) {
+			return getTypeInfo(info.getBaseClass());
+		} else if (info.getRefBaseClass() != null) {
+			return getTypeInfo(info.getRefBaseClass());
+		} else {
+			return null;
+		}
 	}
 }

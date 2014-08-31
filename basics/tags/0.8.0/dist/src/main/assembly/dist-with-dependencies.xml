@@ -1,0 +1,33 @@
+<assembly>
+	<id>dist-with-dependencies</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<fileSets>
+		<fileSet>
+			<includes>
+				<include>README*</include>
+				<include>LICENSE*</include>
+				<include>NOTICE*</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>dist</outputDirectory>
+			<!--outputFileNameMapping>${artifact.artifactId}${dashClassifier?}.${artifact.extension}</outputFileNameMapping-->
+			<useProjectArtifact>false</useProjectArtifact>
+			<includes>
+				<include>org.jvnet.jaxb2_commons:*</include>
+			</includes>
+		</dependencySet>
+		<dependencySet>
+			<outputDirectory>lib</outputDirectory>
+			<!--outputFileNameMapping>${artifact.artifactId}${dashClassifier?}.${artifact.extension}</outputFileNameMapping-->
+			<useProjectArtifact>false</useProjectArtifact>
+			<excludes>
+				<exclude>org.jvnet.jaxb2_commons:*</exclude>
+			</excludes>
+		</dependencySet>
+	</dependencySets>
+</assembly>

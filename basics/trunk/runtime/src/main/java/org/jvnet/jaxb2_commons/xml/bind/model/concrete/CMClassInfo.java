@@ -8,6 +8,8 @@ import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MClassTypeInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MClassTypeInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MContainer;
 import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizations;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
@@ -31,7 +33,7 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 	private final String name;
 	private final String localName;
 	private final MContainer container;
-	private final MClassInfo<T, C> baseTypeInfo;
+	private final MClassTypeInfo<T, C> baseTypeInfo;
 	private final QName elementName;
 
 	private List<MPropertyInfo<T, C>> properties = new ArrayList<MPropertyInfo<T, C>>();
@@ -40,7 +42,7 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 
 	public CMClassInfo(MClassInfoOrigin origin, C targetClass,
 			MPackageInfo _package, MContainer container, String localName,
-			MClassInfo<T, C> baseTypeInfo, QName elementName) {
+			MClassTypeInfo<T, C> baseTypeInfo, QName elementName) {
 		super();
 		Validate.notNull(origin);
 		Validate.notNull(targetClass);
@@ -116,7 +118,7 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 		return container;
 	}
 
-	public MClassInfo<T, C> getBaseTypeInfo() {
+	public MClassTypeInfo<T, C> getBaseTypeInfo() {
 		return baseTypeInfo;
 	}
 
@@ -153,6 +155,12 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 	}
 
 	public <V> V acceptTypeInfoVisitor(MTypeInfoVisitor<T, C, V> visitor) {
+		return visitor.visitClassInfo(this);
+	}
+	
+	@Override
+	public <V> V acceptClassTypeInfoVisitor(
+			MClassTypeInfoVisitor<T, C, V> visitor) {
 		return visitor.visitClassInfo(this);
 	}
 }

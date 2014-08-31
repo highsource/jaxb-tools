@@ -7,16 +7,10 @@ import javax.xml.namespace.QName;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MClassInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MOriginated;
 
-public interface MClassInfo<T, C> extends MPackagedTypeInfo<T, C>,
-		MOriginated<MClassInfoOrigin>, MContainer {
+public interface MClassInfo<T, C> extends MClassTypeInfo<T, C>,
+		MOriginated<MClassInfoOrigin> {
 
-	public C getTargetClass();
-
-	public MClassInfo<T, C> getBaseTypeInfo();
-
-	public String getName();
-
-	public String getLocalName();
+	public MClassTypeInfo<T, C> getBaseTypeInfo();
 
 	public List<MPropertyInfo<T, C>> getProperties();
 

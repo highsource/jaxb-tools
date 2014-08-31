@@ -2,6 +2,7 @@ package org.jvnet.jaxb2_commons.xml.bind.model.concrete;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassRef;
+import org.jvnet.jaxb2_commons.xml.bind.model.MClassTypeInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MContainer;
 import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizations;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
@@ -16,10 +17,10 @@ public class CMClassRef<T, C extends T> implements MClassRef<T, C> {
 	private final String localName;
 	private final MContainer container;
 
-	public CMClassRef(/*MClassInfoOrigin origin, */C targetClass,
+	public CMClassRef(/* MClassInfoOrigin origin, */C targetClass,
 			MPackageInfo _package, MContainer container, String localName) {
 		super();
-//		Validate.notNull(origin);
+		// Validate.notNull(origin);
 		Validate.notNull(targetClass);
 		Validate.notNull(_package);
 		Validate.notNull(localName);
@@ -78,6 +79,12 @@ public class CMClassRef<T, C extends T> implements MClassRef<T, C> {
 
 	public C getTargetClass() {
 		return targetClass;
+	}
+
+	@Override
+	public <V> V acceptClassTypeInfoVisitor(
+			MClassTypeInfoVisitor<T, C, V> visitor) {
+		return visitor.visitClassRef(this);
 	}
 
 }

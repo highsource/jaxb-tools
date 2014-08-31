@@ -13,6 +13,7 @@ import javax.xml.namespace.QName;
 import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MBuiltinLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MClassTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MContainer;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementTypeInfo;
@@ -252,10 +253,14 @@ WTI extends WildcardTypeInfo<T, C>> {
 
 	protected MClassInfo<T, C> createClassInfo(CI info) {
 		return new CMClassInfo<T, C>(createClassInfoOrigin(info),
-				info.getClazz(), getPackage(info), getContainer(info), getLocalName(info),
-				info.getBaseClass() == null ? null : getTypeInfo((CI) info
-						.getBaseClass()),
+				info.getClazz(), getPackage(info), getContainer(info),
+				getLocalName(info), createBaseTypeInfo(info),
 				info.isElement() ? info.getElementName() : null);
+	}
+
+	protected MClassTypeInfo<T, C> createBaseTypeInfo(CI info) {
+		return info.getBaseClass() == null ? null : getTypeInfo((CI) info
+				.getBaseClass());
 	}
 
 	private MPropertyInfo<T, C> createPropertyInfo(

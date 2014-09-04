@@ -34,8 +34,8 @@ public class CMElementRefsPropertyInfo<T, C> extends CMPropertyInfo<T, C>
 			boolean typedObjectAllowed) {
 		super(origin, classInfo, privateName, collection);
 		Validate.noNullElements(elementTypeInfos);
-		Validate.notEmpty(elementTypeInfos);
-		Validate.isTrue(elementTypeInfos.size() > 1);
+//		Validate.notEmpty(elementTypeInfos);
+//		Validate.isTrue(elementTypeInfos.size() > 1);
 		this.elementTypeInfos.addAll(elementTypeInfos);
 		this.wrapperElementName = wrapperElementName;
 		this.mixed = mixed;

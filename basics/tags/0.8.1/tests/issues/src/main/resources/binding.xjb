@@ -1,0 +1,18 @@
+<jaxb:bindings
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+	jaxb:extensionBindingPrefixes="inheritance"
+
+	jaxb:version="2.1">
+
+	<jaxb:bindings schemaLocation="schema.xsd" node="/xsd:schema">
+		<jaxb:bindings node="xsd:simpleType[@name='issueJIIB38Type']">
+			<inheritance:implements>java.lang.Cloneable</inheritance:implements>
+		</jaxb:bindings>
+		<jaxb:bindings node="xsd:element[@name='issueJIIB38']">
+			<jaxb:class/>
+			<inheritance:implements>java.lang.Cloneable</inheritance:implements>
+		</jaxb:bindings>
+	</jaxb:bindings>
+</jaxb:bindings>

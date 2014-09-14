@@ -1,0 +1,92 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jvnet.hyperjaxb3</groupId>
+	<artifactId>hyperjaxb3-ejb-samples-po-customized-toplink-maven</artifactId>
+	<version>0.5.7-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>Hyperjaxb3 Samples [po-customized-toplink:maven]</name>
+	<repositories>
+		<repository>
+			<id>maven-repository.java.net</id>
+			<name>Java.net Maven 1 Repository (legacy)</name>
+			<url>http://download.java.net/maven/1</url>
+			<layout>legacy</layout>
+		</repository>
+	</repositories>
+	<dependencies>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.2.4-1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jvnet.hyperjaxb3</groupId>
+			<artifactId>hyperjaxb3-ejb-runtime</artifactId>
+			<version>0.5.7-SNAPSHOT</version>
+		</dependency>
+
+		<!-- Test dependencies -->
+		<!--dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+		</dependency-->
+
+		<!-- Roundtrip -->
+		<dependency>
+			<groupId>org.jvnet.hyperjaxb3</groupId>
+			<artifactId>hyperjaxb3-ejb-roundtrip</artifactId>
+			<version>0.5.7-SNAPSHOT</version>
+		</dependency>
+
+		<!-- Toplink Dependencies -->
+		<dependency>
+			<groupId>toplink.essentials</groupId>
+			<artifactId>toplink-essentials</artifactId>
+			<version>2.0.1-04</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Database -->
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.8.0.7</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<plugins>
+			<plugin>
+				<groupId>org.jvnet.hyperjaxb3</groupId>
+				<artifactId>maven-hyperjaxb3-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<extension>true</extension>
+					<roundtripTestClassName>RoundtripTest</roundtripTestClassName>
+				</configuration>
+			</plugin>
+			<plugin>
+				<inherited>true</inherited>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

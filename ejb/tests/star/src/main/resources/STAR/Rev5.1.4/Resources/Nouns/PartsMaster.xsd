@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- User   MOD      Date              Description  
+    =========================================================================
+    
+    MV     CRx     20061031          Commented out "DocumentID" 
+    DC     CR299   20070212          Updated to PartsProductItem component from JADM.     
+    MV     CR384   20070509          Added: PartsMasterLineItem: AlternateItemID, Brand, FirstModelYear
+                                     LastModelYear, ItemEffectiveDate, GoodwrenchServiceMerchandisingPlusEligibleIndicator,
+         					 		 FranchiseCode, FuturePriceIndicator, ItemCatalogGroupID, CoreChargeAmount
+                                     VintagePartIndicator, StratificationCode, UniversalProductCodeNumberID, SupplyChainLocationCode                                     
+    MV     CR384   20070510          Added: PartsMasterLineItem: DistributionQuantity, MerchandiseQuantity, MinimumBuyQuantity, PackageQuantity
+                                     Dimension, ItemRegionCountry, TemporaryPriceIndicator
+    MV     CR384   20070511          PartsMasterLineItem.ItemLineCode, ItemWeightMeasure                                                       
+-->
+
+<xsd:schema xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns="http://www.starstandard.org/STAR/5" xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="PartPartsBase" type="PartsBaseType">
+        <xsd:annotation>
+            <xsd:documentation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR" source="http://www.starstandard.org/STAR/5">Detail information about the part being returned.</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">This definition came from the PartMasterLine Component</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="TopSellerGroup" type="TopSellerType">
+        <xsd:annotation>
+            <xsd:documentation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR" source="http://www.starstandard.org/STAR/5">Top Selling Brands for this Part.</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">This definition came from the PartMasterLine Component</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartMaster" type="PartMasterType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Part Master
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartMasterHeader" type="PartMasterHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Part Master Header
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartMasterLine" type="PartMasterLineType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Part Master Line
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="PartMasterType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="PartMasterHeader" />
+            <xsd:element ref="PartMasterLine" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PartMasterHeaderType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+                <xsd:sequence>
+                  <!--  <xsd:element ref="DocumentID" minOccurs="0" /> -->
+                    <xsd:element ref="PartMasterEffectiveDate" minOccurs="1" />
+                    <xsd:element ref="PartMasterCountryCode" minOccurs="1" />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="PartMasterLineType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="PartsProductItem" minOccurs="1" />
+            <xsd:element ref="PartManufacturer" minOccurs="0" />
+            <xsd:element ref="ManufacturerPartCode" minOccurs="0" />
+            <xsd:element ref="PartManufacturerBrand" minOccurs="0" />
+            <xsd:element ref="ItemQuantity" minOccurs="0" />
+            <xsd:element ref="PartMasterPricing" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="PartCoreDetail" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="SupersedingPartGroup" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="TopSellerGroup" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="AlternateItemID" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="Brand" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="FirstModelYear" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="LastModelYear" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="ItemEffectiveDate" minOccurs="0" maxOccurs="1" />            
+            <xsd:element ref="GoodwrenchServiceMerchandisingPlusEligibleIndicator" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="FranchiseCode" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="FuturePriceIndicator" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="ItemCatalogGroupID" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="CoreChargeAmount" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="VintagePartIndicator" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="StratificationCode" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="UniversalProductCodeNumberID" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="SupplyChainLocationCode" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="ReturnIndicator" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="DistributionQuantity" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="MerchandiseQuantity" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="MinimumBuyQuantity" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="PackageQuantity" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="Dimension" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="ItemRegionCountry" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="TemporaryPriceIndicator" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="ItemLineCode" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="ItemWeightMeasure" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

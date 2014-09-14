@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ioda Standard Feed Schema -->
+<!-- Internal $Id: ioda_standard_export_v1.16.xsd,v 1.1 2007/12/14 09:37:38 lexi Exp $ -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+            targetNamespace="http://www.iodalliance.com/schema/ioda_standard_export_v1.16.xsd"
+            xmlns="http://www.iodalliance.com/schema/ioda_standard_export_v1.16.xsd"
+            xmlns:ioda_style="http://www.iodalliance.com/schema/ioda_styles.xsd"
+            xmlns:iso3166="http://www.iodalliance.com/schema/iso-3166-1_alpha-2.xsd"
+            elementFormDefault="qualified">
+  <xsd:import namespace="http://www.iodalliance.com/schema/iso-3166-1_alpha-2.xsd" schemaLocation="iso-3166-1_alpha-2.xsd"/>
+  <xsd:import namespace="http://www.iodalliance.com/schema/ioda_styles.xsd" schemaLocation="ioda_styles.xsd"/>
+  <xsd:element name="release">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="export_id" type="xsd:integer"/>
+        <xsd:element name="export_date" type="xsd:dateTime"/>
+
+        <xsd:element name="schema_version">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+              <xsd:enumeration value="1.16"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:element>
+        <xsd:element name="partner_code" type="xsd:string"/>
+        <xsd:element name="ioda_release_id" type="xsd:integer"/>
+
+        <xsd:element name="release_name" type="xsd:string"/>
+        <xsd:element name="display_artist_name" type="xsd:string"/>
+        <xsd:element name="label">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="ioda_label_id" type="xsd:integer"/>
+              <xsd:element name="label_name" type="xsd:string"/>
+              <xsd:element name="city" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="state" type="xsd:string" minOccurs="0"/>
+
+              <xsd:element name="country" type="iso3166:country_code_type" minOccurs="0"/>
+              <xsd:element name="url" type="xsd:anyURI" minOccurs="0"/>
+              <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="primary_style" type="style_type" minOccurs="0"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="label_catalog_id" type="xsd:string" minOccurs="0"/>
+        <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+
+        <xsd:element name="album_notes" type="xsd:string" minOccurs="0"/>
+        <xsd:element name="parental_advisory" type="xsd:boolean"/>
+        <xsd:element name="c_line" type="xsd:string"/>
+        <xsd:element name="recording_location" type="xsd:string" minOccurs="0"/>
+        <xsd:element name="original_release_date" type="xsd:date" minOccurs="0"/>
+        <xsd:element name="street_date" type="xsd:date"/>
+        <xsd:element name="publish_date" type="xsd:date"/>
+        <xsd:element name="radio_date" type="xsd:date" minOccurs="0"/>
+        <xsd:element name="promo_buylink" minOccurs="0" maxOccurs="unbounded">
+
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="store_alias" type="xsd:string"/>
+		      <xsd:element name="store_name" type="xsd:string"/>
+              <xsd:element name="url" type="xsd:anyURI"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="upc_ean" minOccurs="0">
+
+		  <xsd:simpleType>
+			<xsd:restriction base="xsd:token">
+			  <xsd:pattern value="(\d){12,13}"/>
+			</xsd:restriction>
+		  </xsd:simpleType>
+        </xsd:element>
+        <xsd:element name="release_format" minOccurs="0">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+
+              <xsd:enumeration value="LP"/>
+              <xsd:enumeration value="EP"/>
+              <xsd:enumeration value="Single"/>
+              <xsd:enumeration value="Multi-disc"/>
+              <xsd:enumeration value="Box Set"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:element>
+        <xsd:element name="release_type" minOccurs="0" maxOccurs="unbounded">
+
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+              <xsd:enumeration value="Vinyl"/>
+              <xsd:enumeration value="Out of Print"/>
+              <xsd:enumeration value="Digital Only"/>
+              <xsd:enumeration value="Live"/>
+              <xsd:enumeration value="Re-mastered"/>
+              <xsd:enumeration value="Collection"/>
+              <xsd:enumeration value="Bonus Tracks"/>
+
+              <xsd:enumeration value="Promotional"/>
+              <xsd:enumeration value="Ringtone"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:element>
+        <xsd:element name="catalog_type" minOccurs="0">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+              <xsd:enumeration value="Frontline"/>
+
+              <xsd:enumeration value="Mid"/>
+              <xsd:enumeration value="Back"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:element>
+        <xsd:element name="primary_style" type="style_type"/>
+        <xsd:element name="other_style" type="style_type" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element name="territories">
+			<xsd:complexType>
+
+				<xsd:sequence>
+					<xsd:element name="territory" type="iso3166:country_code_type" minOccurs="1" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:complexType>
+        </xsd:element>
+        <xsd:element name="primary_artist" type="primary_artist_type" maxOccurs="unbounded"/>
+        <xsd:element name="featured_artist" type="featured_artist_type" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element name="track" type="track_type" maxOccurs="unbounded"/>
+        <xsd:element name="image" type="image_type" minOccurs="0" maxOccurs="unbounded"/>
+
+      </xsd:sequence>
+    </xsd:complexType>
+    <xsd:unique name="uniqueTrackNumberSequence">
+      <xsd:selector xpath="track"/>
+      <xsd:field xpath="discNumber"/>
+      <xsd:field xpath="sequence"/>
+    </xsd:unique>
+  </xsd:element>
+  <xsd:complexType name="primary_artist_type">
+
+    <xsd:sequence>
+      <xsd:element name="ioda_artist_id" type="xsd:integer"/>
+      <xsd:element name="artist_name" type="xsd:string"/>
+      <xsd:element name="artist_sort_name" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="url" type="xsd:anyURI" minOccurs="0"/>
+      <xsd:element name="city" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="state" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="country" type="iso3166:country_code_type" minOccurs="0"/>
+      <xsd:element name="bio" type="xsd:string" minOccurs="0"/>
+
+      <xsd:element name="primary_style" type="style_type" minOccurs="0"/>
+      <xsd:element name="other_style" type="style_type" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="similar_artist" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="artist_name" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="similarity" minOccurs="0" maxOccurs="unbounded">
+              <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+
+                  <xsd:enumeration value="Contemporary"/>
+                  <xsd:enumeration value="Influence"/>
+                  <xsd:enumeration value="Follower"/>
+                  <xsd:enumeration value="Related"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+
+      </xsd:element>
+      <xsd:element name="image" type="image_type" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="style_type">
+    <xsd:sequence>
+      <xsd:element name="ioda_style_name" type="ioda_style:style_type"/>
+      <xsd:element name="ioda_style_id" type="xsd:integer"/>
+      <xsd:element name="partner_style_name" type="xsd:string" minOccurs="0"/>
+
+      <xsd:element name="partner_style_id" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="featured_artist_type">
+    <xsd:sequence>
+      <xsd:element name="artist_name" type="xsd:string"/>
+      <xsd:element name="role" maxOccurs="unbounded">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+
+            <xsd:enumeration value="Primary"/>
+            <xsd:enumeration value="Featuring"/>
+            <xsd:enumeration value="Producer"/>
+            <xsd:enumeration value="Remixer"/>
+            <xsd:enumeration value="Composer"/>
+            <xsd:enumeration value="Conductor"/>
+            <xsd:enumeration value="Soloist"/>
+            <xsd:enumeration value="Performer"/>
+            <xsd:enumeration value="Arranger"/>
+
+            <xsd:enumeration value="Writer"/>
+            <xsd:enumeration value="Engineer"/>
+            <xsd:enumeration value="Mixer"/>
+            <xsd:enumeration value="Choir"/>
+            <xsd:enumeration value="Orchestra"/>
+            <xsd:enumeration value="Ensemble"/>
+            <xsd:enumeration value="Lyricist"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="track_type">
+    <xsd:sequence>
+      <xsd:element name="ioda_track_id" type="xsd:integer" minOccurs="0"/>
+      <xsd:element name="track_name" type="xsd:string"/>
+      <xsd:element name="track_length" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="preview_start_time" type="xsd:duration" minOccurs="0"/>
+
+      <xsd:element name="preview_clip_length" type="xsd:duration" minOccurs="0"/>
+      <xsd:element name="isrc" minOccurs="0">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:token">
+            <xsd:pattern value="[a-zA-Z0-9]{5}[0-9]{7}"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="primary_artist" type="primary_artist_type"/>
+
+      <xsd:element name="display_artist_name" type="xsd:string"/>
+      <xsd:element name="featured_artist" type="featured_artist_type" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="disc_number" type="xsd:unsignedShort" minOccurs="0"/>
+      <xsd:element name="sequence" type="xsd:unsignedShort" minOccurs="0"/>
+      <xsd:element name="p_line" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="publishing_control" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="publisher" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+
+            <xsd:element name="ioda_publisher_id" type="xsd:integer"/>
+            <xsd:element name="publisher_name" type="xsd:string"/>
+            <xsd:element name="percent" type="xsd:decimal" minOccurs="0"/>
+            <xsd:element name="publishing_rights_org" type="xsd:string" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="for_album_sale" type="xsd:boolean"/>
+      <xsd:element name="for_track_sale" type="xsd:boolean"/>
+
+      <xsd:element name="emphasis" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="promo" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="is_ringtone" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="media_file" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="bitrate" type="xsd:unsignedShort" minOccurs="0"/>
+            <xsd:element name="format" minOccurs="0">
+              <xsd:simpleType>
+
+                <xsd:restriction base="xsd:string">
+                  <xsd:enumeration value="mp3"/>
+                  <xsd:enumeration value="wma"/>
+                  <xsd:enumeration value="flac"/>
+                  <xsd:enumeration value="aac"/>
+                  <xsd:enumeration value="ogg"/>
+                  <xsd:enumeration value="wav"/>
+                </xsd:restriction>
+              </xsd:simpleType>
+
+            </xsd:element>
+		    <xsd:element name="md5_checksum" type="xsd:string"/>
+            <xsd:element name="file_name" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="image_type">
+
+    <xsd:sequence>
+      <xsd:element name="format">
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="jpg"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:element>
+      <xsd:element name="width" type="xsd:unsignedShort"/>
+
+      <xsd:element name="height" type="xsd:unsignedShort"/>
+      <xsd:element name="x_resolution" type="xsd:unsignedShort"/>
+      <xsd:element name="y_resolution" type="xsd:unsignedShort"/>
+      <xsd:element name="md5_checksum" type="xsd:string"/>
+      <xsd:element name="file_name" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

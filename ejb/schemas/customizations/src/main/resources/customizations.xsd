@@ -1,0 +1,384 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	elementFormDefault="qualified" attributeFormDefault="unqualified" 
+	targetNamespace="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" 
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" 
+	xmlns:persistence="http://java.sun.com/xml/ns/persistence"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" 
+
+	jaxb:extensionBindingPrefixes="inheritance"
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance">
+
+	<xsd:import namespace="http://java.sun.com/xml/ns/persistence/orm" 
+		schemaLocation="orm/orm_1_0.xsd"/>
+	<xsd:import namespace="http://java.sun.com/xml/ns/persistence" 
+		schemaLocation="persistence_1_0.xsd"/>
+
+	<xsd:element name="persistence"	type="hj:persistence"/>
+	<xsd:complexType name="persistence">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="default-entity" type="hj:entity"/>
+			<xsd:element name="default-mapped-superclass" type="hj:mapped-superclass"/>
+			<xsd:element name="default-embeddable" type="hj:embeddable"/>
+			<xsd:element name="default-id" type="hj:id"/>
+			<xsd:element name="default-generated-id" type="hj:generated-id"/>
+			<xsd:element name="default-embedded-id" type="hj:embedded-id"/>
+			<xsd:element name="default-version" type="hj:version"/>
+			<xsd:element name="default-generated-version" type="hj:generated-version"/>
+			<xsd:element name="default-basic" type="hj:basic"/>
+			<xsd:element name="default-to-one" type="hj:to-one"/>
+			<xsd:element name="default-to-many" type="hj:to-many"/>
+			<xsd:element name="default-many-to-one" type="hj:many-to-one"/>
+			<xsd:element name="default-one-to-many" type="hj:one-to-many"/>
+			<xsd:element name="default-one-to-one" type="hj:one-to-one"/>
+			<xsd:element name="default-many-to-many" type="hj:many-to-many"/>
+			<xsd:element name="default-element-collection" type="hj:element-collection"/>
+			<xsd:element name="default-embedded" type="hj:embedded"/>
+			<xsd:element name="default-single-property" type="hj:single-property"
+				minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="default-collection-property" type="hj:collection-property"
+				minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="default-jaxb-context" type="hj:jaxb-context"/>
+		</xsd:sequence>
+		<xsd:attribute name="merge" type="xsd:boolean" default="true"/>
+	</xsd:complexType>
+
+
+	<!-- ... -->
+	<xsd:element name="ignored-package" type="hj:ignored-package"/>
+	<xsd:complexType name="ignored-package">
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+	</xsd:complexType>
+
+	<!-- ... -->
+	<xsd:element name="ignored" type="hj:ignored"/>
+	<xsd:complexType name="ignored"/>
+
+	<!-- Entity -->
+	<xsd:element name="entity" type="hj:entity"/>
+
+	<xsd:complexType name="entity">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="orm:entity">
+			    <xsd:attribute name="merge" type="xsd:boolean" default="true"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+
+	<xsd:element name="mapped-superclass" type="hj:mapped-superclass"/>
+
+	<xsd:complexType name="mapped-superclass">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="orm:mapped-superclass">
+			    <xsd:attribute name="merge" type="xsd:boolean" default="true"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<!-- ... -->
+	<xsd:element name="id" type="hj:id"/>
+	<xsd:complexType name="id">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="orm:id">
+			    <xsd:attribute name="merge" type="xsd:boolean" default="true"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<!-- ... -->
+	<xsd:element name="generated-id" type="hj:generated-id"/>
+	<xsd:complexType name="generated-id">
+		<xsd:complexContent>
+			<xsd:extension base="hj:id">
+			    <xsd:attribute name="attributeName" type="xsd:QName"/>
+			    <xsd:attribute name="javaType" type="xsd:string"/>
+			    <xsd:attribute name="schemaType" type="xsd:QName"/>
+			    <xsd:attribute name="transient" type="xsd:boolean"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<!-- ... -->
+	<xsd:element name="embedded-id" type="hj:embedded-id"/>
+	<xsd:complexType name="embedded-id">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="orm:embedded-id">
+			    <xsd:attribute name="merge" type="xsd:boolean" default="true"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<!-- ... -->
+	<xsd:element name="version" type="hj:version"/>
+	<xsd:complexType name="version">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="orm:version">
+			    <xsd:attribute name="merge" type="xsd:boolean" default="true"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:element name="generated-version" type="hj:generated-version"/>
+	<xsd:complexType name="generated-version">
+		<xsd:complexContent>
+			<xsd:extension base="hj:version">
+			    <xsd:attribute name="attributeName" type="xsd:QName"/>
+			    <xsd:attribute name="javaType" type="xsd:string"/>
+			    <xsd:attribute name="schemaType" type="xsd:QName"/>
+			    <xsd:attribute name="transient" type="xsd:boolean"/>
+			    <xsd:attribute name="forced" type="xsd:boolean"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<!-- ... -->
+	<xsd:element name="table" type="orm:table"/>
+	<!-- ... -->
+	<xsd:element name="column" type="orm:column"/>
+	<!-- ... -->
+	<xsd:element name="embeddable" type="hj:embeddable"/>
+	<xsd:complexType name="embeddable">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="orm:embeddable">
+			    <xsd:attribute name="merge" type="xsd:boolean" default="true"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<!-- ... -->
+	<xsd:element name="one-to-many" type="hj:one-to-many"/>
+	<!-- ... -->
+	<xsd:complexType name="one-to-many">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="orm:one-to-many">
+			    <xsd:attribute name="merge" type="xsd:boolean" default="true"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ... -->
+	<xsd:element name="many-to-one" type="hj:many-to-one"/>
+	<!-- ... -->
+	<xsd:complexType name="many-to-one">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="orm:many-to-one">
+			    <xsd:attribute name="merge" type="xsd:boolean" default="true"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ... -->
+	<xsd:element name="one-to-one" type="hj:one-to-one"/>
+	<!-- ... -->
+	<xsd:complexType name="one-to-one">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="orm:one-to-one">
+			    <xsd:attribute name="merge" type="xsd:boolean" default="true"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ... -->
+	<xsd:element name="many-to-many" type="hj:many-to-many"/>
+	<!-- ... -->
+	<xsd:complexType name="many-to-many">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="orm:many-to-many">
+			    <xsd:attribute name="merge" type="xsd:boolean" default="true"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- ... -->
+	<xsd:element name="element-collection" type="hj:element-collection"/>
+	<!-- ... -->
+	<xsd:complexType name="element-collection">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="orm:element-collection">
+			    <xsd:attribute name="merge" type="xsd:boolean" default="true"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<!--- ... -->
+	<xsd:element name="basic" type="hj:basic"/>
+	<!--- ... -->
+	<xsd:complexType name="basic">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="orm:basic">
+			        <xsd:choice>
+					<xsd:element name="enumerated-value" type="hj:enumerated-value" minOccurs="0"/>
+				</xsd:choice>
+				<xsd:attribute name="merge" type="xsd:boolean" default="true"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="enumerated-value">
+	</xsd:complexType>
+
+
+	<xsd:complexType name="to-one">
+		<xsd:choice>
+			<xsd:element name="many-to-one" type="hj:many-to-one"/>
+			<xsd:element name="one-to-one" type="hj:one-to-one"/>
+			<xsd:element name="embedded" type="hj:embedded"/>
+		</xsd:choice>
+	</xsd:complexType>
+
+	<xsd:complexType name="to-many">
+		<xsd:choice>
+			<xsd:element name="one-to-many" type="hj:one-to-many"/>
+			<xsd:element name="many-to-many" type="hj:many-to-many"/>
+		</xsd:choice>
+	</xsd:complexType>
+
+	<!--- ... -->
+	<xsd:element name="embedded" type="hj:embedded"/>
+	<!--- ... -->
+	<xsd:complexType name="embedded">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="orm:embedded">
+			    <xsd:attribute name="merge" type="xsd:boolean" default="true"/>
+			    <xsd:attribute name="columnNamePrefix" type="xsd:string"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<!-- ... -->
+	<xsd:complexType name="single-property">
+		<xsd:choice>
+			<xsd:element name="basic" type="hj:basic"/>
+			<xsd:element name="one-to-one" type="hj:one-to-one"/>
+			<xsd:element name="many-to-one" type="hj:many-to-one"/>
+			<xsd:element name="embedded" type="hj:embedded"/>
+		</xsd:choice>
+		<xsd:attribute name="type" type="xsd:QName" use="required"/>
+	</xsd:complexType>
+
+	<!-- ... -->
+	<xsd:complexType name="collection-property">
+		<xsd:choice>
+			<xsd:element name="element-collection" type="hj:element-collection"/>
+			<xsd:element name="one-to-many" type="hj:one-to-many"/>
+			<xsd:element name="many-to-many" type="hj:many-to-many"/>
+		</xsd:choice>
+		<xsd:attribute name="type" type="xsd:QName" use="required"/>
+	</xsd:complexType>
+
+	<!-- ... -->
+	<xsd:element name="generated-class" type="hj:generated-class"/>
+	<xsd:complexType name="generated-class">
+		<xsd:sequence>
+				<xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="className" type="xsd:string"/>
+	</xsd:complexType>
+
+	<xsd:element name="generated-property" type="hj:generated-property"/>
+
+	<xsd:complexType name="generated-property">
+		<xsd:sequence>
+				<xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string"/>
+		<xsd:attribute name="propertyName" type="xsd:string"/>
+		<xsd:attribute name="propertyQName" type="xsd:QName"/>
+		<xsd:attribute name="propertyKind">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:token">
+					<xsd:enumeration value="element"/>
+					<xsd:enumeration value="attribute"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:element name="jaxb-context" type="hj:jaxb-context"/>
+
+	<xsd:complexType name="jaxb-context">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<inheritance:implements>org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable</inheritance:implements>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="field">
+				<xsd:complexType>
+					<xsd:attribute name="final" type="xsd:boolean"/>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="contextPath" type="xsd:string"/>
+		<xsd:attribute name="merge" type="xsd:boolean" default="true"/>
+	</xsd:complexType>
+
+</xsd:schema>

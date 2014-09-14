@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- User   MOD      Date              Description  
+    =========================================================================
+    
+    DC     MT445   20071022          Initial Creation...based on OAGIS 9.1 PriceList                                                       
+-->
+
+<xsd:schema xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0"
+            xmlns:ccts="urn:un:unece:uncefact:documentation:1.1"
+            xmlns="http://www.starstandard.org/STAR/5"
+            xmlns:star="http://www.starstandard.org/STAR/5"
+            xmlns:oacl="http://www.openapplications.org/oagis/9/codelists"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:scl="http://www.starstandard.org/STAR/5/codelists"
+            xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0"
+            xmlns:oagis="http://www.openapplications.org/oagis/9"
+            targetNamespace="http://www.starstandard.org/STAR/5"
+            elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:import namespace="http://www.openapplications.org/oagis/9" schemaLocation="../Components/OAGIS/Common/Components.xsd"/>
+    <xsd:element name="PartsPriceList" type="PartsPriceListType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Parts Price List. Based on OAGIS 9.1 Price List BOD.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartsPriceListHeader" type="PartsPriceListHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Parts Price List Header
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartsPriceListLine" type="PartsPriceListLineType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Parts Price List Line
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="PartsPriceListType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                The Parts Price List is used to describe price catalgoue information in regards to the parts for a vehicle.
+                This information can be sent in either realtime or batch modes.  It allows the Dealer to obtain the latest
+                pricing information for their system without having to wait for a new paper catalogue to arrive.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="PartsPriceListHeader" minOccurs="1" maxOccurs="1"/>
+            <xsd:element ref="PartsPriceListLine" minOccurs="1" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PartsPriceListHeaderType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+                <xsd:sequence>
+                    <xsd:element ref="DefaultCurrencyCode" minOccurs="1" maxOccurs="1"/>
+                    <xsd:element ref="EffectivePeriod" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="PublisherParty" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="CustomerParty" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element ref="PriceBreak" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="PriceListQualifier" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="SalesProgram" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="PartsPriceListLineType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Parts Price List Line information.  This may occur 1 to many times.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="LineID" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="Description" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="Attachment" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="PartsProductItem" minOccurs="1" maxOccurs="1"/>
+            <xsd:element ref="PartCoreDetail" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="PackageQuantity" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="Dimension" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="ItemWeightMeasure" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="ClassificationTypeCode" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="SupersedingPartGroup" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="Price" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="PriceBreak" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="ChangedPrice" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="NetDailyPriceAmount" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="ProgramID" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,108 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jvnet.hyperjaxb3</groupId>
+	<artifactId>hyperjaxb3-ejb-samples-po-maven-jaxb2-plugin</artifactId>
+	<version>0.5.7-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>Hyperjaxb3 Samples [po-maven-jaxb2-plugin]</name>
+	<dependencies>
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>1.0.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.2.4-1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jvnet.hyperjaxb3</groupId>
+			<artifactId>hyperjaxb3-ejb-runtime</artifactId>
+			<version>0.5.7-SNAPSHOT</version>
+		</dependency>
+
+		<!-- Test dependencies -->
+
+		<!-- Roundtrip -->
+		<dependency>
+			<groupId>org.jvnet.hyperjaxb3</groupId>
+			<artifactId>hyperjaxb3-ejb-roundtrip</artifactId>
+			<version>0.5.7-SNAPSHOT</version>
+		</dependency>
+
+		<!-- Hibernate Dependencies -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>3.6.5.Final</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Database -->
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.8.0.7</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>target/generated-sources/xjc</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<testSourceDirectory>${basedir}/target/generated-sources/xjc</testSourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<version>${maven-jaxb2-plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<extension>true</extension>
+					<plugins>
+						<plugin>
+							<groupId>org.jvnet.hyperjaxb3</groupId>
+							<artifactId>hyperjaxb3-ejb-plugin</artifactId>
+							<version>${project.version}</version>
+						</plugin>
+					</plugins>
+					<args>
+						<arg>-Xequals</arg>
+						<arg>-XhashCode</arg>
+						<arg>-Xinheritance</arg>
+						<arg>-Xhyperjaxb3-ejb</arg>
+						<arg>-Xhyperjaxb3-ejb-roundtripTestClassName=RoundtripTest</arg>
+					</args>
+				</configuration>
+			</plugin>
+			<plugin>
+				<inherited>true</inherited>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

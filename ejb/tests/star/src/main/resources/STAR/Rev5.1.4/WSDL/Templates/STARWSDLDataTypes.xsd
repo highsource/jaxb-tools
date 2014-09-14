@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:starws="http://www.starstandards.org/webservices/2005/10/transport"
+	targetNamespace="http://www.starstandards.org/webservices/2005/10/transport"
+	xmlns="http://www.starstandards.org/webservices/2005/10/transport"
+	elementFormDefault="qualified">
+
+	<!-- Payload -->
+
+	<xsd:complexType name="Payload">
+		<xsd:annotation>
+			<xsd:documentation source="http://www.starstandard.org/">The Payload is a general
+				purpose wrapper for the content that is transmitted as part of the
+			soap-env:body.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="content" type="Content" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation source="http://www.starstandard.org">Describes the type of
+						payload included. This item is optional.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:anyAttribute/>
+	</xsd:complexType>
+
+	<xsd:complexType name="Content">
+		<xsd:annotation>
+			<xsd:documentation source="http://www.starstandard.org">Contains the content of a
+				particular payload.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:any namespace="##any" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation source="http://www.starstandard.org">Generic Payload, this
+						can be any type of content as long as it meets XML formatting
+					standards.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:any>
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:ID" use="required">
+			<xsd:annotation>
+				<xsd:documentation source="http://www.starstandard.org">A unique id that identifies
+					the content being sent. This corresponds to the id specified in the
+				manifest.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:anyAttribute/>
+	</xsd:complexType>
+
+
+	<!-- Attachment -->
+
+	<xsd:element name="attachment" type="Attachment">
+		<xsd:annotation>
+			<xsd:documentation source="http://www.starstandard.org">Extended information regarding
+				attachements.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="Attachment">
+		<xsd:annotation>
+			<xsd:documentation>Attachment Information. Defines wether we are dealing with internal
+				attaches, mime attachements, or external attachements</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice minOccurs="1" maxOccurs="1">
+			<xsd:annotation>
+				<xsd:documentation source="http://www.starstandard.org">A set of choices for a
+					particular attachment. The attachements may be of binary, text, url, or external
+					attachments. </xsd:documentation>
+			</xsd:annotation>
+			<xsd:element name="binary" type="BinaryData">
+				<xsd:annotation>
+					<xsd:documentation source="http://www.starstandard.org">Binary data using
+						base64Binary encoding.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="text" type="TextData">
+				<xsd:annotation>
+					<xsd:documentation source="http://www.starstandard.org">Text data, such as comma
+						delimited files.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="uriReference" type="UriReference">
+				<xsd:annotation>
+					<xsd:documentation source="http://www.starstandard.org">External attachments
+						that reside on an accessible server. For these attachments this element
+						carries only the URL of the attachment.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="attachmentReference" type="AttachmentReference">
+				<xsd:annotation>
+					<xsd:documentation source="http://www.starstandard.org">MIME or DIME attachments
+						that are embedded the HTTP request. For these attachments, this element
+						points to the attachment that resides outside the SOAP Envelope.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:choice>
+		<xsd:attributeGroup ref="AttachmentAttributes">
+			<xsd:annotation>
+				<xsd:documentation source="http://www.starstandard.org"> Identifies additional
+					information about the attachment. </xsd:documentation>
+			</xsd:annotation>
+		</xsd:attributeGroup>
+	</xsd:complexType>
+	<xsd:attributeGroup name="AttachmentAttributes">
+		<xsd:annotation>
+			<xsd:documentation source="http://www.starstandard.org"> Identifies additional
+				information about the attachment. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="id" type="xsd:ID" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>An optional ID to identify the attachment</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="mimeCode" type="xsd:token" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="http://www.starstandard.org/">Describes the content type
+					of the attachment using a MIME code</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="fileName" type="xsd:token" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="http://www.starstandard.org">The name of the file being
+					transported</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="dateTime" type="xsd:dateTime" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="http://www.starstandard.org">The date and time of the
+					file</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="size" type="xsd:long" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="http://www.starstandard.org">The size of the attachment
+					in bytes.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="from" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="http://www.starstandard.org">Sender of the
+				attachment.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="to" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="http://www.starstandard.org">Receiver of the
+				attachment.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="action" type="xsd:anyURI" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="http://www.starstandard.org">Need
+				Description</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:attributeGroup>
+
+	<xsd:simpleType name="BinaryData">
+		<xsd:annotation>
+			<xsd:documentation source="http://www.starstandard.org">Binary Data
+			Type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:base64Binary"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="TextData">
+		<xsd:annotation>
+			<xsd:documentation source="http://www.starstandard.org">Text Data
+			Type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:complexType name="UriReference">
+		<xsd:annotation>
+			<xsd:documentation source="http://www.starstandard.org">URI Data
+			Type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="href" type="xsd:anyURI" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="AttachmentReference">
+		<xsd:annotation>
+			<xsd:documentation source="http://www.starstandard.org">AttachementReference
+			Type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="href" type="xsd:anyURI" use="required"/>
+	</xsd:complexType>
+
+
+	<!-- Manifest -->
+
+	<xsd:element name="payloadManifest" type="PayloadManifest">
+		<xsd:annotation>
+			<xsd:documentation source="http://www.starstandard.org">The payload manifest contains
+				one manifest element for each content element in the SOAP body.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="PayloadManifest">
+		<xsd:annotation>
+			<xsd:documentation>The payload manifest contains one manifest element for each content
+				element in the SOAP body. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="manifest" type="Manifest" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation source="http://www.starstandard.org"> The manifest provides
+						an easy and fast way to identify the type of data in the message without
+						parsing the whole message. This is useful for implementations that make
+						routing decisions based on the contents of the message. And, it’s especially
+						useful if the body of the message is encrypted. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Manifest">
+		<xsd:annotation>
+			<xsd:documentation> The manifest provides an easy and fast way to identify the type of
+				data in the message without parsing the whole message. This is useful for
+				implementations that make routing decisions based on the contents of the message.
+				And, it’s especially useful if the body of the message is encrypted.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="contentID" type="xsd:IDREF" use="required">
+			<xsd:annotation>
+				<xsd:documentation> This attribute should be populated with the ID of the
+					corresponding content element. This attribute, along with the id attribute of
+					the content element is used to match the manifest to its corresponding content
+					element </xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="namespaceURI" type="xsd:anyURI" use="required">
+			<xsd:annotation>
+				<xsd:documentation source="http://www.starstandard.org"> This attribute contains the
+					namespace URI of the XML element in the corresponding content in the SOAP body
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="element" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation source="http://www.starstandard.org"> This attribute contains the
+					local name of the XML element in the corresponding content in the SOAP body.
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="relatedID" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="http://www.starstandard.org"> Need documentation.
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="version" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation source="http://www.starstandard.org"> When the payload content is
+					a BOD, this attribute contains the version number of the noun’s schema used to
+					validate the BOD, for example, 3.01. For an attachment, version specifies the
+					version of the attachment contents. For example, DTS files use the
+					interfaceVersion of the file. For BOD content and DTS attachments this attribute
+					is REQUIRED. </xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+
+	<!-- Methods -->
+
+	<xsd:element name="PutMessageResponse">
+		<xsd:complexType/>
+	</xsd:element>
+
+	<xsd:element name="PullMessage">
+		<xsd:complexType/>
+	</xsd:element>
+
+</xsd:schema>

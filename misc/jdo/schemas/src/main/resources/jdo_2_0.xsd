@@ -1,0 +1,1144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://java.sun.com/xml/ns/jdo/jdo"
+           xmlns="http://java.sun.com/xml/ns/jdo/jdo"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           version="1.0">
+    <xs:element name="jdo">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:choice maxOccurs="unbounded">
+                    <xs:element ref="package"/>
+                    <xs:element ref="query"/>
+                </xs:choice>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.jdo"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.jdo">
+        <xs:attribute name="catalog"/>
+        <xs:attribute name="schema"/>
+    </xs:attributeGroup>
+    <xs:element name="package">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:choice maxOccurs="unbounded">
+                    <xs:element ref="interface"/>
+                    <xs:element ref="class"/>
+                    <xs:element ref="sequence"/>
+                </xs:choice>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.package"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.package">
+        <xs:attribute name="name" default=""/>
+        <xs:attribute name="catalog"/>
+        <xs:attribute name="schema"/>
+    </xs:attributeGroup>
+    <xs:element name="interface">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:element minOccurs="0" ref="datastore-identity"/>
+                <xs:element minOccurs="0" ref="primary-key"/>
+                <xs:element minOccurs="0" ref="inheritance"/>
+                <xs:element minOccurs="0" ref="version"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="join"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="foreign-key"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="index"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="unique"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="property"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="query"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="fetch-group"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.interface"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.interface">
+        <xs:attribute name="name" use="required"/>
+        <xs:attribute name="table"/>
+        <xs:attribute name="identity-type">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="datastore"/>
+                    <xs:enumeration value="application"/>
+                    <xs:enumeration value="nondurable"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="objectid-class"/>
+        <xs:attribute name="requires-extent" default="true">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="detachable" default="false">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="embedded-only">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="catalog"/>
+        <xs:attribute name="schema"/>
+    </xs:attributeGroup>
+    <xs:element name="property">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:choice minOccurs="0">
+                    <xs:element ref="array"/>
+                    <xs:element ref="collection"/>
+                    <xs:element ref="map"/>
+                </xs:choice>
+                <xs:element minOccurs="0" ref="join"/>
+                <xs:element minOccurs="0" ref="embedded"/>
+                <xs:element minOccurs="0" ref="element"/>
+                <xs:element minOccurs="0" ref="key"/>
+                <xs:element minOccurs="0" ref="value"/>
+                <xs:element minOccurs="0" ref="order"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="column"/>
+                <xs:element minOccurs="0" ref="foreign-key"/>
+                <xs:element minOccurs="0" ref="index"/>
+                <xs:element minOccurs="0" ref="unique"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.property"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.property">
+        <xs:attribute name="name" use="required"/>
+        <xs:attribute name="persistence-modifier">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="persistent"/>
+                    <xs:enumeration value="transactional"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="default-fetch-group">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="load-fetch-group"/>
+        <xs:attribute name="null-value" default="none">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="default"/>
+                    <xs:enumeration value="exception"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="dependent">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="embedded">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="primary-key" default="false">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="value-strategy"/>
+        <xs:attribute name="sequence"/>
+        <xs:attribute name="serialized">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="field-type"/>
+        <xs:attribute name="table"/>
+        <xs:attribute name="column"/>
+        <xs:attribute name="delete-action">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="restrict"/>
+                    <xs:enumeration value="cascade"/>
+                    <xs:enumeration value="null"/>
+                    <xs:enumeration value="default"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indexed">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                    <xs:enumeration value="unique"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="unique">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="mapped-by"/>
+        <xs:attribute name="recursion-depth"/>
+        <xs:attribute name="field-name"/>
+    </xs:attributeGroup>
+    <xs:element name="class">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="implements"/>
+                <xs:element minOccurs="0" ref="datastore-identity"/>
+                <xs:element minOccurs="0" ref="primary-key"/>
+                <xs:element minOccurs="0" ref="inheritance"/>
+                <xs:element minOccurs="0" ref="version"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="join"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="foreign-key"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="index"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="unique"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="column"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="field"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="property"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="query"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="fetch-group"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.class"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.class">
+        <xs:attribute name="name" use="required"/>
+        <xs:attribute name="identity-type">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="application"/>
+                    <xs:enumeration value="datastore"/>
+                    <xs:enumeration value="nondurable"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="objectid-class"/>
+        <xs:attribute name="table"/>
+        <xs:attribute name="requires-extent" default="true">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="persistence-capable-superclass"/>
+        <xs:attribute name="detachable" default="false">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="embedded-only">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="persistence-modifier">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="persistence-capable"/>
+                    <xs:enumeration value="persistence-aware"/>
+                    <xs:enumeration value="non-persistent"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="catalog"/>
+        <xs:attribute name="schema"/>
+    </xs:attributeGroup>
+    <xs:element name="primary-key">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="column"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.primary-key"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.primary-key">
+        <xs:attribute name="name"/>
+        <xs:attribute name="column"/>
+    </xs:attributeGroup>
+    <xs:element name="join">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:element minOccurs="0" ref="primary-key"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="column"/>
+                <xs:element minOccurs="0" ref="foreign-key"/>
+                <xs:element minOccurs="0" ref="index"/>
+                <xs:element minOccurs="0" ref="unique"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.join"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.join">
+        <xs:attribute name="table"/>
+        <xs:attribute name="column"/>
+        <xs:attribute name="outer" default="false">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="delete-action">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="restrict"/>
+                    <xs:enumeration value="cascade"/>
+                    <xs:enumeration value="null"/>
+                    <xs:enumeration value="default"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indexed">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                    <xs:enumeration value="unique"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="unique">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="version">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="column"/>
+                <xs:element minOccurs="0" ref="index"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.version"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.version">
+        <xs:attribute name="strategy"/>
+        <xs:attribute name="column"/>
+        <xs:attribute name="indexed">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                    <xs:enumeration value="unique"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="datastore-identity">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="column"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.datastore-identity"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.datastore-identity">
+        <xs:attribute name="column"/>
+        <xs:attribute name="strategy" default="native"/>
+        <xs:attribute name="sequence"/>
+    </xs:attributeGroup>
+    <xs:element name="implements">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="property"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.implements"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.implements">
+        <xs:attribute name="name" use="required"/>
+    </xs:attributeGroup>
+    <xs:element name="inheritance">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:element minOccurs="0" ref="join"/>
+                <xs:element minOccurs="0" ref="discriminator"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.inheritance"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.inheritance">
+        <xs:attribute name="strategy"/>
+    </xs:attributeGroup>
+    <xs:element name="discriminator">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="column"/>
+                <xs:element minOccurs="0" ref="index"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.discriminator"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.discriminator">
+        <xs:attribute name="column"/>
+        <xs:attribute name="value"/>
+        <xs:attribute name="strategy"/>
+        <xs:attribute name="indexed">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                    <xs:enumeration value="unique"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="column">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.column"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.column">
+        <xs:attribute name="name"/>
+        <xs:attribute name="target"/>
+        <xs:attribute name="target-field"/>
+        <xs:attribute name="jdbc-type"/>
+        <xs:attribute name="sql-type"/>
+        <xs:attribute name="length"/>
+        <xs:attribute name="scale"/>
+        <xs:attribute name="allows-null">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="default-value"/>
+        <xs:attribute name="insert-value"/>
+    </xs:attributeGroup>
+    <xs:element name="field">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:choice minOccurs="0">
+                    <xs:element ref="array"/>
+                    <xs:element ref="collection"/>
+                    <xs:element ref="map"/>
+                </xs:choice>
+                <xs:element minOccurs="0" ref="join"/>
+                <xs:element minOccurs="0" ref="embedded"/>
+                <xs:element minOccurs="0" ref="element"/>
+                <xs:element minOccurs="0" ref="key"/>
+                <xs:element minOccurs="0" ref="value"/>
+                <xs:element minOccurs="0" ref="order"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="column"/>
+                <xs:element minOccurs="0" ref="foreign-key"/>
+                <xs:element minOccurs="0" ref="index"/>
+                <xs:element minOccurs="0" ref="unique"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.field"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.field">
+        <xs:attribute name="name" use="required"/>
+        <xs:attribute name="persistence-modifier">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="persistent"/>
+                    <xs:enumeration value="transactional"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="field-type"/>
+        <xs:attribute name="table"/>
+        <xs:attribute name="column"/>
+        <xs:attribute name="primary-key" default="false">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="null-value" default="none">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="exception"/>
+                    <xs:enumeration value="default"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="default-fetch-group">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="embedded">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="serialized">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="dependent">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="value-strategy"/>
+        <xs:attribute name="delete-action">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="restrict"/>
+                    <xs:enumeration value="cascade"/>
+                    <xs:enumeration value="null"/>
+                    <xs:enumeration value="default"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indexed">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                    <xs:enumeration value="unique"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="unique">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="sequence"/>
+        <xs:attribute name="load-fetch-group"/>
+        <xs:attribute name="recursion-depth"/>
+        <xs:attribute name="mapped-by"/>
+    </xs:attributeGroup>
+    <xs:element name="foreign-key">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:choice>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="column"/>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="field"/>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="property"/>
+                </xs:choice>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.foreign-key"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.foreign-key">
+        <xs:attribute name="table"/>
+        <xs:attribute name="deferred">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="delete-action" default="restrict">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="restrict"/>
+                    <xs:enumeration value="cascade"/>
+                    <xs:enumeration value="null"/>
+                    <xs:enumeration value="default"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="update-action" default="restrict">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="restrict"/>
+                    <xs:enumeration value="cascade"/>
+                    <xs:enumeration value="null"/>
+                    <xs:enumeration value="default"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="unique">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="name"/>
+    </xs:attributeGroup>
+    <xs:element name="collection">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.collection"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.collection">
+        <xs:attribute name="element-type"/>
+        <xs:attribute name="embedded-element">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="dependent-element">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="serialized-element">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="map">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.map"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.map">
+        <xs:attribute name="key-type"/>
+        <xs:attribute name="embedded-key">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="dependent-key">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="serialized-key">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="value-type"/>
+        <xs:attribute name="embedded-value">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="dependent-value">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="serialized-value">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="key">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:element minOccurs="0" ref="embedded"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="column"/>
+                <xs:element minOccurs="0" ref="foreign-key"/>
+                <xs:element minOccurs="0" ref="index"/>
+                <xs:element minOccurs="0" ref="unique"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.key"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.key">
+        <xs:attribute name="column"/>
+        <xs:attribute name="table"/>
+        <xs:attribute name="delete-action">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="restrict"/>
+                    <xs:enumeration value="cascade"/>
+                    <xs:enumeration value="null"/>
+                    <xs:enumeration value="default"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="update-action">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="restrict"/>
+                    <xs:enumeration value="cascade"/>
+                    <xs:enumeration value="null"/>
+                    <xs:enumeration value="default"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indexed">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                    <xs:enumeration value="unique"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="unique">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="mapped-by"/>
+    </xs:attributeGroup>
+    <xs:element name="value">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:element minOccurs="0" ref="embedded"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="column"/>
+                <xs:element minOccurs="0" ref="foreign-key"/>
+                <xs:element minOccurs="0" ref="index"/>
+                <xs:element minOccurs="0" ref="unique"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.value"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.value">
+        <xs:attribute name="column"/>
+        <xs:attribute name="table"/>
+        <xs:attribute name="delete-action">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="restrict"/>
+                    <xs:enumeration value="cascade"/>
+                    <xs:enumeration value="null"/>
+                    <xs:enumeration value="default"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="update-action">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="restrict"/>
+                    <xs:enumeration value="cascade"/>
+                    <xs:enumeration value="null"/>
+                    <xs:enumeration value="default"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indexed">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                    <xs:enumeration value="unique"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="unique">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="mapped-by"/>
+    </xs:attributeGroup>
+    <xs:element name="array">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.array"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.array">
+        <xs:attribute name="element-type"/>
+        <xs:attribute name="embedded-element">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="dependent-element">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="serialized-element">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="element">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:element minOccurs="0" ref="embedded"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="column"/>
+                <xs:element minOccurs="0" ref="foreign-key"/>
+                <xs:element minOccurs="0" ref="index"/>
+                <xs:element minOccurs="0" ref="unique"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.element"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.element">
+        <xs:attribute name="column"/>
+        <xs:attribute name="table"/>
+        <xs:attribute name="delete-action">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="restrict"/>
+                    <xs:enumeration value="cascade"/>
+                    <xs:enumeration value="null"/>
+                    <xs:enumeration value="default"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="update-action">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="restrict"/>
+                    <xs:enumeration value="cascade"/>
+                    <xs:enumeration value="null"/>
+                    <xs:enumeration value="default"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="indexed">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                    <xs:enumeration value="unique"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="unique">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="mapped-by"/>
+    </xs:attributeGroup>
+    <xs:element name="order">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="column"/>
+                <xs:element minOccurs="0" ref="index"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.order"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.order">
+        <xs:attribute name="column"/>
+        <xs:attribute name="mapped-by"/>
+    </xs:attributeGroup>
+    <xs:element name="fetch-group">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="fetch-group"/>
+                    <xs:element ref="field"/>
+                    <xs:element ref="property"/>
+                </xs:choice>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.fetch-group"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.fetch-group">
+        <xs:attribute name="name" use="required"/>
+        <xs:attribute name="post-load">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="embedded">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="field"/>
+                    <xs:element ref="property"/>
+                </xs:choice>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.embedded"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.embedded">
+        <xs:attribute name="owner-field"/>
+        <xs:attribute name="null-indicator-column"/>
+        <xs:attribute name="null-indicator-value"/>
+    </xs:attributeGroup>
+    <xs:element name="sequence">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.sequence"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.sequence">
+        <xs:attribute name="name" use="required"/>
+        <xs:attribute name="datastore-sequence"/>
+        <xs:attribute name="factory-class"/>
+        <xs:attribute name="strategy" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="nontransactional"/>
+                    <xs:enumeration value="contiguous"/>
+                    <xs:enumeration value="noncontiguous"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="index">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:choice>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="column"/>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="field"/>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="property"/>
+                </xs:choice>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.index"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.index">
+        <xs:attribute name="name"/>
+        <xs:attribute name="table"/>
+        <xs:attribute name="unique" default="false">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="query">
+        <xs:complexType mixed="true">
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.query"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.query">
+        <xs:attribute name="name" use="required"/>
+        <xs:attribute name="language"/>
+        <xs:attribute name="unmodifiable" default="false">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="unique">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="result-class"/>
+    </xs:attributeGroup>
+    <xs:element name="unique">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:choice>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="column"/>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="field"/>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="property"/>
+                </xs:choice>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.unique"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.unique">
+        <xs:attribute name="name"/>
+        <xs:attribute name="table"/>
+        <xs:attribute name="deferred" default="false">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="extension">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="any">
+                    <xs:attributeGroup ref="attlist.extension"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.extension">
+        <xs:attribute name="vendor-name" use="required"/>
+        <xs:attribute name="key"/>
+        <xs:attribute name="value"/>
+    </xs:attributeGroup>
+    <xs:complexType name="any" mixed="true">
+        <xs:sequence>
+            <xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

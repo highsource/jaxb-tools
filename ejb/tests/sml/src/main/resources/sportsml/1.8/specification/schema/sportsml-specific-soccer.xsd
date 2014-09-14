@@ -1,0 +1,738 @@
+<?xml version="1.0"?>
+<!--
+IPTC - International Press Telecommunications Council
+Royal Albert House, Windsor, Berkshire SL4 1BE, England
+www.iptc.org
+
+See sportsml.xsd to view Non-Exclusive License Agreement for 
+International Press Telecommunications Council, which
+applies to this specification.
+-->
+<schema 
+	targetNamespace="http://iptc.org/std/SportsML/2006-10-18/"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:sportsml="http://iptc.org/std/SportsML/2006-10-18/"
+	version="1.8"
+	>
+	<attributeGroup name="eventStateSoccer">
+		<attribute name="period-value" type="string" use="optional">
+			<annotation>
+				<documentation>Identifier for which period of a game. (1, 2 for first and second halfs, 3 for first overtime, etc. shootout also allowed value.).</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="period-time-elapsed" type="string" use="optional">
+			<annotation>
+				<documentation>Detailed time MMSS that has elapsed.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="minutes-elapsed" type="string" use="optional">
+			<annotation>
+				<documentation>Number of minutes that have elapsed since the beginning of the game.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="period-minute-elapsed" type="string" use="optional">
+			<annotation>
+				<documentation>The time elapsed, but only given as whole minutes.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="period-time-remaining" type="string" use="optional">
+			<annotation>
+				<documentation>Detailed time in MMSS format showing remaining time of period.</documentation>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+	<element name="event-metadata-soccer">
+		<annotation>
+			<documentation>Soccer-specific metadata for events. | Metadata that is specific to soccer for events.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:time-adjustment" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateSoccer"/>
+			<attribute name="kick-off-team-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>Pointer to the team doing the kick-off for the period covered.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="time-adjustment">
+		<annotation>
+			<documentation>Record time added by referee. | Holds values for the time added by the referee and how much extra time was actually played.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateSoccer"/>
+			<attribute name="period-extra-time-added" type="string" use="optional">
+				<annotation>
+					<documentation>How many minutes the referee has decided to add to the period.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="period-extra-time-elapsed" type="string" use="optional">
+				<annotation>
+					<documentation>How much time exactly MMSS that was actually elapsed in the period.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="team-metadata-soccer">
+		<annotation>
+			<documentation>Soccer specific metadata for one team. | The team-metadata that is specific for soccer and does not apply in all sports.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="team-stats-soccer">
+		<annotation>
+			<documentation>Soccer specific stats for one team. | Team-stats that is specific to soccer and does not apply to all sports.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-soccer-offensive" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-soccer-defensive" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-soccer-foul" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+		</complexType>
+	</element>
+	<element name="stats-soccer-offensive">
+		<annotation>
+			<documentation>Offensive stats specific to soccer. | Offensive stats for one team, specific to soccer.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="goals-game-winning" type="string" use="optional">
+				<annotation>
+					<documentation>Goals that meant winning a game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-game-tying" type="string" use="optional">
+				<annotation>
+					<documentation>Goals that meant tying a game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-overtime" type="string" use="optional">
+				<annotation>
+					<documentation>Goals scored during overtime.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-shootout" type="string" use="optional">
+				<annotation>
+					<documentation>Goals scored during shootout.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-total" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="assists-game-winning" type="string" use="optional">
+				<annotation>
+					<documentation>Assists to goals that meant winning a game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="assists-game-tying" type="string" use="optional">
+				<annotation>
+					<documentation>Assists to goals that meant tying a game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="assists-overtime" type="string" use="optional">
+				<annotation>
+					<documentation>Assists made on goals scored during overtime.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="assists-total" type="string" use="optional">
+				<annotation>
+					<documentation>Number of assists.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points" type="string" use="optional">
+				<annotation>
+					<documentation>Sum of goals and assists.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-total" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-on-goal-total" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-penalty-shot-taken" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of attempts to score as penalty-shot.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-penalty-shot-scored" type="string" use="optional">
+				<annotation>
+					<documentation>Goals scored as penalty-shots.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-penalty-shot-missed" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of attempts to score as penalty-shot that did not result in a goal.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-penalty-shot-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Percentage of penalty shots scored. Could be calculated from above values.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-shootout-taken" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of attempts to score during shootout.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-shootout-scored" type="string" use="optional">
+				<annotation>
+					<documentation>Goals scored during shootout.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-shootout-missed" type="string" use="optional">
+				<annotation>
+					<documentation>Goals missed during shootout.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-shootout-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Percentage of shootout goals scored.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="giveaways" type="string" use="optional">
+				<annotation>
+					<documentation>When you play bad so the other team gets hold of the ball/puck.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="offsides" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of offsides.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="corner-kicks" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of corner kicks performed.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="hat-tricks" type="string" use="optional">
+				<annotation>
+					<documentation>A record of the number of times a player scored three or more goals in a game. Sometimes, the rules that govern the assignment of a hat-trick varies.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-hit-frame" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-soccer-defensive">
+		<annotation>
+			<documentation>Defensive stats specific to soccer. | Defensive stats for one team, specific to soccer.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="shots-penalty-shot-allowed" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of penalty-shots allowed from other teams.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-penalty-shot-allowed" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of goals allowed as penalty shots.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-against-average" type="string" use="optional">
+				<annotation>
+					<documentation>Average goals against per game for the given period.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-against-total" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="saves" type="string" use="optional">
+				<annotation>
+					<documentation>Score attempts that were saved by the goal-keeper.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="save-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Percentage of saves compared to score-attempts on goal.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="catches-punches" type="string" use="optional">
+				<annotation>
+					<documentation>Situations when the goalie catches or punches the ball. Not a save attempt.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-on-goal-total" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-shootout-total" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of attempts to score during shootout.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-shootout-allowed" type="string" use="optional">
+				<annotation>
+					<documentation>Goals allowed during shootout.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-blocked" type="string" use="optional">
+				<annotation>
+					<documentation>Score attempts that was blocked by someone else than the goal-keeper.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shutouts" type="string" use="optional">
+				<annotation>
+					<documentation>Number of games when you did not allow the other team to score.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-soccer-foul">
+		<annotation>
+			<documentation>Stats specific to fauls, cautions, and ejections. | Could occur while players are on the offense, the defense, or even the bench.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="fouls-commited" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of fouls commited. Generally a defensive foul.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fouls-suffered" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of fouls the player has suffered. Generally an offensive foul.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="cautions-total" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of cautions recieved.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="cautions-pending" type="string" use="optional">
+				<annotation>
+					<documentation>Number of cautions that could result in a game suspension.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="caution-points-total" type="string" use="optional">
+				<annotation>
+					<documentation>Total amount of caution points. Can occur over various games in a season.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="caution-points-pending" type="string" use="optional">
+				<annotation>
+					<documentation>Number of caution points that could result in a game suspension.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="ejections-total" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of ejections.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="player-metadata-soccer">
+		<annotation>
+			<documentation>Player metadata specific to soccer. | Metadata for one player, specific to soccer.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="player-stats-soccer">
+		<annotation>
+			<documentation>Player statistics that are specific to soccer. | Soccer specific statistic information about a player.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-soccer-offensive" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-soccer-defensive" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-soccer-foul" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+		</complexType>
+	</element>
+	<element name="event-actions-soccer">
+		<annotation>
+			<documentation>Action specific to soccer. | Actions that are specific to soccer.</documentation>
+		</annotation>
+		<complexType>
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="sportsml:action-soccer-substitution"/>
+				<element ref="sportsml:action-soccer-score-attempt"/>
+				<element ref="sportsml:action-soccer-score"/>
+				<element ref="sportsml:action-soccer-offside"/>
+				<element ref="sportsml:action-soccer-foul"/>
+				<element ref="sportsml:action-soccer-penalty"/>
+				<element ref="sportsml:action-soccer-timeout"/>
+				<element ref="sportsml:action-soccer-other"/>
+			</choice>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="action-soccer-substitution">
+		<annotation>
+			<documentation>Substition of a person involved in a game. | Substitution of one person for another in a given position in a game. Not limited to players.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateSoccer"/>
+			<attribute name="person-type" use="optional">
+				<annotation>
+					<documentation>What position the person beeing replaced held.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="player"/>
+						<enumeration value="associate"/>
+						<enumeration value="official"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="person-original-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the person beeing replaced.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="person-original-position" type="sportsml:position.Soccer" use="optional">
+				<annotation>
+					<documentation>Position the replaced person held.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="person-replacing-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the person replacing.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="person-replacing-position" type="string" use="optional">
+				<annotation>
+					<documentation>Position the substitute will take up.  External controlled vocabulary: sportsml-vocabulary-specific-soccer.position</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="substitution-reason" type="string" use="optional">
+				<annotation>
+					<documentation>Text explaining the reason for the substitute.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="team-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the team doing the substitution.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment regarding this substitution.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-soccer-score-attempt">
+		<annotation>
+			<documentation>Only used if the attempt is not also a goal. | When a player attempts to score a goal but it does not result in a goal.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateSoccer"/>
+			<attribute name="player-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>idref pointing to the player attempting to score.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="team-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>idref pointing to the team for which the player attempting to score.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-attempt-method" type="string" use="optional">
+				<annotation>
+					<documentation>How the player attempted to score. Using head, left leg, right leg etc. External controlled vocabulary: sportsml-vocabulary-specific-soccer.score-attempt-method</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-attempt-type" type="string" use="optional">
+				<annotation>
+					<documentation>What type of attempt. External controlled vocabulary: sportsml-vocabulary-specific-soccer.score-attempt-type</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-attempt-result" type="string" use="optional">
+				<annotation>
+					<documentation>What the attempt resulted in Values in external controlled vocabulary: sportsml-vocabulary-specific-soccer.score-attempt-result</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment regarding this score-attempt.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shootout-shot-order" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>			
+		</complexType>
+	</element>
+	<element name="action-soccer-score">
+		<annotation>
+			<documentation>When a team scores a goal. | Records by whom, how and when a goal was scored and the standing after the goal.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:action-soccer-assisting-player" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateSoccer"/>
+			<attribute name="score-attempt-method" type="string" use="optional">
+				<annotation>
+					<documentation>How the player attempted to score. Using head, left leg, right leg etc.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-attempt-type" type="string" use="optional">
+				<annotation>
+					<documentation>What type of attempt. Values in external controlled vocabulary: sportsml-vocabulary-specific-soccer.score-attempt-type (Note that the same attribute names are used as in score-attempt to avoid the need for duplicated vocabularies.)</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="player-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>idref pointing to the player attempting to score.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="team-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>idref pointing to the team for which the player attempting to score.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-team" type="string" use="optional">
+				<annotation>
+					<documentation>The current score for the scoring team after the score is counted.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-team-opposing" type="string" use="optional">
+				<annotation>
+					<documentation>The current score for the opposing team after the score is counted.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment about the score.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shootout-shot-order" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>			
+		</complexType>
+	</element>
+	<element name="action-soccer-assisting-player">
+		<annotation>
+			<documentation>Player assisting to score a goal. | Pointer or identification of player assisting in scoring a goal.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="player-idref" type="IDREF" use="required">
+				<annotation>
+					<documentation>idref pointing to the player attempting to score.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-soccer-offside">
+		<annotation>
+			<documentation>When an offside occurs. | Records the event of an offside in a game.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateSoccer"/>
+			<attribute name="team-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>idref pointing to the team causing the offside.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="player-offside-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>idref pointing to the player the lineman indicated was offisde.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="player-passing-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>idref pointing to the player passing the ball when offside was called.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment regarding the offside.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-soccer-foul">
+		<annotation>
+			<documentation>When a player commits an infraction against the rules, which may or may not result in a penalty. | Records what happens (or not happens) when a player commits a foul. Cautions and ejections are recorded under penalty.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateSoccer"/>
+			<attribute name="fouling-team-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>idref pointing to the team causing the foul.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fouling-player-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>idref pointing to the player causing the foul.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fouled-team-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>idref pointing to the team beeing fouled.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fouled-player-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>idref pointing to the player beeing fouled.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="foul-name" type="string" use="optional">
+				<annotation>
+					<documentation>The name of the foul was committed. External controlled vocabulary: sportsml-vocabulary-specific-soccer.foul-name</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="foul-result" type="string" use="optional">
+				<annotation>
+					<documentation>External controlled vocabulary: sportsml-vocabulary-specific-soccer.foul-result</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment regarding the penalty.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-soccer-penalty">
+		<annotation>
+			<documentation>Results from a foul. | Details of a penalty that a foul resulted in.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateSoccer"/>
+			<attribute name="recipient-type" use="optional">
+				<annotation>
+					<documentation>What type of person or team that got the penalty.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="team"/>
+						<enumeration value="player"/>
+						<enumeration value="auxilliary"/>
+						<enumeration value="official"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="recipient-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>idref pointer to the person suffering the penalty.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="caller-idref" type="string" use="optional">
+				<annotation>
+					<documentation>idref pointing to who called the penalty.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-type" type="string" use="optional">
+				<annotation>
+					<documentation>External controlled vocabulary: sportsml-vocabulary-specific-soccer.penalty-type</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-level" type="string" use="optional">
+				<annotation>
+					<documentation>External controlled vocabulary: sportsml-vocabulary-specific-soccer.penalty-level</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="caution-value" type="string" use="optional">
+				<annotation>
+					<documentation>Used to indicate what value, if any, the penalty adds to the caution-total of the player.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment regarding the penalty.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-soccer-timeout">
+		<annotation>
+			<documentation>A timeout is called. | How, when and what type of timeout was called.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateSoccer"/>
+			<attribute name="timeout-duration" type="string" use="optional">
+				<annotation>
+					<documentation>The duration of the timeout.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="caller" use="optional">
+				<annotation>
+					<documentation>Who called the timeout, either team or official.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="team"/>
+						<enumeration value="official"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="caller-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>If caller is team, say, an idref pointer to the team element.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment about the timeout.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-soccer-other">
+		<annotation>
+			<documentation>A custom action. | For use when none of the pre-build actions apply.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateSoccer"/>
+			<attribute name="action-source" type="string" use="optional">
+				<annotation>
+					<documentation>The name of the controlled-vocabulary for the action-type attribute.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="action-type" type="string" use="optional">
+				<annotation>
+					<documentation>A selection from a controlled-vocabulary list maintained by the publisher.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment about the action.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+</schema>

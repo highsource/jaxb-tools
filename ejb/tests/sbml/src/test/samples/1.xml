@@ -1,0 +1,865 @@
+<sbml xmlns="http://www.sbml.org/sbml/level2" level="2" version="1">
+  <model id="mod" name="EPSP_AChDynValue">
+    <annotation xmlns:stsim="http://www.sbml.org/2001/ns/stochsim">
+      <stsim:disclaimer>model definition generated on Thu Dec  4 11:28:00 2003 GMT by TkStochSim. (c) N Le Novère 2000-2003</stsim:disclaimer>
+      <stsim:listcpnts>A:A;ALL:A,L,L;DL:D,L;AL:A,L;B:B;BLL:B,L,L;D:D;DLL:D,L,L;I:I;IL:I,L;ILL:I,L,L;BL:B,L;L:L</stsim:listcpnts>
+      <stsim:StoreInterval>0.0003</stsim:StoreInterval>
+      <stsim:TimeIncrement>0</stsim:TimeIncrement>
+      <stsim:SimulationDuration>0.25</stsim:SimulationDuration>
+      <stsim:MaximumNumberComplexes>15000</stsim:MaximumNumberComplexes>
+    </annotation>
+    <listOfUnitDefinitions>
+      <unitDefinition id="unimolRate">
+        <listOfUnits>
+          <unit kind="second" exponent="-1" scale="0" multiplier="1.0" offset="0.0"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="bimolRate">
+        <listOfUnits>
+          <unit kind="mole" exponent="-1" scale="0" multiplier="1.0" offset="0.0"/>
+          <unit kind="litre" exponent="-1" scale="0" multiplier="1.0" offset="0.0"/>
+          <unit kind="second" exponent="-1" scale="0" multiplier="1.0" offset="0.0"/>
+        </listOfUnits>
+      </unitDefinition>
+    </listOfUnitDefinitions>
+    <listOfCompartments>
+      <compartment id="comp1" name="compartment1" spatialDimensions="3" size="1.0E-16" units="litre" constant="true"/>
+    </listOfCompartments>
+    <listOfSpecies>
+      <species id="Cplx0" name="A" compartment="comp1" initialAmount="0.0" substanceUnits="mole" hasOnlySubstanceUnits="true" boundaryCondition="false" constant="false" initialConcentration="0.0">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>unkiganded active state</p>
+          </body>
+        </notes>
+      </species>
+      <species id="Cplx1" name="ALL" compartment="comp1" initialAmount="0.0" substanceUnits="mole" hasOnlySubstanceUnits="true" boundaryCondition="false" constant="false" initialConcentration="0.0">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>biliganted active state</p>
+          </body>
+        </notes>
+      </species>
+      <species id="Cplx2" name="DL" compartment="comp1" initialAmount="0.0" substanceUnits="mole" hasOnlySubstanceUnits="true" boundaryCondition="false" constant="false" initialConcentration="0.0">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>monoliganded desensitised state</p>
+          </body>
+        </notes>
+      </species>
+      <species id="Cplx3" name="AL" compartment="comp1" initialAmount="0.0" substanceUnits="mole" hasOnlySubstanceUnits="true" boundaryCondition="false" constant="false" initialConcentration="0.0">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>monoliganded active state</p>
+          </body>
+        </notes>
+      </species>
+      <species id="Cplx4" name="B" compartment="comp1" initialAmount="1.66057788110262E-21" substanceUnits="mole" hasOnlySubstanceUnits="true" boundaryCondition="false" constant="false" initialConcentration="0.0">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>unliganded basal state</p>
+          </body>
+        </notes>
+      </species>
+      <species id="Cplx5" name="BLL" compartment="comp1" initialAmount="0.0" substanceUnits="mole" hasOnlySubstanceUnits="true" boundaryCondition="false" constant="false" initialConcentration="0.0">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>biliganded basal state</p>
+          </body>
+        </notes>
+      </species>
+      <species id="Cplx6" name="D" compartment="comp1" initialAmount="0.0" substanceUnits="mole" hasOnlySubstanceUnits="true" boundaryCondition="false" constant="false" initialConcentration="0.0">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>fully desensitised state</p>
+          </body>
+        </notes>
+      </species>
+      <species id="Cplx7" name="DLL" compartment="comp1" initialAmount="0.0" substanceUnits="mole" hasOnlySubstanceUnits="true" boundaryCondition="false" constant="false" initialConcentration="0.0">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>biliganded desensitised state</p>
+          </body>
+        </notes>
+      </species>
+      <species id="Cplx8" name="I" compartment="comp1" initialAmount="0.0" substanceUnits="mole" hasOnlySubstanceUnits="true" boundaryCondition="false" constant="false" initialConcentration="0.0">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>unliganted intermediate</p>
+          </body>
+        </notes>
+      </species>
+      <species id="Cplx9" name="IL" compartment="comp1" initialAmount="0.0" substanceUnits="mole" hasOnlySubstanceUnits="true" boundaryCondition="false" constant="false" initialConcentration="0.0">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>monoliganded intermediate</p>
+          </body>
+        </notes>
+      </species>
+      <species id="Cplx10" name="ILL" compartment="comp1" initialAmount="0.0" substanceUnits="mole" hasOnlySubstanceUnits="true" boundaryCondition="false" constant="false" initialConcentration="0.0">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>biliganded intermediate</p>
+          </body>
+        </notes>
+      </species>
+      <species id="Cplx11" name="BL" compartment="comp1" initialAmount="0.0" substanceUnits="mole" hasOnlySubstanceUnits="true" boundaryCondition="false" constant="false" initialConcentration="0.0">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>monoliganded basal state</p>
+          </body>
+        </notes>
+      </species>
+      <species id="Cplx12" name="L" compartment="comp1" initialAmount="1.66057788110262E-20" substanceUnits="mole" hasOnlySubstanceUnits="true" boundaryCondition="false" constant="false" initialConcentration="0.0">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>ligand</p>
+          </body>
+        </notes>
+      </species>
+    </listOfSpecies>
+    <listOfParameters>
+      <parameter id="kf_0" value="30000.0" units="unimolRate" constant="false"/>
+      <parameter id="kr_0" value="8000.0" units="unimolRate" constant="true"/>
+      <parameter id="kf_1" value="15000.0" units="unimolRate" constant="false"/>
+      <parameter id="kr_1" value="16000.0" units="unimolRate" constant="true"/>
+      <parameter id="kf_2" value="30000.0" units="unimolRate" constant="true"/>
+      <parameter id="kr_2" value="700.0" units="unimolRate" constant="true"/>
+      <parameter id="kf_3" value="30000.0" units="unimolRate" constant="false"/>
+      <parameter id="kr_3" value="8.64" units="unimolRate" constant="true"/>
+      <parameter id="kf_4" value="15000.0" units="unimolRate" constant="false"/>
+      <parameter id="kr_4" value="17.28" units="unimolRate" constant="true"/>
+      <parameter id="kf_5" value="0.54" units="unimolRate" constant="true"/>
+      <parameter id="kr_5" value="10800.0" units="unimolRate" constant="true"/>
+      <parameter id="kf_6" value="130.0" units="unimolRate" constant="true"/>
+      <parameter id="kr_6" value="2740.0" units="unimolRate" constant="true"/>
+      <parameter id="kf_7" value="30000.0" units="unimolRate" constant="false"/>
+      <parameter id="kr_7" value="4.0" units="unimolRate" constant="true"/>
+      <parameter id="kf_8" value="15000.0" units="unimolRate" constant="false"/>
+      <parameter id="kr_8" value="8.0" units="unimolRate" constant="true"/>
+      <parameter id="kf_9" value="19.7" units="unimolRate" constant="true"/>
+      <parameter id="kr_9" value="3.74" units="unimolRate" constant="true"/>
+      <parameter id="kf_10" value="19.85" units="unimolRate" constant="true"/>
+      <parameter id="kr_10" value="1.74" units="unimolRate" constant="true"/>
+      <parameter id="kf_11" value="20.0" units="unimolRate" constant="true"/>
+      <parameter id="kr_11" value="0.81" units="unimolRate" constant="true"/>
+      <parameter id="kf_12" value="30000.0" units="unimolRate" constant="false"/>
+      <parameter id="kr_12" value="4.0" units="unimolRate" constant="true"/>
+      <parameter id="kf_13" value="15000.0" units="unimolRate" constant="false"/>
+      <parameter id="kr_13" value="8.0" units="unimolRate" constant="true"/>
+      <parameter id="kf_14" value="0.05" units="unimolRate" constant="true"/>
+      <parameter id="kr_14" value="0.0012" units="unimolRate" constant="true"/>
+      <parameter id="kf_15" value="0.05" units="unimolRate" constant="true"/>
+      <parameter id="kr_15" value="0.0012" units="unimolRate" constant="true"/>
+      <parameter id="kf_16" value="0.05" units="unimolRate" constant="true"/>
+      <parameter id="kr_16" value="0.0012" units="unimolRate" constant="true"/>
+      <parameter id="t1" value="0.05" units="second" constant="true"/>
+      <parameter id="t2" value="0.15" units="second" constant="true"/>
+    </listOfParameters>
+    <listOfReactions>
+      <reaction id="React0" name="React0" reversible="true" fast="false">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>first ligand on basal</p>
+          </body>
+        </notes>
+        <listOfReactants>
+          <speciesReference species="B" stoichiometry="1.0"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="BL" stoichiometry="1.0"/>
+        </listOfProducts>
+        <kineticLaw>
+          <notes>
+            <body xmlns="http://www.w3.org/1999/xhtml">
+              <p>(kf_0 * B - kr_0 * BL) * comp1</p>
+            </body>
+          </notes>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci>kf_0</ci>
+                <ci>B</ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci>kr_0</ci>
+                <ci>BL</ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="React1" name="React1" reversible="true" fast="false">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>second ligand on basal</p>
+          </body>
+        </notes>
+        <listOfReactants>
+          <speciesReference species="BL" stoichiometry="1.0"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="BLL" stoichiometry="1.0"/>
+        </listOfProducts>
+        <kineticLaw>
+          <notes>
+            <body xmlns="http://www.w3.org/1999/xhtml">
+              <p>(kf_1 * BL - kr_1 * BLL) * comp1</p>
+            </body>
+          </notes>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci>kf_1</ci>
+                <ci>BL</ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci>kr_1</ci>
+                <ci>BLL</ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="React2" name="React2" reversible="true" fast="false">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>opening of biliganded</p>
+          </body>
+        </notes>
+        <listOfReactants>
+          <speciesReference species="BLL" stoichiometry="1.0"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="ALL" stoichiometry="1.0"/>
+        </listOfProducts>
+        <kineticLaw>
+          <notes>
+            <body xmlns="http://www.w3.org/1999/xhtml">
+              <p>(kf_2 * BLL - kr_2 * ALL) * comp1</p>
+            </body>
+          </notes>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci>kf_2</ci>
+                <ci>BLL</ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci>kr_2</ci>
+                <ci>ALL</ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="React3" name="React3" reversible="true" fast="false">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>first ligand on active</p>
+          </body>
+        </notes>
+        <listOfReactants>
+          <speciesReference species="A" stoichiometry="1.0"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="AL" stoichiometry="1.0"/>
+        </listOfProducts>
+        <kineticLaw>
+          <notes>
+            <body xmlns="http://www.w3.org/1999/xhtml">
+              <p>(kf_3 * A - kr_3 * AL) * comp1</p>
+            </body>
+          </notes>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci>kf_3</ci>
+                <ci>A</ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci>kr_3</ci>
+                <ci>AL</ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="React4" name="React4" reversible="true" fast="false">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>second ligand on active</p>
+          </body>
+        </notes>
+        <listOfReactants>
+          <speciesReference species="AL" stoichiometry="1.0"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="ALL" stoichiometry="1.0"/>
+        </listOfProducts>
+        <kineticLaw>
+          <notes>
+            <body xmlns="http://www.w3.org/1999/xhtml">
+              <p>(kf_4 * AL - kr_4 * ALL) * comp1</p>
+            </body>
+          </notes>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci>kf_4</ci>
+                <ci>AL</ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci>kr_4</ci>
+                <ci>ALL</ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="React5" name="React5" reversible="true" fast="false">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>opening of unliganded</p>
+          </body>
+        </notes>
+        <listOfReactants>
+          <speciesReference species="B" stoichiometry="1.0"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="A" stoichiometry="1.0"/>
+        </listOfProducts>
+        <kineticLaw>
+          <notes>
+            <body xmlns="http://www.w3.org/1999/xhtml">
+              <p>(kf_5 * B - kr_5 * A) * comp1</p>
+            </body>
+          </notes>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci>kf_5</ci>
+                <ci>B</ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci>kr_5</ci>
+                <ci>A</ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="React6" name="React6" reversible="true" fast="false">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>opening of monoliganded</p>
+          </body>
+        </notes>
+        <listOfReactants>
+          <speciesReference species="BL" stoichiometry="1.0"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="AL" stoichiometry="1.0"/>
+        </listOfProducts>
+        <kineticLaw>
+          <notes>
+            <body xmlns="http://www.w3.org/1999/xhtml">
+              <p>(kf_6 * BL - kr_6 * AL) * comp1</p>
+            </body>
+          </notes>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci>kf_6</ci>
+                <ci>BL</ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci>kr_6</ci>
+                <ci>AL</ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="React7" name="React7" reversible="true" fast="false">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>first ligand on intermediate</p>
+          </body>
+        </notes>
+        <listOfReactants>
+          <speciesReference species="I" stoichiometry="1.0"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="IL" stoichiometry="1.0"/>
+        </listOfProducts>
+        <kineticLaw>
+          <notes>
+            <body xmlns="http://www.w3.org/1999/xhtml">
+              <p>(kf_7 * I - kr_7 * IL) * comp1</p>
+            </body>
+          </notes>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci>kf_7</ci>
+                <ci>I</ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci>kr_7</ci>
+                <ci>IL</ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="React8" name="React8" reversible="true" fast="false">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>second ligand on intermediate</p>
+          </body>
+        </notes>
+        <listOfReactants>
+          <speciesReference species="IL" stoichiometry="1.0"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="ILL" stoichiometry="1.0"/>
+        </listOfProducts>
+        <kineticLaw>
+          <notes>
+            <body xmlns="http://www.w3.org/1999/xhtml">
+              <p>(kf_8 * IL - kr_8 * ILL) * comp1</p>
+            </body>
+          </notes>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci>kf_8</ci>
+                <ci>IL</ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci>kr_8</ci>
+                <ci>ILL</ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="React9" name="React9" reversible="true" fast="false">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>unlig act &lt;=&gt; unlig interm</p>
+          </body>
+        </notes>
+        <listOfReactants>
+          <speciesReference species="A" stoichiometry="1.0"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="I" stoichiometry="1.0"/>
+        </listOfProducts>
+        <kineticLaw>
+          <notes>
+            <body xmlns="http://www.w3.org/1999/xhtml">
+              <p>(kf_9 * A - kr_9 * I) * comp1</p>
+            </body>
+          </notes>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci>kf_9</ci>
+                <ci>A</ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci>kr_9</ci>
+                <ci>I</ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="React10" name="React10" reversible="true" fast="false">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>monolig act &lt;=&gt; monolig interm</p>
+          </body>
+        </notes>
+        <listOfReactants>
+          <speciesReference species="AL" stoichiometry="1.0"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="IL" stoichiometry="1.0"/>
+        </listOfProducts>
+        <kineticLaw>
+          <notes>
+            <body xmlns="http://www.w3.org/1999/xhtml">
+              <p>(kf_10 * AL - kr_10 * IL) * comp1</p>
+            </body>
+          </notes>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci>kf_10</ci>
+                <ci>AL</ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci>kr_10</ci>
+                <ci>IL</ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="React11" name="React11" reversible="true" fast="false">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>bilig act &lt;=&gt; bilig interm</p>
+          </body>
+        </notes>
+        <listOfReactants>
+          <speciesReference species="ALL" stoichiometry="1.0"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="ILL" stoichiometry="1.0"/>
+        </listOfProducts>
+        <kineticLaw>
+          <notes>
+            <body xmlns="http://www.w3.org/1999/xhtml">
+              <p>(kf_11 * ALL - kr_11 * ILL) * comp1</p>
+            </body>
+          </notes>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci>kf_11</ci>
+                <ci>ALL</ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci>kr_11</ci>
+                <ci>ILL</ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="React12" name="React12" reversible="true" fast="false">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>first ligand on desensitised</p>
+          </body>
+        </notes>
+        <listOfReactants>
+          <speciesReference species="D" stoichiometry="1.0"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="DL" stoichiometry="1.0"/>
+        </listOfProducts>
+        <kineticLaw>
+          <notes>
+            <body xmlns="http://www.w3.org/1999/xhtml">
+              <p>(kf_12 * D - kr_12 * DL) * comp1</p>
+            </body>
+          </notes>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci>kf_12</ci>
+                <ci>D</ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci>kr_12</ci>
+                <ci>DL</ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="React13" name="React13" reversible="true" fast="false">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>second ligand on desensitised</p>
+          </body>
+        </notes>
+        <listOfReactants>
+          <speciesReference species="DL" stoichiometry="1.0"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="DLL" stoichiometry="1.0"/>
+        </listOfProducts>
+        <kineticLaw>
+          <notes>
+            <body xmlns="http://www.w3.org/1999/xhtml">
+              <p>(kf_13 * DL - kr_13 * DLL) * comp1</p>
+            </body>
+          </notes>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci>kf_13</ci>
+                <ci>DL</ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci>kr_13</ci>
+                <ci>DLL</ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="React14" name="React14" reversible="true" fast="false">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>unlig interm &lt;=&gt; unlig desen</p>
+          </body>
+        </notes>
+        <listOfReactants>
+          <speciesReference species="I" stoichiometry="1.0"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="D" stoichiometry="1.0"/>
+        </listOfProducts>
+        <kineticLaw>
+          <notes>
+            <body xmlns="http://www.w3.org/1999/xhtml">
+              <p>(kf_14 * I - kr_14 * D) * comp1</p>
+            </body>
+          </notes>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci>kf_14</ci>
+                <ci>I</ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci>kr_14</ci>
+                <ci>D</ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="React15" name="React15" reversible="true" fast="false">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>monolig interm &lt;=&gt; monolig desen</p>
+          </body>
+        </notes>
+        <listOfReactants>
+          <speciesReference species="IL" stoichiometry="1.0"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="DL" stoichiometry="1.0"/>
+        </listOfProducts>
+        <kineticLaw>
+          <notes>
+            <body xmlns="http://www.w3.org/1999/xhtml">
+              <p>(kf_15 * IL - kr_15 * DL) * comp1</p>
+            </body>
+          </notes>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci>kf_15</ci>
+                <ci>IL</ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci>kr_15</ci>
+                <ci>DL</ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="React16" name="React16" reversible="true" fast="false">
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <p>bilig interm &lt;=&gt; bilig desen</p>
+          </body>
+        </notes>
+        <listOfReactants>
+          <speciesReference species="ILL" stoichiometry="1.0"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="DLL" stoichiometry="1.0"/>
+        </listOfProducts>
+        <kineticLaw>
+          <notes>
+            <body xmlns="http://www.w3.org/1999/xhtml">
+              <p>(kf_16 * ILL - kr_16 * DLL) * comp1</p>
+            </body>
+          </notes>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci>kf_16</ci>
+                <ci>ILL</ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci>kr_16</ci>
+                <ci>DLL</ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+    <listOfEvents>
+      <event>
+        <trigger>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <gt/>
+              <csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol>
+              <ci>t1</ci>
+            </apply>
+          </math>
+        </trigger>
+        <listOfEventAssignments>
+          <eventAssignment variable="kf_1">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn>1.5e4</cn>
+            </math>
+          </eventAssignment>
+          <eventAssignment variable="kf_4">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn>1.5e4</cn>
+            </math>
+          </eventAssignment>
+          <eventAssignment variable="kf_8">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn>1.5e4</cn>
+            </math>
+          </eventAssignment>
+          <eventAssignment variable="kf_13">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn>1.5e4</cn>
+            </math>
+          </eventAssignment>
+          <eventAssignment variable="kf_0">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn>3e4</cn>
+            </math>
+          </eventAssignment>
+          <eventAssignment variable="kf_3">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn>3e4</cn>
+            </math>
+          </eventAssignment>
+          <eventAssignment variable="kf_7">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn>3e4</cn>
+            </math>
+          </eventAssignment>
+          <eventAssignment variable="kf_12">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn>3e4</cn>
+            </math>
+          </eventAssignment>
+        </listOfEventAssignments>
+      </event>
+      <event>
+        <trigger>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <gt/>
+              <csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">time</csymbol>
+              <ci>t2</ci>
+            </apply>
+          </math>
+        </trigger>
+        <listOfEventAssignments>
+          <eventAssignment variable="kf_1">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn>0</cn>
+            </math>
+          </eventAssignment>
+          <eventAssignment variable="kf_4">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn>0</cn>
+            </math>
+          </eventAssignment>
+          <eventAssignment variable="kf_8">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn>0</cn>
+            </math>
+          </eventAssignment>
+          <eventAssignment variable="kf_13">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn>0</cn>
+            </math>
+          </eventAssignment>
+          <eventAssignment variable="kf_0">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn>0</cn>
+            </math>
+          </eventAssignment>
+          <eventAssignment variable="kf_3">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn>0</cn>
+            </math>
+          </eventAssignment>
+          <eventAssignment variable="kf_7">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn>0</cn>
+            </math>
+          </eventAssignment>
+          <eventAssignment variable="kf_12">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn>0</cn>
+            </math>
+          </eventAssignment>
+        </listOfEventAssignments>
+      </event>
+    </listOfEvents>
+  </model>
+</sbml>

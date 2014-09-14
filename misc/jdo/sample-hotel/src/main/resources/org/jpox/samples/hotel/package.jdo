@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.hotel">
+        <class name="Hotel" identity-type="application" objectid-class="org.jpox.samples.hotel.Hotel$Oid" table="HOTEL">
+            <field name="name" primary-key="true">
+                <column name="NAME" length="40" jdbc-type="CHAR"/>
+            </field>
+            <field name="number" primary-key="true">
+                <column name="NUMBER"/>
+            </field>
+
+            <field name="description">
+                <column name="DESCRIPTION" length="255" jdbc-type="VARCHAR"/>
+            </field>
+
+            <field name="rooms" persistence-modifier="persistent" mapped-by="hotel">
+                <collection element-type="org.jpox.samples.hotel.Room">
+                </collection>
+            </field>
+        </class>
+
+        <class name="Room" table="ROOM">
+            <field name="roomNumber">
+                <column name="ROOM_NUMBER"/>
+            </field>
+            <field name="floor">
+                <column name="FLOOR_NUMBER"/>
+            </field>
+
+            <field name="hotel" persistence-modifier="persistent">
+                <column name="HOTEL_NAME"/>
+                <column name="HOTEL_NUMBER"/>
+            </field>
+        </class>
+
+    </package>
+</jdo>

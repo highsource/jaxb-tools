@@ -1,0 +1,384 @@
+<xs:schema targetNamespace="http://internal.innoq.com/pl"
+	xmlns="http://internal.innoq.com/pl" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	jaxb:extensionBindingPrefixes="xjc hj orm" jaxb:version="2.0"
+	attributeFormDefault="unqualified" elementFormDefault="qualified">
+
+	<!-- globale Konfiguration -->
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:globalBindings generateIsSetMethod="true" />
+			<jaxb:schemaBindings>
+				<jaxb:package name="com.innoq.model.impl" />
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+
+	<!-- Ableitungen zur besseren Struktierung des Inhaltes -->
+	<xs:simpleType name="DecimalValue">
+		<xs:restriction base="xs:decimal" />
+	</xs:simpleType>
+	<xs:simpleType name="PercentValue">
+		<xs:restriction base="xs:decimal" />
+	</xs:simpleType>
+	<xs:simpleType name="CurrencyValue">
+		<xs:restriction base="xs:decimal" />
+	</xs:simpleType>
+
+	<!--aggregating Root-->
+	<xs:complexType name="PlanwertGruppe">
+		<xs:all>
+			<xs:element name="produktKategoriePlanwertGruppe" type="ProduktKategoriePlanwertGruppe">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:embedded columnNamePrefix="PKPG_">
+							<orm:attribute-override name="zielgruppe">
+								<orm:column name="ZG"/>
+							</orm:attribute-override>
+						</hj:embedded>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="standardPlanwertGruppe" type="StandardPlanwertGruppe">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:embedded columnNamePrefix="SPG_"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="artikelArtPlanwertGruppe" minOccurs="0"
+				type="ArtikelArtPlanwertGruppe">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:embedded columnNamePrefix="AAPG_"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="preislagenPlanwertGruppe" minOccurs="0"
+				type="PreislagenPlanwertGruppe">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:embedded columnNamePrefix="PPG_"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="themenPlanwertGruppe" minOccurs="0"
+				type="ThemenPlanwertGruppe">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:embedded columnNamePrefix="TPG_"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="aktionenPlanwertGruppe" minOccurs="0"
+				type="AktionenPlanwertGruppe">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:embedded columnNamePrefix="APG_"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+		<xs:attribute name="id" use="required" type="xs:long">
+			<xs:annotation>
+				<xs:appinfo>
+					<hj:id><orm:generated-value strategy="AUTO" /></hj:id>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ProduktKategoriePlanwertGruppe">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:embeddable/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="anlass" minOccurs="0" type="xs:integer" />
+			<xs:element name="warengruppe" minOccurs="0" type="xs:integer" />
+			<xs:element name="form" minOccurs="0" type="xs:integer" />
+			<xs:element name="material" minOccurs="0" type="xs:integer" />
+			<xs:element name="lieferant" minOccurs="0" type="xs:string" />
+			<xs:element name="marke" minOccurs="0" type="xs:string" />
+			<xs:element name="zielgruppe" minOccurs="0" type="xs:string" />
+			<xs:element name="anlassDescription" minOccurs="0" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo><hj:ignored /></xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="warengruppeDescription" minOccurs="0" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo><hj:ignored /></xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="formDescription" minOccurs="0" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo><hj:ignored /></xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="materialDescription" minOccurs="0" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo><hj:ignored /></xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lieferantDescription" minOccurs="0" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo><hj:ignored /></xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="markeDescription" minOccurs="0" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo><hj:ignored /></xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="zielgruppeDescription" minOccurs="0" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo><hj:ignored /></xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+		<!--xs:attribute name="produktKategorieId" use="required"
+			type="xs:long">
+			<xs:annotation>
+				<xs:appinfo>
+					<hj:id><orm:generated-value strategy="AUTO" /></hj:id>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute-->
+	</xs:complexType>
+	
+	<xs:complexType name="StandardPlanwertGruppe">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:embeddable/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:all>
+			<!-- Eingabefeld -->
+			<xs:element name="anzahlArtikel" type="DecimalValue" />
+			<!-- Eingabefeld -->
+			<xs:element name="anzahlFarbenDurchschnitt" type="DecimalValue" />
+			<!-- Eingabefeld | Berechnetes Feld -->
+			<xs:element name="anzahlVarianten" minOccurs="0"
+				type="DecimalValue" />
+			<!-- Eingabefeld | Berechnetes Feld -->
+			<xs:element name="durchschnittlicheTiefe" minOccurs="0"
+				type="DecimalValue" />
+			<!-- Eingabefeld -->
+			<xs:element name="vkRegulaerDurchschnitt" type="CurrencyValue" />
+			<!-- Eingabefeld -->
+			<xs:element name="ekalk" type="PercentValue" />
+			<!-- Eingabefeld -->
+			<xs:element name="akalk" type="PercentValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="abschriftenVk" minOccurs="0" type="DecimalValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="abschriftenUmsatzVkRealisiert"
+				minOccurs="0" type="CurrencyValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="weStueckGesamt" minOccurs="0" type="DecimalValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="weEk" minOccurs="0" type="CurrencyValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="weVkRegulaer" minOccurs="0" type="CurrencyValue" />
+			<!-- Eingabefeld -->
+			<xs:element name="retourStueck" minOccurs="0" type="DecimalValue" />
+			<!-- Eingabefeld -->
+			<xs:element name="retourenQuote" minOccurs="0" type="PercentValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="retourEk" minOccurs="0" type="CurrencyValue" />
+			<!-- Eingabefeld -->
+			<xs:element name="abverkaufsQuote" type="PercentValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="endlagerQuote" minOccurs="0" type="PercentValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="umsatzStueck" minOccurs="0" type="DecimalValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="umsatzEk" minOccurs="0" type="CurrencyValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="umsatzVkRealisiert" minOccurs="0"
+				type="CurrencyValue" />
+		</xs:all>
+		<!--xs:attribute name="id" use="required" type="xs:long">
+			<xs:annotation>
+				<xs:appinfo>
+					<hj:id><orm:generated-value strategy="AUTO" /></hj:id>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute-->
+	</xs:complexType>
+	<xs:complexType name="ArtikelArtPlanwertGruppe">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:embeddable/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:all>
+			<!-- Replenishment-Block -->
+			
+			<!-- Eingabefeld -->
+			<xs:element name="anzahlVariantenReplenishment" minOccurs="0"
+				type="DecimalValue" />
+			<!-- Eingabefeld -->
+			<xs:element name="tiefeDurchschnittReplenishment"
+				minOccurs="0" type="DecimalValue" />
+			<!-- Eingabefeld -->
+			<xs:element name="vkRegulaerDurchschnittReplenishment"
+				minOccurs="0" type="CurrencyValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="stueckReplenishment" minOccurs="0"
+				type="DecimalValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="weVkRegulaerReplenishment" minOccurs="0"
+				type="CurrencyValue" />
+
+			<!-- Standard-Block -->
+			
+			<!-- Eingabefeld -->
+			<xs:element name="anzahlVariantenStandard" minOccurs="0"
+				type="DecimalValue" />
+			<!-- Eingabefeld -->
+			<xs:element name="tiefeDurchschnittStandard" minOccurs="0"
+				type="DecimalValue" />
+			<!-- Eingabefeld -->
+			<xs:element name="vkRegulaerDurchschnittStandard"
+				minOccurs="0" type="CurrencyValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="stueckStandard" minOccurs="0" type="DecimalValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="weVkRegulaerStandard" minOccurs="0"
+				type="CurrencyValue" />
+
+			<!-- Fashion-Block -->
+			
+			<!-- Eingabefeld -->
+			<xs:element name="anzahlVariantenFashion" minOccurs="0"
+				type="DecimalValue" />
+			<!-- Eingabefeld -->
+			<xs:element name="tiefeDurchschnittFashion" minOccurs="0"
+				type="DecimalValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="vkRegulaerDurchschnittFashion"
+				minOccurs="0" type="CurrencyValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="stueckFashion" minOccurs="0" type="DecimalValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="weVkRegulaerFashion" minOccurs="0"
+				type="CurrencyValue" />
+
+			<!-- Gesamt-Block -->
+			
+			<!-- Eingabefeld -->
+			<xs:element name="anzahlVariantenGesamt" minOccurs="0"
+				type="DecimalValue" />
+			<!-- Eingabefeld -->
+			<xs:element name="tiefeDurchschnittGesamt" minOccurs="0"
+				type="DecimalValue" />
+			<!-- Eingabefeld -->
+			<xs:element name="vkRegulaerDurchschnittGesamt" minOccurs="0"
+				type="CurrencyValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="stueckGesamt" minOccurs="0" type="DecimalValue" />
+			<!-- Berechnetes Feld -->
+			<xs:element name="weVkRegulaerGesamt" minOccurs="0"
+				type="CurrencyValue" />
+		</xs:all>
+		<!--xs:attribute name="id" use="required" type="xs:long">
+			<xs:annotation>
+				<xs:appinfo>
+					<hj:id><orm:generated-value strategy="AUTO" /></hj:id>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute-->
+	</xs:complexType>
+	<xs:complexType name="PreislagenPlanwertGruppe">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:embeddable/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="preislageId" type="xs:string" />
+			<xs:element name="weStueckAnteil_pl1" minOccurs="0"
+				type="PercentValue" />
+			<xs:element name="weStueck_pl1" minOccurs="0" type="DecimalValue" />
+			<xs:element name="vkRegulaerDurchschnitt_pl1" minOccurs="0"
+				type="CurrencyValue" />
+			<xs:element name="weVkRegulaer_pl1" minOccurs="0"
+				type="CurrencyValue" />
+		</xs:all>
+		<!--xs:attribute name="id" use="required" type="xs:long">
+			<xs:annotation>
+				<xs:appinfo>
+					<hj:id><orm:generated-value strategy="AUTO" /></hj:id>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute-->
+	</xs:complexType>
+	<xs:complexType name="ThemenPlanwertGruppe">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:embeddable/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="themaId" type="xs:string" />
+			<xs:element name="weStueckAnteil_thema1" minOccurs="0"
+				type="PercentValue" />
+			<xs:element name="weStueck_thema1" minOccurs="0"
+				type="DecimalValue" />
+			<xs:element name="vkRegulaerDurchschnitt_thema1"
+				minOccurs="0" type="CurrencyValue" />
+			<xs:element name="weVkRegulaer_thema1" minOccurs="0"
+				type="CurrencyValue" />
+		</xs:all>
+		<!--xs:attribute name="id" use="required" type="xs:long">
+			<xs:annotation>
+				<xs:appinfo>
+					<hj:id><orm:generated-value strategy="AUTO" /></hj:id>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute-->
+	</xs:complexType>
+	<xs:complexType name="AktionenPlanwertGruppe">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:embeddable/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="aktionId" type="xs:string" />
+			<xs:element name="weStueckAnteil_aktion1" minOccurs="0"
+				type="PercentValue" />
+			<xs:element name="weStueck_aktion1" minOccurs="0"
+				type="DecimalValue" />
+			<xs:element name="vkRegulaerDurchschnitt_aktion1"
+				minOccurs="0" type="CurrencyValue" />
+			<xs:element name="weVkRegulaer_aktion1" minOccurs="0"
+				type="CurrencyValue" />
+		</xs:all>
+		<!--xs:attribute name="id" use="required" type="xs:long">
+			<xs:annotation>
+				<xs:appinfo>
+					<hj:id><orm:generated-value strategy="AUTO" /></hj:id>
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute-->
+	</xs:complexType>
+	
+	<xs:element name="PlanunertGruppeElement">
+		<xs:complexType>
+			<!--xs:annotation>
+				<xs:appinfo><hj:ignored/></xs:appinfo>
+			</xs:annotation-->	
+			<xs:sequence>
+				<xs:element name="planwertGruppe" type="PlanwertGruppe"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

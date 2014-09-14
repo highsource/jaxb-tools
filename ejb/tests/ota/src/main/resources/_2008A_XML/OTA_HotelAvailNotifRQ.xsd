@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="2.002" id="OTA2008A">
+	<xs:include schemaLocation="OTA_HotelCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_HotelAvailNotifRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The OTA_AvailNotifRQ is the message that sends the notification of the availability status of a hotel.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">POS provides a mechanism to indicate the source of the message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="UniqueID" type="UniqueID_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The unique identifier element allows the trading partners to  uniquely identify each AvailStatusMessageRQ, (i.e. the entire message) for tracing of transactions. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="AvailStatusMessages" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Container for the individual AvailStatusMessage(s). An OTA_HotelAvailNotifRQ contains the availability statuses for a single hotel. Hotel identification information are the attributes of this element.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="AvailStatusMessage" type="AvailStatusMessageType" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The AvailStatusMessage. It is here that one indicates whether the inventory is opened, closed, closed on request, etc.</xs:documentation>
+									<xs:documentation xml:lang="en">The MinMaxLOSStatusMessage class communicates the set of minimum and maximum length-of-stay availability status changes to be 	synchronized 	with 	another system.</xs:documentation>
+									<xs:documentation xml:lang="en">The RateHurdleStatusMessage class defines the setting for rate hurdle controls to be synchronized with the central reservation system.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:attributeGroup ref="HotelReferenceGroup"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This element defines standard attributes that appear on the root element for all OTA payloads.	</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+			<xs:attribute name="MessageContentCode" type="OTA_CodeType" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines specific content of the message being sent. 
+Refer to OTA Code List to be determined (TBD).</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

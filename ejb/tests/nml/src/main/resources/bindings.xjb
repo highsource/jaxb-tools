@@ -1,0 +1,30 @@
+<jxb:bindings version="1.0" 
+  xmlns:jxb="http://java.sun.com/xml/ns/jaxb" 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+  xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" 
+  jxb:extensionBindingPrefixes="hj">
+
+
+ <jxb:bindings schemaLocation="NewsML_1.2.xsd" node="/xs:schema">
+
+	 <jxb:globalBindings
+  		fixedAttributeAsConstantProperty="true"
+		  collectionType="java.util.Vector"
+		  typesafeEnumBase="xs:NCName"
+		  choiceContentProperty="false"
+		  typesafeEnumMemberName="generateError"
+		  enableFailFastCheck="false"	
+		  generateIsSetMethod="false"
+		  underscoreBinding="asCharInWord"/>
+	<jxb:schemaBindings>
+	  <jxb:package name="newsml.entities"/>
+	</jxb:schemaBindings>
+	<!--jxb:bindings node=".//xs:element[@name='DataContent']">
+		<hj:column length="2000"/>
+	</jxb:bindings-->
+	<hj:persistence>
+		<hj:default-generated-id name="Hjid" transient="true"/>
+	</hj:persistence>
+  </jxb:bindings>
+</jxb:bindings>

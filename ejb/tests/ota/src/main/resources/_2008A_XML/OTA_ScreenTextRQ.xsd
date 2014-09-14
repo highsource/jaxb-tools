@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.005" id="OTA2008A">
+	<xs:include schemaLocation="OTA_CommonTypes.xsd"/>
+	
+	<xs:element name="OTA_ScreenTextRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This message may be used to request information in a free text type of response using a terminal message input.  It will allow users who do not have fully developed XML capabilities to send and receive XML messages and/or to request information for which there is no OTA message functionality developed.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Used to provide information about the requester.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ScreenEntry" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The message input entry which the receiver will process and return the appropriate information (e.g., A28MAYLONPAR, HELP AVAIL).</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attribute name="MessageFunction" type="StringLength0to64" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">To specify the message function that is being requested.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attributeGroup ref="QuantityGroup">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The maximum number of screens that can be returned in the response.							</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+			<xs:attribute name="OmitBlankLinesIndicator" type="xs:boolean" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">If true, blank lines should be omitted in the response.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="MergeScreenIndicator" type="xs:boolean" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">If true, all screens should be returned as a continuous string in one TextScreen element.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

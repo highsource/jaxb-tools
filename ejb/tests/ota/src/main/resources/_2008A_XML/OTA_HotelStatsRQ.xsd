@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="2.005" id="OTA2008A">
+	<xs:include schemaLocation="OTA_HotelCommonTypes.xsd"/>
+	
+	
+	
+	
+	
+	
+	
+	
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_HotelStatsRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This message is sent by a system (e.g. RMS) requesting one or several pre-defined statistic reports for one or several hotels from another system (e.g. CRS) which has the data required to generate the reports.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RequestedHotels">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Collection of requested hotels.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="RequestedHotel" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Identifies each hotel or set of hotels for which reports are being requested.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="RequestedReports">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Collection of requested statistical reports.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="RequestedReport" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">Identifies a report being requested.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attributeGroup ref="DateTimeSpanGroup">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">This may be used to send a date range for several fiscal dates (and thus several reports) instead of a single fiscal date.</xs:documentation>
+																</xs:annotation>
+															</xs:attributeGroup>
+															<xs:attributeGroup ref="StatisticReportGroup">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">This may be used to provide the ReportCode (pre-defined) and the FiscalDate for a specific report request. Generally, when providing a particular FiscalDate, the DateTimeSpanGroup would not be used.</xs:documentation>
+																</xs:annotation>
+															</xs:attributeGroup>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attributeGroup ref="HotelReferenceGroup"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="MessageID" type="UniqueID_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Uniquely identifies this message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

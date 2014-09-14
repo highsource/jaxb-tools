@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:hj="http://hyperjaxb2.jvnet.org/customizations" 
+	jaxb:extensionBindingPrefixes="hj" jaxb:version="1.0">
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.jvnet.hyperjaxb2.tests.component"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+	<!-- ... -->
+	<xs:element name="a" type="aType"/>
+	<xs:complexType name="aType">
+		<xs:sequence>
+			<xs:element name="b" type="bType" minOccurs="0"/>
+			<xs:element name="b1" type="bType" minOccurs="0"/>
+			<xs:element name="c" type="cType" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:complexSingleProperty>
+							<hj:component/>
+						</hj:complexSingleProperty>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="d" type="dType" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:complexSingleProperty>
+							<hj:component/>
+						</hj:complexSingleProperty>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="bType">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:ignored/>
+				<hj:component/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="d" type="xs:string" minOccurs="0"/>
+			<xs:element name="e" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="cType">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:ignored/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="f" type="xs:long" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="g" type="xs:anyURI" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="dType">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:ignored/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="cType">
+				<xs:sequence>
+					<xs:element name="h" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

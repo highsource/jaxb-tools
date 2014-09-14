@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings
+  version="2.1"
+  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+  xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+
+  xmlns:annox="http://annox.dev.java.net" 
+
+  jaxb:extensionBindingPrefixes="hj orm annox">
+
+  <jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+    <jaxb:globalBindings generateIsSetMethod="true"/>
+    <jaxb:schemaBindings>
+      <jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.annox"/>
+    </jaxb:schemaBindings>
+
+    <jaxb:bindings node="xs:complexType[@name='Items']/xs:sequence/xs:element[@name='item']">
+      <jaxb:bindings node="xs:complexType">
+        <annox:annotate>
+          <annox:annotate annox:class="org.hibernate.search.annotations.Indexed" index="target/test-index"/>
+        </annox:annotate>
+        <jaxb:bindings node="xs:sequence">
+          <jaxb:bindings node="xs:element[@name='productName']">
+            <annox:annotate>
+              <annox:annotate
+                annox:class="org.hibernate.search.annotations.FieldBridge"
+                impl="org.jvnet.hyperjaxb3.ejb.tests.annox.Items">
+                <annox:annotate annox:field="params">
+                  <annox:annotate annox:class="org.hibernate.search.annotations.Parameter"
+                    name="foo"
+                    value="bar"/>
+                </annox:annotate>
+              </annox:annotate>
+            </annox:annotate>
+            <annox:annotate>
+              <annox:annotate annox:class="org.hibernate.search.annotations.Field" name="item"/>
+            </annox:annotate>
+          </jaxb:bindings>
+        </jaxb:bindings>
+      </jaxb:bindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="xs:complexType[@name='HYPERJAXB3_149_Type']/xs:attribute[@name='timestamp1']">
+      <hj:generated-property propertyName="Ts1">
+        <annox:annotate>
+          <annox:annotate
+            annox:class="org.hibernate.annotations.Index"
+            name="HYPERJAXB3_149_TYPE_INDEX_TS1" columnNames="TS1"/>
+        </annox:annotate>
+      </hj:generated-property>
+    </jaxb:bindings>
+  </jaxb:bindings>
+</jaxb:bindings>

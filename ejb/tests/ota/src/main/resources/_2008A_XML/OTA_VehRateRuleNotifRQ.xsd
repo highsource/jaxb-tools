@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.001" id="OTA2008A">
+	<xs:include schemaLocation="OTA_SimpleTypes.xsd"/>
+	<xs:include schemaLocation="OTA_CommonTypes.xsd"/>
+	<xs:include schemaLocation="OTA_VehicleCommonTypes.xsd"/>
+	<xs:element name="OTA_VehRateRuleNotifRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This message pushes rate rules. The information pushed may establish this rule initially in a database and/or update the information that currently exists.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">To specify who is sending the vehicle location details database information.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Rules">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A collection of rules.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Rule" maxOccurs="999">
+								<xs:annotation>
+									<xs:documentation>Rule detail information.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="RateRulesType">
+											<xs:sequence>
+												<xs:element name="ProcessingInfo">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">To specifiy the action to be taken on this information and the effective and discontinue dates.</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:attributeGroup ref="ProcessingInfoGroup">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">To specifiy the action to be taken on this information and the effective and discontinue dates.</xs:documentation>
+															</xs:annotation>
+														</xs:attributeGroup>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="RuleText" type="FormattedTextTextType" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>The rule in textual format.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+											<xs:attribute name="ID" type="AlphaNumericStringLength1to8" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">An identifier for the rule.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:extension>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="RuleQuantity" type="xs:nonNegativeInteger" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The count of car locations being sent in this message.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attributeGroup ref="ReqRespVersion">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Used to request the version of the payload message desired for the response.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

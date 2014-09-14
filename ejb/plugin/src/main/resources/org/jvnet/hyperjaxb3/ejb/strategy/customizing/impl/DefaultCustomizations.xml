@@ -1,0 +1,498 @@
+<hj:persistence xmlns="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm">
+	<hj:default-entity class="##default">
+	</hj:default-entity>
+	<hj:default-mapped-superclass class="##default">
+	</hj:default-mapped-superclass>
+	<hj:default-embeddable class="##default">
+	</hj:default-embeddable>
+	<hj:default-id>
+		<orm:column/>
+	</hj:default-id>
+	<hj:default-generated-id name="Hjid" javaType="java.lang.Long" schemaType="xsd:long">
+		<orm:column/>
+		<orm:generated-value strategy="AUTO"/>
+	</hj:default-generated-id>
+    <hj:default-embedded-id>
+    </hj:default-embedded-id>
+	<hj:default-version>
+		<orm:column/>
+	</hj:default-version>
+	<hj:default-generated-version name="Hjversion" javaType="java.lang.Long" schemaType="xsd:long" forced="false">
+		<orm:column/>
+	</hj:default-generated-version>
+	<hj:default-basic>
+		<orm:column/>
+	</hj:default-basic>
+	<hj:default-to-one>
+		<hj:many-to-one/>
+	</hj:default-to-one>
+	<hj:default-to-many>
+		<hj:one-to-many/>
+	</hj:default-to-many>
+	<hj:default-many-to-one>
+		<orm:join-column/>
+		<orm:cascade>
+			<orm:cascade-all/>
+		</orm:cascade>
+	</hj:default-many-to-one>
+	<hj:default-one-to-many>
+		<orm:join-column/>
+		<orm:cascade>
+			<orm:cascade-all/>
+		</orm:cascade>
+	</hj:default-one-to-many>
+	<hj:default-one-to-one>
+		<orm:join-column/>
+		<orm:cascade>
+			<orm:cascade-all/>
+		</orm:cascade>
+	</hj:default-one-to-one>
+	<hj:default-many-to-many>
+		<orm:join-table/>
+		<orm:cascade>
+			<orm:cascade-all/>
+		</orm:cascade>
+	</hj:default-many-to-many>
+	<hj:default-element-collection>
+		<orm:order-column/>
+		<orm:column/>
+		<orm:collection-table>
+			<orm:join-column/>
+		</orm:collection-table>
+	</hj:default-element-collection>
+	<hj:default-embedded>
+	</hj:default-embedded>
+
+    <!-- 3.2.1 xsd:string -->
+	<hj:default-single-property type="xsd:string">
+		<hj:basic>
+			<orm:column length="255"/>
+		</hj:basic>
+	</hj:default-single-property>
+
+    <!-- 3.2.2 xsd:boolean -->
+	
+    <!-- 3.2.3 xsd:decimal -->
+	<hj:default-single-property type="xsd:decimal">
+		<hj:basic>
+			<orm:column scale="10" precision="20"/>
+		</hj:basic>
+	</hj:default-single-property>	
+	
+    <!-- 3.2.4 xsd:float -->
+	<hj:default-single-property type="xsd:float">
+		<hj:basic>
+			<orm:column scale="10" precision="20"/>
+		</hj:basic>
+	</hj:default-single-property>
+
+    <!-- 3.2.5 xsd:double -->
+	<hj:default-single-property type="xsd:double">
+		<hj:basic>
+			<orm:column scale="10" precision="20"/>
+		</hj:basic>
+	</hj:default-single-property>
+	
+    <!-- 3.2.6 xsd:duration -->
+	<hj:default-single-property type="xsd:duration">
+		<hj:basic>
+			<orm:column length="127"/>
+		</hj:basic>
+	</hj:default-single-property>
+
+    <!-- 3.2.7 xsd:dateTime -->
+	<hj:default-single-property type="xsd:dateTime">
+		<hj:basic>
+			<orm:temporal>TIMESTAMP</orm:temporal>
+		</hj:basic>
+	</hj:default-single-property>
+
+    <!-- 3.2.8 xsd:time -->
+	<hj:default-single-property type="xsd:time">
+		<hj:basic>
+			<orm:temporal>TIME</orm:temporal>
+		</hj:basic>
+	</hj:default-single-property>
+
+    <!-- 3.2.9 xsd:date -->
+	<hj:default-single-property type="xsd:date">
+		<hj:basic>
+			<orm:temporal>DATE</orm:temporal>
+		</hj:basic>
+	</hj:default-single-property>
+	
+    <!-- 3.2.10 xsd:gYearMonth -->
+	<hj:default-single-property type="xsd:gYearMonth">
+		<hj:basic>
+			<orm:temporal>DATE</orm:temporal>
+		</hj:basic>
+	</hj:default-single-property>
+
+    <!-- 3.2.11 xsd:gYear -->
+	<hj:default-single-property type="xsd:gYear">
+		<hj:basic>
+			<orm:temporal>DATE</orm:temporal>
+		</hj:basic>
+	</hj:default-single-property>
+
+    <!-- 3.2.12 xsd:gMonthDay -->
+	<hj:default-single-property type="xsd:gMonthDay">
+		<hj:basic>
+			<orm:temporal>DATE</orm:temporal>
+		</hj:basic>
+	</hj:default-single-property>
+
+    <!-- 3.2.13 xsd:gDay -->
+	<hj:default-single-property type="xsd:gDay">
+		<hj:basic>
+			<orm:temporal>DATE</orm:temporal>
+		</hj:basic>
+	</hj:default-single-property>
+
+    <!-- 3.2.14 xsd:gMonth -->
+	<hj:default-single-property type="xsd:gMonth">
+		<hj:basic>
+			<orm:temporal>DATE</orm:temporal>
+		</hj:basic>
+	</hj:default-single-property>
+
+    <!-- 3.2.15 xsd:hexBinary -->
+	<hj:default-single-property type="xsd:hexBinary">
+		<hj:basic>
+			<orm:lob/>
+		</hj:basic>
+	</hj:default-single-property>
+	
+    <!-- 3.2.16 xsd:base64Binary -->
+	<hj:default-single-property type="xsd:base64Binary">
+		<hj:basic>
+			<orm:lob/>
+		</hj:basic>
+	</hj:default-single-property>
+	
+    <!-- 3.2.17 xsd:anyURI -->
+
+    <!-- 3.2.18 xsd:QName -->
+
+    <!-- 3.2.19 xsd:NOTATION -->
+    
+    <!-- 3.3.1 xsd:normalizedString -->
+
+    <!-- 3.3.2 xsd:token -->
+    
+    <!-- 3.3.3 xsd:language -->
+	<hj:default-single-property type="xsd:language">
+		<hj:basic>
+			<orm:column length="17"/>
+		</hj:basic>
+	</hj:default-single-property>
+    
+    <!-- 3.3.4 xsd:NMTOKEN -->
+
+    <!-- 3.3.5 xsd:NMTOKENS -->
+
+    <!-- 3.3.6 xsd:Name -->
+	
+    <!-- 3.3.7 xsd:NCName -->
+
+    <!-- 3.3.8 xsd:ID -->
+    
+    <!-- 3.3.9 xsd:IDREF -->
+    
+    <!-- 3.3.10 xsd:IDREFs -->
+    
+    <!-- 3.3.11 xsd:ENTITY -->
+    
+    <!-- 3.3.12 xsd:ENTITIES -->
+    
+
+    <!-- 3.3.13 xsd:integer -->
+	<hj:default-single-property type="xsd:integer">
+		<hj:basic>
+			<orm:column scale="0" precision="20"/>
+		</hj:basic>
+	</hj:default-single-property>
+
+    <!-- 3.3.14 xsd:nonPositiveInteger -->
+    
+    <!-- 3.3.15 xsd:negativeInteger -->
+    
+    <!-- 3.3.16 xsd:long -->
+	<hj:default-single-property type="xsd:long">
+		<hj:basic>
+			<orm:column scale="0" precision="20"/>
+		</hj:basic>
+	</hj:default-single-property>
+
+    <!-- 3.3.17 xsd:int -->
+	<hj:default-single-property type="xsd:int">
+		<hj:basic>
+			<orm:column scale="0" precision="10"/>
+		</hj:basic>
+	</hj:default-single-property>
+
+    <!-- 3.3.18 xsd:short -->
+	<hj:default-single-property type="xsd:short">
+		<hj:basic>
+			<orm:column scale="0" precision="5"/>
+		</hj:basic>
+	</hj:default-single-property>
+
+    <!-- 3.3.19 xsd:byte -->
+	<hj:default-single-property type="xsd:byte">
+		<hj:basic>
+			<orm:column scale="0" precision="3"/>
+		</hj:basic>
+	</hj:default-single-property>
+
+    <!-- 3.3.20 xsd:nonNegativeInteger -->
+
+    <!-- 3.3.21 xsd:unsignedLong -->
+	<hj:default-single-property type="xsd:unsignedLong">
+		<hj:basic>
+			<orm:column scale="0" precision="20"/>
+		</hj:basic>
+	</hj:default-single-property>
+	
+    <!-- 3.3.22 xsd:unsignedInt -->
+	<hj:default-single-property type="xsd:unsignedInt">
+		<hj:basic>
+			<orm:column scale="0" precision="10"/>
+		</hj:basic>
+	</hj:default-single-property>
+
+    <!-- 3.3.23 xsd:unsignedShort -->
+	<hj:default-single-property type="xsd:unsignedShort">
+		<hj:basic>
+			<orm:column scale="0" precision="5"/>
+		</hj:basic>
+	</hj:default-single-property>
+
+    <!-- 3.3.24 xsd:unsignedByte -->
+	<hj:default-single-property type="xsd:unsignedByte">
+		<hj:basic>
+			<orm:column scale="0" precision="3"/>
+		</hj:basic>
+	</hj:default-single-property>
+    <!-- ================================================================================== -->
+
+    <!-- 3.2.1 xsd:string -->
+	<hj:default-collection-property type="xsd:string">
+		<hj:element-collection>
+			<orm:column length="255"/>
+		</hj:element-collection>
+	</hj:default-collection-property>
+
+    <!-- 3.2.2 xsd:boolean -->
+	
+    <!-- 3.2.3 xsd:decimal -->
+	<hj:default-collection-property type="xsd:decimal">
+		<hj:element-collection>
+			<orm:column scale="10" precision="20"/>
+		</hj:element-collection>
+	</hj:default-collection-property>	
+	
+    <!-- 3.2.4 xsd:float -->
+	<hj:default-collection-property type="xsd:float">
+		<hj:element-collection>
+			<orm:column scale="10" precision="20"/>
+		</hj:element-collection>
+	</hj:default-collection-property>
+
+    <!-- 3.2.5 xsd:double -->
+	<hj:default-collection-property type="xsd:double">
+		<hj:element-collection>
+			<orm:column scale="10" precision="20"/>
+		</hj:element-collection>
+	</hj:default-collection-property>
+	
+    <!-- 3.2.6 xsd:duration -->
+	<hj:default-collection-property type="xsd:duration">
+		<hj:element-collection>
+			<orm:column length="127"/>
+		</hj:element-collection>
+	</hj:default-collection-property>
+
+    <!-- 3.2.7 xsd:dateTime -->
+	<hj:default-collection-property type="xsd:dateTime">
+		<hj:element-collection>
+			<orm:temporal>TIMESTAMP</orm:temporal>
+		</hj:element-collection>
+	</hj:default-collection-property>
+
+    <!-- 3.2.8 xsd:time -->
+	<hj:default-collection-property type="xsd:time">
+		<hj:element-collection>
+			<orm:temporal>TIME</orm:temporal>
+		</hj:element-collection>
+	</hj:default-collection-property>
+
+    <!-- 3.2.9 xsd:date -->
+	<hj:default-collection-property type="xsd:date">
+		<hj:element-collection>
+			<orm:temporal>DATE</orm:temporal>
+		</hj:element-collection>
+	</hj:default-collection-property>
+	
+    <!-- 3.2.10 xsd:gYearMonth -->
+	<hj:default-collection-property type="xsd:gYearMonth">
+		<hj:element-collection>
+			<orm:temporal>DATE</orm:temporal>
+		</hj:element-collection>
+	</hj:default-collection-property>
+
+    <!-- 3.2.11 xsd:gYear -->
+	<hj:default-collection-property type="xsd:gYear">
+		<hj:element-collection>
+			<orm:temporal>DATE</orm:temporal>
+		</hj:element-collection>
+	</hj:default-collection-property>
+
+    <!-- 3.2.12 xsd:gMonthDay -->
+	<hj:default-collection-property type="xsd:gMonthDay">
+		<hj:element-collection>
+			<orm:temporal>DATE</orm:temporal>
+		</hj:element-collection>
+	</hj:default-collection-property>
+
+    <!-- 3.2.13 xsd:gDay -->
+	<hj:default-collection-property type="xsd:gDay">
+		<hj:element-collection>
+			<orm:temporal>DATE</orm:temporal>
+		</hj:element-collection>
+	</hj:default-collection-property>
+
+    <!-- 3.2.14 xsd:gMonth -->
+	<hj:default-collection-property type="xsd:gMonth">
+		<hj:element-collection>
+			<orm:temporal>DATE</orm:temporal>
+		</hj:element-collection>
+	</hj:default-collection-property>
+
+    <!-- 3.2.15 xsd:hexBinary -->
+	<hj:default-collection-property type="xsd:hexBinary">
+		<hj:element-collection>
+			<orm:lob/>
+		</hj:element-collection>
+	</hj:default-collection-property>
+	
+    <!-- 3.2.16 xsd:base64Binary -->
+	<hj:default-collection-property type="xsd:base64Binary">
+		<hj:element-collection>
+			<orm:lob/>
+		</hj:element-collection>
+	</hj:default-collection-property>
+	
+    <!-- 3.2.17 xsd:anyURI -->
+
+    <!-- 3.2.18 xsd:QName -->
+
+    <!-- 3.2.19 xsd:NOTATION -->
+    
+    <!-- 3.3.1 xsd:normalizedString -->
+
+    <!-- 3.3.2 xsd:token -->
+    
+    <!-- 3.3.3 xsd:language -->
+	<hj:default-collection-property type="xsd:language">
+		<hj:element-collection>
+			<orm:column length="17"/>
+		</hj:element-collection>
+	</hj:default-collection-property>
+    
+    <!-- 3.3.4 xsd:NMTOKEN -->
+
+    <!-- 3.3.5 xsd:NMTOKENS -->
+
+    <!-- 3.3.6 xsd:Name -->
+	
+    <!-- 3.3.7 xsd:NCName -->
+
+    <!-- 3.3.8 xsd:ID -->
+    
+    <!-- 3.3.9 xsd:IDREF -->
+    
+    <!-- 3.3.10 xsd:IDREFs -->
+    
+    <!-- 3.3.11 xsd:ENTITY -->
+    
+    <!-- 3.3.12 xsd:ENTITIES -->
+    
+
+    <!-- 3.3.13 xsd:integer -->
+	<hj:default-collection-property type="xsd:integer">
+		<hj:element-collection>
+			<orm:column scale="0" precision="20"/>
+		</hj:element-collection>
+	</hj:default-collection-property>
+
+    <!-- 3.3.14 xsd:nonPositiveInteger -->
+    
+    <!-- 3.3.15 xsd:negativeInteger -->
+    
+    <!-- 3.3.16 xsd:long -->
+	<hj:default-collection-property type="xsd:long">
+		<hj:element-collection>
+			<orm:column scale="0" precision="20"/>
+		</hj:element-collection>
+	</hj:default-collection-property>
+
+    <!-- 3.3.17 xsd:int -->
+	<hj:default-collection-property type="xsd:int">
+		<hj:element-collection>
+			<orm:column scale="0" precision="10"/>
+		</hj:element-collection>
+	</hj:default-collection-property>
+
+    <!-- 3.3.18 xsd:short -->
+	<hj:default-collection-property type="xsd:short">
+		<hj:element-collection>
+			<orm:column scale="0" precision="5"/>
+		</hj:element-collection>
+	</hj:default-collection-property>
+
+    <!-- 3.3.19 xsd:byte -->
+	<hj:default-collection-property type="xsd:byte">
+		<hj:element-collection>
+			<orm:column scale="0" precision="3"/>
+		</hj:element-collection>
+	</hj:default-collection-property>
+
+    <!-- 3.3.20 xsd:nonNegativeInteger -->
+
+    <!-- 3.3.21 xsd:unsignedLong -->
+	<hj:default-collection-property type="xsd:unsignedLong">
+		<hj:element-collection>
+			<orm:column scale="0" precision="20"/>
+		</hj:element-collection>
+	</hj:default-collection-property>
+	
+    <!-- 3.3.22 xsd:unsignedInt -->
+	<hj:default-collection-property type="xsd:unsignedInt">
+		<hj:element-collection>
+			<orm:column scale="0" precision="10"/>
+		</hj:element-collection>
+	</hj:default-collection-property>
+
+    <!-- 3.3.23 xsd:unsignedShort -->
+	<hj:default-collection-property type="xsd:unsignedShort">
+		<hj:element-collection>
+			<orm:column scale="0" precision="5"/>
+		</hj:element-collection>
+	</hj:default-collection-property>
+
+    <!-- 3.3.24 xsd:unsignedByte -->
+	<hj:default-collection-property type="xsd:unsignedByte">
+		<hj:element-collection>
+			<orm:column scale="0" precision="3"/>
+		</hj:element-collection>
+	</hj:default-collection-property>
+
+    <!-- 3.3.25 xsd:positiveInteger -->
+
+	<hj:default-jaxb-context>
+		<hj:field final="true"/>
+	</hj:default-jaxb-context>	
+
+</hj:persistence>

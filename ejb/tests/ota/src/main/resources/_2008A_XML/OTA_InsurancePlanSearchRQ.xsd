@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.009" id="OTA2008A">
+	<xs:include schemaLocation="OTA_InsuranceCommonTypes.xsd"/>
+	
+	
+	
+	
+	
+	
+	
+	
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_InsurancePlanSearchRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Root element for insurance plan search request</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Allows vendors to pass an number of identifying codes to the insurance provider so that the provider can retrieve the plans available to that specific vendor.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CoveragePreferences" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Collection of insurance coverage preferences used in the advance plan search feature.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="CoveragePreference" maxOccurs="99">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Lists a specific insurance coverage type (baggage, medical, etc) to search for and allows search-er to specify preferences on different coverages.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="CoverageLimitType">
+											<xs:attributeGroup ref="PreferLevelGroup"/>
+										</xs:extension>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SearchTripInfo" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Collection of information about the trips for which insurance coverage is being searched for.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="TravelSector" type="OTA_CodeType" minOccurs="0" maxOccurs="5">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Code used to indicate the travel sector (air, car, hotel, cruise) associated with the trips. Refer to OTA Code List Travel Sector (TVS).</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="TotalTripCost" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Estimated trip cost, or the total price of the journey for the traveler(s).</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attributeGroup ref="CurrencyAmountGroup"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="MaximumTripLength" type="TimeDurationType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The maximum trip length the traveler(s) plan on taking during the period of coverage (Multi-Trip plans only).</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="CoveredTrips" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Container for any information about the trip(s) for which the traveler(s) are requesting coverage.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="CoveredTrip" maxOccurs="99">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Information about a single trip for which the traveler(s) are requesting coverage.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:complexContent>
+													<xs:extension base="TripFeaturesType">
+														<xs:attributeGroup ref="DateTimeSpanGroup"/>
+														<xs:attribute name="DepositDate" type="xs:dateTime" use="optional"/>
+														<xs:attribute name="FinalPayDate" type="xs:dateTime" use="optional"/>
+													</xs:extension>
+												</xs:complexContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SearchTravInfo" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Collection of information about the travelers for which insurance coverage is being searched for</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SearchTravelers" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Collection of individual traveler objects containing information about each traveler pertaining to the insurance search.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="SearchTraveler" type="SearchTravelerType" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Represents general information about a single traveler for which insurance coverage is being sought.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CitizenCountryName" type="CountryNameType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Citizenship information about the traveling group (if all travelers are of same citizenship type)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ResidenceCountryName" type="CountryNameType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Residency information about the traveling group (if all travelers are from same country of residence)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Affiliations" type="BoundedAffiliationsType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Container of objects used to associate traveling group with larger organizations (travel clubs, employers, etc)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="MinTravelers" type="xs:positiveInteger" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The minimum size of the group of travelers for which the coverage search is being performed.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="MaxTravelers" type="xs:positiveInteger" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The maximum size of the group of travelers for which the coverage search is being performed.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attribute name="SearchResponseFilter" type="OTA_CodeType" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies which type of plans should be returned in the response (e.g. featured only, featured and preferred, all). Refer to OTA Code List Search Response Filter (SRF).
+</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attributeGroup ref="DetailResponseGroup">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Flag to indicate whether response should contain detailed descriptions for each plan returned.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="3.005" id="OTA2008A">
+	<xs:include schemaLocation="OTA_VehicleCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_VehCancelRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The root tag of  OTA_VehCancelResRS contains the standard payload attributes found in all OTA payload documents.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType"/>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0"/>
+					<xs:element name="VehCancelRSCore">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Identifies the common, or core, information associated with the response to a request for the cancellation of a vehicle reservation.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="CancelInfoRSType">
+									<xs:attribute name="CancelStatus" type="TransactionStatusType" use="required"/>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="VehCancelRSInfo" type="VehicleCancelRSAdditionalInfoType">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Identifies the supplemental information associated with the response to a request for the cancellation of a vehicle reservation.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType"/>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="VehicleCancelRSAdditionalInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleCancelRSAdditionalInfoType complex type defines the supplemental information that is used as part of the confirmation of the cancellation of a vehicle reservation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="VehReservation" type="VehicleReservationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Details about the reservation that was successfully cancelled.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

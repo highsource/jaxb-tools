@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jaxb:bindings version="1.0" 
+               xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+               xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+               xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+               xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+               jaxb:extensionBindingPrefixes="xjc hj annox"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:annox="http://annox.dev.java.net"
+               xmlns:hsa="http://annox.dev.java.net/org.hibernate.search.annotations"
+               xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+               xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb  http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+    >
+    
+    
+    <!--
+    $Id:$    
+    -->
+    <jaxb:bindings schemaLocation="./xsd/rim.xsd" node="/xs:schema">        
+
+	<hj:persistence>
+		<hj:default-one-to-many>
+			<orm:order-column/>
+		</hj:default-one-to-many>
+	</hj:persistence>
+
+
+        <jaxb:bindings node="xs:complexType[@name='TelephoneNumberType']">
+		<hj:entity>
+			<orm:association-override name="slot">
+				<orm:join-column name="SLOT_TELEPHONENUMBERTYPE_ID"/>
+			</orm:association-override>
+		</hj:entity>
+        </jaxb:bindings>        
+
+        <jaxb:bindings node="xs:complexType[@name='EmailAddressType']">
+		<hj:entity>
+			<orm:association-override name="slot">
+				<orm:join-column name="SLOT_EMAILADDRESSTYPE_ID"/>
+			</orm:association-override>
+		</hj:entity>
+        </jaxb:bindings>        
+
+        <jaxb:bindings node="xs:complexType[@name='QueryInvocationType']">
+		<hj:entity>
+			<orm:association-override name="slot">
+				<orm:join-column name="SLOT_QUERYINVOCATION_ID"/>
+			</orm:association-override>
+		</hj:entity>
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='QueryExpressionType']">
+		<hj:entity>
+			<orm:association-override name="slot">
+				<orm:join-column name="SLOT_QUERYEXPRESSION_ID"/>
+			</orm:association-override>
+		</hj:entity>
+        </jaxb:bindings>        
+
+        <jaxb:bindings node="xs:complexType[@name='DeliveryInfoType']">
+		<hj:entity>
+			<orm:association-override name="slot">
+				<orm:join-column name="SLOT_DELIVERYINFO_ID"/>
+			</orm:association-override>
+		</hj:entity>
+        </jaxb:bindings>        
+
+        <jaxb:bindings node="xs:complexType[@name='ParameterType']">
+		<hj:entity>
+			<orm:association-override name="slot">
+				<orm:join-column name="SLOT_PARAMETER_ID"/>
+			</orm:association-override>
+		</hj:entity>
+        </jaxb:bindings>        
+
+        <jaxb:bindings node="xs:complexType[@name='PostalAddressType']">
+		<hj:entity>
+			<orm:association-override name="slot">
+				<orm:join-column name="SLOT_POSTALADDRESS_ID"/>
+			</orm:association-override>
+		</hj:entity>
+        </jaxb:bindings>        
+
+        <jaxb:bindings node="xs:complexType[@name='IdentifiableType']">
+		<hj:entity>
+			<orm:association-override name="slot">
+				<orm:join-column name="SLOT_IDENTIFIABLETYPE_ID"/>
+			</orm:association-override>
+		</hj:entity>
+        </jaxb:bindings>        
+	
+
+
+
+
+
+
+        <!--jaxb:bindings node="xs:complexType[@name='RegistryObjectType']">
+            <jaxb:class implClass="org.freebxml.omar.jaxb.util.RegistryObjectTypeExt" />
+        </jaxb:bindings>
+        
+        <jaxb:bindings node="xs:complexType[@name='ExtrinsicObjectType']">
+            <jaxb:class implClass="org.freebxml.omar.jaxb.util.ExtrinsicObjectTypeExt" />
+        </jaxb:bindings-->
+        
+        <jaxb:bindings node="//xs:complexType[@name='StringQueryExpressionType']//xs:element[@name='value']">
+            <hj:basic>
+              <orm:column length="8192"/>
+            </hj:basic>
+        </jaxb:bindings>
+                
+        <jaxb:schemaBindings>
+            <jaxb:package name="org.freebxml.omar.jaxb.bindings.rim._4_0"/>
+        </jaxb:schemaBindings>    
+                        
+        <jaxb:bindings node="xs:complexType[@name='ExtensibleObjectType']">
+		<hj:mapped-superclass/>
+		<!--hj:generated-id name="Id" attributeName="id" javaType="java.lang.String" schemaType="xs:anyURI"/-->
+        </jaxb:bindings>
+        <jaxb:bindings node="xs:complexType[@name='IdentifiableType']">
+            <!--hj:basic>
+              <orm:inheritance strategy="InheritanceType.JOINED"/>
+            </hj:basic-->
+        </jaxb:bindings>
+        <jaxb:bindings node="//xs:complexType[@name='IdentifiableType']//xs:attribute[@name='id']">
+            <hj:id/>
+        </jaxb:bindings>
+        <jaxb:bindings node="xs:complexType[@name='ExtensibleObjectType']//xs:element[@ref='tns:Slot']">
+		<hj:one-to-many>
+			<orm:join-column name="SLOT_ID"/>
+		</hj:one-to-many>
+	</jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='SlotType']//xs:element[@ref='tns:ValueList']">
+        </jaxb:bindings>
+        <jaxb:bindings node="xs:complexType[@name='SlotType']//xs:attribute[@name='name']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='ValueListType']//xs:element[@name='ValueListItem']">
+        </jaxb:bindings>                        
+        <jaxb:bindings node="xs:complexType[@name='RegistryObjectType']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='RegistryObjectType']//xs:element[@ref='tns:Name']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='RegistryObjectType']//xs:element[@ref='tns:Description']">
+        </jaxb:bindings>
+        <!--
+        Following does not work due to limitation in hibernate-search with 
+        circular class references. Need to file an Issue.
+        -->
+        <!--jaxb:bindings node="xs:complexType[@name='RegistryObjectType']//xs:element[@ref='tns:Classification']">
+            <annox:annotate>
+                <annox:annotate
+                    annox:class="org.hibernate.search.annotations.IndexedEmbedded" >
+                </annox:annotate>
+            </annox:annotate>
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='RegistryObjectType']//xs:element[@ref='tns:ExternalIdentifier']">
+            <annox:annotate>
+                <annox:annotate
+                    annox:class="org.hibernate.search.annotations.IndexedEmbedded" >
+                </annox:annotate>
+            </annox:annotate>
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='RegistryObjectType']//xs:element[@ref='tns:ExternalLink']">
+            <annox:annotate>
+                <annox:annotate
+                    annox:class="org.hibernate.search.annotations.IndexedEmbedded" >
+                </annox:annotate>
+            </annox:annotate>
+        </jaxb:bindings-->        
+        <!--jaxb:bindings node="xs:complexType[@name='InternationalStringType']">
+            <annox:annotate>
+                <annox:annotate
+                    annox:class="org.hibernate.search.annotations.Indexed" >
+                </annox:annotate>
+            </annox:annotate>
+        </jaxb:bindings-->        
+        <jaxb:bindings node="xs:complexType[@name='InternationalStringType']//xs:element[@ref='tns:LocalizedString']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='LocalizedStringType']/xs:attribute[@name='value']">
+        </jaxb:bindings>
+        
+        <jaxb:bindings node="xs:complexType[@name='ExtrinsicObjectType']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='ExtrinsicObjectType']//xs:element[@name='repositoryItem']">
+        </jaxb:bindings>                        
+        <jaxb:bindings node="xs:complexType[@name='ParameterizedQueryType']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='AssociationType']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='AssociationType']//xs:attribute[@name='type']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='FederationType']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='OrganizationType']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='OrganizationType']//xs:element[@ref='tns:PostalAddress']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='OrganizationType']//xs:element[@ref='tns:TelephoneNumber']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='OrganizationType']//xs:element[@ref='tns:EmailAddress']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='PersonType']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='PersonType']//xs:element[@ref='tns:PostalAddress']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='PersonType']//xs:element[@ref='tns:TelephoneNumber']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='PersonType']//xs:element[@ref='tns:EmailAddress']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='PersonType']//xs:element[@ref='tns:PersonName']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='PersonNameType']//xs:attribute[@name='firstName']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='PersonNameType']//xs:attribute[@name='middleName']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='PersonNameType']//xs:attribute[@name='lastName']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='PostalAddressType']//xs:attribute[@name='city']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='PostalAddressType']//xs:attribute[@name='country']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='PostalAddressType']//xs:attribute[@name='postalCode']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='PostalAddressType']//xs:attribute[@name='stateOrProvince']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='PostalAddressType']//xs:attribute[@name='street']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='EmailAddressType']//xs:attribute[@name='address']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='RegistryPackageType']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='RegistryType']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='ServiceBindingType']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='ServiceType']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='ClassificationSchemeType']">
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='ClassificationNodeType']">
+        </jaxb:bindings>        
+        
+    </jaxb:bindings>
+    
+    <jaxb:bindings schemaLocation="./xsd/rs.xsd" node="/xs:schema">        
+        <jaxb:schemaBindings>
+            <jaxb:package name="org.freebxml.omar.jaxb.bindings.rs._4_0"/>
+        </jaxb:schemaBindings>    
+
+	<!-- Added by lexi -->
+        <jaxb:bindings node="xs:complexType[@name='RegistryRequestType']">
+		<hj:entity>
+			<orm:association-override name="slot">
+				<orm:join-column name="SLOT_REGISTRYREQUESTTYPE_ID"/>
+			</orm:association-override>
+		</hj:entity>
+        </jaxb:bindings>        
+        <jaxb:bindings node="xs:complexType[@name='RegistryResponseType']">
+		<hj:entity>
+			<orm:association-override name="slot">
+				<orm:join-column name="SLOT_REGISTRYRESPONSETYPE_ID"/>
+			</orm:association-override>
+		</hj:entity>
+        </jaxb:bindings>
+
+    </jaxb:bindings>
+    
+    <jaxb:bindings schemaLocation="./xsd/lcm.xsd" node="/xs:schema">        
+        <jaxb:schemaBindings>
+            <jaxb:package name="org.freebxml.omar.jaxb.bindings.lcm._4_0"/>
+        </jaxb:schemaBindings>    
+        <jaxb:bindings node="//xs:element[@name='SubmitObjectsRequest']//xs:attribute[@name='mode']/xs:simpleType">
+            <jaxb:typesafeEnumClass name="Mode"/>
+        </jaxb:bindings>
+    </jaxb:bindings>
+    
+    <jaxb:bindings schemaLocation="./xsd/query.xsd" node="/xs:schema">        
+        <jaxb:schemaBindings>
+            <jaxb:package name="org.freebxml.omar.jaxb.bindings.query._4_0"/>
+        </jaxb:schemaBindings>
+        
+        <jaxb:bindings node="//xs:complexType[@name='ResponseOptionType']//xs:attribute[@name='returnType']/xs:simpleType">
+            <jaxb:typesafeEnumClass name="ReturnType"/>
+        </jaxb:bindings>
+        
+    </jaxb:bindings>
+    
+    <jaxb:bindings schemaLocation="./xsd/spi.xsd" node="/xs:schema">        
+        <jaxb:schemaBindings>
+            <jaxb:package name="org.freebxml.omar.jaxb.bindings.spi._4_0"/>
+        </jaxb:schemaBindings>    
+    </jaxb:bindings>
+</jaxb:bindings>

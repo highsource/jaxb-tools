@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="CustomerServiceService"
+	targetNamespace="http://customerservice.example.com/service"
+	xmlns:tns="http://customerservice.example.com/service"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:tns="http://customerservice.example.com/service"
+			xmlns:cns="http://customerservice.example.com/model"
+			attributeFormDefault="unqualified"
+			elementFormDefault="qualified"
+			targetNamespace="http://customerservice.example.com/service">
+
+			<xs:import schemaLocation="customer.xsd" namespace="http://customerservice.example.com/model"/>
+			<!-- ... -->
+			<xs:element name="getCustomerById" type="tns:getCustomerById" />
+			<xs:complexType name="getCustomerById">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="customerId" type="xs:int" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="getCustomerByIdResponse" type="tns:getCustomerByIdResponse" />
+			<xs:complexType name="getCustomerByIdResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="cns:customer" />
+				</xs:sequence>
+			</xs:complexType>
+			<!-- ... -->
+			<xs:element name="updateCustomer" type="tns:updateCustomer" />
+			<xs:complexType name="updateCustomer">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="customer" type="cns:customer" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="updateCustomerResponse" type="tns:updateCustomerResponse" />
+			<xs:complexType name="updateCustomerResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="customerId" type="xs:int" />
+				</xs:sequence>
+			</xs:complexType>
+			<!-- ... -->
+			<xs:element name="deleteCustomerById" type="tns:deleteCustomerById" />
+			<xs:complexType name="deleteCustomerById">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="customerId" type="xs:int" />
+				</xs:sequence>
+			</xs:complexType>			
+			<!-- ... -->
+			<xs:element name="NoSuchCustomer" type="tns:NoSuchCustomer" />
+			<xs:complexType name="NoSuchCustomer">
+				<xs:sequence>
+					<xs:element name="customerId" nillable="true" type="xs:int" />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getCustomerById">
+		<wsdl:part name="parameters" element="tns:getCustomerById"/>
+	</wsdl:message>
+	<wsdl:message name="getCustomerByIdResponse">
+		<wsdl:part name="parameters" element="tns:getCustomerByIdResponse"/>
+	</wsdl:message>
+	<wsdl:message name="updateCustomer">
+		<wsdl:part name="parameters" element="tns:updateCustomer"/>
+	</wsdl:message>
+	<wsdl:message name="updateCustomerResponse">
+		<wsdl:part name="parameters" element="tns:updateCustomerResponse"/>
+	</wsdl:message>
+	<wsdl:message name="deleteCustomerById">
+		<wsdl:part name="parameters" element="tns:deleteCustomerById"/>
+	</wsdl:message>	
+	<wsdl:message name="NoSuchCustomerException">
+		<wsdl:part name="NoSuchCustomerException" element="tns:NoSuchCustomer"/>
+	</wsdl:message>
+	<wsdl:portType name="CustomerService">
+		<wsdl:operation name="updateCustomer">
+			<wsdl:input name="updateCustomer" message="tns:updateCustomer"/>
+			<wsdl:output name="updateCustomerResponse" message="tns:updateCustomerResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="deleteCustomerById">
+			<wsdl:input name="deleteCustomerById" message="tns:deleteCustomerById"/>
+			<wsdl:fault name="NoSuchCustomerException" message="tns:NoSuchCustomerException"/>
+		</wsdl:operation>
+		<wsdl:operation name="getCustomerById">
+			<wsdl:input name="getCustomerById" message="tns:getCustomerById"/>
+			<wsdl:output name="getCustomerByIdResponse" message="tns:getCustomerByIdResponse"/>
+			<wsdl:fault name="NoSuchCustomerException" message="tns:NoSuchCustomerException"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="CustomerServiceServiceSoapBinding"
+		type="tns:CustomerService">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="updateCustomer">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="updateCustomer">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="updateCustomerResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteCustomerById">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="deleteCustomerById">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:fault name="NoSuchCustomerException">
+				<soap:fault name="NoSuchCustomerException" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getCustomerById">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getCustomerById">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getCustomerByIdResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="NoSuchCustomerException">
+				<soap:fault name="NoSuchCustomerException" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="CustomerServiceService">
+		<wsdl:port name="CustomerServicePort" binding="tns:CustomerServiceServiceSoapBinding">
+			<soap:address location="http://localhost:8080/CustomerServicePort" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

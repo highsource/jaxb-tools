@@ -1,0 +1,47 @@
+<jxb:bindings version="2.1" 
+  xmlns:jxb="http://java.sun.com/xml/ns/jaxb" 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
+  jxb:extensionBindingPrefixes="xjc">
+
+    <jxb:bindings schemaLocation="mathml2.xsd" node="/xs:schema">
+        <jxb:bindings node="/xs:schema/xs:element[@name='math']">
+            <xjc:dom/>
+        </jxb:bindings>
+    </jxb:bindings>
+
+    <!--jxb:bindings schemaLocation="http://www.w3.org/Math/XMLSchema/mathml2/common/common-attribs.xsd" node="/xs:schema">
+        <jxb:bindings node="/xs:schema/xs:attributeGroup[@name='Common.attrib']/xs:attribute[@name='class']">
+            <jxb:property name="ObjectClass"/>
+        </jxb:bindings>
+    </jxb:bindings-->
+
+   <!--jxb:bindings schemaLocation="http://www.w3.org/Math/XMLSchema/mathml2/presentation/scripts.xsd" node="/xs:schema">
+        <jxb:bindings node="//xs:group[@name='mmultiscripts.content']">
+          <xjc:dom/>
+        </jxb:bindings> 
+        <jxb:bindings node="//xs:group[@name='mmultiscripts.content']/xs:sequence/xs:sequence/xs:sequence/xs:group[@ref='Presentation-expr-or-none.class'][1]">
+            <jxb:class name="PEON1"/>
+        </jxb:bindings> 
+        <jxb:bindings node="//xs:group[@name='mmultiscripts.content']/xs:sequence/xs:sequence/xs:sequence">
+            <jxb:class name="PEON"/>
+        </jxb:bindings>
+    </jxb:bindings-->
+
+    <jxb:bindings schemaLocation="sbml.xsd" node="/xs:schema">
+        <jxb:bindings node="//xs:complexType[@name='Sbml']">
+            <jxb:class name="SBMLType"/>
+        </jxb:bindings>
+        <jxb:bindings node="//xs:element[@name='sbml']">
+            <jxb:class name="SBML"/>
+        </jxb:bindings>
+
+        <jxb:bindings node="/xs:schema/xs:complexType[@name='SBase']/xs:sequence/xs:element[@name='notes']">
+            <xjc:dom/>
+        </jxb:bindings>
+        <jxb:bindings node="/xs:schema/xs:complexType[@name='SBase']/xs:sequence/xs:element[@name='annotation']">
+            <xjc:dom/>
+        </jxb:bindings>
+
+    </jxb:bindings>
+</jxb:bindings>

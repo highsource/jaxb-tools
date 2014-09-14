@@ -1,0 +1,835 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+   User    Mod     Date            Description
+   ====================================================================                                            
+   MV     CR139    20061018       Added to LengthUnitsContentType: pixal
+   MV     CR139    20061020       Added to SpeedUnitsContentType: Revolutions Per Minute, foot per second, meter per second
+                                  Added: PressureUnitsContentType, ElectricityUnitsContentType, ForceUnitsContentType
+   DC     CR238    20061215       Added: ComputerStorageUnitsContentType
+   DC              20061220       Added missing documentation to simpleTypes to have it pass STAR Unit Tests.
+   DC              20070117       Added: bits, bytes to ComputerStorageMeasureType
+   DC     CR322    20070212       Added DisplacementContentType with Union of Weight and Volume
+   DC              20070222       Corrected pixal to pixel
+   MV     MT307    20070611       BugFix - Added: LengthUnitsContentType: Mile
+   
+ -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.xfront.com/UnitsOfMeasure"
+            xmlns:xfUOMcl="http://www.xfront.com/UnitsOfMeasure"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                           X X X XML Schema simpleType definitions for units of measure
+                           X X X X Author: Roger Costello
+                           X X X X For an explanation of what each of these units means
+                           X X see: http://www.unc.edu/~rowlett/units/
+                           X X X
+                           XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                           Converted to UNCEFACT NDR by David Carver, STAR. Removed duplicate values.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleType name="TemperatureUnitsContentType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This code list represents the System Internationale's unit of measure for temperature.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="celsius">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Celsius</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="farenheit">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Farenheit</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="kelvin">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Kelvin</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="LengthUnitsContentType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This code list represents the System Internationale's unit of measure for lengths.
+            </xsd:documentation>
+        </xsd:annotation>
+         <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="angstrom">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Angstrom</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="A">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Paper Size</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="nanometer">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Nanometer</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="normal metric">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Normal Metric</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="micron">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Micron</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="millimeter">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Millimeter</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="centimeter">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Centimeter</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="decimeter">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Decimeter</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="meter">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Meter</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="kilometer">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Kilometer</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="yottameter">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Yotta Meter</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="milli-inch">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Milli-Inch</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="inch">
+                <xsd:annotation>
+                    <xsd:documentation source="inch">Inch</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="feet">
+                <xsd:annotation>
+                    <xsd:documentation source="feet">Feet</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="yard">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Yard</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="hand">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Hand</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="link">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Link</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="chain">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Chain</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="span">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Span</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="cubit">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Cubit</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="vara">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Vara</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="fathom">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Fathom</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="rod">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Rod</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="perch">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Perch</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="pole">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Pole</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="furlong">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Furlong</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="cable">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Cable</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="nautical mile">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Nautical Mile</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="league">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">League</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="degree">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Degree</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="pixel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Pixels do not have a fixed size; their diameters are generally measured in micrometers (microns). Although the pixel is not a unit of measurement itself, pixels are often used to measure the resolution (or sharpness) of images. As a hypothetical example, a 600 x 1000 pixel image has 4 times the pixel density and is thus 4 times sharper than a 300 x 500 pixel image, assuming the two images have the same physical size.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="mile">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Mile</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="WeightUnitsContentType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This code list represents the System Internationale's unit of measure for weight.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="gram">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Gram</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="kilogram">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Kilogram</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ounce">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Ounce</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="pound">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Pound</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="ton">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Ton</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="grain">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Grain</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="scruple">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Scruple</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="carat">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Carat</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="pennyweight">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Penny Weight</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="dram">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Dram</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="stone">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Stone</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="quarter">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Quarter</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="slug">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Slug</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="metric ton">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Metric Ton</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="long ton">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Long Ton</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="VolumeUnitsContentType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This code list represents the System Internationale's unit of measure for volume.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="milliliter">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Milliliter</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="cubic centimeter">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Cubic Centimeter</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="cubic meter">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Cubic Meter</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="liter">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Liter</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="fluid ounce">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Fluid Ounce</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="pint">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Pint</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="quart">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Quart</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="gallon">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Gallon</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="gill">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Gill</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="board foot">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Board Foot</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="peck">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Peck</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="cubic inch">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Cubic Inch</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="cubic foot">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Cubic Foot</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="cubic yard">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Cubic Yard</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="bushel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Bushel</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="barrel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Barrel</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="hogshead">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Hogshead</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="tun">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Tun</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="stere">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Stere</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="chaldron">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Chaldron</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="register ton">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Register Ton</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="cord">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Cord</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="acre foot">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Acre Foot</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="acre inch">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Acre Inch</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="AreaUnitsContentType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This code list represents the System Internationale's unit of measure for area.
+            </xsd:documentation>
+        </xsd:annotation>
+        
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="square meter">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Square Meter</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="square kilometer">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Square Kilometer</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="square inch">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Square Inch</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="square foot">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Square Foot</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="square yard">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Square Yard</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="square mile">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Square Mile</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="square rod">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Square Rod</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="circular inch">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Circular Inch</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="circular mil">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Circular Millimeter</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="acre">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Acre</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="rood">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Rood</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="hectare">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Hectare</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="township">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Township</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="CookingUnitsContentType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This code list represents the System Internationale's unit of measure for cooking.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="cup" />
+            <xsd:enumeration value="c" />
+            <xsd:enumeration value="tablespoon (US)" />
+            <xsd:enumeration value="tbsp (US)" />
+            <xsd:enumeration value="tblsp (US)" />
+            <xsd:enumeration value="tablespoon (UK)" />
+            <xsd:enumeration value="tbsp (UK)" />
+            <xsd:enumeration value="tblsp (UK)" />
+            <xsd:enumeration value="teaspoon (US)" />
+            <xsd:enumeration value="tsp (US)" />
+            <xsd:enumeration value="teaspoon (UK)" />
+            <xsd:enumeration value="tsp (UK)" />
+            <xsd:enumeration value="drop" />
+            <xsd:enumeration value="dash" />
+            <xsd:enumeration value="pinch" />
+            <xsd:enumeration value="fluid ounce (US)" />
+            <xsd:enumeration value="fluid ounce (UK)" />
+            <xsd:enumeration value="fl oz" />
+            <xsd:enumeration value="pint (US liq.)" />
+            <xsd:enumeration value="pint (US dry)" />
+            <xsd:enumeration value="pint (UK)" />
+            <xsd:enumeration value="quart (US liq.)" />
+            <xsd:enumeration value="quart (US dry)" />
+            <xsd:enumeration value="liter" />
+            <xsd:enumeration value="gallon (US liq.)" />
+            <xsd:enumeration value="gallon (US dry)" />
+            <xsd:enumeration value="gallon (UK)" />
+            <xsd:enumeration value="peck" />
+            <xsd:enumeration value="bushel" />
+            <xsd:enumeration value="gill (US)" />
+            <xsd:enumeration value="gill (UK)" />
+            <xsd:enumeration value="fluid dram" />
+            <xsd:enumeration value="fluiddram" />
+            <xsd:enumeration value="fl dr" />
+            <xsd:enumeration value="coffeespoon" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="SpeedUnitsContentType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This code list represents the System Internationale's unit of measure for speed.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="miles per hour">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Miles Per Hour</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="meters per second">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Meters Per Second</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="kilometers per hour">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Kilometers Per Hour</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="knots">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Knots</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="nautical miles per hour">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Nautical Miles Per Hour</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="mach">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Mach</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="gallons per hour">
+                <xsd:annotation>
+                    <xsd:documentation>Gallons Per Hour</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="liters per hour">
+                <xsd:annotation>
+                    <xsd:documentation>Liters Per Hour</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="revolutions per minute">
+                <xsd:annotation>
+                    <xsd:documentation>Revolutions Per Minute (rpm)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="foot per second">
+                <xsd:annotation>
+                    <xsd:documentation>foot per second (ft/s)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="meter per second">
+                <xsd:annotation>
+                    <xsd:documentation>meter per second (m/s)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="TimeUnitsContentType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This code list represents the System Internationale's unit of measure for time.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="nanosecond">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Nanosecond</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="microsecond">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Microsecond</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="millisecond">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Millisecond</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="second">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Second</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="minute">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Minute</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="hour">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Hour</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="day">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Day</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="week">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Week</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="month">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Month</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="year">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Year</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="decade">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Decade</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="century">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Century</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="millennium">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Millennium</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="PowerUnitsContentType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This code list represents the System Internationale's unit of measure for power.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="horsepower">
+                <xsd:annotation>
+                    <xsd:documentation>The US horsepower measurement</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="metric horsepower">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">The UK horsepower measurement. This is slighly less than the US measurement.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="FuelConsumptionUnitsContentType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This code list represents the combined code lists of Volume and Speed for measuring fuel consumption.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:union memberTypes="xfUOMcl:VolumeUnitsContentType xfUOMcl:SpeedUnitsContentType" />
+    </xsd:simpleType>
+    <xsd:simpleType name="ElectricityUnitsContentType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This code list represents the System Internationale's unit of measure for electricity.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="ampere">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Ampere(amps)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="cold cranking ampere">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Cold Cranking Ampere(CCA)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="volt">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">Volt(V)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="kilowatt hour">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">kilowatt hour (kWH)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="ForceUnitsContentType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This code list represents the System Internationale's unit of measure for force.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="millinewton">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">millinewton (mN)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="PressureUnitsContentType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This code list represents the System Internationale's unit of measure for pressure.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="megapascal">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">megapascal (MPa)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="pound per square inch">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">pound per square inch (lbf/in2 or psi)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="ComputerStorageUnitsContentType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This code list represents the System Internationale's unit of measure for computer storage.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="bit">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">
+                        The basic unit of the amount of data. Each bit records one of the two possible answers to a single question: "0" or "1," "yes" or "no," "on" or "off." 
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="byte">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        A unit of information used in computer engineering. Technically the byte is a unit of addressable memory, and its size can vary depending on the machine or the computing language. However, in most contexts the byte is equal to 8 bits.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="kilobit">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">A unit of information equal to 1000 bits, or, in some cases, equal to 1024 bits or 128 bytes. The larger unit is now supposed to be called a kibibit.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="kilobyte">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">A unit of information equal to 1000 bytes. As a unit of computer storage, however, the kilobyte is usually equal to 1024 bytes, although this should now be called a kibibyte.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="megabyte">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">A unit of information equal to 1 000 000 bytes, but sometimes it means 1 048 576 bytes</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="gigabyte">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.unc.edu/~rowlett/units/">A unit of information equal to 1 000 000 000 bytes, but sometimes it means 1 073 741 824 bytes.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="DisplacementUnitsContentType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This code list represents the combined code lists of Volume and Weight for measuring displacement.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:union memberTypes="xfUOMcl:VolumeUnitsContentType xfUOMcl:WeightUnitsContentType" />
+    </xsd:simpleType>
+</xsd:schema>

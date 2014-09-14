@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id:$ -->
+<schema targetNamespace="urn:oasis:names:tc:ebxml-regrep:xsd:spi:4.0" 
+  xmlns="http://www.w3.org/2001/XMLSchema" 
+  xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" 
+  xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:4.0" 
+  xmlns:tns="urn:oasis:names:tc:ebxml-regrep:xsd:spi:4.0"
+  elementFormDefault="qualified"
+  attributeFormDefault="unqualified"
+  >
+  
+  <!-- Import the rim.xsd file with XML schema mapping from RIM -->
+  <import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" schemaLocation="rim.xsd"/>
+  <import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:rs:4.0" schemaLocation="rs.xsd"/>
+  
+  <element name="ValidateObjectsRequest">
+    <annotation>
+      <documentation xml:lang="en">Request to validate specified objects.</documentation>
+    </annotation>
+    <complexType>
+      <complexContent>
+        <extension base="rs:RegistryRequestType">
+          <sequence>
+            <!-- QueryInvocation and ObjectRefList select objects to validate -->
+            <element ref="rim:QueryInvocation" minOccurs="0" maxOccurs="1" />
+            <element ref="rim:ObjectRefList" minOccurs="0" maxOccurs="1" />            
+            <element name="OriginalObjects" type="rim:RegistryObjectListType"/>
+            <!-- The Invocation Control File (optional). -->
+            <element maxOccurs="unbounded" minOccurs="0" name="InvocationControlFile" type="rim:ExtrinsicObjectType"/>
+          </sequence>
+        </extension>
+      </complexContent>
+    </complexType>
+  </element>
+  <element name="ValidateObjectsResponse">
+    <annotation>
+      <documentation xml:lang="en">Response to request to validate specified objects.</documentation>
+    </annotation>
+    <complexType>
+      <complexContent>
+        <extension base="rs:RegistryResponseType">
+          <sequence/>
+        </extension>
+      </complexContent>
+    </complexType>
+  </element>
+  
+  <element name="CatalogObjectsRequest">
+    <annotation>
+      <documentation xml:lang="en">Request to catalog specified objects.</documentation>
+    </annotation>
+    <complexType>
+      <complexContent>
+        <extension base="rs:RegistryRequestType">
+          <sequence>
+            <!-- QueryInvocation and ObjectRefList select objects to catalog -->
+            <element ref="rim:QueryInvocation" minOccurs="0" maxOccurs="1" />
+            <element ref="rim:ObjectRefList" minOccurs="0" maxOccurs="1" />
+            <element name="OriginalObjects" type="rim:RegistryObjectListType"/>
+            <!-- The Invocation Control File (optional). -->
+            <element maxOccurs="unbounded" minOccurs="0" name="InvocationControlFile" type="rim:ExtrinsicObjectType"/>
+          </sequence>
+        </extension>
+      </complexContent>
+    </complexType>
+  </element>
+  <element name="CatalogObjectsResponse">
+    <annotation>
+      <documentation xml:lang="en">Response to request to catalog specified objects.</documentation>
+    </annotation>
+    <complexType>
+      <complexContent>
+        <extension base="rs:RegistryResponseType">
+          <sequence>
+            <element name="CatalogedObjects" type="rim:RegistryObjectListType"/>
+          </sequence>
+        </extension>
+      </complexContent>
+    </complexType>
+  </element>
+  
+  <element name="FilterObjectsRequest">
+    <annotation>
+      <documentation xml:lang="en">Request to filter specified objects.</documentation>
+    </annotation>
+    <complexType>
+      <complexContent>
+        <extension base="rs:RegistryRequestType">
+          <sequence>
+            <element name="OriginalObjects" type="rim:RegistryObjectListType"/>
+            <!-- The Invocation Control File (optional). -->
+            <element maxOccurs="unbounded" minOccurs="0" name="InvocationControlFile" type="rim:ExtrinsicObjectType"/>
+          </sequence>
+        </extension>
+      </complexContent>
+    </complexType>
+  </element>
+  <element name="FilterObjectsResponse">
+    <annotation>
+      <documentation xml:lang="en">Response to request to catalog specified objects.</documentation>
+    </annotation>
+    <complexType>
+      <complexContent>
+        <extension base="rs:RegistryResponseType">
+          <sequence>
+            <element name="FilteredObjects" type="rim:RegistryObjectListType"/>
+          </sequence>
+        </extension>
+      </complexContent>
+    </complexType>
+  </element>
+  
+  <complexType name="ValidationExceptionType">
+    <complexContent>
+      <extension base="rs:RegistryExceptionType">
+        <sequence/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <element name="ValidationException" type="tns:ValidationExceptionType"/>
+
+  <complexType name="CatalogingExceptionType">
+    <complexContent>
+      <extension base="rs:RegistryExceptionType">
+        <sequence/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <element name="CatalogingException" type="tns:CatalogingExceptionType"/>
+  
+  <complexType name="FilteringExceptionType">
+    <complexContent>
+      <extension base="rs:RegistryExceptionType">
+        <sequence/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <element name="FilteringException" type="tns:FilteringExceptionType"/>    
+  
+</schema>

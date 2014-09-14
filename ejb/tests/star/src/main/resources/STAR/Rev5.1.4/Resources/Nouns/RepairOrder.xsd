@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  User     Mod      Date       Description
+  =========================================================================
+  DC              20061031     Removed DocumentID
+  DC      CR283   20061202     Updated Party Components
+  DC              20070212     Clean up deprecated Components
+  DC      CR327   20070220     Added ReturnDisallowedPartsIndicator to the Header
+  MV      CR297   20070223     Replaced: Header.Vehicle with RepairOrderVehicleLineItem
+  MV      CR297   20070307     Replaced: RepairOrderVehicleLineItem.DeliveryDate with OriginalSoldDate
+  DC      CR352   20070514     Added: JobCountNumeric, AlternateOEMIndicator
+  DC      MT594   20080223     Corrected RepairOrderStatus to point to Global component for guideline generation.
+ -->
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns="http://www.starstandard.org/STAR/5" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="RepairOrderStatusServiceContractStatus" type="ServiceContractStatusType">
+        <xsd:annotation>
+            <xsd:documentation  source="http://www.starstandard.org/STAR/5">Status of the repair order.</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">This definition came from the RepairOrderHeader Component</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ServiceContractFullServiceContract" type="FullServiceContractType">
+        <xsd:annotation>
+            <xsd:documentation  source="http://www.starstandard.org/STAR/5">Vehicle Servcie Contract(s)</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">This definition came from the RepairOrderHeader Component</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="RepairOrder" type="RepairOrderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Repair Order
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="RepairOrderHeader" type="RepairOrderHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Repair Order Header
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="RepairOrderType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 3.0 - Draft</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.1, STAR approved 04/20/2005; effective date 07/04/2005</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.0, STAR approved 05/07/2004; effective date 07/04/2004</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 1.1 STAR approved 04/09/2003; OAGI approved 8/16/2002 effective date 07/04/2003</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 1.0, STAR approved 8/6/2002; OAGI approved 8/16/2002; effective date 1/01/2003</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="RepairOrderHeader" />
+            <xsd:element ref="Job" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="JobReferback" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="WarrantyClaim" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="InternalPay" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="RepairOrderHeaderType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+                <xsd:sequence>
+<!--                    <xsd:element ref="DocumentID" /> -->
+                    <xsd:element ref="SecondaryReferenceNumberString" minOccurs="0" />
+                    <xsd:element ref="DealerParty" minOccurs="0" />
+                    <xsd:element ref="OwnerParty" minOccurs="0" />
+                    <xsd:element ref="Co-OwnerParty" minOccurs="0"/>
+                    <xsd:element ref="PrimaryDriver" minOccurs="0" />
+                    <xsd:element ref="SecondaryPrimaryDriver" minOccurs="0" maxOccurs="unbounded" />
+                    <xsd:element ref="RepairOrderVehicleLineItem"  minOccurs="0" />
+                    <xsd:element ref="Warranty" minOccurs="0" maxOccurs="unbounded" />
+                    <xsd:element ref="ServiceContract" minOccurs="0" maxOccurs="unbounded" />
+                    <xsd:element ref="CASE" minOccurs="0" maxOccurs="unbounded" />
+                    <xsd:element ref="RepairOrderOpenedDate" minOccurs="0" />
+                    <xsd:element ref="RepairOrderCompletedDate" minOccurs="0" />
+                    <xsd:element ref="RepairOrderInvoiceDate" minOccurs="0" />
+                    <xsd:element ref="ServiceAdvisorParty" minOccurs="0" />
+                    <xsd:element ref="InDistanceMeasure" minOccurs="0" />
+                    <xsd:element ref="OutDistanceMeasure" minOccurs="0" />
+                    <xsd:element ref="OrderNotes" minOccurs="0" />
+                    <xsd:element ref="OrderInternalNotes" minOccurs="0" />
+                    <xsd:element ref="DepartmentType" minOccurs="0" />
+                    <xsd:element ref="RentLoaner" minOccurs="0" maxOccurs="unbounded" />
+                    <xsd:element ref="ServiceComponents" minOccurs="0" maxOccurs="unbounded" />
+                    <xsd:element ref="Sublet" minOccurs="0" maxOccurs="unbounded" />
+                    <xsd:element ref="LaborRateAmount" minOccurs="0" />
+                    <xsd:element ref="Price" minOccurs="0" maxOccurs="3" />
+                    <xsd:element ref="Tax" minOccurs="0" maxOccurs="unbounded" />
+                    <xsd:element ref="DataCollectionStatus" minOccurs="0" />
+                    <xsd:element ref="ESCFranchiseIndicator" minOccurs="0" />
+                    <xsd:element ref="Splits" minOccurs="0" />
+                    <xsd:element ref="TreadActIndicator" minOccurs="0" />
+                    <xsd:element ref="LocationID" minOccurs="0" />
+                    <xsd:element ref="RepairOrderStatus" minOccurs="0" maxOccurs="unbounded" />
+                    <xsd:element ref="ReturnDisallowedPartsIndicator" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="JobCountNumeric" minOccurs="0" maxOccurs="1"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="RepairOrderVehicleLineItem" type="RepairOrderVehicleLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Detail information regarding a vehicle for a particular repair order.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="RepairOrderVehicleLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="Vehicle" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="BrandedInfo" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="OriginalSoldDate" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="DeliveryDistanceMeasure" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="IgnitionKeyNumberString" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="NonUSVehicleIndicator" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="OdometerStatus" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="RestrictionIndicator" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="RestrictionDescription" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="TelematicsServiceIndicator" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="VehicleDemoIndicator" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="VehicleStockString" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="FleetAccount" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="LicenseNumberString" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="VehicleStatusCode" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="AlternateOEMVehicleIndicator" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

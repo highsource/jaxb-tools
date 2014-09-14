@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.010" id="OTA2008A">
+	<xs:include schemaLocation="OTA_VehicleCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_VehRetResRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The root tag of OTA_VehRetResRS contains the standard payload attributes found in all OTA payload documents.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType"/>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0"/>
+					<xs:element name="VehRetResRSCore" type="VehicleRetrieveResRSCoreType">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Core information associated with the retrieval of a vehicle reservation </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="VehRetResRSInfo" type="VehicleRetrieveResRSAdditionalInfoType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Additional information associated with the retrieval of a vehicle reservation </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType"/>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="VehicleRetrieveResRSAdditionalInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleRetrieveResRSAdditionalInfoType complex type identifies the supplemental information that is associated with a retrieved reservation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VehicleRetrieveResRSCoreType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleRetrieveResRSCoreType complex type identifies the core, or common, information that is associated with a retrieved reservation, or a list of reservations when one exact match could not be identified. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="VehReservation" type="VehicleReservationType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Information on one reservation when the request results in exactly one matching reservation being located</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="VehResSummaries">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A list of 2 or more reservations that match the criteria in the request</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="VehResSummary" type="VehicleReservationSummaryType" maxOccurs="99">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Summary information of a reservation, to allow a reservation to be identified from several reservations that matched the previous request criteria</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

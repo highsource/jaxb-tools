@@ -1,0 +1,2148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="2.004" id="OTA2005B2008A">
+	<xs:include schemaLocation="OTA_CommonPrefs.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="CategoryLocationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies the category location preference.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Inside">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">No window.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Outside">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">On the outside of the ship generally has a window, porthole or balcony.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Both">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Used to identify that the category contains both inside and outside cabins.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ListOfDurationsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A list of individual durations to be included in a search.</xs:documentation>
+		</xs:annotation>
+		<xs:list itemType="DurationType"/>
+	</xs:simpleType>
+	<xs:attributeGroup name="AgentInfoGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Agency information.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Contact" type="StringLength1to64" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Either the agent name or agency name that created the booking.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ContactID" type="StringLength1to32" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Agent or agency's identifier.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="CruiseCabinGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Contains the cabin-specific information.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="CabinNumber" type="StringLength1to8" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The number identifying the cabin.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="MaxOccupancy" type="Numeric1to99" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the Max occupancy  of the Cabin</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DeclineIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Can be true in event that wait list category is cleared at booking retrieval time.	(Possibly used by CabinUnhold.)		</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="HeldIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, the cabin is held. When false, the cabin is not being held.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="CruiseCategoryDetailGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+Specificies cruise category information.
+</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="CruiseCategoryGroup"/>
+		<xs:attributeGroup ref="DeckGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Provides the deck number and deck name.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="CruiseCategoryGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Contains the berth and price category codes.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="BerthedCategoryCode" type="StringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Contains the cruise line's category code for the general cabin location. BerthedCategoryCode will differ from the PricedCategoryCode if the customer receives an upgrade.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="PricedCategoryCode" type="StringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Contains the cruise line's category code for the general cabin location for which the customer pays.  PricedCategoryCode will differ from the  BerthedCategoryCode if the customer receives an upgrade.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="CruiseCategoryType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies the detail information about the Cruise Category</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="CruiseCategoryDetailGroup"/>
+		<xs:attribute name="Location" type="CategoryLocationType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the Category location such as Inside, Outside or Both</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="MaxOccupancy" type="Numeric1to99" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the Max occupancy of the category</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="HeldIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies if the category is currently being held</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Status" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the status of the category. Refer to OTA Code table Status (STS).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CategoryQualifierCodes" type="ListOfOTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the indicators for the category. Refer to OTA Code Table Category Qualifier Code (CQC). </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="CruiseDiningGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies the Dining Information</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="SmokingCode" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Indicates the guest smoking preference. Refer to OTA code table Option Type Code (OTC).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DiningRoom" type="StringLength1to32" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the Dining Room</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="TableSize" type="AlphaNumericStringLength1to14" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the table size of the dining.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="AgeCode" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Refer to OTA Code List Age Qualifying Code (AQC).
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Language" type="xs:language" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Typically used to define the preferred language of the server.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Sitting" type="StringLength1to64" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Dining service. Typical values are: first, second, third, open.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Status" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Dining status. Refer to OTA Code table Status (STS).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Preference" type="PreferLevelType" use="optional"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="CruiseInsuranceGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies the Insurance information</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="InsuranceCode" type="StringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the cruise vendor's insurance code.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="SelectedOptionIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true indicates the item is selected. When false, indicates an alternate item exists, but is not currently selected.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DefaultIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, the insurance code would be the pre-selected default. When false, the insurance code is not the default.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Status" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the Status of the Insurance Refer to OTA Code table Status (STS).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="CruisePackageGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies package type.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="CruisePackageCode" type="StringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the inclusive package code as defined by the cruise line.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="InclusiveIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, specifies the package is included in the cruise arrangement.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="DateTimeSpanGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Provides the time span of the package.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="CruisePriceGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies the pricing information</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="PriceTypeCode" type="OTA_CodeType" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies what the amount is for.
+  Refer to OTA Code Table Price Type Code (PRI).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Amount" type="Money" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The price associated with the specified code.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="RestrictedIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, the display of the price is restricted. When false, the price may be displayed.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CodeDetail" type="StringLength1to64" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">May be used to give further detail on the PriceTypeCode. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Percent" type="Percentage" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The percentage value used to arrive at the amount associated with this item.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="DeckGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Provides the number and name of a ship deck.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="DeckNumber" type="StringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Number of the deck on the ship where the cabin is located.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DeckName" type="StringLength1to32" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Name of the deck on the ship where the cabin is located.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="DurationGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Allows selection of one or more preferred durations, or a range of durations.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="MinDuration" type="DurationType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The shortest duration for the search.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="MaxDuration" type="DurationType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The longest duration for the search.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ListOfDurations" type="ListOfDurationsType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">A list of individual durations to be included in the response.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="FareGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies fare code and group code.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="FareCode" type="StringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the fare code.  Fare codes are specific to individual cruise lines.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="GroupCode" type="StringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the group code.   Group codes are specific to individual cruise lines.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="GuestInfoGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies the Guest information</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="GuestRefNumber" type="NumericStringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Provides a reference number for the guest.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Age" type="Numeric0to999" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the Guest's Age</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Nationality" type="ISO3166" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the Nationality</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="GuestOccupation" type="StringLength1to64" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies occupation of the guest</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="BirthDate" type="xs:date" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the Guest Birth Date</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="GenderGroup"/>
+		<xs:attributeGroup ref="LoyaltyInfoGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Identifies the loyalty membership of a guest.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="LocationInfoGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies details about a particular location</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="PortCode" type="StringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the Port Code</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="PortName" type="StringLength1to64" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the Port name for the above Port Code</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="PortCountryCode" type="ISO3166" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the Country Code for the above port. ISO3166 specifies all the ISO country codes.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DockIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, the ship docks at this port.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ShorexIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, one or more shore excursions are offered at this port.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="LoyaltyInfoGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Identifies the loyalty membership of a guest or prospect</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="LoyaltyMembershipID" type="StringLength1to32" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Unique identifier of the member in the program (membership number, account number, etc.).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="LoyalLevelGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Accumulated credits as defined by a reward program.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="PortInfoGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Contains information pertaining to a port.</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="LocationInfoGroup"/>
+		<xs:attribute name="EmbarkIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true idicates embarking.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DisembarkIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true indicates debarking.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="ReservationStatusGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Provides the synchronization datetime as well as the reservation status code</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="StatusCode" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the booking status. Refer to OTA_Code list Status (STS).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="LastModifyDateTime" type="xs:dateTime" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the synchronization date and time of the record between two systems.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="BookedDate" type="DateOrDateTimeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The date or date/time associated with the original reservation booking.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OfferDate" type="DateOrDateTimeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The date or date/time associated with the original reservation offer or quote.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="SyncDateTime" type="xs:dateTime" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the synchronization date of the record between GDS and CruiseLine.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="SelectedSailingGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Identifies a specific sailing by voyage number, dates, and/or cruise line information.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="VoyageID" type="StringLength1to32" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the cruise line unique identifier for a particular sailing.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="DateTimeSpanGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the time interval for the sailing.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+		<xs:attributeGroup ref="ShipReferenceGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the ship information for the sailing.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+		<xs:attribute name="Status" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Provides the status of the voyage. Refer to OTA Code table Status (STS).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="ShipReferenceGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies a vendor and ship.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="VendorCode" type="StringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the operator of the ship (e.g. cruise line or ferry company).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="VendorName" type="StringLength1to64" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the name of the operator of the ship (e.g. a cruise line or ferry company).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ShipCode" type="StringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the ship code as defined by the cruise line.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ShipName" type="StringLength1to64" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the ship name as specified by the cruise line.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="VendorCodeContext" type="StringLength1to32" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Identifies the source authority for the code (e.g., IATA); typically used with VendorCode.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:complexType name="AirInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies the Air Deviation Request information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DepartureCity" type="LocationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the requested departure city</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ArrivalCity" type="LocationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the requested arrival city</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Airline" type="OperatingAirlineType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the requested Airline</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="DepartureDateTime" type="DateOrDateTimeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the requested departure date of the flight</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ArrivalDateTime" type="DateOrDateTimeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the requested arrival date of the flight</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="AirlineCabinClass" type="CabinType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the Cabin Class such as, BUSINESS, ECONOMY, FIRST etc</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="AmenityOptionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines the amenity/gift and its form of delivery.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence minOccurs="0">
+			<xs:element name="Originator" type="PersonNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The person requesting the amenity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Message" type="ParagraphType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the additional comments or message.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="OptionCode" type="StringLength1to16" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the amenity, gift or option code as defined by the cruise line.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Quantity" type="Numeric0to99" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the quantity of the Amenity order</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DeliveryDate" type="DateOrDateTimeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the delivery date of the Amenity/Gift</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DeliveryLocation" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the delivery location (e.g., cabin
+, dining room
+).</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="diningroom"/>
+					<xs:enumeration value="cabin"/>
+					<xs:enumeration value="person">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The option is to be delivered directly to a person.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="ModifiableIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, the existing option is modifiable.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="CabinOptionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies cabin option info.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CabinConfiguration" minOccurs="0" maxOccurs="9">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies cabin bed configuration.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="BedConfigurationCode" type="StringLength1to8" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Contains a code defining the bed configuration in the cabin.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="MeasurementInfo" minOccurs="0" maxOccurs="9">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Provides area information related to the cabin.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="UnitsOfMeasureGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Provides the unit of measure information for the item identified by the Code.</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+					<xs:attributeGroup ref="OptionalCodeOptionalNameGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This will provide the item for which measurements are being provided (e.g., balcony, cabin).</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+					<xs:attribute name="DimensionInfo" type="StringLength1to32" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The dimensions associated with the cabin, balcony, or window (e.g., 10x12)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Remark" type="FreeTextType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Remark information related to the cabin option.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Status" type="OTA_CodeType" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the status of the cabin. Refer to OTA Code table Status (STS).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CategoryLocation" type="CategoryLocationType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the category location.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ShipSide" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Identifies the ship side location of the cabin.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="Starboard">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Right side.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Port">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Left side.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="PositionInShip" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Position of the cabin in ship (e.g., aft).</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="Aft">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This is the back of the ship.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Forward">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This is the front of the ship.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Midship">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This is the middle of the ship.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="BedType" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the bed type for this cabin. Refer to OTA Codelist Bed Type (BED).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="CruiseCabinGroup"/>
+		<xs:attribute name="ReleaseDateTime" type="xs:dateTime" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The date and time the held cabin will be released back to inventory if not booked. Typically, this is the same ReleaseDateTime that was provided in the CabinHoldRS.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="DeckGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Provides the deck name and number.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+		<xs:attribute name="CabinCategoryStatusCode" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The status of the berth category of the cabin. Refer to OTA Code Table STS (Status).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CabinCategoryCode" type="StringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The berth category of the cabin.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CabinRanking" type="Numeric1to999" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The relative ranking of the cabin based on location preference, a better view, etc.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ConnectingCabinIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">If true, the cabin is connected to another cabin.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ConnectingCabinNumber" type="StringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The number of the connecting cabin.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="CategoryOptionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies category option information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PriceInfos" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Collection of price infos.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PriceInfo" maxOccurs="8">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Contains the pricing monetary information.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="PriceInfoType">
+										<xs:attributeGroup ref="FareGroup">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">When handling pricing by the lowest available fare, each category may have a distinct lowest fare code. </xs:documentation>
+											</xs:annotation>
+										</xs:attributeGroup>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Dining" minOccurs="0" maxOccurs="8">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The status per dining seating.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="Sitting" type="StringLength1to64" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The dining seating (e.g., main dining, second dining).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Status" type="OTA_CodeType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The status of the dining. Refer to OTA Code Table Status (STS)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Occupancy" type="Numeric1to99" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The available occupancy associated with the dining.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="FareGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the fare code and or group code associated with the category.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+		<xs:attribute name="Status" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Category availability status. Refer to OTA Code table Status (STS).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="HeldIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, all cabins in this category are currently being held.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CategoryLocation" type="CategoryLocationType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Category location in the ship.
+I  : Inside
+O : Outside</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="MaxOccupancy" type="Numeric1to99" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Maximum number of guest per cabin.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ListOfCategoryQualifierCodes" type="ListOfOTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Contains additional category information. Refer to OTA Code List Cabin Filters (CBF).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="CruiseCategoryGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies category code information.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+		<xs:attribute name="AvailableGroupAllocationQty" type="Numeric0to9999" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Number of remaining cabins allocated to the group.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="CruiseBookingInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Contains pricing and payment information for the booking.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BookingPrices" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the booking prices for the booking.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="BookingPrice" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Summary of all charges for the PriceType for the booking.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attributeGroup ref="CruisePriceGroup">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Specifies pricing information.</xs:documentation>
+									</xs:annotation>
+								</xs:attributeGroup>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PaymentSchedule" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the payment schedule information.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Payment" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Used to specify multiple currency amounts as well as payment types (e.g., deposit, final). </xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attributeGroup ref="CurrencyAmountGroup"/>
+								<xs:attribute name="PaymentNumber" type="Numeric1to99" use="required">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Specifies the Payment Number. Typically would be used to indicate the deposit as well as the final payments as determined by the backend system.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="DueDate" type="DateOrDateTimeType" use="required">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Specifies the Payment Due Date/Time</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="GuestPrices" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">
+Specifies the guest level price information.
+</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="GuestPrice" maxOccurs="9">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Specifies the guest and prices at the guest level.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="GuestType">
+										<xs:sequence>
+											<xs:element name="PriceInfos">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Collection of price info.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="PriceInfo" maxOccurs="99">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Summary of all charges for the PriceType at the guest level.</xs:documentation>
+															</xs:annotation>
+															<xs:complexType>
+																<xs:attributeGroup ref="CruisePriceGroup">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">Specifies pricing information.</xs:documentation>
+																	</xs:annotation>
+																</xs:attributeGroup>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PolicyInfo" type="ParagraphType" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">May be used to provide price policy information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CruiseGuestDetailType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+Provides the detail data associated with the guest for a particular sailing.
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SelectedFareCode" minOccurs="0" maxOccurs="9">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the fare code and the group code if any. Fare codes are specific to cruise lines.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="FareGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ContactInfo" minOccurs="0" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the guest contact address and phone number as well as the emergency contact.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ContactPersonType">
+							<xs:attributeGroup ref="GuestInfoGroup">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies group information.</xs:documentation>
+								</xs:annotation>
+							</xs:attributeGroup>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="GuestTransportation" type="GuestTransportationType" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Guest's mode of transportation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LoyaltyInfo" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Used to define a guest's loyalty programs.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="CustomerLoyaltyGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="LinkedTraveler" minOccurs="0" maxOccurs="9">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies cross references at the guest level.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="RelatedTravelerType">
+							<xs:attribute name="LinkTypeCode" type="OTA_CodeType" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies the nature of the link (e.g. booking, dining, tour, back to back).  Refer to OTA Code Table Link Type Code (LTC).</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="TravelDocument" type="DocumentType" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Used for passport, visa, other travel type documents.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SelectedDining" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the dining info</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="CruiseDiningGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies dining criteria.</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SelectedInsurance" minOccurs="0" maxOccurs="9">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the insurance information</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="CruiseInsuranceGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SelectedOptions" type="AmenityOptionType" minOccurs="0" maxOccurs="20">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies a gift, amenity, or other options (e.g., include gratuity).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SelectedPackages" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the selected packages.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="SelectedPackage" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Specifies the package information such as Pre/Post/Shorex/Bus/Transfer.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="CruisePackageType">
+										<xs:sequence>
+											<xs:element name="AirInfo" type="AirInfoType" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Specifies the air travel information for the transfer.</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SelectedSpecialServices" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the Special Services information</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="SelectedSpecialService" type="SpecialServiceType" minOccurs="0" maxOccurs="10">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Specifies the Special Service information</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="AirAccommodations" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of air accommodations.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AirAccommodation" minOccurs="0" maxOccurs="10">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Specifies guest air accommodation information.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="AirInfoType">
+										<xs:attribute name="Comment" type="StringLength1to128" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Used for additional info regarding the flight deviation.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="AirAccommodationType" type="StringLength1to16" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Identifies the type of air accommodation (e.g., Regular, Premium, Deviation).</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="CruiseDocument" type="DocumentHandlingType" minOccurs="0" maxOccurs="9">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Provides information on requested documents, the type of document, method of distribution, and associated costs.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Profiles" type="CruiseProfileType" minOccurs="0" maxOccurs="4">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the Profile informations at the guest level</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="GuestExistsIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, guest already exists for this booking. When false, the guest is being added for this booking.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="RepeatGuestIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, the customer is a repeat guest. When false, the customer is not a repeat guest.  </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="CruiseGuestInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+Contains guest information for the specified sailing.
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ReservationID" type="ReservationID_Type" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the reservation control information or the guest's booking ID in modification mode (e.g. PNR Record Locator and/or Vendor Confirmation Number).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GuestDetails">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the guests' information.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="GuestDetail" type="CruiseGuestDetailType" maxOccurs="9">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Specifies the Guest information</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="LinkedBookings" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Collection of linked bookings.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="LinkedBooking" maxOccurs="32">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Specifies cross references at the booking level.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="RelatedTravelerType">
+										<xs:attribute name="LinkTypeCode" type="ListOfOTA_CodeType" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Specifies the nature of the link (e.g. booking, dining, tour, back to back).  Refer to OTA Code Table Link Type Code (LTC).</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PaymentOptions" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Collection of payment choices.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PaymentOption" maxOccurs="9">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Payment choice.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="PaymentDetailType">
+										<xs:attribute name="ExtendedIndicator" type="xs:boolean" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">When true, indicates payment will be made over an extended time. When false, the payment isn't extended.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="PaymentPurpose" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Specifies payment for a gift order or reservsation.</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:NMTOKEN">
+													<xs:enumeration value="GiftOrder"/>
+													<xs:enumeration value="Reservation"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="ExtendedDepositDate" type="DateOrDateTimeType" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Specifies the Extended Deposit Date for the check form of payment.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="ReferenceNumber" type="StringLength1to16" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Specifies the Gift Order Reference/Form of Payment Number.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="CancellationPenalty" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Penalty information for cancelling a reservation.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="Amount" type="Money" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The penalty amount for cancelling a reservation.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CruisePackageType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines pre/post/shorex/bus/transfers packages</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Location" minOccurs="0" maxOccurs="16">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the activity location (e.g., port city for excursion, bus stop for transfer).</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="LocationGeneralType">
+							<xs:sequence>
+								<xs:element name="Information" type="ParagraphType" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Provides additional information pertaining to the location or cruise package.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+							<xs:attributeGroup ref="LocationGroup"/>
+							<xs:attribute name="LocationName" type="StringLength1to64" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies the full name of the  port city</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attributeGroup ref="DateTimeSpanGroup">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Period of time for which you'll be at a particular location. Typically when a hotel, this is the check-in date and time and check-out date and time or if this is a bus stop, it will be the date and time of pick-up and date and time for drop-off .</xs:documentation>
+								</xs:annotation>
+							</xs:attributeGroup>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="PackageTypeCode" type="OTA_CodeType" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the type of the package. Refer to OTA Codelist Cruise Package Type (CPK).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="CruisePackageGroup"/>
+		<xs:attribute name="Status" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the Status of the package. Refer to OTA Code table Status (STS).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="CruiseProfileType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Used to specify the data requirements. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CruiseProfile" maxOccurs="99">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">
+Contains the cruise attribute information, identifying those items which are mandatory, modifiable, or have required maximums.
+</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="Code" type="OTA_CodeType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Identifies the cruise options for which parameters are being set. Refer to OTA Code table Cruise Profile Type (CPT).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MaxQuantity" type="StringLength1to16" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies the maximum quantity allowed for the option identified by the CruiseOption attribute. Typically only used when the ApplicationProfileTypeIndentifier contains the value "MAX".</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ProfileTypeIdentifier" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the Profile Type such as MOD, MAX or MAN. Profile information,
+E.g,
+- MOD for Modification
+- MAX for Maximum units allowed
+- MAN for Mandatory
+</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="Modifiable">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Indicates that the components are modifiable.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="NotModifiable">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Indicates the CruiseProfileCode may not be modified.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Maximums">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Indicates there is a maximum limitation on the CruiseOption, this should be specified in the MaxQuantity.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Mandatory">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Indicates the CruiseOption is mandatory (e.g., passport).</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="CruiseReservationType">
+		<xs:sequence>
+			<xs:element name="SailingInfo" type="SailingCategoryInfoType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the selected category to book.  Contains information related to the selected sailing. Typically the selected sailing is one of the sailings returned in the previous sailing availability response. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SailingProfile" type="CruiseProfileType" minOccurs="0" maxOccurs="4">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the profile information at the sailing level.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReservationInfo" type="CruiseGuestInfoType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies reservation and guest information about  the booking.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaymentsDue" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of payments due.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PaymentDue" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Information on a due payment </xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="Amount" type="Money" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Specifies the payment amount.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="PaymentNumber" type="Numeric1to99" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Specifies the payment number. Typically would be used to indicate the deposit as well as the final payments as determined by the backend system.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="DueDate" type="DateOrDateTimeType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Specifies the payment due date/time.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Information" type="ParagraphType" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Contains information such as advisories or marketing messages returned by the cruise line.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentHandlingType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies the document handling information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence minOccurs="0">
+			<xs:element name="VendorOption" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates vendors available for document delivery.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="VendorName" type="StringLength1to32" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies the various options for mailing documents (e.g., UPS, FEDEX).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attributeGroup ref="CurrencyAmountGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies the price for the mailing option.</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="DocumentTypeCode" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines the content of the document being referred to. Refer to OTA Code List Cruise Document Type (CRD).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DeliveryMethodCode" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Indicates the type of delivery method for the document defined in the DocumentTypeCode. Refer to OTA Code List Distribution Type (DTB).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DocumentDestination" type="StringLength1to32" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the mailing location (e.g , agent address or alternate address).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="SelectedOptionIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true indicates the item is selected. When false, indicates an alternate item exists, but is not currently selected.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DefaultIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, the DocumentDestination is the default. When false, the DocumentDestination  is not the default.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="AddressRequiredIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, this indicates the DocumentDestination address is required. When false, a DcoumentDestination address is not required.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="AddressRPH" type="RPH_Type" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Provides a reference pointer that links the document destination to the appropriate address in ContactInfo.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="EmailRPH" type="RPH_Type" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Provides a reference pointer that links the document destination to the appropriate email address in ContactInfo.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="TelephoneRPH" type="RPH_Type" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Provides a reference pointer that links the document destination to the appropriate telephone number in ContactInfo that designates the fax number.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DocumentLanguage" type="xs:language" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The language of the travel document.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="FareCodeOptionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies fare option info.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FareRemark" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Contains a remark pertaining to the fare.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="FreeTextType"/>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ListOfFareQualifierCode" type="ListOfOTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specify the type of fare. For example it could specify that the fare applies to a past passenger. Refer to OTA Code table Fare Qualifier (FQC).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Status" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Indicates the status of the fare. Refer to OTA Code table Status (STS).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="FareDescription" type="StringLength1to128" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Contains a description of the fare.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="FareGroup"/>
+	</xs:complexType>
+	<xs:complexType name="GuestTransportationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies the guest transportation type.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GuestCity" type="LocationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">City or closest airport where the guest resides. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GatewayCity" type="LocationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the gateway city for the cruise line (especially when the mode of transportation is air).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Mode" type="OTA_CodeType" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Transportation mode code. Refer to OTA Code List Transportation Code (TRP).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Status" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Status for the mode of transportation. Refer to OTA Code table Status (STS).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="GuestType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Provides information regarding the guest name and the guest's mode of transportation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GuestName" type="PersonNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Name of the guest.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GuestTransportation" type="GuestTransportationType" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Selected guest mode of transportation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="GuestInfoGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Provides information about the guest.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+	</xs:complexType>
+	<xs:complexType name="PaymentResponseType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Details of payment.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="PaymentFormType">
+				<xs:sequence>
+					<xs:element name="PaymentAmount" minOccurs="0">
+						<xs:complexType>
+							<xs:attributeGroup ref="CurrencyAmountGroup"/>
+							<xs:attribute name="ApprovalCode" type="StringLength1to16" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The approval code returned as part of an authorization process.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="PaymentReferenceID" type="UniqueID_Type" minOccurs="0"/>
+					<xs:element name="Error" type="ErrorType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PriceInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies price info.  Contains information that qualifies the amount priced. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PriceDescription" type="FreeTextType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Free text that describes the price.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="AgeQualifyingCode" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Contains the occupancy pricing breakdown code. This code specifies the type of passenger such as adult, child or infant. Refer to OTA Code List Age Qualifying Code (AQC).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="BreakdownType" type="StringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Contains the type of breakdown for the occupancy pricing (e.g., 1/2=  First and second guest price
+; 3GT= Third guest price;
+ 4GT=  Fourth guest price; 
+MGT= Additional guest price; 
+SGL=Single; 
+DBL= Double;
+ TPL =Triple; 
+ QUA= Quad;
+QUI=  Quin; and  
+CAB= Cabin).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="CurrencyAmountGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Provides amount and currency for the cruise item.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+		<xs:attribute name="ChargeTypeCode" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the basis for the price. Refer to OTA Code List Charge Type (CHG).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ReservationID_Type">
+		<xs:complexContent>
+			<xs:extension base="UniqueID_Type">
+				<xs:attributeGroup ref="ReservationStatusGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Provides the synch date and the reservation status.</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SailingBaseType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines base sailing information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CruiseLine">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Contains cruise line specific information.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="ShipReferenceGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Region" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Contains region specific information.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="RegionGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="DeparturePort" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Contains cruise departure port information. Departure port defines the start place of the cruise sailing.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="LocationType">
+							<xs:attribute name="EmbarkationTime" type="xs:dateTime" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ArrivalPort" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Contains cruise arrival port information. Arrival port defines the end place of the cruise sailing.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="LocationType">
+							<xs:attribute name="DebarkationDateTime" type="xs:dateTime"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ListOfSailingDescriptionCode" type="ListOfOTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Different qualifiers of the sailing (e.g., groups exist on this sailing; inclusive packages available; or no itinerary description available). Refer to OTA Code Table Sailing Description Code (SAI).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="SailingCategoryInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+Provides category information for the specified sailing.
+</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SailingInfoType">
+				<xs:sequence>
+					<xs:element name="SelectedCategory" minOccurs="0" maxOccurs="2">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies a selected cabin category.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="CabinAttributes" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Collection of category-level cabin attributes.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="CabinAttribute" maxOccurs="99">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">List of attributes associated with all cabins in the specified category.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:attribute name="CabinAttributeCode" type="OTA_CodeType" use="optional">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">Specifies the type of cabin requested. Refer to OTA Code List Cabin Filters (CBF).</xs:documentation>
+														</xs:annotation>
+													</xs:attribute>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="SelectedCabin" minOccurs="0" maxOccurs="3">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Specifies the selected cabin information.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="CabinOptionType">
+												<xs:sequence>
+													<xs:element name="CabinAttributes" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">Collection of cabin attributes.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="CabinAttribute" maxOccurs="99">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">List of attributes associated with this cabin.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:attribute name="CabinAttributeCode" type="OTA_CodeType" use="optional">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">Specifies the type of cabin requested. Refer to OTA Code List Cabin Filters (CBF).</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+							<xs:attributeGroup ref="CruiseCategoryDetailGroup">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specificies cruise category information.
+</xs:documentation>
+								</xs:annotation>
+							</xs:attributeGroup>
+							<xs:attribute name="WaitlistIndicator" type="xs:boolean" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">When true, this indicates the selected category is waitlisted.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attributeGroup ref="FareGroup">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The fare requested for this category.</xs:documentation>
+								</xs:annotation>
+							</xs:attributeGroup>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SailingInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Contains information pertaining to the selected sailing.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SelectedSailing" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Contains information related to the selected sailing. </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="SailingBaseType">
+							<xs:attribute name="VoyageID" type="StringLength1to32" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies the cruise line unique identifier for a particular sailing.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attributeGroup ref="DateTimeSpanGroup"/>
+							<xs:attribute name="Status" type="OTA_CodeType" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies the status of the voyage. Refer to OTA Code table Status (STS).</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="PortsOfCallQuantity" type="Numeric1to99" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Number of ports of call that the specific sailing has.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="InclusivePackageOption" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Used to request package options that the cruise might offer with the sailing. It is quite common to request, at this stage, packages that are included in the cruise sailing offering (inclusive packages).</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="CruisePackageGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Currency" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Currency in which the fare will be returned.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="CurrencyCodeGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Provides currency in which business will be done.</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SailingSearchQualifierType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Search qualifiers that can be used to identify a cruise.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SearchQualifierType">
+				<xs:sequence>
+					<xs:element name="Port" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Provides information regarding the port.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:attributeGroup ref="PortInfoGroup">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Provides information regarding the port.</xs:documentation>
+								</xs:annotation>
+							</xs:attributeGroup>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SailingType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies sailing information.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SailingInfoType">
+				<xs:sequence>
+					<xs:element name="Dining" minOccurs="0" maxOccurs="3">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Identifies the availability of the particular sitting.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:attribute name="Sitting" type="StringLength1to64" use="required">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Dining service. Typical values are: first, second, third, open.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="Status" type="OTA_CodeType" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Indicates the dining status. Refer to OTA Code table Status (STS).</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Transportation" type="GuestTransportationType" minOccurs="0" maxOccurs="5">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies the mode of the transportation from the guest location to the cruise port of departure.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Information" type="ParagraphType" minOccurs="0" maxOccurs="5">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies cruise line registration procedures and other free text information. The name attribute is used to define the type of information. Registration procedures are messages that advise customers who are not registered with the cruise line how to do so. Usually non registered customers cannot get access to the cruise line inventory.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="MaxCabinOccupancy" type="Numeric1to99" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Maximum cabin occupancy available on this specific sailing (ship).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="CategoryLocation" type="CategoryLocationType" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specifies the different category locations available on the ship.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SearchQualifierType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Search qualifiers that can be used in cruise availability/fare/category to avail special search data.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ReservationID" type="UniqueID_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the passenger's reservation number.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Residency" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines where the passenger resides for fare calculation purposes.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="StateProvCode" type="StateProvCodeType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The standard code or abbreviation for the state, province, or region</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="CountryCode" type="ISO3166" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">2 character country code as defined in ISO3166.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PriceRange" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Provides a minimum and maximum price to qualify a search.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="RateRangeGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Status" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Provides a search filter by the status of sailing, category, fare, or cabin.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="Status" type="OTA_CodeType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Status of the sailing, category, fare, or cabin. Refer to OTA Codelist Status (STS).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Dining" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Provides a search filter by dining sitting.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="Sitting" type="StringLength1to64" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The dining seating (e.g., main dining, second dining).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="CruiseCategoryGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Contains the berth and price category codes.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+		<xs:attribute name="CabinNumber" type="StringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the cabin number.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="HeldIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, indicates the CabinNumber has a hold on it. When false, the CabinNumber does not have a hold.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="FareGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the fare and group codes.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+		<xs:attribute name="MaxOccupancy" type="Numeric1to99" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the Max occupancy  of the Cabin</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CategoryLocation" type="CategoryLocationType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the cabin category location (e.g., inside, outside).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="LoyaltyInfoGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Identifies the loyalty membership of a guest or prospect.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+		<xs:attribute name="SortOrderCode" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the order in which the response information should be sorted. Refer to OTA Code List Sort Order (SOC).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ShipInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines the ship details.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Ship" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the ship details.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="StabilizedIndicator" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true, the ship is stabilized.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="RegistrationCountryCode" type="ISO3166" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Identifies the country of registration.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="RestaurantQuantity" type="xs:nonNegativeInteger" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The number of restaurants.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ElevatorQuantity" type="xs:nonNegativeInteger" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The number of elevators.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MaxCrewQuantity" type="xs:positiveInteger" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The maximum number of crew.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MaxGuestQuantity" type="xs:positiveInteger" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The maximum number of guests.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="CruisingSpeed" type="xs:decimal" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The ship cruising speed in knots.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MaxSpeed" type="xs:decimal" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The maximum ship speed in knots.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="InsideCabinQuantity" type="xs:nonNegativeInteger" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The number of interior cabins.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="OutsideCabinQuantity" type="xs:nonNegativeInteger" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The number of exterior cabins.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="InauguralDate" type="xs:date" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The date of the ship's first voyage.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="RefurbishedDate" type="xs:date" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Date the ship was last refurbished.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="BuiltDate" type="xs:date" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The date the ship was built or delivered to the cruiseline.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="NextRefurbishDate" type="xs:date" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This is the date the ship is next scheduled to be refurbished.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ShipLength" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the length of the ship.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="UnitsOfMeasureGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Defines the length of the ship.</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ShipVoltage" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the voltage on the ship.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="UnitsOfMeasureGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Defines the voltage available for guests (e.g., 110, 220).</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="ShipReferenceGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies a vendor and ship.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+	</xs:complexType>
+	<xs:complexType name="SpecialServiceType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specifies the special service requirements.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Comment" type="ParagraphType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Additional comments associated with the service or notes to be attached to the service.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Type" type="StringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the special requirement type identification (e.g.,  occasion,
+ special service, 
+language).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Code" type="StringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Special service code maintained by individual companies.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CodeName" type="StringLength1to32" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The name of the special service.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CodeDetail" type="StringLength1to64" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">May be used to give further detail on the code. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="AssociationType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the special service association type (i.e., Cabin, Passenger).</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="Cabin"/>
+					<xs:enumeration value="Passenger"/>
+					<xs:enumeration value="DualOccupancy">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The special service requires dual occupancy.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Date" type="DateOrDateTimeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specifies the date the service is to be rendered.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="NbrOfYears" type="xs:positiveInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The number of years associated with a special event such as a birthday, an anniversary, etc.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+</xs:schema>

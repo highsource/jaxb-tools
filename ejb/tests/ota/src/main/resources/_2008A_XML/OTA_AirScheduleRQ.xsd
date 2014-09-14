@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.009" id="OTA2008A">
+	<xs:include schemaLocation="OTA_AirCommonTypes.xsd"/>
+	<xs:include schemaLocation="OTA_AirPreferences.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_AirScheduleRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+The Schedule Request message requests Flight Schedules for a city pair. Optional request information can include:
+- Time / Time Window
+- Connecting cities.
+- Client Preferences (airlines, cabin, flight types etc.)
+The request can be narrowed to request schedules for a specific airline or specific flight.
+</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Point of sale object. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OriginDestinationInformation" type="OriginDestinationInformationType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Origin and Destination location, and time information for the Air Schedule request. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="FlightInfo" type="SpecificFlightInfoType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specific airline and flight number for which a schedule is being requested. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="VendorPref" type="CompanyNamePrefType" minOccurs="0" maxOccurs="99">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specify vendors to include and exclude from the response.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="FlightTypePref" minOccurs="0" maxOccurs="3">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Flight Type Preferences to qualify Air Schedule request. </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attributeGroup ref="FlightTypePrefGroup"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="EquipPref" type="EquipmentTypePref" minOccurs="0" maxOccurs="9">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Equipment Preference to qualify Air Schedule request.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attributeGroup ref="MaxResponsesGroup">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The maximum number of flights that may be returned in the response.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

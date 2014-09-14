@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+== Copyright (c) 2002-2007. All rights reserved. 
+== Financial Products Markup Language is subject to the FpML public license. 
+== A copy of this license is available at http://www.fpml.org/license/license.html
+-->
+<!--View is pretrade-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns="http://www.fpml.org/FpML-5-0/pretrade" targetNamespace="http://www.fpml.org/FpML-5-0/pretrade" ecore:documentRoot="FpML" ecore:nsPrefix="pre" ecore:package="org.fpml.pretrade" version="$Revision: 2350 $" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xsd:include schemaLocation="fpml-option-shared-5-0.xsd" />
+<!--    <xsd:include schemaLocation="fpml-mktenv.xsd"/>-->
+  <xsd:complexType name="BondOption">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A Bond Option</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="OptionBaseExtended">
+        <xsd:sequence>
+          <xsd:element name="strike" type="BondOptionStrike">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">Strike of the the Bond Option.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:group ref="BondChoice.model" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="BondOptionStrike">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A complex type to specify the strike of a bond or convertible bond option.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
+      <xsd:element name="referenceSwapCurve" type="ReferenceSwapCurve">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The strike of an option when expressed by reference to a swap curve. (Typically the case for a convertible bond option.)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="price" type="OptionStrike" />
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:complexType name="MakeWholeAmount">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A complex type to specify the amount to be paid by the buyer of the option if the option is exercised prior to the Early Call Date (Typically applicable to the convertible bond options).</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="SwapCurveValuation">
+        <xsd:sequence>
+          <xsd:element name="interpolationMethod" type="InterpolationMethod" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The type of interpolation method that the calculation agent reserves the right to use.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="earlyCallDate" type="IdentifiedDate">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">Date prior to which the option buyer will have to pay a Make Whole Amount to the option seller if he/she exercises the option.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="ReferenceSwapCurve">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A complex type used to specify the option and convertible bond option strike when expressed in reference to a swap curve.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="swapUnwindValue" type="SwapCurveValuation" />
+      <xsd:element name="makeWholeAmount" type="MakeWholeAmount" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Amount to be paid by the buyer of the option if the option is exercised prior to the Early Call Date. (The market practice in the convertible bond option space being that the buyer should be penalized if he/she exercises the option early on.)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SwapCurveValuation">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A complex type to specify a valuation swap curve, which is used as part of the strike construct for the bond and convertible bond options.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:group ref="FloatingRateIndex.model">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Defines the benchmark floating rate index and the ISDA Designated Maturity, i.e. the tenor of the floating rate.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:group>
+      <xsd:element name="spread" type="xsd:decimal">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Spread in basis points over the floating rate index.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="side" type="QuotationSideEnum" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The side (bid/mid/ask) of the measure.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="bondOption" type="BondOption" substitutionGroup="product">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A component describing a Bond Option product.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+</xsd:schema>
+

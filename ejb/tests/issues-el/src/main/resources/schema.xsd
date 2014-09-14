@@ -1,0 +1,49 @@
+<xsd:schema
+	targetNamespace="urn:test" xmlns:test="urn:test" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	jaxb:version="2.1" 
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified"
+
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+
+	jaxb:extensionBindingPrefixes="hj orm xjc"
+
+	>
+
+	<xsd:element name="issueHJIII31Persons" type="test:issueHJIII31Persons"/>
+	<xsd:complexType name="issueHJIII31Persons">
+		<xsd:sequence>
+			<xsd:element ref="test:issueHJIII31Person" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="issueHJIII31Person" type="test:issueHJIII31Person"/>
+	<xsd:complexType name="issueHJIII31Person">
+		<xsd:sequence>
+			<xsd:element name="key" type="test:issueHJIII31PersonPK">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<hj:embedded-id/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="name" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="issueHJIII31PersonPK">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<hj:embeddable/>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Id" type="xsd:int"/>
+			<xsd:element name="TokenId" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="2.001" id="OTA2008A">
+	<xs:include schemaLocation="OTA_AirCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_AirDetailsRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The AirDetails Request message is used to request additional flight details for each leg of a flight (e.g. journey time, meal service).  The request includes necessary information to identify a specific flight: 
+- Airline
+- Flight Number
+- Departure Airport
+- Arrival Airport
+- Departure Date
+</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Point of sale object. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="AirDetail" maxOccurs="150">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Information for a specific flight.
+</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Airline" type="CompanyNameType">
+								<xs:annotation>
+									<xs:documentation xml:lang="en"> Airline specified for details request.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="FlightNumber" type="FlightNumberType">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specific flight number to request details for. Requires that Airline is also supplied.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="DepartureAirport" type="LocationType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Flight Origin - IATA 3 letter code.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ArrivalAirport" type="LocationType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Flight Destination- IATA 3 letter code.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="DepartureDate" type="xs:date">
+								<xs:annotation>
+									<xs:documentation xml:lang="en"> The scheduled date of departure for the requested flight.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

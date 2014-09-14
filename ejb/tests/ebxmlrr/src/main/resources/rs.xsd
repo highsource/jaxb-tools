@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!-- $Header: /cvs/hyperjaxb3/ejb/tests/ebxmlrr/src/main/resources/rs.xsd,v 1.1 2007/11/25 12:25:12 lexi Exp $ -->
+<schema targetNamespace="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0" 
+  xmlns="http://www.w3.org/2001/XMLSchema" 
+  xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" 
+  xmlns:tns="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0">
+  
+  <annotation>
+    <documentation xml:lang="en">The schema for OASIS ebXML Registry Services</documentation>
+  </annotation>
+  <!-- Import the rim.xsd file with XML schema mappaing from RIM -->
+  <import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" schemaLocation="rim.xsd"/>
+  <complexType name="RegistryRequestType">
+    <annotation>
+      <documentation xml:lang="en">Base type for all ebXML Registry requests</documentation>
+    </annotation>
+    <sequence>
+      <!-- every request may be signed. -->
+      <element maxOccurs="1" minOccurs="0" ref="rim:SignatureList"/>
+      <!-- every request may be extended using Slots. -->
+      <element maxOccurs="1" minOccurs="0" name="RequestSlotList" type="rim:SlotListType"/>
+    </sequence>
+    <!-- Needed for async case. In case of sync request/response you may not need id. -->
+    <attribute name="id" type="anyURI" use="optional"/>
+  </complexType>
+  <element name="RegistryErrorList">
+    <annotation>
+      <documentation xml:lang="en">The RegistryErrorList is derived from the ErrorList element from the ebXML Message Service Specification</documentation>
+    </annotation>
+    <complexType>
+      <sequence>
+        <element maxOccurs="unbounded" ref="tns:RegistryError"/>
+      </sequence>
+      <attribute name="highestSeverity" type="rim:referenceURI" use="optional"/>
+    </complexType>
+  </element>
+  <element name="RegistryError">
+    <complexType>
+      <simpleContent>
+        <extension base="string">
+          <attribute name="codeContext" type="string" use="required"/>
+          <attribute name="errorCode" type="string" use="required"/>
+          <attribute default="urn:uuid:f76d7d42-de2e-4181-8237-93080cef1540" name="severity" type="rim:referenceURI" />
+          <attribute name="location" type="string" use="optional"/>
+        </extension>
+      </simpleContent>
+    </complexType>
+  </element>
+  <complexType name="RegistryResponseType">
+    <annotation>
+      <documentation xml:lang="en">Base type for all ebXML Registry responses</documentation>
+    </annotation>
+    <sequence>
+      <!-- every response may be signed. -->
+      <element maxOccurs="1" minOccurs="0" ref="rim:SignatureList"/>
+      <!-- every response may be extended using Slots. -->
+      <element maxOccurs="1" minOccurs="0" name="ResponseSlotList" type="rim:SlotListType"/>
+      <element minOccurs="0" ref="tns:RegistryErrorList"/>
+    </sequence>
+    <attribute name="status" type="rim:referenceURI" use="required"/>
+    <!-- id is the request if for the request for which this is a response -->
+    <attribute name="requestId" type="anyURI" use="optional"/>
+  </complexType>
+  <element name="RegistryResponse" type="tns:RegistryResponseType"/>
+</schema>

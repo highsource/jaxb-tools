@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Copyright 2005 UGS Corp.  All Rights Reserved.
+This software and related documentation are proprietary to UGS Corp.
+-->
+<xsd:schema targetNamespace="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.plmxml.org/Schemas/PLMXMLMPMSchema" xmlns:plm="http://www.plmxml.org/Schemas/PLMXMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" xml:lang="en">
+  <xsd:include schemaLocation="PLMXMLSchema.xsd"/>
+  <!-- -->
+  <xsd:annotation>
+    <xsd:documentation source="http://www.plmxml.org/Schemas/PLMXMLSchema/History">
+      <plm:SchemaChange author="davidj" date="2005-10-24" version="6.0.1.26">
+        <plm:Description>
+        Add plm:refType attribute to various attributes
+        </plm:Description>
+      </plm:SchemaChange>
+    </xsd:documentation>
+    <xsd:documentation>    	 
+    
+    PLM XML Schema for Manufacturing Process Management
+	 	  
+    </xsd:documentation>
+    <xsd:appinfo source="http://www.plmxml.org/Schemas/PLMXMLMPMSchema">
+      <plm:SchemaInfo name="PLMXMLMPMSchema.xsd" date="2005-10-24" version="6.0" status="release"/>
+    </xsd:appinfo>
+  </xsd:annotation>
+  <!-- -->
+  <!-- ************************* SetupInstance ************************************* -->
+  <!-- -->
+  <xsd:complexType name="SetupInstanceType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element is used to allow ProcessRevisionView elements to Instance elements
+      in the Plant and Product Structures, or to reference Occurrences in those
+      structures.
+      
+      Attributes:      
+   
+      predecessorRefs:     Used to indicate the process flow.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:CompositionInstanceType">
+        <xsd:attribute name="predecessorRefs" type="plm:uriReferenceListType" plm:refType="plm:Instance"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SetupInstance" type="plm:SetupInstanceType" substitutionGroup="plm:CompositionInstance"/>
+  <!-- -->
+  <!-- ************************* ProcessInstance ********************************* -->
+  <!-- -->
+  <xsd:complexType name="ProcessInstanceType">
+    <xsd:annotation>
+      <xsd:documentation>
+      An Instance of a Process, ProcessRevision, ProcessRevisionView, or ProcessStructureView.
+    
+      Attributes:
+    
+      predecessorRefs:      Used to indicate the process flow.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:InstanceBase">
+        <xsd:attribute name="predecessorRefs" type="plm:uriReferenceListType" plm:refType="plm:ProcessInstance"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ProcessInstance" type="plm:ProcessInstanceType" substitutionGroup="plm:Instance"/>
+  <!-- -->
+  <!-- ************************* WorkAreaInstance *************************** -->
+  <!-- -->
+  <xsd:complexType name="WorkAreaInstanceType">
+    <xsd:annotation>
+      <xsd:documentation>
+      An Instance of a WorkArea, WorkAreaRevision, WorkAreaStructureView, or
+      PlantRevisionView.
+    
+      Attributes:
+    
+      predecessorRefs:    Used to indicate the process flow.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:InstanceBase">
+        <xsd:attribute name="predecessorRefs" type="plm:uriReferenceListType" plm:refType="plm:WorkAreaInstance"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="WorkAreaInstance" type="plm:WorkAreaInstanceType" substitutionGroup="plm:Instance"/>
+  <!-- -->
+  <!-- ******************************* Activity ***************************** -->
+  <!-- -->
+  <xsd:complexType name="ActivityType">
+    <xsd:annotation>
+      <xsd:documentation>
+      An Activity is a component of an OperationRevision. An OperationRevision
+      contains a tree of Activities.
+    
+      Attributes:
+    
+      type:              
+      activityRefs       child activities
+      predecessorRefs    prior activities in the flow
+    
+      Note that the values of the following attributes are in unspecified time units. They
+      can be used for comparison, but do not indicate absolute time intervals.
+    
+      startTime          The start time of an activity 
+      duration           The duration of the activity
+      calcStartTime      Calculated time before starting current process/operation/activity 
+                         due to existence of predecessors
+      calcDuration       calculated total duration of all the activities under an operation
+      calcMinStartTime   calculated minimum time required before starting current
+                         process/operation/activity due to existence of predecessor(s)
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ManagedBase">
+        <xsd:attribute name="type" type="xsd:string" plm:deprecated="true"/>
+        <xsd:attribute name="activityRefs" type="plm:uriReferenceListType" plm:refType="plm:Activity"/>
+        <xsd:attribute name="predecessorRefs" type="plm:uriReferenceListType" plm:refType="plm:Activity"/>
+        <xsd:attribute name="startTime" type="xsd:double" use="optional"/>
+        <xsd:attribute name="calcStartTime" type="xsd:double" use="optional"/>
+        <xsd:attribute name="duration" type="xsd:double" use="optional"/>
+        <xsd:attribute name="calcDuration" type="xsd:double" use="optional"/>
+        <xsd:attribute name="calcMinStartTime" type="xsd:double" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Activity" type="plm:ActivityType" substitutionGroup="plm:Managed"/>
+  <!-- -->
+  <!--	************************* WorkArea ***************************** -->
+  <!-- -->
+  <xsd:complexType name="WorkAreaType">
+    <xsd:annotation>
+      <xsd:documentation>
+      The WorkArea is used to represent plant structure.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="WorkArea" type="plm:WorkAreaType" substitutionGroup="plm:Structure"/>
+  <!-- -->
+  <!-- ************************* WorkAreaRevision ********************* -->
+  <!-- -->
+  <xsd:complexType name="WorkAreaRevisionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A Revision of a WorkArea.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureRevisionBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="WorkAreaRevision" type="plm:WorkAreaRevisionType" substitutionGroup="plm:StructureRevision"/>
+  <!-- -->
+  <!-- ************************* Operation ******************************* -->
+  <!-- -->
+  <xsd:complexType name="OperationType">
+    <xsd:annotation>
+      <xsd:documentation>
+      An Operation is a leaf node in the Process Structure.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Operation" type="plm:OperationType" substitutionGroup="plm:Structure"/>
+  <!-- -->
+  <!-- ************************* OperationRevision ******************** -->
+  <!-- -->
+  <xsd:complexType name="OperationRevisionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A Revision of an Operation.
+      
+      Attributes:
+      
+      activityRef:   the root Activity under this Operation.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureRevisionBase">
+        <xsd:attribute name="activityRef" type="plm:anyURIType" use="optional" plm:refType="plm:Activity"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="OperationRevision" type="plm:OperationRevisionType" substitutionGroup="plm:StructureRevision"/>
+  <!-- -->
+  <!--************************* Process ******************************** -->
+  <!-- -->
+  <xsd:complexType name="ProcessType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A Process is a subclass of Structure representing a Manufacturing Process.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Process" type="plm:ProcessType" substitutionGroup="plm:Structure"/>
+  <!-- -->
+  <!-- ************************* ProcessRevision *********************** -->
+  <!-- -->
+  <xsd:complexType name="ProcessRevisionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A Revision of a Process
+    
+      Attributes
+    
+      productRefs:  
+      plantRefs:
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureRevisionBase">
+        <xsd:attribute name="productRefs" type="plm:uriReferenceListType" use="optional" plm:deprecated="true"/>
+        <xsd:attribute name="plantRefs" type="plm:uriReferenceListType" use="optional" plm:deprecated="true"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ProcessRevision" type="plm:ProcessRevisionType" substitutionGroup="plm:StructureRevision"/>
+  <!-- -->
+  <!-- ************************ ProcessView ***************************** -->
+  <!-- -->
+  <xsd:complexType name="ProcessViewType">
+    <xsd:annotation>
+      <xsd:documentation>
+      ProcessView. This is a collection of Occurrences.
+	   
+      Attributes:
+                           
+      definition:     how the ProcessView is defined. 
+
+      usage:          This optional attribute specifies the intent of the ProcessView. 
+                      
+      rootRefs:       specifies the root Occurrences, i.e. those which are not children
+                      of other Occurrences in this ProcessView.
+                      
+      primaryOccurrenceRef: (deprecated). Used when there is only one root Occurrence.                
+       
+      SubElements:
+      
+      Occurrence:           Occurrences in the ProcessView.
+      ConfiguredOccurrenceGroup: ConfiguredOccurrenceGroups in the ProcessView
+      Transform:            Transforms which may be referenced by the Occurrences.
+      </xsd:documentation>
+      <!-- The elements inside the appinfo are not part of the actual schema, but are
+	   processed by the CodeGenerator, and so appear in the PLM XML SDK run-time
+	   model and API. -->
+      <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">AdditionalElements=
+      http://www.plmxml.org/Schemas/PLMXMLSchema:ConfiguredActivity ConfiguredActivity
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ConfigurationViewType">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element ref="plm:Occurrence"/>
+          <xsd:element ref="plm:ConfiguredOccurrenceGroup"/>
+          <xsd:element ref="plm:Transform"/>
+        </xsd:choice>
+        <xsd:attribute name="rootRefs" type="xsd:IDREFS" use="optional" plm:refType="plm:Occurrence plm:ConfiguredOccurrenceGroup"/>
+        <xsd:attribute name="definition" type="plm:ProductViewDefinitionType" use="optional"/>
+        <xsd:attribute name="usage" type="plm:ProductViewUsageType" use="optional"/>
+        <xsd:attribute name="primaryOccurrenceRef" type="xsd:IDREF" use="optional" plm:deprecated="true"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ProcessView" type="plm:ProcessViewType" substitutionGroup="plm:ConfigurationView"/>
+  <!-- -->
+  <!-- ************************ PlantView ***************************** -->
+  <!-- -->
+  <xsd:complexType name="PlantViewType">
+    <xsd:annotation>
+      <xsd:documentation>
+      PlantView. This is a collection of Occurrences of Parts within one
+      Assembly, i.e. it selects certain Occurrences, for example in order to
+      display them.
+
+      All the root Occurrences (given by rootRefs) must
+      have the same 'top Structure'. This is called the 'top Structure' of the 
+      PlantView.
+	   
+      Attributes:
+      
+      definition:     how the PlantView is defined.
+                           
+      usage:          This optional attribute specifies the intent of the PlantView. 
+                      
+      rootRefs:       specifies the root Occurrences, i.e. those which are not children
+                      of other Occurrences in this PlantView.
+                     
+      primaryOccurrenceRef: (deprecated). Used when there is only one root Occurrence.
+       
+      SubElements:
+      
+      Occurrence:           the Occurrences in the PlantView.
+      ConfiguredOccurrenceGroup: ConfiguredOccurrenceGroups in the PlantView
+      Transform:            Transforms which may be referenced by the Occurrences.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ConfigurationViewType">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element ref="plm:Occurrence"/>
+          <xsd:element ref="plm:ConfiguredOccurrenceGroup"/>
+          <xsd:element ref="plm:Transform"/>
+        </xsd:choice>
+        <xsd:attribute name="rootRefs" type="xsd:IDREFS" use="optional" plm:refType="plm:Occurrence plm:ConfiguredOccurrenceGroup"/>
+        <xsd:attribute name="definition" type="plm:ProductViewDefinitionType" use="optional"/>
+        <xsd:attribute name="usage" type="plm:ProductViewUsageType" use="optional"/>
+        <xsd:attribute name="primaryOccurrenceRef" type="xsd:IDREF" use="optional" plm:deprecated="true"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PlantView" type="plm:PlantViewType" substitutionGroup="plm:ConfigurationView"/>
+  <!-- -->
+  <!-- ************************* ProcessDef ******************************* -->
+  <!-- -->
+  <xsd:complexType name="ProcessDefType">
+    <xsd:annotation>
+      <xsd:documentation>
+      ProcessDef is a container element for the Process Structure.
+    
+      Attributes:
+    
+      rootRefs:
+
+      Sub-elements:
+    
+      ProcessInstance
+      StructureRevision
+      ProcessView
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureDefBase">
+        <xsd:sequence>
+          <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element ref="plm:ProcessInstance" plm:deprecated="true"/>
+            <xsd:element ref="plm:StructureRevision" plm:deprecated="true"/>
+            <xsd:element ref="plm:ProcessView"/>
+          </xsd:choice>
+        </xsd:sequence>
+        <xsd:attribute name="rootRefs" type="xsd:IDREFS" use="optional" plm:deprecated="true"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ProcessDef" type="plm:ProcessDefType" substitutionGroup="plm:StructureDef"/>
+  <!-- -->
+  <!-- ************************* ProcessRevisionView ******************************* -->
+  <!-- -->
+  <xsd:complexType name="ProcessRevisionViewType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A 'View' of a ProcessRevision.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureRevisionViewBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ProcessRevisionView" type="plm:ProcessRevisionViewType" substitutionGroup="plm:StructureRevisionView"/>
+  <!-- -->
+  <!-- ************************* PlantDefType *********************** -->
+  <!-- -->
+  <xsd:complexType name="PlantDefType">
+    <xsd:annotation>
+      <xsd:documentation>
+      PlantDef differs from ProductDef as it has the concept of stationFlow.
+    
+      Attributes:
+    
+      rootRefs:
+    
+      Sub-elements:
+    
+      PlantView:
+      WorkAreaInstance:  
+      WorkAreaRevision:  
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureDefBase">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element ref="plm:WorkAreaInstance" plm:deprecated="true"/>
+          <xsd:element ref="plm:WorkAreaRevision" plm:deprecated="true"/>
+          <xsd:element ref="plm:PlantView"/>
+        </xsd:choice>
+        <xsd:attribute name="rootRefs" type="plm:uriReferenceListType" plm:deprecated="true"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PlantDef" type="plm:PlantDefType" substitutionGroup="plm:StructureDef"/>
+  <!-- -->
+  <!-- ************************* PlantRevisionView ******************************* -->
+  <!-- -->
+  <xsd:complexType name="PlantRevisionViewType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A 'View' of a WorkAreaRevision. 
+    
+      For legacy reasons this is called a PlantRevisionView, not a WorkAreaRevisionView.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureRevisionViewBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PlantRevisionView" type="plm:PlantRevisionViewType" substitutionGroup="plm:StructureRevisionView"/>
+  <!-- -->
+  <!-- ************************* ProcessStructureView ****************************** -->
+  <!-- -->
+  <xsd:complexType name="ProcessStructureViewType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element represents a View of a Process, e.g. 'design' View.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureViewType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ProcessStructureView" type="plm:ProcessStructureViewType" substitutionGroup="plm:StructureView"/>
+  <!-- -->
+  <!-- ************************* WorkAreaStructureView ****************************** -->
+  <!-- -->
+  <xsd:complexType name="WorkAreaStructureViewType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element represents a View of a WorkArea, e.g. 'design' View.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureViewType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="WorkAreaStructureView" type="plm:WorkAreaStructureViewType" substitutionGroup="plm:StructureView"/>
+  <!-- -->
+  <!-- ************************* ProcessOccurrence ****************************** -->
+  <!-- -->
+  <xsd:complexType name="ProcessOccurrenceType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a derived class of Occurrence, specific to Process Structure.
+      
+      Attributes:
+      
+      predecessorRefs:            list of predecessor ProcessOccurrences
+      configuredActivityRootRef:
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:OccurrenceType">
+        <xsd:attribute name="predecessorRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:ProcessOccurrence"/>
+        <xsd:attribute name="configuredActivityRootRef" type="plm:anyURIType" use="optional" plm:refType="plm:ConfiguredActivity"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ProcessOccurrence" type="plm:ProcessOccurrenceType" substitutionGroup="plm:Occurrence"/>
+  <!-- -->
+  <!-- ************************* WorkAreaOccurrence ****************************** -->
+  <!-- -->
+  <xsd:complexType name="WorkAreaOccurrenceType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a derived class of Occurrence, specific to WorkArea Structure.
+      
+      Attributes:
+      
+      predecessorRefs:            list of predecessor WorkAreaOccurrences
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:OccurrenceType">
+        <xsd:attribute name="predecessorRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:WorkAreaOccurrence"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="WorkAreaOccurrence" type="plm:WorkAreaOccurrenceType" substitutionGroup="plm:Occurrence"/>
+  <!-- -->
+  <!-- ************************* ConfiguredActivity ****************************** -->
+  <!-- -->
+  <xsd:complexType name="ConfiguredActivityType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a derived class of AssociatedAttachment, and represents a Configured
+      Activity.
+      
+      Attributes:
+      
+      predecessorRefs:            list of predecessor ConfiguredActivity elements
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AssociatedAttachmentType">
+        <xsd:attribute name="predecessorRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:ConfiguredActivity"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ConfiguredActivity" type="plm:ConfiguredActivityType" substitutionGroup="plm:AssociatedAttachment"/>
+  <!-- -->
+</xsd:schema>

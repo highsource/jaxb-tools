@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.010" id="OTA2008A">
+	<xs:include schemaLocation="OTA_VehicleCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_VehModifyRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The root tag of OTA_VehModiifyRQ contains standard payload attributes found in all OTA payload documents. The attribute ReqRespVersion is a positive integer value that indicates the version number requested for the response message.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Point of Sale Identification.  Identification number of the vendor that has made the vehicle availability request and agency number assigned by IATA, ARC, ESRP or TID.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="UniqueID" type="UniqueID_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A unique identifier by which to reference the reservation. This is typically referred to as a reservation number. Generally used at this level when multiple actions are being made to the reservation.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="VehModifyRQCore" maxOccurs="3">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the common, or core, information associated with the request for the modification of a rental vehicle reservation.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="VehicleModifyRQCoreType">
+								<xs:attribute name="ModifyType" use="required">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Used to specify the status of the reservation with either one of the enumerations in TransactionActionType or an UpperCaseAlphaLength1to2 such as the IATA status code. </xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:union memberTypes="TransactionActionType UpperCaseAlphaLength1to2"/>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="IndexNumber" type="Numeric1to999" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">A unique number (e.g., segment number or index number) used to further identify a booked item within a list of booked items in a multi-segment PNR. Typically not used in messages to car suppliers.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Action" type="ActionType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Identifies an action (add, delete, replace, etc.) to be taken on the information in the child elements.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="OptionChangeIndicator" type="xs:boolean" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">When true, indicates that critical options have changed since the  reservation was made or modified.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="VehModifyRQInfo" minOccurs="0" maxOccurs="3">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the supplemental information associated with the request for the modification of a rental vehicle reservation.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="VehicleModifyRQAdditionalInfoType">
+								<xs:attribute name="Action" type="ActionType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en"> Identifies an action (add, delete, replace, etc.) to be taken on the information in the child elements.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attributeGroup ref="ReqRespVersion"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="VehicleModifyRQAdditionalInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleModifyRQAdditionalInfoType complex type identifies the data that is supplemental in a request to modify an existing vehicle reservation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SpecialReqPref" type="VehicleSpecialReqPrefType" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates the preference associated with special needs or requirements of the customer, described using free text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CoveragePrefs" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates the preferences for one or more types of coverage (insurance).</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="CoveragePref" maxOccurs="30">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Specific preference for a type of coverage.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attributeGroup ref="VehicleCoveragePrefGroup"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="OffLocService" type="OffLocationServiceType" minOccurs="0" maxOccurs="4">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on requested off-airport location services, for example, vehicle delivery, customer pickup.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ArrivalDetails" type="VehicleArrivalDetailsType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Details of the arrival transportation, if applicable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RentalPaymentPref" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates preferences for the form of payment that will be used, if the request results in a reservation. This element may repeat for different rental payment preferences.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="PaymentDetailType"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Reference" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information identifying an earlier availability quote.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="UniqueID_Type">
+							<xs:attribute name="DateTime" type="xs:dateTime">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The date and time at which this availability quote was made available.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attributeGroup ref="CurrencyAmountGroup"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="TourInfo" type="VehicleTourInfoType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Details of a tour with which this reservation information is associated.  Rate information may vary if associated with a tour.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WrittenConfInst" type="WrittenConfInstType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Used to provide instructions regarding cusotmer preferences for receiving confirmation information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="LuggageQty" type="xs:positiveInteger" use="optional"/>
+		<xs:attribute name="PassengerQty" type="xs:positiveInteger" use="optional"/>
+		<xs:attributeGroup ref="SmokingIndicatorGroup"/>
+		<xs:attribute name="GasPrePay" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The GasPrePay attribute defines a set of valid values for the choice of prepaying for gas at the time of the pick up of the rental vehicle.  This information is useful  in that it allows a customer's preference to be made known to the vendor. It also allows the vendor to provide more detailed and accurate pricing up front.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VehicleModifyRQCoreType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleModifyRQCoreType complex type identifies the data that is common in a request to modify an existing vehicle reservation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UniqueID" type="UniqueID_Type" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A unique identifier by which to reference the reservation. This is typically referred to as a reservation number.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VehRentalCore" type="VehicleRentalCoreType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information that is common,  or core, to all requests and responses associated with the reservation of a vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Customer" type="CustomerPrimaryAdditionalType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on the one primary driver and, optionally, several additional drivers. This may be used to provide a frequent renter number.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VendorPref" type="CompanyNamePrefType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates the preferred Vendor Company for car rental. If a company name is supplied, the rates will be supplied for the specific Vendor Company. The company name is unique amongst the vendors.  The name of the company is provided in this element.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VehPref" type="VehiclePrefType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates any preferences for  the vehicle, such as type, class, transmission, air conditioning.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DriverType" minOccurs="0" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates the number of people of each age category associated with this request.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="TravelerCountGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RateQualifier" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates the type of rates of interest to the customer, along with any discount number or promotional codes that may affect the rate.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="RateQualifierCoreGroup"/>
+					<xs:attribute name="VendorRateID" type="StringLength1to32" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The identifier assigned to this rate by the vendor </xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RateRestriction" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on restrictions that may be associated with this rate.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="CancellationPenaltyInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true indicates the requestor is aware that a fee applies if a cancellation is requested.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ModificationPenaltyInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true indicates the requestor is aware that a fee applies if a modification is requested.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SpecialEquipPrefs" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates the preferences for one or more specific items of additional equipment, such as ski racks, child seats, etc.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="SpecialEquipPref" maxOccurs="15">
+							<xs:complexType>
+								<xs:attributeGroup ref="VehicleEquipmentPrefGroup"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="VehicleCharge" type="VehicleChargePurposeType" minOccurs="0" maxOccurs="99">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on the charges associated with this vehicle. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TotalCharge" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Total cost for this reservation.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="VehicleTotalChargeGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Provides the data that is used to express a total charge both including and excluding taxes and/or additional charges.</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RateDistance" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on the distance that a reserved vehicle may be driven as part of the standard rental charge.  Such distance may be unlimited, or a quantity of miles or kilometers for a certain period of time. This may be repeated for situations such as an 8 day rental that has 500 miles per week and 100 miles per additional day.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="VehicleRateDistanceGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Provides information on a distance associated with a particular rate (e.g., the distance may be  expressed as Unlimited miles per rental period or 200 miles per day).</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="Status" type="InventoryStatusType" use="optional"/>
+	</xs:complexType>
+</xs:schema>

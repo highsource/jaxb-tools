@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="2.003" id="OTA2008A">
+	<xs:include schemaLocation="OTA_VehicleCommonTypes.xsd"/>
+	<xs:element name="OTA_VehLocDetailsNotifRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This message will push location details for multiple car rental locations to a trading partner.  The information pushed may establish this location initially in a trading partner's database and/or update the information that currently exists.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">To specify who is sending the vehicle location details database information.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="LocationDetails">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A container for location detail information.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="LocationDetail" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">All the detail information for a specific car rental location.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ProcessingInfo">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">To specifiy the action to be taken on this information and the effective and discontinue dates.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attributeGroup ref="ProcessingInfoGroup">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">To specifiy the action to be taken on this information and the effective and discontinue dates.</xs:documentation>
+													</xs:annotation>
+												</xs:attributeGroup>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Address" minOccurs="0" maxOccurs="5">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Address information for the car rental location.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:complexContent>
+													<xs:extension base="AddressInfoType">
+														<xs:sequence>
+															<xs:element name="Position" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation>Used to specify the geographic position of a rental location.</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:attributeGroup ref="PositionGroup">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">Used to specify the geographic coordinates of a location.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attributeGroup>
+																	<xs:attribute name="AccuracyLevelCode" type="OTA_CodeType" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">Specifies the level of accuracy of this latitute and longitude. Refer to OTA code list 'Index Point Code' (IPC).</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																	<xs:attribute name="Action" type="StringLength1to32" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">Specifies the action requested on the position.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+														<xs:attributeGroup ref="DateTimeSpanGroup">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">The effective and discontinue dates for this address.</xs:documentation>
+															</xs:annotation>
+														</xs:attributeGroup>
+														<xs:attribute name="LocationName" type="StringLength1to64" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">The name of the location.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+													</xs:extension>
+												</xs:complexContent>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Telephone" minOccurs="0" maxOccurs="5">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Telephone information for the car rental location.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attributeGroup ref="TelephoneAttributesGroup"/>
+												<xs:attributeGroup ref="DateTimeSpanGroup">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">The effective and discontinue dates for this telephone information.</xs:documentation>
+													</xs:annotation>
+												</xs:attributeGroup>
+												<xs:attribute name="MovePhoneNbrToPNR_Ind" type="xs:boolean" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">If true, this phone number should be moved to the PNR.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Policies" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">A collection of policy information.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Policy" maxOccurs="99">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">Unformatted policy information with effective/discontinue dates.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:complexContent>
+																<xs:extension base="ParagraphType">
+																	<xs:attribute name="Code" type="AlphaNumericStringLength1to8" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">A code that identifies the policy information.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																	<xs:attribute name="PolicyNumber" type="NumericStringLength1to8" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">The policy number for this policy.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																	<xs:attributeGroup ref="DateTimeSpanGroup">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">The effective and discontinue date for the policy.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attributeGroup>
+																	<xs:attribute name="Action" type="ActionType" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">To specify if the action to be taken is a replacement, addition, deletion, or update.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																</xs:extension>
+															</xs:complexContent>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Keywords" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">A collection of keyword information.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Keyword" maxOccurs="30">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">Unformatted keyword information with the effective and discontinue dates.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:complexContent>
+																<xs:extension base="ParagraphType">
+																	<xs:attribute name="Code" type="AlphaNumericStringLength1to8" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">The code used to identify a keyword.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																	<xs:attribute name="PolicyNumber" type="NumericStringLength1to8" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">The policy number for this keyword.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																	<xs:attribute name="AttachToKeyword" type="StringLength1to64" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">Another keyword to which this keyword is attached.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																	<xs:attributeGroup ref="DateTimeSpanGroup">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">The effective and discontinue dates for this keyword information.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attributeGroup>
+																	<xs:attribute name="Action" type="ActionType" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">To specify if the action to be taken is a replacement, addition, deletion, or update.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																</xs:extension>
+															</xs:complexContent>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="OperationSchedules" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">A collection of operation schedule information.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:complexContent>
+													<xs:extension base="OperationSchedulesType">
+														<xs:attribute name="PolicyNumber" type="StringLength1to8" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">The policy number for this information.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attribute name="Text" type="StringLength0to64" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Free text information concerning the hours of operation.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attribute name="Action" type="ActionType" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">To specify if the action to be taken is a replacement, addition, deletion, or update.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+													</xs:extension>
+												</xs:complexContent>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="SpecialEquipments" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">A collection of descriptions about the special pieces of equipment that can be included in a rental from this facility.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="SpecialEquipment" maxOccurs="99">
+														<xs:annotation>
+															<xs:documentation xml:lang="en"> Information that describes a piece of special equipment, any restrictions associated with it and charges that may apply.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:complexContent>
+																<xs:extension base="VehicleEquipmentType">
+																	<xs:sequence>
+																		<xs:element name="Charge" type="VehicleChargeType" minOccurs="0">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">Identifies charges associated with the special equipment.</xs:documentation>
+																			</xs:annotation>
+																		</xs:element>
+																	</xs:sequence>
+																	<xs:attribute name="GDS_TypeCode" type="StringLength1to8" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">The GDS specific code that is used to identify the special equipment.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																	<xs:attribute name="Name" type="StringLength1to64" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">The name of the special equipment.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																	<xs:attribute name="FreeInd" type="xs:boolean" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">If true, there is no charge for the special equipment.  If false, there is a charge for the special equipment.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																	<xs:attribute name="ReadEquipPolicyInd" type="xs:boolean" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">If true, the equipment policy information for this type of equipment should be read.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																</xs:extension>
+															</xs:complexContent>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="PolicyNumber" type="StringLength1to8" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">The policy number for special equipment.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="Action" type="ActionType" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">To specify if the action to be taken is a replacement, addition, deletion, or update.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attributeGroup ref="DateTimeSpanGroup">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">The effective and discontinue dates for the special equipment.</xs:documentation>
+													</xs:annotation>
+												</xs:attributeGroup>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Vehicles" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">A collection of vehicle information for this location.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:complexContent>
+													<xs:extension base="VehicleLocationVehiclesType">
+														<xs:attributeGroup ref="DateTimeSpanGroup">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">The effective and discontinue dates for the vehicle types information.</xs:documentation>
+															</xs:annotation>
+														</xs:attributeGroup>
+														<xs:attribute name="PolicyNumber" type="StringLength1to8" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">The policy number for vehicle types.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attribute name="Text" type="StringLength1to128" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Free text information that applies to all car types.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attribute name="Action" type="ActionType" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">To specify if the action to be taken is a replacement, addition, deletion, or update.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+													</xs:extension>
+												</xs:complexContent>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="AgeRequirements" minOccurs="0" maxOccurs="5">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Age requirement information for this car rental location.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:complexContent>
+													<xs:extension base="VehicleAgeRequirementsType">
+														<xs:attribute name="Action" type="ActionType" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">To specify if the action to be taken is a replacement, addition, deletion, or update.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attributeGroup ref="DateTimeSpanGroup">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">The effective and discontinue dates for the age requirement.</xs:documentation>
+															</xs:annotation>
+														</xs:attributeGroup>
+													</xs:extension>
+												</xs:complexContent>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="AdditionalDriverRequirements" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Additional driver requirements for this rental car location.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:complexContent>
+													<xs:extension base="VehicleAdditionalDriverRequirementsType">
+														<xs:attribute name="Action" type="ActionType" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">To specify if the action to be taken is a replacement, addition, deletion, or update.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+													</xs:extension>
+												</xs:complexContent>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="CreditCardRequirements" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Credit card information for this car rental location.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="CreditCardPurpose" maxOccurs="3">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">To specify the credit card purpose, e.g., guarantee, deposit.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="CreditCardCode" maxOccurs="99">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">The credit card vendor that will be accepted for payment, guarantee, or deposit.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:attribute name="CardCode" type="PaymentCardCodeType" use="optional">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">The 2 digit code that references the credit card vendor.</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attribute name="PurposeType">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">To specify if the credit cards may be used for deposits, guarantee, or payment.</xs:documentation>
+																</xs:annotation>
+																<xs:simpleType>
+																	<xs:restriction base="xs:NMTOKEN">
+																		<xs:enumeration value="Deposit">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">The credit card information is for deposits.</xs:documentation>
+																			</xs:annotation>
+																		</xs:enumeration>
+																		<xs:enumeration value="Guarantee">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">The credit card information is for guarantees.</xs:documentation>
+																			</xs:annotation>
+																		</xs:enumeration>
+																		<xs:enumeration value="Payment">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">The credit card information is for payment.</xs:documentation>
+																			</xs:annotation>
+																		</xs:enumeration>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="CreditCardInfo" type="FormattedTextType" minOccurs="0" maxOccurs="5">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">Textual credit card information.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+												<xs:attributeGroup ref="DateTimeSpanGroup">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">The effective and discontinue dates for the credit card information.</xs:documentation>
+													</xs:annotation>
+												</xs:attributeGroup>
+												<xs:attribute name="PolicyNumber" type="StringLength1to8" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">The policy number for the credit card information.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="Action" type="ActionType" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">To specify if the action to be taken is a replacement, addition, deletion, or update.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ShuttleInfo" minOccurs="0" maxOccurs="5">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">The shuttle information for this location.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ShuttleDesc" minOccurs="0" maxOccurs="6">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">The type of shuttle information and a description.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:complexContent>
+																<xs:extension base="FormattedTextType">
+																	<xs:attribute name="Type" type="LocationDetailShuttleInfoType" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">A set of valid values for the textual information about the shuttle services when renting from a rental facility.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																</xs:extension>
+															</xs:complexContent>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="Type" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Identifies the type of shuttle information.</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:NMTOKEN">
+															<xs:enumeration value="Non-terminal">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">Outside the terminal shuttle information.</xs:documentation>
+																</xs:annotation>
+															</xs:enumeration>
+															<xs:enumeration value="In-terminal">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">In the terminal shuttle information.</xs:documentation>
+																</xs:annotation>
+															</xs:enumeration>
+															<xs:enumeration value="CarRentalShuttle-OffAirport">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">Shuttle information when the location is off airport.</xs:documentation>
+																</xs:annotation>
+															</xs:enumeration>
+															<xs:enumeration value="CarRentalShuttle-InTerminal">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">Shuttle information when the location is in the terminal.</xs:documentation>
+																</xs:annotation>
+															</xs:enumeration>
+															<xs:enumeration value="CarRentalShuttle-OnAirport">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">Shuttle information when the location is on the airport property.</xs:documentation>
+																</xs:annotation>
+															</xs:enumeration>
+															<xs:enumeration value="AirportShuttle-OnAirport">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">The airport shuttle is on the airport property.</xs:documentation>
+																</xs:annotation>
+															</xs:enumeration>
+															<xs:enumeration value="CallForShuttle">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">Information for calling for a shuttle.</xs:documentation>
+																</xs:annotation>
+															</xs:enumeration>
+															<xs:enumeration value="AirportShuttleThenRentalShuttle">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">Information for using an airport shuttle to get to the rental shuttle.</xs:documentation>
+																</xs:annotation>
+															</xs:enumeration>
+															<xs:enumeration value="AirportShuttle-OffAirport">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">Airport Shuttle information when the location is off airport.</xs:documentation>
+																</xs:annotation>
+															</xs:enumeration>
+															<xs:enumeration value="AirportShuttle-InTerminal">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">Airport shuttle information when the location is in terminal.</xs:documentation>
+																</xs:annotation>
+															</xs:enumeration>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attributeGroup ref="DateTimeSpanGroup">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">The effective and discontinue dates for the shuttle information.</xs:documentation>
+													</xs:annotation>
+												</xs:attributeGroup>
+												<xs:attribute name="Action" type="ActionType" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">To specify if the action to be taken is a replacement, addition, deletion, or update.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="AdditionalFees" minOccurs="0" maxOccurs="5">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">An additional fee that may apply to this car rental location and the effective and discontinue dates for the fee.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="AdditionalFeeInfo" type="FormattedTextType" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">Text information concerning the additional fee.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="Type" type="OTA_CodeType">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Identifies the type of additional fee.  Refer to OTA Code List Vehicle Charge Type (VCP).</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attributeGroup ref="DateTimeSpanGroup">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">The effective and discontinue dates for the additional fee.</xs:documentation>
+													</xs:annotation>
+												</xs:attributeGroup>
+												<xs:attribute name="Action" type="ActionType" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">To specify if the action to be taken is a replacement, addition, deletion, or update.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Liabilities" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Information on the financial liabilities assumed by the renter when renting from this facility, along with optional coverage to reduce the financial liabilities. </xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:complexContent>
+													<xs:extension base="VehicleLocationLiabilitiesType">
+														<xs:attribute name="Action" type="ActionType" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">To specify if the action to be taken is a replacement, addition, deletion, or update.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attributeGroup ref="DateTimeSpanGroup">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">The effective and discontinue dates for the coverage information.</xs:documentation>
+															</xs:annotation>
+														</xs:attributeGroup>
+													</xs:extension>
+												</xs:complexContent>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="LoyaltyProgram" minOccurs="0" maxOccurs="5">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Frequent renter information applicable to this car rental location and the effective and discontinue dates for the information.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Vehicles" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">A collection of vehicles.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="Vehicle" maxOccurs="99">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">The vehicle types associated with the frequent renter information.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:complexContent>
+																			<xs:extension base="VehicleCoreType">
+																				<xs:attribute name="IncludeExclude" type="IncludeExcludeType" use="optional">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">To specify if the frequent renter program is required, allowed, excluded, or included for this vehicle type.</xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																			</xs:extension>
+																		</xs:complexContent>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="ProgramID" type="StringLength1to16" use="required">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Identifies the vendor of the loyalty program.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attributeGroup ref="DateTimeSpanGroup">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">The effective and discontinue dates for the loyalty program information.</xs:documentation>
+													</xs:annotation>
+												</xs:attributeGroup>
+												<xs:attribute name="Text" type="StringLength1to128" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Textual information for this loyalty program.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="Action" type="ActionType" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">To specify if the action to be taken is a replacement, addition, deletion, or update.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="VehicleVendorSupplier" minOccurs="0" maxOccurs="5">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">The vehicle provider (e.g., Hertz, National) when different from the car rental location vendor.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Vehicles">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">A collection of vehicles.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="Vehicle" maxOccurs="99">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">The type of vehicle for the provider.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:complexContent>
+																			<xs:extension base="VehicleCoreType"/>
+																		</xs:complexContent>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attributeGroup ref="CompanyID_AttributesGroup">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">The vehicle provider (e.g., Hertz, National) when different from the car rental location vendor.</xs:documentation>
+													</xs:annotation>
+												</xs:attributeGroup>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attributeGroup ref="VehLocDetailsGrp">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">The locationr code, name, extended location code and a list of any airport codes associated to this location.</xs:documentation>
+										</xs:annotation>
+									</xs:attributeGroup>
+									<xs:attribute name="CounterLoc" type="OTA_CodeType" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">The location of the car rental counter for this location. Refer to  OTA codelist Vehicle Where At Facility (VWF).</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="PrimaryLocCodeForBranch" type="StringLength1to8" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">The primary location code if this location is a branch.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="CorporateLocInd" type="xs:boolean" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">If true, this is a corporate location.  If false, it is a franchised location.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="DistanceUnit" type="DistanceUnitNameType" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">The unit of measure, miles or kilometers, in which the mileage is measured.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="WrittenConfirmationInd" type="xs:boolean" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">If true, a written confrimation is available for this location. If false, it is not available.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="ViewershipRuleID" type="StringLength1to8" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Used to identify which subscribers can view the rule information for this location.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="PrimaryAirportCode" type="StringLength1to8" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">The primary airport code if this location is not at the airport.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="RecordID" type="StringLength1to32" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">The identification of this car location detail record that may be returned in the response associated to a warning or error.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="LocationQuantity" type="xs:nonNegativeInteger" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The count of car locations being sent in this message.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attributeGroup ref="ReqRespVersion">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Used to request the version of the payload message desired for the response.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

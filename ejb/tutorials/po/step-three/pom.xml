@@ -1,0 +1,114 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jvnet.hyperjaxb3</groupId>
+	<artifactId>hyperjaxb3-ejb-tutorials-po-step-three</artifactId>
+	<version>0.5.7-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>Hyperjaxb3 EJB Tutorial [po:step-three]</name>
+	<repositories>
+		<repository>
+			<id>maven-repository.java.net</id>
+			<name>Java.net Maven 1 Repository (legacy)</name>
+			<url>http://download.java.net/maven/1</url>
+			<layout>legacy</layout>
+		</repository>
+	</repositories>
+	<distributionManagement>
+		<repository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>org.highsource.repository.maven2.releases</id>
+			<url>${sftp.repository.highsource.org}/maven2/releases</url>
+		</repository>
+		<snapshotRepository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>org.highsource.repository.maven2.snapshots</id>
+			<url>${sftp.repository.highsource.org}/maven2/snapshots</url>
+		</snapshotRepository>
+		<site>
+			<url>${sftp.static.highsource.org}/hyperjaxb3/hyperjaxb-ejb/hyperjaxb3-ejb-tutorials/hyperjaxb3-ejb-tutorials-po/hyperjaxb3-ejb-tutorials-po-step-three</url>
+		</site>
+	</distributionManagement>
+	<dependencies>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.2.4-1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jvnet.hyperjaxb3</groupId>
+			<artifactId>hyperjaxb3-ejb-runtime</artifactId>
+			<version>0.5.7-SNAPSHOT</version>
+		</dependency>
+
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+		</dependency>
+
+		<!-- Roundtrip -->
+		<dependency>
+			<groupId>org.jvnet.hyperjaxb3</groupId>
+			<artifactId>hyperjaxb3-ejb-roundtrip</artifactId>
+			<version>0.5.7-SNAPSHOT</version>
+		</dependency>
+
+		<!-- TopLink Dependencies -->
+		<dependency>
+			<groupId>toplink.essentials</groupId>
+			<artifactId>toplink-essentials</artifactId>
+			<version>2.0.1-04</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+
+		<!-- Database -->
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.8.0.7</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<plugins>
+			<plugin>
+				<groupId>org.jvnet.hyperjaxb3</groupId>
+				<artifactId>maven-hyperjaxb3-plugin</artifactId>
+				<version>0.5.7-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<extension>true</extension>
+					<roundtripTestClassName>org.jvnet.hyperjaxb3.ejb.tutorials.po.stepthree.RoundtripTest</roundtripTestClassName>
+				</configuration>
+			</plugin>
+			<plugin>
+				<inherited>true</inherited>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

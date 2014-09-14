@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<schema
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:sportsml="http://iptc.org/std/SportsML/2006-10-18/"
+	version="1.8"
+	>
+	<simpleType name="scoreAttemptType.Basketball.Vocabulary">
+		<annotation>
+			<documentation>What type of shot it was. </documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="free-throw">
+				<annotation>
+					<documentation>A foul shot, worth one point.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="fg">
+				<annotation>
+					<documentation>A two-point field goal.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="fg3">
+				<annotation>
+					<documentation>A three-pointer.</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+	<simpleType name="scoreAttemptResult.Basketball.Vocabulary">
+		<annotation>
+			<documentation>The reason the ball did not go through the basket.</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="missed"/>
+			<enumeration value="blocked"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="penaltySide.Basketball.Vocabulary">
+		<restriction base="string">
+			<enumeration value="offensive"/>
+			<enumeration value="defensive"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="penaltyLevel.Basketball.Vocabulary">
+		<restriction base="string">
+			<enumeration value="regular"/>
+			<enumeration value="flagrant"/>
+			<enumeration value="technical"/>
+			<enumeration value="illegal-defense"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="position.Basketball.Vocabulary">
+		<restriction base="string">
+			<enumeration value="guard"/>
+			<enumeration value="point-guard"/>
+			<enumeration value="shooting-guard"/>
+			<enumeration value="forward"/>
+			<enumeration value="power-forward">
+				<annotation>
+					<documentation>Forward who mostly plays defense.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="small-forward">
+				<annotation>
+					<documentation>Forward who mostly tries to score.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="center"/>
+			<enumeration value="referee"/>
+			<enumeration value="umpire"/>
+			<enumeration value="scorekeeper"/>
+			<enumeration value="timekeeper"/>
+			<enumeration value="shot-clock-operator"/>
+			<enumeration value="coach"/>
+			<enumeration value="assistant-coach"/>
+		</restriction>
+	</simpleType>
+</schema>

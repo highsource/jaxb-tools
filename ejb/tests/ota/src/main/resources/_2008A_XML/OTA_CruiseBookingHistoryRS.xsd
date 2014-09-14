@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.003" id="OTA2008A">
+	<xs:include schemaLocation="OTA_CruiseCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA 
+specification are made available according to the terms defined by the OTA 
+License Agreement at 
+http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_CruiseBookingHistoryRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+This message provides a detailed service history for the reservation requested.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Indicates successful 
+processing of an OTA message.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Used in conjunction with a successful 
+processing of an OTA message to provide  warnings.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReservationID">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies the reservation control information or the guest's booking ID .</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="UniqueID_Type">
+									<xs:attributeGroup ref="ReservationStatusGroup">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">The status and last modified date of this reservation.</xs:documentation>
+										</xs:annotation>
+									</xs:attributeGroup>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="SailingInfo" type="SailingCategoryInfoType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies the sailing information for a reservation.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="HistoryInfos" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">A collection of history info items.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="HistoryInfo" maxOccurs="999">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Used to provide history of the booking.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="SourceType">
+												<xs:sequence>
+													<xs:element name="Items" maxOccurs="99">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">Collection of changed items.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="Item" maxOccurs="999">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">History item details.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:complexContent>
+																			<xs:extension base="ParagraphType">
+																				<xs:attribute name="GuestID" type="StringLength1to32" use="optional">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">Unique identifier of the guest to whom this transaction applies.</xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																				<xs:attribute name="ItemName" type="StringLength1to64" use="optional">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">The item being modified in this transaction.</xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																				<xs:attribute name="OldValue" type="StringLength1to255" use="optional">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">Specifies the old value of an item.</xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																				<xs:attribute name="NewValue" type="StringLength1to255" use="optional">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">Specifies the new value of an item.</xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																				<xs:attribute name="Classification" type="StringLength1to128" use="optional">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">Specifies the classification of the item (e.g., RES_GUEST, RES_HEADER).</xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																			</xs:extension>
+																		</xs:complexContent>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+															<xs:attributeGroup ref="OptionalCodeOptionalNameGroup">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">Specifies a general category of history items or type of history item (e.g., RESERVATION, TRANSACTION).</xs:documentation>
+																</xs:annotation>
+															</xs:attributeGroup>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="LastModified" type="xs:dateTime" use="required"/>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en"> A collection of errors that occurred during 
+the processing of a message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The standard attributes that appear on the root element for all OTA payloads. </xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+			<xs:attributeGroup ref="ResponseGroup">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that additional records are available and provides the echo token to be used to retrieve those records.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

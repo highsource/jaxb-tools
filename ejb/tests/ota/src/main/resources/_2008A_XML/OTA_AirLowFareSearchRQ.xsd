@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="2.009" id="OTA2008A">
+	<xs:include schemaLocation="OTA_AirCommonTypes.xsd"/>
+	<xs:include schemaLocation="OTA_AirPreferences.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_AirLowFareSearchRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+	The Low Fare Search Request message requests priced itinerary options for flights between specific city pairs on specific dates for specific 	numbers and types of passengers. Optional request information can include:
+	- Time / Time Window
+	- Connecting cities.
+	- Client Preferences (airlines, cabin, flight types etc.)
+	The Low Fare Search request contains similar information to a Low Fare Search entry on an airline CRS or GDS.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Point of sale object. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ProcessingInfo" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A collection of information that specifies how the message processing should occur or how the data should be returned.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attributeGroup ref="AirProcessingInfoGroup"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="OriginDestinationInformation" maxOccurs="10">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Origin and Destination location, and time information for the Air Low Fare Search request. </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="OriginDestinationInformationType">
+								<xs:sequence>
+									<xs:element name="AlternateLocationInfo" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Specifies alternate location(s) for the origin and/or destination. </xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="OriginLocation" type="ListOfStringLength1to8" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Specifies alternate airport/city codes for the origin location.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="DestinationLocation" type="ListOfStringLength1to8" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Specifies alternate airport/city codes for the destination location.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+									<xs:element ref="TPA_Extensions" minOccurs="0"/>
+								</xs:sequence>
+								<xs:attribute name="RPH" type="RPH_Type" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">A unique reference to this origin destination information.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="RefNumber" type="Numeric1to99" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">A unique reference to this origin destination information to be referenced wihin the OTA_AirLowFareSearchRS message.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SpecificFlightInfo" type="SpecificFlightInfoType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specify actual airline, flight number, or booking class to qualify the low fare search</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TravelPreferences" minOccurs="0" maxOccurs="10">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Air Low Fare Search Request preference information.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="AirSearchPrefsType">
+								<xs:attribute name="FlexDatePref" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">To specify which portions of the journey the date is flexible.</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:NMTOKEN">
+											<xs:enumeration value="Outbound">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Date is flexible on the outbound portion.</xs:documentation>
+												</xs:annotation>
+											</xs:enumeration>
+											<xs:enumeration value="Return">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Date is flexible on the return portion.</xs:documentation>
+												</xs:annotation>
+											</xs:enumeration>
+											<xs:enumeration value="Both">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Date is flexible on the entire journey.</xs:documentation>
+												</xs:annotation>
+											</xs:enumeration>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="FlexWeekendIndicator" type="xs:boolean" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">If true, days before or after the weekend day should be searched.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="FlexLevelIndicator" type="xs:boolean" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">If true, eligible for widest flex searches.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="NoFareBreakIndicator" type="xs:boolean" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">If true, no fare breaks in the itinerary apart from the turn point should be considered.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="OriginDestinationRPHs" type="ListOfRPH" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Refers to specific origin destination information within this request message.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="TravelerInfoSummary">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specify the number of passengers and types for Air Low Fare Search</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="TravelerInfoSummaryType">
+								<xs:attribute name="TicketingCountryCode" type="ISO3166" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">To specify the country code where ticketing of the reservation will take place.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="SpecificPTC_Indicator" type="xs:boolean" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">If true, this request is for a specific PTC and only fares applicable to that PTC will be checked and returned.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attributeGroup ref="MaxResponsesGroup"/>
+			<xs:attribute name="DirectFlightsOnly" type="xs:boolean" use="optional" default="false">
+				<xs:annotation>
+					<xs:documentation xml:lang="en"> Request direct flights on between the given locations.This defaults to false.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="AvailableFlightsOnly" type="xs:boolean" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Include only flights with available booking codes (when True or when attribute not present).</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

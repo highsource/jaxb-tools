@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.009" id="OTA2008A">
+	<xs:include schemaLocation="OTA_InsuranceCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_InsurancePlanSearchRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Root element for insurance plan search response message</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType"/>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0"/>
+					<xs:element name="AvailablePlans">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Collection of plan that meet the search request requirements</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AvailablePlan" maxOccurs="999">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Container for information about a single insurance plan.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="PlanDetail" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Container for detailed descriptions and URLs associated with the insurance product.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="PlanDescription" type="FormattedTextType" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Detailed description of insurance product.</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+														<xs:element name="QuoteDetailURL" type="URL_Type" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">URL where user may get more information about quoting this product.</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+														<xs:element name="BookingDetailURL" type="URL_Type" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">URL where user may get more information about purchasing this product.</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="ProviderDetail" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Container for the name and detailed description of the insurance company offering the product.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="ProviderCompany" type="CompanyNameType" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Name of the insurance company offering the product.</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+														<xs:element name="ProviderDescription" type="FormattedTextType" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Detailed description of the insurance company.</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="UnderwriterDetail" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Container for the name and detailed description of the company underwriting the insurance product.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="UnderwriterCompany" type="CompanyNameType" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Name of the company underwriting the insurance product.</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+														<xs:element name="UnderwriterDescription" type="FormattedTextType" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Detailed description of the underwriter.</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="PlanRestrictions" type="PlanRestrictionType" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Collection of restrictions associated with purchasing this insurance product.</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+										<xs:attribute name="Featured" type="xs:boolean" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Indicates if plan has been marked as a featured product by the insurance company or 3rd party vendor</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="PreferLevel" type="PreferLevelType" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">May be used to indicate how well the plan matches the original search request parameters.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attributeGroup ref="PlanID_Group"/>
+										<xs:attributeGroup ref="EffectiveExpireOptionalDateGroup">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Indicates for how long plan information is valid.</xs:documentation>
+											</xs:annotation>
+										</xs:attributeGroup>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType"/>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

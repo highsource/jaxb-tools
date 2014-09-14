@@ -1,0 +1,135 @@
+<!-- User   MOD      Date              Description  
+    =========================================================================
+    
+    MV     CRx     20061031          Commented out "DocumentID"                                      
+-->
+
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns="http://www.starstandard.org/STAR/5" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="ValidationMessageFundingErrorMessage" type="FundingErrorMessageType">
+        <xsd:annotation>
+            <xsd:documentation  source="http://www.starstandard.org/STAR/5">Federally defined 17 position vehicle identification number</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">This definition came from the CreditContractResponseHeader Component</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="CreditContractResponse" type="CreditContractResponseType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">For each Credit Contract Response represented in the Data Area of the CreditContractResponse BOD, there must be one occurrence of the CreditContractResponse component.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="CreditContractResponseHeader" type="CreditContractResponseHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">For each CreditContractResponse represented in the Data Area of the Credit Contract Response BOD, there must be one occurrence of the Header component.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="CreditContractResponseType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 3.0 - Draft</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.1, STAR approved 04/20/2005; effective date 07/04/2005</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.0, STAR approved 05/07/2004; effective date 07/04/2004</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 1.0 STAR approved 01/10/2003; OAGI approved 3/15/2003; effective date 01/01/2003</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="CreditContractResponseHeader">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/STAR/5">For each CreditContractResponse represented in the Data Area of the Credit Contract Response BOD, there must be one occurrence of the Header component.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="FinanceParty">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="DealerParty">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="Applicants" minOccurs="0"/>
+            <xsd:element ref="ContractResponseFinancing">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/STAR/5">The Financing component represents finance information for the credit contract.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="ContractVehiclePricing" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="CreditContractResponseHeaderType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+                <xsd:sequence>
+                <!--    <xsd:element ref="DocumentID" minOccurs="0"> 
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Is the identifier for the document.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element> -->
+                    <xsd:element ref="DocumentVersionNumberString" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Identifies the version of the doucment.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="ContractFormNumberString" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Identifies the type of contract.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="FinanceTypeString">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Type of financing Examples may be F- Finance, L - Lease, C-Cash, 1-Retail, 2-Lease, 3-Balloon, etc.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="ApplicationTypeString" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Type of application being submitted for financing (e.g., individual, individual + co-applicant, business, business + coapplicant, employee).</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="FundingStatusCode" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Identifies the funding status of the deal.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="VIN" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Previous or Temporary VIN</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="ContractID" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Identification of Contract</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="ValidationResultsCode" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Identifies whether a Credit Contract has passed validation rules as defined by the receiving organization.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="ValidationMessage" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Federally defined 17 position vehicle identification number</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="ApplicationNumberString" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Manufacturer assigned appilcation number.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+</xsd:schema>

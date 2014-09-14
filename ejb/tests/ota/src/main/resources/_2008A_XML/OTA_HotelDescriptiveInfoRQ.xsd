@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.009" id="OTA2008A">
+	
+	<xs:include schemaLocation="OTA_HotelContentDescription.xsd"/>
+	
+	
+	
+	
+	
+	
+	
+	
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_HotelDescriptiveInfoRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The OTA_HotelDescriptiveInfoRQ message allows a trading partner to query for specific hotel descriptive data.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The point-of-sale data, contained in the POS element, communicates the information that allows the receiving system to identify the trading partner that is sending the request or the response message. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="HotelDescriptiveInfos">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Collection of items for data from multiple  hotels.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="HotelDescriptiveInfo" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">This allows the requestor to indicate which specific information is requested if complete hotel details are not required.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="HotelDescriptiveInfoRequestType">
+											<xs:attribute name="StateCodeList" type="ListOfStringLength1to8" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">One or more postal service standard codes or abbreviations for the state, province, or region.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="CountryCodeList" type="ListOfISO3166" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">These may be used to filter the response of requested data.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="BrandCodeList" type="ListOfStringLength1to8" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">These may be used to filter the response of requested data.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="MoreDataEchoToken" type="StringLength1to128" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The response returns the attribute if there was additional data.  The text value should be echoed in this request to indicate where to begin the next block of data.		</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="ApplicableDate" type="xs:date" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Date to which the response information should apply.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:extension>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="LangRequested" type="xs:language" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The requested language in which the hotel property information should be sent.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="HotelDescriptiveInfoRequestType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The HotelDescriptiveInfo element contains the descriptive information about a hotel property.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="HotelInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Is used to indicate whether hotel information is being requested. </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="SendData" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Send this data.  "True" means send the data.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="HotelStatus" type="StringLength1to64" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This is a description of the operating status of the Hotel. This information may support the code in HotelStatusCode.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="HotelStatusCode" type="OTA_CodeType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This indicates the operating status (e.g. Open, Closed, Deflagged, Pre-opening) of the hotels to be returned in the response. Refer to OTA Code List HotelStatusCode.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="FacilityInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Is used to the indicate the  specific facility information being requested.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="SendMeetingRooms" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Send this data.  "True" means send the data.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="SendGuestRooms" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Send this data.  "True" means send the data.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="SendRestaurants" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Send this data.  "True" means send the data.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Policies" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Is used to the indicate whether policy information is being requested.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="SendPolicies" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Send this data.  "True" means send the data.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="AreaInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Is used to the indicate the  specific area information being requested.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="SendRefPoints" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Send this data.  "True" means send the data.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="SendAttractions" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Send this data.  "True" means send the data.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="SendRecreations" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Send this data.  "True" means send the data.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="AffiliationInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Is used to the indicate the  specific affiliation information being requested.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="SendDistribSystems" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Send this data.  "True" means send the data.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="SendBrands" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Send this data.  "True" means send the data.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="SendLoyalPrograms" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Send this data.  "True" means send the data.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="SendAwards" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Send this data.  "True" means send the data.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ContactInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Is used to the indicate whether contact information is being requested.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="SendData" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Send this data.  "True" means send the data.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="MultimediaObjects" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Is used to the indicate whether multimedia information is being requested.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="SendData" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Send this data.  "True" means send the data.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ContentInfos" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Container for specific information.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ContentInfo" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Used for requesting specific content information.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attributeGroup ref="OptionalCodeOptionalNameGroup">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Used to specify information by name and/or code as defined by trading partners.</xs:documentation>
+									</xs:annotation>
+								</xs:attributeGroup>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="HotelReferenceGroup"/>
+	</xs:complexType>
+</xs:schema>

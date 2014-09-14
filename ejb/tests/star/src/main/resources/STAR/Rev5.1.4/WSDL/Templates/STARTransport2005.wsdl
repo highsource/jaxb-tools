@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:starws="http://www.starstandards.org/webservices/2005/10/transport"
+                  xmlns:starbindings="http://www.starstandards.org/webservices/2005/10/transport/bindings"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:star="http://www.starstandard.org/STAR/5"
+                  targetNamespace="http://www.starstandards.org/webservices/2005/10/transport/bindings">
+   <wsdl:documentation>Note: That if implementing the STAR Transport 2005/10 version of the WSDL and including a STAR 5 payload.  Then
+                the correct namespace for the STAR 5 BODs needs to be specified.  Recommended prefix would be star5 and the namespace of
+                http://www.starstandard.org/STAR/5.  It should also be noted that the OAGI namespace may need to be specified as well.  This namespace
+                is http://www.openapplications.org/oagis/9
+            </wsdl:documentation>
+   <wsdl:types>
+      <xsd:schema xmlns="http://www.starstandards.org/webservices/2005/10/transport"
+                  targetNamespace="http://www.starstandards.org/webservices/2005/10/transport"
+                  elementFormDefault="qualified">
+         <xsd:include schemaLocation="STARWSDLDataTypes.xsd"/>
+         <!--Method Global Elements-->
+                
+            <xsd:element name="ProcessMessage">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="payload" type="Payload" minOccurs="0" maxOccurs="1" form="qualified"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="ProcessMessageResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="payload" type="Payload" minOccurs="0" maxOccurs="1" form="qualified"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="PutMessage">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="payload" type="Payload" minOccurs="0" maxOccurs="1" form="qualified"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="PullMessageResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="payload" type="Payload" minOccurs="0" maxOccurs="1" form="qualified"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="ProcessMessageIn">
+      <wsdl:part name="parameters" element="starws:ProcessMessage"/>
+   </wsdl:message>
+   <wsdl:message name="ProcessMessageOut">
+      <wsdl:part name="parameters" element="starws:ProcessMessageResponse"/>
+   </wsdl:message>
+   <wsdl:message name="PutMessageIn">
+      <wsdl:part name="parameters" element="starws:PutMessage"/>
+   </wsdl:message>
+   <wsdl:message name="PutMessageOut">
+      <wsdl:part name="parameters" element="starws:PutMessageResponse"/>
+   </wsdl:message>
+   <wsdl:message name="PullMessageIn">
+      <wsdl:part name="parameters" element="starws:PullMessage"/>
+   </wsdl:message>
+   <wsdl:message name="PullMessageOut">
+      <wsdl:part name="parameters" element="starws:PullMessageResponse"/>
+   </wsdl:message>
+   <wsdl:message name="ManifestHeader">
+      <wsdl:part name="header" element="starws:payloadManifest"/>
+   </wsdl:message>
+   <wsdl:portType name="starTransportPortTypes">
+      <wsdl:operation name="ProcessMessage">
+         <wsdl:input message="starbindings:ProcessMessageIn"/>
+         <wsdl:output message="starbindings:ProcessMessageOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="PutMessage">
+         <wsdl:input message="starbindings:PutMessageIn"/>
+         <wsdl:output message="starbindings:PutMessageOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="PullMessage">
+         <wsdl:input message="starbindings:PullMessageIn"/>
+         <wsdl:output message="starbindings:PullMessageOut"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="starTransport" type="starbindings:starTransportPortTypes">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="ProcessMessage">
+         <soap:operation soapAction="http://www.starstandards.org/webservices/2005/10/transport/operations/ProcessMessage"/>
+         <wsdl:input>
+            <soap:header message="starbindings:ManifestHeader" part="header" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header message="starbindings:ManifestHeader" part="header" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="PutMessage">
+         <soap:operation soapAction="http://www.starstandards.org/webservices/2005/10/transport/operations/PutMessage"
+                         style="document"/>
+         <wsdl:input>
+            <soap:header message="starbindings:ManifestHeader" part="header" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="PullMessage">
+         <soap:operation soapAction="http://www.starstandards.org/webservices/2005/10/transport/operations/PullMessage"
+                         style="document"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:header message="starbindings:ManifestHeader" part="header" use="literal"/>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="WebService">
+      <wsdl:port name="StarTransport" binding="starbindings:starTransport"><!--Note to implementors. You will need to change or override the soap address as appropriate.--><soap:address location="http://www.example.org/"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+    <display-name>CXF Customer Service Sample Test</display-name>
+
+    <servlet>
+        <servlet-name>org.apache.cxf.transport.servlet.CXFServlet</servlet-name>
+        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+        <init-param>
+	        <param-name>config-location</param-name>
+    	    <param-value>
+    	    	classpath:com/example/customerservice/service/test/applicationContext.xml
+    	    </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>org.apache.cxf.transport.servlet.CXFServlet</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+    
+</web-app>

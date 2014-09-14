@@ -1,0 +1,106 @@
+<xsd:schema targetNamespace="urn:test" xmlns:test="urn:test" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" jaxb:version="2.1" 
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" elementFormDefault="qualified" 
+	attributeFormDefault="unqualified">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.any"/>
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+	<xsd:element name="anySingleStrict" type="test:AnySingleStrict"/>
+	<xsd:complexType name="AnySingleStrict">
+		<xsd:sequence>
+			<xsd:any namespace="##any" processContents="strict" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="anyCollectionStrict" type="test:AnyCollectionStrict"/>
+	<xsd:complexType name="AnyCollectionStrict">
+		<xsd:sequence>
+			<xsd:any namespace="##any" processContents="strict" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="anySingleLax" type="test:AnySingleLax"/>
+	<xsd:complexType name="AnySingleLax">
+		<xsd:sequence>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="anyCollectionLax" type="test:AnyCollectionLax"/>
+	<xsd:complexType name="AnyCollectionLax">
+		<xsd:sequence>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="anySingleSkip" type="test:AnySingleSkip"/>
+	<xsd:complexType name="AnySingleSkip">
+		<xsd:sequence>
+			<xsd:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="anyCollectionSkip" type="test:AnyCollectionSkip"/>
+	<xsd:complexType name="AnyCollectionSkip">
+		<xsd:sequence>
+			<xsd:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+
+	<xsd:element name="anySingleStrictMixed" type="test:AnySingleStrictMixed"/>
+	<xsd:complexType name="AnySingleStrictMixed" mixed="true">
+		<xsd:sequence>
+			<xsd:any namespace="##any" processContents="strict" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="anyCollectionStrictMixed" type="test:AnyCollectionStrictMixed"/>
+	<xsd:complexType name="AnyCollectionStrictMixed" mixed="true">
+		<xsd:sequence>
+			<xsd:any namespace="##any" processContents="strict" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="anySingleLaxMixed" type="test:AnySingleLaxMixed"/>
+	<xsd:complexType name="AnySingleLaxMixed" mixed="true">
+		<xsd:sequence>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="anyCollectionLaxMixed" type="test:AnyCollectionLaxMixed"/>
+	<xsd:complexType name="AnyCollectionLaxMixed" mixed="true">
+		<xsd:sequence>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="anySingleSkipMixed" type="test:AnySingleSkipMixed"/>
+	<xsd:complexType name="AnySingleSkipMixed" mixed="true">
+		<xsd:sequence>
+			<xsd:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="anyCollectionSkipMixed" type="test:AnyCollectionSkipMixed"/>
+	<xsd:complexType name="AnyCollectionSkipMixed" mixed="true">
+		<xsd:sequence>
+			<xsd:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="anyAttribute" type="test:anyAttributeType"/>
+	<xsd:complexType name="anyAttributeType">
+		<xsd:sequence>
+			<xsd:element name="firstname" type="xsd:string"/>
+			<xsd:element name="lastname" type="xsd:string"/>
+		</xsd:sequence>
+		<xsd:anyAttribute/>
+	</xsd:complexType>
+
+</xsd:schema>

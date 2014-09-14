@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="2.003" id="OTA2008A">
+	<xs:include schemaLocation="OTA_HotelCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_HotelCommNotifRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">CommissionEventUpdateRequest
+CommissionsEvents are prepared by the PMS as a result of a guest stay, or by systems such as an activity vendor's system as a result of a completed activity.  The report is then sent to the entity responsible for making payments to those parties that are to receive commissions for the transactions.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CommissionEvents" type="CommissionEventsType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A collection of CommissionsEvent elements that result from a guest stay to be sent to the system responsible for processing agent commission payments.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="CommissionEventType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The CommissionEvent element is used to identify the commission to be paid to a central server. The Commission Event is initiated on the schedule that the hotel typically pays commissions (e.g.: following night audit), and a CommissionEvent occurs for every check out.
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UniqueID" type="UniqueID_Type" minOccurs="0"/>
+			<xs:element name="ProfileCertification" type="ProfileCertificationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The ProfileCertification element identifies the travel agency to be paid by providing the IATA number or ARC certifying number.  (Implementation note: This attribute is optional, but if it is not set, the Profile attribute must be set.)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Profiles" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of profiles.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Profile" type="ProfileType" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Provides the details for a profile.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Payee" type="PersonNameType" minOccurs="0"/>
+			<xs:element name="PayeeAddress" type="AddressType" minOccurs="0"/>
+			<xs:element name="Commissions" type="CommissionsType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of Commission elements.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GuestNames" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of guest names.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="GuestName" type="PersonNameType" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Provides details of a guest name.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="HotelReference" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The hotel reference identifies the specific hotel for which the commission applies.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="HotelReferenceGroup"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="CurrencyAmountGroup"/>
+		<xs:attributeGroup ref="DateTimeSpanGroup"/>
+		<xs:attribute name="ConfirmationID" type="StringLength1to8" use="optional"/>
+		<xs:attribute name="ConfirmationOriginatorCode" type="StringLength1to8" use="optional"/>
+		<xs:attribute name="CommissionOriginatorCode" type="StringLength1to8" use="optional"/>
+		<xs:attribute name="ReservationID" type="StringLength1to8" use="optional"/>
+		<xs:attribute name="OriginalBookingDate" type="xs:date" use="optional"/>
+		<xs:attribute name="PreferredPaymentCurrency" type="AlphaLength3" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Indicates the preferred currency of the commission to be paid. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="MarketCode" type="StringLength1to8" use="optional"/>
+		<xs:attribute name="BookingSource" type="StringLength1to8" use="optional"/>
+		<xs:attribute name="NumberOfRooms" type="xs:nonNegativeInteger" use="optional"/>
+		<xs:attribute name="RoomInventoryCode" type="StringLength1to8" use="optional"/>
+		<xs:attribute name="PromotionCode" type="StringLength1to8" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="CommissionEventsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Events : CommissionEvent
+A collection of CommissionsEvent elements that result from a guest stay to be sent to the system responsible for processing agent commission payments.
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CommissionEvent" type="CommissionEventType" maxOccurs="99">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The CommissionEvent element is used to identify the commission to be paid to a central server. The Commission Event is initiated on the schedule that the hotel typically pays commissions (e.g.: following night audit), and a CommissionEvent occurs for every check out.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CommissionsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Commissions : Commission
+A collection of multiple Commission elements.
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Commission" type="CommissionType" maxOccurs="99">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Contains details pertaining to commissions.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProfileCertificationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">ProfileCertification : ProfileCertification
+The ProfileCertification element identifies the travel agency to be paid by providing the IATA number or ARC certifying number.  (Implementation note: This attribute is optional, but if it is not set, the Profile attribute must be set.)</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="CertificationType" type="StringLength1to8" use="optional"/>
+		<xs:attribute name="CertificationID" type="StringLength1to8" use="optional"/>
+	</xs:complexType>
+	<xs:element name="ProfileReference">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">ProfileReference : Profile
+A reference to the travel agent's Profile.  (Implementation note: This attribute is optional, but if it is not set, the ProfileCertification attribute must be set.)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Profile" type="ProfileType" maxOccurs="99"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

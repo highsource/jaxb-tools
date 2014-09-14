@@ -1,0 +1,29 @@
+<xsd:schema
+	targetNamespace="urn:test-ignored" xmlns:test="urn:test-ignored" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	jaxb:version="2.1" 
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified"
+
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+
+	jaxb:extensionBindingPrefixes="hj orm xjc">
+
+	<!--xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.issuesignored"/>
+			</jaxb:schemaBindings>
+			<hj:ignored-package name="org.jvnet.hyperjaxb3.ejb.tests.issuesignored"/>
+		</xsd:appinfo>
+	</xsd:annotation-->
+
+	<xsd:complexType name="issueHJIII32ComplexType">
+ 		<xsd:attribute name="value" type="xsd:string" use="required"/>
+	</xsd:complexType> 
+
+</xsd:schema>

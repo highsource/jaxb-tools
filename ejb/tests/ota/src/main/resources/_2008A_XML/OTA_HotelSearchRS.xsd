@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="2.003" id="OTA2008A">
+	<xs:include schemaLocation="OTA_HotelCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_HotelSearchRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Returns a list of hotel properties that meet the requested criteria and/or Warnings, or Errors if the request did not succeed.</xs:documentation>
+			<xs:documentation xml:lang="en">Standard way to indicate successful processing of an OTA message</xs:documentation>
+			<xs:documentation xml:lang="en">Standard way to indicate successful processing of an OTA message, but one in which warnings are generated</xs:documentation>
+			<xs:documentation xml:lang="en">Standard way to indicate that an error occurred during the processing of an OTA message</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type" minOccurs="0"/>
+				<xs:choice>
+					<xs:sequence>
+						<xs:element name="Success" type="SuccessType">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Standard way to indicate successful processing of an OTA message.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Warnings" type="WarningsType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Standard way to indicate successful processing of an OTA message, but one in which warnings are generated.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Properties" type="PropertiesType" minOccurs="0"/>
+						<xs:element name="Areas" type="AreasType" minOccurs="0"/>
+						<xs:element name="Criteria" type="HotelSearchCriteriaType" minOccurs="0"/>
+						<xs:element ref="TPA_Extensions" minOccurs="0"/>
+					</xs:sequence>
+					<xs:element name="Errors" type="ErrorsType">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Standard way to indicate that an error occurred during the processing of an OTA message.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="PropertiesType">
+		<xs:sequence>
+			<xs:element name="Property" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="PropertyValueMatchType">
+							<xs:sequence>
+								<xs:element ref="TPA_Extensions" minOccurs="0"/>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

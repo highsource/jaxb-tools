@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="2.004" id="OTA2008A">
+	<xs:include schemaLocation="OTA_CruiseCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_CruiseSailAvailRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+The Sailing Availability Response message contains sailing availability for 1 to many cruise lines for a given region or ship on a date and duration range. For each sailing the following information may be returned:
+- Cruise line code
+- Ship code
+- Region code
+- Departure date
+- Duration
+- Voyage number
+- Number of ports visited
+- Departure port code
+- Arrival port code
+- Status code
+- Max cabin occupancy
+- Category location
+- First and second dining services status
+- Sailing indicators
+- Free flow text
+- Available modes of transportation
+- Available currencies
+- Cruise package information
+- Registration information
+This message contains similar information to a standard airline CRS or GDS sailing availability response message.	</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType">
+						<xs:annotation>
+							<xs:documentation xml:lang="en"> Standard way to indicate successful processing of an OTA message. Returning an empty element of this type indicates success.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en"> Standard way to indicate successful processing of an OTA message, but one in which warnings are generated.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SailingOptions" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Contains the different sailing availability options that customers can choose from.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="SailingOption" maxOccurs="unbounded">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Specifies a sailing availability option per cruise line and per ship. </xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="SailingType">
+												<xs:sequence>
+													<xs:element ref="TPA_Extensions" minOccurs="0"/>
+												</xs:sequence>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A collection of errors that prevented the processing of a message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The standard attributes that appear on the root element for all OTA payloads. </xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+			<xs:attributeGroup ref="ResponseGroup">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Used to identify requirements regarding the maximum data results sent.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

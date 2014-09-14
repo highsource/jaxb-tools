@@ -1,0 +1,1418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 rel. 3 U (http://www.altova.com) by Steven (Personal) -->
+<xs:schema xmlns="urn:astm-org:CCR" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ccr="urn:astm-org:CCR" targetNamespace="urn:astm-org:CCR" elementFormDefault="qualified" attributeFormDefault="unqualified"
+  xmlns:hj="http://hyperjaxb2.jvnet.org/customizations"
+  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+  jaxb:extensionBindingPrefixes="hj">
+	<!--Draft Version 1.0 (V1.0) Released for review and comment June 14, 2005 by ASTM E31.28 CCR Subcommittee.-->
+	<!--Copyright 2004-2005 ASTM, 100 Barr Harbor Drive, West Conshohocken, PA 19428-2959. All rights reserved.-->
+	<xs:element name="ContinuityOfCareRecord">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CCRDocumentObjectID" type="xs:string"/>
+				<xs:element name="Language" type="CodedDescriptionType"/>
+				<xs:element name="Version" type="xs:string"/>
+				<xs:element name="DateTime" type="DateTimeType"/>
+				<xs:element name="Patient" maxOccurs="2">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ActorID" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="From">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ActorLink" type="ActorReferenceType" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="To" minOccurs="0">
+					<xs:annotation>
+						<xs:appinfo>
+							<hj:complexSingleProperty>
+								<hj:column name="ccr_to"/>
+							</hj:complexSingleProperty>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ActorLink" type="ActorReferenceType" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:appinfo>
+										<hj:complexCollectionProperty>
+											<hj:key>
+												<hj:column name="ccr_to_al"/>
+											</hj:key>
+										</hj:complexCollectionProperty>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Purpose" type="PurposeType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Body">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Insurance" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Payer" type="InsuranceType" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="AdvanceDirectives" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="AdvanceDirective" type="CCRCodedDataObjectType" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Support" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="SupportProvider" type="ActorReferenceType" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="FunctionalStatus" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Function" type="FunctionType" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Problems" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Problem" type="ProblemType" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="FamilyHistory" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="FamilyProblemHistory" type="FamilyHistoryType" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SocialHistory" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="RiskFactorHistory" type="RiskFactorHistoryType" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Alerts" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Alert" type="AlertType" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Medications" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Medication" type="StructuredProductType" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="MedicalEquipment" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Equipment" type="StructuredProductType" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Immunizations" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Immunization" type="StructuredProductType" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="VitalSigns" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Result" type="ResultType" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Results" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Result" type="ResultType" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Procedures" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Procedure" type="ProcedureType" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Encounters" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Encounter" type="EncounterType" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PlanOfCare" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Plan" type="PlanType" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="HealthCareProviders" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Provider" type="ActorReferenceType" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Actors">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Actor" type="ActorType" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="References" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Reference" type="ReferenceType" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Comments" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Comment" type="CommentType" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Signatures" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="CCRSignature" type="SignatureType" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!--Global CCR Data Types-->
+	<xs:complexType name="ActorType">
+		<xs:sequence>
+			<xs:element name="ActorObjectID" type="xs:string" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="Person" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Name" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="BirthName" type="PersonNameType" minOccurs="0"/>
+										<xs:element name="FormerName" type="PersonNameType" minOccurs="0" maxOccurs="unbounded"/>
+										<xs:element name="CurrentName" type="PersonNameType" minOccurs="0"/>
+										<xs:element name="DisplayName" type="xs:string" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="DateOfBirth" type="DateTimeType" minOccurs="0"/>
+							<xs:element name="Gender" type="CodedDescriptionType" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Organization" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Name" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="InformationSystem" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Name" type="xs:string"/>
+							<xs:element name="Type" type="xs:string" minOccurs="0"/>
+							<xs:element name="Version" type="xs:string" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="IDs" type="IDType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Relation" type="CodedDescriptionType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Specialty" type="CodedDescriptionType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Address" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Type" minOccurs="0"/>
+						<xs:element name="Line1" type="xs:string" minOccurs="0"/>
+						<xs:element name="Line2" type="xs:string" minOccurs="0"/>
+						<xs:element name="City" type="xs:string" minOccurs="0"/>
+						<xs:element name="County" type="xs:string" minOccurs="0"/>
+						<xs:element name="State" type="xs:string" minOccurs="0"/>
+						<xs:element name="Country" type="xs:string" minOccurs="0"/>
+						<xs:element name="PostalCode" type="xs:string" minOccurs="0"/>
+						<xs:element name="Priority" type="xs:string" minOccurs="0"/>
+						<xs:element ref="Status" minOccurs="0"/>
+					</xs:sequence>
+					<xs:attribute name="Preferred" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Telephone" type="CommunicationType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="EMail" type="CommunicationType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="URL" type="CommunicationType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="Status" minOccurs="0"/>
+			<xs:group ref="SLRCGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CCRCodedDataObjectType">
+		<xs:sequence>
+			<xs:element name="CCRDataObjectID" type="xs:string"/>
+			<xs:element name="DateTime" type="DateTimeType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="IDs" type="IDType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="Type" minOccurs="0"/>
+			<xs:element ref="Description" minOccurs="0"/>
+			<xs:element ref="Status" minOccurs="0"/>
+			<xs:group ref="SLRCGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodedDescriptionType">
+		<xs:sequence>
+			<xs:element name="Text" type="xs:string" minOccurs="0"/>
+			<xs:element name="ObjectAttribute" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Attribute" type="xs:string"/>
+						<xs:element name="AttributeValue" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Value"/>
+									<xs:element name="Code" type="CodeType" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Code" type="CodeType" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+				<xs:unique name="UniqueValues">
+					<xs:selector xpath="./AttributeValue"/>
+					<xs:field xpath="Value"/>
+				</xs:unique>
+			</xs:element>
+			<xs:element name="Code" type="CodeType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeType">
+		<xs:sequence>
+			<xs:element name="Value" type="xs:string"/>
+			<xs:element name="CodingSystem" type="xs:string" minOccurs="0"/>
+			<xs:element name="Version" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CommentType">
+		<xs:sequence>
+			<xs:element name="CommentObjectID" type="xs:string"/>
+			<xs:element name="DateTime" type="DateTimeType"/>
+			<xs:element ref="Type" minOccurs="0"/>
+			<xs:element ref="Description"/>
+			<xs:element name="Source" type="ActorReferenceType" maxOccurs="unbounded"/>
+			<xs:element name="ReferenceID" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateTimeType">
+		<xs:sequence>
+			<xs:element ref="Type" minOccurs="0"/>
+			<xs:element name="ExactDateTime" type="xs:string" minOccurs="0"/>
+			<xs:element ref="Age" minOccurs="0"/>
+			<xs:element name="ApproximateDateTime" type="CodedDescriptionType" minOccurs="0"/>
+			<xs:element name="DateTimeRange" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="BeginRange" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ExactDateTime" type="xs:string" minOccurs="0"/>
+									<xs:element ref="Age" minOccurs="0"/>
+									<xs:element name="ApproximateDateTime" type="CodedDescriptionType" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="EndRange" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ExactDateTime" type="xs:string" minOccurs="0"/>
+									<xs:element ref="Age" minOccurs="0"/>
+									<xs:element name="ApproximateDateTime" type="CodedDescriptionType" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IDType">
+		<xs:sequence>
+			<xs:element name="DateTime" type="DateTimeType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="Type" minOccurs="0"/>
+			<xs:element name="ID" type="xs:string"/>
+			<xs:element name="IssuedBy" type="ActorReferenceType" minOccurs="0"/>
+			<xs:group ref="SLRCGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReferenceType">
+		<xs:sequence>
+			<xs:element name="ReferenceObjectID" type="xs:string"/>
+			<xs:element name="DateTime" type="DateTimeType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="Type" minOccurs="0"/>
+			<xs:element ref="Description" minOccurs="0"/>
+			<xs:element name="Source" type="ActorReferenceType" maxOccurs="unbounded"/>
+			<xs:element ref="Locations" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Links-->
+	<xs:element name="Actor" type="ActorReferenceType"/>
+	<xs:complexType name="ActorReferenceType">
+		<xs:sequence>
+			<xs:element name="ActorID" type="xs:string" minOccurs="0"/>
+			<xs:element name="ActorRole" type="CodedDescriptionType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InternalCCRLink">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="LinkID" type="xs:string"/>
+				<xs:element name="LinkRelationship" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Source" minOccurs="0">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="SourceType"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- Recurrent Global Elements -->
+	<xs:element name="Age" type="MeasureType"/>
+	<xs:element name="Description" type="CodedDescriptionType"/>
+	<xs:element name="Direction">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Description" minOccurs="0"/>
+				<xs:element name="Dose" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="MeasureType">
+								<xs:sequence>
+									<xs:element name="DoseSequencePosition" type="xs:integer" minOccurs="0"/>
+									<xs:element name="VariableDoseModifier" type="CodedDescriptionType" minOccurs="0"/>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="DoseCalculation" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="DoseCalculationType">
+								<xs:sequence>
+									<xs:element name="CalculationSequencePosition" minOccurs="0">
+										<xs:simpleType>
+											<xs:restriction base="xs:integer">
+												<xs:minInclusive value="1"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="VariableCalculationModifier" type="CodedDescriptionType" minOccurs="0"/>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="DoseRestriction" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="DoseCalculationType">
+								<xs:sequence>
+									<xs:element name="RestrictionSequencePosition" minOccurs="0">
+										<xs:simpleType>
+											<xs:restriction base="xs:integer">
+												<xs:minInclusive value="1"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="VariableRestrictionModifier" type="CodedDescriptionType" minOccurs="0"/>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Vehicle" type="VehicleType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Route" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="CodedDescriptionType">
+								<xs:sequence>
+									<xs:element name="RouteSequencePosition" type="xs:integer" minOccurs="0"/>
+									<xs:element name="MultipleRouteModifier" type="CodedDescriptionType" minOccurs="0"/>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Site" type="SiteType" minOccurs="0" maxOccurs="unbounded"/>
+				<!--				
+				<xs:group ref="FreqDurGroup"/>
+-->
+				<xs:element name="DateTime" type="DateTimeType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Rate" type="RateType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Frequency" type="FrequencyType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Interval" type="IntervalType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Duration" type="DurationType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="StopIndicator" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="Yes"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Indication" type="IndicationType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="DirectionsSequencePosition" type="xs:integer" minOccurs="0"/>
+				<xs:element name="MultipleDirectionsModifier" type="CodedDescriptionType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Directions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Direction" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Encounters">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Encounter" type="EncounterType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Goals">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Goal" type="GoalType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="IDs" type="IDType"/>
+	<xs:element name="Immunizations">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Immunization" type="StructuredProductType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Indications">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Indication" type="IndicationType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Instructions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Instruction" type="CodedDescriptionType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Location">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Description" minOccurs="0"/>
+				<xs:element name="Actor" type="ActorReferenceType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Locations">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Location" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Medications">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Medication" type="StructuredProductType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Practitioners">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Practitioner" type="ActorReferenceType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Procedures">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Procedure" type="ProcedureType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Products">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Product" type="StructuredProductType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Agent">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Products" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Product" type="StructuredProductType" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="EnvironmentalAgents" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="EnvironmentalAgent" type="CCRCodedDataObjectType" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Problems" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Problem" type="ProblemType" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="Procedures" minOccurs="0"/>
+				<xs:element name="Results" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Result" type="ResultType" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Reaction">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Description" minOccurs="0"/>
+				<xs:element name="Severity" type="CodedDescriptionType" minOccurs="0"/>
+				<xs:element name="Interventions" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Intervention" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:sequence>
+											<xs:element name="CCRDataObjectID" type="xs:string"/>
+											<xs:element name="DateTime" type="DateTimeType" minOccurs="0" maxOccurs="unbounded"/>
+											<xs:element ref="Type" minOccurs="0"/>
+											<xs:element ref="Description" minOccurs="0"/>
+											<xs:element ref="Status" minOccurs="0"/>
+											<xs:group ref="SLRCGroup"/>
+										</xs:sequence>
+										<xs:sequence>
+											<xs:element ref="Procedures" minOccurs="0"/>
+											<xs:element ref="Products" minOccurs="0"/>
+											<xs:element ref="Medications" minOccurs="0"/>
+											<xs:element ref="Immunizations" minOccurs="0"/>
+											<xs:element ref="Services" minOccurs="0"/>
+											<xs:element ref="Encounters" minOccurs="0"/>
+										</xs:sequence>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ReactionSequencePosition" type="xs:integer" minOccurs="0"/>
+				<xs:element name="MultipleReactionModifier" type="CodedDescriptionType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Services">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Service" type="EncounterType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Status" type="CodedDescriptionType"/>
+	<xs:element name="Type" type="CodedDescriptionType"/>
+	<!--CCR Complex Types-->
+	<xs:complexType name="AlertType">
+		<xs:complexContent>
+			<xs:extension base="CCRCodedDataObjectType">
+				<xs:sequence>
+					<xs:element ref="Agent" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="Reaction" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AuthorizationType">
+		<xs:complexContent>
+			<xs:extension base="CCRCodedDataObjectType">
+				<xs:sequence>
+					<xs:element name="Purpose" type="PurposeType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="Practitioners" minOccurs="0"/>
+					<xs:element ref="Procedures" minOccurs="0"/>
+					<xs:element ref="Products" minOccurs="0"/>
+					<xs:element ref="Medications" minOccurs="0"/>
+					<xs:element name="Immunizations" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Immunization" type="StructuredProductType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="Services" minOccurs="0"/>
+					<xs:element ref="Encounters" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CommunicationType">
+		<xs:sequence>
+			<xs:element name="Value" type="xs:string"/>
+			<xs:element ref="Type" minOccurs="0"/>
+			<xs:element name="Priority" type="xs:string" minOccurs="0"/>
+			<xs:element ref="Status" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CurrentHealthStatusType">
+		<xs:sequence>
+			<xs:element name="DateTime" type="DateTimeType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="Description" minOccurs="0"/>
+			<xs:element name="CauseOfDeath" type="xs:string" minOccurs="0"/>
+			<xs:group ref="SLRCGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DoseCalculationType">
+		<xs:sequence>
+			<xs:element name="Dose" type="MeasureType" minOccurs="0"/>
+			<xs:element name="Variable" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="MeasureType">
+							<xs:sequence>
+								<xs:element name="VariableIdentifier" type="xs:string"/>
+								<xs:element name="VariableSequencePosition" minOccurs="0">
+									<xs:simpleType>
+										<xs:restriction base="xs:integer">
+											<xs:minInclusive value="1"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="VariableModifier" type="CodedDescriptionType" minOccurs="0"/>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="CalculationEquation" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DurationType">
+		<xs:sequence>
+			<xs:element ref="Description" minOccurs="0"/>
+			<xs:sequence>
+				<xs:element name="DateTime" type="DateTimeType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:group ref="MeasureGroup"/>
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EpisodeType">
+		<xs:complexContent>
+			<xs:extension base="CCRCodedDataObjectType">
+				<xs:sequence>
+					<xs:element name="Duration" type="DurationType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EpisodesType">
+		<xs:sequence>
+			<xs:element name="Number" type="xs:string" minOccurs="0"/>
+			<xs:element name="Frequency" type="MeasureType" minOccurs="0"/>
+			<xs:element name="Episode" type="EpisodeType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:group ref="SLRCGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EncounterType">
+		<xs:complexContent>
+			<xs:extension base="CCRCodedDataObjectType">
+				<xs:sequence>
+					<xs:element ref="Locations" minOccurs="0"/>
+					<xs:element ref="Practitioners" minOccurs="0"/>
+					<xs:element name="Frequency" type="FrequencyType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="Interval" type="IntervalType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="Duration" type="DurationType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="Indications" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="Instructions" minOccurs="0"/>
+					<xs:element name="Consent" type="CCRCodedDataObjectType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="FamilyHistoryType">
+		<xs:complexContent>
+			<xs:extension base="CCRCodedDataObjectType">
+				<xs:sequence>
+					<xs:element name="FamilyMember" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="ActorReferenceType">
+									<xs:sequence>
+										<xs:element name="HealthStatus" type="CurrentHealthStatusType" minOccurs="0"/>
+										<xs:group ref="SLRCGroup"/>
+									</xs:sequence>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Problem" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="Type" minOccurs="0"/>
+								<xs:element ref="Description" minOccurs="0"/>
+								<xs:element name="Episodes" type="EpisodesType" minOccurs="0"/>
+								<xs:group ref="SLRCGroup"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="FrequencyType">
+		<xs:sequence>
+			<xs:element ref="Description" minOccurs="0"/>
+			<xs:group ref="MeasureGroup"/>
+			<xs:element name="FrequencySequencePosition" type="xs:integer" minOccurs="0"/>
+			<xs:element name="VariableFrequencyModifier" type="CodedDescriptionType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FunctionType">
+		<xs:complexContent>
+			<xs:extension base="CCRCodedDataObjectType">
+				<xs:sequence>
+					<xs:element name="Problem" type="ProblemType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="Test" type="ResultType" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GoalType">
+		<xs:complexContent>
+			<xs:extension base="EncounterType">
+				<xs:sequence>
+					<xs:element name="Milestones" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Outcome" type="CCRCodedDataObjectType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="IndicationType">
+		<xs:sequence>
+			<xs:element name="PRNFlag" type="CodedDescriptionType" minOccurs="0"/>
+			<xs:element ref="Description" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Problem" type="ProblemType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="PhysiologicalParameter" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="MeasureType">
+							<xs:sequence>
+								<xs:element name="ParameterSequencePosition" type="xs:integer" minOccurs="0"/>
+								<xs:element name="VariableParameterModifier" type="CodedDescriptionType" minOccurs="0"/>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:group ref="SLRCGroup"/>
+			<xs:element name="IndicationSequencePosition" type="xs:integer" minOccurs="0"/>
+			<xs:element name="MultipleIndicationModifier" type="CodedDescriptionType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InstructionType">
+		<xs:complexContent>
+			<xs:extension base="CodedDescriptionType">
+				<xs:sequence>
+					<xs:element name="instructionSequencePosition" type="xs:integer" minOccurs="0"/>
+					<xs:element name="MultipleInstructionModifier" type="CodedDescriptionType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="InsuranceType">
+		<xs:complexContent>
+			<xs:extension base="CCRCodedDataObjectType">
+				<xs:sequence>
+					<xs:element name="PaymentProvider" type="ActorReferenceType" minOccurs="0"/>
+					<xs:element name="Subscriber" type="ActorReferenceType" minOccurs="0"/>
+					<xs:element name="Authorizations" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Authorization" type="AuthorizationType" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="IntervalType">
+		<xs:sequence>
+			<xs:element ref="Description" minOccurs="0"/>
+			<xs:group ref="MeasureGroup"/>
+			<xs:element name="IntervalSequencePosition" type="xs:integer" minOccurs="0"/>
+			<xs:element name="VariableIntervalModifier" type="CodedDescriptionType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InterventionType">
+		<xs:complexContent>
+			<xs:extension base="CCRCodedDataObjectType">
+				<xs:sequence>
+					<xs:element ref="Procedures" minOccurs="0"/>
+					<xs:element ref="Products" minOccurs="0"/>
+					<xs:element name="Medications" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Medication" type="StructuredProductType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Immunizations" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Immunization" type="StructuredProductType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="Services" minOccurs="0"/>
+					<xs:element ref="Encounters" minOccurs="0"/>
+					<xs:element name="Authorizatons" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Authorization" type="AuthorizationType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MeasureType">
+		<xs:sequence>
+			<xs:element name="Value" type="xs:string"/>
+			<xs:element name="Units" type="xs:string" minOccurs="0"/>
+			<xs:element name="Code" type="CodeType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MethodType">
+		<xs:complexContent>
+			<xs:extension base="CodedDescriptionType">
+				<xs:sequence>
+					<xs:element name="MethodSequencePosition" type="xs:integer" minOccurs="0"/>
+					<xs:element name="MultipleMethodModifier" type="CodedDescriptionType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="NormalType">
+		<xs:sequence>
+			<xs:element ref="Description" minOccurs="0"/>
+			<xs:element ref="Type" minOccurs="0"/>
+			<xs:group ref="MeasureGroup"/>
+			<xs:element name="ValueSequencePosition" type="xs:integer" minOccurs="0"/>
+			<xs:element name="VariableNomalModifier" type="CodedDescriptionType" minOccurs="0"/>
+			<xs:group ref="SLRCGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrderRxHistoryType">
+		<xs:complexContent>
+			<xs:extension base="CCRCodedDataObjectType">
+				<xs:sequence>
+					<xs:element name="FulfillmentMethod" type="CodedDescriptionType" minOccurs="0"/>
+					<xs:element name="Provider" type="ActorReferenceType" minOccurs="0"/>
+					<xs:element name="Location" type="ActorReferenceType" minOccurs="0"/>
+					<xs:element ref="Reaction" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="ProductName" type="CodedDescriptionType" minOccurs="0"/>
+					<xs:element name="BrandName" type="xs:string" minOccurs="0"/>
+					<xs:element name="Manufacturer" type="ActorReferenceType" minOccurs="0"/>
+					<xs:element name="IDNumber" type="IDType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="Strength" type="MeasureType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="Form" type="CodedDescriptionType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="Concentration" type="MeasureType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="Quantity" type="MeasureType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="LabelInstructions" type="InstructionType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="SeriesNumber" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PatientKnowledgeType">
+		<xs:sequence>
+			<xs:element name="PatientAware" type="xs:string"/>
+			<xs:element ref="Description" minOccurs="0"/>
+			<xs:group ref="SLRCGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersonNameType">
+		<xs:sequence>
+			<xs:element name="Given" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Middle" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Family" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Suffix" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Title" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="NickName" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PlanOfCareType">
+		<xs:complexContent>
+			<xs:extension base="InterventionType">
+				<xs:sequence>
+					<xs:element ref="Goals" minOccurs="0"/>
+					<xs:element name="OrderSequencePosition" type="xs:integer" minOccurs="0"/>
+					<xs:element name="MultipleOrderModifier" type="CodedDescriptionType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PlanType">
+		<xs:complexContent>
+			<xs:extension base="CCRCodedDataObjectType">
+				<xs:sequence>
+					<xs:element name="OrderRequest" type="PlanOfCareType" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PositionType">
+		<xs:complexContent>
+			<xs:extension base="CodedDescriptionType">
+				<xs:sequence>
+					<xs:element name="PositionSequencePosition" type="xs:integer" minOccurs="0"/>
+					<xs:element name="MultiplePositionModifier" type="CodedDescriptionType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ProblemType">
+		<xs:complexContent>
+			<xs:extension base="CCRCodedDataObjectType">
+				<xs:sequence>
+					<xs:element name="Episodes" type="EpisodesType" minOccurs="0"/>
+					<xs:element name="HealthStatus" type="CurrentHealthStatusType" minOccurs="0"/>
+					<xs:element name="PatientKnowledge" type="PatientKnowledgeType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ProcedureType">
+		<xs:sequence>
+			<xs:sequence>
+				<xs:element name="CCRDataObjectID" type="xs:string"/>
+				<xs:element name="DateTime" type="DateTimeType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="IDs" type="IDType" minOccurs="0"/>
+				<xs:element ref="Type" minOccurs="0"/>
+				<xs:element ref="Description" minOccurs="0"/>
+				<xs:element ref="Status" minOccurs="0"/>
+				<xs:group ref="SLRCGroup"/>
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element ref="Locations" minOccurs="0"/>
+				<xs:element ref="Practitioners" minOccurs="0"/>
+				<xs:element name="Frequency" type="FrequencyType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Interval" type="IntervalType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Duration" type="DurationType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="Indications" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="Instructions" minOccurs="0"/>
+				<xs:element name="Consent" type="CCRCodedDataObjectType" minOccurs="0"/>
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="Products" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Product" type="StructuredProductType" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Substance" type="CodedDescriptionType" minOccurs="0"/>
+				<xs:element name="Method" type="MethodType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Position" type="PositionType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Site" type="SiteType" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PurposeType">
+		<xs:sequence>
+			<xs:element name="DateTime" type="DateTimeType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="Description" maxOccurs="unbounded"/>
+			<xs:element name="OrderRequest" type="PlanOfCareType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="Indications" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ReferenceID" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="CommentID" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QuantityType">
+		<xs:complexContent>
+			<xs:extension base="MeasureType">
+				<xs:sequence>
+					<xs:element name="QuantitySequencePosition" type="xs:integer" minOccurs="0"/>
+					<xs:element name="VariableQuantityModifier" type="CodedDescriptionType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RateType">
+		<xs:sequence>
+			<xs:element ref="Description" minOccurs="0"/>
+			<xs:group ref="MeasureGroup"/>
+			<xs:element name="RateSequencePosition" type="xs:integer" minOccurs="0"/>
+			<xs:element name="VariableRateModifier" type="CodedDescriptionType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResultType">
+		<xs:complexContent>
+			<xs:extension base="CCRCodedDataObjectType">
+				<xs:sequence>
+					<xs:element name="Procedure" type="ProcedureType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="Substance" type="CodedDescriptionType" minOccurs="0"/>
+					<xs:element name="Result" type="TestType" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RiskFactorHistoryType">
+		<xs:complexContent>
+			<xs:extension base="CCRCodedDataObjectType">
+				<xs:sequence>
+					<xs:element name="Episodes" type="EpisodesType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SignatureType">
+		<xs:sequence>
+			<xs:element name="SignatureObjectID" type="xs:string"/>
+			<xs:element name="ExactDateTime" type="xs:string" minOccurs="0"/>
+			<xs:element ref="Type" minOccurs="0"/>
+			<xs:element ref="IDs" minOccurs="0"/>
+			<xs:element name="Source" type="ActorReferenceType" minOccurs="0"/>
+			<xs:element name="Signature"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SiteType">
+		<xs:complexContent>
+			<xs:extension base="CodedDescriptionType">
+				<xs:sequence>
+					<xs:element name="SiteSequencePosition" type="xs:integer" minOccurs="0"/>
+					<xs:element name="MultipleSiteModifier" type="CodedDescriptionType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SourceType">
+		<xs:sequence>
+			<xs:element ref="Description" minOccurs="0"/>
+			<xs:element ref="Actor" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="DateTime" type="DateTimeType" minOccurs="0"/>
+			<xs:element name="ReferenceID" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="CommentID" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StructuredProductType">
+		<xs:complexContent>
+			<xs:extension base="CCRCodedDataObjectType">
+				<xs:sequence>
+					<xs:element name="Product" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="ProductName" type="CodedDescriptionType"/>
+								<xs:element name="BrandName" type="CodedDescriptionType" minOccurs="0"/>
+								<xs:element name="Strength" minOccurs="0" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="MeasureType">
+												<xs:sequence>
+													<xs:element name="StrengthSequencePosition" type="xs:integer" minOccurs="0"/>
+													<xs:element name="VariableStrengthModifier" type="CodedDescriptionType" minOccurs="0"/>
+												</xs:sequence>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Form" minOccurs="0" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="CodedDescriptionType">
+												<xs:sequence>
+													<xs:element name="FormSequencePosition" type="xs:integer" minOccurs="0"/>
+													<xs:element name="MultipleFormModifier" type="CodedDescriptionType" minOccurs="0"/>
+												</xs:sequence>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Concentration" minOccurs="0" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="MeasureType">
+												<xs:sequence>
+													<xs:element name="ConcentrationSequencePosition" type="xs:integer" minOccurs="0"/>
+													<xs:element name="VariableConcentrationModifier" type="CodedDescriptionType" minOccurs="0"/>
+												</xs:sequence>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Size" minOccurs="0" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="CodedDescriptionType">
+												<xs:sequence>
+													<xs:element name="Dimensions" minOccurs="0">
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="Dimension" maxOccurs="unbounded">
+																	<xs:complexType>
+																		<xs:complexContent>
+																			<xs:extension base="MeasureType">
+																				<xs:sequence>
+																					<xs:element ref="Description"/>
+																				</xs:sequence>
+																			</xs:extension>
+																		</xs:complexContent>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="SizeSequencePosition" type="xs:integer" minOccurs="0"/>
+													<xs:element name="VariableSizeModifier" type="CodedDescriptionType" minOccurs="0"/>
+												</xs:sequence>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Manufacturer" type="ActorReferenceType" minOccurs="0"/>
+								<xs:element name="IDNumber" type="IDType" minOccurs="0" maxOccurs="unbounded"/>
+								<xs:element name="ProductSequencePosition" type="xs:integer" minOccurs="0"/>
+								<xs:element name="MultipleProductModifier" type="CodedDescriptionType" minOccurs="0"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<!-- Dosing/ordering information -->
+					<xs:element name="Quantity" type="QuantityType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="Directions" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="PatientInstructions" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Instruction" type="InstructionType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="FulfillmentInstructions" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Instruction" type="InstructionType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Refills" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Refill" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="Number" maxOccurs="unbounded">
+												<xs:simpleType>
+													<xs:restriction base="xs:integer">
+														<xs:minInclusive value="0"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:element>
+											<xs:element name="Quantity" type="QuantityType" minOccurs="0" maxOccurs="unbounded"/>
+											<xs:element ref="Status" minOccurs="0"/>
+											<xs:element name="DateTime" type="DateTimeType" minOccurs="0" maxOccurs="unbounded"/>
+											<xs:element name="Comment" type="CommentType" minOccurs="0" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="SeriesNumber" type="xs:string" minOccurs="0"/>
+					<xs:element name="Consent" type="CCRCodedDataObjectType" minOccurs="0"/>
+					<xs:element name="FulfillmentHistory" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Fulfillment" type="OrderRxHistoryType" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TestResultType">
+		<xs:sequence>
+			<xs:group ref="MeasureGroup"/>
+			<xs:element ref="Description" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ResultSequencePosition" type="xs:integer" minOccurs="0"/>
+			<xs:element name="VariableResultModifier" type="CodedDescriptionType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TestType">
+		<xs:complexContent>
+			<xs:extension base="CCRCodedDataObjectType">
+				<xs:sequence>
+					<xs:element name="Method" type="CodedDescriptionType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="Agent" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="TestResult" type="TestResultType"/>
+					<xs:element name="NormalResult" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Normal" type="NormalType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Flag" type="CodedDescriptionType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="ConfidenceValue" type="CodedDescriptionType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VehicleType">
+		<xs:sequence>
+			<xs:element ref="Description" minOccurs="0"/>
+			<xs:element name="Product" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ProductName" type="CodedDescriptionType"/>
+						<xs:element name="BrandName" type="CodedDescriptionType" minOccurs="0"/>
+						<xs:element name="Strength" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="MeasureType">
+										<xs:sequence>
+											<xs:element name="StrengthSequencePosition" type="xs:integer" minOccurs="0"/>
+											<xs:element name="VariableStrengthModifier" type="CodedDescriptionType" minOccurs="0"/>
+										</xs:sequence>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Form" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="CodedDescriptionType">
+										<xs:sequence>
+											<xs:element name="FormSequencePosition" type="xs:integer" minOccurs="0"/>
+											<xs:element name="MultipleFormModifier" type="CodedDescriptionType" minOccurs="0"/>
+										</xs:sequence>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Concentration" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="MeasureType">
+										<xs:sequence>
+											<xs:element name="ConcentrationSequencePosition" type="xs:integer" minOccurs="0"/>
+											<xs:element name="VariableConcentrationModifier" type="CodedDescriptionType" minOccurs="0"/>
+										</xs:sequence>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Size" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="CodedDescriptionType">
+										<xs:sequence>
+											<xs:element name="SizeSequencePosition" type="xs:integer" minOccurs="0"/>
+											<xs:element name="VariableSizeModifier" type="CodedDescriptionType" minOccurs="0"/>
+										</xs:sequence>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="ProductSequencePosition" type="xs:integer" minOccurs="0"/>
+						<xs:element name="MultipleProductModifier" type="CodedDescriptionType" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Manufacturer" type="ActorReferenceType" minOccurs="0"/>
+			<xs:element ref="IDs" minOccurs="0"/>
+			<xs:element name="Quantity" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="MeasureType">
+							<xs:sequence>
+								<xs:element name="QuantitySequencePosition" type="xs:integer" minOccurs="0"/>
+								<xs:element name="VariableQuantityModifier" type="CodedDescriptionType" minOccurs="0"/>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="VehicleSequencePosition" type="xs:integer" minOccurs="0"/>
+			<xs:element name="MultipleVehicleModifier" type="CodedDescriptionType" minOccurs="0"/>
+			<xs:element ref="InternalCCRLink" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Groups Used Repeatedly in the CCR-->
+	<xs:group name="SLRCGroup">
+		<xs:sequence>
+			<xs:element name="Source" type="SourceType" maxOccurs="unbounded"/>
+			<xs:element ref="InternalCCRLink" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ReferenceID" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="CommentID" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Signature" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="SignatureID" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="MeasureGroup">
+		<!-- MeasureGroup is used where a measure is needed.  The value must be present, and the units should be present. -->
+		<xs:sequence>
+			<xs:element name="Value" type="xs:string" minOccurs="0"/>
+			<xs:element name="Units" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+</xs:schema>

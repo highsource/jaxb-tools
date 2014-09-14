@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   User    Mod    Date      Description
+   ============================================================================
+   DC           20061031    Removed DocumentID
+ -->
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns="http://www.starstandard.org/STAR/5" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>    
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="ServiceAdvisoryReceiptAcknowledgment" type="ServiceAdvisoryReceiptAcknowledgmentType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Service Advisory Receipt Acknowledgment
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ServiceAdvisoryReceiptAcknowledgmentHeader" type="ServiceAdvisoryReceiptAcknowledgmentHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Service Advisory Receipt Acknowledgment Header
+            </xsd:documentation>
+        </xsd:annotation>        
+    </xsd:element>
+    <xsd:element name="ServiceAdvisoryReceiptAcknowledgmentDetail" type="ServiceAdvisoryReceiptAcknowledgmentDetailType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Service Advisory Receipt Acknowledgment Detail
+            </xsd:documentation>
+        </xsd:annotation>        
+    </xsd:element>
+    <xsd:complexType name="ServiceAdvisoryReceiptAcknowledgmentType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 3.0 - Draft</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.1, STAR approved 04/20/2005; effective date 07/04/2005</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.0, STAR approved 05/07/2004; effective date 07/04/2004</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 1.0, STAR approved 8/7/2002; OAGI approved 8/16/2002; effective date 1/01/2003</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="ServiceAdvisoryReceiptAcknowledgmentHeader" />
+            <xsd:element ref="ServiceAdvisoryReceiptAcknowledgmentDetail" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ServiceAdvisoryReceiptAcknowledgmentHeaderType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+                <xsd:sequence>
+                    <xsd:element ref="RepairOrderCountNumeric" minOccurs="0" />
+                    <xsd:element ref="ClaimCountNumeric" minOccurs="0" />
+                    <xsd:element ref="JobCountNumeric" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="ServiceAdvisoryReceiptAcknowledgmentDetailType">
+        <xsd:sequence>
+            <!--<xsd:element ref="DocumentID" minOccurs="0" />-->
+            <xsd:element ref="VIN" minOccurs="0" />
+            <xsd:element ref="JobNumberString" minOccurs="0" />
+            <xsd:element ref="ClaimNumberString" minOccurs="0" />
+            <xsd:element ref="ClaimTypeString" minOccurs="0" />
+            <xsd:element ref="ReturnedAmount" minOccurs="0" />
+            <xsd:element ref="ReturnMessage" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="3.005" id="OTA2008A">
+	<xs:include schemaLocation="OTA_AirCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_AirPriceRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+The Price Request message requests pricing information for specific flights on specific dates for a specific number and type of passengers. Optional information in the message allows fare restriction preferences and negotiated fare contract codes to be included in the message.
+The pricing request contains the information necessary to perform an availability / sell from availability / price series of entries on an airline CRS or GDS.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Point of sale object. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="AirItinerary" type="AirItineraryType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The Air Itineraries to be priced</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TravelerInfoSummary">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specify passenger numbers and types</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="TravelerInfoSummaryType">
+								<xs:sequence>
+									<xs:element name="PaymentDetail" type="PaymentDetailType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Used to specify the planned method of payment.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="PricingPref" minOccurs="0" maxOccurs="20">
+										<xs:annotation>
+											<xs:documentation>Used to specify a passenger or processing pricing preference.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attributeGroup ref="PricingInfoGroup">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Use to specify a type of pricing information and whether it should be applied or not applied to the pricing.</xs:documentation>
+												</xs:annotation>
+											</xs:attributeGroup>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="BookingReferenceID" type="UniqueID_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The PNR address of the booking which needs to be priced.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="FlightReference" minOccurs="0" maxOccurs="16">
+					<xs:annotation>
+						<xs:documentation>Used to reference flight segments that have already been booked for which pricing is requested.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="FlightRefNumber" type="StringLength1to64" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The flight number(s) for which pricing is requested.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="FareBasisCode" type="StringLength1to16" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Used to specify the fare basis code to be used in pricing for these flight segments.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attributeGroup ref="DateTimeSpanGroup">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Used to specify the not valid before and after dates.</xs:documentation>
+							</xs:annotation>
+						</xs:attributeGroup>
+						<xs:attribute name="OpenJawInd" type="xs:boolean" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">When true, the flight segment is to be priced as open jaw.  When false, do not price as open jaw.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attribute name="Type" type="AlphaNumericStringLength1to14" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Used to specify the type of pricing requested.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--View is pretrade-->
+<!--Version is 5-0-->
+<!--NS is http://www.fpml.org/FpML-5-0/pretrade-->
+<!--Omit notional amounts, prices, adjustments, and other information not required for an RFQ-->
+<requestQuote xmlns="http://www.fpml.org/FpML-5-0/pretrade" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" fpmlVersion="5-0" xsi:schemaLocation="http://www.fpml.org/FpML-5-0/pretrade ../fpml-main-5-0.xsd">
+<!-- message header information -->
+  <header>
+<!-- unique message id -->
+    <messageId messageIdScheme="http://www.partyA.com/coding-scheme/message-id">234233423420</messageId>
+<!-- identify the sender of this message -->
+    <sentBy partyIdScheme="http://www.partyA.com/coding-scheme/party-id">23902</sentBy>
+    <creationTimestamp>2007-05-02T08:57:00-00:00</creationTimestamp>
+  </header>
+  <varianceSwapOption>
+    <optionType>Put</optionType>
+    <americanExercise>
+      <commencementDate>
+        <relativeDate>
+          <periodMultiplier>0</periodMultiplier>
+          <period>D</period>
+          <businessDayConvention>FOLLOWING</businessDayConvention>
+        </relativeDate>
+      </commencementDate>
+      <expirationDate>
+        <relativeDate>
+          <periodMultiplier>0</periodMultiplier>
+          <period>D</period>
+          <businessDayConvention>FOLLOWING</businessDayConvention>
+        </relativeDate>
+      </expirationDate>
+    </americanExercise>
+    <varianceSwap>
+      <varianceLeg>
+        <terminationDate id="TerminationDate">
+          <relativeDate>
+            <periodMultiplier>0</periodMultiplier>
+            <period>D</period>
+            <businessDayConvention>FOLLOWING</businessDayConvention>
+          </relativeDate>
+        </terminationDate>
+        <underlyer>
+          <singleUnderlyer>
+            <index>
+              <instrumentId instrumentIdScheme="http://www.fpml.org/schemes/4.1/instrumentId">.SP500</instrumentId>
+              <description>SP 500 Index</description>
+              <currency>USD</currency>
+              <exchangeId exchangeIdScheme="http://www.fpml.org/schemes/4.1/exchangeId">NYSE</exchangeId>
+              <relatedExchangeId exchangeIdScheme="http://www.fpml.org/schemes/4.1/exchangeId">CBOE</relatedExchangeId>
+            </index>
+          </singleUnderlyer>
+        </underlyer>
+        <valuation>
+          <valuationDate id="FinalValuationDate">
+            <adjustableDate>
+              <unadjustedDate>2008-07-21</unadjustedDate>
+            </adjustableDate>
+          </valuationDate>
+          <futuresPriceValuation>true</futuresPriceValuation>
+        </valuation>
+      </varianceLeg>
+    </varianceSwap>
+  </varianceSwapOption>
+</requestQuote>
+

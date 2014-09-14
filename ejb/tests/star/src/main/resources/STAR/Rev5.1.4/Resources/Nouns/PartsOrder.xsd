@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- User   MOD      Date              Description  
+    =========================================================================
+    
+    MV     CRx     20061031          Commented out "DocumentID"
+    MV     CR268   20061109          Changed Description fields to multiple occurs
+    DC     CR283   20061130          Changed BillTo, ShipTo, AlternateShipTo to point to appropriate Parties
+    DC     CR286   20061212          Added CrossShipmentRestrictionCode to Header and Line
+    DC             20070212          Clean up deprecated fields.
+    DC     CR333   20070223          Refactored name of first Parts Order line to make intent clearer.
+    DC     CR360   20070411          Added PartsOrderReceivedDateTime to header.
+    DC     MT321   20070705          Added FOBTermsString to the Parts Order Header. 
+    MV     CR376   20070711          Added: Header.ShipmentCarrierDetail (0..*)
+                                     Added: Line.ShipmentCarrierDetail (0..*)
+    MV     CR343   20070716          Added: Header.OrderDatePeriod, OrderedByName
+                                            Line.OrderDate
+    MV     MT407   20070829          Added: Line.ShipDate   
+    MV     MT618   20080220          Added: Line.SerialNumberIDRequiredIndicator, SerialNumberID                                                                              
+    DC     MT595   20080225          Changed PaymentTerms to a global reference, Added AcknowledgementStatus and deprecated Status.
+    MV     MT564   20080306          Deprecated: PartsOrderHeader.AlternateShipTo, FeedbackIndicator, PrintIndicator, AcknowledgmentDetail
+                                                 PartsOrderLineItem.AcknowledgmentDetail 
+    MV     MT564   20080307          Deprecated: PartsOrderHeader.ManufacturerOrderNumber, DealerOrderNumber.  Use: DocumentIdentificationGroup
+                                     Added: PartsOrderHeader.DocumentReferenceIdentificationGroup, PartsOrderLineItem.DocumentReferenceIdentificationGroup
+                                     Deprecated: PartsOrderHeader.RepairOrderNumberString, OrderReferenceNumberString.  Use: DocumentReferenceIdentificationGroup                                                                                            
+                                     Deprecated: PartsOrderLineItem.RepairOrderNumberString, OrderReferenceNumberString.  Use: DocumentReferenceIdentificationGroup
+    MV     MT564   20080310          Deprecated: ItemID, SupplierItemID.  Use: ItemIdenficationGroup
+    MV     MT564   20080312          Deprecated: PartsOrderLineItem.ManufacturerName                                   
+-->    
+    
+
+
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns="http://www.starstandard.org/STAR/5" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="PartsOrder" type="PartsOrderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Parts Order
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartsOrderHeaderBase" type="PartsOrderHeaderBaseType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Parts Order Header Base
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartsOrderHeader" type="PartsOrderHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Parts Order Header</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartsOrderLineBase" type="PartsOrderLineBaseType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Parts Order Line Base</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    
+    <xsd:element name="PartsOrderLine" type="PartsOrderLineType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Parts Order Line
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="LineSplitPartsOrderLine" type="SplitPartsOrderLineType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Split Parts Order Line
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="PartsOrderType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 4.0 - Draft</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 3.0, STAR approved 04/20/2005; effective date 07/04/2005</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.0, STAR approved 05/07/2004; effective date 07/04/2004</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 1.1 STAR approved 04/09/2003; OAGI approved 8/16/2002; effective date 07/04/2003</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 1.0, STAR approved 8/6/2002; OAGI approved 8/16/2002; effective date 1/01/2003</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="PartsOrderHeader" />
+            <xsd:element ref="PartsOrderLine" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PartsOrderHeaderBaseType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:appinfo>Is derived from oa:PurchaseOrderHeader affectively by restriction.</xsd:appinfo>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+                <xsd:sequence>
+                    <!--<xsd:element ref="DocumentID" /> -->
+                    <xsd:element ref="TaxabilityIndicator" minOccurs="0" />
+                    <xsd:element ref="PromisedDeliveryDate" minOccurs="0" />
+                    <xsd:element ref="PromisedShipDate" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="PartsOrderHeaderType">
+        <xsd:complexContent>
+            <xsd:extension base="PartsOrderHeaderBaseType">
+                <xsd:sequence>
+                    <xsd:element ref="AcknowledgmentDetail" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated. Use: AcknowledgmentStatus</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>   
+                    <xsd:element ref="PaymentTerms" minOccurs="0" />
+                    <xsd:element ref="OrderTypeCode" minOccurs="0" />
+                    <xsd:element ref="SpecialInstructions" minOccurs="0" />
+                    <xsd:element ref="OrderComments" minOccurs="0" />
+                    <xsd:element ref="PromotionCode" minOccurs="0" />
+                    <xsd:element ref="PriorityString" minOccurs="0" />
+                    <xsd:element ref="ShipPriorityCode" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated. Use: ShipmentCarrierTransportMethodTypeCode</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>                        
+                    <xsd:element ref="AlternateShipPriorityCode" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated. Use: ShipmentCarrierTransportMethodTypeCode</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="AllowBackOrderIndicator" minOccurs="0" />
+                    <xsd:element ref="AllowCrossShipmentIndicator" minOccurs="0" />
+                    <xsd:element ref="ShipWarehouseNumeric" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated. Use: OriginatingWarehouse</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="PrintIndicator" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="FeedbackIndicator" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated.  Use:ShipTo</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="RepairOrderNumberString" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated.  Use:DocumentReferenceIdentificationGroup</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>    
+                    <xsd:element ref="OrderReferenceNumberString" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated.  Use:DocumentReferenceIdentificationGroup</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element> 
+                    <xsd:element ref="ConsolidateIndicator" minOccurs="0" />
+                    <xsd:element ref="SequenceCode" minOccurs="0" />
+                    <xsd:element ref="ShipmentCarrierCode" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated. Use: ShipmentCarrierCompanyCode</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="AlternateShipmentCarrierCode" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated. Use: ShipmentCarrierCompanyCode</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    
+                    <xsd:element ref="TariffCodeIndicator" minOccurs="0" />
+                    <xsd:element ref="TariffCode" minOccurs="0" />
+                    <xsd:element ref="BillToParty" minOccurs="0" />
+                    <xsd:element ref="ShipToParty" minOccurs="0" />
+                    <xsd:element ref="SupplierParty" minOccurs="0" />
+                    <xsd:element ref="AlternateShipToParty" minOccurs="0"> 
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated.  Use:ShipTo</xsd:documentation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">2008 PO Profile Group found that there was no use case for an AlternateShipTo</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="OrderActionCode" minOccurs="0" />
+                    <xsd:element name="Status" type="AcknowledgementStatusType" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                                Deprecated: Use AcknowledgmentStatus.  Renamed field to handle correct NDR rules.  This is
+                                left in for compatibility reasons.  It will be removed in the next major version of STAR.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="SubtotalAmount" minOccurs="0" />
+                    <xsd:element ref="EstimatedFreightCostAmount" minOccurs="0" />
+                    <xsd:element ref="HandlingAmount" minOccurs="0" />
+                    <xsd:element ref="TotalAmountLessTax" minOccurs="0" />
+                    <xsd:element ref="AlternateShipToIndicator" minOccurs="0" />
+                    <xsd:element ref="OrderState" minOccurs="0" maxOccurs="unbounded" />
+                    <xsd:element ref="AllowBackOrderPartialShipCode" minOccurs="0" />
+                    <xsd:element ref="RequestedShipDate" minOccurs="0" />
+                    <xsd:element ref="ManufacturerOrderNumberString" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                                Deprecated: Use DocumentIdentificationGroup.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                        
+                    <xsd:element ref="DealerOrderNumberString" minOccurs="0" >
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                                Deprecated: Use DocumentIdentificationGroup.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="ChangeIndicator" minOccurs="0" />
+                    <xsd:element ref="CrossShipmentRestrictionCode" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element ref="PartsOrderReceivedDateTime" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="FOBTermsString" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="ShipmentCarrierDetail" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element ref="OrderDatePeriod" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="OrderedByName" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="AllowSubstitutionIndicator" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="AllowSupersessionIndicator" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="AcknowledgementStatus" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element ref="DocumentReferenceIdentificationGroup" minOccurs="0" maxOccurs="1"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="PartsOrderLineBaseType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:appinfo>Is derived from oa:PurchaseOrderLine affectively by restriction.</xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="LineNumberString" minOccurs="0" />
+            <xsd:element ref="OrderQuantity" minOccurs="0" />
+            <xsd:element ref="PromisedDeliveryDate" minOccurs="0" />
+            <xsd:element ref="PromisedShipDate" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PartsOrderLineType">
+        <xsd:complexContent>
+            <xsd:extension base="PartsOrderLineBaseType">
+                <xsd:sequence>
+                    <xsd:element ref="AcknowledgmentDetail" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated. Use: AcknowledgmentStatus</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="PartDimensions" minOccurs="0" />
+                    <xsd:element ref="InDistanceMeasure" minOccurs="0" />
+                    <xsd:element ref="CustomerName" minOccurs="0" />
+                    <xsd:element ref="LineItemComments" minOccurs="0" />
+                    <xsd:element ref="PartLineInternalReferenceString" minOccurs="0" />
+                    <xsd:element ref="ItemID" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated. Use: ItemIdentificationGroup</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="SupplierItemID" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated. Use: ItemIdentificationGroup</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="BinLocation" minOccurs="0" />
+                    <xsd:element ref="PartClassCode" minOccurs="0" />
+                    <xsd:element ref="PartTypeCode" minOccurs="0" />
+                    <xsd:element ref="ShipWarehouseNumeric" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated. Use: OriginatingWarehouse</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>                    
+                    <xsd:element ref="OptionCode" minOccurs="0" />
+                    <xsd:element ref="PartVerification" minOccurs="0" />
+                    <xsd:element ref="VehicleID" minOccurs="0" />
+                    <xsd:element ref="IgnitionKeyNumberString" minOccurs="0" />
+                    <xsd:element ref="ClaimTypeString" minOccurs="0" />
+                    <xsd:element ref="DiagnosticCodes" minOccurs="0" />
+                    <xsd:element ref="RepairOrderNumberString" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated.  Use:DocumentReferenceIdentificationGroup</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element> 
+                    <xsd:element ref="OrderReferenceNumberString" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated.  Use:DocumentReferenceIdentificationGroup</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element> 
+                    <xsd:element ref="HazmatShippingChargeIndicator" minOccurs="0" />
+                    <xsd:element ref="TariffCodeIndicator" minOccurs="0" />
+                    <xsd:element ref="TariffCode" minOccurs="0" />
+                    <xsd:element ref="ShipmentCarrierCode" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated. Use: ShipmentCarrierCompanyCode</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>                    
+                    <xsd:element ref="HazmatIndicator" minOccurs="0" />
+                    <xsd:element ref="SupplierLineID" minOccurs="0" />
+                    <xsd:element name="Status" type="AcknowledgementStatusType" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                                Deprecated:  Use AcknowledgementStatus.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="DealerNetPriceAmount" minOccurs="0" />
+                    <xsd:element ref="SuggestedRetailPriceAmount" minOccurs="0" />
+                    <xsd:element ref="ItemIdDescription" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element ref="AllowBackOrderIndicator" minOccurs="0" />
+                    <xsd:element ref="LineState" minOccurs="0" maxOccurs="unbounded" />
+                    <xsd:element ref="ManufacturerName" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                                Deprecated:  ItemIdentificationGroup.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="AllowBackOrderPartialShipCode" minOccurs="0" />
+                    <xsd:element ref="AllowCrossShipmentIndicator" minOccurs="0" />
+                    <xsd:element ref="AllowSubstitutionIndicator" minOccurs="0" />
+                    <xsd:element ref="AllowSupersessionIndicator" minOccurs="0" />
+                    <xsd:element ref="ShipPriorityCode" minOccurs="0" />
+                    <xsd:element ref="SupplierToDealerComments" minOccurs="0" />
+                    <xsd:element ref="LineSplitPartsOrderLine" minOccurs="0" maxOccurs="unbounded"></xsd:element>
+                    <xsd:element ref="ChangeIndicator" minOccurs="0" />
+                    <xsd:element ref="CrossShipmentRestrictionCode" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element ref="ShipmentCarrierDetail" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element ref="OrderDate" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="ShipDate" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="SerialNumberIDRequiredIndicator" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="SerialNumberID" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="AcknowledgementStatus" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element ref="DocumentReferenceIdentificationGroup" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="ItemIdentificationGroup" minOccurs="0" maxOccurs="1"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="SplitPartsOrderLineType">
+        <xsd:complexContent>
+            <xsd:extension base="PartsOrderLineType">
+                <xsd:sequence>
+                    <xsd:element ref="ChildLineReasonCode" minOccurs="0" />
+                    <xsd:element ref="ChildLinePricingAppliesIndicator" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+</xsd:schema>

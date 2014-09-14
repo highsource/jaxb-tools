@@ -1,0 +1,24 @@
+<jaxb:bindings
+	version="1.0"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
+	jaxb:extensionBindingPrefixes="xjc">
+
+	<jaxb:bindings schemaLocation="CoreMain_v1.2.0.xsd" node="/xs:schema">
+		<jaxb:globalBindings
+			fixedAttributeAsConstantProperty="true"
+			typesafeEnumBase="xs:string"
+			typesafeEnumMemberName="generateName"
+			generateIsSetMethod="true">
+			<xjc:noValidator />
+			<xjc:noValidatingUnmarshaller />
+		</jaxb:globalBindings>
+
+		<jaxb:schemaBindings>
+			<jaxb:nameXmlTransform>
+				<jaxb:elementName suffix="Element"/>
+			</jaxb:nameXmlTransform>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+</jaxb:bindings>

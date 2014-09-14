@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: mtom-transport.xsd,v 1.1 2007/06/02 08:00:13 lexi Exp $ -->
+<schema targetNamespace="urn:oasis:names:tc:ebxml-regrep:xsd:mtom:4.0"
+    xmlns="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="urn:oasis:names:tc:ebxml-regrep:xsd:mtom:4.0"
+    xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" 
+    xmlns:ref="http://ws-i.org/profiles/basic/1.1/xsd"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    
+    <annotation>
+        <documentation xml:lang="en">The schema for OASIS ebXML Registry Services</documentation>
+    </annotation>
+    
+    <import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" schemaLocation="rim.xsd"/>
+    
+    <complexType name="MtomContentType">
+        <complexContent>
+            <extension base="rim:RepositoryItemType">
+                <sequence>
+                    <element name="content" type="base64Binary" xmime:expectedContentTypes="*/*" xmlns:xmime="http://www.w3.org/2005/05/xmlmime"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    <element name="MtomContent" type="tns:MtomContentType" substitutionGroup="rim:RepositoryItem"/>
+</schema>

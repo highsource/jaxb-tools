@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<schema
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:sportsml="http://iptc.org/std/SportsML/2006-10-18/"
+	version="1.8"
+	>
+	<simpleType name="scoreAttemptType.Soccer.Vocabulary">
+		<restriction base="string">
+			<enumeration value="regular">
+				<annotation>
+					<documentation>The score attempt is made during regular play.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="penalty">
+				<annotation>
+					<documentation>The score attempt is made as a penalty shot.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="freekick">
+				<annotation>
+					<documentation>The score attempt is made as a free kick.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="corner-kick">
+				<annotation>
+					<documentation>The score attempt is made as a kick from the corner.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="empty-net">
+				<annotation>
+					<documentation>The score attempt is made when there is no goal-keeper in place.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="own-goal">
+				<annotation>
+					<documentation>The score attempt is made towards the own goal.</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+	<simpleType name="scoreAttemptMethod.Soccer.Vocabulary">
+		<restriction base="string">
+			<enumeration value="head"/>
+			<enumeration value="right-foot"/>
+			<enumeration value="left-foot"/>
+			<enumeration value="bicycle-kick"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="scoreAttemptResult.Soccer.Vocabulary">
+		<restriction base="string">
+			<enumeration value="missed">
+				<annotation>
+					<documentation>The ball missed the goal completely.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="blocked">
+				<annotation>
+					<documentation>A non-goalie diverted the shot from reaching the goal.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="saved">
+				<annotation>
+					<documentation>The goalie has stopped the shot.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="off-post">
+				<annotation>
+					<documentation>The framework of the goal itself blocked the shot.</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+	<simpleType name="penaltyType.Soccer.Vocabulary">
+		<restriction base="string">
+			<enumeration value="offensive"/>
+			<enumeration value="defensive"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="penaltyLevel.Soccer.Vocabulary">
+		<restriction base="string">
+			<enumeration value="yellow-card">
+				<annotation>
+					<documentation>Penalty shown by a yellow card - also known as a caution.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="red-card">
+				<annotation>
+					<documentation>Penalty shown as a red card - also known as an ejection.</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+	<simpleType name="foulResult.Soccer.Vocabulary">
+		<restriction base="string">
+			<enumeration value="play-on">
+				<annotation>
+					<documentation>Fouled team has advantage of the ball and is allowed to play on.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="freekick">
+				<annotation>
+					<documentation>Fouled team is awarded a freekick.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="penalty-shot">
+				<annotation>
+					<documentation>The foul occured in the penalty-shot area so the fouled team is awarded a penalty-shot.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="caution">
+				<annotation>
+					<documentation>The player is beeing cautioned. Indicated by a yellow card. Suffered team get a freekick or penalty-shot.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="ejection">
+				<annotation>
+					<documentation>The player is beeing ejected from the game. Shown by a red card. Suffered team get a freekick or penalty shot.</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+	<simpleType name="foulName.Soccer.Vocabulary">
+		<restriction base="string">
+			<enumeration value="hand-ball"/>
+			<enumeration value="kicking-player"/>
+			<enumeration value="cursing"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="position.Soccer.Vocabulary">
+		<restriction base="string">
+			<enumeration value="right-fullback"/>
+			<enumeration value="left-fullback"/>
+			<enumeration value="sweeper"/>
+			<enumeration value="stopper"/>
+			<enumeration value="defenseman"/>
+			<enumeration value="right-mid-fielder"/>
+			<enumeration value="left-mid-fielder"/>
+			<enumeration value="center-mid-fielders"/>
+			<enumeration value="half-backs"/>
+			<enumeration value="right-wing"/>
+			<enumeration value="left-wing"/>
+			<enumeration value="center-forward"/>
+			<enumeration value="forward"/>
+			<enumeration value="goalie"/>
+			<enumeration value="coach"/>
+			<enumeration value="assistant-coach"/>
+			<enumeration value="referee"/>
+			<enumeration value="assistant-referee"/>
+		</restriction>
+	</simpleType>
+</schema>

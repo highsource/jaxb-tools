@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+** OAGIS® Revision: 9.0 **
+** Date: 08 April 2005 **
+** Copyright 1998-2005, All Rights Reserved **
+
+This is an OAGIS® BOD XML Schema (XSD) Definition.
+
+License information for this file is provided in the file **2005 OAGi License Agreement.txt** that is provided with this download package.
+
+For support, more information, or to report implementation bugs, please contact the Open Applications Group at xml@openapplications.org.
+    
+     XML Schema 
+     
+    Name: \OAGIS\9.0\Resources\Components\Operational\OrderManagementComponents.xsd
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.openapplications.org/oagis/9" targetNamespace="http://www.openapplications.org/oagis/9" elementFormDefault="qualified" attributeFormDefault="unqualified">
+        <xsd:include schemaLocation="../Common/Components.xsd"/>
+        <xsd:complexType name="RequestHeaderType" abstract="true">
+                <xsd:annotation>
+                        <xsd:documentation source="http://www.openapplications.org/oagis/9">The abstract basis for the Header of all the Procurement Documents.
+
+For a Procurement Document the CustomerParty is the party in which the items have been or will be SoldTo (i.e. the SoldToParty).</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexContent>
+                        <xsd:extension base="StatusEnabledHeaderType">
+                                <xsd:sequence>
+                                        <xsd:element ref="Party" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element ref="CustomerParty" minOccurs="0"/>
+                                        <xsd:element ref="SupplierParty" minOccurs="0"/>
+                                        <xsd:element ref="ShipToParty" minOccurs="0"/>
+                                        <xsd:element ref="PlannerContact" minOccurs="0"/>
+                                        <xsd:element ref="CatalogReference" minOccurs="0"/>
+                                        <xsd:element ref="ContractReference" minOccurs="0"/>
+                                        <xsd:element ref="ExtendedAmount" minOccurs="0"/>
+                                        <xsd:element ref="TotalAmount" minOccurs="0"/>
+                                        <xsd:element ref="EnterpriseUnit" minOccurs="0"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="RequestLineType">
+                <xsd:complexContent>
+                        <xsd:extension base="StatusEnabledLineType">
+                                <xsd:sequence>
+                                        <xsd:group ref="ItemInstanceGroup"/>
+                                        <xsd:element ref="UnitPrice" minOccurs="0"/>
+                                        <xsd:element ref="ExtendedAmount" minOccurs="0"/>
+                                        <xsd:element ref="TotalAmount" minOccurs="0"/>
+                                        <xsd:element ref="CatalogReference" minOccurs="0"/>
+                                        <xsd:element ref="RequiredDeliveryDateTime" minOccurs="0"/>
+                                        <xsd:element ref="AllowSubstitutionIndicator" minOccurs="0"/>
+                                        <xsd:element ref="ShipToParty" minOccurs="0"/>
+                                        <xsd:element ref="DrawingAttachment" minOccurs="0" maxOccurs="unbounded"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="RequestSubLineType">
+                <xsd:annotation>
+                        <xsd:documentation source="http://www.openapplications.org/oagis/9">The basis for the ProcurementDocumet SubLine.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexContent>
+                        <xsd:extension base="LineType">
+                                <xsd:sequence>
+                                        <xsd:element ref="Item" minOccurs="0"/>
+                                        <xsd:element name="Quantity" type="QuantityType" minOccurs="0">
+                                                <xsd:annotation>
+                                                        <xsd:documentation source="http://www.openapplications.org/oagis/9">Indicates the number of order items for the given line..</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element ref="DrawingReference" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element ref="CatalogReference" minOccurs="0"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="ProcurementHeaderType">
+                <xsd:complexContent>
+                        <xsd:extension base="RequestHeaderType">
+                                <xsd:sequence>
+                                        <xsd:element ref="BillToParty" minOccurs="0"/>
+                                        <xsd:element ref="CarrierParty" minOccurs="0"/>
+                                        <xsd:element ref="PayFromParty" minOccurs="0"/>
+                                        <xsd:element ref="PartialShipmentAllowedIndicator" minOccurs="0"/>
+                                        <xsd:element ref="DropShipmentAllowedIndicator" minOccurs="0"/>
+                                        <xsd:element ref="EarlyShipmentAllowedIndicator" minOccurs="0"/>
+                                        <xsd:element ref="LicenseIndicator" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element ref="TaxExemptIndicator" minOccurs="0">
+                                                <xsd:annotation>
+                                                        <xsd:documentation source="http://www.openapplications.org/oagis/9">Specifies whether the associated element is exempt from withholding taxes.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element ref="TransportationTerm" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element ref="PaymentTerm" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element ref="DistributedCharge" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element ref="DistributedTax" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element ref="Distribution" minOccurs="0" maxOccurs="unbounded"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="ProcurementLineType">
+                <xsd:complexContent>
+                        <xsd:extension base="RequestLineType">
+                                <xsd:sequence>
+                                        <xsd:element ref="PartialShipmentAllowedIndicator" minOccurs="0"/>
+                                        <xsd:element ref="DropShipmentAllowedIndicator" minOccurs="0"/>
+                                        <xsd:element ref="EarlyShipmentAllowedIndicator" minOccurs="0"/>
+                                        <xsd:element ref="LicenseIndicator" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element ref="TransportationTerm" minOccurs="0"/>
+                                        <xsd:element ref="PaymentTerm" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element ref="DistributedCharge" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element ref="DistributedTax" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element ref="Distribution" minOccurs="0" maxOccurs="unbounded"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="ProcurementScheduleType">
+                <xsd:annotation>
+                        <xsd:documentation>The Quantity Indicates the number of items that are to be deliveried on the Required Date or the number of items to be delivered on each occurence of the Schedule period frequency or the number of items to be delivered on each delivery where the number of deliveries is provided by the NumberOfDelivery field below.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexContent>
+                        <xsd:extension base="LineType">
+                                <xsd:sequence>
+                                        <xsd:element ref="Quantity" minOccurs="0"/>
+                                        <xsd:choice>
+                                                <xsd:element ref="RequiredDeliveryDateTime" minOccurs="0"/>
+                                                <xsd:element ref="ScheduleTimePeriod" minOccurs="0"/>
+                                        </xsd:choice>
+                                        <xsd:element ref="NumberOfDeliveries" minOccurs="0"/>
+                                        <xsd:element ref="ShipmentQuantityTolerence" minOccurs="0"/>
+                                        <xsd:element ref="ShipmemtTimeTolerance" minOccurs="0"/>
+                                        <xsd:element ref="ReasonCode" minOccurs="0"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="OrderHeaderType">
+                <xsd:complexContent>
+                        <xsd:extension base="ProcurementHeaderType">
+                                <xsd:sequence>
+                                        <xsd:element ref="SpecialPriceAuthorizationCode" minOccurs="0"/>
+                                        <xsd:element ref="EarliestShipDateTime" minOccurs="0"/>
+                                        <xsd:element ref="RequestedShipDateTime" minOccurs="0"/>
+                                        <xsd:element ref="PromisedShipDateTime" minOccurs="0"/>
+                                        <xsd:element ref="PromisedDeliveryDateTime" minOccurs="0"/>
+                                        <xsd:element ref="PaymentMethodCode" minOccurs="0"/>
+                                        <xsd:element ref="Payment" minOccurs="0" maxOccurs="unbounded"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="OrderLineType">
+                <xsd:complexContent>
+                        <xsd:extension base="ProcurementLineType">
+                                <xsd:sequence>
+                                        <xsd:element ref="FreightClassification" minOccurs="0"/>
+                                        <xsd:element ref="SpecialPriceAuthorizationCode" minOccurs="0"/>
+                                        <xsd:element ref="SubstituteItemIndicator" minOccurs="0"/>
+                                        <xsd:element ref="RequisitionReference" minOccurs="0"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="PriceBreakType">
+                <xsd:sequence>
+                        <xsd:choice>
+                                <xsd:element ref="DiscountAmount" minOccurs="0">
+                                        <xsd:annotation>
+                                                <xsd:documentation source="http://www.openapplications.org/oagis/9">Allows a flat amount to be discounted per item.</xsd:documentation>
+                                        </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element ref="DiscountPercent" minOccurs="0">
+                                        <xsd:annotation>
+                                                <xsd:documentation source="http://www.openapplications.org/oagis/9">Indicates the percentage of the PriceBreak.</xsd:documentation>
+                                        </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element ref="OverridePrice" minOccurs="0">
+                                        <xsd:annotation>
+                                                <xsd:documentation source="http://www.openapplications.org/oagis/9">This is the price that overrides the list price when a given price break requirement is reached. For example, if a customer orders over 50,000 dollars worth of computer equipment, he may qualify for an overriding price.  The list price of $800 per will be modified to $700 per</xsd:documentation>
+                                        </xsd:annotation>
+                                </xsd:element>
+                        </xsd:choice>
+                        <xsd:choice>
+                                <xsd:element ref="PriceBreakQuantity" minOccurs="0">
+                                        <xsd:annotation>
+                                                <xsd:documentation source="http://www.openapplications.org/oagis/9">The quantity that must be purchased of the item or commodity on a given price list line before the benefit, or until the detriment of a given price break line will apply.  For example, if a customer orders up to 5000 units of flour, they will get a price of $8:00 a case.  If the customer buys 5500 units of flour they will get a price of $7.50 a case</xsd:documentation>
+                                        </xsd:annotation>
+                                </xsd:element>
+                                <xsd:element ref="PriceBreakAmount" minOccurs="0">
+                                        <xsd:annotation>
+                                                <xsd:documentation source="http://www.openapplications.org/oagis/9">The monetary amount that must be spent on a given price list line before the benefit or until the detriment of a given price break line will apply.  For example, if a customer orders up to 5000 dollars worth of flour, they will get a price of $8:00 a case.  If the customer buys 5500 dollars worth of flour they will get a price of $7.50 a case</xsd:documentation>
+                                        </xsd:annotation>
+                                </xsd:element>
+                        </xsd:choice>
+                        <xsd:group ref="FreeFormTextGroup"/>
+                       <!-- <xsd:element ref="UserArea" minOccurs="0"/> -->
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="PriceBreak" type="PriceBreakType">
+                <xsd:annotation>
+                        <xsd:documentation source="http://www.openapplications.org/oagis/9">This defines the prices and modifiers to the price for buying a given quantity or value of an item or item category on a price list line. For Price List Lines that specify Items the price breaks can be specified in terms of quantity or amount. For Price list lines that specify commodity, price breaks can only be specified in terms of currency amount</xsd:documentation>
+                </xsd:annotation>
+        </xsd:element>
+        <xsd:complexType name="QualificationTermType">
+                <xsd:sequence>
+                        <xsd:element ref="ID" minOccurs="0"/>
+                        <xsd:element ref="Type" minOccurs="0"/>
+                        <xsd:element ref="ValueText" minOccurs="0" maxOccurs="unbounded"/>
+                        <xsd:group ref="FreeFormTextGroup"/>
+                        <!-- <xsd:element ref="UserArea" minOccurs="0"/> -->
+                </xsd:sequence>
+                <xsd:attribute name="type" type="NormalizedStringType" use="optional"/>
+        </xsd:complexType>
+        <xsd:element name="QualificationTerm" type="QualificationTermType">
+                <xsd:annotation>
+                        <xsd:documentation>This is used to describe preferences that will be used to evaluate responses to an RFQ. For example, to identify a preference for sharing CAD data in VRML format the ID = VRML, Type = CAD and Value = 1 or Yes</xsd:documentation>
+                </xsd:annotation>
+        </xsd:element>
+        <xsd:complexType name="OrderCommissionType">
+                <xsd:annotation>
+                        <xsd:documentation>Contains the relevant information about the salesperson and the associated commission information. </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence minOccurs="0">
+                        <xsd:element ref="SalesOrganizationIDs" minOccurs="0"/>
+                        <xsd:element ref="SalesPerson" minOccurs="0"/>
+                        <xsd:choice>
+                                <xsd:sequence>
+                                        <xsd:element ref="Amount" minOccurs="0"/>
+                                        <xsd:element ref="Quantity" minOccurs="0"/>
+                                </xsd:sequence>
+                                <xsd:sequence>
+                                        <xsd:element ref="OrderAmount" minOccurs="0"/>
+                                        <xsd:element ref="OrderQuantity" minOccurs="0"/>
+                                        <xsd:element ref="Percentage" minOccurs="0"/>
+                                </xsd:sequence>
+                        </xsd:choice>
+                       <!-- <xsd:element ref="UserArea" minOccurs="0"/> -->
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="OrderCommission" type="OrderCommissionType">
+                <xsd:annotation>
+                        <xsd:documentation>Contains the relevant information about the salesperson and the associated commission information. </xsd:documentation>
+                </xsd:annotation>
+        </xsd:element>
+</xsd:schema>

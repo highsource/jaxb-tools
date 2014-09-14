@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jvnet.hyperjaxb3</groupId>
+		<artifactId>hyperjaxb3-ejb-tests</artifactId>
+		<version>0.5.7-SNAPSHOT</version>
+	</parent>
+	<artifactId>hyperjaxb3-ejb-tests-device</artifactId>
+	<packaging>jar</packaging>
+	<name>Hyperjaxb3 EJB Test [device]</name>
+	<dependencies>
+		<!-- Test -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.8.0.7</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.2.2.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>8.2-504.jdbc3</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<defaultGoal>test</defaultGoal>
+		<plugins>
+			<plugin>
+				<groupId>org.jvnet.hyperjaxb3</groupId>
+				<artifactId>maven-hyperjaxb3-plugin</artifactId>
+				<configuration>
+					<roundtripTestClassName>org.jvnet.hyperjaxb3.ejb.tests.device.tests.RoundtripTest</roundtripTestClassName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

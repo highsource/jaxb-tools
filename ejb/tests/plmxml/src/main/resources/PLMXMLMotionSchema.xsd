@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  Copyright 2006 UGS Corp. All Rights Reserved.
+  This software and related documentation are proprietary to UGS Corp.
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:plm="http://www.plmxml.org/Schemas/PLMXMLSchema" targetNamespace="http://www.plmxml.org/Schemas/PLMXMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" xml:lang="en">
+      <xsd:include schemaLocation="PLMXMLSchema.xsd"/>
+      <xsd:annotation>
+        <xsd:documentation source="http://www.plmxml.org/Schemas/PLMXMLSchema/History">
+          <plm:SchemaChange author="howardmu" date="2007-02-15" version="6.0.1.108">
+            <plm:Description>
+              Add MotionAssembly and FrameSequenceInstance.
+              Add plm:refType attribute to motionEntityRefs attribute.
+            </plm:Description>
+            <plm:Reference locationRef="..//schema/complexType[@name='MotionAssemblyType']"/>
+            <plm:Reference locationRef="..//schema/complexType[@name='FrameSequenceInstanceType']"/>
+            <plm:Reference locationRef="..//schema/complexType[@name='MotionEntityRefType']/attribute[@name='motionEntityRefs'"/>
+          </plm:SchemaChange>
+        </xsd:documentation>
+        <xsd:documentation>
+
+          PLM XML Motion Schema
+
+          Motion results are defined in terms of sequences of frames. PLM XML
+          imposes no connection between or order on the sequences of frames but
+          an external application may do so via ApplicationRef elements.
+        </xsd:documentation>
+        <xsd:appinfo source="http://www.plmxml.org/Schemas/PLMXMLSchema">
+          <plm:SchemaInfo name="PLMXMLMotionSchema.xsd" date="2006-04-28" version="6.0" status="release"/>
+        </xsd:appinfo>
+      </xsd:annotation>
+      <!-- -->
+      <!-- ******************** MotionAssembly ***************************** -->
+      <!-- -->
+      <xsd:complexType name="MotionAssemblyType">
+        <xsd:annotation>
+          <xsd:documentation>
+            The container element for a sequence of FrameSequenceInstance
+            elements.
+            
+            Sub-elements:
+            
+            FrameSequenceInstance: The instances of the FrameSequences in the
+                            sequence.
+
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+              <xsd:element ref="plm:FrameSequenceInstance"/>
+            </xsd:choice>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="MotionAssembly" type="plm:MotionAssemblyType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** FrameSequenceInstance ********************** -->
+      <!-- -->
+      <xsd:complexType name="FrameSequenceInstanceType">
+        <xsd:annotation>
+          <xsd:documentation>
+            An instance of a FrameSequence.
+            
+            Attributes:
+            
+            frameSequenceRef: References a FrameSequence.
+            timeStamp:      The time in seconds (SI units) of the start of the
+                            FrameSequence with respect to some external datum.
+                            This overrides the timeStamp attribute on the
+                            FrameSequence.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:attribute name="frameSequenceRef" type="plm:anyURIType" use="optional" plm:refType="plm:FrameSequence"/>
+            <xsd:attribute name="timeStamp" type="xsd:double" use="optional"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="FrameSequenceInstance" type="plm:FrameSequenceInstanceType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** FrameSequence ****************************** -->
+      <!-- -->
+      <xsd:complexType name="FrameSequenceType">
+        <xsd:annotation>
+          <xsd:documentation>
+            A sequence of Frames that defines Motion results definition.
+            FrameSequences are independent.
+            
+            Attributes:
+            
+            frameRate:      The frame rate in frames per second (SI units).
+            timeStamp:      The time in seconds (SI units) of the first Frame in
+                            the sequence with respect to some external datum.
+              
+            Sub-elements:
+            
+            Frame:          The Frames in the sequence.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+              <xsd:element ref="plm:Frame"/>
+            </xsd:choice>
+            <xsd:attribute name="frameRate" type="xsd:double" use="optional"/>
+            <xsd:attribute name="timeStamp" type="xsd:double" use="optional"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="FrameSequence" type="plm:FrameSequenceType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** FrameTypeEnum ****************************** -->
+      <!-- -->
+      <xsd:simpleType name="FrameTypeEnum">
+        <xsd:annotation>
+          <xsd:documentation>
+            The type of a Frame, either simple (the default) or key.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="simple"/>
+          <xsd:enumeration value="key"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** Frame ************************************** -->
+      <!-- -->
+      <xsd:complexType name="FrameType">
+        <xsd:annotation>
+          <xsd:documentation>
+            A Frame of type simple represents a single Frame at the time of the
+            previous frame plus the reciprocal of the frame rate in seconds (SI
+            units). A Frame of type key represents a key Frame that is linearly
+            interpolated at the frame rate up to the time of the previous frame
+            plus the duration in seconds (SI units).
+            
+            Attributes:
+            
+            type:           The type of a Frame, either simple (the default) or
+                            key.
+            duration:       The time in seconds (SI units) of a Frame relative
+                            to the previous frame.
+            
+            Sub-elements:
+            
+            MotionEntityRef: The references to the MotionEntity elements, which
+                            represent the conceptual motion entities or bodies.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+              <xsd:element ref="plm:MotionEntityRef"/>
+            </xsd:choice>
+            <xsd:attribute name="type" type="plm:FrameTypeEnum" default="simple"/>
+            <xsd:attribute name="duration" type="xsd:double" use="optional"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="Frame" type="plm:FrameType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** MotionTransformEnum ************************ -->
+      <!-- -->
+      <xsd:simpleType name="MotionTransformEnum">
+        <xsd:annotation>
+          <xsd:documentation>
+            Specifies whether the Transform sub-element of a MotionEntityRef is
+            applied to one or more conceptual motion entities or bodies
+            absolutely or relatively (the default).
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="absolute"/>
+          <xsd:enumeration value="relative"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** MotionEntityRefType ************************ -->
+      <!-- -->
+      <xsd:complexType name="MotionEntityRefType">
+        <xsd:annotation>
+          <xsd:documentation>
+            Applies a Transform sub-element to one or more conceptual motion
+            entities or bodies. A MotionEntityRef may have an absolute or
+            relative Transform.
+
+            Attributes:
+
+            transformType:  Specifies whether the Transform sub-element is
+                            applied to the MotionEntity elements referenced by
+                            the motionEntityRefs attribute absolutely or
+                            relatively (the default). An absolute
+                            MotionEntityRef applies its Transform to the
+                            MotionEntity elements in the absolute coordinate
+                            system. A relative MotionEntityRef applies its
+                            Transform relative to the positions and orientations
+                            of the MotionEntity elements in a previous Frame.
+                            Those positions and orientations are usually defined
+                            by the Transform sub-element of a MotionEntityRef in
+                            a previous Frame. However, if no previous Frame has
+                            a MotionEntityRef that applies to the MotionEntity
+                            elements and that has a Transform sub-element, the
+                            positions and orientations are defined by the
+                            playback application.
+            motionEntityRefs: References MotionEntity elements, which represent
+                            the conceptual motion entities or bodies.
+
+            Sub-elements:
+
+            Transform:      The Transform that is applied to the MotionEntity
+                            elements referenced by the motionEntityRefs
+                            attribute.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:choice minOccurs="0" maxOccurs="1">
+              <xsd:element ref="plm:Transform"/>
+            </xsd:choice>
+            <xsd:attribute name="transformType" type="plm:MotionTransformEnum" default="relative"/>
+            <xsd:attribute name="motionEntityRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:MotionEntity"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="MotionEntityRef" type="plm:MotionEntityRefType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** MotionEntity ******************************* -->
+      <!-- -->
+      <xsd:complexType name="MotionEntityType">
+        <xsd:annotation>
+          <xsd:documentation>
+            A conceptual motion entity or body.
+            
+            Attribute:
+            
+            entityRefs:     References Occurrences in the Product Structure or
+                            external references.
+            
+            Sub-elements:
+            
+            Reference:      Any references to entities within Occurrences.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+              <xsd:element name="Reference" type="plm:GDEReferenceType"/>
+            </xsd:choice>
+            <xsd:attribute name="entityRefs" type="plm:uriReferenceListType" use="optional"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="MotionEntity" type="plm:MotionEntityType" substitutionGroup="plm:AttribOwner"/>
+    </xsd:schema>

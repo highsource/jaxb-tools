@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" 
+	jaxb:extensionBindingPrefixes="hj" jaxb:version="2.1">
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.verylong"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+	<!-- ... -->
+	<xs:element name="a_abcdefghijklmnopqrstvuw12345678910" type="a_abcdefghijklmnopqrstvuw12345678910_type"/>
+	<xs:complexType name="a_abcdefghijklmnopqrstvuw12345678910_type">
+		<xs:sequence>
+			<xs:element name="b_abcdefghijklmnopqrstvuw12345678910" type="b_abcdefghijklmnopqrstvuw12345678910_type" minOccurs="0"/>
+			<xs:element name="b1_abcdefghijklmnopqrstvuw12345678910" type="b_abcdefghijklmnopqrstvuw12345678910_type" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="c_abcdefghijklmnopqrstvuw12345678910" type="c_abcdefghijklmnopqrstvuw12345678910_type" minOccurs="0">
+			</xs:element>
+			<xs:element name="d_abcdefghijklmnopqrstvuw12345678910" type="d_abcdefghijklmnopqrstvuw12345678910_type" minOccurs="0">
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="b_abcdefghijklmnopqrstvuw12345678910_type">
+		<xs:sequence>
+			<xs:element name="d_abcdefghijklmnopqrstvuw12345678910" type="xs:string" minOccurs="0"/>
+			<xs:element name="e_abcdefghijklmnopqrstvuw12345678910" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="c_abcdefghijklmnopqrstvuw12345678910_type">
+		<xs:annotation>
+			<xs:appinfo>
+				<!--hj:embeddable/-->
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="f_abcdefghijklmnopqrstvuw12345678910" type="xs:long" minOccurs="0"/>
+			<xs:element name="g_abcdefghijklmnopqrstvuw12345678910" type="xs:anyURI" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="d_abcdefghijklmnopqrstvuw12345678910_type">
+		<xs:annotation>
+			<xs:appinfo>
+				<!--hj:embeddable/-->
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="c_abcdefghijklmnopqrstvuw12345678910_type">
+				<xs:sequence>
+					<xs:element name="h_abcdefghijklmnopqrstvuw12345678910" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

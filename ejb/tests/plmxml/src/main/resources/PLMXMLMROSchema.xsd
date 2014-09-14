@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Copyright 2005 UGS Corp.  All Rights Reserved.
+This software and related documentation are proprietary to UGS Corp.
+-->
+<xsd:schema targetNamespace="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:plm="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns="http://www.plmxml.org/Schemas/PLMXMLMROSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xsd:include schemaLocation="PLMXMLSchema.xsd"/>
+  <xsd:annotation>
+    <xsd:documentation source="http://www.plmxml.org/Schemas/PLMXMLSchema/History">
+      <plm:SchemaChange author="davidj" date="2005-10-24" version="6.0.1.26">
+        <plm:Description>
+        Add plm:refType attribute to various attributes
+        </plm:Description>
+      </plm:SchemaChange>
+    </xsd:documentation>
+    <xsd:documentation xml:lang="en">
+    
+    PLM XML In-Service (MRO) schema.
+    
+    </xsd:documentation>
+    <xsd:appinfo source="http://www.plmxml.org/Schemas/PLMXMLMROSchema">
+      <plm:SchemaInfo name="PLMXMLMROSchema.xsd" date="2005-10-24" version="6.0" status="release"/>
+    </xsd:appinfo>
+  </xsd:annotation>
+  <!-- -->
+  <!-- *************************** RealisedProduct **********************-->
+  <!-- -->
+  <xsd:simpleType name="RealisedProductTraceableType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="repairable"/>
+      <xsd:enumeration value="nonRepairable"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="RealisedProductType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This represents a physical product, throughout its as-built/as-maintained lifecycle. 
+      
+      Attributes:
+      
+      manufacturerId     Id (part number) assigned by Manufacturer.
+      mrbId              Id (part number) assigned by Material Review Board
+      manufactureDate    Date (and time) of manufacture
+      manufacturerRef    Ref to manufacturing Organisation 
+      designRef          Reference to Product Revision from which this product was realised.   
+      standardLife       StandardLife specified in given environment and operation conditions.
+      actualLife         Actual Hours recorded by physical part.
+      standardLifeValueRef  Reference to a ValueWithUnit giving the standard life
+      actualLifeValueRef    Reference to a ValueWithUnit giving the actual life
+      lifeLimitedPart    Whether the life of a part is limited.      
+      orderDate          Physical Part Order Date.
+      serialNumber       Serial Number if a serialised product 
+      lot                Lot number if product is lot.
+      traceablePartType  Whether the part is repairable or non-repairable.
+      orderId            Physical Part order id.
+    </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ProductType">
+        <xsd:attribute name="manufacturerId" type="xsd:string" use="optional"/>
+        <xsd:attribute name="mrbId" type="xsd:string" use="optional"/>
+        <xsd:attribute name="manufactureDate" type="xsd:dateTime" use="optional"/>
+        <xsd:attribute name="manufacturerRef" type="plm:anyURIType" use="optional" plm:refType="plm:Organisation"/>
+        <xsd:attribute name="designRef" type="plm:anyURIType" use="optional" plm:refType="plm:ProductRevision"/>
+        <xsd:attribute name="standardLife" type="xsd:duration" use="optional"/>
+        <xsd:attribute name="actualLife" type="xsd:duration" use="optional"/>
+        <xsd:attribute name="standardLifeValueRef" type="plm:anyURIType" use="optional" plm:refType="plm:ValueWithUnit"/>
+        <xsd:attribute name="actualLifeValueRef" type="plm:anyURIType" use="optional" plm:refType="plm:ValueWithUnit"/>
+        <xsd:attribute name="lifeLimitedPart" type="xsd:boolean" use="optional"/>
+        <xsd:attribute name="orderDate" type="xsd:dateTime" use="optional"/>
+        <xsd:attribute name="traceablePartType" type="plm:RealisedProductTraceableType" use="optional"/>
+        <xsd:attribute name="orderId" type="xsd:string" use="optional"/>
+        <xsd:attribute name="serialNumber" type="xsd:string" use="optional"/>
+        <xsd:attribute name="lot" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RealisedProduct" type="plm:RealisedProductType" substitutionGroup="plm:Product"/>
+  <!-- -->
+  <!-- ************************* RealisedProductRevision ****************************** -->
+  <!-- -->
+  <xsd:complexType name="RealisedProductRevisionType">
+    <xsd:annotation>
+      <xsd:documentation>
+	   This represents a physical product, at a particular stage of maintainance.
+	   It corresponds to STEP AP239 'product_as_realized'.
+       
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ProductRevisionType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RealisedProductRevision" type="plm:RealisedProductRevisionType" substitutionGroup="plm:ProductRevision"/>
+  <!-- -->
+  <!-- ************************* Facility ********************************** -->
+  <!-- -->
+  <xsd:complexType name="FacilityType" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation>
+	   Facility classes are defined to identify usage of physical parts in various facilities 
+	   like Inventory, Repair Shop etc.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Facility" type="plm:FacilityType" substitutionGroup="plm:Structure"/>
+  <!-- -->
+  <!-- ************************* Inventory ********************************** -->
+  <!-- -->
+  <xsd:complexType name="InventoryType">
+    <xsd:annotation>
+      <xsd:documentation>
+	   Inventory class is defined to identify usage of physical parts in an Inventory.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:FacilityType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Inventory" type="plm:InventoryType" substitutionGroup="plm:Facility"/>
+  <!-- -->
+  <!-- ************************* RepairShop ********************************** -->
+  <!-- -->
+  <xsd:complexType name="RepairShopType">
+    <xsd:annotation>
+      <xsd:documentation>
+	   RepairShop class is defined to identify usage of physical parts in a Repair Shop.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:FacilityType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RepairShop" type="plm:RepairShopType" substitutionGroup="plm:Facility"/>
+  <!-- -->
+</xsd:schema>

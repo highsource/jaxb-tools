@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.005" id="OTA2008A">
+	<xs:include schemaLocation="OTA_VehicleCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_VehExchangeRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This message is used to return information about the vehicles involved in the exchange as well as a recap of the rate information.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType"/>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0"/>
+					<xs:element name="ConfID" type="UniqueID_Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">A confirmation number by which this reservation can be uniquely identified. In some cases the ConfID may be used in lieu of a ContractID, dependent on business needs.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ContractID" type="UniqueID_Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">A contract number by which this rental can be uniquely identified.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Customer" type="CustomerPrimaryAdditionalType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Details regarding the customer.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PickUpReturnDetails" type="VehicleRentalCoreType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Typically this is used to provide the actual return date, time, and location.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ExchangeLocationDetails" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Provides location details where the vehicle was exchanged.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="VehicleLocationDetailsType">
+									<xs:attribute name="ExchangeDateTime" type="xs:dateTime" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Provides the date and time when the actual exchange occured.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Vehicle" maxOccurs="9">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Vehicle info including size, class, make/model, vehicle asset number, etc.  This is the actual vehicle being returned and the actual vehicle being given to the customer in exchange. This provides the ability to display multiple exchanges within this rental agreement.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="VehicleType">
+									<xs:sequence>
+										<xs:element name="VehRentalDetails" minOccurs="0" maxOccurs="2">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Provides details of the vehicle at checkout, exchange in, or exchange out.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:complexContent>
+													<xs:extension base="VehicleRentalDetailsType">
+														<xs:attribute name="CheckOutCheckInCode" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Used to identify the context of the element and whether the content applies to data at the time of CheckOut or CheckIn.</xs:documentation>
+															</xs:annotation>
+															<xs:simpleType>
+																<xs:restriction base="xs:NMTOKEN">
+																	<xs:enumeration value="CheckOut"/>
+																	<xs:enumeration value="CheckIn"/>
+																</xs:restriction>
+															</xs:simpleType>
+														</xs:attribute>
+													</xs:extension>
+												</xs:complexContent>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="PricedEquips" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Collection of priced equipment.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="PricedEquip" type="VehicleEquipmentType" maxOccurs="99">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">Provides details of the priced equipment.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="ReturnVehicleIndicator" type="xs:boolean" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">When true, this vehicle is being returned. When false, this vehicle is being given in exchange.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="AdjustmentDetails" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Collection of adjustments.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AdjustmentDetail" type="VehicleChargeType" maxOccurs="15">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Used to provide adjustment details. Amount attribute and Description attribute will be the most commonly used fields. </xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="RentalRate" type="VehicleRentalRateType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This describes time, mileage and other charges for a specific rental agreement.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Fees" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">A collection of fees associated with this rental.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Fee" type="VehicleChargePurposeType" maxOccurs="99">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">A fee associated with this rental (e.g., airport concession fee, vehicle license fee, facility usage fee). This is not intended for information regarding rates, priced equipment or coverages.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="TotalCharge" minOccurs="0">
+						<xs:complexType>
+							<xs:attributeGroup ref="VehicleTotalChargeGroup"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="PricedCoverages" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">A collection of coverages associated with this vehicle.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="PricedCoverage" type="CoveragePricedType" maxOccurs="15">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">One specific coverage associated with this vehicle.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="ExchangeReason" type="ParagraphType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Used to indicate reasons for vehicle exchange.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Remarks" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">A collection of remarks.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Remark" type="ParagraphType" maxOccurs="10">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Textual remarks that apply to the rental.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType"/>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attributeGroup ref="RentalActionGroup">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This typically echoes back the RentalActionCode from the request and may provide an updated RentalAgreementStatusCode based on the request message.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

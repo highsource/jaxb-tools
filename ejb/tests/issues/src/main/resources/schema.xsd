@@ -1,0 +1,898 @@
+<xsd:schema
+	targetNamespace="urn:test" xmlns:test="urn:test" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	jaxb:version="2.1" 
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified"
+
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+
+	jaxb:extensionBindingPrefixes="hj orm xjc"
+
+	>
+
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.issues"/>
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:element name="issue91Element" type="test:issue91Type"/>
+	<xsd:complexType name="issue91Type">
+		<xsd:sequence>
+			<xsd:element ref="test:issue91A" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="test:issue91C" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="issue91A" type="xsd:string"/>
+	<xsd:element name="issue91B" type="xsd:string" substitutionGroup="test:issue91A"/>
+
+	<xsd:complexType name="issue91BaseType">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="issue91ExtendedType">
+		<xsd:complexContent>
+			<xsd:extension base="test:issue91BaseType">
+				<xsd:sequence>
+					<xsd:element name="value" type="xsd:string" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:element name="issue91C" type="test:issue91BaseType"/>
+	<xsd:element name="issue91D" type="test:issue91ExtendedType" substitutionGroup="test:issue91C"/>
+
+
+
+	<xsd:element name="issue44OneElement" type="test:issue44OneType"/>
+
+	<xsd:complexType name="issue44OneType">
+		<xsd:choice maxOccurs="unbounded">
+			<xsd:element name="a" type="test:issue44Subtype"/>
+			<xsd:element name="b" type="test:issue44Subtype"/>
+		</xsd:choice>
+	</xsd:complexType>
+
+	<xsd:complexType name="issue44Subtype">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="issue44TwoElement" type="test:issue44TwoType"/>
+
+	<xsd:complexType name="issue44TwoType">
+		<xsd:sequence maxOccurs="unbounded">
+			<xsd:element name="a" type="test:issue44Subtype"/>
+			<xsd:element name="b" type="test:issue44Subtype"/>
+			<xsd:any/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="issue44ThreeElement" type="test:issue44ThreeType"/>
+
+	<xsd:complexType name="issue44ThreeType">
+		<xsd:sequence maxOccurs="unbounded">
+			<xsd:element name="a" type="test:issue44Subtype"/>
+			<xsd:element name="b" type="test:issue44Subtype"/>
+			<xsd:any processContents="lax"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="issue44FourElement" type="test:issue44FourType"/>
+
+
+	<xsd:complexType name="issue44FourType">
+		<xsd:sequence maxOccurs="unbounded">
+			<xsd:element name="a" type="test:issue44Subtype"/>
+			<xsd:element name="b" type="test:issue44Subtype"/>
+			<xsd:any processContents="strict"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="issue44FiveElement" type="test:issue44FiveType"/>
+
+	<xsd:complexType name="issue44FiveType" mixed="true">
+		<xsd:sequence maxOccurs="unbounded">
+			<xsd:element name="a" type="test:issue44Subtype"/>
+			<xsd:element name="b" type="test:issue44Subtype"/>
+			<xsd:element name="c" type="xsd:string"/>
+			<xsd:any processContents="lax"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="issue44SixElement" type="test:issue44SixType"/> 
+	<xsd:complexType name="issue44SixType" mixed="true">
+		<xsd:sequence>
+			<xsd:any namespace="##any" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required"/> 
+	</xsd:complexType>
+
+	<xsd:element name="issue92Element" type="test:issue92Type"/>
+
+	<xsd:complexType name="issue92Type" mixed="true">
+		<xsd:sequence>
+			<xsd:any namespace="##any" processContents="lax"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="optional"/>
+	</xsd:complexType>
+
+
+
+	<xsd:element name="issue53Element">
+		<xsd:complexType>
+			<xsd:choice maxOccurs="unbounded">
+				<xsd:element ref="test:Value"/>
+				<xsd:element ref="test:Range"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Value" type="test:ValueType"/>
+	<xsd:complexType name="ValueType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element name="Range" type="test:RangeType"/>
+	<xsd:complexType name="RangeType">
+		<xsd:sequence>
+			<xsd:element ref="test:MinimumValue" minOccurs="0"/>
+			<xsd:element ref="test:MaximumValue" minOccurs="0"/>
+			<xsd:element ref="test:Spacing" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="MinimumValue" type="test:ValueType"/>
+	<xsd:element name="MaximumValue" type="test:ValueType"/>
+	<xsd:element name="Spacing" type="test:ValueType"/>
+
+	<xsd:element name="issue64Element">
+		<xsd:complexType>
+			<xsd:choice maxOccurs="unbounded">
+				<xsd:element ref="test:NamedValue"/>
+				<xsd:element ref="test:TypedValue"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="NamedValue" type="test:NamedValueType"/>
+	<xsd:complexType name="NamedValueType">
+		<xsd:complexContent>
+			<xsd:extension base="test:ValueType">
+				<xsd:attribute name="name" type="xsd:string" use="optional"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:element name="TypedValue" type="test:TypedValueType"/>
+	<xsd:complexType name="TypedValueType">
+		<xsd:complexContent>
+			<xsd:extension base="test:ValueType">
+				<xsd:attribute name="type" type="xsd:string" use="optional"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="SType" mixed="true">
+		<xsd:attribute name="name" type="xsd:string" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="StringSType" mixed="true">
+		<xsd:complexContent>
+			<xsd:extension base="test:SType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+
+	<xsd:element name="issue108" type="test:issue108Type"/>
+	<xsd:complexType name="issue108Type">
+		<xsd:choice maxOccurs="unbounded">
+			<xsd:element name="q" type="xsd:string"/>
+			<xsd:element name="r" type="test:complexType" nillable="true"/>
+		</xsd:choice>
+	</xsd:complexType>
+
+	<xsd:complexType name="complexType">
+		<xsd:sequence>
+			<xsd:element name="a" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="b" type="xsd:long" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name = "issue112">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:choice minOccurs = "0" maxOccurs = "unbounded">
+					<xsd:element ref = "test:issue112A"/>
+					<xsd:element ref = "test:issue112Ext"/>
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+
+	<xsd:element name = "issue112A">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="b" type="xsd:string"/>
+				<xsd:element name="c" type="xsd:string"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name = "issue112Ext"/>
+
+
+	<xsd:element name="issue113A">
+		<xsd:complexType mixed="true">
+			<xsd:choice minOccurs="0" maxOccurs="unbounded">
+				<xsd:element ref="test:issue113B"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="issue113B">
+		<xsd:complexType mixed="true">
+			<xsd:choice minOccurs="0" maxOccurs="unbounded">
+				<xsd:element ref="test:issue113B"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="issue93Element" type="test:issue93Type"/>
+
+	<xsd:complexType name="issue93Type">
+		<xsd:sequence>
+			<xsd:element name="issue93A" minOccurs="0" type="xsd:string"/>
+			<xsd:choice maxOccurs = "unbounded">
+				<xsd:element ref="test:issue93B"/>
+				<xsd:element ref="test:issue93C"/>
+			</xsd:choice>
+			<xsd:element name="issue93D" minOccurs="0" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="issue93B" type="xsd:ID"/>
+
+	<xsd:element name="issue93C">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="xsd:string"/>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="issue66Element">
+		<xsd:complexType mixed="true">
+			<xsd:choice minOccurs="0" maxOccurs="unbounded">
+				<xsd:element ref="test:issue66Element"/>
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="issue121Element" type="test:issue121Type">
+
+	</xsd:element>
+
+	<xsd:complexType name="issue121Type">
+		<xsd:sequence>         
+			<xsd:element name="simpleSingle" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="complexSingle" type="test:issue121Type"  minOccurs="0"/>
+			<xsd:element name="simpleCollection" type="xsd:long"  minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="complexCollection" type="test:issue121Type"  minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>         
+	</xsd:complexType>
+
+	<xsd:element name="issue120Element">
+		<xsd:complexType mixed="true">
+			<xsd:choice minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="origin" type="xsd:string"/>
+			</xsd:choice>
+			<xsd:attribute name="lang" use="optional"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:simpleType name="issue75SimpleType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+
+	<xsd:element name="issue75Element">
+		<xsd:complexType>
+			<xsd:attribute name="value" use="optional" type="test:issue75SimpleType"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:complexType name="issue132Type">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<hj:ignored/>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:attribute name="value" use="optional" type="xsd:string"/>
+	</xsd:complexType>
+
+	<xsd:element name="issue131SequenceGenerator" type="test:issue131SequenceGeneratorType"/>
+
+	<xsd:complexType name="issue131SequenceGeneratorType">
+		<xsd:attribute name="id" use="optional" type="xsd:int">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<hj:id>
+						<hj:generated-value strategy="SEQUENCE" generator="issue131SequenceGenerator"/>
+						<hj:sequence-generator
+							name="issue131SequenceGenerator"
+							sequence-name="issue131SequenceGeneratorSequenceName"
+							initial-value="131"
+							allocation-size="131"/>
+					</hj:id>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="value" use="optional" type="xsd:string"/>
+	</xsd:complexType>
+
+	<xsd:element name="issue131TableGenerator" type="test:issue131TableGeneratorType"/>
+
+	<xsd:complexType name="issue131TableGeneratorType">
+		<xsd:attribute name="id" use="optional" type="xsd:int">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<hj:id>
+						<hj:generated-value strategy="TABLE" generator="issue131TableGenerator"/>
+						<hj:table-generator
+							name="issue131TableGenerator"
+							table="issue131TableGeneratorTableName"
+							catalog="issue131TableGeneratorCatalogName"
+							schema="issue131TableGeneratorSchemaName"
+							pk-column-name="pkColumnName"
+							value-column-name="valueColumnName"
+							pk-column-value="issue131TableGeneratorPkColumnValue"
+							initial-value="131"
+							allocation-size="131">
+							<orm:unique-constraint>
+								<orm:column-name>pkColumnName</orm:column-name>
+								<orm:column-name>valueColumnName</orm:column-name>
+							</orm:unique-constraint>
+						</hj:table-generator>
+					</hj:id>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="value" use="optional" type="xsd:string"/>
+	</xsd:complexType>
+
+	<xsd:element name="issue129" type="test:issue129Type"/>
+
+	<xsd:complexType name="issue129Type">
+		<xsd:attribute name="value129" use="optional" type="xsd:time">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<jaxb:property>
+						<jaxb:baseType>
+							<xjc:javaType name="java.util.Calendar" adapter="org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.TimeStringAsCalendar"/>
+						</jaxb:baseType>
+					</jaxb:property>
+					<hj:basic>
+						<orm:temporal>TIMESTAMP</orm:temporal>
+					</hj:basic>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:element name="issue33" type="test:issue33Type"/>
+	<xsd:complexType name="issue33Type">
+		<xsd:sequence>
+			<xsd:element name="token" type="xsd:token" minOccurs="0"/>
+			<xsd:element name="normalizedString" type="xsd:normalizedString" minOccurs="0"/>
+			<xsd:element name="hexBinary" type="xsd:hexBinary" minOccurs="0"/>
+			<xsd:element name="tokenNillable" type="xsd:token" minOccurs="0" nillable="true"/>
+			<xsd:element name="normalizedStringNillable" type="xsd:normalizedString" minOccurs="0" nillable="true"/>
+			<xsd:element name="hexBinaryNillable" type="xsd:hexBinary" minOccurs="0" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="issue67" type="test:issue67Type"/>
+	<xsd:complexType name="issue67Type">
+		<xsd:sequence>
+			<xsd:element name="strings" type="xsd:string" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			<xsd:element name="ENTITIES" type="xsd:ENTITIES" minOccurs="0" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="issue127Type">
+		<xsd:sequence>
+			<xsd:element name="time" type="xsd:time" minOccurs="0"/>
+			<xsd:element name="date" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="dateTime" type="xsd:dateTime" minOccurs="0"/>
+			<xsd:element name="gYearMonth" type="xsd:gYearMonth" minOccurs="0"/>
+			<xsd:element name="gYear" type="xsd:gYear" minOccurs="0"/>
+			<xsd:element name="gMonth" type="xsd:gMonth" minOccurs="0"/>
+			<xsd:element name="gMonthDay" type="xsd:gMonthDay" minOccurs="0"/>
+			<xsd:element name="gDay" type="xsd:gDay" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="issue127TypeNillable">
+		<xsd:sequence>
+			<xsd:element name="time" type="xsd:time" minOccurs="0" nillable="true"/>
+			<xsd:element name="date" type="xsd:date" minOccurs="0" nillable="true"/>
+			<xsd:element name="dateTime" type="xsd:dateTime" minOccurs="0" nillable="true"/>
+			<xsd:element name="gYearMonth" type="xsd:gYearMonth" minOccurs="0" nillable="true"/>
+			<xsd:element name="gYear" type="xsd:gYear" minOccurs="0" nillable="true"/>
+			<xsd:element name="gMonth" type="xsd:gMonth" minOccurs="0" nillable="true"/>
+			<xsd:element name="gMonthDay" type="xsd:gMonthDay" minOccurs="0" nillable="true"/>
+			<xsd:element name="gDay" type="xsd:gDay" minOccurs="0" nillable="true"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="issue126Type">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<hj:entity>
+					<orm:table name="ISSUE_126_TABLE">
+						<orm:unique-constraint>
+							<orm:column-name>VALUE_</orm:column-name>
+							<orm:column-name>TEXT</orm:column-name>
+						</orm:unique-constraint>
+					</orm:table>
+				</hj:entity>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:attribute name="value" use="optional" type="xsd:string"/>
+		<xsd:attribute name="text" use="optional" type="xsd:string"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="issueXXXType">
+		<xsd:attribute name="value" use="optional" type="xsd:string"/>
+	</xsd:complexType>
+
+	<xsd:element name="issueYYY" type="test:issueYYYType"/>
+
+	<xsd:complexType name="issueYYYType">
+		<xsd:sequence>
+			<xsd:element name="single" type="test:issueXXXType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+
+	<xsd:element name="issue140Base" type="test:issue140BaseType"/>
+	<xsd:complexType name="issue140BaseType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<hj:mapped-superclass/>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="a" type="xsd:string"/>
+			<xsd:element name="b" type="xsd:long"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="issue140ExtendedA" type="test:issue140ExtendedAType"/>
+	<xsd:complexType name="issue140ExtendedAType">
+		<xsd:complexContent>
+		    <xsd:extension base="test:issue140BaseType">
+				<xsd:sequence>
+					<xsd:element name="c" type="xsd:dateTime"/>
+					<xsd:element name="d" type="xsd:byte"/>
+				</xsd:sequence>
+		    </xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="issue140ExtendedB" type="test:issue140ExtendedBType"/>
+	<xsd:complexType name="issue140ExtendedBType">
+		<xsd:complexContent>
+		    <xsd:extension base="test:issue140BaseType">
+				<xsd:sequence>
+					<xsd:element name="e" type="xsd:integer"/>
+					<xsd:element name="f" type="xsd:time"/>
+				</xsd:sequence>
+		    </xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="issue140ExtendedC" type="test:issue140ExtendedCType"/>
+	<xsd:complexType name="issue140ExtendedCType">
+		<xsd:complexContent>
+		    <xsd:extension base="test:issue140ExtendedBType">
+				<xsd:sequence>
+					<xsd:element name="g" type="xsd:decimal"/>
+					<xsd:element name="h" type="xsd:date"/>
+				</xsd:sequence>
+		    </xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:element name="issue86X1" type="test:issue86X1Type"/>
+
+	<xsd:complexType name="issue86X1Type">
+		<xsd:sequence>
+			<xsd:element name="a" type="xsd:string"/>
+			<xsd:element name="y" type="test:issue86Y1Type">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<hj:embedded/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="issue86Y1Type">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<hj:embeddable/>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="a" type="xsd:string"/>
+			<xsd:element name="b" type="xsd:long"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="issueHJIII14Type">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<hj:entity>
+					<orm:named-query name="issueHJIII14NamedQuery">
+					<orm:query>SELECT
+x
+FROM
+org.jvnet.hyperjaxb3.ejb.tests.issues.IssueHJIII14Type						
+x
+</orm:query>
+					</orm:named-query>
+				</hj:entity>
+			</xsd:appinfo> 
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="value" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="issue142" type="test:issue142Type"/>
+
+
+	<xsd:complexType name="issue142Type">
+		<xsd:sequence>
+			<xsd:element name="base64Binary" type="xsd:base64Binary" minOccurs="0"/>
+			<xsd:element name="hexBinary" type="xsd:hexBinary" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="issue116Type">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<hj:entity>
+					<hj:generated-id transient="true"/>
+				</hj:entity>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:attribute name="value" use="optional" type="xsd:string"/>
+		<xsd:attribute name="text" use="optional" type="xsd:string"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="issueHJIII25Type">
+		<xsd:attribute name="booleanAttribute" type="xsd:boolean"/>
+		<xsd:attribute name="defaultedBooleanAttribute" type="xsd:boolean" default="false"/>
+	</xsd:complexType>
+
+	<xsd:element name="issueHJIII26" type="test:issueHJIII26Type"/>
+
+	<xsd:complexType name="issueHJIII26Type">
+		<xsd:choice maxOccurs="unbounded">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<hj:generated-property propertyName="Ot">
+						<hj:one-to-many>
+							<orm:join-column />
+							<orm:cascade>
+								<orm:cascade-persist/>
+								<orm:cascade-refresh/>
+								<orm:cascade-merge/>
+							</orm:cascade>
+						</hj:one-to-many>
+					</hj:generated-property>
+				</xsd:appinfo>
+			</xsd:annotation>
+			<xsd:element name="one" type="test:issueHJIII26OneType"/>
+			<xsd:element name="two" type="test:issueHJIII26TwoType"/>
+		</xsd:choice>
+	</xsd:complexType>
+
+	<xsd:complexType name="issueHJIII26OneType">
+		<xsd:attribute name="one" type="xsd:boolean"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="issueHJIII26TwoType">
+		<xsd:attribute name="two" type="xsd:boolean"/>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="issueHJIII28SimpleType">
+ 		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1024"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+
+	<xsd:complexType name="issueHJIII28ComplexType">
+ 		<xsd:attribute name="issueHJIII28" type="test:issueHJIII28SimpleType" use="required"/>
+	</xsd:complexType> 
+
+	<xsd:complexType name="issueHJIII41ParentType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<hj:mapped-superclass/>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:attribute name="id" type="xsd:long">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<jaxb:property>
+						<jaxb:baseType>
+							<jaxb:javaType name="java.lang.Long"/>
+						</jaxb:baseType>
+					</jaxb:property>
+					<hj:id/>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType> 
+
+	<xsd:element name="issueHJIII41Child" type="test:issueHJIII41ChildType"/>
+
+	<xsd:complexType name="issueHJIII41ChildType">
+		<xsd:complexContent>
+			<xsd:extension base="test:issueHJIII41ParentType">
+				<xsd:attribute name="value" type="xsd:string"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType> 
+
+	<xsd:element name="issueHJIII35Element" type="test:issueHJIII35Type"/>
+
+	<xsd:complexType name="issueHJIII35Type">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<hj:generated-version name="Hjversion" javaType="java.lang.Long" schemaType="xsd:long">
+					<orm:column/>
+				</hj:generated-version>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="value" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType> 
+
+	<xsd:element name="issueHJIII48AElement" type="test:issueHJIII48AType"/>
+
+	<xsd:complexType name="issueHJIII48AType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<hj:generated-property name="AnyElement" propertyName="Anything">
+					<hj:jaxb-context contextPath="org.jvnet.hyperjaxb3.ejb.tests.po"/>
+				</hj:generated-property>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:any namespace="##other" processContents="strict" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jaxb:property name="AnyElement"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:any>
+		</xsd:sequence>
+	</xsd:complexType> 
+
+	<xsd:element name="issueHJIII48BElement" type="test:issueHJIII48BType"/>
+
+	<xsd:complexType name="issueHJIII48BType">
+		<xsd:sequence>
+			<xsd:any namespace="##other" processContents="strict" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType> 
+
+	<xsd:element name="issueHJIII48CElement" type="test:issueHJIII48CType"/>
+
+	<xsd:complexType name="issueHJIII48CType">
+		<xsd:sequence>
+			<xsd:element name="any" type="xsd:anyType">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<hj:generated-property propertyName="Anything">
+							<hj:jaxb-context contextPath="org.jvnet.hyperjaxb3.ejb.tests.po"/>
+							<hj:basic merged="false">
+								<orm:column name="EVERYTHING" length="3000"/>
+							</hj:basic>
+						</hj:generated-property>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType> 
+
+	<xsd:element name="issueHJIII40A">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="test:issueHJIII40B">
+					<xsd:annotation>
+						<xsd:appinfo>
+							<jaxb:property name="First"/>
+							<hj:many-to-one>
+								<orm:join-column name="FIRST" />
+							</hj:many-to-one>
+						</xsd:appinfo>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element ref="test:issueHJIII40B">
+					<xsd:annotation>
+						<xsd:appinfo>
+							<jaxb:property name="Second"/>
+							<hj:many-to-one>
+								<orm:join-column name="SECOND" />
+							</hj:many-to-one>
+						</xsd:appinfo>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element> 
+
+	<xsd:element name="issueHJIII40B">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="value" type="xsd:string" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType> 
+	</xsd:element>
+
+	<xsd:simpleType name="issueHJIII85SimpleType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4096" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="issueHJIII85ComplexType">
+		<xsd:simpleContent>
+			<xsd:extension base="test:issueHJIII85SimpleType">
+				<xsd:attribute name="attribute" type="xsd:string" use="optional" />
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+
+	<xsd:element name="issueHJIII86" type="test:issueHJIII86Type"/>
+
+	<xsd:element name="issueHJIII86A" type="test:issueHJIII86AType"/>
+
+	<xsd:element name="issueHJIII86B" type="test:issueHJIII86BType"/>
+
+	<xsd:complexType name="issueHJIII86Type">
+		<xsd:sequence>
+			<xsd:element ref="test:issueHJIII86A" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="test:issueHJIII86B" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="issueHJIII86AType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<hj:entity>
+					<orm:secondary-table name="ISSUEHJIII86BTYPE">
+						<orm:primary-key-join-column name="A_" referenced-column-name="ID"/>
+					</orm:secondary-table>
+				</hj:entity>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="login" type="xsd:string" minOccurs="0" />
+			<xsd:element name="password" type="xsd:string" minOccurs="0" />
+		</xsd:sequence>
+		<xsd:attribute name="id" use="required" type="xsd:string">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<hj:id>
+						<hj:generator generatorClass="assigned" />
+					</hj:id>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:complexType name="issueHJIII86BType">
+		<xsd:sequence>
+			<xsd:element name="A" type="xsd:string"/>
+		</xsd:sequence>
+		<xsd:attribute name="id" use="required" type="xsd:string">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<hj:id>
+						<hj:generator generatorClass="assigned" />
+					</hj:id>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:element name="issueHJIII92" type="test:issueHJIII92Type"/>
+
+	<xsd:complexType name="issueHJIII92Type"> 
+		<xsd:sequence> 
+			<xsd:element name="id1" type="xsd:string" minOccurs="1" maxOccurs="1" /> 
+			<xsd:element name="id2" type="xsd:string" minOccurs="1" maxOccurs="1" /> 
+			<xsd:element name="field1" type="xsd:string" minOccurs="0" />	
+		</xsd:sequence> 
+	</xsd:complexType> 
+
+	<xsd:complexType name="issueHJIII94Type" abstract="true">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" ref="test:issueHJIII94A"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="issueHJIII94A" type="test:issueHJIII94AType"/>
+	<xsd:complexType name="issueHJIII94AType">
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:element name="issueHJIII94Sub" type="test:issueHJIII94SubType"/>
+	<xsd:complexType name="issueHJIII94SubType">
+		<xsd:complexContent>
+			<xsd:extension base="test:issueHJIII94Type">
+				<xsd:sequence>
+					<xsd:element name="subelement" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<!--xsd:complexType name="Shape">
+		<xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Cicrle">
+		<xsd:complexContent>
+			<xsd:extension base="test:Shape">
+				<xsd:sequence>
+					<xsd:element name="radius" type="xsd:double"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType-->
+
+	<xsd:element name="issueHJIII45Super" type="test:issueHJIII45SuperType"/>
+	<xsd:complexType name="issueHJIII45SuperType"/>
+
+	<xsd:element name="issueHJIII45Sub" type="test:issueHJIII45SubType"/>
+	<xsd:complexType name="issueHJIII45SubType">
+		<xsd:complexContent>
+			<xsd:extension base="test:issueHJIII45SuperType">
+				<xsd:attribute name="name" type="xsd:string" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="issueHJIII100Type">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<hj:entity> 
+					<orm:named-query name="IssueHJIII100Type.getAll"> 
+						<orm:query>from IssueHJIII100Type</orm:query> 
+						<orm:hint name="org.hibernate.cacheable" value="true" /> 
+					</orm:named-query> 
+				</hj:entity>
+ 			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence> 
+			<xsd:element name="a" type="xsd:string" minOccurs="1" maxOccurs="1" /> 
+		</xsd:sequence> 
+	</xsd:complexType>
+
+</xsd:schema>

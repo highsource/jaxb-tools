@@ -1,0 +1,1681 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Copyright 2007 UGS Corp.  All Rights Reserved.
+This software and related documentation are proprietary to UGS Corp.
+-->
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:plm="http://www.plmxml.org/Schemas/PLMXMLSchema" targetNamespace="http://www.plmxml.org/Schemas/PLMXMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" xml:lang="en">
+      <xsd:include schemaLocation="PLMXMLSchema.xsd"/>
+      <xsd:annotation>
+        <xsd:documentation>
+          <plm:SchemaChange author="howardmu" date="2007-02-28" version="6.0.1.xxx">
+            <plm:Description>
+            Add support for robotics.
+            </plm:Description>
+            <plm:Reference locationRef="..//schema/simpleType[@name='ConstraintEnum']/enumeration[@value='limitsDependency']"/>
+            <plm:Reference locationRef="..//schema/complexType[@name='ConstraintType']/element[@name='LimitsDependencyData']"/>
+            <plm:Reference locationRef="..//schema/complexType[@name='ConstraintInstanceType']/element[@name='LimitsDependencyData']"/>
+            <plm:Reference locationRef="..//schema/complexType[@name='ConstraintOccurrenceType']/element[@name='LimitsDependencyData']"/>
+            <plm:Reference locationRef="..//schema/simpleType[@name='SolverEnum']/enumeration[@value='tecnomatix']"/>
+            <plm:Reference locationRef="..//schema/complexType[@name='JointVelocityLimitType']"/>
+            <plm:Reference locationRef="..//schema/complexType[@name='JointAccelerationLimitType']"/>
+            <plm:Reference locationRef="..//schema/complexType[@name='MechanismRevisionViewType']/element[@name='MechanismParameters']"/>
+            <plm:Reference locationRef="..//schema/complexType[@name='MechanismRevisionViewType']/element[@name='Marker']"/>
+            <plm:Reference locationRef="..//schema/complexType[@name='MechanismViewType']"/>
+            <plm:Reference locationRef="..//schema/simpleType[@name='MarkerEnum']"/>
+            <plm:Reference locationRef="..//schema/complexType[@name='MarkerType']/attribute[@name='type']"/>
+            <plm:Reference locationRef="..//schema/complexType[@name='MechanismExpressionType']/attribute[@name='format']"/>
+            <plm:Reference locationRef="..//schema/simpleType[@name='CouplerEnum']/enumeration[@value='position']"/>
+            <plm:Reference locationRef="..//schema/simpleType[@name='CouplerEnum']/enumeration[@value='follow']"/>
+            <plm:Reference locationRef="..//schema/complexType[@name='CouplerDataType']/attribute[@name='ratio']"/>
+            <plm:Reference locationRef="..//schema/complexType[@name='CouplerDataType']/attribute[@name='ratios']"/>
+            <plm:Reference locationRef="..//schema/complexType[@name='LimitsDependencyDataType']"/>
+          </plm:SchemaChange>
+        </xsd:documentation>
+        <xsd:documentation>
+          
+          PLM XML Constraint Schema.
+          
+        </xsd:documentation>
+        <xsd:appinfo source="http://www.plmxml.org/Schemas/PLMXMLSchema">
+          <plm:SchemaInfo name="PLMXMLConstraintSchema.xsd" date="2006-3-28" version="6.0" status="development"/>
+        </xsd:appinfo>
+      </xsd:annotation>
+      <!-- -->
+      <!-- ******************** GeometryTypeEnum *************************** -->
+      <!-- -->
+      <xsd:simpleType name="GeometryTypeEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="point"/>
+          <xsd:enumeration value="curve"/>
+          <xsd:enumeration value="line"/>
+          <xsd:enumeration value="circle"/>
+          <xsd:enumeration value="ellipse"/>
+          <xsd:enumeration value="bSplineCurve"/>
+          <xsd:enumeration value="compositeCurve"/>
+          <xsd:enumeration value="spCurve"/>
+          <xsd:enumeration value="generalParametricCurve"/>
+          <xsd:enumeration value="surface"/>
+          <xsd:enumeration value="plane"/>
+          <xsd:enumeration value="cylinder"/>
+          <xsd:enumeration value="cone"/>
+          <xsd:enumeration value="sphere"/>
+          <xsd:enumeration value="torus"/>
+          <xsd:enumeration value="sweptSurface"/>
+          <xsd:enumeration value="spunSurface"/>
+          <xsd:enumeration value="bSplineSurface"/>
+          <xsd:enumeration value="generalParametricSurface"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** GeometrySubTypeEnum ************************ -->
+      <!-- -->
+      <xsd:simpleType name="GeometrySubTypeEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="interpolation"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** ConstraintEnum ***************************** -->
+      <!-- -->
+      <xsd:simpleType name="ConstraintEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="radius"/>
+          <xsd:enumeration value="diameter"/>
+          <xsd:enumeration value="minorRadius"/>
+          <xsd:enumeration value="majorRadius"/>
+          <xsd:enumeration value="halfAngle"/>
+          <xsd:enumeration value="length"/>
+          <xsd:enumeration value="distance"/>
+          <xsd:enumeration value="signedDistance"/>
+          <xsd:enumeration value="angle3D"/>
+          <xsd:enumeration value="angle2D"/>
+          <xsd:enumeration value="fixed"/>
+          <xsd:enumeration value="rigid"/>
+          <xsd:enumeration value="parallel"/>
+          <xsd:enumeration value="perpendicular"/>
+          <xsd:enumeration value="coincident"/>
+          <xsd:enumeration value="concentric"/>
+          <xsd:enumeration value="symmetric"/>
+          <xsd:enumeration value="tangent"/>
+          <xsd:enumeration value="midpoint"/>
+          <xsd:enumeration value="equalRadius"/>
+          <xsd:enumeration value="equalDirection"/>
+          <xsd:enumeration value="equalCurvature"/>
+          <xsd:enumeration value="equalFirstDerivative"/>
+          <xsd:enumeration value="equalSecondDerivative"/>
+          <xsd:enumeration value="equalLength"/>
+          <xsd:enumeration value="equalDistance"/>
+          <xsd:enumeration value="fixedParameter"/>
+          <xsd:enumeration value="equalParameter"/>
+          <xsd:enumeration value="joint"/>
+          <xsd:enumeration value="driver"/>
+          <xsd:enumeration value="force"/>
+          <xsd:enumeration value="spring"/>
+          <xsd:enumeration value="damper"/>
+          <xsd:enumeration value="bushing"/>
+          <xsd:enumeration value="contact"/>
+          <xsd:enumeration value="coupler"/>
+          <xsd:enumeration value="limitsDependency"/>          
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** ConstraintAlignmentEnum ******************** -->
+      <!-- -->
+      <xsd:simpleType name="ConstraintAlignmentEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="align"/>
+          <xsd:enumeration value="antiAlign"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** ConstraintTorusCoincidenceEnum ************* -->
+      <!-- -->
+      <xsd:simpleType name="ConstraintTorusCoincidenceEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="coincident"/>
+          <xsd:enumeration value="coincidentWithSpine"/>
+          <xsd:enumeration value="coincidentAroundSpine"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** ConstraintHalfSpaceEnum ******************** -->
+      <!-- -->
+      <xsd:simpleType name="ConstraintHalfSpaceEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="positive"/>
+          <xsd:enumeration value="negative"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** ConstraintPrecedenceEnum ******************* -->
+      <!-- -->
+      <xsd:simpleType name="ConstraintPrecedenceEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="modelSpace"/>
+          <xsd:enumeration value="parameterSpace"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** DimensionalityType ************************* -->
+      <!-- -->
+      <xsd:simpleType name="DimensionalityType">
+        <xsd:restriction base="xsd:positiveInteger">
+          <xsd:minInclusive value="2"/>
+          <xsd:maxInclusive value="3"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** ConstraintHelpEnum ************************* -->
+      <!-- -->
+      <xsd:simpleType name="ConstraintHelpEnum">
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="boundary"/>
+          <xsd:enumeration value="centre"/>
+          <xsd:enumeration value="point"/>
+          <xsd:enumeration value="paramUV"/>
+          <xsd:enumeration value="paramU"/>
+          <xsd:enumeration value="surfacePoint"/>
+          <xsd:enumeration value="curvePoint"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** ConstraintHelp ***************************** -->
+      <!-- -->
+      <xsd:complexType name="ConstraintHelpType">
+        <xsd:annotation>
+          <xsd:documentation>
+            Constraint Help information. The type attribute determines which other attributes are allowed,
+            as follows:
+      
+                                point   u       v       precedence
+                         
+            boundary            no      no      no      no
+            centre              no      no      no      no
+            point               yes     no      no      no
+            paramUV             no      yes     yes     no
+            paramU              no      yes     no      no
+            surfacePoint        yes     yes     yes     yes
+            curvePoint          yes     yes     no      yes
+      
+            Attributes:
+      
+            type:           specifies the type of Help information included
+            point:          2D or 3D point coordinates
+            u:              u parameter (curve or surface)
+            v:              v parameter (surface)
+            precedence:     specifies whether the 3D point, or the parameters are to take precedence. For
+                            example, the 3D point may be precise, and the parameter(s) an approximation.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:IdBase">
+            <xsd:attribute name="type" type="plm:ConstraintHelpEnum" use="optional"/>
+            <xsd:attribute name="coordinates" type="plm:DoubleListType" use="optional"/>
+            <xsd:attribute name="u" type="xsd:double" use="optional"/>
+            <xsd:attribute name="v" type="xsd:double" use="optional"/>
+            <xsd:attribute name="precedence" type="plm:ConstraintPrecedenceEnum" use="optional"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="ConstraintHelp" type="plm:ConstraintHelpType"/>
+      <!-- -->
+      <!-- ******************** GeometryData ******************************* -->
+      <!-- -->
+      <xsd:complexType name="GeometryDataType">
+        <xsd:annotation>
+          <xsd:documentation>
+            A GeometryData element contains information about a geometric object.
+      
+            Attributes:
+      
+            geometryType:   the type of the geometry.
+            planar:         true if the geometry is a planar curve
+            subType:        additional information about the geometry
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:IdBase">
+            <xsd:attribute name="geometryType" type="plm:GeometryTypeEnum" use="optional"/>
+            <xsd:attribute name="planar" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="geometrySubType" type="plm:GeometrySubTypeEnum" use="optional"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="GeometryData" type="plm:GeometryDataType"/>
+      <!-- -->
+      <!-- ******************** ConstraintTargetRef ************************ -->
+      <!-- -->
+      <xsd:complexType name="ConstraintTargetRefType">
+        <xsd:annotation>
+          <xsd:documentation>
+            A ConstraintTargetRef is a means of referencing the target of a constraint, typically a
+            geometric object, together with associated information required by the constraint. It uses the
+            "occurrenceRef" attribute, and "EntityRef" sub-element, inherited from GDEReferenceType.
+            
+            Attributes:
+            
+            halfSpace:      specifies the relevant halfspace of the geometry.
+            occurrenceRef:  Inherited from GDEReference. References a MechanismOccurrence. See the
+                            "Representing Feature Semantics" Chapter of the PLM XML Schema Functional
+                            Description.
+            pathRefs:       Inherited from GDEReference. References a list of MechanismInstances, which
+                            defines an occurrence of a Mechanism object by defining a unique path through
+                            an instance graph.
+            targetRef:      Inherited from GDEReference. References the target Marker, Joint or geometry.
+            degreeOfFreedom: If the target of the constraint is a Joint, degreeOfFreedom specifies the
+                            degree of freedom of the Joint that the ConstraintTargetRef targets.
+            
+            Sub-elements:
+            
+            ConstraintHelp: an element derived from ConstraintHelp, which assists the constraint solver.
+            GeometryData:   If the target is geometry, GeometryData contains information about the
+                            geometric object.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:GDEReferenceType">
+            <xsd:sequence>
+              <xsd:element ref="plm:ConstraintHelp" minOccurs="0"/>
+              <xsd:element ref="plm:GeometryData" minOccurs="0"/>
+            </xsd:sequence>
+            <xsd:attribute name="halfSpace" type="plm:ConstraintHalfSpaceEnum" use="optional"/>
+            <xsd:attribute name="degreeOfFreedom" type="plm:DegreeOfFreedomEnum" use="optional"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="ConstraintTargetRef" type="plm:ConstraintTargetRefType"/>
+      <!-- -->
+      <!-- ******************** ConstraintData ***************************** -->
+      <!-- -->
+      <xsd:complexType name="ConstraintDataType">
+        <xsd:annotation>
+          <xsd:documentation>
+            A ConstraintData element contains information which defines a constraint.
+      
+            Attributes:
+      
+            value:          the numerical value of the constraint, in metres or radians.
+            dimension:      whether a 2- or 3-dimensional constraint.
+            orientation:    surface orientation - "align" or "antiAlign"
+            alignment:      direction alignment - "align" or "antiAlign"
+            torusCoincidence: additional information for when the constraint involves coincidence with a
+                            torus.
+            suppressed:     true if this constraint is not to be used when solving the system of
+                            constraints.
+            rigid:          true if the constraint is "rigid", i.e. it is not necessarily possible to vary
+                            the value of the constraint while fixing the values of all the other
+                            constraints.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:IdBase">
+            <xsd:attribute name="value" type="xsd:double" use="optional"/>
+            <xsd:attribute name="dimension" type="plm:DimensionalityType" default="3"/>
+            <xsd:attribute name="orientation" type="plm:ConstraintAlignmentEnum" use="optional"/>
+            <xsd:attribute name="alignment" type="plm:ConstraintAlignmentEnum" use="optional"/>
+            <xsd:attribute name="torusCoincidence" type="plm:ConstraintTorusCoincidenceEnum" use="optional"/>
+            <xsd:attribute name="suppressed" type="xsd:boolean" use="optional"/>
+            <xsd:attribute name="rigid" type="xsd:boolean" use="optional"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="ConstraintData" type="plm:ConstraintDataType"/>
+      <!-- -->
+      <!-- ******************** Constraint ********************************* -->
+      <!-- -->
+      <xsd:complexType name="ConstraintType">
+        <xsd:annotation>
+          <xsd:documentation>
+            A Constraint is a subclass of GDE that models a condition applied to
+            occurrences of geometric objects in a Product Structure or Mechanism
+            objects in a Mechanism Structure.
+      
+            Attributes:
+      
+            type: The type of the Constraint (concentric, parallel, et cetera).
+
+            Sub-elements:
+      
+            ConstraintData: Data defining a geometric Constraint or a Contact
+                            Constraint.
+            ConstraintTargetRef: References to constrained geometry.
+            JointData:      Additional data for a Joint Constraint.
+            FrictionData:   Additional data for a Friction Constraint or a Joint
+                            Constraint.
+            DriverData:     Additional data for a Driver Constraint or a Joint
+                            Constraint.
+            ForceData:      Additional data for a Force Constraint.
+            SpringData:     Additional data for a Spring Constraint.
+            DamperData:     Additional data for a Damper Constraint.
+            BushingData:    Additional data for a Bushing Constraint.
+            ContactData:    Additional data for a Contact Constraint.
+            CouplerData:    Additional data for a Coupler Constraint or a Joint
+                            Constraint that infers a Joint.
+            LimitsDependencyData: Additional data for a Limits Dependency
+                            Constraint.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:GDEBase">
+            <xsd:sequence>
+              <xsd:element ref="plm:ConstraintData" minOccurs="0"/>
+              <xsd:element ref="plm:ConstraintTargetRef" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:element ref="plm:JointData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:FrictionData" minOccurs="0" maxOccurs="2"/>
+              <xsd:element ref="plm:DriverData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:ForceData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:SpringData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:DamperData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:BushingData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:ContactData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:CouplerData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:LimitsDependencyData" minOccurs="0" maxOccurs="1"/>              
+            </xsd:sequence>
+            <xsd:attribute name="type" type="plm:ConstraintEnum" use="optional"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="Constraint" type="plm:ConstraintType" substitutionGroup="plm:GDE"/>
+      <!-- -->
+      <!-- ******************** ConstraintInstance ************************* -->
+      <!-- -->
+      <xsd:complexType name="ConstraintInstanceType">
+        <xsd:annotation>
+          <xsd:documentation>
+            This subclass of GDEInstance may be used for instancing a
+            Constraint.
+      
+            If a particular type of sub-element is present, the
+            ConstraintInstance overrides the entire set of sub-elements of that
+            type present under the Constraint.
+  
+            Sub-elements:
+      
+            ConstraintData: Overrides the data defining the geometric Constraint
+                            or the Contact Constraint.
+            ConstraintTargetRef: Overrides references to constrained geometry.
+            JointData:      Overrides additional data for a Joint Constraint.
+            FrictionData:   Overrides additional data for a Friction Constraint
+                            or a Joint Constraint.
+            DriverData:     Overrides additional data for a Driver Constraint or
+                            a Joint Constraint.
+            ForceData:      Overrides additional data for a Force Constraint.
+            SpringData:     Overrides additional data for a Spring Constraint.
+            DamperData:     Overrides additional data for a Damper Constraint.
+            BushingData:    Overrides additional data for a Bushing Constraint.
+            ContactData:    Overrides additional data for a Contact Constraint.
+            CouplerData:    Overrides additional data for a Coupler Constraint
+                            or a Joint Constraint that infers a Joint.
+            LimitsDependencyData: Additional data for a Limits Dependency
+                            Constraint.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:GDEInstanceType">
+            <xsd:sequence>
+              <xsd:element ref="plm:ConstraintData" minOccurs="0"/>
+              <xsd:element ref="plm:ConstraintTargetRef" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:element ref="plm:JointData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:FrictionData" minOccurs="0" maxOccurs="2"/>
+              <xsd:element ref="plm:DriverData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:ForceData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:SpringData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:DamperData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:BushingData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:ContactData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:CouplerData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:LimitsDependencyData" minOccurs="0" maxOccurs="1"/>
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="ConstraintInstance" type="plm:ConstraintInstanceType" substitutionGroup="plm:GDEInstance"/>
+      <!-- -->
+      <!-- ******************** ConstraintOccurrence *********************** -->
+      <!-- -->
+      <xsd:complexType name="ConstraintOccurrenceType">
+        <xsd:annotation>
+          <xsd:documentation>
+            This subclass of Occurrence may be used where the Occurrence
+            references a Constraint.
+      
+            If a particular type of sub-element is present, the
+            ConstraintOccurrence overrides the entire set of sub-elements of
+            that type present under the ConstraintInstance or Constraint.
+  
+            Sub-elements:
+      
+            ConstraintData: Overrides the data defining the geometric Constraint
+                            or the Contact Constraint.
+            ConstraintTargetRef: Overrides references to constrained geometry.
+            JointData:      Overrides additional data for a Joint Constraint.
+            FrictionData:   Overrides additional data for a Friction Constraint
+                            or a Joint Constraint.
+            DriverData:     Overrides additional data for a Driver Constraint or
+                            a Joint Constraint.
+            ForceData:      Overrides additional data for a Force Constraint.
+            SpringData:     Overrides additional data for a Spring Constraint.
+            DamperData:     Overrides additional data for a Damper Constraint.
+            BushingData:    Overrides additional data for a Bushing Constraint.
+            ContactData:    Overrides additional data for a Contact Constraint.
+            CouplerData:    Overrides additional data for a Coupler Constraint
+                            or a Joint Constraint that infers a Joint.
+            LimitsDependencyData: Additional data for a Limits Dependency
+                            Constraint.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:OccurrenceType">
+            <xsd:sequence>
+              <xsd:element ref="plm:ConstraintData" minOccurs="0"/>
+              <xsd:element ref="plm:ConstraintTargetRef" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:element ref="plm:JointData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:FrictionData" minOccurs="0" maxOccurs="2"/>
+              <xsd:element ref="plm:DriverData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:ForceData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:SpringData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:DamperData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:BushingData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:ContactData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:CouplerData" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:LimitsDependencyData" minOccurs="0" maxOccurs="1"/>              
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="ConstraintOccurrence" type="plm:ConstraintOccurrenceType" substitutionGroup="plm:Occurrence"/>
+      <!-- -->
+      <!-- ******************** Mechanism ********************************** -->
+      <!-- -->
+      <xsd:complexType name="MechanismType">
+        <xsd:annotation>
+          <xsd:documentation>
+            A revision-independent Mechanism, analogous to Product in the Product Structure.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:StructureBase"/>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="Mechanism" type="plm:MechanismType" substitutionGroup="plm:Structure"/>
+      <!-- -->
+      <!-- ******************** MechanismRevision ************************** -->
+      <!-- -->
+      <xsd:complexType name="MechanismRevisionType">
+        <xsd:annotation>
+          <xsd:documentation>
+            A revision of a Mechanism, analogous to a ProductRevision in the Product Structure.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:StructureRevisionBase"/>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="MechanismRevision" type="plm:MechanismRevisionType" substitutionGroup="plm:StructureRevision"/>
+      <!-- -->
+      <!-- ******************** SolverAnalysisEnum ************************* -->
+      <!-- -->
+      <xsd:simpleType name="SolverAnalysisEnum">
+        <xsd:annotation>
+          <xsd:documentation>
+            The type of the solution, for which the Mechanism model is designed. Dynamic analysis may be
+            performed on models with one or more degrees of freedom. It uses Newton's Laws of Motion to
+            determine the motion of all the Mechanism objects. A kinematic model has zero degrees of
+            freedom and the motion of one or more Mechanism objects is pre-defined. The analyser determines
+            the motion of all the other Mechanism objects. Static or equilibrium analysis determines the
+            positions &amp; orientations of, and the forces &amp; torques on, all the Mechanism objects at
+            an equilibrium.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="dynamics"/>
+          <xsd:enumeration value="kinematics"/>
+          <xsd:enumeration value="statics"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** SolverEnum ********************************* -->
+      <!-- -->
+      <xsd:simpleType name="SolverEnum">
+        <xsd:annotation>
+          <xsd:documentation>
+            The type of the Mechanism solver. adams means ADAMS/Solver from
+            MSC.Software Corporation is supported. (ADAMS is a trademark of
+            MSC.Software Corporation.) tecnomatix means Tecnomatix robotics.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="adams"/>
+          <xsd:enumeration value="tecnomatix"/>          
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** SolverParameterEnum ************************ -->
+      <!-- -->
+      <xsd:simpleType name="SolverParameterEnum">
+        <xsd:annotation>
+          <xsd:documentation>
+            The type of the Mechanism solver parameter. These 3 parameters specify the maximum number of
+            iterations allowed to solve the equations of motion during dynamic, kinematic and static or
+            equilibrium analysis respectively. (During dynamic analysis, the equations of motion are
+            derived by numerically integrating Newton's Laws of Motion.)
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="maxIntegratorIterations"/>
+          <xsd:enumeration value="maxKinematicsIterations"/>
+          <xsd:enumeration value="maxEquilibriumIterations"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** SolverParameter **************************** -->
+      <!-- -->
+      <xsd:complexType name="SolverParameterType">
+        <xsd:annotation>
+          <xsd:documentation>
+              A parameter for a particular Mechanism solver.
+              
+              Attributes:
+              
+              type:         The type of the Mechanism solver as a SolverEnum.
+              title:        The type of the Mechanism solver parameter as a SolverParameterEnum.
+              value:        The value of the Mechanism solver parameter.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:attribute name="type" type="plm:SolverEnum" use="optional"/>
+            <xsd:attribute name="title" type="plm:SolverParameterEnum" use="required"/>
+            <xsd:attribute name="value" type="xsd:double" use="optional"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="SolverParameter" type="plm:SolverParameterType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** MechanismParameters ************************ -->
+      <!-- -->
+      <xsd:complexType name="MechanismParametersType">
+        <xsd:annotation>
+          <xsd:documentation>
+              The parameters for a Mechanism solution.
+              
+              Attribute:
+              
+              type:         The type of the solution, for which the Mechanism is designed as a
+                            SolverAnalysisEnum.
+              maxIntegratorStep: The maximum step in SI units of time (seconds) that the integrator of the
+                            Mechanism solver is allowed to take.
+              integratorError: The maximum relative error allowed in the output of the integrator.
+              
+              Sub-element:
+              
+              SolverParameter: A parameter for a particular Mechanism solver.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+              <xsd:element ref="plm:SolverParameter"/>
+            </xsd:choice>
+            <xsd:attribute name="type" type="plm:SolverAnalysisEnum" default="dynamics"/>
+            <xsd:attribute name="maxIntegratorStep" type="xsd:double" use="optional"/>
+            <xsd:attribute name="integratorError" type="xsd:double" use="optional"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="MechanismParameters" type="plm:MechanismParametersType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** MechanismInertia *************************** -->
+      <!-- -->
+      <xsd:complexType name="MechanismInertiaType">
+        <xsd:annotation>
+          <xsd:documentation>
+              The inertia of a Mechanism object about Marker.
+              
+              Attribute:
+              
+              markerRef:    References a Marker, which defines the position, about which the inertia of the
+                            Mechanism object is defined. If the Marker also holds orientation information,
+                            the inertia is defined in the coordinate system of the Marker. Otherwise, it is
+                            defined in the coordinate system of the Mechanism object. (A Marker may not
+                            hold orientation information if it has a translational rather than general
+                            Transform sub-element or references a Smart Point rather than a Smart Vector.)
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:InertiaType">
+            <xsd:attribute name="markerRef" type="plm:anyURIType" use="optional" plm:refType="plm:Marker"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="MechanismInertia" type="plm:MechanismInertiaType" substitutionGroup="plm:Property"/>
+      <!-- -->
+      <!-- ******************** InitialVelocity **************************** -->
+      <!-- -->
+      <xsd:complexType name="InitialVelocityType">
+        <xsd:annotation>
+          <xsd:documentation>
+            The initial translational and rotational velocities of a Mechanism object.
+            
+            Attributes:
+            
+            translationVelocity: The initial translational velocity of the Mechanism object in SI units,
+                            currently metres per second. The default is 0.0, 0.0, 0.0.
+            translationOrientationRef: References a Marker, which defines the coordinate system, in which
+                            the translational velocity is defined. If the Marker does not hold orientation
+                            information, the translational velocity is defined in the coordinate system of
+                            the Mechanism object.
+            rotationVelocity: The initial rotational velocity of the Mechanism object in SI units,
+                            currently radians per second. The default is 0.0, 0.0, 0.0.
+            rotationCentreRef: References a Marker, which defines the position of the centre of rotation of
+                            the Mechanism object. If the Marker also holds orientation information, the
+                            rotational velocity is defined in the coordinate system of the Marker.
+                            Otherwise, it is defined in the coordinate system of the Mechanism object. (A
+                            Marker may not hold orientation information if it has a translational rather
+                            than general Transform sub-element or references a Smart Point rather than a
+                            Smart Vector.)
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:PropertyBase">
+            <xsd:attribute name="translationVelocity" type="plm:VectorType" use="optional"/>
+            <xsd:attribute name="translationOrientationRef" type="plm:anyURIType" use="optional" plm:refType="plm:Marker"/>
+            <xsd:attribute name="rotationVelocity" type="plm:VectorType" use="optional"/>
+            <xsd:attribute name="rotationCentreRef" type="plm:anyURIType" use="optional" plm:refType="plm:Marker"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="InitialVelocity" type="plm:InitialVelocityType" substitutionGroup="plm:Property"/>
+      <!-- -->
+      <!-- ******************** Gravity ************************************ -->
+      <!-- -->
+      <xsd:complexType name="GravityType">
+        <xsd:annotation>
+          <xsd:documentation>
+              The acceleration due to a gravitational field.
+              
+              Attribute:
+              
+              value:        The vector value of the acceleration due to the gravitational field in SI
+                            units, currently metres per second per second. The default is 0.0, 0.0, 0.0.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:PropertyBase">
+            <xsd:attribute name="value" type="plm:VectorType" default="0.0 0.0 0.0"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="Gravity" type="plm:GravityType" substitutionGroup="plm:Property"/>
+      <!-- -->
+      <!-- ******************** Joint Velocity Limit *********************** -->
+      <!-- -->
+      <xsd:complexType name="JointVelocityLimitType">
+        <xsd:annotation>
+          <xsd:documentation>
+              The maximum velocity of a Joint.
+              
+              Attribute:
+              
+              degreeOfFreedom: The degree of freedom along or around which the
+                            velocity of the Marker given by the second
+                            ConstraintTargetRef of the Joint relative to the
+                            Marker given by the second is measured. Represented
+                            as a DegreeOfFreedomEnum.
+                            
+              Sub-element:
+            
+              ValueWithUnit: The value of the maximum allowed velocity.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:PropertyBase">
+            <xsd:choice minOccurs="1" maxOccurs="1">
+              <xsd:element ref="plm:ValueWithUnit"/>
+            </xsd:choice>
+            <xsd:attribute name="degreeOfFreedom" type="plm:DegreeOfFreedomEnum" use="optional"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="JointVelocityLimit" type="plm:JointVelocityLimitType" substitutionGroup="plm:Property"/>
+      <!-- -->
+      <!-- ******************** Joint Acceleration Limit ******************* -->
+      <!-- -->
+      <xsd:complexType name="JointAccelerationLimitType">
+        <xsd:annotation>
+          <xsd:documentation>
+              The maximum acceleration of a Joint.
+              
+              Attribute:
+              
+              degreeOfFreedom: The degree of freedom along or around which the
+                            acceleration of the Marker given by the second
+                            ConstraintTargetRef of the Joint relative to the
+                            Marker given by the second is measured. Represented
+                            as a DegreeOfFreedomEnum.
+                            
+              Sub-element:
+            
+              ValueWithUnit: The value of the maximum allowed acceleration.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:PropertyBase">
+            <xsd:choice minOccurs="1" maxOccurs="1">
+              <xsd:element ref="plm:ValueWithUnit"/>
+            </xsd:choice>
+            <xsd:attribute name="degreeOfFreedom" type="plm:DegreeOfFreedomEnum" use="optional"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="JointAccelerationLimit" type="plm:JointAccelerationLimitType" substitutionGroup="plm:Property"/>
+      <!-- -->
+      <!-- ******************** MechanismRevisionView ********************** -->
+      <!-- -->
+      <xsd:complexType name="MechanismRevisionViewType">
+        <xsd:annotation>
+          <xsd:documentation>
+            A view of a revision of a Mechanism, analogous to a ProductRevisionView in the Product
+            Structure. MechanismRevisionView elements are used together with MechanismInstance elements in
+            an instance graph. At the leaf nodes, they represent conceptual rigid bodies, which may be
+            implemented by ProductRevisionView elements. At other levels, they represent sub-assemblies of
+            conceptual rigid bodies, known as sub-mechanisms, and at the top level, they represent the
+            mechanism definition.
+            
+            Attributes:
+            
+            id:             Inherited from StructureRevisionView.
+            name:           Inherited from StructureRevisionView.
+            instanceRefs:   Inherited from StructureRevisionView. References MechanismInstance elements,
+                            which represent Mechanism objects.
+            gdeInstanceRefs: Inherited from StructureRevisionView. References JointInstance elements.
+            propertyRefs:   Inherited from StructureRevisionView. A list of references to elements
+                            representing properties such as mass or initial velocity. See also the
+                            PropertyGroup sub-element. See the "Defining Mass and Material Properties"
+                            Chapter of the PLM XML Schema Functional Description.
+            
+            Sub-elements:
+            
+            Bound:          Inherited from StructureRevisionView. Represents the bounding box in which the
+                            Mechanism object lies. See Section 5.4.2 of the PLM XML Schema Functional
+                            Description.
+            PropertyGroup:  Inherited from StructureRevisionView. May have sub-elements representing
+                            properties such as mass or initial velocity. See also the propertyRefs
+                            attribute. See the "Defining Mass and  Material Properties" Chapter of the PLM
+                            XML Schema Functional Description.
+            MechanismParameters: The parameters for a Mechanism solution.
+            Marker:         The Markers on the Mechanism object.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:StructureRevisionViewBase">
+            <xsd:sequence>
+              <xsd:element ref="plm:MechanismParameters" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="plm:Marker" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="MechanismRevisionView" type="plm:MechanismRevisionViewType" substitutionGroup="plm:StructureRevisionView"/>
+      <!-- -->
+      <!-- ******************** MechanismInstance ************************** -->
+      <!-- -->
+      <xsd:complexType name="MechanismInstanceType">
+        <xsd:annotation>
+          <xsd:documentation>
+            An Instance of a MechanismRevisionView. A MechanismInstance represents an instance of a
+            Mechanism object.
+            
+            A MechanismInstance may reference geometry in the Product Structure via Reference elements. A
+            Reference may reference an Occurrence in the Product Structure via its occurrenceRef attribute.
+            A MechanismInstance may correspond to different Occurrence elements for different purposes by
+            using more than one Reference. In this case, each Reference has a different value for its type
+            attribute.
+
+            Attributes: 
+            
+            id:             Inherited from Instance.
+            name:           Inherited from Instance.
+            partRef:        Inherited from Instance. References a MechanismRevisionView, which represents a
+                            Mechanism object.
+            propertyRefs:   Inherited from Instance. A list of references to elements representing
+                            properties such as mass or initial velocity. See also the PropertyGroup
+                            sub-element. See the "Defining Mass and Material Properties" Chapter of the PLM
+                            XML Schema Functional Description.
+              
+            Sub-elements:
+            
+            Bound:          Inherited from Instance. Represents the bounding box in which the Mechanism
+                            object lies. See Section 5.4.2 of the PLM XML Schema Functional Description.
+            PropertyGroup:  Inherited from Instance. May have sub-elements representing properties such as
+                            mass or initial velocity. See also the propertyRefs attribute. See the
+                            "Defining Mass and Material Properties" Chapter of the PLM XML Schema
+                            Functional Description.
+            Marker:         The Markers on the Mechanism object.
+            Reference:      Inherited from Instance. The occurrenceRef attribute of a Reference element
+                            references an Occurrence in the Product Structure. See the "Representing
+                            Feature Semantics" Chapter of the PLM XML Schema Functional Description.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:InstanceBase">
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+              <xsd:element ref="plm:Marker"/>
+            </xsd:choice>
+          </xsd:extension>  
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="MechanismInstance" type="plm:MechanismInstanceType" substitutionGroup="plm:Instance"/>
+      <!-- -->
+      <!-- ******************** MechanismOccurrence ************************ -->
+      <!-- -->
+      <xsd:complexType name="MechanismOccurrenceType">
+        <xsd:annotation>
+          <xsd:documentation>
+            An Occurrence of a MechanismRevisionView. A MechanismOccurrence represents an occurrence of a
+            Mechanism object.
+            
+            A MechanismOccurrence may reference geometry in the Product Structure via Reference elements. A
+            Reference may reference an Occurrence in the Product Structure via its occurrenceRef attribute.
+            A MechanismOccurrence may correspond to different Occurrence elements for different purposes by
+            using more than one Reference. In this case, each Reference has a different value for its type
+            attribute.
+
+            Attributes:
+            
+            id:             Inherited from Occurrence.
+            name:           Inherited from Occurrence.
+            instanceRefs:   Inherited from Occurrence. References a list of MechanismInstances, which
+                            define a particular Mechanism object.
+            propertyRefs:   Inherited from Occurrence. A list of references to elements representing
+                            properties such as mass or initial velocity. See also the PropertyGroup
+                            sub-element. See the "Defining Mass and Material Properties" Chapter of the PLM
+                            XML Schema Functional Description.
+              
+            Sub-elements:
+            
+            Bound:          Inherited from Occurrence. Represents the bounding in which the Mechanism
+                            object lies. See Section 5.4.2 of the PLM XML Schema Functional Description.
+            PropertyGroup:  Inherited from Occurrence. May have sub-elements representing properties such
+                            as mass or initial velocity. See also the propertyRefs attribute. See the
+                            "Defining Mass and Material Properties" Chapter of the PLM XML Schema
+                            Functional Description.
+            Marker:         The Markers on the Mechanism object.
+            Reference:      Inherited from Occurrence. The occurrenceRef attribute of a Reference element
+                            references an Occurrence in the Product Structure. See the "Representing
+                            Feature Semantics" Chapter of the PLM XML Schema Functional Description.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:OccurrenceType">
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+              <xsd:element ref="plm:Marker"/>
+            </xsd:choice>
+          </xsd:extension>  
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="MechanismOccurrence" type="plm:MechanismOccurrenceType" substitutionGroup="plm:Occurrence"/>
+      <!-- -->
+      <!-- ******************** MechanismView ****************************** -->
+      <!-- -->
+      <xsd:complexType name="MechanismViewType">
+        <xsd:annotation>
+          <xsd:documentation>
+            A View of a Mechanism Structure.
+            
+            Attributes:
+            
+            id:             Inherited from ConfigurationView.
+            name:           Inherited from ConfigurationView.
+            rootRefs:       References the MechanismOccurrences and
+                            ConstraintOccurrences that are not children of other
+                            MechanismOccurrences or ConstraintOccurrences in
+                            the MechanismView.
+            definition:     Specifies how the MechanismView is defined as a
+                            ProductViewDefinitionType.
+            usage:          The usage for the MechanismView as a 
+                            ProductViewUsageType.
+
+            Sub-elements:
+            
+            MechanismOccurrence: The MechanismOccurrences of the MechanismView.
+            ConstraintOccurrence: The ConstraintOccurrences of the
+                            MechanismView.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:ConfigurationViewType">
+            <xsd:sequence>
+              <xsd:element ref="plm:MechanismOccurrence" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:element ref="plm:ConstraintOccurrence" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+            <xsd:attribute name="rootRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:Managed"/>
+            <xsd:attribute name="definition" type="plm:ProductViewDefinitionType" use="optional"/>
+            <xsd:attribute name="usage" type="plm:ProductViewUsageType" use="optional"/>
+          </xsd:extension>  
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="MechanismView" type="plm:MechanismViewType" substitutionGroup="plm:ConfigurationView"/>
+      <!-- -->
+      <!-- ******************** MarkerEnum ********************************* -->
+      <!-- -->
+      <xsd:simpleType name="MarkerEnum">
+        <xsd:annotation>
+          <xsd:documentation>
+            The coordinate frame of a robot.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="referenceFrame"/>
+          <xsd:enumeration value="baseFrame"/>
+          <xsd:enumeration value="toolFrame"/>
+          <xsd:enumeration value="toolCentrePointFrame"/>
+          <xsd:enumeration value="locator"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** Marker ************************************* -->
+      <!-- -->
+      <xsd:complexType name="MarkerType">
+        <xsd:annotation>
+          <xsd:documentation>
+            A point with orientation in a Mechanism object. The position and
+            orientation given by any Smart Point is used in preference to any
+            Transform.
+            
+            Attributes:
+            
+            pointRef:       References a Smart Point or ExternalReference to a
+                            Smart Point. See the "Representing Delta
+                            Information" Chapter of the PLM XML Schema
+                            Functional Description.
+            type:           The type of the Marker as a MarkerEnum.
+            
+            Sub-elements:
+            
+            Transform:      The position and orientation of the Marker with
+                            respect to origin of the Mechanism object. See
+                            Section 5.3.1 of the PLM XML Schema Functional
+                            Description.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:choice minOccurs="0" maxOccurs="1">
+              <xsd:element ref="plm:Transform"/>
+            </xsd:choice>
+            <xsd:attribute name="pointRef" type="plm:anyURIType" use="optional"/>
+            <xsd:attribute name="type" type="plm:MarkerEnum" use="optional"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="Marker" type="plm:MarkerType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** DegreeOfFreedomEnum ************************ -->
+      <!-- -->
+      <xsd:simpleType name="DegreeOfFreedomEnum">
+        <xsd:annotation>
+          <xsd:documentation>
+            The degree of freedom. Translation along or rotation about the x, y or z axis.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="x"/>
+          <xsd:enumeration value="y"/>
+          <xsd:enumeration value="z"/>
+          <xsd:enumeration value="rx"/>
+          <xsd:enumeration value="ry"/>
+          <xsd:enumeration value="rz"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** JointLimits ******************************** -->
+      <!-- -->
+      <xsd:complexType name="JointLimitsType">
+        <xsd:annotation>
+          <xsd:documentation>
+            The linear limits of a translational Joint or the angular limits of a revolute Joint. May
+            appear as a sub-element (inside a PropertyGroup) or be referenced by the Joint Constraint.
+            
+            Attributes:
+            
+            degreeOfFreedom: The degree of freedom of the Joint that the JointLimits limits. Represented as
+                            a DegreeOfFreedomEnum.
+            
+            Sub-elements:
+
+            RangeWithUnit:  The linear limits of a translational degree of freedom or the angular limits of
+                            a rotational degree of freedom. If the units are not specified, SI units are
+                            assumed.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:PropertyBase">
+            <xsd:choice minOccurs="1" maxOccurs="1">
+              <xsd:element ref="plm:RangeWithUnit"/>
+            </xsd:choice>
+            <xsd:attribute name="degreeOfFreedom" type="plm:DegreeOfFreedomEnum" use="optional"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="JointLimits" type="plm:JointLimitsType" substitutionGroup="plm:Property"/>
+      <!-- -->
+      <!-- ******************** JointEnum ********************************** -->
+      <!-- -->
+      <xsd:simpleType name="JointEnum">
+        <xsd:annotation>
+          <xsd:documentation>
+            The type of a Joint.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="fixed"/>
+          <xsd:enumeration value="atpoint"/>
+          <xsd:enumeration value="inline"/>
+          <xsd:enumeration value="inplane"/>
+          <xsd:enumeration value="orientation"/>
+          <xsd:enumeration value="parallel"/>
+          <xsd:enumeration value="perpendicular"/>
+          <xsd:enumeration value="translational"/>
+          <xsd:enumeration value="revolute"/>
+          <xsd:enumeration value="cylindrical"/>
+          <xsd:enumeration value="universal"/>
+          <xsd:enumeration value="spherical"/>
+          <xsd:enumeration value="planar"/>
+          <xsd:enumeration value="constantVelocity"/>
+          <xsd:enumeration value="screw"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** JointOverlapDeltaEnum ********************** -->
+      <!-- -->
+      <xsd:simpleType name="JointOverlapDeltaEnum">
+        <xsd:annotation>
+          <xsd:documentation>
+            Whether the overlap of a translational or cylindrical Joint increases, decreases or remains
+            constant.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="increase"/>
+          <xsd:enumeration value="decrease"/>
+          <xsd:enumeration value="constant"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** JointData ********************************** -->
+      <!-- -->
+      <xsd:complexType name="JointDataType">
+        <xsd:annotation>
+          <xsd:documentation>
+            Additional data for a Joint Constraint. Only one JointData sub-element is allowed in a
+            Constraint, ConstraintInstance or ConstraintOccurrence element.
+            
+            Attributes:
+            
+            id:             Inherited from AttribOwner.
+            name:           Inherited from AttribOwner.
+            type:           The type of the Joint as a JointEnum.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:attribute name="type" type="plm:JointEnum" use="optional"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="JointData" type="plm:JointDataType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** FrictionData ******************************* -->
+      <!-- -->
+      <xsd:complexType name="FrictionDataType">
+        <xsd:annotation>
+          <xsd:documentation>
+            Additional data for a Friction Constraint. Two FrictionData sub-elements are allowed in a
+            Constraint, ConstraintInstance or ConstraintOccurrence element.
+            
+            Attributes:
+            
+            id:             Inherited from AttribOwner.
+            name:           Inherited from AttribOwner.
+            yokeRef:        References one of the ConstraintTargetRef elements, which references one of the
+                            Markers of a universal Joint.
+            initialOverlap: The initial overlap of a translational or cylindrical Joint in SI units,
+                            currently metres.
+            overlapDelta:   Whether the overlap increases, decreases or remains constant as a
+                            JointOverlapDeltaEnum.
+            innerRadius:    The radius of the pin of a revolute, cylindrical or universal Joint in SI
+                            units, currently metres.
+            ballRadius:     The radius of the ball of a spherical Joint in SI units, currently metres.
+            bendingReactionArm: The effective moment arm of the reaction torque due to bending the pin of a
+                            revolute, cylindrical or universal Joint in SI units, currently metres.
+            frictionArm:    The effective moment arm of the frictional torque at the end of the pin of a
+                            revolute, cylindrical or universal Joint in SI units, currently metres.
+            reactionArm:    The effective moment arm of the reaction torque due to twisting a translational
+                            Joint around its degree of freedom in SI units, currently metres.
+            frictionalPreloadForce: The frictional preload force in SI units, currently newtons.
+            frictionalPreloadTorque: The frictional preload torque in SI units, currently newton metres.
+            preload:        Whether the preload force and the preload torque contribute to the friction
+                            model. The default is true, which means the preload force and preload torque
+                            are on by default.
+            reactionForce:  Whether the Joint reaction forces contribute to the friction model. The default
+                            is true, which means the Joint reaction forces are on by default.
+            bendingMoment:  Whether the bending moment due to bending the pin of a revolute, cylindrical
+                            or universal Joint contributes to the friction model. The default is true,
+                            which means the bending moment is on by default.
+            torsionalMoment: Whether the torsional moment due to twisting a translational Joint around
+                            its degree of freedom contributes to the friction model. The default is true,
+                            which means the torsional moment is on by default.
+            staticAnalysis: Whether friction is considered in a static solution. The default is true, which
+                            means friction is on by default.
+            staticCoefficient: The coefficient of static friction. This is a dimensionless quantity. The
+                            default is 0.0.
+            dynamicCoefficient: The coefficient of dynamic friction. This is a dimensionless quantity. The
+                            default is 0.0.
+            staticTransitionSpeed: The surface speed at which the transition from static friction to
+                            dynamic friction begins in SI units, currently metres per second. The effective
+                            coefficient of friction equals the coefficient of static friction.
+            dynamicTransitionSpeed: The surface speed at which the transition from static friction to
+                            dynamic friction ends in SI units, currently metres per second. The effective
+                            coefficient of friction equals the coefficient of dynamic friction.
+            maximumDisplacement: The maximum surface displacement allowed during static friction due to the
+                            creep of a Joint in SI units, currently metres.
+            staticFriction: Whether the static friction contributes to the friction model. The default
+                            is true, which means the static friction is on by default.
+            dynamicFriction: Whether the dynamic friction contributes to the friction model. The default
+                            is true, which means the dynamic friction is on by default.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:attribute name="yokeRef" type="plm:anyURIType" use="optional" plm:refType="plm:ConstraintTargetRef"/>
+            <xsd:attribute name="initialOverlap" type="xsd:double" use="optional"/>
+            <xsd:attribute name="overlapDelta" type="plm:JointOverlapDeltaEnum" use="optional"/>
+            <xsd:attribute name="innerRadius" type="xsd:double" use="optional"/>
+            <xsd:attribute name="ballRadius" type="xsd:double" use="optional"/>
+            <xsd:attribute name="bendingReactionArm" type="xsd:double" use="optional"/>
+            <xsd:attribute name="frictionArm" type="xsd:double" use="optional"/>
+            <xsd:attribute name="reactionArm" type="xsd:double" use="optional"/>
+            <xsd:attribute name="frictionalPreloadForce" type="xsd:double" use="optional"/>
+            <xsd:attribute name="frictionalPreloadTorque" type="xsd:double" use="optional"/>
+            <xsd:attribute name="preload" type="xsd:boolean" default="true"/>
+            <xsd:attribute name="reactionForce" type="xsd:boolean" default="true"/>
+            <xsd:attribute name="bendingMoment" type="xsd:boolean" default="true"/>
+            <xsd:attribute name="torsionalMoment" type="xsd:boolean" default="true"/>
+            <xsd:attribute name="staticAnalysis" type="xsd:boolean" default="true"/>
+            <xsd:attribute name="staticCoefficient" type="xsd:double" default="0.0"/>
+            <xsd:attribute name="dynamicCoefficient" type="xsd:double" default="0.0"/>
+            <xsd:attribute name="staticTransitionSpeed" type="xsd:double" use="optional"/>
+            <xsd:attribute name="dynamicTransitionSpeed" type="xsd:double" use="optional"/>
+            <xsd:attribute name="maximumDisplacement" type="xsd:double" use="optional"/>
+            <xsd:attribute name="staticFriction" type="xsd:boolean" default="true"/>
+            <xsd:attribute name="dynamicFriction" type="xsd:boolean" default="true"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="FrictionData" type="plm:FrictionDataType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** DriverEnum ********************************* -->
+      <!-- -->
+      <xsd:simpleType name="DriverEnum">
+        <xsd:annotation>
+          <xsd:documentation>
+            The type of a Driver.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="constant"/>
+          <xsd:enumeration value="harmonic"/>
+          <xsd:enumeration value="general"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** MechanismExpression ************************ -->
+      <!-- -->
+      <xsd:complexType name="MechanismExpressionType">
+        <xsd:annotation>
+          <xsd:documentation>
+            A Mechanism expression.
+            
+            Attributes:
+            
+            expression:     The expression in the syntax of the Mechanism solver as a string.
+            format:         The format of the expression as a SolverEnum.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:attribute name="expression" type="xsd:string" use="required"/>
+            <xsd:attribute name="format" type="plm:SolverEnum" use="optional"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="MechanismExpression" type="plm:MechanismExpressionType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** DriverComponent **************************** -->
+      <!-- -->
+      <xsd:complexType name="DriverComponentType">
+        <xsd:annotation>
+          <xsd:documentation>
+            The components of a DriverData. Several degrees of freedom may be driven by having several
+            DriverComponent sub-elements in a DriverData element.
+            
+            Attributes:
+            
+            id:             Inherited from AttribOwner.
+            name:           Inherited from AttribOwner.
+            type:           The type of the Driver as a DriverEnum.
+            degreeOfFreedom: The degree of freedom of the Joint that the Driver drives. Represented as a
+                            DegreeOfFreedomEnum.
+            displacement:   If type is "constant", displacement is the constant displacement if velocity
+                            &amp; acceleration are unspecified and the initial displacement if velocity or
+                            acceleration are specified. If type is "harmonic", displacement is the constant
+                            offset of the harmonic component from the origin. The units are SI units,
+                            currently metres for translational Drivers or radians for rotational Drivers.
+                            The default is 0.0.
+            velocity:       The constant velocity of a constant Driver if acceleration is unspecified. The
+                            initial velocity if it is specified. The units are SI units, currently metres
+                            per second for translational Drivers or radians per second for rotational
+                            Drivers. The default is 0.0.
+            acceleration:   The constant acceleration of a constant Driver in SI units, currently metres
+                            per second per second for translational Drivers or radians per second per
+                            second for rotational Drivers. The default is 0.0.
+            amplitude:      The amplitude of a harmonic Driver in SI units, currently metres for
+                            translational Drivers or radians for rotational Drivers. The default is 0.0.
+            frequency:      The frequency of a harmonic Driver in SI units, currently radians per second.
+                            The default is 0.0.
+            phaseAngle:     The phase angle of a harmonic Driver in SI units, currently radians. The
+                            default is 0.0.
+              
+            Sub-elements:
+            
+            DisplacementExpression: A MechanismExpression that defines the displacement of a general
+                            Driver. VelocityExpression and AccelerationExpression must not be present.
+            VelocityExpression: A MechanismExpression that defines the velocity of a general Driver. The
+                            initial displacement is defined by the displacement attribute.
+                            DisplacementExpression and AccelerationExpression must not be present.
+            AccelerationExpression: A MechanismExpression that defines the acceleration of a general
+                            Driver. The initial velocity is defined by the velocity attribute and the
+                            initial displacement is defined by the displacement attribute.
+                            DisplacementExpression and VelocityExpression must not be present.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:choice minOccurs="0" maxOccurs="1">
+              <xsd:element name="DisplacementExpression" type="plm:MechanismExpressionType"/>
+              <xsd:element name="VelocityExpression" type="plm:MechanismExpressionType"/>
+              <xsd:element name="AccelerationExpression" type="plm:MechanismExpressionType"/>
+            </xsd:choice>
+            <xsd:attribute name="type" type="plm:DriverEnum" use="required"/>
+            <xsd:attribute name="degreeOfFreedom" type="plm:DegreeOfFreedomEnum" use="optional"/>
+            <xsd:attribute name="displacement" type="xsd:double" default="0.0"/>
+            <xsd:attribute name="velocity" type="xsd:double" default="0.0"/>
+            <xsd:attribute name="acceleration" type="xsd:double" default="0.0"/>
+            <xsd:attribute name="amplitude" type="xsd:double" default="0.0"/>
+            <xsd:attribute name="frequency" type="xsd:double" default="0.0"/>
+            <xsd:attribute name="phaseAngle" type="xsd:double" default="0.0"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="DriverComponent" type="plm:DriverComponentType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** DriverData ********************************* -->
+      <!-- -->
+      <xsd:complexType name="DriverDataType">
+        <xsd:annotation>
+          <xsd:documentation>
+            Additional data for a Driver Constraint. Only one DriverData sub-element is allowed in a
+            Constraint, ConstraintInstance or ConstraintOccurrence element. Several degrees of freedom may
+            be driven by having several DriverComponent sub-elements in a DriverData element.
+            
+            Attributes:
+            
+            id:             Inherited from AttribOwner.
+            name:           Inherited from AttribOwner.
+              
+            Sub-element:
+            
+            DriverComponent: The components of the Driver represented as DriverComponentType.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:choice minOccurs="0" maxOccurs="6">
+              <xsd:element name="DriverComponent" type="plm:DriverComponentType"/>
+            </xsd:choice>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="DriverData" type="plm:DriverDataType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** ForceComponent ***************************** -->
+      <!-- -->
+      <xsd:complexType name="ForceComponentType">
+        <xsd:annotation>
+          <xsd:documentation>
+            The components of a ForceData. Vector Forces and Torques are represented by having several
+            ForceComponent sub-elements in a ForceData element.
+            
+            Attributes:
+            
+            id:             Inherited from AttribOwner.
+            name:           Inherited from AttribOwner.
+            constant:       Whether the Force or Torque is a constant or general Force or Torque.
+            degreeOfFreedom: The degree of freedom of the Joint along or around which the force or torque
+                            acts. Represented as a DegreeOfFreedomEnum.
+            force:          The force or torque of a constant Force or Torque in SI units, currently
+                            newtons for Forces and newton metres for Torques. The default is 0.0.
+
+            Sub-element:
+            
+            ForceExpression: A MechanismExpression that defines the force or torque of a general Force or
+                            Torque.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:choice minOccurs="0" maxOccurs="1">
+              <xsd:element name="ForceExpression" type="plm:MechanismExpressionType"/>
+            </xsd:choice>
+            <xsd:attribute name="constant" type="xsd:boolean" default="true"/>
+            <xsd:attribute name="degreeOfFreedom" type="plm:DegreeOfFreedomEnum" use="optional"/>
+            <xsd:attribute name="force" type="xsd:double" default="0.0"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="ForceComponent" type="plm:ForceComponentType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** ForceData ********************************** -->
+      <!-- -->
+      <xsd:complexType name="ForceDataType">
+        <xsd:annotation>
+          <xsd:documentation>
+            Additional data for a Force Constraint. Force Constraints can represent Forces or Torques. Only
+            one ForceData sub-element is allowed in a Constraint, ConstraintInstance or
+            ConstraintOccurrence element. Vector Forces and Torques are represented by having several
+            ForceComponent sub-elements in a ForceData element.
+            
+            Attributes:
+            
+            id:             Inherited from AttribOwner.
+            name:           Inherited from AttribOwner.
+            scalar:         Whether the Force or Torque is a scalar or vector Force or Torque.
+            translation:    Whether the force or torque acts along translational degrees of freedom (in
+                            which case it is a Force) or around rotational degrees of freedom (in which
+                            case it is a Torque).
+            
+            Sub-element:
+            
+            ForceComponent: The components of the Force represented as ForceComponentType.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:choice minOccurs="0" maxOccurs="3">
+              <xsd:element name="ForceComponent" type="plm:ForceComponentType"/>
+            </xsd:choice>
+            <xsd:attribute name="scalar" type="xsd:boolean" default="true"/>
+            <xsd:attribute name="translation" type="xsd:boolean" default="true"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="ForceData" type="plm:ForceDataType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** SpringData ********************************* -->
+      <!-- -->
+      <xsd:complexType name="SpringDataType">
+        <xsd:annotation>
+          <xsd:documentation>
+            Additional data for a Spring Constraint. Only one SpringData sub-element is allowed in a
+            Constraint, ConstraintInstance or ConstraintOccurrence element.
+            
+            Attributes:
+            
+            id:             Inherited from AttribOwner.
+            name:           Inherited from AttribOwner.
+            degreeOfFreedom: The degree of freedom of the Joint along or around which the Spring acts.
+                            Represented as a DegreeOfFreedomEnum.
+            preloadForce:   The preload force or torque in SI units, currently newtons for forces acting
+                            along translational degrees of freedom and newton metres for torques acting
+                            around rotational degrees of freedom. The default is 0.0.
+            stiffness:      The spring constant of a Spring in SI units, currently newtons per metre for
+                            Springs acting along translational degrees of freedom and newton metres per
+                            radian for Springs acting around rotational degrees of freedom. The default is
+                            0.0.
+            free:           The free length or angle of a Spring in SI units, currently metres for Springs
+                            acting along translational degrees of freedom and radians for Springs acting
+                            around rotational degrees of freedom. The default is 0.0.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:attribute name="degreeOfFreedom" type="plm:DegreeOfFreedomEnum" use="optional"/>
+            <xsd:attribute name="preloadForce" type="xsd:double" default="0.0"/>
+            <xsd:attribute name="stiffness" type="xsd:double" default="0.0"/>
+            <xsd:attribute name="free" type="xsd:double" default="0.0"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="SpringData" type="plm:SpringDataType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** DamperData ********************************* -->
+      <!-- -->
+      <xsd:complexType name="DamperDataType">
+        <xsd:annotation>
+          <xsd:documentation>
+            Additional data for a Damper Constraint. Only one DamperData sub-element is allowed in a
+            Constraint, ConstraintInstance or ConstraintOccurrence element.
+            
+            Attributes:
+            
+            id:             Inherited from AttribOwner.
+            name:           Inherited from AttribOwner.
+            degreeOfFreedom: The degree of freedom of the Joint along or around which the Damper acts.
+                            Represented as a DegreeOfFreedomEnum.
+            coefficient:    The viscous damping coefficient of a Damper in SI units, currently newton
+                            seconds per metre for Dampers acting along translational degrees of freedom and
+                            newton metre seconds per radian for Dampers acting around rotational degrees of
+                            freedom. The default is 0.0.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:attribute name="degreeOfFreedom" type="plm:DegreeOfFreedomEnum" use="optional"/>
+            <xsd:attribute name="coefficient" type="xsd:double" default="0.0"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="DamperData" type="plm:DamperDataType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** BushingData ******************************** -->
+      <!-- -->
+      <xsd:complexType name="BushingDataType">
+        <xsd:annotation>
+          <xsd:documentation>
+            Additional data for a Bushing Constraint. Only one BushingData sub-element is allowed in a
+            Constraint, ConstraintInstance or ConstraintOccurrence element.
+            
+            Attributes:
+            
+            id:             Inherited from AttribOwner.
+            name:           Inherited from AttribOwner.
+            preloadForce:   The vector components of the preload force in SI units, currently newtons. The
+                            default is 0.0, 0.0, 0.0.
+            preloadTorque:  The vector components of the preload torque in SI units, currently newton
+                            metres. The default is 0.0, 0.0, 0.0.
+            translationStiffness: The translational vector components of the spring constant of the Bushing
+                            in SI units, currently newtons per metre. The default is 0.0, 0.0, 0.0.
+            rotationStiffness: The rotational vector components of the spring constant of the Bushing in SI
+                            units, currently newton metres per radian. The default is 0.0, 0.0, 0.0.
+            translationCoefficient: The translational vector components of the viscous damping coefficient
+                            of the Bushing in SI units, currently newton seconds per metre. The default is
+                            0.0, 0.0, 0.0.
+            rotationCoefficient: The rotational vector components of the viscous damping coefficient of the
+                            Bushing in SI units, currently newton metre seconds per radian. The default is
+                            0.0, 0.0, 0.0.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:attribute name="preloadForce" type="plm:VectorType" default="0.0 0.0 0.0"/>
+            <xsd:attribute name="preloadTorque" type="plm:VectorType" default="0.0 0.0 0.0"/>
+            <xsd:attribute name="translationStiffness" type="plm:VectorType" default="0.0 0.0 0.0"/>
+            <xsd:attribute name="rotationStiffness" type="plm:VectorType" default="0.0 0.0 0.0"/>
+            <xsd:attribute name="translationCoefficient" type="plm:VectorType" default="0.0 0.0 0.0"/>
+            <xsd:attribute name="rotationCoefficient" type="plm:VectorType" default="0.0 0.0 0.0"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="BushingData" type="plm:BushingDataType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** ContactData ******************************** -->
+      <!-- -->
+      <xsd:complexType name="ContactDataType">
+        <xsd:annotation>
+          <xsd:documentation>
+            Additional data for a Contact Constraint. Only one ContactData sub-element is allowed in a
+            Constraint, ConstraintInstance or ConstraintOccurrence element.
+            
+            Attributes:
+            
+            id:             Inherited from AttribOwner.
+            name:           Inherited from AttribOwner.
+            impact:         Whether the contact model is impact or poisson.
+            stiffness:      The spring constant of the Contact in SI units, currently newtons per metre.
+                            The default is 0.0.
+            stiffnessExponent: The exponent of the penetration in a non-linear spring equation, used to
+                            calculate the normal force. The default is 1.0.
+            dampingCoefficient: The viscous damping coefficient of the Contact in SI units, currently
+                            newton seconds per metre. The default is 0.0.
+            boundaryPenetration: The penetration in SI units, currently metres, at which the effective
+                            coefficient of damping equals the dampingCoefficient.
+            restitution:    The coefficient of restitution. This is a dimensionless quantity.
+            staticCoefficient: The coefficient of static friction. This is a dimensionless quantity. The
+                            default is 0.0.
+            dynamicCoefficient: The coefficient of dynamic friction. This is a dimensionless quantity. The
+                            default is 0.0.
+            staticTransitionSpeed: The surface speed at which the transition from static friction to
+                            dynamic friction begins in SI units, currently metres per second. The effective
+                            coefficient of friction equals the coefficient of static friction.
+            dynamicTransitionSpeed: The surface speed at which the transition from static friction to
+                            dynamic friction ends in SI units, currently metres per second. The effective
+                            coefficient of friction equals the coefficient of dynamic friction.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:attribute name="impact" type="xsd:boolean" default="true"/>
+            <xsd:attribute name="stiffness" type="xsd:double" use="optional"/>
+            <xsd:attribute name="stiffnessExponent" type="xsd:double" default="1.0"/>
+            <xsd:attribute name="dampingCoefficient" type="xsd:double" default="0.0"/>
+            <xsd:attribute name="boundaryPenetration" type="xsd:double" default="0.0"/>
+            <xsd:attribute name="restitution" type="xsd:double" default="1.0"/>
+            <xsd:attribute name="staticCoefficient" type="xsd:double" default="0.0"/>
+            <xsd:attribute name="dynamicCoefficient" type="xsd:double" default="0.0"/>
+            <xsd:attribute name="staticTransitionSpeed" type="xsd:double" use="optional"/>
+            <xsd:attribute name="dynamicTransitionSpeed" type="xsd:double" use="optional"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="ContactData" type="plm:ContactDataType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** CouplerEnum ******************************** -->
+      <!-- -->
+      <xsd:simpleType name="CouplerEnum">
+        <xsd:annotation>
+          <xsd:documentation>
+            The type of a Coupler.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:NMTOKEN">
+          <xsd:enumeration value="gear"/>
+          <xsd:enumeration value="rackAndPinion"/>
+          <xsd:enumeration value="cable"/>
+          <xsd:enumeration value="position"/>
+          <xsd:enumeration value="follow"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+      <!-- -->
+      <!-- ******************** CouplerData ******************************** -->
+      <!-- -->
+      <xsd:complexType name="CouplerDataType">
+        <xsd:annotation>
+          <xsd:documentation>
+            Additional data for a Coupler Constraint or a Joint Constraint that
+            infers a Coupler. Only one CouplerData sub-element is allowed in a
+            Constraint, ConstraintInstance or ConstraintOccurrence element.
+            
+            Attributes:
+            
+            id:             Inherited from AttribOwner.
+            name:           Inherited from AttribOwner.
+            type:           The type of the Coupler as a CouplerEnum.
+            ratio:          The ratio of the first Joint of the Coupler to the
+                            second Joint of the Coupler in SI units, currently
+                            metres or radians. The default is 1.0. This
+                            attribute is deprecated in favour of ratios.
+            ratios:         A list of ratio values in SI units, currently metres
+                            or radians. The first value represents the ratio of
+                            the Joint given by the last ConstraintTargetRef of
+                            the Coupler to the Joint given by the first. The
+                            second value represents the ratio of the Joint given
+                            by the last ConstraintTargetRef of the Coupler to
+                            the Joint given by the second. And so on.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:attribute name="type" type="plm:CouplerEnum" use="optional"/>
+            <xsd:attribute name="ratio" type="xsd:double" default="1.0" plm:deprecated="true"/>
+            <xsd:attribute name="ratios" type="plm:DoubleListType" default="1.0"/>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="CouplerData" type="plm:CouplerDataType" substitutionGroup="plm:AttribOwner"/>
+      <!-- -->
+      <!-- ******************** LimitsDependencyData *********************** -->
+      <!-- -->
+      <xsd:complexType name="LimitsDependencyDataType">
+        <xsd:annotation>
+          <xsd:documentation>
+            Additional data for a Limits Dependency Constraint. Only one
+            LimitsDependencyData sub-element is allowed in a Constraint,
+            ConstraintInstance or ConstraintOccurrence element.
+            
+            Attributes:
+            
+            id:             Inherited from AttribOwner.
+            name:           Inherited from AttribOwner.
+            
+            Sub-elements:
+            
+            ValueWithUnit:  The list of ValueWithUnit sub-elements represents
+                            the values of the independent Joint given by the
+                            first ConstraintTargetRef of the Limits Dependency.
+                            The limits of the dependent Joint corresponding to a
+                            given value are represented by the corresponding
+                            RangeWithUnit sub-element. The limits of the
+                            dependent Joint at intermediate values of the
+                            independent Joint are found by linear interpolation.
+            RangeWithUnit:  The list of RangeWithUnit sub-elements represents
+                            the limits of the dependent Joint given by the
+                            second ConstraintTargetRef of the Limits Dependency.
+                            The value of the independent Joint corresponding to
+                            given limits is represented by the corresponding
+                            ValueWithUnit sub-element. The limits of the
+                            dependent Joint at intermediate values of the
+                            independent Joint are found by linear interpolation.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+          <xsd:extension base="plm:AttribOwnerBase">
+            <xsd:sequence>
+              <xsd:element ref="plm:ValueWithUnit" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:element ref="plm:RangeWithUnit" minOccurs="0" maxOccurs="unbounded"/>              
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="LimitsDependencyData" type="plm:LimitsDependencyDataType" substitutionGroup="plm:AttribOwner"/>
+    </xsd:schema>

@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="3.006" id="OTA2008A">
+	<xs:include schemaLocation="OTA_HotelCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_HotelInvBlockNotifRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The OTA_InvBlockNotifRQ may be used to send a notification of one or more new inventory blocks. This message may also be used to modify or cancel one or more existing inventory blocks.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">POS provides a mechanism to indicate the source of the message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="InvBlocks" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">This may be used for creating blocks at multiple hotels or multiple blocks at a single hotel.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="HotelRef" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">This is used to identify the hotel to which the block(s) applies.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attributeGroup ref="HotelReferenceGroup"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="InvBlockDates" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">This is used to indicate the date or date range applicable to all inventory blocks in this message.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attributeGroup ref="InvBlockDatesGroup"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="InvBlock" type="InvBlockType" minOccurs="0" maxOccurs="99">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">This is for creating a single block at a single hotel.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Contacts" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">A collection of contacts.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Contact" type="ContactPersonType" maxOccurs="99">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">This may be used for multiple sets of contact information (e.g., sales manager, group contact, event manager).</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attributeGroup ref="InvBlockGroup"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="TPA_Extensions" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="DOW_RulesType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Indicates the day of week rules that apply based on the DOW_TypeCode. </xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="DOW_PatternGroup"/>
+		<xs:attribute name="DOW_TypeCode" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">This specifies the type of rule for which the day of week or date span applies.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="Arrival">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The days of week when arrival is allowed.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Available">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The days of week when there is availability for booking.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The days of week for which the product must be booked.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attributeGroup ref="DateTimeSpanGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">This will allow a specific date range to be defined.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+	</xs:complexType>
+	<xs:complexType name="InvBlockRoomType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Used to define the room types and all of their supporting data within a room
+block.
+	</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RoomTypeAllocations" minOccurs="0" maxOccurs="10">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This allows for multiple allocations to be blocked for a specific room type.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RoomTypeAllocation" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This is the number of rooms blocked for a specific room type for specific dates.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attributeGroup ref="DateTimeSpanGroup">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">This is the date range to which rooms are allocated for availability by room type.</xs:documentation>
+									</xs:annotation>
+								</xs:attributeGroup>
+								<xs:attribute name="NumberOfUnits" type="Numeric0to9999" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The number of rooms allocated as available for the dates specified in the DateTimeSpanGroup.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="CompRoomQuantity" type="Numeric1to999" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The number of complimentary rooms allocated as part of the inventory block. This may be a flat number of rooms or it may be used in conjunction with CompRoomFactor.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="CompRoomFactor" type="Numeric1to999" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Used to indicate how many rooms need to be sold before a complimentary room is granted (e.g. CompRoomQuantity="1" and CompRoomFactor="100" means 1 complimentary room is granted per 100 rooms sold). </xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="EndDateIndicator" type="xs:boolean" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">If true, this indicator designates that the room allocation is applied through to the End date in the RoomType DateTimeSpanGroup if it exists or to the End date in the InvBlock DateTimeSpanGroup.  This would be used in place of RoomTypeAllocation/Duration and RoomTypeAllocation/End. </xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="SellLimit" type="xs:positiveInteger" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The contracted quantity or ceiling of inventory, which may differ from the NumberOfUnits allocated.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="ProcureBlockCode" type="StringLength1to16" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The block from which to take inventory when NumberOfUnits is depleted.  This is used in conjunction with the SellLimit attribute.  If this attribute is not present, inventory is taken from general inventory.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="AllocationID" type="StringLength1to32" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Used to refer to a specific allocation already in the receiving system.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="RoomTypePickUpStatus" type="OTA_CodeType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Refer to OTA Code list (INV) Inventory Count Type.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RatePlans" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This allows for multiple rate plans for a specific room type.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RatePlan" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This is a specific rate plan defined for a specific room type.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="RateUploadType">
+										<xs:sequence>
+											<xs:element name="MarketCode" minOccurs="0" maxOccurs="5">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">This is user specific information used for tracking and  market segmentation reporting.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:attribute name="MarketCode" type="StringLength1to64" use="optional">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">The company specific code that relates to the market being sold to (e.g. corporate, government, association, social).</xs:documentation>
+														</xs:annotation>
+													</xs:attribute>
+													<xs:attribute name="MarketCodeName" type="StringLength1to64" use="optional">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">The descriptive name of the code that relates to the market being sold to (e.g. corporate, government, association, social).</xs:documentation>
+														</xs:annotation>
+													</xs:attribute>
+													<xs:attribute name="CommissionableIndicator" type="xs:boolean" use="optional">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">If true, indicates that the rate for this market code is commissionable.  The Commission element may be used to send details regarding the commission.</xs:documentation>
+														</xs:annotation>
+													</xs:attribute>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="Commission" type="CommissionType" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Commission associated with the RatePlan.  This can be a percentage or a flat amount.</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="MethodInfo" minOccurs="0" maxOccurs="5">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">This is used to indicate the reservation and billing methods for the rate plan.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:attributeGroup ref="MethodInfoGroup"/>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="DaysOfWeeks" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">This is available so multiple rules or multiple date ranges may be applied.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="DaysOfWeek" type="DOW_RulesType" maxOccurs="unbounded">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Used to define rate plan by day of week rules for availability, required arrival, or required stay.  </xs:documentation>
+															</xs:annotation>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+										<xs:attribute name="RatePlanCode" type="StringLength1to16" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">The RatePlanCode assigned for the inventory item.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="BookingCode" type="StringLength1to16" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">This is used to indicate the code with which to book the item and is primarily used to exchange information with GDSs or other systems.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attributeGroup ref="PromotionCodeGroup">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">This indicates additional special services included in the rate plan (e.g. breakfast included).</xs:documentation>
+											</xs:annotation>
+										</xs:attributeGroup>
+										<xs:attribute name="UpgradeIndicator" type="xs:boolean" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Indicator that signifies whether a room block rate plan is available for room type upgrade.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="DaysOfWeeks" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This is available so multiple rules or multiple date ranges may be applied.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="DaysOfWeek" type="DOW_RulesType" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Used to define room type by day of week rules for availability, required arrival, or required stay.  </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="DateTimeSpanGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">This is the date range to which rooms are assigned to the inventory block.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+		<xs:attribute name="RoomTypeCode" type="StringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Specfic system room type code (e.g. GENR, CONC, SUIT).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="InvBlockType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Used to define the details of an inventory block.	</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="HotelRef" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This is used to identify the hotel to which the block applies.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="HotelReferenceGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="InvBlockDates" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This is used to indicate the date or date range applicable to this inventory block.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="InvBlockDatesGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RoomTypes" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This allows for multiple room types to be defined within an inventory block.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RoomType" type="InvBlockRoomType" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This is a specific room type defined within an inventory block.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="MethodInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This is used to indicate the reservation and billing methods for a single inventory block.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="MethodInfoGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="BlockDescriptions" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Collection of free form information about the inventory block.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="BlockDescription" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Used for free form descriptive information about the inventory block.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="ParagraphType">
+										<xs:attributeGroup ref="DateTimeSpanGroup">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">This may be used to define the date range for which a set of free form text applies to the inventory block.</xs:documentation>
+											</xs:annotation>
+										</xs:attributeGroup>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Contacts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of contacts.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Contact" type="ContactPersonType" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This may be used for multiple sets of contact information (e.g., sales manager, group contact, event manager).</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="DestinationSystemCodes" type="DestinationSystemCodesType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of destination system codes. These are systems for which this inventory block is targeted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="InvBlockGroup"/>
+	</xs:complexType>
+</xs:schema>

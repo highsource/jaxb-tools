@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5"
+     xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" 
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+     xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" 
+     xmlns="http://www.starstandard.org/STAR/5" 
+     xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" 
+     xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" 
+     xmlns:scl="http://www.starstandard.org/STAR/5/codelists" 
+     targetNamespace="http://www.starstandard.org/STAR/5" 
+     elementFormDefault="qualified" 
+     attributeFormDefault="unqualified"
+     blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="CreditContract" type="CreditContractType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Credit Contract
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="CreditContractType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version X.X, STAR approved xx/xx/xxxx; effective date 07/04/xxxx</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 5.0 - Draft</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 4.0, STAR approved 04/20/2005; effective date 07/04/2005</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 3.0, STAR approved 05/07/2004; effective date 07/04/2004</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.0 STAR approved 04/09/2003; OAGI approved 3/15/2003; effective date 07/04/2003</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 1.0 STAR approved 01/10/2003; OAGI reviewed 1/06/2003; effective date 01/01/2003</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="ContractHeaderBase">
+                <xsd:annotation>
+                    <xsd:documentation xmlns="http://www.starstandard.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" source="http://www.starstandard.org/STAR/5">The Header component represents summary information about the credit contract.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="FinanceParty">
+                <xsd:annotation>
+                    <xsd:documentation xmlns="http://www.starstandard.org/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" source="http://www.starstandard.org/STAR/5">The FinanceCompany represents the business party receiving the Credit Contract.</xsd:documentation>
+                </xsd:annotation>                
+            </xsd:element>
+            <xsd:element ref="DealerParty">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                        <xsd:documentation  source="http://www.starstandard.org/STAR/5">The Financing Component represents finance information for the credit contract.</xsd:documentation>
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="Applicants" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation  source="http://www.starstandard.org/STAR/5">The IndividualApplicant Component represents the business party applying for vehicle financing.</xsd:documentation>
+                </xsd:annotation>                
+            </xsd:element>
+            <xsd:element ref="CreditVehicle">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/STAR/5">The CreditVehicle component represents information about the vehicle that the Applicant is interested in purchasing. </xsd:documentation>
+                </xsd:annotation>                
+            </xsd:element>
+            <xsd:element ref="ContractFinancing">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/STAR/5">The Financing component represents finance information for the credit contract.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="CreditPrimaryDriver" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/STAR/5">The PrimaryDriver component represents the business party who will be the primary driver of the vehicle being financed if different from the Applicant, Co-Applicant or Organizational Applicant.</xsd:documentation>
+                </xsd:annotation>                
+            </xsd:element>
+            <xsd:element ref="AdditionalContractAttribute" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                        The AdditionalContractAttribute component represents additional items to the contract that facilitate validation and discounting of finance plan.                
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="OtherOwnerParty" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/STAR/5">The OtherOwner component represents an individual whose name is on the title of the vehicle but is not responsible for paying the debt.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="GuarantorParty" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation  source="http://www.starstandard.org/STAR/5">The Guarantor is the party who makes or gives a guarantee for the financing.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 (http://www.altova.com) by Sukumar Dwarkanath (private) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:oasis="urn:oasis:names:tc:emergency:EDXL:HAVE:1.0:geo-oasis" xmlns:gml="http://www.opengis.net/gml" targetNamespace="urn:oasis:names:tc:emergency:EDXL:HAVE:1.0:geo-oasis" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xs:import namespace="http://www.opengis.net/gml" schemaLocation="gml-oasis.xsd"/>
+	<!-- 
+ ================================================= 
+  -->
+	<xs:element name="where" type="oasis:WhereType">
+		<xs:annotation>
+			<xs:documentation>Root property element of an OASIS GML instance</xs:documentation>
+			<xs:documentation>Container for optional OASIS GML attributes</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<!-- 
+ ================================================= 
+  -->
+	<xs:complexType name="WhereType">
+		<xs:annotation>
+			<xs:documentation>Root property type for an OASIS GML instance</xs:documentation>
+			<xs:documentation>Container for optional OASIS GML attributes</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element ref="gml:Point"/>
+			<xs:element ref="gml:LineString"/>
+			<xs:element ref="gml:CircleByCenterPoint"/>
+			<xs:element ref="gml:Polygon"/>
+			<xs:element ref="gml:Envelope"/>
+		</xs:choice>
+		<xs:attributeGroup ref="oasis:whereAttrGroup"/>
+	</xs:complexType>
+	<!-- 
+ ================================================= 
+  -->
+	<xs:element name="point" type="oasis:PointPropertyType">
+		<xs:annotation>
+			<xs:documentation>Point property element containing a pair of coordinates representing latitude then longitude in the WGS84 coordinate reference system</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<!-- 
+ ================================================= 
+  -->
+	<xs:complexType name="PointPropertyType">
+		<xs:annotation>
+			<xs:documentation>This type contains a gml:Point.  Unlike a gml:PointPropertyType, it does not enable reference to an external gml:Point via an xlink.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="gml:Point"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- 
+ ================================================= 
+  -->
+	<xs:element name="line" type="oasis:LinePropertyType">
+		<xs:annotation>
+			<xs:documentation>Line property element containing a list of pairs of coordinates representing latitude then longitude in the WGS84 coordinate reference system</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<!-- 
+ ================================================= 
+  -->
+	<xs:complexType name="LinePropertyType">
+		<xs:annotation>
+			<xs:documentation>This type contains a gml:LineString.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="gml:LineString"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- 
+ ================================================= 
+  -->
+	<xs:element name="polygon" type="oasis:PolygonPropertyType">
+		<xs:annotation>
+			<xs:documentation>Closed ring property element containing a list of pairs of coordinates (first pair and last pair identical) representing latitude then longitude in the WGS84 coordinate reference system</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<!-- 
+ ================================================= 
+  -->
+	<xs:complexType name="PolygonPropertyType">
+		<xs:annotation>
+			<xs:documentation>This type contains a gml:Polygon</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="gml:Polygon"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- 
+ ================================================= 
+  -->
+	<xs:element name="box" type="oasis:EnvelopePropertyType">
+		<xs:annotation>
+			<xs:documentation>Rectangular envelope property element containing two pairs of coordinates (lower left envelope corner, upper right envelope corner) representing latitude then longitude in the WGS84 coordinate reference system</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<!-- 
+ ================================================= 
+  -->
+	<xs:complexType name="EnvelopePropertyType">
+		<xs:annotation>
+			<xs:documentation>This type contains a gml:Envelope</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="gml:Envelope"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- 
+ ================================================= 
+  -->
+	<xs:attributeGroup name="whereAttrGroup">
+		<xs:annotation>
+			<xs:documentation>Optional additional parameters for a oasis location property</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="featuretypetag" type="xs:NCName" use="optional">
+			<xs:annotation>
+				<xs:documentation>Optional where attribute indicating the type of geographic entity is being referred to. Default is "location"</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="relationshiptag" type="xs:NCName" use="optional">
+			<xs:annotation>
+				<xs:documentation>Optional where attribute indicating how geotagged content is related to the represented location. Default is "isLocatedAt"</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="elev" type="xs:double" use="optional">
+			<xs:annotation>
+				<xs:documentation>Optional where attribute indicating a GPS-measured elevation in meters (e.g. WGS84 geoid height)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="floor" type="xs:double" use="optional">
+			<xs:annotation>
+				<xs:documentation>Optional where attribute indicating elevation by building floor</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="radius" type="xs:double" use="optional">
+			<xs:annotation>
+				<xs:documentation>Optional where attribute indicating size in meters of a radius or buffer being indicated around the geometry (e.g. radius of circular area around a point geometry</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<!--  =================================================  -->
+</xs:schema>

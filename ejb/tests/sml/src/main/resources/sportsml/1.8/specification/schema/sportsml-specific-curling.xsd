@@ -1,0 +1,249 @@
+<?xml version="1.0"?>
+<!--
+IPTC - International Press Telecommunications Council
+Royal Albert House, Windsor, Berkshire SL4 1BE, England
+www.iptc.org
+
+See sportsml.xsd to view Non-Exclusive License Agreement for 
+International Press Telecommunications Council, which
+applies to this specification.
+-->
+<schema 
+	targetNamespace="http://iptc.org/std/SportsML/2006-10-18/"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:sportsml="http://iptc.org/std/SportsML/2006-10-18/"
+	version="1.8"
+	>
+	<attributeGroup name="eventStateCurling">
+		<attribute name="stone-idref" type="string" use="optional">
+			<annotation>
+				<documentation>TBD.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="player-idref" type="string" use="optional">
+			<annotation>
+				<documentation>TBD.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="team-idref" type="string" use="optional">
+			<annotation>
+				<documentation>TBD.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="end-number" type="string" use="optional">
+			<annotation>
+				<documentation>TBD.</documentation>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+	<element name="event-metadata-curling">
+		<annotation>
+			<documentation>TBD.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="sheet" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="draw" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="team-stats-curling">
+		<annotation>
+			<documentation>TBD.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-curling-stone" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-curling-end" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-curling-accuracy" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+		</complexType>
+	</element>
+	<element name="stats-curling-stone">
+		<annotation>
+			<documentation>TBD.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="stone-number" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="stone-color" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-curling-end">
+		<annotation>
+			<documentation>TBD.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="end-number" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="throw-order" type="sportsml:throwOrder.Curling" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="time-used" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-curling-accuracy">
+		<annotation>
+			<documentation>TBD.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="shot-type" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="turn" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="percentage" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="number-of-shots" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="player-metadata-curling">
+		<annotation>
+			<documentation>Holds metadata specific to a curling player.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="delivery" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="role" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="player-stats-curling">
+		<annotation>
+			<documentation>Holds curling-specific stats.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-curling-accuracy" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+		</complexType>
+	</element>
+	<element name="event-actions-curling">
+		<annotation>
+			<documentation>A holder for actions taking place in a curling match.</documentation>
+		</annotation>
+		<complexType>
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="sportsml:action-curling-shot"/>
+			</choice>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="action-curling-shot">
+		<annotation>
+			<documentation>TBD.</documentation>
+		</annotation>
+		<complexType>
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="sportsml:action-curling-miss-reason"/>
+			</choice>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateCurling"/>
+			<attribute name="time-used" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="turn" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shot-type" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="stone-speed" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="success" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shot-finish" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-curling-miss-reason">
+		<annotation>
+			<documentation>TBD.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="type" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+</schema>

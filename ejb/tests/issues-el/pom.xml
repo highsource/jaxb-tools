@@ -1,0 +1,47 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jvnet.hyperjaxb3</groupId>
+		<artifactId>hyperjaxb3-ejb-tests</artifactId>
+		<version>0.5.7-SNAPSHOT</version>
+	</parent>
+	<artifactId>hyperjaxb3-ejb-tests-issues-el</artifactId>
+	<packaging>jar</packaging>
+	<name>Hyperjaxb3 EJB Test [issues]</name>
+	<repositories>
+		<repository>
+			<id>EclipseLink Repo</id>
+			<url>http://download.eclipse.org/rt/eclipselink/maven.repo</url>
+		</repository>    
+	</repositories>
+	<dependencies>
+		<!-- Test -->
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>eclipselink</artifactId>
+			<version>2.4.0-M2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.7.3.3</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<defaultGoal>test</defaultGoal>
+		<plugins>
+			<plugin>
+				<groupId>org.jvnet.hyperjaxb3</groupId>
+				<artifactId>maven-hyperjaxb3-plugin</artifactId>
+				<version>${project.version}</version>
+				<configuration>
+					<roundtripTestClassName>org.jvnet.hyperjaxb3.ejb.tests.issuesel.RoundtripTest</roundtripTestClassName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

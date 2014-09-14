@@ -1,0 +1,1644 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Copyright 2007 UGS Corp. All Rights Reserved.
+This software and related documentation are proprietary to UGS Corp.
+-->
+<xsd:schema targetNamespace="http://www.plmxml.org/Schemas/PLMXMLBusinessSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:plm="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:bus="http://www.plmxml.org/Schemas/PLMXMLBusinessSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:import namespace="http://www.plmxml.org/Schemas/PLMXMLSchema" schemaLocation="PLMXMLSchema.xsd"/>
+  <xsd:annotation>
+    <xsd:documentation source="http://www.plmxml.org/Schemas/PLMXMLSchema/History">
+      <plm:SchemaChange author="davidj" date="2005-05-12" version="6.0.1.26">
+        <plm:Description>
+        Deprecate references to 'tceng' in enumerations, add replacement values.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/simpleType[@name='TransferModeDirectionType']"/>
+        <plm:Reference locationRef="..//schema/simpleType[@name='RuleScopeType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-05-12" version="6.0.1.26">
+        <plm:Description>
+        Add ApplicationInterface element.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='ApplicationInterfaceType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-05-12" version="6.0.1.26">
+        <plm:Description>
+        Add AttribOwner sub-element to PLMXMLBusinessTypesType.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='PLMXMLBusinessTypesType']/element[@name='AttribOwner']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-10-24" version="6.0.1.26">
+        <plm:Description>
+        Add plm:refType attribute to various attributes.
+        </plm:Description>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2006-05-10" version="6.0.1.xxx">
+        <plm:Description>
+        Add AuthorisationRule element.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='AuthorisationRuleType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="howardmu" date="2007-03-01" version="6.0.1.xxx">
+        <plm:Description>
+        Add resultsType attribute to SavedQueryDef element.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/simpleType[@name='SavedQueryResultsEnum']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='SavedQueryDefType']/attribute[@name='resultsType']"/>        
+      </plm:SchemaChange>
+    </xsd:documentation>
+    <xsd:documentation>
+    
+              Business Types and Business Rules Schema
+                        
+    </xsd:documentation>
+    <xsd:appinfo source="http://www.plmxml.org/Schemas/PLMXMLBusinessSchema">
+      <plm:SchemaInfo name="PLMXMLBusinessSchema.xsd" date="2007-01-17" version="6.0" status="release"/>
+    </xsd:appinfo>
+  </xsd:annotation>
+  <!--  -->
+  <xsd:complexType name="BusinessRuleBase" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+      This element defines abstract type for Business Rules.
+
+      Attributes:
+
+      isExportable:           Is this rule exportable? 
+      isReplaceable:          Used for import. If the object exists and and this flag is set to true,  
+                              then only this element can be replaced.
+      version:                String that represents the version of a BusinessRule. This will help 
+                              in tracking changes to rules.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="isExportable" type="xsd:boolean" use="optional" default="true"/>
+        <xsd:attribute name="isReplaceable" type="xsd:boolean" use="optional" default="true"/>
+        <xsd:attribute name="version" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="BusinessRule" type="bus:BusinessRuleBase" abstract="true"/>
+  <!--  -->
+  <!-- ************************* HideTypeRuleType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="HideTypeRuleType">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+      This element contains a Hide Type Business Rule. This rule is used for suppressing 
+      display of types in the creation dialogs.
+
+      Attributes:
+      
+      hiddenTypeClassName:    Name of the class in which this type exists
+      hiddenTypeName:         Name of the type on which this rule is applicable
+      accessorType:           Type of accessor, i.e. user, group, role in group. 
+      accessor:               reference to an URI of above type of accessor. If not specified, 
+                              this would be assumed as a site wide rule
+      isSystemRule:           Is this a system defined rule. If not specified this is assumed 
+                              as false.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessRuleBase">
+        <xsd:attribute name="hiddenTypeClassName" type="xsd:string" use="required"/>
+        <xsd:attribute name="hiddenTypeName" type="xsd:string" use="required"/>
+        <xsd:attribute name="accessorType" type="xsd:string" use="optional"/>
+        <xsd:attribute name="accessor" type="plm:uriReferenceListType" use="optional">
+          <xsd:annotation>
+            <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">validate=skipName</xsd:appinfo>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="isSystemRule" type="xsd:boolean" use="optional" default="false"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="HideTypeRule" type="bus:HideTypeRuleType" substitutionGroup="bus:BusinessRule"/>
+  <!--  -->
+  <!-- ************************* RelationRuleTypeDefinition ****************************** -->
+  <!--  -->
+  <xsd:complexType name="RelationRuleType">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+      This element contains a Business rule of GRM Rule Type. It defines the constraints 
+      for a relation.
+
+      Attributes:
+      
+      primaryObjectType:      Primary object type for the relation
+      secondaryObjectType:    Secondary object type for the relation
+      relationType:           Relation type
+      primaryCardinality:     Cardinality on primary object
+      secondaryCardinality:   Cardinality on secondary object
+      bitwiseConstraints:     Bitwise constraints, to represent attachability, detachability.
+      secured:                Is this a system rule? Default is false.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessRuleBase">
+        <xsd:attribute name="primaryObjectType" type="xsd:string" use="required"/>
+        <xsd:attribute name="secondaryObjectType" type="xsd:string" use="required"/>
+        <xsd:attribute name="relationType" type="xsd:string" use="required"/>
+        <xsd:attribute name="primaryCardinality" type="xsd:integer" use="required"/>
+        <xsd:attribute name="secondaryCardinality" type="xsd:integer" use="required"/>
+        <xsd:attribute name="bitwiseConstraints" type="xsd:integer" use="required"/>
+        <xsd:attribute name="secured" type="xsd:boolean" use="optional" default="false"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RelationRule" type="bus:RelationRuleType" substitutionGroup="bus:BusinessRule"/>
+  <!--  -->
+  <!-- ************************* CompoundPropDefType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="CompoundPropDefType">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+      This element contains a Business rule of Type Compound Property.
+
+      Attributes:
+      
+      compoundPropName:       Name of compound property
+      displayTypeName:        Display Object Type on which this compound property is defined
+      sourceTypeName:         Source object Type
+      sourcePropName:         Property name on the source object
+      objectHierarchy:        String that represents how this property can queried on the displayed
+      isReadOnly:             Is  this compound property be read only. Default is false.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessRuleBase">
+        <xsd:attribute name="compoundPropName" type="xsd:string" use="required"/>
+        <xsd:attribute name="displayTypeName" type="xsd:string" use="required"/>
+        <xsd:attribute name="sourceTypeName" type="xsd:string" use="required"/>
+        <xsd:attribute name="sourcePropName" type="xsd:string" use="required"/>
+        <xsd:attribute name="objectHierarchy" type="xsd:string" use="required"/>
+        <xsd:attribute name="isReadOnly" type="xsd:boolean" use="optional" default="false"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CompoundPropDef" type="bus:CompoundPropDefType" substitutionGroup="bus:BusinessRule"/>
+  <!--  -->
+  <!-- ************************* NameRuleType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="NameRuleType">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+      This element contains a Business rule of Type Naming Rule. This would contain 
+      patterns that are valid for a Naming Rule.
+      
+      SubElements:
+      
+      Autogen:            Specifies if counters need to be generated for the Naming Rule 
+                          using the first pattern
+      StringPattern:      A Naming Rule Pattern or regular expression
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessRuleBase">
+        <xsd:sequence>
+          <xsd:element name="Autogen" type="bus:AutogenType" minOccurs="0"/>
+          <xsd:element name="StringPattern" type="bus:ValueDetailsType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="NameRule" type="bus:NameRuleType" substitutionGroup="bus:BusinessRule"/>
+  <!--  -->
+  <!-- ********************** NameFieldCaseType ************************ -->
+  <!-- -->
+  <xsd:simpleType name="NameFieldCaseType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Case into which the String should be converted 
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="upper"/>
+      <xsd:enumeration value="lower"/>
+      <xsd:enumeration value="mixed"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ************************* NameFieldType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="NameFieldType">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+      This element contains a Business rule of Type Name Field. Determines which property 
+      will have a Name Rule associated with it.
+
+      Attributes:
+      
+      typeName:             Name of Object Type to which a Naming Rule is attached
+      propertyName:         Property on the Object to which a Naming Rule is attached
+      ruleNameRef:          Name of the Naming Rule as defined by NameRuleType
+      case:                 Case to which the value will get converted
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessRuleBase">
+        <xsd:attribute name="typeName" type="xsd:string" use="required"/>
+        <xsd:attribute name="propertyName" type="xsd:string" use="required"/>
+        <xsd:attribute name="ruleNameRef" type="plm:anyURIType" use="required" plm:refType="bus:NameRule"/>
+        <xsd:attribute name="case" type="bus:NameFieldCaseType" default="mixed"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="NameField" type="bus:NameFieldType" substitutionGroup="bus:BusinessRule"/>
+  <!--  -->
+  <!-- ************************* AutogenType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="AutogenType">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+      This element holds the details of Autogen of ids for Naming Rule.
+
+      Attributes:
+      
+      init:              Initial Value
+      max:               Maximum Value
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="init" type="xsd:string" use="optional"/>
+        <xsd:attribute name="max" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Autogen" type="bus:AutogenType" substitutionGroup="plm:AttribOwner"/>
+  <!--  -->
+  <!-- ************************* TypeCannedMethodType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="TypeCannedMethodType">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+      This element contains a Business rule of Type Action Rules. These are methods to be 
+      executed on Types on some events.
+
+      SubElements:
+      
+      MethodOpts:          References a construct of parameters, that are required for this method. 
+                           Multiple sets of parameters are allowed.
+      
+      Attributes:
+      
+      typeName:            Object Type on which this rule is applied
+      msgName:             Name of the message, which is the event at which this rule gets applied
+      actionType:          Holds the action as Precondition, PreAction or Post Action
+      methodName:          Name of the Method which gets executed at this event
+      execSeq:             Specifies the Order sequence in which this method gets executed
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessRuleBase">
+        <xsd:sequence>
+          <xsd:element name="MethodOpts" type="bus:MethodOptsType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="typeName" type="xsd:string" use="required"/>
+        <xsd:attribute name="msgName" type="xsd:string" use="required"/>
+        <xsd:attribute name="actionType" type="xsd:string" use="required"/>
+        <xsd:attribute name="methodName" type="xsd:string" use="required"/>
+        <xsd:attribute name="execSeq" type="xsd:string" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TypeCannedMethod" type="bus:TypeCannedMethodType" substitutionGroup="bus:BusinessRule"/>
+  <!--  -->
+  <!-- ************************* MethodOptionsType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="MethodOptsType">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+      Holds a construct of parameters that are passed to Action Rule.
+
+      SubElements:
+      
+      Parameters:             A set of parameters that are defined for an Action Rule.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="Parameter" type="bus:ParameterType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="MethodOpts" type="bus:MethodOptsType" substitutionGroup="plm:AttribOwner"/>
+  <!--  -->
+  <!-- ************************* ParameterType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="ParameterType">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+      Holds a set of parameter strings.
+
+      SubElements:
+      Parameter:          A string that is passed as a parameter
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="value" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Parameter" type="bus:ParameterType" substitutionGroup="plm:AttribOwner"/>
+  <!--  -->
+  <!-- ********************** PropertyRuleIsModifiableType ************************ -->
+  <!-- -->
+  <xsd:simpleType name="PropertyRuleIsModifiableType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Is the property modifiable  
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="default"/>
+      <xsd:enumeration value="readOnly"/>
+      <xsd:enumeration value="writable"/>
+      <xsd:enumeration value="writeOnlyIfNull"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ********************** PropertyRuleWriteOnceType ************************ -->
+  <!-- -->
+  <xsd:simpleType name="PropertyRuleWriteOnceType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Is the PropertyRule write once? 
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="onlyIfNull"/>
+      <xsd:enumeration value="always"/>
+      <xsd:enumeration value="no"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ************************* PropertyRuleType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="PropertyRuleType">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+      This element contains a Business rule of Type Property Rule. 
+
+      Attributes:
+      
+      typeName:                Object Type on which this rule applies
+      propertyName:            Property on the object on which this rule applies
+      initialValue:            Initial Value for the property
+      isModifiable:            Is this property modifiable?
+      writeOnce:               Is this property value written once only?
+      isRequired:                             
+      isEnabled:
+      alternateDisplayName:
+      isVisible:
+      attachedLOVName:
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessRuleBase">
+        <xsd:attribute name="typeName" type="xsd:string" use="required"/>
+        <xsd:attribute name="initialValue" type="xsd:string" use="optional"/>
+        <xsd:attribute name="isModifiable" type="bus:PropertyRuleIsModifiableType" use="optional" default="default"/>
+        <xsd:attribute name="writeOnce" type="bus:PropertyRuleWriteOnceType" use="optional" default="no"/>
+        <xsd:attribute name="isRequired" type="xsd:boolean" use="optional" default="false"/>
+        <xsd:attribute name="isEnabled" type="xsd:boolean" use="optional" default="true"/>
+        <xsd:attribute name="alternateDisplayName" type="xsd:string" use="optional"/>
+        <xsd:attribute name="isVisible" type="xsd:boolean" use="optional" default="true"/>
+        <xsd:attribute name="combinationProperty" type="xsd:string" use="optional"/>
+        <xsd:attribute name="attachedLOVName" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PropertyRule" type="bus:PropertyRuleType" substitutionGroup="bus:BusinessRule"/>
+  <!--  -->
+  <!-- ************************* IdContext Rule Type Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="IdContextRuleType">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+      This element contains a Business rule for IdContext used for Alternate Id. 
+
+      Attributes:
+      typeName:              Object Type on which this rule applies
+      idContextName:                             
+      identifierType:
+      validationRule:
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessRuleBase">
+        <xsd:attribute name="typeName" type="xsd:string" use="required"/>
+        <xsd:attribute name="idContextName" type="xsd:string" use="required"/>
+        <xsd:attribute name="identifierType" type="xsd:string" use="required"/>
+        <xsd:attribute name="validationRule" type="xsd:string" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="IdContextRule" type="bus:IdContextRuleType" substitutionGroup="bus:BusinessRule"/>
+  <!--  -->
+  <!-- **********************DeepCopyRuleOperationType ************************ -->
+  <!-- -->
+  <xsd:simpleType name="DeepCopyRuleOperationType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Operation type in deep copy rule
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="saveAs"/>
+      <xsd:enumeration value="revise"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- **********************DeepCopyRuleType ************************ -->
+  <!-- -->
+  <xsd:simpleType name="DeepCopyType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Copy type in deep copy rule
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="copyAsObject"/>
+      <xsd:enumeration value="copyAsReference"/>
+      <xsd:enumeration value="noCopy"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ************************* Deep Copy Rule Type Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="DeepCopyRuleType">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+      This element contains a Business rule of Type Deep Copy Rule. When doing a Save As 
+      or Revise, specifies what should be copied forward as a physical copy or reference 
+      or not copied forward at all.
+
+      Attributes:
+      
+      typeName:              Object Type on which this rule applies
+      operation:             Whether it is SaveAs or Revise
+      copyType:
+      relationType:
+      attachmentType:
+      isRequired:
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessRuleBase">
+        <xsd:attribute name="typeName" type="xsd:string" use="required"/>
+        <xsd:attribute name="operation" type="bus:DeepCopyRuleOperationType" use="required"/>
+        <xsd:attribute name="copyType" type="bus:DeepCopyType" use="required"/>
+        <xsd:attribute name="relationType" type="xsd:string" use="required"/>
+        <xsd:attribute name="attachmentType" type="xsd:string" use="required"/>
+        <xsd:attribute name="isRequired" type="xsd:boolean" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DeepCopyRule" type="bus:DeepCopyRuleType" substitutionGroup="bus:BusinessRule"/>
+  <!--  -->
+  <!-- ************************* BusinessDataType Definition *************************** -->
+  <!--  -->
+  <xsd:complexType name="BusinessDataDefBase" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">
+      This element defines abstract type for Business Data Definition.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="BusinessDataDef" type="bus:BusinessDataDefBase" abstract="true"/>
+  <!--  -->
+  <!-- **********************LOVValueType ************************ -->
+  <!-- -->
+  <xsd:simpleType name="LOVValueType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Value type in LOV
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="integer"/>
+      <xsd:enumeration value="double"/>
+      <xsd:enumeration value="char"/>
+      <xsd:enumeration value="string"/>
+      <xsd:enumeration value="date"/>
+      <xsd:enumeration value="reference"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- **********************LOVType ************************ -->
+  <!-- -->
+  <xsd:simpleType name="LOVType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Type of LOV
+      
+      listOfValuesFilter:  This type represents the filtered list of values from a based on LOV.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="listOfValuesChar"/>
+      <xsd:enumeration value="listOfValuesDate"/>
+      <xsd:enumeration value="listOfValuesDouble"/>
+      <xsd:enumeration value="listOfValuesExtentSite"/>
+      <xsd:enumeration value="listOfValuesInteger"/>
+      <xsd:enumeration value="listOfValuesStringExtentStatus"/>
+      <xsd:enumeration value="listOfValuesStringExtentWSOClass"/>
+      <xsd:enumeration value="listOfValuesStringExtentPubrType"/>
+      <xsd:enumeration value="listOfValuesStringExtentGrName"/>
+      <xsd:enumeration value="listOfValuesStringExtentUsName"/>
+      <xsd:enumeration value="listOfValuesStringExtentUserId"/>
+      <xsd:enumeration value="listOfValuesStringExtent"/>
+      <xsd:enumeration value="listOfValuesString"/>
+      <xsd:enumeration value="listOfValuesTagExtent"/>
+      <xsd:enumeration value="listOfValuesFilter"/>
+      <xsd:enumeration value="listOfValuesTag"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ********************** LOVUsageType ************************ -->
+  <!-- -->
+  <xsd:simpleType name="LOVUsageType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="exhaustive"/>
+      <xsd:enumeration value="suggestive"/>
+      <xsd:enumeration value="range"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ********************** LOVAttachmentEnum ************************ -->
+  <!-- -->
+  <xsd:simpleType name="LOVAttachmentEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="cascading"/>
+      <xsd:enumeration value="interdependent"/>
+      <xsd:enumeration value="simple"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ************************* ListOfValuesType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="ValueDetailsType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a value in a LOV (the type is also used for other purposes).
+      
+      Attributes:
+      
+      stringValue:      value, if a string
+      intValue:         value, if an integer
+      doubleValue:      value, if a double
+      dateValue:        value, if a date
+    
+      indexValue:       associates an index with a LOV value
+      listOfValuesRef:  used if a LOV value has a reference to another LOV.
+      classification:   associates a classification string with a LOV value. The classification
+                        specifies the 'meaning' of the value.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="stringValue" type="xsd:string"/>
+        <xsd:attribute name="intValue" type="xsd:integer"/>
+        <xsd:attribute name="doubleValue" type="xsd:double"/>
+        <xsd:attribute name="dateValue" type="xsd:dateTime"/>
+        <xsd:attribute name="indexValue" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="listOfValuesRef" type="plm:anyURIType" use="optional" plm:refType="bus:ListOfValues"/>
+        <xsd:attribute name="classification" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!--  -->
+  <xsd:complexType name="LOVAttachmentType">
+    <xsd:annotation>
+      <xsd:documentation>
+      These attributes specify where the LOV is attached to,i.e. to which type and what property. 
+      
+      Attributes:
+		 
+	  typeName:        name of object type (i.e. class)
+	  propertyName:    name of property
+	  attachType:      type of attachment
+	  level:           in an interdependent LOV, this gives the hierarchical level at which the property
+	                   is attached (level 1 means the parent LOV of the LOVAttachment element).
+	  classification:  in an interdependent LOV, this specifies that only values with this classification
+	                   are to be used as property values. 'level' and 'classification' should not be 
+	                   used together.
+	  isDescription:   if true, the property values are taken from the LOV value Descriptions rather than
+	                   the actual LOV values.
+	  parentDepth:     in a cascading LOV, this integer specifies the number of levels above the base
+	                   level which are used to construct the property value. The LOV values from the
+	                   various levels are combined (top first), with a system-defined separating
+	                   character. So for example parentDepth=1 means two levels are combined. Only 
+	                   meaningful for string-valued LOVs.
+	  </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="typeName" type="xsd:string"/>
+    <xsd:attribute name="propertyName" type="xsd:string"/>
+    <xsd:attribute name="attachType" type="bus:LOVAttachmentEnum"/>
+    <xsd:attribute name="level" type="xsd:integer" use="optional"/>
+    <xsd:attribute name="classification" type="xsd:string" use="optional"/>
+    <xsd:attribute name="isDescription" type="xsd:boolean" use="optional" default="false"/>
+    <xsd:attribute name="parentDepth" type="xsd:integer" use="optional"/>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="ListOfValuesType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A List-of-Values.
+      
+      Sub-elements:
+      
+      LovValueDetails:     The values in the LOV.
+      LovAttachTypes:      deprecated
+      LovAttachProperties: deprecated
+      LOVAttachment:       Specifies the property, type and level to which the LOV is attached.
+		 </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessDataDefBase">
+        <xsd:sequence>
+          <xsd:element name="LovValueDetails" type="bus:ValueDetailsType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="LovAttachTypes" type="bus:ValueDetailsType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="LovAttachProperties" type="bus:ValueDetailsType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="LOVAttachment" type="bus:LOVAttachmentType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="referenceAttribute" type="xsd:string" use="optional"/>
+        <xsd:attribute name="referenceClass" type="xsd:string" use="optional"/>
+        <xsd:attribute name="valueType" type="bus:LOVValueType" use="required"/>
+        <xsd:attribute name="lovType" type="bus:LOVType" use="required"/>
+        <xsd:attribute name="lovUsage" type="bus:LOVUsageType" use="required"/>
+        <xsd:attribute name="rangeMinValue" type="xsd:string" use="optional"/>
+        <xsd:attribute name="rangeMaxValue" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ListOfValues" type="bus:ListOfValuesType" substitutionGroup="bus:BusinessDataDef"/>
+  <!-- -->
+  <xsd:complexType name="ListOfValuesFilterType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A List-of-Values defined as a filter.
+      
+      attributes:
+            
+      basedOnLOVRef:         reference to based on LOV
+      filterIndices:         indices into the referenced LOV.
+		 </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:ListOfValuesType">
+        <xsd:attribute name="basedOnLOVRef" type="plm:anyURIType" use="optional" plm:refType="bus:ListOfValues"/>
+        <xsd:attribute name="filterIndices" type="plm:IntegerListType" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ListOfValuesFilter" type="bus:ListOfValuesFilterType" substitutionGroup="bus:ListOfValues"/>
+  <!-- -->
+  <!-- ********************** SavedQueryResultsEnum ************************ -->
+  <!-- -->
+  <xsd:simpleType name="SavedQueryResultsEnum">
+    <xsd:annotation>
+      <xsd:documentation>
+      The type of search results required from a SavedQueryDef. Currently flat
+      and hierarchical are supported.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="flat"/>
+      <xsd:enumeration value="hierarchical"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ************************* SavedQuery Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="SavedQueryDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessDataDefBase">
+        <xsd:sequence>
+          <xsd:element name="QueryClause" type="bus:ValueDetailsType" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="queryClass" type="xsd:string" use="required"/>
+        <xsd:attribute name="queryFlag" type="xsd:integer" use="required"/>
+        <xsd:attribute name="resultsType" type="bus:SavedQueryResultsEnum" default="flat"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SavedQueryDef" type="bus:SavedQueryDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* TypeDefBase Definition *************************** -->
+  <!--  -->
+  <xsd:complexType name="DataTypeDefBase" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessDataDefBase">
+        <xsd:attribute name="cName" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DataTypeDef" type="bus:DataTypeDefBase" abstract="true"/>
+  <!--  -->
+  <!-- ************************* GenericType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="GenericTypeDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="GenericTypeDef" type="bus:GenericTypeDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* ItemType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="ItemTypeDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ItemTypeDef" type="bus:ItemTypeDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* StorageClassDefType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="StorageClassDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessDataDefBase">
+        <xsd:sequence>
+          <xsd:element name="AttributeDef" type="bus:AttributeDefType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="parentClass" type="xsd:string" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="StorageClassDef" type="bus:StorageClassDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!-- -->
+  <!-- **********************AttributeDefAttrType ************************ -->
+  <!-- -->
+  <xsd:simpleType name="AttributeDefAttrType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="character"/>
+      <xsd:enumeration value="double"/>
+      <xsd:enumeration value="date"/>
+      <xsd:enumeration value="float"/>
+      <xsd:enumeration value="integer"/>
+      <xsd:enumeration value="logical"/>
+      <xsd:enumeration value="short"/>
+      <xsd:enumeration value="string"/>
+      <xsd:enumeration value="typedReference"/>
+      <xsd:enumeration value="untypedReference"/>
+      <xsd:enumeration value="externalReference"/>
+      <xsd:enumeration value="note"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!--  -->
+  <xsd:complexType name="AttributeDefType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:DescriptionBase">
+        <xsd:attribute name="attrType" type="bus:AttributeDefAttrType" use="required"/>
+        <xsd:attribute name="stringSize" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="referenceClass" type="xsd:string" use="optional"/>
+        <xsd:attribute name="isArray" type="xsd:boolean" use="optional" default="false"/>
+        <xsd:attribute name="isPublicWrite" type="xsd:boolean" use="optional" default="false"/>
+        <xsd:attribute name="isNullsAllowed" type="xsd:boolean" use="optional" default="true"/>
+        <xsd:attribute name="isIgnoreErrors" type="xsd:boolean" use="optional" default="false"/>
+        <xsd:attribute name="isPublicRead" type="xsd:boolean" use="optional" default="false"/>
+        <xsd:attribute name="isUnique" type="xsd:boolean" use="optional" default="false"/>
+        <xsd:attribute name="isCandidateKey" type="xsd:boolean" use="optional" default="false"/>
+        <xsd:attribute name="initialValue" type="xsd:string" use="optional"/>
+        <xsd:attribute name="lowerBound" type="xsd:string" use="optional"/>
+        <xsd:attribute name="upperBound" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!-- ************************* FormType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="FormTypeDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase">
+        <xsd:attribute name="storageClassRef" type="plm:anyURIType" use="optional" plm:refType="bus:StorageClassDef"/>
+        <xsd:attribute name="displayFileName" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FormTypeDef" type="bus:FormTypeDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* DatasetType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="DatasetTypeDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase">
+        <xsd:attribute name="referenceToolRefs" type="plm:uriReferenceListType" use="optional" plm:refType="bus:ApplicationToolDef"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DatasetTypeDef" type="bus:DatasetTypeDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* ApplicationToolDefType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="ApplicationToolDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase">
+        <xsd:attribute name="inputFormat" type="xsd:string" use="required"/>
+        <xsd:attribute name="outputFormat" type="xsd:string" use="required"/>
+        <xsd:attribute name="mimeType" type="xsd:string" use="optional"/>
+        <xsd:attribute name="shellOrSymbolName" type="xsd:string" use="optional"/>
+        <xsd:attribute name="vendorName" type="xsd:string" use="optional"/>
+        <xsd:attribute name="revision" type="xsd:string" use="optional"/>
+        <xsd:attribute name="releaseDate" type="xsd:date" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ApplicationToolDef" type="bus:ApplicationToolDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* AliasType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="AliasTypeDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase">
+        <xsd:sequence>
+          <xsd:element name="AliasClassName" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AliasTypeDef" type="bus:AliasTypeDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* IdentifierType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="IdentifierTypeDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="IdentifierTypeDef" type="bus:IdentifierTypeDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* FolderType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="FolderTypeDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FolderTypeDef" type="bus:FolderTypeDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* StatusType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="StatusTypeDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="StatusTypeDef" type="bus:StatusTypeDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* ViewType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="ViewTypeDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ViewTypeDef" type="bus:ViewTypeDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* NoteType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="NoteTypeDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase">
+        <xsd:sequence>
+          <xsd:element name="NoteValue" type="bus:ValueDetailsType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="defaultValue" type="xsd:string" use="optional"/>
+        <xsd:attribute name="attachValueList" type="xsd:boolean" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="NoteTypeDef" type="bus:NoteTypeDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* UnitOfMeasureType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="UnitOfMeasureDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase">
+        <xsd:attribute name="symbol" type="xsd:string" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="UnitOfMeasureDef" type="bus:UnitOfMeasureDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* RelationType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="RelationTypeDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RelationTypeDef" type="bus:RelationTypeDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- **********************StorageMediaType ************************ -->
+  <!-- -->
+  <xsd:simpleType name="StorageMediaType">
+    <xsd:annotation>
+      <xsd:documentation>
+      disk:
+      tape:
+      contentStorage:   The storage media is third party content storage.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="disk"/>
+      <xsd:enumeration value="tape"/>
+      <xsd:enumeration value="contentStorage"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ************************* StorageMediaType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="StorageMediaDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase">
+        <xsd:attribute name="logicalDevice" type="xsd:string" use="required"/>
+        <xsd:attribute name="mediaType" type="bus:StorageMediaType" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="StorageMediaDef" type="bus:StorageMediaDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* MEProcessType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="MEProcessTypeDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="MEProcessTypeDef" type="bus:MEProcessTypeDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* ProductInstanceTypeDefType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="ProductInstanceTypeDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ProductInstanceTypeDef" type="bus:ProductInstanceTypeDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* WorkAreaType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="WorkAreaTypeDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="WorkAreaTypeDef" type="bus:WorkAreaTypeDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* ActivityType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="ActivityTypeDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ActivityTypeDef" type="bus:ActivityTypeDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* MEOperationType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="MEOperationTypeDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="MEOperationTypeDef" type="bus:MEOperationTypeDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* OccurrenceGroupType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="OccurrenceGroupTypeDefType">
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="OccurrenceGroupTypeDef" type="bus:OccurrenceGroupTypeDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ************************* ChangeType Definition ********************* -->
+  <!--  -->
+  <xsd:complexType name="ChangeTypeDefType">
+    <xsd:annotation>
+      <xsd:documentation>
+      attributes:
+      
+      formTypeDefRefs:   references the Form Types related to this Change type.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:DataTypeDefBase">
+        <xsd:sequence>
+          <xsd:element name="FormType" type="bus:FormTypeDefType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="ChangeId" type="bus:ChangeIdDefType" maxOccurs="unbounded"/>
+          <xsd:element name="RevId" type="bus:ChangeIdDefType" maxOccurs="unbounded"/>
+          <xsd:element name="Process" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="isEffectivityShared" type="xsd:boolean" use="required"/>
+        <xsd:attribute name="formTypeDefRefs" type="plm:uriReferenceListType" plm:refType="bus:FormTypeDef"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ChangeTypeDef" type="bus:ChangeTypeDefType" substitutionGroup="bus:BusinessDataDef"/>
+  <!-- -->
+  <!-- **********************ChangeIdDefFormatType ************************ -->
+  <!-- -->
+  <xsd:simpleType name="ChangeIdDefFormatType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="static"/>
+      <xsd:enumeration value="running"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ************************* ChangeIdDef Definition ********************* -->
+  <!-- -->
+  <xsd:complexType name="ChangeIdDefType">
+    <xsd:annotation>
+      <xsd:documentation>
+      attributes:
+      
+      length:         number of characters or digits in the ID
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="range" type="xsd:string" use="required"/>
+        <xsd:attribute name="value" type="xsd:string" use="required"/>
+        <xsd:attribute name="length" type="xsd:integer"/>
+        <xsd:attribute name="changeFormat" type="bus:ChangeIdDefFormatType" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ChangeIdDef" type="bus:ChangeIdDefType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- **********************TransferModeDirectionType************************ -->
+  <!-- -->
+  <xsd:simpleType name="TransferModeDirectionType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="tceng2plmxml" plm:deprecated="true"/>
+      <xsd:enumeration value="plmxml2tceng" plm:deprecated="true"/>
+      <xsd:enumeration value="toPLMXML"/>
+      <xsd:enumeration value="fromPLMXML"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ********************** TransferMode Type************************* -->
+  <!-- -->
+  <xsd:complexType name="TransferModeType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Represents the TransferMode information for PLM XML based Import/Export from TC.
+                             
+      Attributes:
+                              
+      contextString       User Specified String that the TransferMode carries.
+      direction           Import or Export Mode.
+      incremental         Specified whether the mode defines full transfer or incremental transfer
+      closureRule         Reference to a Closure Rule Element
+      filter              Reference to a Filter Element
+      propertySet         Reference to a PropertySet Element
+
+      configObjects       Reference to either Context Objects or individual configuration 
+                          objects i.e. Saved Variant Rule and/or Revision Rule.
+      xsltFiles           Reference to ExternalFile elements that contain XSLT Transform file links.
+      actionList          Reference to ApplicationToolDef
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessDataDefBase">
+        <xsd:attribute name="contextString" type="xsd:string" use="optional"/>
+        <xsd:attribute name="direction" type="bus:TransferModeDirectionType" use="required"/>
+        <xsd:attribute name="incremental" type="xsd:boolean" use="optional" default="false"/>
+        <xsd:attribute name="closureRule" type="xsd:anyURI" use="optional" plm:refType="bus:ClosureRule">
+          <xsd:annotation>
+            <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">validate=skipName</xsd:appinfo>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="filter" type="xsd:anyURI" use="optional" plm:refType="bus:FilterRule">
+          <xsd:annotation>
+            <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">validate=skipName</xsd:appinfo>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="propertySet" type="xsd:anyURI" use="optional" plm:refType="bus:PropertySet">
+          <xsd:annotation>
+            <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">validate=skipName</xsd:appinfo>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="configObjects" type="plm:uriReferenceListType" use="optional">
+          <xsd:annotation>
+            <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">validate=skipName</xsd:appinfo>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="xsltFiles" type="plm:uriReferenceListType" use="optional" plm:refType="plm:ExternalFile">
+          <xsd:annotation>
+            <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">validate=skipName</xsd:appinfo>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="actionList" type="plm:uriReferenceListType" use="optional" plm:refType="bus:ApplicationToolDef">
+          <xsd:annotation>
+            <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">validate=skipName</xsd:appinfo>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TransferMode" type="bus:TransferModeType" substitutionGroup="bus:BusinessDataDef"/>
+  <!-- -->
+  <!-- **********************RuleScopeType************************ -->
+  <!-- -->
+  <xsd:simpleType name="RuleScopeType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="tceng" plm:deprecated="true"/>
+      <xsd:enumeration value="application"/>
+      <xsd:enumeration value="plmxml"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ********************** ClosureRule Type************************* -->
+  <!-- -->
+  <xsd:complexType name="ClosureRuleType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Represents the Closure Rule Set for any Transfer Mode.
+                             
+      Attributes:
+                                                      
+      SubElements:
+      
+      Clauses        A UserList element that contains the list of Rule Strings in a CLosure Rule Set.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessDataDefBase">
+        <xsd:sequence>
+          <xsd:element name="Clauses" type="plm:UserListDataType"/>
+        </xsd:sequence>
+        <xsd:attribute name="scope" type="bus:RuleScopeType" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ClosureRule" type="bus:ClosureRuleType" substitutionGroup="bus:BusinessDataDef"/>
+  <!-- -->
+  <!-- ********************** Filter Type************************* -->
+  <!-- -->
+  <xsd:complexType name="FilterRuleType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Represents the Filter Rule Set for any Transfer Mode.
+                             
+      Attributes:
+                             
+                              
+      SubElements:
+                              
+      Clauses        A UserList element that contains the list of filters for various object 
+                     types in the filter rule set.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessDataDefBase">
+        <xsd:sequence>
+          <xsd:element name="Clauses" type="plm:UserListDataType"/>
+        </xsd:sequence>
+        <xsd:attribute name="scope" type="bus:RuleScopeType" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FilterRule" type="bus:FilterRuleType" substitutionGroup="bus:BusinessDataDef"/>
+  <!-- -->
+  <!-- ********************** PropertySet Type************************* -->
+  <!-- -->
+  <xsd:complexType name="PropertySetType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Represents the Property Set for any Transfer Mode.
+                        
+      Attributes:
+                                           
+      SubElements:
+                         
+      Clauses:        A UserList element that contains the list of property strings for 
+                      various object types in the property set.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessDataDefBase">
+        <xsd:sequence>
+          <xsd:element name="Clauses" type="plm:UserListDataType"/>
+        </xsd:sequence>
+        <xsd:attribute name="scope" type="bus:RuleScopeType" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PropertySet" type="bus:PropertySetType" substitutionGroup="bus:BusinessDataDef"/>
+  <!-- -->
+  <!-- **********************APILanguageType ************************ -->
+  <!-- -->
+  <xsd:simpleType name="APILanguageType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Programming Laguage type used for implementing the Method
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="unknown"/>
+      <xsd:enumeration value="C"/>
+      <xsd:enumeration value="CPlusPlus"/>
+      <xsd:enumeration value="java"/>
+      <xsd:enumeration value="script"/>
+      <xsd:enumeration value="dotNET"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ********************** MethodValidity ************************* -->
+  <!-- -->
+  <xsd:complexType name="MethodValidityType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Represents a condition which determines whether a particular Method can
+      be used with a particular Business Operation and/or MethodAttachmentPoint.
+      
+      Attributes:
+      
+      typeName:                   The allowed 'typeName' of the Operation
+      propertyName:               The allowed 'propertyName' of the Operation
+      operationName:              The allowed 'name' of the Operation
+      methodAttachmentPointType:  The allowed type of the MethodAttachmentPoint.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:DescriptionBase">
+        <xsd:attribute name="typeName" type="xsd:string" use="optional"/>
+        <xsd:attribute name="propertyName" type="xsd:string" use="optional"/>
+        <xsd:attribute name="operationName" type="xsd:string" use="optional"/>
+        <xsd:attribute name="methodAttachmentPointType" type="bus:MethodAttachmentPointEnum" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!-- ********************** MethodArgumentDefinition ************************* -->
+  <!-- -->
+  <xsd:complexType name="MethodArgumentDefinitionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Represents a Method Argument Definition.
+      
+      Attributes:
+      
+      name (derived):   Name of the argument.
+      type:             Type of the argument ("string", "int", etc)
+      required:         Whether the argument is required or not.
+      queryRef:         An optional reference to a SavedQueryDef element, which when
+                        invoked, returns a list of possible values of the Argument,
+                        to be chosen for example by a user.    
+      listOfValuesRef:  An optional reference to a ListOfValues element, which defines
+                        a list of possible values. 'queryRef' and 'listOfValuesRef' should not 
+                        be used together.      
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:DescriptionBase">
+        <xsd:attribute name="type" type="plm:UserValueDataType" use="optional"/>
+        <xsd:attribute name="required" type="xsd:boolean" use="optional"/>
+        <xsd:attribute name="queryRef" type="plm:anyURIType" use="optional" plm:refType="bus:SavedQueryDef"/>
+        <xsd:attribute name="listOfValuesRef" type="plm:anyURIType" use="optional" plm:refType="bus:ListOfValues"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!-- ********************** Method ************************* -->
+  <!-- -->
+  <xsd:complexType name="MethodType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Represents a Method that could be used for extending the behaviour of an operation.
+                        
+      attributes:
+                         
+      library:        Library or Jar file name that contains this method.
+      language:       Language of implementation of this method.
+      
+      Sub-elements:
+      
+      ArgumentDefinition: Definitions of arguments that can be passed to the Method.                                    
+      Validity:           Specifies the MethodAttachmentPoints which this Method can be 
+                          connected to.   
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessRuleBase">
+        <xsd:sequence>
+          <xsd:element name="ArgumentDefinition" type="bus:MethodArgumentDefinitionType" minOccurs="1" maxOccurs="unbounded"/>
+          <xsd:element name="Validity" type="bus:MethodValidityType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="library" type="xsd:string" use="optional"/>
+        <xsd:attribute name="language" type="bus:APILanguageType" default="C"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Method" type="bus:MethodType" substitutionGroup="bus:BusinessRule"/>
+  <!-- -->
+  <!-- ********************** MethodCondition ************************* -->
+  <!-- -->
+  <xsd:complexType name="MethodConditionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Represents a Method Condition, which is used to determine whether
+      or not to execute a Method.
+      
+      Attributes:
+      
+      methodRef:        Reference to another Method which is to be executed
+                        to evaluate the Condition.
+      value:            A boolean value which, if present, gives the evaluation
+                        of the Condition as true or false.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:DescriptionBase">
+        <xsd:attribute name="methodRef" type="plm:anyURIType" use="optional" plm:refType="bus:Method"/>
+        <xsd:attribute name="value" type="xsd:boolean" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!-- ********************** MethodArgument ************************* -->
+  <!-- -->
+  <xsd:complexType name="MethodArgumentType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Represents a Method Argument.
+      
+      Attributes:
+      
+      name (derived):   Name of the argument.
+      value:            Value of the argument.  
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:DescriptionBase">
+        <xsd:attribute name="value" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!-- ********************** MethodArgumentGroup ************************* -->
+  <!-- -->
+  <xsd:complexType name="MethodArgumentGroupType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Represents a group of Method Arguments.
+      
+      Sub-elements:
+      
+      Argument:       An element of type MethodArgument.       
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:DescriptionBase">
+        <xsd:sequence>
+          <xsd:element name="Argument" type="bus:MethodArgumentType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!-- ********************** MethodDescriptor ************************* -->
+  <!-- -->
+  <xsd:complexType name="MethodDescriptorType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Contains all the information required to execute a Method. The name of the MethodDescriptor 
+      will be name of Method itself. For internally implemented Method in the system there will not be any
+      methodRef.
+      
+      Attributes:                  
+                                                                
+      methodRef:      Reference to Method. Only used for non-core Methods.
+      priority:       Priority of executing the specified method. Lower number has higher priority.
+      
+      Sub-elements:
+      
+      Condition:      A element of type MethodCondition. This evaluates to a boolean which
+                      determines whether or not the Method method is invoked.
+
+      ArgumentGroup:  A group of arguments to be passed to the Method. If there is more than one
+                      ArgumentGroup sub-element, the Method is invoked once with each
+                      group of arguments.                
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessRuleBase">
+        <xsd:sequence>
+          <xsd:element name="Condition" type="bus:MethodConditionType" minOccurs="0"/>
+          <xsd:element name="ArgumentGroup" type="bus:MethodArgumentGroupType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="methodRef" type="plm:anyURIType" use="required" plm:refType="bus:Method"/>
+        <xsd:attribute name="priority" type="xsd:integer" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="MethodDescriptor" type="bus:MethodDescriptorType" substitutionGroup="bus:BusinessRule"/>
+  <!-- -->
+  <!-- ********************** MethodAttachmentPointEnum ************************ -->
+  <!-- -->
+  <xsd:simpleType name="MethodAttachmentPointEnum">
+    <xsd:annotation>
+      <xsd:documentation>
+      Type of MethodAttachmentPoint
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="unknown"/>
+      <xsd:enumeration value="preCondition"/>
+      <xsd:enumeration value="preAction"/>
+      <xsd:enumeration value="baseAction"/>
+      <xsd:enumeration value="postAction"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ********************** MethodAttachmentPoint ************************* -->
+  <!-- -->
+  <xsd:complexType name="MethodAttachmentPointType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This describes a Method Attachment Point in an operation.
+                        
+      isOverridable:             Specifies if this Attachment Point is overridable            
+      isSingleMethod:            If true, this element can have only one Descriptor.
+      methodAttachmentPointType: Type of the MethodAttachmentPoint. This determines when
+                                 the method is executed.
+      methodDescriptorRefs:      Reference to Method Descriptors that contain the methods to be 
+                                 executed within this Attachment Point.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessRuleBase">
+        <xsd:attribute name="isOverridable" type="xsd:boolean" use="optional" default="false"/>
+        <xsd:attribute name="isSingleMethod" type="xsd:boolean" use="optional" default="false"/>
+        <xsd:attribute name="methodAttachmentPointType" type="bus:MethodAttachmentPointEnum" use="required"/>
+        <xsd:attribute name="methodDescriptorRefs" type="plm:uriReferenceListType" use="optional" plm:refType="bus:MethodDescriptor"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="MethodAttachmentPoint" type="bus:MethodAttachmentPointType" substitutionGroup="bus:BusinessRule"/>
+  <!-- -->
+  <!-- ********************** BusinessOperation Type************************* -->
+  <!-- -->
+  <xsd:complexType name="BusinessOperationType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This describes a Business Operation.
+           
+      Attributes:     
+                      
+      typeName:                  Object Type name on which this operation is defined
+      methodAttachmentPointRefs: Reference to MethodAttachmentPoints related to this Operation.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessRuleBase">
+        <xsd:attribute name="typeName" type="xsd:string" use="optional"/>
+        <xsd:attribute name="methodAttachmentPointRefs" type="plm:uriReferenceListType" use="optional" plm:refType="bus:MethodAttachmentPoint"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="BusinessOperation" type="bus:BusinessOperationType" substitutionGroup="bus:BusinessRule"/>
+  <!-- -->
+  <!-- ********************** TypeBusinessOperation Type************************* -->
+  <!-- -->
+  <xsd:complexType name="TypeBusinessOperationType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This describes a Business Operation which operates on a particular type of object.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessOperationType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="TypeBusinessOperation" type="bus:TypeBusinessOperationType" substitutionGroup="bus:BusinessOperation"/>
+  <!-- -->
+  <!-- ********************** PropertyBusinessOperation Type************************* -->
+  <!-- -->
+  <xsd:complexType name="PropertyBusinessOperationType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This describes a Business Operation which operates on a particular property of
+      a particular Type.
+           
+      Attributes:     
+                      
+      propertyName:      Property of object where this operation is defined.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessOperationType">
+        <xsd:attribute name="propertyName" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PropertyBusinessOperation" type="bus:PropertyBusinessOperationType" substitutionGroup="bus:BusinessOperation"/>
+  <!-- -->
+  <!-- ********************** Application Interface ************************* -->
+  <!-- -->
+  <xsd:complexType name="ApplicationInterfaceType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element describes the integration between the main application and an 
+      external application.
+      
+      Attributes:     
+                      
+      incrementalChangeRequired: If "true", this means that when the external application 
+                           makes changes to data sent from the main app, these changes 
+                           must be recorded in the main database under an Incremental Change.
+      
+      objectTypes:         This is an array of types, which defines the object types understood 
+                           by the external application.
+      viewRefs:            This is an array of View elements giving the Views which the application 
+                           is allowed to access/process.
+      exportTransferModeRef: This is the TransferMode used to export PLM XML to the external application.
+      importTransferModeRef: This is the TransferMode used to import PLM XML from the external application.
+      toolRef:             This specifies the ApplicationToolDef element which corresponds to 
+                           the external application.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessDataDefBase">
+        <xsd:attribute name="incrementalChangeRequired" type="xsd:boolean" use="optional"/>
+        <xsd:attribute name="objectTypes" type="xsd:string" use="optional"/>
+        <xsd:attribute name="viewRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:View"/>
+        <xsd:attribute name="exportTransferModeRef" type="plm:anyURIType" use="optional" plm:refType="bus:TransferMode"/>
+        <xsd:attribute name="importTransferModeRef" type="plm:anyURIType" use="optional" plm:refType="bus:TransferMode"/>
+        <xsd:attribute name="toolRef" type="plm:anyURIType" use="optional" plm:refType="bus:ApplicationToolDef"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ApplicationInterface" type="bus:ApplicationInterfaceType" substitutionGroup="bus:BusinessDataDef"/>
+  <!--  -->
+  <!-- ********************** AuthorisationRuleDomainEnum ********************* -->
+  <!-- -->
+  <xsd:simpleType name="AuthorisationRuleDomainEnum">
+    <xsd:annotation>
+      <xsd:documentation>
+      The type of resource controlled by an AuthorisationRule.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="application"/>
+      <xsd:enumeration value="utility"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ********************** AuthorisationRuleType ************************* -->
+  <!-- -->
+  <xsd:complexType name="AuthorisationRuleType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A rule authorising certain users or groups to use a specified resource.
+           
+      Attributes:     
+                      
+      targetName:         the name of the resource, e.g. an application program
+      ruleDomain:         the type of resource
+      accessorRefs:       the Users, Persons, OrganisationMembers, Organisations, or
+                          ResourcePools which are permitted to use the resource.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="bus:BusinessRuleBase">
+        <xsd:attribute name="targetName" type="xsd:string" use="required"/>
+        <xsd:attribute name="ruleDomain" type="bus:AuthorisationRuleDomainEnum" use="required"/>
+        <xsd:attribute name="accessorRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:Owner plm:ResourcePool"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AuthorisationRule" type="bus:AuthorisationRuleType" substitutionGroup="bus:BusinessRule"/>
+  <!-- -->
+  <!-- ********************** Business Rules Root Element ************************* -->
+  <!-- -->
+  <xsd:complexType name="PLMXMLBusinessTypesType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element is the root element for transferring Business Data Types and Rules
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:DocumentBase">
+        <xsd:sequence>
+          <xsd:element ref="bus:BusinessRule" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element ref="bus:BusinessDataDef" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element ref="plm:AttribOwner" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PLMXMLBusinessTypes" type="bus:PLMXMLBusinessTypesType"/>
+</xsd:schema>

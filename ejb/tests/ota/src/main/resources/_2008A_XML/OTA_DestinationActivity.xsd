@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="2.003" id="OTA2003A2008A">
+	<xs:include schemaLocation="OTA_Profile.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="DestActivityItemsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A collection of destination activity items.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Item" type="ItemType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The details of a destination activity item.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DestActivityReservationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Details of a destination activity reservation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UniqueID" type="UniqueID_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Used to uniquely identify a reservation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TravelerCount" minOccurs="0" maxOccurs="4">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The counts of types of travelers, such as 1 adult, 2 children if full traveler details are not required.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="TravelerCountGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Travelers" type="TravelersType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of Traveler objects, identifying the travelers associated with this reservation. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Contact" type="ContactPersonType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Contact information for this booking. May be either one of the travelers as specified by the RPH or a new set of contact information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DestActivityItems" type="DestActivityItemsType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of destination activity items.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DestActivityResResponseItemType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The item-level response to a reservation request.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PickupLocation" type="ParagraphType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The vendor may provide an address or directions as to where the travelers will be picked up.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReservationItemReferences">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Collection of reservation item references.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ReservationItemReference" type="UniqueID_Type" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The ReservationItemReference object contains various unique (ReservationID) and non unique (ConfirmationID, CancellationID) identifiers that the trading partners associate with a given reservation.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="PickupTime" type="xs:time" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Based upon the time requested for the item, the vendor may respond with an earlier pickup time</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ItemType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The details of a destination activity item.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NegotiatedPrice" type="TotalType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The price agreed between the two parties.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SellingPrice" type="TotalType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The price sold to the end consumer, in case the end supplier must communicate with the customer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SubAllocation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">If traveler suballocation is allowed (see Capabilities), the set of travelers booking this item.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="TravelerRPH" type="ListOfRPH" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This is a list of reference place holders used as an index for the travelers booking this item.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SpecialRequest" type="SpecialRequestType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Any special requests against this particular item</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HotelStay" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Where the guests are staying, allowing the vendor to decide the appropriate pickup point</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="HotelReferenceGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ItemReferences">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of trading partners' references to identifiy the activities.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ItemReference" type="UniqueID_Type" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">ItemReference contains various unique (ReservationID) and non unique (ConfirmationID, CancellationID) identifiers that the trading partners associate with a given reservation.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ItemCode" type="StringLength1to32" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The supplier's code identifying this item.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OptionCode" type="StringLength1to32" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">A code to identify an option within an item.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="SelectedDate" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The selected date of the item.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Quantity" type="xs:integer" use="optional" default="1">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The number of items to purchase of this type</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="SelectedTime" type="xs:time" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">If the item has various times (such as departures) for sale during the day, indicates which time is required.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TravelersType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A collection of Traveler objects, identifying the travelers. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Traveler" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Contains the details of a traveler. </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Profile" type="ProfileType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Basic traveler profile.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="TravelerCharacteristic" minOccurs="0" maxOccurs="2">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Used to define a traveler's physical characteristic.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="Type" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Specifies the traveler characteristic.</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:NMTOKEN">
+											<xs:enumeration value="Height">
+												<xs:annotation>
+													<xs:documentation/>
+												</xs:annotation>
+											</xs:enumeration>
+											<xs:enumeration value="Weight"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attributeGroup ref="UnitsOfMeasureGroup">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Used in conjunction with Type to quantify the traveler characteristic.</xs:documentation>
+									</xs:annotation>
+								</xs:attributeGroup>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="SpecialRequests" type="SpecialRequestType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The SpecialRequest object indicates special requests for a particular traveler.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element ref="TPA_Extensions" minOccurs="0"/>
+					</xs:sequence>
+					<xs:attribute name="RPH" type="RPH_Type" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This is a reference placeholder, used as an index for this traveler in this reservation. </xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

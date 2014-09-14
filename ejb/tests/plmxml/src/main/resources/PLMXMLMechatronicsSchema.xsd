@@ -1,0 +1,1303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Copyright 2005 UGS Corp.  All Rights Reserved.
+This software and related documentation are proprietary to UGS Corp.
+-->
+<xsd:schema targetNamespace="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:plm="http://www.plmxml.org/Schemas/PLMXMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xsd:include schemaLocation="PLMXMLSchema.xsd"/>
+  <xsd:annotation>
+    <xsd:documentation source="http://www.plmxml.org/Schemas/PLMXMLSchema/History">
+      <plm:SchemaChange author="davidj" date="2005-05-11" version="6.0.1.26">
+        <plm:Description>
+        Add Terminal, FlowConnection, FlowConnectionRevision, FlowConnectionRevisionView, 
+        RouteData, RouteDataSegment, Route, RouteSection, RouteNode, Location, LocationRevision,
+        LocationInstance, LocationAssignment, CrossSectionalArea, CoordinateExtent, Temperature,
+        OutsideDiameter, RatedCurrent, RatedVoltage, RatedPower, MaterialSpecification, 
+        WireGauge, HarnessProduct, BendRadius, CompatibleWireSize, Copyright, WireCore,
+        ConnectorCavityGroup, ConnectorCavity, WireProtectionAreaRelation, RouteNodeAssignment,     
+        RouteSectionAssignment and DerivedFromRelation elements.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='TerminalType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='FlowConnectionType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='FlowConnectionRevisionType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='FlowConnectionRevisionViewType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='RouteDataType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='RouteDataSegmentType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='RouteType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='RouteSectionType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='RouteNodeType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='LocationType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='LocationRevisionType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='LocationInstanceType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='LocationAssignmentType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='CrossSectionalAreaType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='CoordinateExtentType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='TemperatureType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='OutsideDiameterType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='RatedCurrentType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='RatedVoltageType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='RatedPowerType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='MaterialSpecificationType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='WireGaugeType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='HarnessProductType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='BendRadiusType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='CompatibleWireSizeType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='CopyrightType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='WireCoreType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='ConnectorCavityGroupType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='ConnectorCavityType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='WireProtectionAreaRelationType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='RouteNodeAssignmentType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='RouteSectionAssignment Type']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='DerivedFromRelationType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-07-21" version="6.0.1.26">
+        <plm:Description>
+        Add 'type' attributes to HarnessProduct, WireCore, ConnectorCavity and 
+        ConnectorCavityGroup.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='HarnessProductType']/attribute[@name='harnessProductType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='WireCoreType']/attribute[@name='wireCoreType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='ConnectorCavityType']/attribute[@name='connectorCavityType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='ConnectorCavityGroupType']/attribute[@name='connectorCavityGroupType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-09-08" version="6.0.1.26">
+        <plm:Description>
+        Correct 'LocationAssigment' element to 'LocationAssignment'
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='LocationAssignmentType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-10-24" version="6.0.1.26">
+        <plm:Description>
+        Modify plm:refType attributes on various attributes.
+        </plm:Description>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2006-01-03" version="6.0.1.xx">
+        <plm:Description>
+        Add support for Embedded Software.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='SoftwareType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='SoftwareRevisionType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='SoftwareRevisionViewType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='ProcessorType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='FrameSignalType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='FrameSignalRevisionType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2006-02-23" version="6.0.1.xx">
+        <plm:Description>
+        Add ProcessorProduct and ProcessorProductRevision.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='ProcessorProductType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='ProcessorProductRevisionType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2006-04-21" version="6.0.1.xx">
+        <plm:Description>
+        Add structureRefs to AllocationGroup
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='AllocationGroupType']"/>
+      </plm:SchemaChange>
+    </xsd:documentation>
+    <xsd:documentation>
+    
+    Mechatronics schema extension
+                        
+    </xsd:documentation>
+    <xsd:appinfo source="http://www.plmxml.org/Schemas/PLMXMLMechatronicsSchema">
+      <plm:SchemaInfo name="PLMXMLMechatronicsSchema.xsd" date="2005-10-24" version="6.0" status="release"/>
+    </xsd:appinfo>
+  </xsd:annotation>
+  <!-- -->
+  <!-- ******************************* Signal *************************** -->
+  <!-- -->
+  <xsd:complexType name="SignalType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A Signal is a message or flow of information within a system.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Signal" type="plm:SignalType" substitutionGroup="plm:Structure"/>
+  <!-- -->
+  <!-- ******************************* SignalRevision *************************** -->
+  <!-- -->
+  <xsd:complexType name="SignalRevisionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a revision of a Signal.
+      
+      Attributes:
+     
+      valueRef:         Reference to a 'default' SignalValue
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureRevisionBase">
+        <xsd:attribute name="valueRef" type="plm:anyURIType" use="optional" plm:refType="plm:SignalValue"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SignalRevision" type="plm:SignalRevisionType" substitutionGroup="plm:StructureRevision"/>
+  <!-- -->
+  <!-- ******************************* SignalValue *************************** -->
+  <!-- -->
+  <xsd:complexType name="SignalValueType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a value of a Signal, e.g. "10.2 volts".
+      
+      Attributes:
+      
+      valueRef:         Reference to a ValueWithUnit or RangeWithUnit giving the signal value.
+      characteristic:   Describes how the signal value depends on the value of 
+                        the corresponding ProcessVariable. There is one predefined value,
+                        namely "linear".
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="characteristic" type="xsd:string" use="optional"/>
+        <xsd:attribute name="valueRef" type="plm:anyURIType" use="required" plm:refType="plm:ValueWithUnit plm:RangeWithUnit"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SignalValue" type="plm:SignalValueType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ********************** ProcessVariable ****************************** -->
+  <!-- -->
+  <xsd:complexType name="ProcessVariableType">
+    <xsd:annotation>
+      <xsd:documentation>
+      The ProcessVariable is a sub-class of GDE. It corresponds to the ProcessVariable
+      object in STEP AP212, where it is defined as 'a parameter used to control or monitor
+      a process'.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:GDEBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ProcessVariable" type="plm:ProcessVariableType" substitutionGroup="plm:GDE"/>
+  <!-- -->
+  <!-- ******************************* GeneralRelationGroup *************************** -->
+  <!-- -->
+  <xsd:complexType name="GeneralRelationGroupType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element is a group of GeneralRelation elements.
+        
+      Attributes:
+      
+      groupId:          The identifier of the GeneralRelationGroup, unique in some context, e.g. an 
+                        Organisation.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ManagedBase">
+        <xsd:attribute name="groupId" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="GeneralRelationGroup" type="plm:GeneralRelationGroupType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ******************************* AllocationGroup *************************** -->
+  <!-- -->
+  <xsd:complexType name="AllocationGroupType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element is a group of Allocation elements.
+        
+      Attributes:
+      
+      sourceRef:        The source ProductStructureView.
+      targetRef:        The target ProductStructureView.
+      structureRefs:    The referenced ProductStructureViews.
+      
+      Either sourceRef and targetRef should be set, or, structureRefs should be set. They
+      should not be used together. 
+      
+      The Allocations in the AllocationGroup should all reference Occurrences which have
+      one of the referenced ProductStructureViews as their root. An Allocation may reference
+      more than one Occurrence with the same root.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:GeneralRelationGroupType">
+        <xsd:attribute name="sourceRef" type="plm:anyURIType" use="optional" plm:refType="plm:ProductStructureView"/>
+        <xsd:attribute name="targetRef" type="plm:anyURIType" use="optional" plm:refType="plm:ProductStructureView"/>
+        <xsd:attribute name="structureRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:ProductStructureView"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AllocationGroup" type="plm:AllocationGroupType" substitutionGroup="plm:GeneralRelationGroup"/>
+  <!-- -->
+  <!-- ******************************* GeneralRelationGroupRevision *************************** -->
+  <!-- -->
+  <xsd:complexType name="GeneralRelationGroupRevisionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a revision of an GeneralRelationGroup.
+      
+      Attributes:
+      
+      revision:         The revision string, e.g. "A".
+      masterRef:        The master GeneralRelationGroup
+      memberRefs:       The GeneralRelation elements in the Group.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ManagedBase">
+        <xsd:attribute name="revision" type="xsd:string" use="required"/>
+        <xsd:attribute name="masterRef" type="plm:anyURIType" use="required" plm:refType="plm:GeneralRelationGroup"/>
+        <xsd:attribute name="memberRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:GeneralRelation"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="GeneralRelationGroupRevision" type="plm:GeneralRelationGroupRevisionType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ******************************* AllocationGroupRevision *************************** -->
+  <!-- -->
+  <xsd:complexType name="AllocationGroupRevisionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element is a revision of an AllocationGroup.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:GeneralRelationGroupRevisionType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AllocationGroupRevision" type="plm:AllocationGroupRevisionType" substitutionGroup="plm:GeneralRelationGroupRevision"/>
+  <!-- -->
+  <!-- ******************************* Allocation ********************************* -->
+  <!-- -->
+  <xsd:complexType name="AllocationType">
+    <xsd:annotation>
+      <xsd:documentation>
+      An Allocation is a relation between a number of Occurrences, in different Views of the 
+      same Product, or different Views of different Products. The 'relatedRefs' attribute of 
+      the base GeneralRelation element will contain the referenced Occurrences.
+      
+      Elements:
+      
+      Reason            the reason for the Allocation. There is one predefined value
+                        for this string, namely "functionalToPhysical", which may be
+                        used if the Allocation represents the equivalent of the AP212
+                        functional_unit_allocation.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:GeneralRelationType">
+        <xsd:sequence>
+          <xsd:element name="Reason" type="plm:UserEnumDataType"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Allocation" type="plm:AllocationType" substitutionGroup="plm:GeneralRelation"/>
+  <!-- -->
+  <!-- ************************* Terminal ****************************** -->
+  <!-- -->
+  <xsd:complexType name="TerminalType">
+    <xsd:annotation>
+      <xsd:documentation>
+      The Terminal is a sub-class of GDE. It corresponds to the Interface_terminal
+      object in STEP AP212, and represents 'an access point for a piece of equipment'.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:GDEBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Terminal" type="plm:TerminalType" substitutionGroup="plm:GDE"/>
+  <!-- -->
+  <!-- ********************** FlowConnection ****************************** -->
+  <!-- -->
+  <xsd:complexType name="FlowConnectionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a sub-class of Connection which corresponds to the AP212 Location,
+      which "allows the flow of energy or information, for instance".
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ConnectionBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FlowConnection" type="plm:FlowConnectionType" substitutionGroup="plm:Connection"/>
+  <!-- -->
+  <!-- ********************** FlowConnectionRevision ************************* -->
+  <!-- -->
+  <xsd:complexType name="FlowConnectionRevisionType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:ConnectionRevisionType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FlowConnectionRevision" type="plm:FlowConnectionRevisionType" substitutionGroup="plm:ConnectionRevision"/>
+  <!-- -->
+  <!-- ********************** FlowConnectionRevisionView ************************* -->
+  <!-- -->
+  <xsd:complexType name="FlowConnectionRevisionViewType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:ConnectionRevisionViewType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FlowConnectionRevisionView" type="plm:FlowConnectionRevisionViewType" substitutionGroup="plm:ConnectionRevisionView"/>
+  <!-- -->
+  <!-- ********************************* RouteData ********************************** -->
+  <!-- -->
+  <xsd:complexType name="RouteDataType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A RouteData element is used to assign routing information to an Instance or Occurrence.
+      
+      Elements:
+      
+      RouteDataSegment:  the RouteDataSegments which define the routes of the various segments 
+                         of the object, in sequence.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="RouteDataSegment" type="plm:RouteDataSegmentType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RouteData" type="plm:RouteDataType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ********************************* RouteDataSegment ********************************** -->
+  <!-- -->
+  <xsd:complexType name="RouteDataSegmentType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A RouteDataSegment is used to assign routing information to a segment of an
+      Instance or Occurrence.
+      
+      Attributes:
+      
+      courseRefs:   the RouteNodes, RouteSections and Routes which define the route of this segment
+                    of the  object, in sequence.
+      free:         false if the segment has a fixed route in space - true if it is free, such as a
+                    freely hanging wire.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:DescriptionBase">
+        <xsd:attribute name="courseRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:Route plm:RouteSection plm:RouteNode"/>
+        <xsd:attribute name="free" type="xsd:boolean" default="false"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!-- ********************************* Route ************************************ -->
+  <!-- -->
+  <xsd:simpleType name="RouteLineTypeEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="solid"/>
+      <xsd:enumeration value="dashed"/>
+      <xsd:enumeration value="thin"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="RouteType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A Route represents a course or track through space.
+      
+      Attributes:
+      
+      courseRefs:    the RouteSections and/or RouteNodes that make up the Route, in order.
+      revision:      a revision string.
+      colour:        display colour
+      lineType:      display line type
+      lineThicknessRef: display line thickness (ValueWithUnit).
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ManagedBase">
+        <xsd:attribute name="courseRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:RouteSection plm:RouteNode"/>
+        <xsd:attribute name="revision" type="xsd:string" use="optional"/>
+        <xsd:attribute name="colour" type="plm:RGBType" use="optional"/>
+        <xsd:attribute name="lineType" type="plm:RouteLineTypeEnum" use="optional"/>
+        <xsd:attribute name="lineThicknessRef" type="plm:anyURIType" use="optional" plm:refType="plm:ValueWithUnit"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Route" type="plm:RouteType" substitutionGroup="plm:Managed"/>
+  <!-- -->
+  <!-- ********************************* RouteSection ***************************** -->
+  <!-- -->
+  <xsd:complexType name="RouteSectionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A RouteSection represents a section of a Route, from one Node to the next.
+      
+      Attributes:
+      
+      startNodeRef:  the Node at the start.
+      endNodeRef:    the Node at the end. Note that this can be the same as the Node at 
+                     the start.
+      startKind:     the shape of the Section at the start. Can be one of "flat oval",
+                     "round", "u shape", or some other string.
+      endKind:       the shape of the Section at the end. Values as for startKind.
+      revision:      a revision string.
+      
+      curveRef:     reference to a Curve element (or entity in a Representation file)
+                    giving the geometric course of the RouteSection.
+                    
+      crossSectionalAreaRefs: references to ValueWithUnit or RangeWithUnit elements describing 
+                     cross-sectional area(s) of the Section.
+      lengthRefs:    references to ValueWithUnit or RangeWithUnit elements describing the length(s)
+                     of the Section.
+
+      bendingRadiusRefs: references to ValueWithUnit or RangeWithUnit elements describing the bending
+                     radius or radii of the Section.
+      spaceFactors:  These are double values which represent the ratio(s) of the usable cross-
+                     section to the geometrical cross-section along the Section.
+      implementationRefs: Occurrences or Instances of ProductRevisionView(s) which implement
+                     the RouteSection.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ManagedBase">
+        <xsd:attribute name="startNodeRef" type="plm:anyURIType" use="optional" plm:refType="plm:RouteNode"/>
+        <xsd:attribute name="endNodeRef" type="plm:anyURIType" use="optional" plm:refType="plm:RouteNode"/>
+        <xsd:attribute name="startKind" type="xsd:string" use="optional"/>
+        <xsd:attribute name="endKind" type="xsd:string" use="optional"/>
+        <xsd:attribute name="revision" type="xsd:string" use="optional"/>
+        <xsd:attribute name="curveRef" type="plm:anyURIType" use="optional" plm:refType="plm:Curve"/>
+        <xsd:attribute name="crossSectionalAreaRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:ValueWithUnit plm:RangeWithUnit"/>
+        <xsd:attribute name="lengthRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:ValueWithUnit plm:RangeWithUnit"/>
+        <xsd:attribute name="bendingRadiusRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:ValueWithUnit plm:RangeWithUnit"/>
+        <xsd:attribute name="spaceFactors" type="plm:DoubleListType" use="optional"/>
+        <xsd:attribute name="implementationRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:StructureUsage"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RouteSection" type="plm:RouteSectionType" substitutionGroup="plm:Managed"/>
+  <!-- -->
+  <!-- ********************************* RouteNode ******************************** -->
+  <!-- -->
+  <xsd:complexType name="RouteNodeType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A RouteNode represents a position along a Route, normally at the end of one
+      or more RouteSections.
+      
+      Attributes:
+      
+      position:      the x,y,z coordinates of the Node.
+      implementationRefs: Occurrences or Instances of ProductRevisionView(s) which implement
+                     the RouteNode.
+
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ManagedBase">
+        <xsd:attribute name="position" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="implementationRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:StructureUsage"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RouteNode" type="plm:RouteNodeType" substitutionGroup="plm:Managed"/>
+  <!-- -->
+  <!-- ************************** Location ************************** -->
+  <!-- -->
+  <xsd:complexType name="LocationType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A Location represents a region of space.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Location" type="plm:LocationType" substitutionGroup="plm:Structure"/>
+  <!-- -->
+  <!-- ************************* LocationRevision ************************* -->
+  <!-- -->
+  <xsd:complexType name="LocationRevisionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a revision of a Location.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureRevisionBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="LocationRevision" type="plm:LocationRevisionType" substitutionGroup="plm:StructureRevision"/>
+  <!-- -->
+  <!-- ********************* LocationInstance ****************************** -->
+  <!-- -->
+  <xsd:complexType name="LocationInstanceType">
+    <xsd:annotation>
+      <xsd:documentation>
+      An Instance of a LocationRevision.
+      
+      definitionRef:      reference to a ProductRevisionView, or an Instance or Occurrence of
+                          a ProductRevisionView, which defines the region of space of this
+                          LocationInstance.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:InstanceBase">
+        <xsd:attribute name="definitionRef" type="plm:anyURIType" use="optional" plm:refType="plm:StructureUsage plm:ProductRevisionView"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="LocationInstance" type="plm:LocationInstanceType" substitutionGroup="plm:Instance"/>
+  <!-- -->
+  <!-- ********************* LocationAssignment ****************************** -->
+  <!-- -->
+  <xsd:complexType name="LocationAssignmentType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This relation relates an element to an Instance or Occurrence of a Location.
+      The Location specifies the region of space in which the element lies.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:GeneralRelationType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="LocationAssignment" type="plm:LocationAssignmentType" substitutionGroup="plm:GeneralRelation"/>
+  <!-- -->
+  <!-- ********************************* CrossSectionalArea ********************************* -->
+  <!-- -->
+  <xsd:complexType name="CrossSectionalAreaType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a Property giving the Cross Sectional Area of an object.
+      
+      Elements:
+      
+      ValueWithUnit
+      RangeWithUnit  one of these sub-elements should be used to indicate the value
+                     or range of the cross-sectional area.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:PropertyBase">
+        <xsd:choice>
+          <xsd:element ref="plm:ValueWithUnit"/>
+          <xsd:element ref="plm:RangeWithUnit"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CrossSectionalArea" type="plm:CrossSectionalAreaType" substitutionGroup="plm:Property"/>
+  <!-- -->
+  <!-- ********************************* CoordinateExtent ******************************** -->
+  <!-- -->
+  <xsd:simpleType name="CoordinateExtentEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="x"/>
+      <xsd:enumeration value="y"/>
+      <xsd:enumeration value="z"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="CoordinateExtentType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This Property gives the Coordinate Extent of an element, i.e. the 'length' in a 
+      particular coordinate direction.      
+      Attributes:
+      
+      type:           "x", "y" or "z"
+      
+      Elements:
+      
+      ValueWithUnit
+      RangeWithUnit   one of these sub-elements should be used to indicate the value
+                      or range of the CoordinateExtent.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:PropertyBase">
+        <xsd:choice>
+          <xsd:element ref="plm:ValueWithUnit"/>
+          <xsd:element ref="plm:RangeWithUnit"/>
+        </xsd:choice>
+        <xsd:attribute name="type" type="plm:CoordinateExtentEnum" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CoordinateExtent" type="plm:CoordinateExtentType" substitutionGroup="plm:Property"/>
+  <!-- -->
+  <!-- ********************************* Temperature ******************************** -->
+  <!-- -->
+  <xsd:simpleType name="TemperatureEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="storage"/>
+      <xsd:enumeration value="operating"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="TemperatureType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This Property gives the Temperature (operating or storage) of an element.
+     
+      Attributes:
+      
+      type:          "operating" or "storage"
+      
+      Elements:
+      
+      ValueWithUnit
+      RangeWithUnit  one of these sub-elements should be used to indicate the value
+                     or range of the temperature.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:PropertyBase">
+        <xsd:choice>
+          <xsd:element ref="plm:ValueWithUnit"/>
+          <xsd:element ref="plm:RangeWithUnit"/>
+        </xsd:choice>
+        <xsd:attribute name="type" type="plm:TemperatureEnum" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Temperature" type="plm:TemperatureType" substitutionGroup="plm:Property"/>
+  <!-- -->
+  <!-- ********************************* OutsideDiameter ******************************** -->
+  <!-- -->
+  <xsd:complexType name="OutsideDiameterType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This Property gives the Outside Diameter of an element.
+      
+      Elements:
+      
+      ValueWithUnit
+      RangeWithUnit  one of these sub-elements should be used to indicate the value
+                     or range of the Outside Diameter
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:PropertyBase">
+        <xsd:choice>
+          <xsd:element ref="plm:ValueWithUnit"/>
+          <xsd:element ref="plm:RangeWithUnit"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="OutsideDiameter" type="plm:OutsideDiameterType" substitutionGroup="plm:Property"/>
+  <!-- -->
+  <!-- ********************************* RatedCurrent ******************************** -->
+  <!-- -->
+  <xsd:simpleType name="RatedCurrentEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="ac3Phase"/>
+      <xsd:enumeration value="ac5Phase"/>
+      <xsd:enumeration value="acSinglePhase"/>
+      <xsd:enumeration value="dc"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="RatedCurrentType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This Property gives the Rated Current of an element.
+      
+      Elements:
+      
+      ValueWithUnit
+      RangeWithUnit  one of these sub-elements should be used to indicate the value
+                     or range of the Rated Current.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:PropertyBase">
+        <xsd:choice>
+          <xsd:element ref="plm:ValueWithUnit"/>
+          <xsd:element ref="plm:RangeWithUnit"/>
+        </xsd:choice>
+        <xsd:attribute name="type" type="plm:RatedCurrentEnum" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RatedCurrent" type="plm:RatedCurrentType" substitutionGroup="plm:Property"/>
+  <!-- -->
+  <!-- ********************************* RatedVoltage ******************************** -->
+  <!-- -->
+  <xsd:simpleType name="RatedVoltageEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="ac3Phase"/>
+      <xsd:enumeration value="ac5Phase"/>
+      <xsd:enumeration value="acSinglePhase"/>
+      <xsd:enumeration value="dc"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="RatedVoltageType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This Property gives the Rated Voltage of an element.
+      
+      Elements:
+      
+      ValueWithUnit
+      RangeWithUnit  one of these sub-elements should be used to indicate the value
+                     or range of the Rated Voltage.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:PropertyBase">
+        <xsd:choice>
+          <xsd:element ref="plm:ValueWithUnit"/>
+          <xsd:element ref="plm:RangeWithUnit"/>
+        </xsd:choice>
+        <xsd:attribute name="type" type="plm:RatedVoltageEnum" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RatedVoltage" type="plm:RatedVoltageType" substitutionGroup="plm:Property"/>
+  <!-- -->
+  <!-- ********************************* RatedPower ******************************** -->
+  <!-- -->
+  <xsd:simpleType name="RatedPowerEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="apparentPower"/>
+      <xsd:enumeration value="reactivePower"/>
+      <xsd:enumeration value="truePower"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="RatedPowerType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This Property gives the Rated Power of an element.
+      
+      Elements:
+      
+      ValueWithUnit
+      RangeWithUnit  one of these sub-elements should be used to indicate the value
+                     or range of the Rated Power.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:PropertyBase">
+        <xsd:choice>
+          <xsd:element ref="plm:ValueWithUnit"/>
+          <xsd:element ref="plm:RangeWithUnit"/>
+        </xsd:choice>
+        <xsd:attribute name="type" type="plm:RatedPowerEnum" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RatedPower" type="plm:RatedPowerType" substitutionGroup="plm:Property"/>
+  <!-- -->
+  <!-- ************************* MaterialSpecification ****************************** -->
+  <!-- -->
+  <xsd:complexType name="MaterialSpecificationType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element specifies the physical material from which an object is made. More than one
+      MaterialSpecification can be associated with an object.
+      
+      Attributes:
+      
+      materialId:      Id of the material in some materials database.
+      referenceSystem: name of the reference system or database in which the material
+                       is defined
+      usage:           string indicating how the material is used in the object, e.g.
+                       "plating".
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:PropertyBase">
+        <xsd:attribute name="materialId" type="xsd:string" use="optional"/>
+        <xsd:attribute name="referenceSystem" type="xsd:string" use="optional"/>
+        <xsd:attribute name="usage" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="MaterialSpecification" type="plm:MaterialSpecificationType" substitutionGroup="plm:Property"/>
+  <!-- -->
+  <!-- ************************* WireGauge ****************************** -->
+  <!-- -->
+  <xsd:complexType name="WireGaugeType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element specifies the gauge of a Wire.
+      
+      Attributes:
+      
+      value:           the gauge value.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:PropertyBase">
+        <xsd:attribute name="value" type="xsd:double" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="WireGauge" type="plm:WireGaugeType" substitutionGroup="plm:Property"/>
+  <!-- -->
+  <!-- ************************* HarnessProduct ****************************** -->
+  <!-- -->
+  <xsd:simpleType name="HarnessProductTypeEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="harness"/>
+      <xsd:enumeration value="module"/>
+      <xsd:enumeration value="connectorHousing"/>
+      <xsd:enumeration value="accessory"/>
+      <xsd:enumeration value="connectorCavityPlug"/>
+      <xsd:enumeration value="connectorCavitySeal"/>
+      <xsd:enumeration value="terminal"/>
+      <xsd:enumeration value="wire"/>
+      <xsd:enumeration value="wireProtection"/>
+      <xsd:enumeration value="fixing"/>
+      <xsd:enumeration value="general"/>
+      <xsd:enumeration value="composite"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="HarnessProductType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a subclass of Product which corresponds to a Product related to electrical
+      Harness definition, as for example defined in the KBL standard.
+      
+      Attributes:
+      
+      type:               An enum specifying the type of Product.
+      harnessProductType: A further string describing the type of product, e.g.
+                          "flat band" or "corrugated pipe".
+      code:               a code for the Product. Only relevant where type="connectorHousing"
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ProductType">
+        <xsd:attribute name="type" type="plm:HarnessProductTypeEnum" use="required"/>
+        <xsd:attribute name="harnessProductType" type="xsd:string" use="optional"/>
+        <xsd:attribute name="code" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="HarnessProduct" type="plm:HarnessProductType" substitutionGroup="plm:Product"/>
+  <!-- -->
+  <!-- ************************* BendRadius ****************************** -->
+  <!-- -->
+  <xsd:complexType name="BendRadiusType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a Property giving the minumum Bend Radius of an object.
+      
+      Attributes:
+      
+      value:         the value of the Bend Radius in metres.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:PropertyBase">
+        <xsd:attribute name="value" type="xsd:double" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="BendRadius" type="plm:BendRadiusType" substitutionGroup="plm:Property"/>
+  <!-- -->
+  <!-- ************************** CompatibleWireSize *************************** -->
+  <!-- -->
+  <xsd:complexType name="CompatibleWireSizeType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a Property giving the size (diameter) of Wire which is compatible with 
+      this Product.
+      
+      Elements:
+      
+      ValueWithUnit
+      RangeWithUnit  one of these sub-elements should be used to indicate the value
+                     or range of the compatible wire size.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:PropertyBase">
+        <xsd:choice>
+          <xsd:element ref="plm:ValueWithUnit"/>
+          <xsd:element ref="plm:RangeWithUnit"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CompatibleWireSize" type="plm:CompatibleWireSizeType" substitutionGroup="plm:Property"/>
+  <!-- -->
+  <!-- ************************* Copyright ****************************** -->
+  <!-- -->
+  <xsd:complexType name="CopyrightType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a Property giving a Copyright string for an object.
+      
+      Attributes:
+      
+      value:         the value of the Copyright string.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:PropertyBase">
+        <xsd:attribute name="value" type="xsd:string" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Copyright" type="plm:CopyrightType" substitutionGroup="plm:Property"/>
+  <!-- -->
+  <!-- ************************* WireCore ****************************** -->
+  <!-- -->
+  <xsd:complexType name="WireCoreType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This represents a single wire in a multi-core cable.
+      
+      Attributes:
+      
+      wireCoreType:  A string describing the type of Wire Core, e.g.
+                     "flat band" or "protected wire".
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:GDEBase">
+        <xsd:attribute name="wireCoreType" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="WireCore" type="plm:WireCoreType" substitutionGroup="plm:GDE"/>
+  <!-- -->
+  <!-- ************************* ConnectorCavityGroup ****************************** -->
+  <!-- -->
+  <xsd:complexType name="ConnectorCavityGroupType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This represents a group of ConnectorCavities.
+      
+      Attributes:
+      
+      connectorCavityGroupType:  A string describing the type of ConnectorCavityGroup
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:GDEBase">
+        <xsd:attribute name="connectorCavityGroupType" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ConnectorCavityGroup" type="plm:ConnectorCavityGroupType" substitutionGroup="plm:GDE"/>
+  <!-- -->
+  <!-- ************************* ConnectorCavity ****************************** -->
+  <!-- -->
+  <xsd:complexType name="ConnectorCavityType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This represents a cavity in a connector, into which a wire can be fixed.
+      
+      Attributes:
+      
+      connectorCavityType:  A string describing the type of ConnectorCavity
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:GDEBase">
+        <xsd:attribute name="connectorCavityType" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ConnectorCavity" type="plm:ConnectorCavityType" substitutionGroup="plm:GDE"/>
+  <!-- -->
+  <!-- **************** WireProtectionAreaRelation ************************* -->
+  <!-- -->
+  <xsd:simpleType name="WireProtectionTapingEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="left"/>
+      <xsd:enumeration value="right"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="WireProtectionAreaRelationType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This relation relates an Occurrence of a WireProtection to a RouteSection
+      element, which specifies where the protection applies.
+      
+      Attributes:
+      
+      startT:          start parameter on associated RouteSection
+      endT:            end parameter on associated RouteSection
+      gradient: 
+      tapingDirection:
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:GeneralRelationType">
+        <xsd:attribute name="startT" type="xsd:double" use="optional"/>
+        <xsd:attribute name="endT" type="xsd:double" use="optional"/>
+        <xsd:attribute name="gradient" type="xsd:double" use="optional"/>
+        <xsd:attribute name="tapingDirection" type="plm:WireProtectionTapingEnum" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="WireProtectionAreaRelation" type="plm:WireProtectionAreaRelationType" substitutionGroup="plm:GeneralRelation"/>
+  <!-- -->
+  <!-- **************** RouteNodeAssignment ************************* -->
+  <!-- -->
+  <xsd:complexType name="RouteNodeAssignmentType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This relation relates an Occurrence to a RouteNode, on which it lies.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:GeneralRelationType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RouteNodeAssignment" type="plm:RouteNodeAssignmentType" substitutionGroup="plm:GeneralRelation"/>
+  <!-- -->
+  <!-- **************** RouteSectionAssignment ************************* -->
+  <!-- -->
+  <xsd:complexType name="RouteSectionAssignmentType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This relation relates an Occurrence to a RouteSection, on which it lies.
+      For example, the Occurrence might be of a Fixing on a wire.
+      
+      Attributes:
+      
+      t:             parameter on the RouteSection at which the Occurrence occurs.
+      zAxis:         direction of the 'Z axis' of the Occurrence.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:GeneralRelationType">
+        <xsd:attribute name="t" type="xsd:double" use="optional"/>
+        <xsd:attribute name="zAxis" type="plm:VectorType" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RouteSectionAssignment" type="plm:RouteSectionAssignmentType" substitutionGroup="plm:GeneralRelation"/>
+  <!-- -->
+  <!-- **************** DerivedFromRelation ************************* -->
+  <!-- -->
+  <xsd:complexType name="DerivedFromRelationType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This relation indicates that one element is derived from (based on) another. 
+      For example, a ProductRevision might be based on an earlier revision of the 
+      Product (or a different Product).
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:GeneralRelationType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DerivedFromRelation" type="plm:DerivedFromRelationType" substitutionGroup="plm:GeneralRelation"/>
+  <!-- -->
+  <!-- **************** Processor ***************************************** -->
+  <!-- -->
+  <xsd:simpleType name="ProcessorByteOrderEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="bigEndian"/>
+      <xsd:enumeration value="littleEndian"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="ProcessorArchitectureEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="bits32"/>
+      <xsd:enumeration value="bits64"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="ProcessorProductType">
+    <xsd:annotation>
+      <xsd:documentation>
+      The ProcessorProduct element is a type of Product which is used to represent a processor
+      which can run embedded software.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ProductType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ProcessorProduct" type="plm:ProcessorProductType" substitutionGroup="plm:Product"/>
+  <!-- -->
+  <xsd:complexType name="ProcessorProductRevisionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      The ProcessorProductRevision element is a revision of a ProcessorProduct.
+      
+      Attributes:
+      
+      linked:                "true" if this Processor is connected to a network.
+      programmableInService: "true" if this Processor can be reprogrammed in service.
+      memoryType:            type of memory, e.g. "EEPROM"
+      byteOrder:             littleEndian or bigEndian
+      architecture:          32-bit or 64-bit
+      gateway:               true if this is a Gateway Processor, i.e. acts as
+                             a Gateway for accessing other Processors.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ProductRevisionType">
+        <xsd:attribute name="linked" type="xsd:boolean" use="optional"/>
+        <xsd:attribute name="programmableInService" type="xsd:boolean" use="optional"/>
+        <xsd:attribute name="memoryType" type="xsd:string" use="optional"/>
+        <xsd:attribute name="byteOrder" type="plm:ProcessorByteOrderEnum" use="optional"/>
+        <xsd:attribute name="architecture" type="plm:ProcessorArchitectureEnum" use="optional"/>
+        <xsd:attribute name="gateway" type="xsd:boolean" default="false"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ProcessorProductRevision" type="plm:ProcessorProductRevisionType" substitutionGroup="plm:ProductRevision"/>
+  <!-- -->
+  <xsd:complexType name="ProcessorType">
+    <xsd:annotation>
+      <xsd:documentation>
+      The Processor element is a type of GDE which is used to represent a processor
+      which can run embedded software.
+      
+      Attributes:
+      
+      linked:                "true" if this Processor is connected to a network.
+      programmableInService: "true" if this Processor can be reprogrammed in service.
+      networkProtocol:       e.g. "CAN", "MOST"
+      memoryType:            type of memory, e.g. "EEPROM"
+      byteOrder:             littleEndian or bigEndian
+      architecture:          32-bit or 64-bit
+      gateway:               true if this is a Gateway Processor, i.e. acts as
+                             a Gateway for accessing other Processors.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:GDEBase">
+        <xsd:attribute name="linked" type="xsd:boolean" use="optional"/>
+        <xsd:attribute name="programmableInService" type="xsd:boolean" use="optional"/>
+        <xsd:attribute name="networkProtocol" type="xsd:string" use="optional"/>
+        <xsd:attribute name="memoryType" type="xsd:string" use="optional"/>
+        <xsd:attribute name="byteOrder" type="plm:ProcessorByteOrderEnum" use="optional"/>
+        <xsd:attribute name="architecture" type="plm:ProcessorArchitectureEnum" use="optional"/>
+        <xsd:attribute name="gateway" type="xsd:boolean" default="false"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Processor" type="plm:ProcessorType" substitutionGroup="plm:GDE"/>
+  <!-- -->
+  <!-- ************************** Software ****************************** -->
+  <!-- -->
+  <xsd:simpleType name="SoftwareEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="application"/>
+      <xsd:enumeration value="calibration"/>
+      <xsd:enumeration value="bootLoader"/>
+      <xsd:enumeration value="configuration"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="SoftwareType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Software is a subclass of Structure representing a piece of embedded Software, 
+      e.g. in an ECU.
+      
+      Attributes:
+      
+      softwareType:  the type of the software - "application", "calibration",
+                     "bootLoader" or "configuration".
+                     
+      alternateForRef:  An 'alternate' Software is one which is substitutable, in all 
+                     contexts, for a particular Software. If this is an 'alternate'
+                     Software, then this attribute references the Software for which
+                     this is an alternate.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureBase">
+        <xsd:attribute name="softwareType" type="plm:SoftwareEnum" use="optional"/>
+        <xsd:attribute name="alternateForRef" type="plm:anyURIType" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Software" type="plm:SoftwareType" substitutionGroup="plm:Structure"/>
+  <!-- -->
+  <!-- ************************* SoftwareRevisionType ************************* -->
+  <!-- -->
+  <xsd:complexType name="SoftwareRevisionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a revision of Software. 
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureRevisionBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SoftwareRevision" type="plm:SoftwareRevisionType" substitutionGroup="plm:StructureRevision"/>
+  <!-- -->
+  <!-- ************************ SoftwareRevisionViewType *********************** -->
+  <!-- -->
+  <xsd:complexType name="SoftwareRevisionViewType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a 'view' (e.g. 'design', 'manufacturing', 'maintenance') of a 
+      revision of a Software.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureRevisionViewBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SoftwareRevisionView" type="plm:SoftwareRevisionViewType" substitutionGroup="plm:StructureRevisionView"/>
+  <!-- -->
+  <!-- ********************* SoftwareInstance ****************************** -->
+  <!-- -->
+  <xsd:complexType name="SoftwareInstanceType">
+    <xsd:annotation>
+      <xsd:documentation>
+      An Instance of a SoftwareRevisionView, SoftwareRevision, or Software.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:InstanceBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SoftwareInstance" type="plm:SoftwareInstanceType" substitutionGroup="plm:Instance"/>
+  <!-- -->
+  <!-- ******************************* FrameSignal *************************** -->
+  <!-- -->
+  <xsd:complexType name="FrameSignalType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A FrameSignal is a type of Signal that carries multiple embedded signals
+      between devices.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:SignalType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FrameSignal" type="plm:FrameSignalType" substitutionGroup="plm:Signal"/>
+  <!-- -->
+  <!-- ******************************* FrameSignalRevision ********************** -->
+  <!-- -->
+  <xsd:complexType name="FrameSignalRevisionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a revision of a FrameSignal.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:SignalRevisionType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FrameSignalRevision" type="plm:FrameSignalRevisionType" substitutionGroup="plm:SignalRevision"/>
+  <!-- -->
+</xsd:schema>

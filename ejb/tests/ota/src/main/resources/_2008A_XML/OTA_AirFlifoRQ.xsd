@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.010" id="OTA2008A">
+	<xs:include schemaLocation="OTA_AirCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_AirFlifoRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Retrieve real-time flight departure, arrival and gate information for a particular flight, including actual as well as scheduled departure and arrival times.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Point of sale object. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Airline" type="CompanyNameType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specify airline to request FLIFO details.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="FlightNumber" type="FlightNumberType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specific flight number to request details for. Requires that Airline is also supplied.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DepartureDate" type="xs:date">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Date of departure for flight information.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DepartureAirport" type="LocationType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specifies the departure location.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ArrivalAirport" type="LocationType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specifies the arrival location.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="FlightSegment" minOccurs="0" maxOccurs="10">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The flight for which flifo information is being requested.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Airline" type="CompanyNameType">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specify airline to request FLIFO details.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="FlightNumber" type="FlightNumberType">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specific flight number to request details for. Requires that Airline is also supplied.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="DepartureDate" type="xs:date">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Date of departure for flight information.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="DepartureAirport" type="LocationType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies the departure location.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ArrivalAirport" type="LocationType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies the arrival location.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="UTC_PreferenceInd" type="xs:boolean" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">When true, times should be returned in UTC (Universal Time Coordinate).  When false, times should be returned in local time.  If attribute is not included time is assumed to be local time.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

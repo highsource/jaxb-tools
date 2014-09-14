@@ -1,0 +1,2770 @@
+<?xml version="1.0"?>
+<!--
+IPTC - International Press Telecommunications Council
+Royal Albert House, Windsor, Berkshire SL4 1BE, England
+www.iptc.org
+
+See sportsml.xsd to view Non-Exclusive License Agreement for
+International Press Telecommunications Council, which
+applies to this specification.
+
+	New in 1.8:
+
+	coverageAttributes
+		added attribute period-value (for tracking hits per inning, for example)
+
+	career-phase
+		added attribute subphase-type (could be "sophomore" or "rookie")
+		added attribute phase-caliber (league | team, for example)
+		added attribute phase-caliber-key (l.nfl.com | l.nfl.com-t.2)
+
+		added attribute entry-reason = draft | trade
+		added attribute selection-level = (1, if drafted in 1st round)
+		added attribute selection-sublevel = (27, if picked as 27th selection in 1st round)
+		added attribute exit-reason = retired | waived
+
+	new element injury-phase
+
+	home-location
+		added attributes %global-attributes;
+		added attributes %coverage-attributes;
+
+	name
+		added attribute suffix
+		added attribute prefix
+
+	rank
+		added attribute issuer (for who issued the ranking)
+
+	rating
+		added attribute rating-issuer
+
+	tournament-round element
+		added attribute round-status
+
+	event-metadata
+		added attribute event-of-day
+		added attribute events-day-total
+
+	player-metadata
+		added attribute scratch-reason
+		added attribute round-position
+
+	team-metadata
+		added attribute round-position
+
+	player-stats
+		time-played-event-average
+
+	add (wagering-stats*) to the content-model of sports-event, right before (officials?)
+
+-->
+<schema
+	targetNamespace="http://iptc.org/std/SportsML/2006-10-18/"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:sportsml="http://iptc.org/std/SportsML/2006-10-18/"
+	xmlns:nitf="http://iptc.org/std/NITF/2006-10-18/"
+	version="1.8"
+	>
+	<annotation>
+		<documentation>The SportsML Core schema contains properties common to all (or many) sports.</documentation>
+	</annotation>
+	<!-- Schema for NITF -->
+	<import namespace="http://iptc.org/std/NITF/2006-10-18/" schemaLocation="../../../../NITF/3.4/specification/schema/nitf-3-4.xsd"/>
+	<attributeGroup name="globalAttributes">
+		<attribute name="id" type="ID" use="optional">
+			<annotation>
+				<documentation>An XML-specific identifier for the element.</documentation>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+	<attributeGroup name="commonAttributes">
+		<attribute name="id" type="ID" use="optional">
+			<annotation>
+				<documentation>An XML-specific identifier for the element.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="class" type="string" use="optional">
+			<annotation>
+				<documentation>An open placeholder for categorization.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="style" type="string" use="optional">
+			<annotation>
+				<documentation>An open placeholder for reference by an external stylesheet.</documentation>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+	<attributeGroup name="coverageAttributes">
+		<attribute name="stats-coverage" type="sportsml:statsCoverage.Core" use="optional">
+			<annotation>
+				<documentation>A relative indication of how many statistics are included in the item.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="team-coverage" type="sportsml:teamCoverage.Core" use="optional">
+			<annotation>
+				<documentation>Indicates whether the item contains information about one team, or many teams.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="date-coverage-type" type="sportsml:dateCoverageType.Core" use="optional">
+			<annotation>
+				<documentation>Describes what time period the statistics describe. Examples: just this week, this event, or this playoff season.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="date-coverage-value" type="string" use="optional">
+			<annotation>
+				<documentation>Value that further describes the dates covered. Example: if type is season, value can be 2001-2002.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="duration-scope" type="sportsml:durationScope.Core" use="optional">
+			<annotation>
+				<documentation>Indicates what class of events the included statistics apply. Example: those events that went into overtime.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="competition-scope" type="sportsml:competitionScope.Core" use="optional">
+			<annotation>
+				<documentation>Indicates that the included statistics apply only to events against particular groups of opponents, such as those in the same division.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="alignment-scope" type="sportsml:alignmentScope.Core" use="optional">
+			<annotation>
+				<documentation>Indicates that the included statistics apply only to events played either at home or away.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="position-scope" type="string" use="optional">
+			<annotation>
+				<documentation>Indicates that the included statistics apply only to while played at a particular position.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="record-making-scope" type="sportsml:recordMakingScope.Core" use="optional">
+			<annotation>
+				<documentation>Indicates that the included statistics apply only to values that set a record, such as a team-high, or an individual-low.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="scoping-label" type="string" use="optional">
+			<annotation>
+				<documentation>A textual description for the scope.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="period-value" type="string" use="optional">
+			<annotation>
+				<documentation>Used for tracking hits-per-inning, for example.</documentation>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+	<attributeGroup name="siteAttributes">
+		<attribute name="site-key" type="string" use="optional">
+			<annotation>
+				<documentation>The symbol for the site at which the event is played. Deprecated in favor of site element.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="site-source" type="string" use="optional">
+			<annotation>
+				<documentation>The maintainer of the controlled vocabulary for the key. Deprecated in favor of site element.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="site-name" type="string" use="optional">
+			<annotation>
+				<documentation>A displayable name for the key. Deprecated in favor of site element.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="site-capacity" type="string" use="optional">
+			<annotation>
+				<documentation>How many spectators can fill the site. Deprecated in favor of site element.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="site-style" type="sportsml:siteStyle.Core" use="optional">
+			<annotation>
+				<documentation>Whether it is an indoor or outdoor site. Deprecated in favor of site element.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="site-surface" type="sportsml:siteSurface.Core" use="optional">
+			<annotation>
+				<documentation>Describes the surface upon which events are played. For example, in tennis, could be hard-court or grass or clay. Deprecated in favor of site element.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="site-city" type="string" use="optional">
+			<annotation>
+				<documentation>City in which the site is located. Deprecated in favor of site element.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="site-county" type="string" use="optional">
+			<annotation>
+				<documentation>County in which the site is located. Deprecated in favor of site element.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="site-state" type="string" use="optional">
+			<annotation>
+				<documentation>State or province in which the site is located. Deprecated in favor of site element.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="site-country" type="string" use="optional">
+			<annotation>
+				<documentation>Country in which the site is located. Generally, a two-letter ISO code. Deprecated in favor of site element.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="site-alignment" use="optional">
+			<annotation>
+				<documentation>Whether the site is neutral with respect to the competitors, or is the often-used site of the home team. Deprecated in favor of site element.</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="home"/>
+					<enumeration value="neutral"/>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="site-attendance" type="string" use="optional">
+			<annotation>
+				<documentation>How many spectators attended during the event. Deprecated in favor of site element.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="site-temperature" type="string" use="optional">
+			<annotation>
+				<documentation>Temperature of the event recorded during the competition. Deprecated in favor of site element.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="site-temperature-units" type="string" use="optional">
+			<annotation>
+				<documentation>Units of the temperature value. Deprecated in favor of site element.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="site-weather-wind" type="string" use="optional">
+			<annotation>
+				<documentation>Wind reading of the event recorded during the competition. Deprecated in favor of site element.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="site-weather-label" type="string" use="optional">
+			<annotation>
+				<documentation>Additional comment about the weather. Deprecated in favor of site element.</documentation>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+	<attributeGroup name="statAttributes">
+		<attribute name="score" type="string" use="optional">
+			<annotation>
+				<documentation>Final or current score of the team or player.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="score-opposing" type="string" use="optional">
+			<annotation>
+				<documentation>Final or current score of the opposing team or player.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="score-average" type="string" use="optional">
+			<annotation>
+				<documentation>Average per-game score for the team or player.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="score-opposing-average" type="string" use="optional">
+			<annotation>
+				<documentation>Average per-game score for the opposing team or player.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="score-units" type="sportsml:scoreUnits.Core" use="optional">
+			<annotation>
+				<documentation>Describes how the score and score-opposing is valued.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="score-attempts" type="string" use="optional">
+			<annotation>
+				<documentation>Final or current number of attempts to score by a team or player. Example: in ice hockey, would represent total shots on goal.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="score-attempts-opposing" type="string" use="optional">
+			<annotation>
+				<documentation>Final or current number of attempts to score by an opposing team or player.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="score-attempts-on-goal" type="string" use="optional">
+			<annotation>
+				<documentation>A subset of score-attempts. Only counts those attempts that were on-goal.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="score-attempts-on-goal-opposing" type="string" use="optional">
+			<annotation>
+				<documentation>Final or current number of attempts to score by an opposing team or player that were on-goal.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="score-percentage" type="string" use="optional">
+			<annotation>
+				<documentation>Percentage of attempted scores that reached their mark.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="score-percentage-opposing" type="string" use="optional">
+			<annotation>
+				<documentation>Percentage of attempted scores by opposing team or player that reached their mark.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="result-effect" type="sportsml:resultEffect.Core" use="optional">
+			<annotation>
+				<documentation>Describes the effect that the result of the event or rank changing has had on the team. Example: Whether or not a team has qualified for the playoffs, or has been promoted or demoted to a different division.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="event-outcome" use="optional">
+			<annotation>
+				<documentation>Whether the competitor won, lost, or tied.</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="win"/>
+					<enumeration value="loss"/>
+					<enumeration value="tie"/>
+					<enumeration value="undecided"/>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="event-standing-points" type="string" use="optional">
+			<annotation>
+				<documentation>How many new points were earned as a result of the outcome of this particular event.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="event-odds" type="string" use="optional">
+			<annotation>
+				<documentation>The odds that this team or player would win the event. Candidate for deprecation.</documentation>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+	<element name="sports-content">
+		<annotation>
+			<documentation>Metadata and coverage of sporting news. | Good for scores, schedules, standings, statistics, etc.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:sports-metadata"/>
+				<choice minOccurs="0" maxOccurs="unbounded">
+					<element ref="sportsml:sports-event"/>
+					<element ref="sportsml:tournament"/>
+					<element ref="sportsml:schedule"/>
+					<element ref="sportsml:standing"/>
+					<element ref="sportsml:statistic"/>
+					<element ref="sportsml:article"/>
+				</choice>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="sports-metadata">
+		<annotation>
+			<documentation>Metadata for the document being published. | Holds metadata applying to the document as a whole.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:catalog" minOccurs="0"/>
+				<element ref="sportsml:sports-title"/>
+				<element ref="sportsml:advisory" minOccurs="0"/>
+				<element ref="sportsml:sports-content-codes" minOccurs="0"/>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="doc-id" type="string" use="required">
+				<annotation>
+					<documentation>The often-unique ID of the document, tracked by publishers.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="publisher" type="string" use="optional">
+				<annotation>
+					<documentation>Publisher of the data.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="date-time" type="sportsml:dateTime.Common" use="optional">
+				<annotation>
+					<documentation>Date-timestamp for the document, normalized to ISO 8601: YYYYMMDDTHHMMSS+HHMM (preferred) YYYYMMDDTHHMMSSZ (alternative). Use YYYYMMDD when no time is available</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="language" type="string" use="optional">
+				<annotation>
+					<documentation>The default language of the document. May be overridden via xml:lang. In ISO format - example: en-US.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="slug" type="string" use="optional">
+				<annotation>
+					<documentation>A keyword used by editors to refer to the document.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="document-class" type="string" use="optional">
+				<annotation>
+					<documentation>A category code for the fixture-key. Equals news, standings, schedules, statistics, event-summary, event-action, dynamic-resource-file</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fixture-key" type="string" use="optional">
+				<annotation>
+					<documentation>A consistent key for the type of regularly-published document being transmitted. External controlled vocabulary: fixture-key.list</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fixture-source" type="string" use="optional">
+				<annotation>
+					<documentation>The maintainer of the controlled-vocabulary of fixture-keys.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fixture-name" type="string" use="optional">
+				<annotation>
+					<documentation>A displayable name for the fixture-key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="feature-name" type="string" use="optional">
+				<annotation>
+					<documentation>A publisher-created subset of the fixture-key.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="catalog">
+		<annotation>
+			<documentation>A reference to the document listing externally-supplied controlled vocabularies. | The catalog file is in NewsML.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="href" type="string" use="optional">
+				<annotation>
+					<documentation>The URL for the catalog.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="sports-title">
+		<annotation>
+			<documentation>A short textual description of the document. | Can show up in search results.</documentation>
+		</annotation>
+		<complexType mixed="true">
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="advisory">
+		<annotation>
+			<documentation>A short textual message to editors receiving the document. | Not generally published through to end-users.</documentation>
+		</annotation>
+		<complexType mixed="true">
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="sports-content-codes">
+		<annotation>
+			<documentation>A container for content-codes. | Can hold as many codes as needed to describe all contents at this level and below.</documentation>
+		</annotation>
+		<complexType>
+			<sequence minOccurs="0" maxOccurs="unbounded">
+				<element ref="sportsml:sports-content-code"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="sports-content-code">
+		<annotation>
+			<documentation>An individual code that describes an entity one may want to filter for. | Describes what sports, what teams, etc., are covered.</documentation>
+		</annotation>
+		<complexType>
+			<sequence minOccurs="0" maxOccurs="unbounded">
+				<element ref="sportsml:sports-content-qualifier"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="code-type" type="sportsml:codeType.Core" use="required">
+				<annotation>
+					<documentation>What type of item is being described.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="code-key" type="string" use="optional">
+				<annotation>
+					<documentation>The symbol for the identified content.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="code-source" type="string" use="optional">
+				<annotation>
+					<documentation>The maintainer of the controlled vocabulary for the code.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="code-name" type="string" use="optional">
+				<annotation>
+					<documentation>A displayable name for the code.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="sports-content-qualifier">
+		<annotation>
+			<documentation>Further refinement/elaboration of a sports-content-code. | If the document covers more than one of these, additional sports-content-qualifier elements may be used.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="gender" type="sportsml:gender.Core" use="optional">
+				<annotation>
+					<documentation>One specific gender or mixed.</documentation>
+				</annotation>
+			</attribute>
+
+			<attribute name="participant-count" type="sportsml:participantCount.Core" use="optional">
+				<annotation>
+					<documentation>Number of participants playing on a team or side in the events covered.</documentation>
+				</annotation>
+			</attribute>
+
+			<attribute name="professional-status" type="sportsml:professionalStatus.Core" use="optional">
+				<annotation>
+					<documentation>The professional-status of the events covered.</documentation>
+				</annotation>
+			</attribute>
+
+			<attribute name="special-group" type="sportsml:specialGroup.Core" use="optional">
+				<annotation>
+					<documentation>If the events covered are for special groups. Can be school-oriented, age-oriented, or group names, like Firefighters.</documentation>
+				</annotation>
+			</attribute>
+
+			<attribute name="minimum-age" type="string" use="optional">
+				<annotation>
+					<documentation>Lowest age for participants, in years. Examples: 0, 14, 21.5.</documentation>
+				</annotation>
+			</attribute>
+
+			<attribute name="maximum-age" type="string" use="optional">
+				<annotation>
+					<documentation>Highest age for participants, in years. Examples: 8, 65, 120.</documentation>
+				</annotation>
+			</attribute>
+
+			<attribute name="special-needs" type="sportsml:specialNeeds.Core" use="optional">
+				<annotation>
+					<documentation>Events for persons with special-needs.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="sports-property">
+		<annotation>
+			<documentation>An extensible property. | Like in NewsML.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="formal-name" type="string" use="optional">
+				<annotation>
+					<documentation>The code or key for the property.</documentation>
+				</annotation>
+			</attribute>
+
+			<attribute name="vocabulary" type="string" use="optional">
+				<annotation>
+					<documentation>Provides a pointer to a Topic Set which is the controlled vocabulary that can be used to resolve the meaning of the formal-name.</documentation>
+				</annotation>
+			</attribute>
+
+			<attribute name="scheme" type="string" use="optional">
+				<annotation>
+					<documentation>Distinguishes which of possibly multiple naming schemes in the controlled vocabulary is the one that governs this formal-name.</documentation>
+				</annotation>
+			</attribute>
+
+			<attribute name="value" type="string" use="optional">
+				<annotation>
+					<documentation>The value of the property. For example, if formal-name equals favorite-color, then value might equal blue.</documentation>
+				</annotation>
+			</attribute>
+
+			<attribute name="allowed-values" type="string" use="optional">
+				<annotation>
+					<documentation>Points to a controlled vocabulary that delimits the set of allowed values for the property.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="article">
+		<annotation>
+			<documentation>Holds either an article or a reference to an article. | Recommended format is NITF.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="nitf:nitf"/>
+				<!-- <any namespace="http://www.w3.org/namespace/"/> -->
+			</sequence>
+			<attributeGroup ref="sportsml:commonAttributes"/>
+			<attribute name="format" type="string" use="optional">
+				<annotation>
+					<documentation>Format for the included content.</documentation>
+				</annotation>
+			</attribute>
+
+			<attribute name="article-ref" type="string" use="optional">
+				<annotation>
+					<documentation>URL or system identifier (or IDREF?) to an externally-located news article.</documentation>
+				</annotation>
+			</attribute>
+
+		</complexType>
+	</element>
+	<element name="sports-event">
+		<annotation>
+			<documentation>A sporting competition. | A contest that generally ends with a winner.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:event-metadata" minOccurs="0"/>
+				<element ref="sportsml:event-stats" minOccurs="0"/>
+				<choice>
+					<element ref="sportsml:team" minOccurs="1" maxOccurs="unbounded"/>
+					<element ref="sportsml:player" minOccurs="1" maxOccurs="unbounded"/>
+				</choice>
+				<element ref="sportsml:wagering-stats" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:officials" minOccurs="0"/>
+				<element ref="sportsml:event-actions" minOccurs="0"/>
+				<element ref="sportsml:highlight" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:award" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:sports-event" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="event-metadata">
+		<annotation>
+			<documentation>Background information about a game. | Where, when, and what an event is.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:sports-content-codes" minOccurs="0"/>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+				<group ref="sportsml:eventMetadataSpecific" minOccurs="0"/>
+				<element ref="sportsml:event-sponsor" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:site" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attributeGroup ref="sportsml:siteAttributes"/>
+			<attribute name="event-key" type="string" use="optional">
+				<annotation>
+					<documentation>The symbol for the identified sports-event. Best if globally unique.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="event-source" type="string" use="optional">
+				<annotation>
+					<documentation>The maintainer of the controlled vocabulary for the key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="event-name" type="string" use="optional">
+				<annotation>
+					<documentation>A displayable name for the key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="event-recurring-key" type="string" use="optional">
+				<annotation>
+					<documentation>The symbol for an identified sports-event that recurs every season. This same key should be used from season to season.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="event-recurring-name" type="string" use="optional">
+				<annotation>
+					<documentation>A displayable name for the event-recurring-key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="event-style" type="sportsml:eventStyle.Core" use="optional">
+				<annotation>
+					<documentation>Indicates whether competitors are trying to defeat each other or just outdo one another.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="event-number" type="string" use="optional">
+				<annotation>
+					<documentation>The ranked position this event had among other events.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="event-status" type="sportsml:eventStatus.Core" use="optional">
+				<annotation>
+					<documentation>The stage of the event, describing whether it has started, is in progress, etc.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="event-of-day" type="sportsml:eventStatus.Core" use="optional">
+				<annotation>
+					<documentation>If the day had multiple events involving these competitors, which event of the day it was. Example values: 1, 2, 3, etc.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="events-day-total" type="sportsml:eventStatus.Core" use="optional">
+				<annotation>
+					<documentation>How many events involving these competitors have been planned for that day.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="postponement-status" type="sportsml:postponementStatus.Core" use="optional">
+				<annotation>
+					<documentation>Either none, weather-delay, or other.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="postponement-note" type="string" use="optional">
+				<annotation>
+					<documentation>A displayable notice as to why an event was postponed.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="start-date-time" type="string" use="optional">
+				<annotation>
+					<documentation>Time the game starts, normalized to ISO 8601: YYYYMMDDTHHMMSS+HHMM (preferred) YYYYMMDDTHHMMSSZ (alternative). Use YYYYMMDD000000+HHMM when no time is available.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="start-weekday" use="optional">
+				<annotation>
+					<documentation>Day of the week in which the game starts.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="sunday"/>
+						<enumeration value="monday"/>
+						<enumeration value="tuesday"/>
+						<enumeration value="wednesday"/>
+						<enumeration value="thursday"/>
+						<enumeration value="friday"/>
+						<enumeration value="saturday"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="end-date-time" type="string" use="optional">
+				<annotation>
+					<documentation>Time the game ends, normalized to ISO 8601: YYYYMMDDTHHMMSS+HHMM (preferred) YYYYMMDDTHHMMSSZ (alternative). Use YYYYMMDD000000+HHMM when no time is available.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="end-weekday" use="optional">
+				<annotation>
+					<documentation>Day of the week in which the game ends.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="sunday"/>
+						<enumeration value="monday"/>
+						<enumeration value="tuesday"/>
+						<enumeration value="wednesday"/>
+						<enumeration value="thursday"/>
+						<enumeration value="friday"/>
+						<enumeration value="saturday"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="heat-number" type="string" use="optional">
+				<annotation>
+					<documentation>The ranked position this heat had among other heats.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="duration" type="sportsml:duration.Common" use="optional">
+				<annotation>
+					<documentation>The length of time the event took place.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="event-stats">
+		<annotation>
+			<documentation>Stats applying to the game as a whole. | Initially designed for motor-racing, but potentially applicable to many sports.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+				<group ref="sportsml:eventStatsSpecific" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+		</complexType>
+	</element>
+	<element name="event-sponsor">
+		<annotation>
+			<documentation>A sponsor for an event. | Events can have more than one sponsor.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="type" type="string" use="optional">
+				<annotation>
+					<documentation>Could be main, supporting, etc.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="name" type="string" use="optional">
+				<annotation>
+					<documentation>The name of the sponsor.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="site">
+		<annotation>
+			<documentation>An element housing data having to do with a venue, stadium, arena, field, etc.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:site-metadata"/>
+				<element ref="sportsml:site-stats" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="site-metadata">
+		<annotation>
+			<documentation>Metadata about the site.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:name" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:home-location" minOccurs="0"/>
+				<element ref="sportsml:sports-content-code" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="site-key" type="string" use="optional">
+				<annotation>
+					<documentation>The unique identifier for the site.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="site-source" type="string" use="optional">
+				<annotation>
+					<documentation>The maintainer of the controlled vocabulary for the site-key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="capacity" type="string" use="optional">
+				<annotation>
+					<documentation>How many spectators can fill the site.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="style" type="string" use="optional">
+				<annotation>
+					<documentation>Whether it is an indoor or outdoor site.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="surface" type="string" use="optional">
+				<annotation>
+					<documentation>Describes the surface upon which events are played. For example, in tennis, could be hard-court or grass or clay.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shape" type="string" use="optional">
+				<annotation>
+					<documentation>A controlled vocabulary for the site's shape. Example for motor-racing: oval.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="incline" type="string" use="optional">
+				<annotation>
+					<documentation>The pitch or embankment of the field of play. Generally in degrees. Example for motor-racing: 13.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="length" type="string" use="optional">
+				<annotation>
+					<documentation>The length of the arena or field of play.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="length-units" type="string" use="optional">
+				<annotation>
+					<documentation>The units used for the length attribute.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="type" type="string" use="optional">
+				<annotation>
+					<documentation>A controlled vocabulary for the type or class of arena. Example for motor-racing: super-speedway.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="home-page-url" type="string" use="optional">
+				<annotation>
+					<documentation>The website for the venue or arena.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="site-stats">
+		<annotation>
+			<documentation>Holder for statistics about the site.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="alignment" use="optional">
+				<annotation>
+					<documentation>Statistics about the site, accurate for a particular occasion.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="home"/>
+						<enumeration value="neutral"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="attendance" type="string" use="optional">
+				<annotation>
+					<documentation>How many spectators attended during the event.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="attendance-average" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of spectators that have attended.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="temperature" type="string" use="optional">
+				<annotation>
+					<documentation>Temperature of the event recorded during the competition.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="temperature-units" type="string" use="optional">
+				<annotation>
+					<documentation>Units of the temperature value.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="weather-code" type="string" use="optional">
+				<annotation>
+					<documentation>A controlled-vocabulary description of the weather, such as sunny, partly-cloudy, etc.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="weather-label" type="string" use="optional">
+				<annotation>
+					<documentation>Additional comment about the weather.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="weather-wind" type="string" use="optional">
+				<annotation>
+					<documentation>Wind reading of the event recorded during the competition.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="team">
+		<annotation>
+			<documentation>A team participating in a sporting event. | Holds code and names for team.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:team-metadata"/>
+				<element ref="sportsml:team-stats" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:player" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:wagering-stats" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:associate" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:affiliation" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:site" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="team-metadata">
+		<annotation>
+			<documentation>Info about the team. Properties of a team that are not based on their competitive performance. | An included sports-content-code element can hold what division it is in, etc.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:name" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:home-location" minOccurs="0"/>
+				<element ref="sportsml:sports-content-code" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+				<group ref="sportsml:teamMetadataSpecific" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="team-key" type="sportsml:teamKey.Common" use="optional">
+				<annotation>
+					<documentation>A unique identifier for the team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="team-source" type="string" use="optional">
+				<annotation>
+					<documentation>The maintainer of the controlled vocabulary for the team-key. A reference to the catalog file, which holds the URL for the topic set in which the team-key is listed.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="alignment" use="optional">
+				<annotation>
+					<documentation>Home or visiting.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="home"/>
+						<enumeration value="away"/>
+						<enumeration value="none"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="team-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>Optional reference to a team in which this team is a member. Example: The U.S. Davis Cup team consists of many sub-teams.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="home-page-url" type="string" use="optional">
+				<annotation>
+					<documentation>The fully-qualified URL for the official home page of the team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="round-position" type="string" use="optional">
+				<annotation>
+					<documentation>The seed or position in this particular round for which this player started. Useful for bracketed tournaments, such as tennis.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="home-location">
+		<annotation>
+			<documentation>A location. | Could be the hometown of a person, or where a team usually plays.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="city" type="string" use="optional">
+				<annotation>
+					<documentation>The city.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="county" type="string" use="optional">
+				<annotation>
+					<documentation>The county.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="state" type="string" use="optional">
+				<annotation>
+					<documentation>The state or province.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="country" type="string" use="optional">
+				<annotation>
+					<documentation>The country. Generally, an ISO two-letter country-code.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="team-stats">
+		<annotation>
+			<documentation>Statistics that apply to the team as a whole. | Not all stats are used in every sport.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:sub-score" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:sub-score-attempts" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:penalty-stats" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:outcome-totals" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:highlight" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:award" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:event-record" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:rank" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:rating" minOccurs="0" maxOccurs="unbounded"/>
+				<group ref="sportsml:teamStatsSpecific" minOccurs="0"/>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attributeGroup ref="sportsml:statAttributes"/>
+			<attribute name="events-played" type="string" use="optional">
+				<annotation>
+					<documentation>The number of sports-events in which this team has already participated.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="time-played-total" type="string" use="optional">
+				<annotation>
+					<documentation>Value for the amount of time played by the team over the course of a particular time-span, such as a season.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="standing-points" type="string" use="optional">
+				<annotation>
+					<documentation>A quantity used to rank teams, usually within a division, in order to decide who comes in first at the end of a season.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="games-back" type="string" use="optional">
+				<annotation>
+					<documentation>A number used to measure how behind one team is from first place. The first place team is 0 games back.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="streak" type="string" use="optional">
+				<annotation>
+					<documentation>A value used to say how many events in a row the team has most recently won or lost. Deprecated. Use outcome-totals instead.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="sub-score">
+		<annotation>
+			<documentation>Statistics that detail the score for a particular period or inning. | Per-sport controlled vocabularies used for period-value.</documentation>
+		</annotation>
+		<complexType>
+			<attribute name="period-value" type="string" use="optional">
+				<annotation>
+					<documentation>Could be quarter-1, period-2, inning-5, etc.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score" type="string" use="optional">
+				<annotation>
+					<documentation>The score for that period.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="sub-score-attempts">
+		<annotation>
+			<documentation>Statistics that detail the scoring attempts for a particular period or inning. | Per-sport controlled vocabularies used for period-value.</documentation>
+		</annotation>
+		<complexType>
+			<attribute name="period-value" type="string" use="optional">
+				<annotation>
+					<documentation>Could be quarter-1, period-2, inning-5, etc.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-attempts" type="string" use="optional">
+				<annotation>
+					<documentation>The score for that period.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="penalty-stats">
+		<annotation>
+			<documentation>Statistics that detail the number of each type of penalty. | Can be recorded for either a team or a player.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="type" type="string" use="optional">
+				<annotation>
+					<documentation>Could be a numeric value like 2, 5 or 10 for ice hockey, or yellow-card or red-card for soccer etc.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="count" type="string" use="optional">
+				<annotation>
+					<documentation>The number of that type of penalities for this team or player.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="outcome-totals">
+		<annotation>
+			<documentation>A report on the number of wins, losses, etc., the team or player had during a particular time period. | Can also be scoped with various coverage qualifications, such as just events played at home.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="wins" type="string" use="optional">
+				<annotation>
+					<documentation>Number of wins.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="losses" type="string" use="optional">
+				<annotation>
+					<documentation>Number of losses.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="ties" type="string" use="optional">
+				<annotation>
+					<documentation>Number of ties.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="undecideds" type="string" use="optional">
+				<annotation>
+					<documentation>Number of events that were started, but ended up undecided.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="winning-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>The winning percentage. Generally, wins divided by total events completed.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points-scored-for" type="string" use="optional">
+				<annotation>
+					<documentation>The number of points a team has scored against its opponents during an extended time period.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points-scored-against" type="string" use="optional">
+				<annotation>
+					<documentation>The number of points scored against a team by its opponents during an extended time period.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points-difference" type="string" use="optional">
+				<annotation>
+					<documentation>The final calculated difference between points-scored-for and points-scored-against. Possibly takes into account other scoring aspects, such as penalties and differences in score-values.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="standing-points" type="string" use="optional">
+				<annotation>
+					<documentation>A quantity used to rank teams, usually within a division, in order to decide who comes in first at the end of a season. Localized to the coverage-attributes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="streak-type" use="optional">
+				<annotation>
+					<documentation>Whether this is a streak of wins, of losses, etc.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="win"/>
+						<enumeration value="loss"/>
+						<enumeration value="tie"/>
+						<enumeration value="score"/>
+						<enumeration value="assist"/>
+						<enumeration value="point"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="streak-duration" type="sportsml:duration.Common" use="optional">
+				<annotation>
+					<documentation>How long the streak lasted.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="streak-total" type="string" use="optional">
+				<annotation>
+					<documentation>Holds the number of goals scored during a streak-type of score, for example.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="streak-start" type="sportsml:dateTime.Common" use="optional">
+				<annotation>
+					<documentation>Date on which the streak began.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="streak-end" type="sportsml:dateTime.Common" use="optional">
+				<annotation>
+					<documentation>Date on which the streak ended.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="event-record">
+		<annotation>
+			<documentation>A world, national, state, or school record. | More than one record can be set by one participant at one sports-event.</documentation>
+		</annotation>
+		<complexType>
+			<attribute name="type" type="string" use="optional">
+				<annotation>
+					<documentation>The type or record.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="previous-record" type="string" use="optional">
+				<annotation>
+					<documentation>The score value of the previously-held record.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="rank">
+		<annotation>
+			<documentation>How a team is doing in comparison to other teams or players. | May be qualified, so that one ranks teams or players according to, say, how they play at home, or within their division.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="type" type="string" use="optional">
+				<annotation>
+					<documentation>The type of the rank. Generally a publisher-specific controlled vocabulary.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="issuer" type="string" use="optional">
+				<annotation>
+					<documentation>The entity or organization which issued the rank.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="value" type="string" use="optional">
+				<annotation>
+					<documentation>The value of the rank.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="value-previous" type="string" use="optional">
+				<annotation>
+					<documentation>The previous rank.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="rating">
+		<annotation>
+			<documentation>A judged value placed on the team or individual. | Often used in British soccer.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="rating-type" type="string" use="optional">
+				<annotation>
+					<documentation>A classification for the rating.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rating-issuer" type="string" use="optional">
+				<annotation>
+					<documentation>The entity or organization which issued the rating.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rating-value" type="string" use="optional">
+				<annotation>
+					<documentation>The value of the rating.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rating-maximum" type="string" use="optional">
+				<annotation>
+					<documentation>The maximum value for the rating.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="wagering-stats">
+		<annotation>
+			<documentation>An element to house lines and odds for wagering. | Includes moneylines, spreads, etc.</documentation>
+		</annotation>
+		<complexType>
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="sportsml:wagering-moneyline"/>
+				<element ref="sportsml:wagering-total-score"/>
+				<element ref="sportsml:wagering-runline"/>
+				<element ref="sportsml:wagering-odds"/>
+				<element ref="sportsml:wagering-straight-spread"/>
+			</choice>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A generic comment for the wagering stats.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="wagering-moneyline">
+		<annotation>
+			<documentation>Odds in terms of money. | Negative amount indicates wagerer must lay that amount to win say a hundred dollars. Positive amount indicates wagerer gets that amount for every hundred dollars wagered.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="bookmaker-key" type="string" use="optional">
+				<annotation>
+					<documentation>Unique ID for the make of the line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="bookmaker-name" type="string" use="optional">
+				<annotation>
+					<documentation>Name of the maker of the line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rotation-key" type="string" use="optional">
+				<annotation>
+					<documentation>Reusable ID for the team generally agreed upon by a pool of bookmakers.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A comment for this line. Often the same comment is supplied for both teams in a game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="date-time" type="string" use="optional">
+				<annotation>
+					<documentation>The date and time which this wagering info was assigned by the bookmaker.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="context" use="optional">
+				<annotation>
+					<documentation>An indication of whether this line is a current line, or a repeat of a special-interest line from the past.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="opening"/>
+						<enumeration value="closing"/>
+						<enumeration value="current"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="prediction" use="optional">
+				<annotation>
+					<documentation>Whether this team or player is the favorite or the underdog.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="favorite"/>
+						<enumeration value="underdog"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="line" type="string" use="optional">
+				<annotation>
+					<documentation>The actual line value.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="prediction-opening" use="optional">
+				<annotation>
+					<documentation>The opening value for this prediction.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="favorite"/>
+						<enumeration value="underdog"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="line-opening" type="string" use="optional">
+				<annotation>
+					<documentation>The opening value for this line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="vigorish" type="string" use="optional">
+				<annotation>
+					<documentation>The commission paid to the bookmaker.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="wagering-total-score">
+		<annotation>
+			<documentation>Total combined point/runs/goals scored in a game.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="bookmaker-key" type="string" use="optional">
+				<annotation>
+					<documentation>Unique ID for the make of the line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="bookmaker-name" type="string" use="optional">
+				<annotation>
+					<documentation>Name of the maker of the line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rotation-key" type="string" use="optional">
+				<annotation>
+					<documentation>Reusable ID for the team generally agreed upon by a pool of bookmakers.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A comment for this line. Often the same comment is supplied for both teams in a game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="date-time" type="string" use="optional">
+				<annotation>
+					<documentation>The date and time which this wagering info was assigned by the bookmaker.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="context" use="optional">
+				<annotation>
+					<documentation>An indication of whether this line is a current line, or a repeat of a special-interest line from the past.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="opening"/>
+						<enumeration value="closing"/>
+						<enumeration value="current"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="prediction" use="optional">
+				<annotation>
+					<documentation>Whether this team or player is the favorite or the underdog.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="favorite"/>
+						<enumeration value="underdog"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="line-over" type="string" use="optional">
+				<annotation>
+					<documentation>The OVER section of an over/under line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="line-under" type="string" use="optional">
+				<annotation>
+					<documentation>The UNDER section of an over/under line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="total" type="string" use="optional">
+				<annotation>
+					<documentation>The combined total of the score for the two teams.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="prediction-opening" use="optional">
+				<annotation>
+					<documentation>The opening value for this prediction.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="favorite"/>
+						<enumeration value="underdog"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="line-over-opening" type="string" use="optional">
+				<annotation>
+					<documentation>The opening value of the OVER section of an over/under line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="line-under-opening" type="string" use="optional">
+				<annotation>
+					<documentation>The opening value of the UNDER section of an over/under line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="total-opening" type="string" use="optional">
+				<annotation>
+					<documentation>The opening value of the combined score for the two teams.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="vigorish" type="string" use="optional">
+				<annotation>
+					<documentation>The commission paid to the bookmaker.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="wagering-runline">
+		<annotation>
+			<documentation>A line used in baseball.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="bookmaker-key" type="string" use="optional">
+				<annotation>
+					<documentation>Unique ID for the make of the line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="bookmaker-name" type="string" use="optional">
+				<annotation>
+					<documentation>Name of the maker of the line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rotation-key" type="string" use="optional">
+				<annotation>
+					<documentation>Reusable ID for the team generally agreed upon by a pool of bookmakers.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A comment for this line. Often the same comment is supplied for both teams in a game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="date-time" type="string" use="optional">
+				<annotation>
+					<documentation>The date and time which this wagering info was assigned by the bookmaker.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="context" use="optional">
+				<annotation>
+					<documentation>An indication of whether this line is a current line, or a repeat of a special-interest line from the past.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="opening"/>
+						<enumeration value="closing"/>
+						<enumeration value="current"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="line" type="string" use="optional">
+				<annotation>
+					<documentation>The value of the runline.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="value" type="string" use="optional">
+				<annotation>
+					<documentation>Generally +1.5 or -1.5.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="prediction" use="optional">
+				<annotation>
+					<documentation>Whether this team or player is the favorite or the underdog.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="favorite"/>
+						<enumeration value="underdog"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="line-opening" type="string" use="optional">
+				<annotation>
+					<documentation>The opening line for this runline.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="value-opening" type="string" use="optional">
+				<annotation>
+					<documentation>The opening value for this runline.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="prediction-opening" use="optional">
+				<annotation>
+					<documentation>The opening value for this prediction.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="favorite"/>
+						<enumeration value="underdog"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="vigorish" type="string" use="optional">
+				<annotation>
+					<documentation>The commission paid to the bookmaker.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="wagering-odds">
+		<annotation>
+			<documentation>A line that gives formal odds on a team or player winning, such as 3-to-1 odds.</documentation>
+		</annotation>
+		<complexType>
+			<sequence minOccurs="0" maxOccurs="unbounded">
+				<element ref="sportsml:wagering-prediction"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="bookmaker-key" type="string" use="optional">
+				<annotation>
+					<documentation>Unique ID for the make of the line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="bookmaker-name" type="string" use="optional">
+				<annotation>
+					<documentation>Name of the maker of the line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rotation-key" type="string" use="optional">
+				<annotation>
+					<documentation>Reusable ID for the team generally agreed upon by a pool of bookmakers.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A comment for this line. Often the same comment is supplied for both teams in a game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="date-time" type="string" use="optional">
+				<annotation>
+					<documentation>The date and time which this wagering info was assigned by the bookmaker.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="context" use="optional">
+				<annotation>
+					<documentation>An indication of whether this line is a current line, or a repeat of a special-interest line from the past.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="opening"/>
+						<enumeration value="closing"/>
+						<enumeration value="current"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="numerator" type="string" use="optional">
+				<annotation>
+					<documentation>The numerator of the chances this team or player is given.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="denominator" type="string" use="optional">
+				<annotation>
+					<documentation>The denominator of the chances this team or player is given.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="numerator-opening" type="string" use="optional">
+				<annotation>
+					<documentation>The opening value of the numerator.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="denominator-opening" type="string" use="optional">
+				<annotation>
+					<documentation>The opening value of the denominator.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="payout-calcluation" type="string" use="optional">
+				<annotation>
+					<documentation>How much money additional gets paid should this team or player or team win.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="payback-amount" type="string" use="optional">
+				<annotation>
+					<documentation>The total amount paid back to the winning wagerer, including the amount invested.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="wagering-prediction">
+		<annotation>
+			<documentation>A prediction as to whether a team or player is a favorite or an underdog.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="prediction" use="optional">
+				<annotation>
+					<documentation>Whether this team or player is the favorite or the underdog.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="favorite"/>
+						<enumeration value="underdog"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="wagering-straight-spread">
+		<annotation>
+			<documentation>A wager built around the different between the scores of two teams.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="bookmaker-key" type="string" use="optional">
+				<annotation>
+					<documentation>Unique ID for the make of the line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="bookmaker-name" type="string" use="optional">
+				<annotation>
+					<documentation>Name of the maker of the line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rotation-key" type="string" use="optional">
+				<annotation>
+					<documentation>Reusable ID for the team generally agreed upon by a pool of bookmakers.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A comment for this line. Often the same comment is supplied for both teams in a game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="date-time" type="string" use="optional">
+				<annotation>
+					<documentation>The date and time which this wagering info was assigned by the bookmaker.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="context" use="optional">
+				<annotation>
+					<documentation>An indication of whether this line is a current line, or a repeat of a special-interest line from the past.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="opening"/>
+						<enumeration value="closing"/>
+						<enumeration value="current"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="prediction" use="optional">
+				<annotation>
+					<documentation>Whether this team or player is the favorite or the underdog.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="favorite"/>
+						<enumeration value="underdog"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="value" type="string" use="optional">
+				<annotation>
+					<documentation>The number of points for which the two scores should differ.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="prediction-opening" use="optional">
+				<annotation>
+					<documentation>The opening value for this prediction.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="favorite"/>
+						<enumeration value="underdog"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="value-opening" type="string" use="optional">
+				<annotation>
+					<documentation>The opening value.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="vigorish" type="string" use="optional">
+				<annotation>
+					<documentation>The commission paid to the bookmaker.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="affiliation">
+		<annotation>
+			<documentation>A mechanism for assigning the membership of a player or team within a division or larger organizational structure.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="membership-idref" type="string" use="optional">
+				<annotation>
+					<documentation>A pointer to the ID for the larger organizational structure.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="membership-type" type="string" use="optional">
+				<annotation>
+					<documentation>The type of organizational structure in which this item is a member.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="membership-key" type="string" use="optional">
+				<annotation>
+					<documentation>A unique key for the organizational structure in which this item is a member.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="membership-name" type="string" use="optional">
+				<annotation>
+					<documentation>The name associated with the organizational structure in which this item is a member.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="player">
+		<annotation>
+			<documentation>A competitor. | Their athletic talents help them decide who wins a sports-event.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:player-metadata"/>
+				<element ref="sportsml:player-stats" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:wagering-stats" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:associate" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:affiliation" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="player-metadata">
+		<annotation>
+			<documentation>Metadata that describes a player. | Generally does not change over the course of a sports-events.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:name" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:home-location" minOccurs="0"/>
+				<element ref="sportsml:career-phase" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:injury-phase" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+				<group ref="sportsml:playerMetadataSpecific" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="player-key" type="string" use="optional">
+				<annotation>
+					<documentation>The symbol for the player.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="player-source" type="string" use="optional">
+				<annotation>
+					<documentation>The maintainer of the controlled vocabulary for the key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="team-idref" type="string" use="optional">
+				<annotation>
+					<documentation>A reference to the team for which this player competes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="team-key" type="string" use="optional">
+				<annotation>
+					<documentation>A key-based reference to the team for which this player competes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="status" type="sportsml:status.Core" use="optional">
+				<annotation>
+					<documentation>Whether a player starts playing at the beginning of a sports-event, joins mid-game, or is not available to participate.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="date-of-birth" type="string" use="optional">
+				<annotation>
+					<documentation>The day on which a player was born, normalized to ISO 8601: YYYYMMDDTHHMMSS+HHMM (preferred) YYYYMMDDTHHMMSSZ (alternative). Use YYYYMMDD000000+HHMM when no time is available.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="height" type="string" use="optional">
+				<annotation>
+					<documentation>Height of the player. Generally in cm.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="weight" type="string" use="optional">
+				<annotation>
+					<documentation>Weight of a player. Generally in kg.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="position-regular" type="sportsml:position.Common" use="optional">
+				<annotation>
+					<documentation>The code for the typical position at which this player plays.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="position-event" type="sportsml:position.Common" use="optional">
+				<annotation>
+					<documentation>The code for the position played by the player at this particular sports-event.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="position-depth" type="string" use="optional">
+				<annotation>
+					<documentation>A ranking amongst players on the team who share the same position.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="position-source" type="string" use="optional">
+				<annotation>
+					<documentation>The source of the controlled-vocabulary for position-regular and position-event.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="health" type="sportsml:health.Core" use="optional">
+				<annotation>
+					<documentation>An indication of the health of the player.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="scratch-reason" type="sportsml:health.Core" use="optional">
+				<annotation>
+					<documentation>Ad indication as to why this player did not play in an event.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="uniform-number" type="string" use="optional">
+				<annotation>
+					<documentation>The number currently displayed on the uniform or jersey of the player.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="home-page-url" type="string" use="optional">
+				<annotation>
+					<documentation>The fully-qualified URL for the official home page of the team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="gender" use="optional">
+				<annotation>
+					<documentation>Male or female.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="male"/>
+						<enumeration value="female"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="nationality" type="string" use="optional">
+				<annotation>
+					<documentation>Your country of citizinship.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="round-position" type="string" use="optional">
+				<annotation>
+					<documentation>The seed or position in this particular round for which this player started. Useful for bracketed tournaments, such as tennis.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="career-phase">
+		<annotation>
+			<documentation>A description of where a player is playing, or has previously played. | Can be used to state where the player went to college. Can also list previous teams of the player.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+
+			<attribute name="phase-type" type="sportsml:phaseType.Core" use="optional">
+				<annotation>
+					<documentation>Value can be college or professional, etc.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="name" type="string" use="optional">
+				<annotation>
+					<documentation>Name of the team or college, for example.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="start-date" type="string" use="optional">
+				<annotation>
+					<documentation>When the player started this phase in the career, generally normalized to ISO 8601: YYYYMMDDTHHMMSS+HHMM (preferred) YYYYMMDDTHHMMSSZ (alternative). Use YYYYMMDD000000+HHMM when no time is available.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="end-date" type="string" use="optional">
+				<annotation>
+					<documentation>When the player ended this phase in the career, generally normalized to ISO 8601: YYYYMMDDTHHMMSS+HHMM (preferred) YYYYMMDDTHHMMSSZ (alternative). Use YYYYMMDD000000+HHMM when no time is available.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="duration" type="sportsml:duration.Common" use="optional">
+				<annotation>
+					<documentation>In lieu of a start-date and end-date. Generally in years. Could hold the number of years that a player was a pro.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="subphase-type" type="string" use="optional">
+				<annotation>
+					<documentation>A subcategory of the phase-type, for example could be sophomore or rookie.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="phase-caliber" type="string" use="optional">
+				<annotation>
+					<documentation>A controlled vocabulary for the name attribute. States organization this player was in, for the duration of the phase. For example, league or team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="phase-caliber-key" type="string" use="optional">
+				<annotation>
+					<documentation>The metadata key within the phase-caliber. For example, l.nfl.com if phase-caliber is league. Or l.nfl.com-t.2 if phase-caliber is team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="entry-reason" type="string" use="optional">
+				<annotation>
+					<documentation>The reason why the player entered this phase. For example, draft or trade.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="selection-level" type="string" use="optional">
+				<annotation>
+					<documentation>The level within which the player was selected to enter this phase. For example, 1, if drafted in 1st round.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="selection-sublevel" type="string" use="optional">
+				<annotation>
+					<documentation>The sublevel of the selection-level. For example, 27, if picked as 27th selection in 1st round.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="exit-reason" type="string" use="optional">
+				<annotation>
+					<documentation>The reason why the player exitted this phase. For example, retired or waived.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="injury-phase">
+		<annotation>
+			<documentation>A description of the phase during which a player is injured.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+
+			<attribute name="phase-type" type="string" use="optional">
+				<annotation>
+					<documentation>An indication as to whether this phase was an unofficial injury report, or a formalized disabled-list.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="injury-type" type="string" use="optional">
+				<annotation>
+					<documentation>A controlled vocabulary for the injury. For example, thigh or hand or lower-back.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="injury-side" type="string" use="optional">
+				<annotation>
+					<documentation>A controlled vocabulary for the body side of the injury. For example, left or right.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="start-date" type="string" use="optional">
+				<annotation>
+					<documentation>When the player started this injury phase, generally normalized to ISO 8601: YYYYMMDDTHHMMSS+HHMM (preferred) YYYYMMDDTHHMMSSZ (alternative). Use YYYYMMDD000000+HHMM when no time is available.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="end-date" type="string" use="optional">
+				<annotation>
+					<documentation>When the player ended this injury phase, generally normalized to ISO 8601: YYYYMMDDTHHMMSS+HHMM (preferred) YYYYMMDDTHHMMSSZ (alternative). Use YYYYMMDD000000+HHMM when no time is available.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="upcoming-event-date" type="string" use="optional">
+				<annotation>
+					<documentation>Generally, the date on which this player has a non-injured status, and has some probability of playing again.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="upcoming-event-key" type="string" use="optional">
+				<annotation>
+					<documentation>The key for the forthcoming event taking place on upcoming-event-date.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="upcoming-event-status" type="string" use="optional">
+				<annotation>
+					<documentation>A measurement of the status of the player for that upcoming event. For example, probable or likely.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A textual description for the injury phase.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="name">
+		<annotation>
+			<documentation>Name of a player, official, associate, team, etc. | Sometimes a person is referred-to by different names, depending upon the language in which the document is displayed.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="full" type="string" use="optional">
+				<annotation>
+					<documentation>The entire name.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="first" type="string" use="optional">
+				<annotation>
+					<documentation>The first name refered to. For people, should be the given name. Also, if person has only one name, like Pele or Ronaldo, use this one.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="middle" type="string" use="optional">
+				<annotation>
+					<documentation>The middle name refered to.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="last" type="string" use="optional">
+				<annotation>
+					<documentation>The last name referred to. For people, should be the surname.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="nickname" type="string" use="optional">
+				<annotation>
+					<documentation>A nickname ascribed to the person or team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="prefix" type="string" use="optional">
+				<annotation>
+					<documentation>A part of a name such as Mr. or Mrs. or Dr.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="suffix" type="string" use="optional">
+				<annotation>
+					<documentation>A part of a name such as Jr. or III.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="abbreviation" type="string" use="optional">
+				<annotation>
+					<documentation>An abbreviation, usually used for teams in display locations where space is constrained.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="language" type="string" use="optional">
+				<annotation>
+					<documentation>A language code in which it is appropriate to display this name.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="player-stats">
+		<annotation>
+			<documentation>Statistics that capture how a player has performed. | Generally does change over the course of a sports-event.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:sub-score" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:sub-score-attempts" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:penalty-stats" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:outcome-totals" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:highlight" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:award" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:event-record" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:rank" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:rating" minOccurs="0" maxOccurs="unbounded"/>
+				<group ref="sportsml:playerStatsSpecific" minOccurs="0"/>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attributeGroup ref="sportsml:statAttributes"/>
+
+			<attribute name="time-played-event" type="string" use="optional">
+				<annotation>
+					<documentation>Value for the amount of time played by this player in a particular sports-event.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="time-played-total" type="string" use="optional">
+				<annotation>
+					<documentation>Value for the amount of time played by the player over the course of a particular time-span, such as a season.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="time-played-event-average" type="string" use="optional">
+				<annotation>
+					<documentation>Value for the average amount of time played per-event by the player over the course of a particular time-span, such as a season.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="events-played" type="string" use="optional">
+				<annotation>
+					<documentation>Number of sports-events the player has participated in.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="events-started" type="string" use="optional">
+				<annotation>
+					<documentation>Number of sports-events the player has played in since the start of the event.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="associate">
+		<annotation>
+			<documentation>Manager or coach or jockey, etc. | An individual or a group that assists a team or player, and functions in a supporting capacity.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:associate-metadata"/>
+				<element ref="sportsml:associate-stats" minOccurs="0"/>
+				<element ref="sportsml:affiliation" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="associate-metadata">
+		<annotation>
+			<documentation>Metadata that describes an associate | Generally does not change over the course of a sports-events.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:name" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:home-location" minOccurs="0"/>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+				<group ref="sportsml:associateMetadataSpecific" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="associate-key" type="string" use="optional">
+				<annotation>
+					<documentation>The symbol for the associate.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="associate-source" type="string" use="optional">
+				<annotation>
+					<documentation>The maintainer of the controlled vocabulary for the key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="position" type="string" use="optional">
+				<annotation>
+					<documentation>A displayable name for the key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="position-source" type="string" use="optional">
+				<annotation>
+					<documentation>The source of the controlled-vocabulary for position.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="associate-stats">
+		<annotation>
+			<documentation>Statistics that capture values about the participation of an associate during one or more sports-events. | Generally does change over the course of a sports-event.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:rating" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:outcome-totals" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+				<group ref="sportsml:associateStatsSpecific" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="points" type="string" use="optional">
+				<annotation>
+					<documentation>Points accumulated by this associate. For example, points earned by a NASCAR owner.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="officials">
+		<annotation>
+			<documentation>A set of officials. | May hold zero or more.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:official" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="official">
+		<annotation>
+			<documentation>Also referred to as umpire or referree. | Ensures that the sports-event is played according to its rules.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:official-metadata"/>
+				<element ref="sportsml:official-stats" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="official-metadata">
+		<annotation>
+			<documentation>Metadata about the official. | Generally does not change over the course of a sports-events.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:name" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:home-location" minOccurs="0"/>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+				<group ref="sportsml:officialMetadataSpecific" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="official-key" type="string" use="optional">
+				<annotation>
+					<documentation>The symbol or identifying key for the official.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="official-source" type="string" use="optional">
+				<annotation>
+					<documentation>The maintainer of the controlled vocabulary for the key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="position" type="string" use="optional">
+				<annotation>
+					<documentation>A code for the position of the official.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="position-source" type="string" use="optional">
+				<annotation>
+					<documentation>The source of the controlled-vocabulary for position.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="official-stats">
+		<annotation>
+			<documentation>Statistics about the official. | Generally does change over the course of a sports-events..</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:rating" minOccurs="0" maxOccurs="unbounded"/>
+				<group ref="sportsml:officialStatsSpecific" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="tournament">
+		<annotation>
+			<documentation>A structured series of competitions within one sport. | Generally organized by a particular sponsoring body. Can happen all in one day, or be spread out - like the Davis Cup in tennis.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:tournament-metadata" minOccurs="0"/>
+				<element ref="sportsml:tournament-division" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="tournament-metadata">
+		<annotation>
+			<documentation>Background data about a tournament. | Where and when the this tournament took place.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:sports-content-codes" minOccurs="0"/>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:award" minOccurs="0" maxOccurs="unbounded"/>
+				<group ref="sportsml:tournamentMetadataSpecific" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attributeGroup ref="sportsml:siteAttributes"/>
+			<attribute name="tournament-key" type="string" use="optional">
+				<annotation>
+					<documentation>The symbol or identifying key for the tournament.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="tournament-source" type="string" use="optional">
+				<annotation>
+					<documentation>The maintainer of the controlled vocabulary for the key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="tournament-name" type="string" use="optional">
+				<annotation>
+					<documentation>A displayable name for the key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="start-date-time" type="string" use="optional">
+				<annotation>
+					<documentation>Generally normalized to ISO 8601: YYYYMMDDTHHMMSS+HHMM (preferred) YYYYMMDDTHHMMSSZ (alternative). Use YYYYMMDD000000+HHMM when no time is available.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="end-date-time" type="string" use="optional">
+				<annotation>
+					<documentation>Generally normalized to ISO 8601: YYYYMMDDTHHMMSS+HHMM (preferred) YYYYMMDDTHHMMSSZ (alternative). Use YYYYMMDD000000+HHMM when no time is available.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="tournament-division">
+		<annotation>
+			<documentation>A tournament subcategory, often with its own trophy and prize. | Like Mens 30k Nordic Skiing, Womens Doubles.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:tournament-division-metadata" minOccurs="0"/>
+				<element ref="sportsml:site" minOccurs="0"/>
+				<element ref="sportsml:standing" minOccurs="0"/>
+				<choice>
+					<element ref="sportsml:tournament-stage" minOccurs="0" maxOccurs="unbounded"/>
+					<element ref="sportsml:tournament-round" minOccurs="0" maxOccurs="unbounded"/>
+				</choice>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="tournament-division-metadata">
+		<annotation>
+			<documentation>General information about the division of this tournament. | Where and when this division is competing.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:sports-content-qualifier" minOccurs="0"/>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:award" minOccurs="0" maxOccurs="unbounded"/>
+				<group ref="sportsml:tournamentDivisionMetadataSpecific" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:siteAttributes"/>
+			<attribute name="division-key" type="string" use="optional">
+				<annotation>
+					<documentation>The symbol or identifying key for the division.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="division-source" type="string" use="optional">
+				<annotation>
+					<documentation>The maintainer of the controlled vocabulary for the key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="division-name" type="string" use="optional">
+				<annotation>
+					<documentation>A displayable name for the key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="start-date-time" type="string" use="optional">
+				<annotation>
+					<documentation>Generally normalized to ISO 8601: YYYYMMDDTHHMMSS+HHMM (preferred) YYYYMMDDTHHMMSSZ (alternative). Use YYYYMMDD000000+HHMM when no time is available.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="end-date-time" type="string" use="optional">
+				<annotation>
+					<documentation>Generally normalized to ISO 8601: YYYYMMDDTHHMMSS+HHMM (preferred) YYYYMMDDTHHMMSSZ (alternative). Use YYYYMMDD000000+HHMM when no time is available.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="tournament-stage">
+		<annotation>
+			<documentation>A tournament subcategory. | Used to group rounds, or other stages. Useful for large-scale soccer tournaments, for example.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:tournament-stage-metadata" minOccurs="0"/>
+				<element ref="sportsml:site" minOccurs="0"/>
+				<choice>
+					<element ref="sportsml:tournament-stage" minOccurs="0" maxOccurs="unbounded"/>
+					<element ref="sportsml:tournament-round" minOccurs="0" maxOccurs="unbounded"/>
+				</choice>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="tournament-stage-metadata">
+		<annotation>
+			<documentation>General information about the stage of this tournament. | Where and when this stage is competing.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:sports-content-qualifier" minOccurs="0"/>
+				<element ref="sportsml:award" minOccurs="0" maxOccurs="unbounded"/>
+				<group ref="sportsml:tournamentStageMetadataSpecific" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:siteAttributes"/>
+			<attribute name="stage-key" type="string" use="optional">
+				<annotation>
+					<documentation>The symbol or identifying key for the stage.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="stage-source" type="string" use="optional">
+				<annotation>
+					<documentation>The maintainer of the controlled vocabulary for the key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="stage-name" type="string" use="optional">
+				<annotation>
+					<documentation>A displayable name for the key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="start-date-time" type="string" use="optional">
+				<annotation>
+					<documentation>Generally normalized to ISO 8601: YYYYMMDDTHHMMSS+HHMM (preferred) YYYYMMDDTHHMMSSZ (alternative). Use YYYYMMDD000000+HHMM when no time is available.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="end-date-time" type="string" use="optional">
+				<annotation>
+					<documentation>Generally normalized to ISO 8601: YYYYMMDDTHHMMSS+HHMM (preferred) YYYYMMDDTHHMMSSZ (alternative). Use YYYYMMDD000000+HHMM when no time is available.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="tournament-round">
+		<annotation>
+			<documentation>Sub-component of tournament-division. | All teams might participate in each round, or only the winners might progress. Not always sequential.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:site" minOccurs="0"/>
+				<choice>
+					<element ref="sportsml:sports-event" minOccurs="0" maxOccurs="unbounded"/>
+					<element ref="sportsml:team" minOccurs="0" maxOccurs="unbounded"/>
+					<element ref="sportsml:player" minOccurs="0" maxOccurs="unbounded"/>
+				</choice>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:siteAttributes"/>
+			<attribute name="round-key" type="string" use="optional">
+				<annotation>
+					<documentation>The symbol or identifying key for the round.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="round-source" type="string" use="optional">
+				<annotation>
+					<documentation>The maintainer of the controlled vocabulary for the key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="round-name" type="string" use="optional">
+				<annotation>
+					<documentation>A displayable name for the key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="round-number" type="string" use="optional">
+				<annotation>
+					<documentation>The number of the round.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="round-status" type="sportsml:eventStatus.Core" use="optional">
+				<annotation>
+					<documentation>Whether the round hasn't started, is in progress, or is over.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="start-date-time" type="string" use="optional">
+				<annotation>
+					<documentation>Generally normalized to ISO 8601: YYYYMMDDTHHMMSS+HHMM (preferred) YYYYMMDDTHHMMSSZ (alternative). Use YYYYMMDD000000+HHMM when no time is available.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="end-date-time" type="string" use="optional">
+				<annotation>
+					<documentation>Generally normalized to ISO 8601: YYYYMMDDTHHMMSS+HHMM (preferred) YYYYMMDDTHHMMSSZ (alternative). Use YYYYMMDD000000+HHMM when no time is available.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="standing">
+		<annotation>
+			<documentation>A series of team or individual records. | A series of team or individual records.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:standing-metadata"/>
+				<choice>
+					<element ref="sportsml:team" minOccurs="0" maxOccurs="unbounded"/>
+					<element ref="sportsml:player" minOccurs="0" maxOccurs="unbounded"/>
+				</choice>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="content-label" type="string" use="optional">
+				<annotation>
+					<documentation>A displayable label describing this standing.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="standing-metadata">
+		<annotation>
+			<documentation>A series of team or individual records. | A series of team or individual records.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:sports-content-codes" minOccurs="0"/>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+		</complexType>
+	</element>
+	<element name="schedule">
+		<annotation>
+			<documentation>A series of games. | Usually grouped by date.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:schedule-metadata"/>
+				<element ref="sportsml:sports-event" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="date-label" type="string" use="optional">
+				<annotation>
+					<documentation>Displayable label that describes what dates this schedule covers.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="content-label" type="string" use="optional">
+				<annotation>
+					<documentation>Displayable label that describes what events this schedule includes.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="schedule-metadata">
+		<annotation>
+			<documentation>Background information about the schedule. | Describes the time period which the schedule covers, and which teams or events may be covered.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:sports-content-codes" minOccurs="0"/>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+		</complexType>
+	</element>
+	<element name="statistic">
+		<annotation>
+			<documentation>A table that generally compares the performance of teams or players. | The fixture-key can identify which regulary-running statistics are being presented.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:statistic-metadata"/>
+				<element ref="sportsml:group" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:team" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:player" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:associate" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:status-change" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="type" type="string" use="optional">
+				<annotation>
+					<documentation>A code describing the class of statistic covered herein, generally part of a controlled vocabulary.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="content-label" type="string" use="optional">
+				<annotation>
+					<documentation>A display label for the enclosed statistical ranking.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="statistic-metadata">
+		<annotation>
+			<documentation>Identifies which teams are being covered. | Also indicates the date ranges for which these stats cover.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:sports-content-codes" minOccurs="0"/>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+		</complexType>
+	</element>
+	<element name="group">
+		<annotation>
+			<documentation>A holder for statistics about a particular bracket or division or conference or league. | Holds metadata and stats.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:group-metadata"/>
+				<element ref="sportsml:group-stats" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:group" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:team" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:player" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:affiliation" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="group-metadata">
+		<annotation>
+			<documentation>Metadata about the group.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:name" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:sports-content-code" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+				<group ref="sportsml:groupMetadataSpecific" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="group-key" type="string" use="optional">
+				<annotation>
+					<documentation>A unique ID for the group.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="group-source" type="string" use="optional">
+				<annotation>
+					<documentation>The source for the controlled vocabulary for the group-key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="group-type" type="string" use="optional">
+				<annotation>
+					<documentation>The type of group. For example: conference, division, etc.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="home-page-url" type="string" use="optional">
+				<annotation>
+					<documentation>The home page URL for the group.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="group-stats">
+		<annotation>
+			<documentation>Statistics that apply to the team as a whole. | Not all stats are used in every sport.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:penalty-stats" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:outcome-totals" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:award" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:rank" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:rating" minOccurs="0" maxOccurs="unbounded"/>
+				<group ref="sportsml:groupStatsSpecific" minOccurs="0"/>
+				<element ref="sportsml:sports-property" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attributeGroup ref="sportsml:statAttributes"/>
+		</complexType>
+	</element>
+	<element name="status-change">
+		<annotation>
+			<documentation>Identifies which teams are being covered. | Also indicates the date ranges for which these stats cover.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="changer-idref" type="IDREF" use="required">
+				<annotation>
+					<documentation>A pointer to the player or team that has undergone the status change.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="status-change-type" type="sportsml:statusChangeType.Core" use="required">
+				<annotation>
+					<documentation>What type of change was made in the status of a player or team. Examples are injury, trade, cut.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="original-status" type="string" use="optional">
+				<annotation>
+					<documentation>What the original status of the player or team was. Examples are active, inactive, disabled-list.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="new-status" type="string" use="optional">
+				<annotation>
+					<documentation>What the new status of the player or team is. Examples are active, inactive, disabled-list.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="original-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>Generally, a pointer to the original team that the player in changer-idref was affiliated with.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="new-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>Generally, a pointer to the new team that the player in changer-idref is now affiliated with.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="highlight">
+		<annotation>
+			<documentation>A textual highlight. | Can hold plain text, or could hold NITF.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<any namespace="http://www.w3.org/namespace/"/>
+			</sequence>
+			<attributeGroup ref="sportsml:commonAttributes"/>
+		</complexType>
+	</element>
+	<element name="award">
+		<annotation>
+			<documentation>A medal, ribbon, placement, or other type of award. | Can be assigned to an event, a team, or a player.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:commonAttributes"/>
+			<attribute name="award-type" type="sportsml:awardType.Core" use="optional">
+				<annotation>
+					<documentation>Type of award.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="name" type="string" use="optional">
+				<annotation>
+					<documentation>Displayable name. For NHL Hockey, could be first-star, second-star, etc.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="player-or-team-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>Reference to the player or team that received the award.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="total" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of these such awards given to the player or team. Can be used to count medals for each country.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="place" type="string" use="optional">
+				<annotation>
+					<documentation>The place for which this prize is offered. For example, place=1 means the first-place prize.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="value" type="string" use="optional">
+				<annotation>
+					<documentation>The amount of money earned by the player who came in this place.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="currency" type="string" use="optional">
+				<annotation>
+					<documentation>The units of currency for the value attribute.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="event-actions">
+		<annotation>
+			<documentation>A container for the various play-by-play actions described herein.</documentation>
+		</annotation>
+		<complexType>
+			<group ref="sportsml:eventActionsSpecific" minOccurs="0"/>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+</schema>
+

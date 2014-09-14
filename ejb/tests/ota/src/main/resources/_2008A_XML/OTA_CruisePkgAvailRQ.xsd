@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.004" id="OTA2008A">
+	<xs:include schemaLocation="OTA_CruiseCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA 
+specification are made available according to the terms defined by the OTA 
+License Agreement at 
+http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_CruisePkgAvailRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The package availability request message handles pre, post, and inclusive package availability requests for a given sailing.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Point of sale 
+object.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="GuestInfos" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Collection of guest information.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="GuestInfo" maxOccurs="9">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies the guest information.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="SelectedFareCode" minOccurs="0" maxOccurs="2">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Specifies the fare code and the group code if any. Fare codes are specific to cruise lines.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attributeGroup ref="FareGroup"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="GuestTransportation" type="GuestTransportationType" minOccurs="0" maxOccurs="2">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Selected guest mode of transportation.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="GuestCounts" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specifies guest quantity and guest types.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specify guest numbers and types.</xs:documentation>
+						</xs:annotation>
+						<xs:sequence>
+							<xs:element name="GuestCount" maxOccurs="9">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Categorization of all guests in the request.  The sum of the Quantity attribute will provide you with the total number of guests.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attributeGroup ref="TravelerCountGroup"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SailingInfo" type="SailingCategoryInfoType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Contains information related to the selected sailing. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PackageOption" type="CruisePackageType" maxOccurs="8">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specifies the type of package options of interest.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SearchQualifiers" type="SearchQualifierType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Used to further qualify the package availability search.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ReservationID" type="ReservationID_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A reference to a specific reservation which may limit the available packages.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The standard attributes that appear on the root element for all OTA payloads. </xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+			<xs:attributeGroup ref="ResponseGroup">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Provides the echo token to be used to retrieve additional records.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="4.000" id="OTA2008A">
+	<xs:include schemaLocation="OTA_HotelCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_HotelRoomListRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The OTA_HotelRoomListRQ message applies to the group (meetings and conventions) market and the tour (wholesale) market.  In both cases, travelers' reservations are booked into blocked space, instead of publicly available room inventory.  This message provides the details of the individual guests staying in the blocked rooms.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Point of sale object. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="UniqueID" type="UniqueID_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the group overall for example the association, tour operator, etc.  This is independent of Hotel identification.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="HotelRoomLists">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Collection of RoomList items which may be for multiple hotels or for multiple groups at a single hotel.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="HotelRoomList" type="HotelRoomListType" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The Details which guests will occupy the rooms in a room block.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

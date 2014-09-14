@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.003" id="OTA2008A">
+	<xs:include schemaLocation="OTA_HotelCommonTypes.xsd"/>
+	
+	
+	
+	<xs:element name="OTA_HotelBookingRuleRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This message provides the capability of requesting the rules and usage requirements (either all or for a specific rule category) of a rate for a specific hotel property.  The request may be per room type, booking code, check in/out dates, or by confirmation number for a previously booked reservation.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">POS provides a mechanism to indicate the source of the message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="RuleMessage">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specifies the hotel chain and property for which booking rules are requested.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="StatusApplication" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies the check in and check out dates, booking code, room type code, and corporate discount number for the booking rules requested.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attributeGroup ref="StatusApplicationGroup"/>
+									<xs:attribute name="NumberOfUnits" type="Numeric1to999" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">The number of rooms for this inventory type code.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GuestCounts" type="GuestCountType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies the number of adults and children per room.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="HotelReservationIDs" type="HotelReservationIDsType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The hotel confirmation number for which the booking rules are requested.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="RuleCategories" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">A collection of rule categories.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="RuleCategory" maxOccurs="99">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">A specific rule category.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="Name" type="StringLength1to64" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">The name of the rule category.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="Number" type="xs:nonNegativeInteger" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">The rule category number.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attributeGroup ref="HotelReferenceGroup"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

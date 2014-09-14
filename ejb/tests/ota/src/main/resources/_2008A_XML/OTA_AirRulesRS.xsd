@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="2.009" id="OTA2008A">
+	<xs:include schemaLocation="OTA_AirCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_AirRulesRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+The Rules Response message contains a set of text (human readable) rule information paragraphs. Each paragraph is identified by a rule code. This message contains similar information to a standard airline CRS or GDS Fare Rules Response message.
+		</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType">
+						<xs:annotation>
+							<xs:documentation xml:lang="en"> Standard way to indicate successful processing of an OTA message. Returning an empty element of this type indicates success.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en"> Standard way to indicate successful processing of an OTA message, but  one in which warnings are generated.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="FareRuleResponseInfo" type="FareRuleResponseInfoType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en"> Provides fare rules and the applicable fare rule categories.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en"> A collection of errors that occurred during the processing of a  message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en"> The OTA_PayloadStdAttributes defines the standard attributes that appear on the root element for all OTA payloads.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="FareRuleResponseInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The collection of Fare Rule requests and the applicable Fare Rule categories.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FareRuleInfo">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The Fare Rule Info as per the request.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="FareInfoType">
+							<xs:attribute name="LanguageRequested" type="AlphaNumericStringLength1to8" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies the language in which the rules should be returned.
+</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="LanguageReturned" type="AlphaNumericStringLength1to8" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies the language in which the rules are returned.
+</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="FareRules" type="FormattedTextType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The applicable Fare Rule categories.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Routing" minOccurs="0" maxOccurs="99">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the routing for all the fares.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Info" minOccurs="0" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The routing direction and city airports for the direction.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="Direction" type="StringLength1to8" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The direction of the routing, such as to or from.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Text" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The routing text associated with the direction.
+</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="Number" type="Numeric1to9999" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">A routing number for the fare.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="RoutingConstructedInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">If true, the routing was constructed.  If false, it was not constructed.
+</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MaximumPermittedMileage" type="xs:integer" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The maximum permitted mileage for the fare associated to this rule.
+</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="RoutingRestriction" type="StringLength1to128" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Restriction information about the routing.
+</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="AdvisoryInfo" minOccurs="0" maxOccurs="15">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Advisory information that applies to all the rule information.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="FreeTextType">
+							<xs:attribute name="AdvisoryCode" type="StringLength1to8" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies the type of advisory information.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

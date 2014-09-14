@@ -1,0 +1,287 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!--
+    IPR, License and Distribution Notices
+    This machine readable file is derived from IMS specification IMS ePortfolio XML Binding Version 1.0 Final Specification
+    found at http://www.imsglobal.org/ep/ and the original IMS schema binding or code base 
+    http://www.imsglobal.org/ep/epv1p0/imsep_bindv1p0.html.
+    
+    Recipients of this document are requested to submit, with their comments, notification of any relevant patent 
+    claims or other intellectual property rights of which they may be aware that might be infringed by the schema 
+    binding contained in this document.
+    
+    IMS takes no position regarding the validity or scope of any intellectual property or other rights that might be 
+    claimed to pertain to the implementation or use of the technology described in this document or the extent to 
+    which any license under such rights might or might not be available; neither does it represent that it has made 
+    any effort to identify any such rights. Information on IMS’s procedures with respect to rights in IMS specifications 
+    can be found at the IMS Intellectual Property Rights web page: http://www.imsglobal.org/ipr/imsipr_policyFinal.pdf.
+    
+    Copyright © IMS Global Learning Consortium 1999-2007. All Rights Reserved.
+    
+    License Notice for Users
+    Users of products or services that include this document are hereby granted a worldwide, royalty-free, 
+    non-exclusive license to use this document.
+    
+    Distribution Notice for Developers
+    Developers of products or services that provide distribution of this document as is or with modifications are 
+    required to register with the IMS community on the IMS website as described in the following two paragraphs:
+    
+    - If you wish to distribute this document as is, with no modifications, you are hereby granted permission to copy, 
+    display and distribute the contents of this document in any medium for any purpose without fee or royalty provided 
+    that you include this IPR, License and Distribution notice in its entirety on ALL copies, or portions thereof, that you 
+    make and you complete a valid license registration with IMS and receive an email from IMS granting the license. 
+    To register, follow the instructions on the IMS website: http://www.imsglobal.org/specificationdownload.cfm. Once 
+    registered you are granted permission to transfer unlimited distribution rights of this document for the purposes 
+    of third-party or other distribution of your product or service that incorporates this document as long as this IPR, 
+    License and Distribution notice remains in place in its entirety.
+    
+    - If you wish to create and distribute a derived work from this document, you are hereby granted permission to copy, 
+    display and distribute the contents of the derived work in any medium for any purpose without fee or royalty provided 
+    that you include this IPR, License and Distribution notice in its entirety on ALL copies, or portions thereof, that you 
+    make and you complete a valid profile registration with IMS and receive an email from IMS granting the license. To 
+    register, follow the instructions on the IMS website: http://www.imsglobal.org/profile/. Once registered you are 
+    granted permission to transfer unlimited distribution rights of the derived work for the purposes of third-party or 
+    other distribution of your product or service that incorporates the derived work as long as this IPR, License and 
+    Distribution notice remains in place in its entirety.
+    
+    The limited permissions granted above are perpetual and will not be revoked by IMS or its successors or assigns.
+    
+    THIS SPECIFICATION IS BEING OFFERED WITHOUT ANY WARRANTY WHATSOEVER, AND IN PARTICULAR, 
+    ANY WARRANTY OF NONINFRINGEMENT IS EXPRESSLY DISCLAIMED. ANY USE OF THIS SPECIFICATION 
+    SHALL BE MADE ENTIRELY AT THE IMPLEMENTER’S OWN RISK, AND NEITHER THE CONSORTIUM, NOR 
+    ANY OF ITS MEMBERS OR SUBMITTERS, SHALL HAVE ANY LIABILITY WHATSOEVER TO ANY IMPLEMENTER 
+    OR THIRD PARTY FOR ANY DAMAGES OF ANY NATURE WHATSOEVER, DIRECTLY OR INDIRECTLY, ARISING 
+    FROM THE USE OF THIS SPECIFICATION.
+-->
+<xsd:schema xmlns="http://www.imsglobal.org/xsd/imsportfoliocp_v1p0"
+    targetNamespace="http://www.imsglobal.org/xsd/imsportfoliocp_v1p0"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance"
+    version="IMS PORTCP 1.0"
+    elementFormDefault="qualified">
+    <xsd:import namespace = "http://www.w3.org/XML/1998/namespace" schemaLocation = "http://www.w3.org/2001/03/xml.xsd"/>
+    <xsd:annotation>
+        <xsd:documentation>
+            XSD Data File Information
+            -------------------------
+            Author:     Colin Smythe
+            Date:       15th May, 2005
+            Version:    1.0
+            Status:     Final
+            Comments:   This is the Portfolio Package Profile of the IMS Content Package.  The reference specification is IMS CP v1.1.4.
+            History:    Initial File
+
+            Source XSLT File Information
+            ----------------------------
+            XSL Generator:    UMLtoXSDTransformv0p6.xsl
+            Release:          6.0 Alpha
+            Date:             30th April, 2005
+
+            Auto-generation Tool
+            --------------------
+            This XSD was auto-generated using the IMS WSDL/XSD auto-generation tool.  While every attempt
+            has been made to ensure that this tool auto-generates the XSDs correctly, users should be aware
+            that this is an experimental tool.  Permission is given to make use of this tool.  IMS makes no
+            claim on the materials created by third party users of this tool.  Details on how to use this tool
+            are contained in the IMS document: "IMS General Web Services: WSDL/XSD Binding Auto-generation"
+            available at the IMS web-site.
+            Tool Copyright:  (c) IMS Global Learning Consortium Inc.  All Rights Reserved.
+        </xsd:documentation>
+    </xsd:annotation>
+
+        <!-- Generate Global Attributes **************************************************************  -->
+
+            <xsd:attributeGroup name="attr.Manifest.identifier">
+                <xsd:attribute name="identifier" use="required" type="xsd:ID"/>
+            </xsd:attributeGroup>
+
+            <xsd:attributeGroup name="attr.Manifest.version">
+                <xsd:attribute name="version" use="required" type="xsd:string"/>
+            </xsd:attributeGroup>
+
+            <xsd:attributeGroup name="attr.Manifest.xmlbase">
+                <xsd:attribute ref="xml:base" use="optional"/>
+            </xsd:attributeGroup>
+
+            <xsd:attributeGroup name="attr.Resources.xmlbase">
+                <xsd:attribute ref="xml:base" use="optional"/>
+            </xsd:attributeGroup>
+
+            <xsd:attributeGroup name="attr.Organizations.default">
+                <xsd:attribute name="default" use="required" type="xsd:IDREF"/>
+            </xsd:attributeGroup>
+
+            <xsd:attributeGroup name="attr.Resource.identifier">
+                <xsd:attribute name="identifier" use="required" type="xsd:ID"/>
+            </xsd:attributeGroup>
+
+            <xsd:attributeGroup name="attr.Resource.type">
+                <xsd:attribute name="type" use="required" type="xsd:string"/>
+            </xsd:attributeGroup>
+
+            <xsd:attributeGroup name="attr.Resource.xmlbase">
+                <xsd:attribute ref="xml:base" use="optional"/>
+            </xsd:attributeGroup>
+
+            <xsd:attributeGroup name="attr.Resource.href">
+                <xsd:attribute name="href" use="optional" type="xsd:anyURI"/>
+            </xsd:attributeGroup>
+
+            <xsd:attributeGroup name="attr.Organization.identifier">
+                <xsd:attribute name="identifier" use="required" type="xsd:ID"/>
+            </xsd:attributeGroup>
+
+            <xsd:attributeGroup name="attr.Item.identifier">
+                <xsd:attribute name="identifier" use="required" type="xsd:ID"/>
+            </xsd:attributeGroup>
+
+            <xsd:attributeGroup name="attr.Item.identifierref">
+                <xsd:attribute name="identifierref" use="optional" type="xsd:string"/>
+            </xsd:attributeGroup>
+
+            <xsd:attributeGroup name="attr.File.href">
+                <xsd:attribute name="href" use="required" type="xsd:anyURI"/>
+            </xsd:attributeGroup>
+
+        <!-- =====================================  -->
+
+
+        <!-- Generate Namespaced extension Group  ****************************************************  -->
+
+            <xsd:group name="grp.any">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Any namespaced element from any namespace may be included within an "any" element.
+                        The namespace for the imported element must be defined in the instance, and the schema must be imported.
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                    <xsd:any namespace = "##other" processContents = "strict" minOccurs = "0" maxOccurs = "unbounded"/>
+                </xsd:sequence>
+            </xsd:group>
+
+        <!-- =====================================  -->
+
+
+        <!-- Generate the enumerated simpleType elements *********************************************  -->
+
+
+        <!-- =====================================  -->
+
+        <!-- Generate the simpleType elements based IMS data-type  ********************************************  -->
+
+
+        <!-- =====================================  -->
+
+        <!-- Generate the derived data-type elements **********************************************************  -->
+
+            <xsd:simpleType name="SchemaVersion.Type">
+                <xsd:restriction base="xsd:string"/>
+            </xsd:simpleType>
+
+            <xsd:simpleType name="Schema.Type">
+                <xsd:restriction base="xsd:string"/>
+            </xsd:simpleType>
+
+            <xsd:simpleType name="Title.Type">
+                <xsd:restriction base="xsd:string"/>
+            </xsd:simpleType>
+
+        <!-- =====================================  -->
+
+        <!-- Generate the data-type elements ******************************************************************  -->
+
+            <xsd:complexType name="Manifest.Type">
+                <xsd:sequence>
+                    <xsd:element ref="metadata" minOccurs = "0" maxOccurs = "1"/>
+                    <xsd:element ref="organizations" minOccurs = "1" maxOccurs = "1"/>
+                    <xsd:element ref="resources" minOccurs = "1" maxOccurs = "1"/>
+                    <xsd:element ref="manifest" minOccurs = "0" maxOccurs = "unbounded"/>
+                </xsd:sequence>
+                <xsd:attributeGroup ref="attr.Manifest.identifier"/>
+                <xsd:attributeGroup ref="attr.Manifest.version"/>
+                <xsd:attributeGroup ref="attr.Manifest.xmlbase"/>
+            </xsd:complexType>
+
+            <xsd:complexType name="Metadata.Type">
+                <xsd:sequence>
+                    <xsd:element ref="schema" minOccurs = "0" maxOccurs = "1"/>
+                    <xsd:element ref="schemaversion" minOccurs = "0" maxOccurs = "1"/>
+                    <xsd:group ref="grp.any"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="Organizations.Type">
+                <xsd:sequence>
+                    <xsd:element ref="organization" minOccurs = "1" maxOccurs = "1"/>
+                </xsd:sequence>
+                <xsd:attributeGroup ref="attr.Organizations.default"/>
+            </xsd:complexType>
+
+            <xsd:complexType name="Resources.Type">
+                <xsd:sequence>
+                    <xsd:element ref="resource" minOccurs = "0" maxOccurs = "unbounded"/>
+                </xsd:sequence>
+                <xsd:attributeGroup ref="attr.Resources.xmlbase"/>
+            </xsd:complexType>
+
+            <xsd:complexType name="Organization.Type">
+                <xsd:sequence>
+                    <xsd:element ref="title" minOccurs = "1" maxOccurs = "1"/>
+                    <xsd:element ref="item" minOccurs = "1" maxOccurs = "unbounded"/>
+                    <xsd:element ref="metadata" minOccurs = "0" maxOccurs = "1"/>
+                </xsd:sequence>
+                <xsd:attributeGroup ref="attr.Organization.identifier"/>
+            </xsd:complexType>
+
+            <xsd:complexType name="Resource.Type">
+                <xsd:sequence>
+                    <xsd:element ref="metadata" minOccurs = "0" maxOccurs = "1"/>
+                    <xsd:element ref="file" minOccurs = "1" maxOccurs = "unbounded"/>
+                </xsd:sequence>
+                <xsd:attributeGroup ref="attr.Resource.identifier"/>
+                <xsd:attributeGroup ref="attr.Resource.type"/>
+                <xsd:attributeGroup ref="attr.Resource.xmlbase"/>
+                <xsd:attributeGroup ref="attr.Resource.href"/>
+            </xsd:complexType>
+
+            <xsd:complexType name="Item.Type">
+                <xsd:sequence>
+                    <xsd:element ref="title" minOccurs = "1" maxOccurs = "1"/>
+                    <xsd:element ref="item" minOccurs = "0" maxOccurs = "unbounded"/>
+                    <xsd:element ref="metadata" minOccurs = "0" maxOccurs = "1"/>
+                </xsd:sequence>
+                <xsd:attributeGroup ref="attr.Item.identifier"/>
+                <xsd:attributeGroup ref="attr.Item.identifierref"/>
+            </xsd:complexType>
+
+            <xsd:complexType name="File.Type">
+                <xsd:sequence>
+                    <xsd:element ref="metadata" minOccurs = "0" maxOccurs = "1"/>
+                </xsd:sequence>
+                <xsd:attributeGroup ref="attr.File.href"/>
+            </xsd:complexType>
+
+        <!-- =====================================  -->
+
+        <!-- Declaration of the elements **********************************************************************  -->
+
+            <xsd:element name="metadata" type="Metadata.Type"/>
+            <xsd:element name="organizations" type="Organizations.Type"/>
+            <xsd:element name="resources" type="Resources.Type"/>
+            <xsd:element name="organization" type="Organization.Type"/>
+            <xsd:element name="resource" type="Resource.Type"/>
+            <xsd:element name="item" type="Item.Type"/>
+            <xsd:element name="file" type="File.Type"/>
+            <xsd:element name="schema" type="Schema.Type"/>
+            <xsd:element name="schemaversion" type="SchemaVersion.Type"/>
+            <xsd:element name="title" type="Title.Type"/>
+
+        <!-- =====================================  -->
+
+        <!-- Declaration of the root element(s) ***************************************************************  -->
+
+            <xsd:element name="manifest" type="Manifest.Type"/>
+
+        <!-- =====================================  -->
+
+</xsd:schema>

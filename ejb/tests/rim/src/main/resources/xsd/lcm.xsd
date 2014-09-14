@@ -1,0 +1,137 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!-- $Id:$ -->
+<schema targetNamespace="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:4.0" 
+  xmlns="http://www.w3.org/2001/XMLSchema" 
+  xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" 
+  xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:4.0" 
+  xmlns:tns="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:4.0"
+  elementFormDefault="qualified"
+  attributeFormDefault="unqualified"
+  >
+  
+  <annotation>
+    <documentation xml:lang="en">The schema for OASIS ebXML Registry Services</documentation>
+  </annotation>
+  <!-- Import the rim.xsd file with XML schema mappaing from RIM -->
+  <import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" schemaLocation="rim.xsd"/>
+  <!-- Import the rs.xsd file with XML schema for base rs related schema -->
+  <import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:rs:4.0" schemaLocation="rs.xsd"/>
+  <element name="SubmitObjectsRequest">
+    <annotation>
+      <documentation xml:lang="en">This SubmitObjects protocol allows a client to submit RegistryObjects to the server. It also allows a client to completely replace existing RegistryObjects in the server.</documentation>
+    </annotation>
+    <complexType>
+      <complexContent>
+        <extension base="rs:RegistryRequestType">
+          <sequence>
+            <element ref="rim:RegistryObjectList" minOccurs="0" maxOccurs="1"/>
+            <element ref="rim:ObjectRefList" minOccurs="0" maxOccurs="1" />
+          </sequence>
+          <attribute name="mode" use="optional" default="createOrReplace">
+            <simpleType>
+              <restriction base="NCName">
+                <enumeration value="createOrReplace"/>
+                <enumeration value="createOnly"/>
+                <enumeration value="replaceOnly"/>
+              </restriction>
+            </simpleType>
+          </attribute>
+        </extension>
+      </complexContent>
+    </complexType>
+  </element>
+  
+  <complexType name="UpdateActionType">
+    <annotation>
+      <documentation xml:lang="en">
+      </documentation>
+    </annotation>
+    <sequence>
+      <!-- Value for attribute or element -->
+      <element name="Value" type="rim:ValueType" minOccurs="1" maxOccurs="1"/>
+      <!-- 
+      Value of selector is an XPATH expression that uniquely identifies an attribute 
+      or an element within target documents.    
+      -->
+      <element name="Selector" type="rim:QueryExpressionType" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+
+    <!--
+    Specifies whether to insert, update or delete a fragment from target document.
+    -->
+    <attribute name="mode">
+      <simpleType>
+        <restriction base="NCName">
+          <enumeration value="insert"/>
+          <enumeration value="update"/>
+          <enumeration value="delete"/>
+        </restriction>
+      </simpleType>
+    </attribute>
+  </complexType>
+    
+  <element name="UpdateObjectsRequest">
+    <annotation>
+      <documentation xml:lang="en">This UpdateObjectsRequest allows a client to updates elements and attributes within RegistryObjects already existing in the server.</documentation>
+    </annotation>
+    <complexType>
+      <complexContent>
+        <extension base="rs:RegistryRequestType">
+          <sequence>
+            <!-- QueryInvocation and ObjectRefList select objects to update -->
+            <element ref="rim:QueryInvocation" minOccurs="0" maxOccurs="1" />
+            <element ref="rim:ObjectRefList" minOccurs="0" maxOccurs="1" />
+            
+            <!-- Specifies how to update selected objects -->
+            <element name="UpdateAction" type="tns:UpdateActionType" minOccurs="1" maxOccurs="unbounded"/>
+          </sequence>
+        </extension>
+      </complexContent>
+    </complexType>
+  </element>
+    
+  <element name="RemoveObjectsRequest">
+    <annotation>
+      <documentation xml:lang="en">
+        The ObjectRefList is the list of
+        refs to the registry entries being removed
+      </documentation>
+    </annotation>
+    <complexType>
+      <complexContent>
+        <extension base="rs:RegistryRequestType">
+          <sequence>
+            <element ref="rim:QueryInvocation" minOccurs="0" maxOccurs="1" />
+            <element ref="rim:ObjectRefList" minOccurs="0" maxOccurs="1" />
+          </sequence>
+          <attribute name="deletionScope" default="urn:oasis:names:tc:ebxml-regrep:DeletionScopeType:DeleteAll" type="rim:referenceURI" use="optional"/>
+        </extension>
+      </complexContent>
+    </complexType>
+  </element>
+  
+  <element name="SetStatusOnObjectsRequest">
+    <annotation>
+      <documentation xml:lang="en">
+        The ObjectRefList and AdhocQuery identify the list of
+        objects whose status is being set.
+      </documentation>
+    </annotation>
+    <complexType>
+      <complexContent>
+        <extension base="rs:RegistryRequestType">
+          <sequence>
+            <element ref="rim:QueryInvocation" minOccurs="0" maxOccurs="1" />          
+            <!--
+            Issue: Should we use following instead??
+            <element name="ObjectsToUpdate" type="rim:ObjectRefType" minOccurs="0" maxOccurs="unbounded" />
+            -->
+            <element ref="rim:ObjectRefList" minOccurs="0" maxOccurs="1" />
+          </sequence>
+          <attribute name="status" type="rim:referenceURI" use="required"/>
+        </extension>
+      </complexContent>
+    </complexType>
+  </element>
+  
+</schema>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="2.003" id="OTA2008A">
+	<xs:include schemaLocation="OTA_HotelCommonTypes.xsd"/>
+	<xs:element name="OTA_HotelBookingRuleRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This message will provide the rule details for a specific hotel based on the room type, booking code, checkin/out dates  or a confirmation number.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The presence of the empty Success element explicitly indicates that the OpenTravel message succeeded.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Used in conjunction with the Success element to define one or more business errors.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RuleMessage">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies the hotel chain and property to which the booking rules apply.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="StatusApplication" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Specifies the check-in and check-out dates and the booking code or room type to which the booking rules apply.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="RoomRates" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">A collection of room rates.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="RoomRate" maxOccurs="9">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">The room rate to which the booking rule applies.</xs:documentation>
+															</xs:annotation>
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="RateDescription" type="ParagraphType" minOccurs="0">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">A description of the rate.  May be used to specify the dates/number of nights to which the rate applies in text format.</xs:documentation>
+																		</xs:annotation>
+																	</xs:element>
+																</xs:sequence>
+																<xs:attributeGroup ref="CurrencyAmountGroup">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">The rate amount and a currency code.</xs:documentation>
+																	</xs:annotation>
+																</xs:attributeGroup>
+																<xs:attribute name="RateTimeUnit" type="TimeUnitType" use="optional">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">The time unit for the rate.</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="UnitMultiplier" type="xs:positiveInteger" use="optional">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">Indicates the number of rate time units such as "3 Days".</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attributeGroup ref="DateTimeSpanGroup">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">Used to define the start and end date of the room rate.</xs:documentation>
+																	</xs:annotation>
+																</xs:attributeGroup>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+										<xs:attributeGroup ref="StatusApplicationGroup">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">To specify the check-in and check-out dates for which the rules are applicable and to specify either the booking code or room type for which the rules are applicable.</xs:documentation>
+											</xs:annotation>
+										</xs:attributeGroup>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="GuestCounts" type="GuestCountType" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Specifies the number of adults and children to which the booking rules apply.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="BookingRules" type="BookingRulesType">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">A collection of booking rules.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="AdvisoryText" type="ParagraphType" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Advisory text related to the booking rules.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element ref="TPA_Extensions" minOccurs="0"/>
+							</xs:sequence>
+							<xs:attributeGroup ref="HotelReferenceGroup"/>
+							<xs:attribute name="CurrencyCode" type="AlphaLength3" use="optional"/>
+							<xs:attribute name="InfoSource" type="InfoSourceType" use="optional"/>
+							<xs:attribute name="StateProv" type="StateProvCodeType" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The state code in which the hotel property is located.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="PostalCode" type="StringLength1to16" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The postal code (zip code) of the hotel property.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="Country" type="ISO3166" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The code of the country in which the hotel property is located.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="CommissionPercent" type="Percentage" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The commission percentage that applies to this hotel property.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Errors are returned if the request was unable to be processed.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

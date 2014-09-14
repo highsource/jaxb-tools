@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<project name="hyperjaxb3-hibernate-sample-ant" default="install">
+	<property name="artifactId" value="hyperjaxb3-sample-uniprot-ant"/>
+	<property name="version" value="0.5.7-SNAPSHOT"/>
+	<path id="compile.path">
+		<fileset dir="${basedir}/lib">
+			<include name="commons-lang-*.jar"/>
+			<include name="jaxb-api-*.jar"/>
+			<include name="jaxb2-basics-runtime-*.jar"/>
+
+			<include name="hibernate-jpa-2.0-api-*.jar"/>
+			<include name="persistence-api-*.jar"/>
+			<include name="hyperjaxb3-ejb-runtime-*.jar"/>
+
+
+			<include name="junit-*.jar"/>
+			<include name="hyperjaxb3-ejb-roundtrip-*.jar"/>
+
+		</fileset>
+	</path>
+	<path id="test-compile.path">
+		<fileset dir="${basedir}/lib">
+			<include name="activation-*.jar"/>
+			<include name="jaxb-api-*.jar"/>
+			<include name="jaxb-impl-*.jar"/>
+			<include name="stax-api-*.jar"/>
+			<include name="jsr173_api-*.jar"/>
+			<include name="jaxb2-basics-runtime-*.jar"/>
+			<include name="junit-*.jar"/>
+			<include name="jaxb2-basics-testing-*.jar"/>
+			<include name="xmlunit-*.jar"/>
+			<include name="commons-lang-*.jar"/>
+			<include name="commons-logging-*.jar"/>
+
+			<include name="hibernate-jpa-2.0-api-*.jar"/>
+			<include name="persistence-api-*.jar"/>
+			<include name="hyperjaxb3-ejb-runtime-*.jar"/>
+
+
+			<include name="junit-*.jar"/>
+			<include name="hyperjaxb3-ejb-roundtrip-*.jar"/>
+		</fileset>
+	</path>
+	<path id="test.path">
+		<fileset dir="${basedir}/lib">
+			<include name="activation-*.jar"/>
+			<include name="jaxb-api-*.jar"/>
+			<include name="jaxb-impl-*.jar"/>
+			<include name="stax-api-*.jar"/>
+			<include name="jsr173_api-*.jar"/>
+			<include name="jaxb2-basics-runtime-*.jar"/>
+			<include name="junit-*.jar"/>
+			<include name="jaxb2-basics-testing-*.jar"/>
+			<include name="xmlunit-*.jar"/>
+			<include name="commons-io-*.jar"/>
+			<include name="commons-lang-*.jar"/>
+			<include name="commons-logging-*.jar"/>
+			<include name="commons-collections-*.jar"/>
+			<include name="dom4j-*.jar"/>
+			<include name="ehcache-*.jar"/>
+			<include name="antlr-*.jar"/>
+			<include name="asm-*.jar"/>
+			<include name="asm-attrs-*.jar"/>
+			<include name="cglib-*.jar"/>
+			<include name="hibernate-*.jar"/>
+			<include name="hibernate-annotations-*.jar"/>
+			<include name="hibernate-entitymanager-*.jar"/>
+			<include name="javassist-*.jar"/>
+			<include name="jboss-archive-browsing-*.jar"/>
+			<include name="jboss-common-core-*.jar"/>
+			<include name="hsqldb-*.jar"/>
+			<include name="hyperjaxb3-ejb-runtime-*.jar"/>
+			<include name="hyperjaxb3-ejb-roundtrip-*.jar"/>
+			<include name="hibernate-jpa-2.0-api-*.jar"/>
+			<include name="persistence-api-*.jar"/>
+			<include name="jta-*.jar"/>
+			<include name="log4j-*.jar"/>
+			<include name="slf4j-*.jar"/>
+			<include name="xmlunit-*.jar"/>
+		</fileset>
+	</path>
+	<target name="clean">
+		<delete dir="${basedir}/target/"/>
+		<delete dir="${basedir}/target/classes"/>
+		<delete dir="${basedir}/target/test-classes"/>
+	</target>
+	<target name="generate-sources">
+		<taskdef name="xjc" classname="org.jvnet.jaxb2_commons.xjc.XJC2Task">
+			<!-- XJC2 Task classpath -->
+			<classpath>
+				<fileset dir="${basedir}/lib">
+					<include name="activation-*.jar"/>
+					<include name="jaxb-api-*.jar"/>
+					<include name="jaxb-impl-*.jar"/>
+					<include name="jsr173_api-*.jar"/>
+					<include name="stax-api-*.jar"/>
+
+					<include name="jaxb-xjc-*.jar"/>
+					<include name="codemodel-*.jar"/>
+					<include name="dtd-parser-*.jar"/>
+					<include name="istack-commons-tools-*.jar"/>
+					<include name="relaxngDatatype-*.jar"/>
+					<include name="resolver-*.jar"/>
+					<include name="rngom-*.jar"/>
+					<include name="xsom-*.jar"/>
+
+					<include name="jaxb2-basics-ant-*.jar"/>
+
+				</fileset>
+			</classpath>
+		</taskdef>
+		<mkdir dir="${basedir}/target/generated-sources/xjc"/>
+		<xjc destdir="${basedir}/target/generated-sources/xjc" extension="true">
+			<arg line="
+				-Xhyperjaxb3-ejb
+				-Xhyperjaxb3-ejb-roundtripTestClassName=RoundtripTest
+				-Xequals
+				-Xinheritance
+				-XhashCode
+				-XtoString"/>
+			<binding dir="${basedir}/src/main/resources">
+			 	<include name="**/*.xjb"/>
+			</binding>
+			<schema dir="${basedir}/src/main/resources">
+			 	<include name="**/*.xsd"/>
+			</schema>
+			<classpath>
+				<fileset dir="${basedir}/lib">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+		</xjc>
+	</target>
+	<target name="compile" depends="generate-sources">
+		<mkdir dir="${basedir}/target/classes"/>
+		<javac
+			destdir="${basedir}/target/classes" 
+			srcdir="${basedir}/src/main/java:${basedir}/target/generated-sources/xjc"
+			classpathref="compile.path"
+			source="1.5"
+			target="1.5">
+		</javac>
+		<copy todir="${basedir}/target/classes">
+			<fileset dir="${basedir}/src/main/resources"/>
+			<fileset dir="${basedir}/target/generated-sources/xjc">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="test-compile" depends="compile">
+		<mkdir dir="${basedir}/target/test-classes"/>
+		<javac
+			destdir="${basedir}/target/test-classes" 
+			srcdir="${basedir}/src/test/java:${basedir}/target/generated-sources/xjc"
+			classpathref="test-compile.path"
+			source="1.5"
+			target="1.5">
+		</javac>
+		<copy todir="${basedir}/target/test-classes">
+			<fileset dir="${basedir}/src/test/resources"/>
+			<fileset dir="${basedir}/target/generated-sources/xjc">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="test" depends="test-compile">
+		<mkdir dir="${basedir}/target/junit-reports"/>
+		<junit printsummary="yes" haltonfailure="yes">
+			<classpath>
+				<pathelement location="${basedir}/target/classes"/>
+				<pathelement location="${basedir}/target/test-classes"/>
+				<path refid="test.path"/>
+			</classpath>
+
+			<formatter type="plain"/>
+			<formatter type="xml"/>
+
+			<batchtest fork="yes" todir="${basedir}/target/junit-reports">
+				<fileset dir="${basedir}/src/test/java">
+					<include name="**/*Test*.java"/>
+					<exclude name="**/AllTests.java"/>
+				</fileset>
+				<fileset dir="${basedir}/target/generated-sources/xjc">
+					<include name="**/*Test*.java"/>
+					<exclude name="**/AllTests.java"/>
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+	<target name="package" depends="test">
+		<mkdir dir="${basedir}/target"/>
+		<jar destfile="${basedir}/target/${artifactId}-${version}.jar"
+			basedir="${basedir}/target/classes"/> 
+	</target>
+	<target name="install" depends="package"/>
+</project>

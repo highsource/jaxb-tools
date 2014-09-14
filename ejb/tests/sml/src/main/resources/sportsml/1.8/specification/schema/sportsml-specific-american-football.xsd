@@ -1,0 +1,1900 @@
+<?xml version="1.0"?>
+<!--
+IPTC - International Press Telecommunications Council
+Royal Albert House, Windsor, Berkshire SL4 1BE, England
+www.iptc.org
+
+See sportsml.xsd to view Non-Exclusive License Agreement for 
+International Press Telecommunications Council, which
+applies to this specification.
+-->
+<!--
+	Differences between CFL and NFL Play
+
+		Kickers get credited with a single point when a punt, kickoff or Field Goal goes
+		through the back or side of the End Zone.
+
+		When a Field Goal misses, a player from the defending team can catch the
+		failed attempt and return it (for a gain or TD).
+
+		Quarterbacks are charged with a Sack Taken stat.
+
+		A player can be credited with an Own Team Fumble Recovery when he secures
+		a ball that was fumbled by a player on his own team.
+
+		Players can be credited with either a Special Teams Tackle or a Defensive
+		Tackle. A Special Teams is credited when a tackle is made during any special
+		teams play (e.g. kicking play) all other tackles are Defensive. The top
+		special teams tackler each year usually records about 20 - 30 in a season,
+		while the top defensive tackler usually records 90 - 110 defensive tackles
+		in a season.
+
+		Quarterbacks can be credited with a defensive tackle.
+
+		Players can also be credited with a pass knocked down or a forced fumble
+		(self explanatory).
+
+		In OT we don't play first-score-wins, like the NFL, instead we play a
+		"Shoot-Out" format. Each club gets the ball on the opposing team's 35 yard
+		line. They both get an equal chance to score until someone is unable
+		(similar to extra innings in Baseball). If, after two attempts each at the
+		tie-breaker then a tie game is declared.
+
+		CFL has 3 downs, while NFL is 4 downs.
+-->
+<schema 
+	targetNamespace="http://iptc.org/std/SportsML/2006-10-18/"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:sportsml="http://iptc.org/std/SportsML/2006-10-18/"
+	version="1.8" 
+	>
+	<attributeGroup name="eventStateAmericanFootball">
+		<attribute name="period-value" type="string" use="optional">
+			<annotation>
+				<documentation>An interger. 1,2,3,4 for the main quarters. 5,6,7,etc. for overtime periods (our shootout periods, for Canadian Football).</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="period-time-elapsed" type="string" use="optional">
+			<annotation>
+				<documentation>The time elapsed since the beginning of the period.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="period-time-remaining" type="string" use="optional">
+			<annotation>
+				<documentation>The time remaining in the period.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="clock-state" use="optional">
+			<annotation>
+				<documentation>Whether the clock is running or stopped.</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="stopped"/>
+					<enumeration value="running"/>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="team-in-possession-idref" type="IDREF" use="optional">
+			<annotation>
+				<documentation>The ID of the team with the football.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="down" use="optional">
+			<annotation>
+				<documentation>The current down.  Valid values are 1,2,3,4,5, with 5th down used for Canadian Football.</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="1"/>
+					<enumeration value="2"/>
+					<enumeration value="3"/>
+					<enumeration value="4"/>
+					<enumeration value="5"/>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="distance-for-1st-down" type="string" use="optional">
+			<annotation>
+				<documentation>The distance between the current line of scrimmage and the first down marker. In yards. The word goal is used for, say, 3rd-and-goal situations. The word kick is used for an extra-point attempt.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="field-side" use="optional">
+			<annotation>
+				<documentation>Which side of the field the event is taking place.  Either "home" or "visiting".</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="home"/>
+					<enumeration value="away"/>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="field-line" type="string" use="optional">
+			<annotation>
+				<documentation>The line of scrimmage. Where the ball is at the start of play or play-segment.</documentation>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+	<element name="event-metadata-american-football">
+		<annotation>
+			<documentation>Metadata about the event itself. | Includes the time left, and where the ball is.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateAmericanFootball"/>
+			<attribute name="week" type="string" use="optional">
+				<annotation>
+					<documentation>The week during the season in which this game is played.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="team-metadata-american-football">
+		<annotation>
+			<documentation>Metadata about a particular team. | Reserved for future football-specific attributes.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="team-stats-american-football">
+		<annotation>
+			<documentation>Statistics about a particular team. | Holds elements that divide statistics into categories.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-american-football-offensive" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-american-football-defensive" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-american-football-scoring" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-american-football-special-teams" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-american-football-fumbles" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-american-football-penalties" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="yards-per-attempt" type="string" use="optional">
+				<annotation>
+					<documentation>The average yards gained per play.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="number-of-plays" type="string" use="optional">
+				<annotation>
+					<documentation>The number of plays this team has completed, including for offensive, defensive, and special teams.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="number-of-plays-gaining" type="string" use="optional">
+				<annotation>
+					<documentation>The number of plays this team has completed for which yards were gained, including for offensive, defensive, and special teams.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="number-of-plays-losing" type="string" use="optional">
+				<annotation>
+					<documentation>The number of plays this team has completed for which yards were lost, including for offensive, defensive, and special teams.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="average-starting-position" type="string" use="optional">
+				<annotation>
+					<documentation>Average yard-line that the team started on per-drive.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="timeouts" type="string" use="optional">
+				<annotation>
+					<documentation>The number of timeouts a team has remaining, either in regulation or in overtime, whichever state the game is currently in.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="time-of-possession" type="string" use="optional">
+				<annotation>
+					<documentation>The time during the entire event that a team has possession of the ball.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="turnover-ratio" type="string" use="optional">
+				<annotation>
+					<documentation>Derived by subtracting turnovers-giveaways from turnovers-takeaways.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="time-of-possession-average" type="string" use="optional">
+				<annotation>
+					<documentation>Team's total time of possession divided by the number of the team's possessions in the game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="time-of-opposition-possession-average" type="string" use="optional">
+				<annotation>
+					<documentation>Opponent's total time of possession divided by the number of the opponent's possessions in the game.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-american-football-offensive">
+		<annotation>
+			<documentation>Statistics about a particular team or player's offensive performance. | Further breaks down stats into passing, rushing, etc.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-american-football-passing" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-american-football-rushing" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-american-football-down-progress" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-american-football-sacks-against" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="offensive-plays-yards" type="string" use="optional">
+				<annotation>
+					<documentation>The total yards accumulated through offensive plays.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="offensive-plays-number" type="string" use="optional">
+				<annotation>
+					<documentation>The number of offensive plays.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="offensive-plays-average-yards-per" type="string" use="optional">
+				<annotation>
+					<documentation>The average number of yards gained per play.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="offensive-plays-average-yards-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>The average number of yards gained via offensive plays per game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="offensive-rank" type="string" use="optional">
+				<annotation>
+					<documentation>How team's offense compares with rest of league or conference.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="possession-duration" type="string" use="optional">
+				<annotation>
+					<documentation>The average amount of time the team had possession per-drive.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="possessions-inside-20" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times team has driven inside its opponent's 20 yard line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="turnovers-giveaway" type="string" use="optional">
+				<annotation>
+					<documentation>Derived by adding passes-interceptions plus fumbles-own-lost.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="turnovers-giveaway-average" type="string" use="optional">
+				<annotation>
+					<documentation>Average-per-game for turnovers-giveaway.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="handoffs-total" type="string" use="optional">
+				<annotation>
+					<documentation>Usually, number of times QB has handed off, typically leading to a running play.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="pitches-total" type="string" use="optional">
+				<annotation>
+					<documentation>Usually, number of times QB has pitched back to another player, typically leading to a running play.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-american-football-passing">
+		<annotation>
+			<documentation>Statistics about a particular team or player's passing performance. | Used for quarterbacks and receivers.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="passes-attempts" type="string" use="optional">
+				<annotation>
+					<documentation>The number of passes attempted.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-completions" type="string" use="optional">
+				<annotation>
+					<documentation>The number of passes completed successfully.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-completions-average-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of completed passes a game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>The percentage of all passes that are completed successfully.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-yards-gross" type="string" use="optional">
+				<annotation>
+					<documentation>The number of yards gained from passing.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-yards-net" type="string" use="optional">
+				<annotation>
+					<documentation>Subtracts out the sacks-against-yards-lost value of stats-american-football-sacks-against element.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-yards-lost" type="string" use="optional">
+				<annotation>
+					<documentation>Amount of yards lost due to sacks and completed passing plays that ended behind the line of scrimmage.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-yards-average" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of yards per game for completed passes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-yards-per-attempt" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of yards per pass completion.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-first-down" type="string" use="optional">
+				<annotation>
+					<documentation>Number of passes a player or team has made for a first-down.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-touchdowns" type="string" use="optional">
+				<annotation>
+					<documentation>The number of passes that resulted in touchdowns.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-touchdowns-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>The ratio of touchdown passes to attempted passes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-interceptions" type="string" use="optional">
+				<annotation>
+					<documentation>The number of passes that were intercepted.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-interceptions-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>The ratio of intercepted passes to attempted passes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-interceptions-yards" type="string" use="optional">
+				<annotation>
+					<documentation>Opponent's yards gained after interceptions.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-interceptions-average" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of interceptions per game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-interceptions-longest" type="string" use="optional">
+				<annotation>
+					<documentation>Longest interception return against a passer.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-interceptions-touchdown" type="string" use="optional">
+				<annotation>
+					<documentation>Number of touchdowns scored from passer's interceptions.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-longest" type="string" use="optional">
+				<annotation>
+					<documentation>The yards gained by the single longest completion.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-average-yards-per" type="string" use="optional">
+				<annotation>
+					<documentation>The average number of yards gained per attempted pass.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-average-yards-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>The average number of yards gained in the air for each game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passer-rating" type="string" use="optional">
+				<annotation>
+					<documentation>A complex formula designed to measure quarterback performance.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="receptions-total" type="string" use="optional">
+				<annotation>
+					<documentation>The total number of successful passes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="receptions-average-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of receptions per game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="receptions-yards" type="string" use="optional">
+				<annotation>
+					<documentation>Number of yards a receiver is credited for.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="receptions-touchdowns" type="string" use="optional">
+				<annotation>
+					<documentation>Number of receptions a player has caught in or taken to the end-zone.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="receptions-first-down" type="string" use="optional">
+				<annotation>
+					<documentation>Number of receptions a player has taken for a first-down.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="receptions-longest" type="string" use="optional">
+				<annotation>
+					<documentation>The longest reception a player had, including to the point where they scored, were-tackled, etc.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="receptions-looks" type="string" use="optional">
+				<annotation>
+					<documentation>The number of opportunities this receiver had to receive the ball.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="receptions-average-yards" type="string" use="optional">
+				<annotation>
+					<documentation>Average yards per game from receptions.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="receptions-average-yards-per" type="string" use="optional">
+				<annotation>
+					<documentation>The average yards per reception.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passing-rank" type="string" use="optional">
+				<annotation>
+					<documentation>How a player or team's passing stats ranks in a league or conference, usually using total passing yards as the measure.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="times-thrown-total" type="string" use="optional">
+				<annotation>
+					<documentation>Number of passes directed at receiver, including incompletions, interceptions, etc.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="receptions-career-100-yard-games" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times in receiver's career where total receiving yardage per game exceeded 100.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passing-career-300-yard-games" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times in passer's career where total passing yardage per game exceeded 300.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-american-football-rushing">
+		<annotation>
+			<documentation>Statistics about a particular team or player's rushing performance. | How well they ran with the ball.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="rushes-attempts" type="string" use="optional">
+				<annotation>
+					<documentation>The number of attempted rushes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rushes-yards" type="string" use="optional">
+				<annotation>
+					<documentation>The number of yards gained by rushing.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rushes-yards-left" type="string" use="optional">
+				<annotation>
+					<documentation>The number of yards gained by rushing up the left side of the field.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rushes-yards-middle" type="string" use="optional">
+				<annotation>
+					<documentation>The number of yards gained by rushing up the middle of the field.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rushes-yards-right" type="string" use="optional">
+				<annotation>
+					<documentation>The number of yards gained by rushing up the right side of the field.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rushes-touchdowns" type="string" use="optional">
+				<annotation>
+					<documentation>The number of touchdowns resulting from rushing plays.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rushing-average-yards-per" type="string" use="optional">
+				<annotation>
+					<documentation>The average number of yards per rush.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rushes-first-down" type="string" use="optional">
+				<annotation>
+					<documentation>The number of rushes that have resulted in a first-down.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rushes-longest" type="string" use="optional">
+				<annotation>
+					<documentation>The number of yards gained by the single longest rushing play.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rushes-average-attempts-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of rushing attempts per game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rushes-average-yards-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of yards gaining from rushes a game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rushing-rank" type="string" use="optional">
+				<annotation>
+					<documentation>How a player or team's rushing stats ranks in a league or conference, usually using total rushing yards as the measure..</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rushes-career-100-yard-games" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times in rusher's career where total rushing yardage per game exceeded 100.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-american-football-down-progress">
+		<annotation>
+			<documentation>Statistics about a particular team or player's performance on downs. | Covers first downs and conversions.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="first-downs-total" type="string" use="optional">
+				<annotation>
+					<documentation>The number of first downs achieved.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="first-downs-pass" type="string" use="optional">
+				<annotation>
+					<documentation>The number of first downs achieved from passing.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="first-downs-run" type="string" use="optional">
+				<annotation>
+					<documentation>The number of first downs achieved from rushing.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="first-downs-penalty" type="string" use="optional">
+				<annotation>
+					<documentation>The number of first downs achieved from penalties on the other team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="first-downs-yards" type="string" use="optional">
+				<annotation>
+					<documentation>Number of yards gained on first down plays.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="first-downs-average-yards-per" type="string" use="optional">
+				<annotation>
+					<documentation>Number of average yards gained on first down plays.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="conversions-second-down" type="string" use="optional">
+				<annotation>
+					<documentation>The number of first downs achieved on a second down.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="conversions-second-down-attempts" type="string" use="optional">
+				<annotation>
+					<documentation>The number of second downs.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="conversions-second-down-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>The percentage of first down attempts on a second down that were successful.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="conversions-third-down" type="string" use="optional">
+				<annotation>
+					<documentation>The number of first downs achieved on a third down.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="conversions-third-down-attempts" type="string" use="optional">
+				<annotation>
+					<documentation>The number of third downs.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="conversions-third-down-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>The percentage of first down attempts on a third down that were successful.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="conversions-fourth-down" type="string" use="optional">
+				<annotation>
+					<documentation>The number of first downs achieved on a fourth down.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="conversions-fourth-down-attempts" type="string" use="optional">
+				<annotation>
+					<documentation>The number of fourth downs.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="conversions-fourth-down-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>The percentage of first down attempts on a fourth down that were successful.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-american-football-sacks-against">
+		<annotation>
+			<documentation>Statistics about the sacks suffered by the offensive team. | How many times and the team was sacked, and for how many yards.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="sacks-against-yards" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of yards lost by the offense from sacks.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="sacks-against-total" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of times that the offense was sacked.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="sacks-against-average" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of times per game a quarterback is sacked.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="sacks-against-safeties" type="string" use="optional">
+				<annotation>
+					<documentation>Number of sacks that resulted in safeties.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-american-football-defensive">
+		<annotation>
+			<documentation>Statistics about a particular player or team's defensive performance. | Covers tackles, interceptions, sacks.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-american-football-passing" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-american-football-rushing" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-american-football-down-progress" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-american-football-sacks-against" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="tackles-total" type="string" use="optional">
+				<annotation>
+					<documentation>The number of tackles made by the defense.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="tackles-solo" type="string" use="optional">
+				<annotation>
+					<documentation>The number of tackles made where only one member of the defense commited the tackle.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="tackles-assists" type="string" use="optional">
+				<annotation>
+					<documentation>The number of tackles made where multiple members of the defense commited the tackle.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="quarterback-hurries" type="string" use="optional">
+				<annotation>
+					<documentation>An unofficial stat given when a defensive player pressures and hurries the quarterback into making a throw to avoid being sacked.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passes-defensed" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of times a pass was deflected or otherwise defended against.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="turnovers-takeaway" type="string" use="optional">
+				<annotation>
+					<documentation>Derived by adding interceptions-total plus fumbles-opposing-recovered.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="yards-allowed-total" type="string" use="optional">
+				<annotation>
+					<documentation>Total yardage a defense allowed, usually through passing and rushing.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="yards-allowed-average" type="string" use="optional">
+				<annotation>
+					<documentation>Total yardage a defense allows per game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="defensive-plays-number" type="string" use="optional">
+				<annotation>
+					<documentation>Number of plays a defense is on the field.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="inside-20-plays" type="string" use="optional">
+				<annotation>
+					<documentation>Number of plays inside defensive team's 20 yard line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="inside-20-points-against" type="string" use="optional">
+				<annotation>
+					<documentation>Number of points given up when opponents' possession starts inside defensive team's 20 yard line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="inside-20-touchdowns-against" type="string" use="optional">
+				<annotation>
+					<documentation>Number of touchdowns given up when opponents' possession starts inside defensive team's 20 yard line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="inside-20-touchdowns-against-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Ratio of touchdowns allowed to possessions when opponents' possession starts inside defensive team's 20 yard line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="defense-rank" type="string" use="optional">
+				<annotation>
+					<documentation>How a team's defensive stats rank in a league or conference, usually using yards allowed per game as the measure.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="defense-rank-pass" type="string" use="optional">
+				<annotation>
+					<documentation>How a team's passing defense stats rank in a league or conference, usually using passing yards allowed per game as the measure.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="defense-rank-rush" type="string" use="optional">
+				<annotation>
+					<documentation>How a team's rushing defense stats rank in a league or conference, usually using rushing yards allowed per game as the measure.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="interceptions-total" type="string" use="optional">
+				<annotation>
+					<documentation>Deprecated. The number of passes the defense has intercepted.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="interceptions-yards" type="string" use="optional">
+				<annotation>
+					<documentation>Deprecated. The number of yards gained as a result of an interception.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="interceptions-average" type="string" use="optional">
+				<annotation>
+					<documentation>Deprecated. The average number of yards gained from interceptions.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="interceptions-longest" type="string" use="optional">
+				<annotation>
+					<documentation>Deprecated. The longest interception returned. Greatest number of yards gained on an interception.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="interceptions-touchdown" type="string" use="optional">
+				<annotation>
+					<documentation>Deprecated. Numer of interceptions that were run back for a touchdown.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="sacks-total" type="string" use="optional">
+				<annotation>
+					<documentation>Deprecated. The number of sacks made by the defense.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="sacks-yards" type="string" use="optional">
+				<annotation>
+					<documentation>Deprecated. Number of yards gained by the defense.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-american-football-scoring">
+		<annotation>
+			<documentation>Statistics about a particular team's scoring performance. | For touchdowns, field goals, etc.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-american-football-field-goals" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="touchdowns-total" type="string" use="optional">
+				<annotation>
+					<documentation>The number of touchdowns scored by the offense.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="touchdowns-passing" type="string" use="optional">
+				<annotation>
+					<documentation>The number of touchdowns scored by passing.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="touchdowns-rushing" type="string" use="optional">
+				<annotation>
+					<documentation>The number of touchdowns scored by rushing.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="touchdowns-special-teams" type="string" use="optional">
+				<annotation>
+					<documentation>The number of touchdowns scored by special teams.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="touchdowns-defensive" type="string" use="optional">
+				<annotation>
+					<documentation>The number of touchdowns scored by the defense.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="touchdowns-receptions" type="string" use="optional">
+				<annotation>
+					<documentation>The number of receptions resulting in a touchdown.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="extra-points-attempts" type="string" use="optional">
+				<annotation>
+					<documentation>The number of extra points attempted by the offense.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="extra-points-made" type="string" use="optional">
+				<annotation>
+					<documentation>The number of extra points made.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="extra-points-missed" type="string" use="optional">
+				<annotation>
+					<documentation>The number of extra points missed.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="extra-points-blocked" type="string" use="optional">
+				<annotation>
+					<documentation>The number of extra points blocked. Extra points made + blocked does not equal attempts.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="extra-points-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Ratio of extra points completed to attempts.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="field-goal-attempts" type="string" use="optional">
+				<annotation>
+					<documentation>The number of field goals attempted.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="field-goals-made" type="string" use="optional">
+				<annotation>
+					<documentation>The number of field goals made.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="field-goals-missed" type="string" use="optional">
+				<annotation>
+					<documentation>The number of field goals missed.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="field-goals-blocked" type="string" use="optional">
+				<annotation>
+					<documentation>The number of field goald blocked. Note that field-goals-made + field-goals-blocked does not equal field-goals-attempts.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="field-goal-longest" type="string" use="optional">
+				<annotation>
+					<documentation>Yardage of longest successful field goal attempt.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="field-goals-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Ratio of field goals made to attempts.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="field-goals-average" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of field goals made per game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="safeties-against" type="string" use="optional">
+				<annotation>
+					<documentation>The number of safeties scored against the offense.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="two-point-conversions-attempts" type="string" use="optional">
+				<annotation>
+					<documentation>The number of two point conversions attempted.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="two-point-conversions-made" type="string" use="optional">
+				<annotation>
+					<documentation>The number of successful two point conversions.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="two-point-conversions-made-rushing" type="string" use="optional">
+				<annotation>
+					<documentation>Number of successful two-point conversions from running plays.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="two-point-conversions-made-passing" type="string" use="optional">
+				<annotation>
+					<documentation>Number of successful two-point conversions from passing plays.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="touchbacks-total" type="string" use="optional">
+				<annotation>
+					<documentation>For Canadian Football. Used to record the number of touchbacks that resulted in scores.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="single-points" type="string" use="optional">
+				<annotation>
+					<documentation>Number of points earned from the single, a CFL-specific play where a kicking team prevents its opponent from returning a kickoff, punt or missed field goal from outside the opponent's own end zone.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="inside-20-points" type="string" use="optional">
+				<annotation>
+					<documentation>Points earned by offensive team when possession starts inside opponent's 20 yard line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="inside-20-touchdowns" type="string" use="optional">
+				<annotation>
+					<documentation>Touchdowns scored by offensive team when possession starts inside opponent's 20 yard line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="inside-20-touchdowns-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Ratio of touchdowns to possessions when possession starts inside opponent's 20 yard line.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-american-football-field-goals">
+		<annotation>
+			<documentation>Statistics about attempted and made field goals. | Allows for breakdowns between particular yard markers.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="minimum-distance" type="string" use="optional">
+				<annotation>
+					<documentation>NOTE: Worth revisiting.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="maximum-distance" type="string" use="optional">
+				<annotation>
+					<documentation>NOTE: Worth revisiting.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="attempts" type="string" use="optional">
+				<annotation>
+					<documentation>Number of attempted field goals.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="made" type="string" use="optional">
+				<annotation>
+					<documentation>Number of successful field goals.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-american-football-special-teams">
+		<annotation>
+			<documentation>Statistics about a particular team's special teams performance. | Covers punts, touchbacks.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="returns-punt-total" type="string" use="optional">
+				<annotation>
+					<documentation>The number of punts returned.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-punt-yards" type="string" use="optional">
+				<annotation>
+					<documentation>The number of yards gained from punt returns.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-punt-average" type="string" use="optional">
+				<annotation>
+					<documentation>The average number of yards gained on each punt return.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-punt-longest" type="string" use="optional">
+				<annotation>
+					<documentation>The number of yards gained on the longest punt return.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-punt-touchdown" type="string" use="optional">
+				<annotation>
+					<documentation>The number of punts returned for a touchdown.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-punt-against-total" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of punt returns defended.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-punt-against-yards" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of yards allowed from punt returns.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-punt-against-average" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of yards allowed from punt returns.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-punt-against-longest" type="string" use="optional">
+				<annotation>
+					<documentation>Yardage of longest punt return allowed.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-punt-against-touchdown" type="string" use="optional">
+				<annotation>
+					<documentation>Number of touchdowns from punt returns allowed.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="kickoffs-total" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of kickoffs to opposition.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="kickoffs-adjusted" type="string" use="optional">
+				<annotation>
+					<documentation>Number of kickoffs excluding onside kicks or kickoffs at the end of a half unless either kickoff is returned for a touchdown.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="kickoffs-to-inside-20" type="string" use="optional">
+				<annotation>
+					<documentation>Number of kickoffs resulting in opponent's possession starting inside own 20 yard line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="kickoffs-drive-start-against-average" type="string" use="optional">
+				<annotation>
+					<documentation>Average starting position of opponent's possession after a kickoff.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="onside-kicks-attempted" type="string" use="optional">
+				<annotation>
+					<documentation>Number of onside kicks attempted.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="onside-kicks-recovered" type="string" use="optional">
+				<annotation>
+					<documentation>Number of onside kicks recovered by kicking team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-kickoff-total" type="string" use="optional">
+				<annotation>
+					<documentation>The number of kickoffs returned.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-kickoff-yards" type="string" use="optional">
+				<annotation>
+					<documentation>The number of yards gained from kickoff returns.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-kickoff-average" type="string" use="optional">
+				<annotation>
+					<documentation>The average number of yards gained on each kickoff return.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-kickoff-longest" type="string" use="optional">
+				<annotation>
+					<documentation>The number of yards gained on the longest kickoff return.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-kickoff-touchdown" type="string" use="optional">
+				<annotation>
+					<documentation>The number of kickoffs returned for a touchdown.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-kickoff-adjusted" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-kickoff-inside-20" type="string" use="optional">
+				<annotation>
+					<documentation>Number of kickoff returns that failed to advance past the returning team's 20 yard line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-kickoff-drive-start-average" type="string" use="optional">
+				<annotation>
+					<documentation>Average start position after kickoff returns.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-kickoff-against-total" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of kickoff returns.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-kickoff-against-yards" type="string" use="optional">
+				<annotation>
+					<documentation>Yards allowed from kickoff returns.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-kickoff-against-average" type="string" use="optional">
+				<annotation>
+					<documentation>Average yards allowed per kickoff return.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-kickoff-against-longest" type="string" use="optional">
+				<annotation>
+					<documentation>Yardage of longest kickoff return allowed.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-kickoff-against-touchdown" type="string" use="optional">
+				<annotation>
+					<documentation>Touchdowns allowed from kickoff returns.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-total" type="string" use="optional">
+				<annotation>
+					<documentation>The total number of returns.  Punts + kickoffs.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="returns-yards" type="string" use="optional">
+				<annotation>
+					<documentation>The total number of yards gained on punts and kickoffs combined.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="punts-total" type="string" use="optional">
+				<annotation>
+					<documentation>The number of punts.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="punts-yards-gross" type="string" use="optional">
+				<annotation>
+					<documentation>The sum of the distances of all punts.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="punts-yards-net" type="string" use="optional">
+				<annotation>
+					<documentation>The sum of the distances of all punts, minus the distances they were returned.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="punts-longest" type="string" use="optional">
+				<annotation>
+					<documentation>The distance of the longest punt.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="punts-inside-20" type="string" use="optional">
+				<annotation>
+					<documentation>The number of punts inside the 20 yard line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="punts-inside-20-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>The percentage of punts inside the 20 yard line.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="punts-average" type="string" use="optional">
+				<annotation>
+					<documentation>The average gross punting yardage.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="punts-average-net" type="string" use="optional">
+				<annotation>
+					<documentation>Average net yards - punt length minus return - per punt.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="punts-against-total" type="string" use="optional">
+				<annotation>
+					<documentation>Number of punts forced by defensive team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="punts-against-yards-gross" type="string" use="optional">
+				<annotation>
+					<documentation>Number of yards of opposing team's punts.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="punts-against-yards-net" type="string" use="optional">
+				<annotation>
+					<documentation>Number of net yards - punt length minus return - of opposing team's punts.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="punts-against-longest" type="string" use="optional">
+				<annotation>
+					<documentation>Longest punt by opposing team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="punts-against-inside-20" type="string" use="optional">
+				<annotation>
+					<documentation>Punt returns failed to advance beyond team's own 20.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="punts-against-inside-20-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Ratio of punt returns failed to advance beyond team's own 20 and total punt returns.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="punts-against-average" type="string" use="optional">
+				<annotation>
+					<documentation>Average length of opponent's punt.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="punts-against-average-net" type="string" use="optional">
+				<annotation>
+					<documentation>Average net length - punt length minus return - of opponent's punt..</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="punts-blocked" type="string" use="optional">
+				<annotation>
+					<documentation>The number of punts that were blocked.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="punts-against-blocked" type="string" use="optional">
+				<annotation>
+					<documentation>The number of punts made by the opposing team that this team or player has blocked.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="touchbacks-total" type="string" use="optional">
+				<annotation>
+					<documentation>The total number of touchbacks, from kickoffs, punts, interceptions, and fumbles.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="touchbacks-total-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>The percentage of kickoffs, punts, interceptions, and fumbles which resulted in a touchback.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="touchbacks-kickoffs" type="string" use="optional">
+				<annotation>
+					<documentation>The number of kickoffs that went into the end zone and were not brought out.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="touchbacks-kickoffs-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>The percentage of kickoffs resulting in touchbacks.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="touchbacks-punts" type="string" use="optional">
+				<annotation>
+					<documentation>The number of punts that went into the end zone and were not brought out.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="touchbacks-punts-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>The percentage of punts resulting in touchbacks.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="touchbacks-interceptions" type="string" use="optional">
+				<annotation>
+					<documentation>The number of interceptions that went into the end zone and were not brought out.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="touchbacks-interceptions-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>The percentage of interceptions resulting in touchbacks.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="touchbacks-punts-against" type="string" use="optional">
+				<annotation>
+					<documentation>Number of punts not returned out of receiving team's end zone.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fair-catches" type="string" use="optional">
+				<annotation>
+					<documentation>The number of fair catches.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fair-catches-against" type="string" use="optional">
+				<annotation>
+					<documentation>Number of fair catches by opponents.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="total-return-yardage-not-kickoffs" type="string" use="optional">
+				<annotation>
+					<documentation>Net return yardage excluding kickoff returns.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="touchdowns-against" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of special teams touchdowns allowed.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="tackles" type="string" use="optional">
+				<annotation>
+					<documentation>For Canadian football, records the number of tackles made while playing for a special-team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="extra-points-against-made" type="string" use="optional">
+				<annotation>
+					<documentation>Number of extra point attempts made by the opposing team that were successful.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="extra-points-against-missed" type="string" use="optional">
+				<annotation>
+					<documentation>Number of extra point attempts made by the opposing team that were not successful.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="extra-points-against-blocked" type="string" use="optional">
+				<annotation>
+					<documentation>Number of extra point attempts made by the opposing team that were blocked by this team or player.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="field-goals-against-made" type="string" use="optional">
+				<annotation>
+					<documentation>Number of field goal attempts made by the opposing team that were successful.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="field-goals-against-missed" type="string" use="optional">
+				<annotation>
+					<documentation>Number of field goal attempts made by the opposing team that were not successful.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="field-goals-against-blocked" type="string" use="optional">
+				<annotation>
+					<documentation>Number of field goal attempts made by the opposing team that were blocked by this player or team.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-american-football-fumbles">
+		<annotation>
+			<documentation>For tracking fumble stats. | Covers teams that do the fumbling and the recovering.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="fumbles-committed" type="string" use="optional">
+				<annotation>
+					<documentation>The total number of fumbles.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fumbles-forced" type="string" use="optional">
+				<annotation>
+					<documentation>The number of fumbles that were forced by the opposing team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fumbles-recovered" type="string" use="optional">
+				<annotation>
+					<documentation>The number of fumbles that were recovered by the fumbling team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fumbles-lost" type="string" use="optional">
+				<annotation>
+					<documentation>The number of fumbles that were not recovered by the fumbling team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fumbles-lost-average-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of fumbles lost per game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fumbles-yards-gained" type="string" use="optional">
+				<annotation>
+					<documentation>The number of yards gained as a result of fumbles.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fumbles-own-committed" type="string" use="optional">
+				<annotation>
+					<documentation>The number of fumbles committed by this team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fumbles-own-recovered" type="string" use="optional">
+				<annotation>
+					<documentation>The number of fumbles committed by this team that were then also recovered by this team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fumbles-own-lost" type="string" use="optional">
+				<annotation>
+					<documentation>The number of fumbles committed by this team but recovered by the other team. A subset of turnovers. Also referred to as a giveaway.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fumbles-own-yards-gained" type="string" use="optional">
+				<annotation>
+					<documentation>The number of yards gained as a result of fumbles by this team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fumbles-own-touchdowns" type="string" use="optional">
+				<annotation>
+					<documentation>The number of touchdowns earned after a team recovers its own fumbles.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fumbles-opposing-committed" type="string" use="optional">
+				<annotation>
+					<documentation>The number of fumbles committed by the opposing team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fumbles-opposing-recovered" type="string" use="optional">
+				<annotation>
+					<documentation>The number of fumbles committed by the opposing but recovered by this team. A subset of turnovers. Also referred to a takeaway.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fumbles-opposing-recovered-average-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of opposing team's fumbles recovered per game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fumbles-opposing-lost" type="string" use="optional">
+				<annotation>
+					<documentation>The number of fumbles committed by the opposing team that were subsequently lost to the opposing team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fumbles-opposing-yards-gained" type="string" use="optional">
+				<annotation>
+					<documentation>The number of yards gained as a result of fumbles by the opposing team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fumbles-opposing-touchdowns" type="string" use="optional">
+				<annotation>
+					<documentation>The number of touchdowns scored as a result of fumbles by the opposing team..</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="touchbacks-fumbles" type="string" use="optional">
+				<annotation>
+					<documentation>The number of fumbles into the end zone that are not brought out.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="touchbacks-fumbles-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>The percentage of fumbles that resulted in touchbacks.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-american-football-penalties">
+		<annotation>
+			<documentation>Statistics about penalties. | Applies to both offensive and defensive penalties.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="penalties-total" type="string" use="optional">
+				<annotation>
+					<documentation>The number of penalties.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-yards" type="string" use="optional">
+				<annotation>
+					<documentation>The yards gained as a result of penalties.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-first-downs" type="string" use="optional">
+				<annotation>
+					<documentation>The number of first downs gained as a result of penalties.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-opponent-yards" type="string" use="optional">
+				<annotation>
+					<documentation>Yards opponents gain as a result of penalties.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalties-opponent-total" type="string" use="optional">
+				<annotation>
+					<documentation>Total of penalties by opposing team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalties-challenged" type="string" use="optional">
+				<annotation>
+					<documentation>Includes penalty challenges that were both won and lost.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalties-reviewed" type="string" use="optional">
+				<annotation>
+					<documentation>Includes both coach challenges and booth challenges.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalties-overturned" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="player-metadata-american-football">
+		<annotation>
+			<documentation>Player metadata that is specific to football. | Reserved for future use.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="player-stats-american-football">
+		<annotation>
+			<documentation>Player statistics for football. | Includes the same elements as team statistics.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-american-football-offensive" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-american-football-defensive" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-american-football-scoring" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-american-football-special-teams" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-american-football-fumbles" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-american-football-penalties" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="event-actions-american-football">
+		<annotation>
+			<documentation>Description of an event. | A play or score should only exist outside a drive for punt-returns or kickoff-returns.</documentation>
+		</annotation>
+		<complexType>
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="sportsml:action-american-football-drive"/>
+				<element ref="sportsml:action-american-football-play"/>
+				<element ref="sportsml:action-american-football-score"/>
+				<element ref="sportsml:action-american-football-other"/>
+			</choice>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="action-american-football-substitution">
+		<annotation>
+			<documentation>A substitution. | Oftentimes recorded for a quarterback change.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateAmericanFootball"/>
+			<attribute name="player-original-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>The ID of the player going out.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="player-original-position" type="sportsml:position.AmericanFootball" use="optional">
+				<annotation>
+					<documentation>The position of the player going out.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="player-replacing-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>The ID of the player coming in.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="player-replacing-position" type="sportsml:position.AmericanFootball" use="optional">
+				<annotation>
+					<documentation>The position of the player coming in.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="substitution-reason" type="string" use="optional">
+				<annotation>
+					<documentation>The reason for the substitution.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A comment.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-american-football-play">
+		<annotation>
+			<documentation>Only for non-scoring plays. | Holds elements that describe the role each play participant performed.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:action-american-football-play-participant" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateAmericanFootball"/>
+			<attribute name="drive-result" type="sportsml:driveResult.AmericanFootball" use="optional">
+				<annotation>
+					<documentation>Describes how a drive ended, if this play ended a drive.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-attempt-type" type="sportsml:scoreType.AmericanFootball" use="optional">
+				<annotation>
+					<documentation>Type of score that was attempted, but missed.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A textual comment.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-team" type="string" use="optional">
+				<annotation>
+					<documentation>After this action took place, the score of the team that team-idref points to.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-team-opposing" type="string" use="optional">
+				<annotation>
+					<documentation>After this action took place, the score of the team opposing that listed in team-idref.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="play-type" type="string" use="optional">
+				<annotation>
+					<documentation>The type of play. Controlled vocabulary. run | pass | kick | etc.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="yards-gained" type="string" use="optional">
+				<annotation>
+					<documentation>The number of yards gained on this play.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-american-football-drive">
+		<annotation>
+			<documentation>A series of plays that may result in a score. | Ends either in a score, or in a change of possession.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<choice minOccurs="0" maxOccurs="unbounded">
+					<element ref="sportsml:action-american-football-play"/>
+					<element ref="sportsml:action-american-football-substitution"/>
+					<element ref="sportsml:action-american-football-penalty"/>
+					<element ref="sportsml:action-american-football-timeout"/>
+				</choice>
+				<element ref="sportsml:action-american-football-score" minOccurs="0" maxOccurs="2"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateAmericanFootball"/>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A comment.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="drive-plays" type="string" use="optional">
+				<annotation>
+					<documentation>The number of plays in this drive.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="drive-yards" type="string" use="optional">
+				<annotation>
+					<documentation>The number of yards covered during this drive.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="drive-duration" type="string" use="optional">
+				<annotation>
+					<documentation>The time it took for the drive.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="drive-result" type="sportsml:driveResult.AmericanFootball" use="optional">
+				<annotation>
+					<documentation>How a drive ends.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-american-football-score">
+		<annotation>
+			<documentation>A play that ended in a score. | Holds participant elements, which detail the role each player had in the scoring play.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:action-american-football-play-participant" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateAmericanFootball"/>
+			<attribute name="team-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>Pointer to the team that scored.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-type" type="sportsml:scoreType.AmericanFootball" use="optional">
+				<annotation>
+					<documentation>Specifies the type of scoring play. Touchdown, field goal, etc.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points" type="string" use="optional">
+				<annotation>
+					<documentation>The number of points scored.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A textual comment.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-team" type="string" use="optional">
+				<annotation>
+					<documentation>After this action took place, the score of the team that team-idref points to.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-team-opposing" type="string" use="optional">
+				<annotation>
+					<documentation>After this action took place, the score of the team opposing that listed in team-idref.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="play-type" type="string" use="optional">
+				<annotation>
+					<documentation>The type of play. Controlled vocabulary. run | pass | kick | etc.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="yards-gained" type="string" use="optional">
+				<annotation>
+					<documentation>The number of yards gained on this scoring play.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-american-football-play-participant">
+		<annotation>
+			<documentation>Describes which player was involved in the play and how. | The role and result attributes are critical.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateAmericanFootball"/>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A comment.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="player-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the player involved in the play.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="role" type="sportsml:role.AmericanFootball" use="optional">
+				<annotation>
+					<documentation>Describes how the player got the ball, not what the player did with it.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="result" type="sportsml:result.AmericanFootball" use="optional">
+				<annotation>
+					<documentation>How this segment of the play finished.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="kick-type" type="sportsml:kickType.AmericanFootball" use="optional">
+				<annotation>
+					<documentation>If result was kick, then the type of kick.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-type" type="sportsml:penaltyType.AmericanFootball" use="optional">
+				<annotation>
+					<documentation>What penalty was called on this player. Called while a play is in progress.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-acceptance" use="optional">
+				<annotation>
+					<documentation>Whether the penalty was accepted or declined.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="accepted"/>
+						<enumeration value="declined"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="official-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>Which official called the penalty.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="yards-gained" type="string" use="optional">
+				<annotation>
+					<documentation>The number of yards gained on this play by this player.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-american-football-penalty">
+		<annotation>
+			<documentation>Describes a penalty. Like plays, contains participant elements.  | These penalties occur before a play is officially started.  </documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:action-american-football-play-participant" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateAmericanFootball"/>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A textual comment.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="recipient-type" use="required">
+				<annotation>
+					<documentation>Whether the receiver of the penalty was the team, the player, a coach, a ref, etc.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="team"/>
+						<enumeration value="player"/>
+						<enumeration value="auxilliary"/>
+						<enumeration value="official"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="recipient-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the receiver of the penalty.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="caller-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the official who called the penalty.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-side" type="sportsml:penaltySide.AmericanFootball" use="optional">
+				<annotation>
+					<documentation>Whether a penalty is assessed on the offense or the defense.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-level" type="sportsml:penaltyLevel.AmericanFootball" use="optional">
+				<annotation>
+					<documentation>The level of the penalty.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-yards" type="string" use="optional">
+				<annotation>
+					<documentation>The number of yards of the penalty.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-acceptance" use="optional">
+				<annotation>
+					<documentation>Whether the penalty was accepted or declined.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="accepted"/>
+						<enumeration value="declined"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="penalty-challenge" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="true"/>
+						<enumeration value="false"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="penalty-review" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="coach"/>
+						<enumeration value="booth"/>
+						<enumeration value="none"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="penalty-review-ruling" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="overturned"/>
+						<enumeration value="left-standing"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-american-football-timeout">
+		<annotation>
+			<documentation>Describes a timeout. | A break in the action, usually called by one of the teams playing.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateAmericanFootball"/>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A textual comment.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="timeout-type" type="sportsml:timeoutType.AmericanFootball" use="optional">
+				<annotation>
+					<documentation>Is it charged to a team or an official?</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="caller" type="sportsml:caller.AmericanFootball" use="optional">
+				<annotation>
+					<documentation>Who called the timeout, either team or official.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="caller-idref" type="string" use="optional">
+				<annotation>
+					<documentation>If caller is team, say, a pointer to the team element, or a pointer to a player on the team.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-american-football-other">
+		<annotation>
+			<documentation>A custom action. | For use when none of the pre-build actions apply.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateAmericanFootball"/>
+			<attribute name="action-source" type="string" use="optional">
+				<annotation>
+					<documentation>The name of the controlled-vocabulary for the action-type attribute.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="action-type" type="string" use="optional">
+				<annotation>
+					<documentation>A selection from a controlled-vocabulary list maintained by the publisher.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment about the action.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+</schema>
+

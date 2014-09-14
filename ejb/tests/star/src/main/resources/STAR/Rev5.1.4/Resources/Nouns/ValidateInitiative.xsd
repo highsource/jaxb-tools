@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    User    Mod     Date      Description
+    =============================================================================
+    MV      CR297   20070228  Replaced: Vehicle with ValidateInitiativeVehicleLineItem
+    
+-->
+
+<xsd:schema xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns="http://www.starstandard.org/STAR/5" xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="ValidateInitiative" type="ValidateInitiativeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Validate Initiative
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ValidateInitiativeHeader" type="ValidateInitiativeHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Validate Initiative Header
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ValidateInitiativeDetail" type="ValidateInitiativeDetailType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Validate Initiative Detail
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ValidateInitiativeVehicleLineItem" type="ValidateInitiativeVehicleLineItemType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Detail information regarding a vehicle for a particular initiative.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="ValidateInitiativeType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Initial Version - Draft</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="ValidateInitiativeHeader" />
+            <xsd:element ref="ValidateInitiativeDetail" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ValidateInitiativeHeaderType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The Header component contains summary information related to the entire ValidateInitiative Business Object Document.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType" />
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="ValidateInitiativeDetailType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The Initiative component represents money an interest rate programs/incentives based on the vehicle or money programs/incentives based on an individual customers.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="InitiativeID" />
+            <xsd:element ref="ValidateInitiativeVehicleLineItem" minOccurs="0" />
+            <xsd:element ref="GeographicalConstraints" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="InitiativeStatus" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ValidateInitiativeVehicleLineItemType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Detail information regarding a vehicle for a particular initiative.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="Vehicle" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="VDSCode" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

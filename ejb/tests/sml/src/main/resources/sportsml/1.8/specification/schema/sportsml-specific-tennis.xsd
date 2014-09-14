@@ -1,0 +1,429 @@
+<?xml version="1.0"?>
+<!--
+IPTC - International Press Telecommunications Council
+Royal Albert House, Windsor, Berkshire SL4 1BE, England
+www.iptc.org
+
+See sportsml.xsd to view Non-Exclusive License Agreement for 
+International Press Telecommunications Council, which
+applies to this specification.
+-->
+<schema 
+	targetNamespace="http://iptc.org/std/SportsML/2006-10-18/"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:sportsml="http://iptc.org/std/SportsML/2006-10-18/"
+	version="1.8"
+	>
+	<attributeGroup name="eventStateTennis">
+		<attribute name="set" type="string" use="optional">
+			<annotation>
+				<documentation>An integer, 1,2,3,4,5.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="game" type="string" use="optional">
+			<annotation>
+				<documentation>An integer, generally 1 through 7.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="server-idref" type="IDREF" use="optional">
+			<annotation>
+				<documentation>A pointer to the player who served the ball on this point.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="server-score" use="optional">
+			<annotation>
+				<documentation>Either love, 15, 30, 40, game.</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="love"/>
+					<enumeration value="15"/>
+					<enumeration value="30"/>
+					<enumeration value="40"/>
+					<enumeration value="game"/>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="receiver-idref" type="IDREF" use="optional">
+			<annotation>
+				<documentation>A pointer to the player who received the served ball on this point.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="receiver-score" use="optional">
+			<annotation>
+				<documentation>Either love, 15, 30, 40, game.</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="love"/>
+					<enumeration value="15"/>
+					<enumeration value="30"/>
+					<enumeration value="40"/>
+					<enumeration value="game"/>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="serve-number" use="optional">
+			<annotation>
+				<documentation>Identifying either the first or second serve.</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="first"/>
+					<enumeration value="second"/>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</attributeGroup>
+	<element name="event-metadata-tennis">
+		<annotation>
+			<documentation>Metadata about the specific tennis match. | When in the match this document was issued.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateTennis"/>
+		</complexType>
+	</element>
+	<element name="team-metadata-tennis">
+		<annotation>
+			<documentation>A placeholder for event metadata specific for tennis. | Reserved for future use.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="team-stats-tennis">
+		<annotation>
+			<documentation>Holds tennis-specific stats. Used for doubles matches. | Generally having to do with the score of the match.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-tennis-service" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-tennis-return" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-tennis-set" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+		</complexType>
+	</element>
+	<element name="stats-tennis-service">
+		<annotation>
+			<documentation>TBD.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="matches-played" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="aces" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="first-services-good" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="first-services-good-pct" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="first-service-points-won" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="first-service-points-won-pct" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="second-service-points-won" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="second-service-points-won-pct" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="service-games-played" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="service-games-won" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="service-games-won-pct" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="break-points-played" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="break-points-saved" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="break-points-saved-pct" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-tennis-return">
+		<annotation>
+			<documentation>TBD.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="returns-played" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="matches-played" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="first-service-return-points-won" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="first-service-return-points-won-pct" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="second-service-return-points-won" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="second-service-return-points-won-pct" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="return-games-played" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="return-games-won" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="return-games-won-pct" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="break-points-played" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="break-points-converted" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="break-points-converted-pct" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+  		</complexType>
+	</element>
+	<element name="stats-tennis-set">
+		<annotation>
+			<documentation>Holds the score of a set. | Includes an attribute for a set's tiebreaker score.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-tennis-game" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="set-number" type="string" use="optional">
+				<annotation>
+					<documentation>An integer, generally 1 through 7.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score" type="string" use="optional">
+				<annotation>
+					<documentation>Either love, 15, 30, 40, game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-tiebreaker" type="string" use="optional">
+				<annotation>
+					<documentation>An integer. Generally 0 through 7.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-tennis-game">
+		<annotation>
+			<documentation>Holds the score of a game. | Also holds details of each point.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="score" use="optional">
+				<annotation>
+					<documentation>Either love, 15, 30, 40, or game.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="love"/>
+						<enumeration value="15"/>
+						<enumeration value="30"/>
+						<enumeration value="40"/>
+						<enumeration value="game"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="player-metadata-tennis">
+		<annotation>
+			<documentation>Holds metadata specific to a tennis player. | Reserved for future use.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="player-stats-tennis">
+		<annotation>
+			<documentation>Holds tennis-specific stats. Used for singles matches. | Generally having to do with the score of the match.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-tennis-service" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-tennis-return" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-tennis-set" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+		</complexType>
+	</element>
+	<element name="event-actions-tennis">
+		<annotation>
+			<documentation>A holder for actions taking place in a tennis match. | Either a tennis point, or a custom action.</documentation>
+		</annotation>
+		<complexType>
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="sportsml:action-tennis-point"/>
+				<element ref="sportsml:action-tennis-other"/>
+			</choice>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="action-tennis-point">
+		<annotation>
+			<documentation>Can be recorded whenever a point is won. | Includes an identifier for how that point was one.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:action-tennis-volley" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateTennis"/>
+			<attribute name="winner-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the player or team (for doubles) who won the point.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="win-type" type="sportsml:winType.Tennis" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-tennis-volley">
+		<annotation>
+			<documentation>TBD.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateTennis"/>
+			<attribute name="swing-type" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="spin-type" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="landing-location" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="result" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="tournament-metadata-tennis">
+		<annotation>
+			<documentation>For holding metadata having to do with a tennis tournament. | Includes an attribute for the name of the tennis tour.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="tour-name" type="string" use="optional">
+				<annotation>
+					<documentation>The name of the tour.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-tennis-other">
+		<annotation>
+			<documentation>A custom action. | For use when none of the pre-build actions apply.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateTennis"/>
+			<attribute name="action-source" type="string" use="optional">
+				<annotation>
+					<documentation>The name of the controlled-vocabulary for the action-type attribute.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="action-type" type="string" use="optional">
+				<annotation>
+					<documentation>A selection from a controlled-vocabulary list maintained by the publisher.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment about the action.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+</schema>

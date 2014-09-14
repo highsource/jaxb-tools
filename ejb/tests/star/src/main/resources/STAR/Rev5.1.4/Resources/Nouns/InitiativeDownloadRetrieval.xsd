@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns="http://www.starstandard.org/STAR/5" xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="InitiativeDownloadRetrieval" type="InitiativeDownloadRetrievalType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Initiative Download Retrieval</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="InitiativeDownloadRetrievalHeader" type="InitiativeDownloadRetrievalHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Initiative Download Retrieval Header</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="InitiativeDownloadRetrievalType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Initial Version - Draft</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="InitiativeDownloadRetrievalHeader" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="InitiativeDownloadRetrievalHeaderType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The Header component contains summary information related to the entire InitiativeDownload Business Object Document.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType" />
+        </xsd:complexContent>
+    </xsd:complexType>
+</xsd:schema>

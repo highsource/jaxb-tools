@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:dcterms="http://purl.org/dc/terms/"
+            xmlns:dc="http://purl.org/dc/elements/1.1/"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
+
+  <xs:annotation>
+    <xs:documentation xml:lang="en">
+      Qualified DC container XML Schema
+ 
+      Created 2003-04-02
+
+      Created by 
+
+      Tim Cole (t-cole3@uiuc.edu)
+      Tom Habing (thabing@uiuc.edu)
+      Jane Hunter (jane@dstc.edu.au)
+      Pete Johnston (p.johnston@ukoln.ac.uk),
+      Carl Lagoze (lagoze@cs.cornell.edu)
+
+      This schema declares a container element for a Qualified DC application. 
+      
+      The declaration of the qualifieddc element uses the dcterms:elementOrRefinementContainer
+      complexType. 
+
+      Note that this schema does not define a target namespace. The expectation is that
+      the qualifieddc element is assigned to a namespace by an application schema 
+      which includes this schema.
+      
+    </xs:documentation>
+
+  </xs:annotation>
+
+      <xs:import namespace="http://purl.org/dc/terms/"
+                 schemaLocation="dcterms.xsd"/>
+
+      <xs:element name="qualifieddc" type="dcterms:elementOrRefinementContainer"/>
+
+</xs:schema>

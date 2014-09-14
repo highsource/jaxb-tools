@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    User    Mod    Date      Description
+    ==========================================================================
+    DC            20061031   Removed DocumentID
+ -->
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns="http://www.starstandard.org/STAR/5" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="ServiceAppointmentAcknowledgment" type="ServiceAppointmentAcknowledgmentType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Service Appointment Acknowledgment
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ServiceAppointmentAcknowledgmentHeader" type="ServiceAppointmentAcknowledgmentHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Service Appointment Acknowledgment Header
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ServiceAppointmentAcknowledgmentDetail" type="ServiceAppointmentAcknowledgmentDetailType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Service Appointment Acknowledgment Detail
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="ServiceAppointmentAcknowledgmentType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 3.0 - Draft</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.1, STAR approved 04/20/2005; effective date 07/04/2005</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.0, STAR approved 05/07/2004; effective date 07/04/2004</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 1.0, STAR approved 10/4/2002; OAGI approved 10/17/2002; effective date 1/01/2003</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="ServiceAppointmentAcknowledgmentHeader" />
+            <xsd:element ref="ServiceAppointmentAcknowledgmentDetail" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ServiceAppointmentAcknowledgmentHeaderType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+<!--                <xsd:sequence>
+                    <xsd:element ref="DocumentID" />
+                </xsd:sequence> -->
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="ServiceAppointmentAcknowledgmentDetailType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Detail for each service visit requested</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="ServiceAppointmentBaseType" />
+        </xsd:complexContent>
+    </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.004" id="OTA2008A">
+	<xs:include schemaLocation="OTA_VehicleCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_VehRateRuleRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The OTA_VehRateRuleRQ will allow additional details to be requested regarding a previously quoted rate or a reservation that is already confirmed.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Point of Sale Identification.  Identification number of the vendor that has made the vehicle rate rule request and agency number assigned by IATA, ARC, ESRP or TID.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:choice>
+					<xs:element name="Reference" type="UniqueID_Type">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The reference element will be used to send either the confirmation number when retrieving rate rule information for a previously confirmed booking or a reference ID from a previous rate display.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RentalInfo">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Contains information for a vehicle rental.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="VehRentalCore" type="VehicleRentalCoreType">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Information that is common, or core, to all requests and responses associated with the reservation of a vehicle.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="VehicleInfo" type="VehiclePrefType">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">A preference for one specific vehicle type.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="SpecialEquipPrefs" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Indicates the preferences for one or more specific items of additional equipment, such as ski racks, child seats, etc.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="SpecialEquipPref" maxOccurs="15">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">A preference for one specific piece of equipment</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:attributeGroup ref="VehicleEquipmentPrefGroup"/>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="CustLoyalty" minOccurs="0" maxOccurs="4">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Used to send frequent renter membership information.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:attributeGroup ref="CustomerLoyaltyGroup"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="RateQualifier" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Indicates the type of rates of interest to the customer, along with any discount number or promotional codes that may affect the rate.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:attributeGroup ref="RateQualifierCoreGroup"/>
+										<xs:attribute name="RateAuthorizationCode" type="StringLength1to32" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">The rate authorization code for this rate.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="VendorRateID" type="StringLength1to32" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en"> The identifier assigned to this rate by the vendor.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="RateModifiedInd" type="xs:boolean" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">When true, the booking has been modified in such a way that the rate may be changed.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="OffLocService" type="OffLocationServiceType" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Information on requested off-airport location services, for example, vehicle delivery, customer pickup.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="ArrivalDetails" type="VehicleArrivalDetailsType" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Details of the arrival transportation, if applicable</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="TourInfo" type="VehicleTourInfoType" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Tour information for which rate rules are requested.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="CustomerID" type="UniqueID_Type" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The identification of the customer for whom the rate rule is being requested. This is different from the customer loyalty number.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element ref="TPA_Extensions" minOccurs="0"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:choice>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attributeGroup ref="CompanyID_AttributesGroup">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Identity of the car supplier for which the rate rules are being requested.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+			<xs:attributeGroup ref="ReqRespVersion">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Used to request the version of the payload message desired for the response.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

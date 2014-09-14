@@ -1,0 +1,306 @@
+<?xml version="1.0"?>
+<xs:schema
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+
+	xmlns:annox="http://annox.dev.java.net"
+	xmlns:ha="http://annox.dev.java.net/org.hibernate.annotations"
+
+	jaxb:extensionBindingPrefixes="hj orm xjc annox"
+	jaxb:version="2.1"
+	targetNamespace="urn:test"
+	xmlns:test="urn:test"
+
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+
+	<xs:annotation>
+		<!--xs:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.cuone"/>
+			</jaxb:schemaBindings>
+			<hj:persistence>
+				<hj:default-generated-id name="Myid" transient="true">
+					<orm:column name="MY_ID"/>
+				</hj:default-generated-id>
+				<hj:default-one-to-many>
+					<orm:join-table/>
+				</hj:default-one-to-many>
+			</hj:persistence>
+		</xs:appinfo-->
+	</xs:annotation>
+
+	<!-- ... -->
+	<xs:element name="one" type="test:one"/>
+
+	<xs:complexType name="one">
+		<xs:sequence>
+			<xs:element name="one-to-many-default" type="test:two" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="one-to-many-join-column" type="test:two" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:one-to-many>
+							<orm:join-column name="O2MJC_ONE_ID"/>
+						</hj:one-to-many>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="one-to-many-join-table" type="test:two" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:one-to-many>
+							<orm:join-table name="ONE_O2MJT_TWO">
+								<orm:join-column name="ONE_ID"/>
+								<orm:inverse-join-column name="TWO_ID"/>
+								<orm:unique-constraint>
+									<orm:column-name>ONE_ID</orm:column-name>
+									<orm:column-name>TWO_ID</orm:column-name>
+								</orm:unique-constraint>
+							</orm:join-table>
+						</hj:one-to-many>
+						<annox:annotate>
+							<ha:Cascade value="DELETE_ORPHAN"/>
+						</annox:annotate>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="many-to-many-join-table" type="test:two" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:many-to-many>
+							<orm:join-table name="ONE_M2MJT_TWO">
+								<orm:join-column name="ONE_ID"/>
+								<orm:inverse-join-column name="TWO_ID"/>
+								<orm:unique-constraint>
+									<orm:column-name>ONE_ID</orm:column-name>
+									<orm:column-name>TWO_ID</orm:column-name>
+								</orm:unique-constraint>
+							</orm:join-table>
+						</hj:many-to-many>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="one-to-many-children" type="test:two" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:one-to-many mapped-by="manyToOneParent" merge="false"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="one-to-many-basic" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:generated-class className="O2MBasic">
+							<hj:entity>
+								<orm:table name="O2M_BASIC_CUSTOM"/>
+							</hj:entity>
+						</hj:generated-class>
+						<!--hj:generated-property>
+							<annox:annotate>
+								<ha:Cascade value="DELETE_ORPHAN"/>
+							</annox:annotate>
+						</hj:generated-property-->
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+
+		</xs:sequence>
+		<xs:attribute name="value" type="xs:string" use="optional"/>
+	</xs:complexType>
+
+	<xs:element name="two" type="test:two"/>
+
+	<xs:complexType name="two">
+		<xs:sequence>
+			<xs:element name="many-to-one-default" type="test:three" minOccurs="0"/>
+			<xs:element name="many-to-one-join-column" type="test:three" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:many-to-one merge="false">
+							<orm:join-column name="M2OJC_THREE_ID"/>
+							<orm:cascade>
+								<orm:cascade-all/>
+							</orm:cascade>
+						</hj:many-to-one>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="many-to-one-join-table" type="test:three" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:many-to-one>
+							<orm:join-table name="TWO_M2OJT_THREE"/>
+						</hj:many-to-one>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="one-to-one-join-column" type="test:three" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:one-to-one>
+							<orm:join-column name="O2OJC_THREE_ID"/>
+						</hj:one-to-one>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="one-to-one-join-table" type="test:three" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:one-to-one>
+							<orm:join-table name="TWO_O2OJT_THREE">
+								<orm:join-column name="TWO_ID"/>
+								<orm:inverse-join-column name="THREE_ID"/>
+								<orm:unique-constraint>
+									<orm:column-name>TWO_ID</orm:column-name>
+									<orm:column-name>THREE_ID</orm:column-name>
+								</orm:unique-constraint>
+							</orm:join-table>
+						</hj:one-to-one>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+
+
+			<xs:element name="many-to-one-parent" type="test:one" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:many-to-one>
+							<orm:join-column name="O2M_ONE_ID"/>
+						</hj:many-to-one>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+
+
+		</xs:sequence>
+		<xs:attribute name="value" type="xs:string" use="optional"/>
+	</xs:complexType>
+
+	<xs:element name="three" type="test:three"/>
+
+	<xs:complexType name="three">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:generated-id name="ThreeId" attributeName="test:tid" transient="false"/>
+				<hj:entity>
+					<orm:table>
+						<orm:unique-constraint>
+							<orm:column-name>VALUE_</orm:column-name>
+						</orm:unique-constraint>
+					</orm:table>
+					<orm:inheritance strategy="TABLE_PER_CLASS"/>
+				</hj:entity>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="basic-clob" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:basic>
+							<orm:lob/>
+						</hj:basic>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="value" type="xs:string" use="optional"/>
+	</xs:complexType>
+
+	<xs:element name="four" type="test:four"/>
+
+	<xs:complexType name="four">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:entity>
+					<orm:sequence-generator name="another-four-sequence" sequence-name="ANOTHER_FOUR_SEQ"/>
+				</hj:entity>	
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="xs:int" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:id>
+							<orm:column name="FOUR_CUSTOM_ID"/>
+							<orm:generated-value strategy="SEQUENCE" generator="four-sequence"/>
+							<orm:sequence-generator name="four-sequence" sequence-name="FOUR_SEQ"/>
+						</hj:id>	
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="five" type="test:five"/>
+
+	<xs:complexType name="five">
+		<xs:sequence>
+			<xs:element name="id" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:id merge="false">
+							<orm:column name="FIVE_CUSTOM_ID"/>
+							<orm:temporal>DATE</orm:temporal>
+						</hj:id>	
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--xs:complexType name="six">
+		<xs:all>
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:property name="XY"/>
+			</xs:appinfo>
+		</xs:annotation>
+
+			<xs:element name="x" type="xs:string" minOccurs="0"/>
+			<xs:element name="y" type="xs:integer" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType-->
+
+	<xs:element name="seven" type="test:seven"/>
+
+	<xs:complexType name="seven">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:ignored/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="value" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="eight" type="test:eight"/>
+
+	<xs:complexType name="eight">
+		<xs:sequence>
+			<xs:element name="value" type="test:seven" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="nine" type="test:nine"/>
+
+	<xs:complexType name="nine">
+		<xs:complexContent>
+			<xs:extension base="test:seven">
+				<xs:sequence>
+					<xs:element name="addition" type="test:eight" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>

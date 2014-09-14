@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="6.003" id="OTA2008A">
+	<xs:include schemaLocation="OTA_HotelContentDescription.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_HotelDescriptiveInfoRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The Hotel Descriptive Info Response is a message used to provide detailed descriptive information about a hotel property.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Identifies the party sending the information.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:choice>
+					<xs:sequence>
+						<xs:element name="Success" type="SuccessType">
+							<xs:annotation>
+								<xs:documentation>The presence of the empty Success element explicitly indicates that the OpenTravel message succeeded.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Warnings" type="WarningsType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Used in conjunction with the Success element to define one or more business errors.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="HotelDescriptiveContents" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>A collection of hotel descriptive information.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="HotelDescriptiveContent" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>Hotel descriptive information.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="HotelDescriptiveContentType">
+													<xs:attributeGroup ref="HotelReferenceGroup">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">Used to identify the specific hotel.</xs:documentation>
+														</xs:annotation>
+													</xs:attributeGroup>
+													<xs:attributeGroup ref="OverWriteGroup">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">Used to indicate a full overlay of data.</xs:documentation>
+														</xs:annotation>
+													</xs:attributeGroup>
+													<xs:attribute name="MoreDataEchoToken" type="StringLength1to128" use="optional">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">The response returns the attribute if there was additional data.  The text value should be echoed in this request to indicate where to begin the next block of data.		</xs:documentation>
+														</xs:annotation>
+													</xs:attribute>
+												</xs:extension>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attributeGroup ref="HotelReferenceGroup">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">HotelReferenceGroup attribute has been added to HotelDescriptiveContent layer in 2003B to satisfy the ability to send multiple hotels within the message. It is possible that the HotelReferenceGroup will be removed from HotelDescriptiveContents in a future release.</xs:documentation>
+									</xs:annotation>
+								</xs:attributeGroup>
+								<xs:attributeGroup ref="OverWriteGroup">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">OverWriteGroup attribute has been added to HotelDescriptiveContent layer in 2003B to satisfy the ability to send multiple hotels within the message. It is possible that the OverWriteGroup will be removed from HotelDescriptiveContents in a future release.</xs:documentation>
+									</xs:annotation>
+								</xs:attributeGroup>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:element name="Errors" type="ErrorsType">
+						<xs:annotation>
+							<xs:documentation>Errors are returned if the request was unable to be processed.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This element defines standard attributes that appear on the root element for all OTA payloads.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

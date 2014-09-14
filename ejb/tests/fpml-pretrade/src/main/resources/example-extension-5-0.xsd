@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+== Copyright (c) 2002-2007. All rights reserved. 
+== Financial Products Markup Language is subject to the FpML public license. 
+== A copy of this license is available at http://www.fpml.org/license/license.html
+-->
+<!--View is pretrade-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns="http://www.abc.com/extension-1-0/pretrade" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:fpml="http://www.fpml.org/FpML-5-0/pretrade" fpml:dummy="force-prefix" targetNamespace="http://www.abc.com/extension-1-0/pretrade" version="$Revision: 884 $" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<!-- import FpML schema -->
+  <xsd:import namespace="http://www.fpml.org/FpML-5-0/pretrade" schemaLocation="fpml-main-5-0.xsd" />
+<!-- example product -->
+  <xsd:complexType name="ForwardSale">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A simple example product that is a forward purchase or sale of an underlying asset.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="fpml:Product">
+        <xsd:sequence>
+          <xsd:group ref="fpml:BuyerSeller.model">
+            <xsd:annotation>
+              <xsd:documentation>References to the buyer and seller of the asset.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:group>
+          <xsd:element ref="fpml:underlyingAsset">
+            <xsd:annotation>
+              <xsd:documentation>This is the underlying asset substitution group, so it can contain any underlying asset in that group.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="forwardSaleDate" type="xsd:date">
+            <xsd:annotation>
+              <xsd:documentation>The date on which the sale will take place.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="settlement" type="fpml:Payment" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation>The details of the settlement.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="price" type="fpml:Price" minOccurs="0"></xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="forward" type="ForwardSale" substitutionGroup="fpml:product" />
+</xsd:schema>
+

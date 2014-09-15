@@ -10,21 +10,6 @@
 	<artifactId>hyperjaxb3-ejb-tests</artifactId>
 	<packaging>pom</packaging>
 	<name>Hyperjaxb3 EJB Tests</name>
-	<distributionManagement>
-		<repository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>org.highsource.repository.maven2.releases</id>
-			<url>${sftp.repository.highsource.org}/maven2/releases</url>
-		</repository>
-		<snapshotRepository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>org.highsource.repository.maven2.snapshots</id>
-			<url>${sftp.repository.highsource.org}/maven2/snapshots</url>
-		</snapshotRepository>
-		<site>
-			<url>${sftp.static.highsource.org}/hyperjaxb3/hyperjaxb-ejb/hyperjaxb-ejb-tests</url>
-		</site>
-	</distributionManagement>
 	<modules>
 		<module>any</module>
 		<module>episodes</module>
@@ -70,16 +55,16 @@
 				<module>enum</module>
 				<module>episodes</module>
 				<module>equals-builder</module>
-				<module>fpml-pretrade</module>
+				<!-- TODO module>fpml-pretrade</module-->
 				<!--module>idSymbolSpace</module-->
 				<module>ids</module>
 				<!-- *** Duplicate definition module>ims-eportfolio</module -->
-				<module>ims-lip</module>
+				<!-- TODO module>ims-lip</module-->
 				<module>ioda</module>
 				<module>issues</module>
 				<module>issues-el</module>
 				<module>issues-jpa2</module>
-				<module>nml</module>
+				<!-- TODO module>nml</module-->
 				<module>nokis</module>
 			</modules>
 		</profile>
@@ -107,12 +92,12 @@
 			<id>tests-r-z</id>
 			<modules>
 				<module>regrep</module>
-				<module>rim</module>
+				<!-- TODO module>rim</module-->
 				<module>sbml</module>
 				<module>sepa</module>
 				<module>service</module>
 				<module>simple</module>
-				<module>sml</module>
+				<!-- TODO module>sml</module-->
 				<module>st</module>
 				<!-- *** module>star</module -->
 				<module>tp</module>
@@ -166,7 +151,7 @@
 				<plugin>
 					<groupId>org.jvnet.hyperjaxb3</groupId>
 					<artifactId>maven-hyperjaxb3-plugin</artifactId>
-					<version>0.5.7-SNAPSHOT</version>
+					<version>${project.version}</version>
 					<executions>
 						<execution>
 							<goals>
@@ -203,7 +188,7 @@
 						<dependency>
 							<groupId>org.jvnet.hyperjaxb3</groupId>
 							<artifactId>hyperjaxb3-tools</artifactId>
-							<version>${pom.version}</version>
+							<version>${project.version}</version>
 						</dependency>
 					</dependencies-->
 					<executions>
@@ -229,5 +214,14 @@
 				</plugin> 
 			</plugins>
 		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 </project>

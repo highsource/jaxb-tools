@@ -2,32 +2,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jvnet.hyperjaxb3</groupId>
 	<artifactId>hyperjaxb3-ejb-templates</artifactId>
 	<packaging>pom</packaging>
 	<name>Hyperjaxb3 EJB Templates</name>
-	<version>0.5.7-SNAPSHOT</version>
 	<parent>
 		<groupId>org.jvnet.hyperjaxb3</groupId>
 		<artifactId>hyperjaxb3-ejb</artifactId>
 		<version>0.5.7-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<distributionManagement>
-		<repository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>org.highsource.repository.maven2.releases</id>
-			<url>${sftp.repository.highsource.org}/maven2/releases</url>
-		</repository>
-		<snapshotRepository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>org.highsource.repository.maven2.snapshots</id>
-			<url>${sftp.repository.highsource.org}/maven2/snapshots</url>
-		</snapshotRepository>
-		<site>
-			<url>${sftp.static.highsource.org}/hyperjaxb3/hyperjaxb-ejb/hyperjaxb-ejb-templates</url>
-		</site>
-	</distributionManagement>
 	<modules>
 		<module>basic</module>
 	</modules>
@@ -80,18 +62,18 @@
 						<configuration>
 							<tasks>
 								<mkdir dir="target/test-maven-repository" />
-								<unzip src="target/${pom.artifactId}-${pom.version}-maven-src.zip" dest="${basedir}/target/test-maven-assembly" />
-								<copy todir="${basedir}/target/test-maven-assembly/${pom.artifactId}-${pom.version}/src/main/java">
+								<unzip src="target/${project.artifactId}-${project.version}-maven-src.zip" dest="${basedir}/target/test-maven-assembly" />
+								<copy todir="${basedir}/target/test-maven-assembly/${project.artifactId}-${project.version}/src/main/java">
 									<fileset dir="src/it/java">
 										<include name="**/*.*"/>
 									</fileset>
 								</copy>
-								<copy todir="${basedir}/target/test-maven-assembly/${pom.artifactId}-${pom.version}/src/main/resources">
+								<copy todir="${basedir}/target/test-maven-assembly/${project.artifactId}-${project.version}/src/main/resources">
 									<fileset dir="src/it/resources">
 										<include name="**/*.*"/>
 									</fileset>
 								</copy>
-								<copy todir="${basedir}/target/test-maven-assembly/${pom.artifactId}-${pom.version}/src/test/samples">
+								<copy todir="${basedir}/target/test-maven-assembly/${project.artifactId}-${project.version}/src/test/samples">
 									<fileset dir="src/it/samples">
 										<include name="**/*.*"/>
 									</fileset>
@@ -108,18 +90,18 @@
 						<phase>none</phase>
 						<configuration>
 							<tasks>
-								<unzip src="${basedir}/target/${pom.artifactId}-${pom.version}-ant-src.zip" dest="${basedir}/target/test-ant-assembly"/>
-								<copy todir="${basedir}/target/test-ant-assembly/${pom.artifactId}-${pom.version}/src/main/java">
+								<unzip src="${basedir}/target/${project.artifactId}-${project.version}-ant-src.zip" dest="${basedir}/target/test-ant-assembly"/>
+								<copy todir="${basedir}/target/test-ant-assembly/${project.artifactId}-${project.version}/src/main/java">
 									<fileset dir="src/it/java">
 										<include name="**/*.*"/>
 									</fileset>
 								</copy>
-								<copy todir="${basedir}/target/test-ant-assembly/${pom.artifactId}-${pom.version}/src/main/resources">
+								<copy todir="${basedir}/target/test-ant-assembly/${project.artifactId}-${project.version}/src/main/resources">
 									<fileset dir="src/it/resources">
 										<include name="**/*.*"/>
 									</fileset>
 								</copy>
-								<copy todir="${basedir}/target/test-ant-assembly/${pom.artifactId}-${pom.version}/src/test/samples">
+								<copy todir="${basedir}/target/test-ant-assembly/${project.artifactId}-${project.version}/src/test/samples">
 									<fileset dir="src/it/samples">
 										<include name="**/*.*"/>
 									</fileset>
@@ -136,7 +118,7 @@
 						<phase>none</phase>
 						<configuration>
 							<tasks>
-								<ant dir="${basedir}/target/test-ant-assembly/${pom.artifactId}-${pom.version}" target="package"/>
+								<ant dir="${basedir}/target/test-ant-assembly/${project.artifactId}-${project.version}" target="package"/>
 							</tasks>
 						</configuration>
 						<goals>
@@ -163,6 +145,13 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

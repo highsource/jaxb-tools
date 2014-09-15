@@ -5,7 +5,7 @@
 	<packaging>pom</packaging>
 	<version>0.5.7-SNAPSHOT</version>
 	<name>Hyperjaxb3</name>
-	<url>http://confluence.highsource.org/display/HJ3/Home</url>
+	<url>https://github.com/highsource/hyperjaxb3</url>
 	<description>Hyperjaxb3 is an open source project which provides relational persistence for JAXB objects.</description>
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
@@ -64,39 +64,17 @@
 
 	<properties>
 		<maven.version>2.0.9</maven.version>
-		<annox.version>1.0.0</annox.version>
-		<jaxb2-basics.version>0.8.1</jaxb2-basics.version>
-		<maven-jaxb2-plugin.version>0.9.0</maven-jaxb2-plugin.version>
+		<annox.version>1.0.1</annox.version>
+		<jaxb2-basics.version>0.8.2</jaxb2-basics.version>
+		<maven-jaxb2-plugin.version>0.9.1</maven-jaxb2-plugin.version>
 		<jaxb.version>2.2.7</jaxb.version>
+		<jaxb-api.version>${jaxb.version}</jaxb-api.version>
 		<maven.plugin.testing.version>2.1</maven.plugin.testing.version>
 		<maven.plugin.plugin.version>3.2</maven.plugin.plugin.version>
 		<jaxb2-basics-annotate.version>1.0.1</jaxb2-basics-annotate.version>
+		<hsqldb17.version>1.7.3.3</hsqldb17.version>
+		<hsqldb18.version>1.8.0.7</hsqldb18.version>
 	</properties>
-
-	<!--repositories>
-		<repository>
-			<id>org.highsource.repository.maven2.releases</id>
-			<name>http://repository.highsource.org/maven2/releases/</name>
-			<url>http://repository.highsource.org/maven2/releases/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>org.highsource.repository.maven2.snapshots</id>
-			<name>http://repository.highsource.org/maven2/snapshots/</name>
-			<url>http://repository.highsource.org/maven2/snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories-->
 	<profiles>
 		<profile>
 			<id>java-home-parent-lib-tools-jar</id>
@@ -297,6 +275,31 @@
 						</execution>
 					</executions>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.9.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.3</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.8.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.5</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-invoker-plugin</artifactId>
+					<version>1.9</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -409,7 +412,7 @@
 			<dependency>
 				<groupId>javax.xml.bind</groupId>
 				<artifactId>jaxb-api</artifactId>
-				<version>2.1</version>
+				<version>${jaxb-api.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.sun.xml.bind</groupId>
@@ -529,6 +532,23 @@
 				<artifactId>hibernate-jpa-2.0-api</artifactId>
 				<version>1.0.0.Final</version>
 			</dependency>
+			<dependency>
+				<groupId>javax.transaction</groupId>
+				<artifactId>jta</artifactId>
+				<version>1.1</version>
+			</dependency>
+			<!-- EclispeLink -->
+			<dependency>
+				<groupId>org.eclipse.persistence</groupId>
+				<artifactId>eclipselink</artifactId>
+				<version>2.5.1</version>
+			</dependency>
+			<!-- TopLink -->
+			<dependency>
+				<groupId>toplink.essentials</groupId>
+				<artifactId>toplink-essentials</artifactId>
+				<version>2.1-60f</version>
+			</dependency>
 			<!-- Spring -->
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -538,7 +558,7 @@
 			<dependency>
 				<groupId>hsqldb</groupId>
 				<artifactId>hsqldb</artifactId>
-				<version>1.8.0.7</version>
+				<version>${hsqldb18.version}</version>
 			</dependency>
 			<!-- Saxon -->
 			<dependency>

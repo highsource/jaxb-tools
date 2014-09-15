@@ -18,23 +18,8 @@
 		<module>po-customized-toplink</module>
 		<module>uniprot</module>
 		<module>po-maven-jaxb2-plugin</module>
-		<module>customerservice-cxf</module>
+		<!--module>customerservice-cxf</module-->
 	</modules>
-	<distributionManagement>
-		<repository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>org.highsource.repository.maven2.releases</id>
-			<url>${sftp.repository.highsource.org}/maven2/releases</url>
-		</repository>
-		<snapshotRepository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>org.highsource.repository.maven2.snapshots</id>
-			<url>${sftp.repository.highsource.org}/maven2/snapshots</url>
-		</snapshotRepository>
-		<site>
-			<url>${sftp.static.highsource.org}/hyperjaxb3/hyperjaxb-ejb/hyperjaxb-ejb-samples</url>
-		</site>
-	</distributionManagement>
 	<build>
 		<defaultGoal>install</defaultGoal>
 		<plugins>
@@ -81,7 +66,7 @@
 						<configuration>
 							<tasks>
 								<mkdir dir="target/test-maven-repository" />
-								<unzip src="target/${pom.artifactId}-${pom.version}-maven-src.zip" dest="${basedir}/target/test-maven-assembly" />
+								<unzip src="target/${project.artifactId}-${project.version}-maven-src.zip" dest="${basedir}/target/test-maven-assembly" />
 							</tasks>
 						</configuration>
 						<goals>
@@ -94,7 +79,7 @@
 						<phase>none</phase>
 						<configuration>
 							<tasks>
-								<unzip src="${basedir}/target/${pom.artifactId}-${pom.version}-ant-src.zip" dest="${basedir}/target/test-ant-assembly"/>
+								<unzip src="${basedir}/target/${project.artifactId}-${project.version}-ant-src.zip" dest="${basedir}/target/test-ant-assembly"/>
 							</tasks>
 						</configuration>
 						<goals>
@@ -107,7 +92,7 @@
 						<phase>none</phase>
 						<configuration>
 							<tasks>
-								<ant dir="${basedir}/target/test-ant-assembly/${pom.artifactId}-${pom.version}" target="package"/>
+								<ant dir="${basedir}/target/test-ant-assembly/${project.artifactId}-${project.version}" target="package"/>
 							</tasks>
 						</configuration>
 						<goals>
@@ -134,6 +119,13 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

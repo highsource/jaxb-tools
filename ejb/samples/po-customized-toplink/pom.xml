@@ -11,14 +11,6 @@
 		<artifactId>hyperjaxb3-ejb-samples</artifactId>
 		<version>0.5.7-SNAPSHOT</version>
 	</parent>
-	<repositories>
-		<repository>
-			<id>maven-repository.java.net</id>
-			<name>Java.net Maven 1 Repository (legacy)</name>
-			<url>http://download.java.net/maven/1</url>
-			<layout>legacy</layout>
-		</repository>
-	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.jvnet.hyperjaxb3</groupId>
@@ -39,7 +31,6 @@
 		<dependency>
 			<groupId>toplink.essentials</groupId>
 			<artifactId>toplink-essentials</artifactId>
-			<version>2.0.1-04</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- Roundtrip -->
@@ -51,7 +42,6 @@
 		<dependency>
 			<groupId>hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
-			<version>1.8.0.7</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -61,10 +51,10 @@
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<executions>
-					<execution>
+					<!-- TODO execution>
 						<id>ant-assembly</id>
 						<phase>package</phase>
-					</execution>
+					</execution-->
 					<execution>
 						<id>maven-assembly</id>
 						<phase>package</phase>
@@ -74,18 +64,18 @@
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
-					<execution>
+					<!-- TODO execution>
 						<id>ant-unpack</id>
 						<phase>pre-integration-test</phase>
-					</execution>
+					</execution-->
 					<execution>
 						<id>maven-unpack</id>
 						<phase>pre-integration-test</phase>
 					</execution>
-					<execution>
+					<!-- TODO execution>
 						<id>ant-integration-test</id>
 						<phase>integration-test</phase>
-					</execution>
+					</execution-->
 				</executions>
 			</plugin>
 			<plugin>

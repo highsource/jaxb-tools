@@ -4,17 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jvnet.hyperjaxb3</groupId>
 	<artifactId>hyperjaxb3-ejb-samples-po-customized-toplink-maven</artifactId>
-	<version>0.5.7-SNAPSHOT</version>
+	<version>${project.version}</version>
 	<packaging>jar</packaging>
 	<name>Hyperjaxb3 Samples [po-customized-toplink:maven]</name>
-	<repositories>
-		<repository>
-			<id>maven-repository.java.net</id>
-			<name>Java.net Maven 1 Repository (legacy)</name>
-			<url>http://download.java.net/maven/1</url>
-			<layout>legacy</layout>
-		</repository>
-	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>javax.persistence</groupId>
@@ -24,12 +16,12 @@
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>2.2.4-1</version>
+			<version>${jaxb.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jvnet.hyperjaxb3</groupId>
 			<artifactId>hyperjaxb3-ejb-runtime</artifactId>
-			<version>0.5.7-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- Test dependencies -->
@@ -43,7 +35,7 @@
 		<dependency>
 			<groupId>org.jvnet.hyperjaxb3</groupId>
 			<artifactId>hyperjaxb3-ejb-roundtrip</artifactId>
-			<version>0.5.7-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- Toplink Dependencies -->
@@ -57,7 +49,7 @@
 		<dependency>
 			<groupId>hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
-			<version>1.8.0.7</version>
+			<version>${hsqldb18.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

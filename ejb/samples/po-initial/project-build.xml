@@ -4,7 +4,7 @@
 	<property name="version" value="0.5.7-SNAPSHOT"/>
 	<path id="compile.path">
 		<fileset dir="${basedir}/lib">
-			<include name="commons-lang-*.jar"/>
+			<include name="commons-lang3-*.jar"/>
 			<include name="jaxb-api-*.jar"/>
 			<include name="jaxb2-basics-runtime-*.jar"/>
 
@@ -29,7 +29,7 @@
 			<include name="junit-*.jar"/>
 			<include name="jaxb2-basics-testing-*.jar"/>
 			<include name="xmlunit-*.jar"/>
-			<include name="commons-lang-*.jar"/>
+			<include name="commons-lang3-*.jar"/>
 			<include name="commons-logging-*.jar"/>
 
 			<include name="hibernate-jpa-2.0-api-*.jar"/>
@@ -53,7 +53,7 @@
 			<include name="jaxb2-basics-testing-*.jar"/>
 			<include name="xmlunit-*.jar"/>
 			<include name="commons-io-*.jar"/>
-			<include name="commons-lang-*.jar"/>
+			<include name="commons-lang3-*.jar"/>
 			<include name="commons-logging-*.jar"/>
 			<include name="commons-collections-*.jar"/>
 			<include name="dom4j-*.jar"/>
@@ -85,7 +85,8 @@
 		<delete dir="${basedir}/target/test-classes"/>
 	</target>
 	<target name="generate-sources">
-		<taskdef name="xjc" classname="org.jvnet.jaxb2_commons.xjc.XJC2Task">
+		<taskdef name="xjc" classname="com.sun.tools.xjc.XJC2Task">
+		<!--taskdef name="xjc" classname="org.jvnet.jaxb2_commons.xjc.XJC2Task"-->
 			<!-- XJC2 Task classpath -->
 			<classpath>
 				<fileset dir="${basedir}/lib">
@@ -95,6 +96,7 @@
 					<include name="jsr173_api-*.jar"/>
 					<include name="stax-api-*.jar"/>
                                                        
+					<include name="jaxb-core-*.jar"/>
 					<include name="jaxb-xjc-*.jar"/>
 					<include name="codemodel-*.jar"/>
 					<include name="dtd-parser-*.jar"/>
@@ -117,7 +119,8 @@
 				-Xequals
 				-Xinheritance
 				-XhashCode
-				-XtoString"/>
+				-XtoString
+				-disableXmlSecurity"/>
 			<binding dir="${basedir}/src/main/resources">
 			 	<include name="**/*.xjb"/>
 			</binding>

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jvnet.hyperjaxb3</groupId>
 	<artifactId>hyperjaxb3-ejb-samples-po-initial-maven</artifactId>
-	<version>0.5.7-SNAPSHOT</version>
+	<version>${project.version}</version>
 	<packaging>jar</packaging>
 	<name>Hyperjaxb3 Samples [po-initial:maven]</name>
 	<dependencies>
@@ -16,12 +16,12 @@
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>2.2.4-1</version>
+			<version>${jaxb.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jvnet.hyperjaxb3</groupId>
 			<artifactId>hyperjaxb3-ejb-runtime</artifactId>
-			<version>0.5.7-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- Test dependencies -->
@@ -35,7 +35,7 @@
 		<dependency>
 			<groupId>org.jvnet.hyperjaxb3</groupId>
 			<artifactId>hyperjaxb3-ejb-roundtrip</artifactId>
-			<version>0.5.7-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- Hibernate Dependencies -->
@@ -49,23 +49,18 @@
 		<dependency>
 			<groupId>hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
-			<version>1.8.0.7</version>
+			<version>${hsqldb18.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 	</dependencies>
-	<repositories>
-		<repository>
-			<id>maven2-repository.jboss.com</id>
-			<url>http://repository.jboss.com/maven2</url>
-		</repository>
-	</repositories>
 	<build>
 		<defaultGoal>install</defaultGoal>
 		<plugins>
 			<plugin>
 				<groupId>org.jvnet.hyperjaxb3</groupId>
 				<artifactId>maven-hyperjaxb3-plugin</artifactId>
+				<version>${project.version}</version>
 				<executions>
 					<execution>
 						<goals>
@@ -82,8 +77,8 @@
 				<inherited>true</inherited>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
+					<source>1.6</source>
+					<target>1.6</target>
 				</configuration>
 			</plugin>
 		</plugins>

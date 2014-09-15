@@ -65,35 +65,35 @@
 							<phase>pre-integration-test</phase>
 							<configuration>
 								<tasks>
-									<unzip src="${basedir}/target/${pom.artifactId}-${pom.version}-ant-src.zip" dest="${basedir}/target/test-ant-assembly"/>
-									<unzip src="${basedir}/target/${pom.artifactId}-${pom.version}-maven-src.zip" dest="${basedir}/target/test-maven-assembly"/>
+									<unzip src="${basedir}/target/${project.artifactId}-${project.version}-ant-src.zip" dest="${basedir}/target/test-ant-assembly"/>
+									<unzip src="${basedir}/target/${project.artifactId}-${project.version}-maven-src.zip" dest="${basedir}/target/test-maven-assembly"/>
 									<mkdir dir="${basedir}/target/test-repository"/>
-									<copy todir="${basedir}/target/test-maven-assembly/${pom.artifactId}-${pom.version}/src/main/java">
+									<copy todir="${basedir}/target/test-maven-assembly/${project.artifactId}-${project.version}/src/main/java">
 										<fileset dir="src/it/java">
 											<include name="**/*.*"/>
 										</fileset>
 									</copy>
-									<copy todir="${basedir}/target/test-maven-assembly/${pom.artifactId}-${pom.version}/src/main/resources">
+									<copy todir="${basedir}/target/test-maven-assembly/${project.artifactId}-${project.version}/src/main/resources">
 										<fileset dir="src/it/resources">
 											<include name="**/*.*"/>
 										</fileset>
 									</copy>
-									<copy todir="${basedir}/target/test-maven-assembly/${pom.artifactId}-${pom.version}/src/main/samples">
+									<copy todir="${basedir}/target/test-maven-assembly/${project.artifactId}-${project.version}/src/main/samples">
 										<fileset dir="src/it/samples">
 											<include name="**/*.*"/>
 										</fileset>
 									</copy>
-									<copy todir="${basedir}/target/test-ant-assembly/${pom.artifactId}-${pom.version}/src/main/java">
+									<copy todir="${basedir}/target/test-ant-assembly/${project.artifactId}-${project.version}/src/main/java">
 										<fileset dir="src/it/java">
 											<include name="**/*.*"/>
 										</fileset>
 									</copy>
-									<copy todir="${basedir}/target/test-ant-assembly/${pom.artifactId}-${pom.version}/src/main/resources">
+									<copy todir="${basedir}/target/test-ant-assembly/${project.artifactId}-${project.version}/src/main/resources">
 										<fileset dir="src/it/resources">
 											<include name="**/*.*"/>
 										</fileset>
 									</copy>
-									<copy todir="${basedir}/target/test-ant-assembly/${pom.artifactId}-${pom.version}/src/main/samples">
+									<copy todir="${basedir}/target/test-ant-assembly/${project.artifactId}-${project.version}/src/main/samples">
 										<fileset dir="src/it/samples">
 											<include name="**/*.*"/>
 										</fileset>
@@ -109,7 +109,7 @@
 							<phase>integration-test</phase>
 							<configuration>
 								<tasks>
-									<ant dir="${basedir}/target/test-ant-assembly/${pom.artifactId}-${pom.version}" target="install"/>
+									<ant dir="${basedir}/target/test-ant-assembly/${project.artifactId}-${project.version}" target="install"/>
 								</tasks>
 							</configuration>
 							<goals>
@@ -138,5 +138,14 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 </project>

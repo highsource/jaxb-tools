@@ -20,7 +20,8 @@ public class RunEjbHyperjaxb3Mojo extends RunXJC2Mojo {
 	}
 
 	protected void configureHyperjaxb3Mojo(Hyperjaxb3Mojo mojo) {
-		mojo.setProject(new MavenProject());
+		final MavenProject project = new MavenProject();
+		mojo.setProject(project);
 		mojo.setExtension(true);
 		mojo.setDebug(true);
 		// mojo.setBvariant = "ejb";

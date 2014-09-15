@@ -317,13 +317,11 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			setupDirectories();
 			doExecute(options);
 			final BuildContext buildContext = getBuildContext();
-			if (buildContext != null) {
-				getLog().debug(
-						MessageFormat.format(
-								"Refreshing generated directory [{0}].",
-								getGenerateDirectory().getAbsolutePath()));
-				buildContext.refresh(getGenerateDirectory());
-			}
+			getLog().debug(
+					MessageFormat.format(
+							"Refreshing generated directory [{0}].",
+							getGenerateDirectory().getAbsolutePath()));
+			buildContext.refresh(getGenerateDirectory());
 
 		}
 
@@ -476,7 +474,11 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		if (catalog != null) {
 			dependsFiles.add(catalog);
 		}
-		dependsFiles.add(getProject().getFile());
+		final File projectFile = getProject().getFile();
+		if (projectFile != null)
+		{
+			dependsFiles.add(projectFile);
+		}
 		if (getOtherDepends() != null) {
 			dependsFiles.addAll(Arrays.asList(getOtherDepends()));
 		}

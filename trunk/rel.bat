@@ -1,1 +1,0 @@
-mvn -Psamples -Ptests release:prepare -DreleaseVersion=0.8.3 -DdevelopmentVersion=0.9.0-SNAPSHOT -Dtag=0.8.3

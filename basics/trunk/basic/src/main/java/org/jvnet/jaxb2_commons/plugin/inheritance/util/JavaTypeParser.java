@@ -22,7 +22,7 @@ import com.sun.codemodel.JType;
 public class JavaTypeParser {
 
 	static {
-		JavaParser.setCacheParser(false);
+//		JavaParser.setCacheParser(false);
 	}
 
 	private final TypeToJTypeConvertingVisitor typeToJTypeConvertingVisitor;

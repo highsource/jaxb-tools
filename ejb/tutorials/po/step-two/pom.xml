@@ -7,21 +7,6 @@
 	<version>0.5.7-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Hyperjaxb3 EJB Tutorial [po:step-two]</name>
-	<distributionManagement>
-		<repository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>org.highsource.repository.maven2.releases</id>
-			<url>${sftp.repository.highsource.org}/maven2/releases</url>
-		</repository>
-		<snapshotRepository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>org.highsource.repository.maven2.snapshots</id>
-			<url>${sftp.repository.highsource.org}/maven2/snapshots</url>
-		</snapshotRepository>
-		<site>
-			<url>${sftp.static.highsource.org}/hyperjaxb3/hyperjaxb-ejb/hyperjaxb3-ejb-tutorials/hyperjaxb3-ejb-tutorials-po/hyperjaxb3-ejb-tutorials-po-step-two</url>
-		</site>
-	</distributionManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
@@ -31,12 +16,12 @@
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>2.2.4-1</version>
+			<version>2.2.7</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jvnet.hyperjaxb3</groupId>
 			<artifactId>hyperjaxb3-ejb-runtime</artifactId>
-			<version>0.5.7-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- Test dependencies -->
@@ -50,7 +35,7 @@
 		<dependency>
 			<groupId>org.jvnet.hyperjaxb3</groupId>
 			<artifactId>hyperjaxb3-ejb-roundtrip</artifactId>
-			<version>0.5.7-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 
 
@@ -81,7 +66,7 @@
 			<plugin>
 				<groupId>org.jvnet.hyperjaxb3</groupId>
 				<artifactId>maven-hyperjaxb3-plugin</artifactId>
-				<version>0.5.7-SNAPSHOT</version>
+				<version>${project.version}</version>
 				<executions>
 					<execution>
 						<goals>

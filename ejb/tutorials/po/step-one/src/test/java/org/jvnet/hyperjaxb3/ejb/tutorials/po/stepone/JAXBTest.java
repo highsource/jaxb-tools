@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jvnet.hyperjaxb3.xml.XMLConstants
+import org.jvnet.hyperjaxb3.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;

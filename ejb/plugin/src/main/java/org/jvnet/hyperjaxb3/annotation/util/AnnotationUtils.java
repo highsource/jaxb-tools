@@ -1,29 +1,68 @@
 package org.jvnet.hyperjaxb3.annotation.util;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Array;
 
 import org.jvnet.annox.model.XAnnotation;
 import org.jvnet.annox.model.annotation.field.XAnnotationField;
 import org.jvnet.annox.model.annotation.field.XArrayAnnotationField;
+import org.jvnet.annox.model.annotation.field.XSingleAnnotationField;
+import org.jvnet.annox.model.annotation.value.XBooleanAnnotationValue;
+import org.jvnet.annox.model.annotation.value.XEnumAnnotationValue;
+import org.jvnet.annox.model.annotation.value.XIntAnnotationValue;
+import org.jvnet.annox.model.annotation.value.XStringAnnotationValue;
 import org.jvnet.annox.model.annotation.value.XXAnnotationAnnotationValue;
-import org.jvnet.annox.parser.XAnnotationFieldParser;
-import org.jvnet.annox.parser.XGenericFieldParser;
 
 public class AnnotationUtils {
 
-	@SuppressWarnings("unchecked")
-	public static <T> XAnnotationField<T> create(final String name,
-			final T value) {
+	public static <A extends Annotation> XAnnotationField<A> create(
+			final String name, final XAnnotation<A> value) {
 		if (value == null) {
 			return null;
 		} else {
+			return new XSingleAnnotationField<A>(name,
+					value.getAnnotationClass(),
+					new XXAnnotationAnnotationValue<A>(value));
+		}
+	}
 
-			try {
-				return XGenericFieldParser.GENERIC.construct(name, value,
-						value.getClass());
-			} catch (Exception ex) {
-				throw new RuntimeException(ex);
-			}
+	public static XAnnotationField<String> create(final String name,
+			final String value) {
+		if (value == null) {
+			return null;
+		} else {
+			return new XSingleAnnotationField<String>(name, String.class,
+					new XStringAnnotationValue(value));
+		}
+	}
+
+	public static XAnnotationField<Boolean> create(final String name,
+			final Boolean value) {
+		if (value == null) {
+			return null;
+		} else {
+			return new XSingleAnnotationField<Boolean>(name, Boolean.class,
+					new XBooleanAnnotationValue(value));
+		}
+	}
+
+	public static XAnnotationField<Integer> create(final String name,
+			final Integer value) {
+		if (value == null) {
+			return null;
+		} else {
+			return new XSingleAnnotationField<Integer>(name, Integer.class,
+					new XIntAnnotationValue(value));
+		}
+	}
+
+	public static <E extends Enum<E>> XAnnotationField<E> create(
+			final String name, final E value) {
+		if (value == null) {
+			return null;
+		} else {
+			return new XSingleAnnotationField<E>(name, value.getClass(),
+					new XEnumAnnotationValue<E>(value));
 		}
 	}
 
@@ -38,23 +77,37 @@ public class AnnotationUtils {
 			for (int index = 0; index < value.length; index++) {
 				values[index] = new XXAnnotationAnnotationValue(value[index]);
 			}
-			return new XArrayAnnotationField<Annotation>(name,
-					Annotation[].class, values);
+
+			return new XArrayAnnotationField<Annotation>(name, Array
+					.newInstance(annotationClass, 0).getClass(), values);
 		}
 	}
 
-	public static <T> XAnnotationField<T[]> create(final String name,
-			final T[] value) {
+	public static <E extends Enum<E>> XAnnotationField<E[]> create(
+			final String name, final E[] value) {
 		if (value == null) {
 			return null;
 		} else {
-			try {
-				@SuppressWarnings("unchecked")
-				final XAnnotationFieldParser<T[], T[]> parser = XGenericFieldParser.GENERIC;
-				return parser.construct(name, value, value.getClass());
-			} catch (Exception ex) {
-				throw new RuntimeException(ex);
+
+			@SuppressWarnings("unchecked")
+			final XEnumAnnotationValue<E>[] values = new XEnumAnnotationValue[value.length];
+			for (int index = 0; index < value.length; index++) {
+				values[index] = new XEnumAnnotationValue<E>(value[index]);
 			}
+			return new XArrayAnnotationField<E>(name, value.getClass(), values);
+		}
+	}
+
+	public static XAnnotationField<String[]> create(final String name,
+			final String[] value) {
+		if (value == null) {
+			return null;
+		} else {
+			final XStringAnnotationValue[] values = new XStringAnnotationValue[value.length];
+			for (int index = 0; index < value.length; index++) {
+				values[index] = new XStringAnnotationValue(value[index]);
+			}
+			return new XArrayAnnotationField<String>(name, String[].class, values);
 		}
 	}
 

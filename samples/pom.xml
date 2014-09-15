@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.jvnet.jaxb2.maven2</groupId>
 		<artifactId>maven-jaxb2-plugin-project</artifactId>
-		<version>0.9.0</version>
+		<version>0.9.1</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<modules>
@@ -17,21 +17,6 @@
 		<module>jaxbplugins</module>
 		<module>po</module>
 	</modules>
-	<!--distributionManagement>
-		<repository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>org.highsource.repository.maven2.releases</id>
-			<url>${sftp.repository.highsource.org}/maven2/releases</url>
-		</repository>
-		<snapshotRepository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>org.highsource.repository.maven2.snapshots</id>
-			<url>${sftp.repository.highsource.org}/maven2/snapshots</url>
-		</snapshotRepository>
-		<site>
-			<url>${sftp.static.highsource.org}/mjiip/samples</url>
-		</site>
-	</distributionManagement-->
 	<build>
 		<plugins>
 			<plugin>
@@ -64,7 +49,7 @@
 						<configuration>
 							<tasks>
 								<mkdir dir="target/test-maven-repository" />
-								<unzip src="target/${pom.artifactId}-${pom.version}-maven-src.zip" dest="${basedir}/target/test-maven-assembly" />
+								<unzip src="target/${project.artifactId}-${project.version}-maven-src.zip" dest="${basedir}/target/test-maven-assembly" />
 							</tasks>
 						</configuration>
 						<goals>

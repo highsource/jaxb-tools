@@ -1,0 +1,47 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jvnet.jaxb2.maven2</groupId>
+		<artifactId>maven-jaxb2-plugin-tests-MAVEN_JAXB2_PLUGIN-77</artifactId>
+		<version>0.9.1</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>maven-jaxb2-plugin-tests-MAVEN_JAXB2_PLUGIN-77-service</artifactId>
+	<name>Maven JAXB 2.x Plugin Tests [MAVEN_JAXB2_PLUGIN-77:service]</name>
+	<dependencies>
+		<dependency>
+			<groupId>org.jvnet.jaxb2.maven2</groupId>
+			<artifactId>maven-jaxb2-plugin-tests-MAVEN_JAXB2_PLUGIN-77-common-types</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<configuration>
+					<schemaDirectory>src/main/resources/META-INF/project/schemas</schemaDirectory>
+					<generatePackage>com.company.project.service.types</generatePackage>
+					<catalog>src/main/jaxb/catalog.cat</catalog>
+					<catalogResolver>org.jvnet.jaxb2.maven2.resolver.tools.ClasspathCatalogResolver</catalogResolver>
+					<extension>true</extension>
+					<plugins>
+						<plugin>
+							<groupId>org.jvnet.jaxb2.maven2</groupId>
+							<artifactId>maven-jaxb2-plugin-tests-MAVEN_JAXB2_PLUGIN-77-common-types</artifactId>
+						</plugin>
+					</plugins>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

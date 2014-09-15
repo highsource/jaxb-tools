@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jvnet.hyperjaxb3</groupId>
 	<artifactId>hyperjaxb3-ejb-samples-uniprot-maven</artifactId>
-	<version>0.5.7-SNAPSHOT</version>
+	<version>${project.version}</version>
 	<packaging>jar</packaging>
 	<name>Hyperjaxb3 Samples [uniprot:maven]</name>
 	<dependencies>
@@ -16,12 +16,12 @@
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>2.2.4-1</version>
+			<version>${jaxb.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jvnet.hyperjaxb3</groupId>
 			<artifactId>hyperjaxb3-ejb-runtime</artifactId>
-			<version>0.5.7-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- Test dependencies -->
@@ -35,7 +35,7 @@
 		<dependency>
 			<groupId>org.jvnet.hyperjaxb3</groupId>
 			<artifactId>hyperjaxb3-ejb-roundtrip</artifactId>
-			<version>0.5.7-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- Hibernate Dependencies -->
@@ -49,7 +49,7 @@
 		<dependency>
 			<groupId>hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
-			<version>1.8.0.7</version>
+			<version>${hsqldb18.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -59,6 +59,7 @@
 			<plugin>
 				<groupId>org.jvnet.hyperjaxb3</groupId>
 				<artifactId>maven-hyperjaxb3-plugin</artifactId>
+				<version>${project.version}</version>
 				<executions>
 					<execution>
 						<goals>

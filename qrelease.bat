@@ -4,34 +4,41 @@ set JAVA_HOME=%JAVA6_HOME%
 
 echo Performing a short clean build.
 rem pause
-call mvn clean install -DperformRelease
+call mvn clean install
 echo Short clean build completed.
 rem pause
 
 echo Performing a full clean build.
 rem pause
-call mvn clean install -DperformRelease -Ptests,samples,tutorials,templates
+call mvn clean install -Ptests,samples,tutorials,templates
+rem pause
+call mvn clean install -Ptests,tests-0
+rem pause
+call mvn clean install -Ptests,tests-1
+rem pause
+call mvn clean install -Ptests,tests-2
+rem pause
 echo Full clean build completed.
 rem pause
 
 echo Setting new version to %1.
 rem pause
-call mvn versions:set -Ptests,samples,tutorials,templates -DnewVersion=%1
+call mvn versions:set -Ptests,tests-0,tests-1,tests-2,samples,tutorials,templates,versions -DnewVersion=%1
 echo Version was set to %1.
 rem pause
-call mvn versions:commit -Ptests,samples,tutorials,templates
+call mvn versions:commit -Ptests,tests-0,tests-1,tests-2,samples,tutorials,templates,versions
 echo Version %1 committed.
 rem pause
 
 echo Performing a short clean build.
 rem pause
-call mvn clean install -DperformRelease
+call mvn clean install
 echo Short clean build completed.
 rem pause
 
 echo Performing a full clean build.
 rem pause
-call mvn clean install -Ptests,samples,tutorials,templates -DperformRelease
+call mvn clean install -Psamples,tutorials,templates
 echo Full clean build completed.
 rem pause
 
@@ -56,31 +63,24 @@ rem pause
 
 echo Performing full clean deploy.
 rem pause
-call mvn -DperformRelease -Psonatype-oss-release,tests,samples,tutorials,templates clean deploy
+call mvn -DperformRelease -Psonatype-oss-release clean deploy
 echo Full clean deploy done.
 rem pause
 
 echo Setting new version to %2.
 rem pause
-call mvn versions:set -Ptests,samples,tutorials,templates -DnewVersion=%2
+call mvn versions:set -Ptests,tests-0,tests-1,tests-2,samples,tutorials,templates,versions -DnewVersion=%2
 echo Version was set to %2.
 rem pause
-call mvn versions:commit -Ptests,samples,tutorials,templates
+call mvn versions:commit -Ptests,tests-0,tests-1,tests-2,samples,tutorials,templates,versions
 echo Version %2 was committed.
 rem pause
 
 echo Performing a short clean build.
 rem pause
-call mvn clean install -DperformRelease
+call mvn clean install
 echo Short clean build completed.
 rem pause
-
-echo Performing a full clean build.
-rem pause
-call mvn clean install -DperformRelease -Ptests,samples,tutorials,templates
-echo Full clean build completed.
-rem pause
-
 
 echo Checking in version %2.
 rem pause

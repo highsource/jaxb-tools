@@ -12,11 +12,12 @@ echo Performing a full clean build.
 pause
 call mvn clean install -Ptests,samples,tutorials,templates
 pause
-call mvn clean install -Ptests-0
+call mvn clean install -Ptests,tests-0
 pause
-call mvn clean install -Ptests-1
+call mvn clean install -Ptests,tests-1
 pause
-call mvn clean install -Ptests-2
+call mvn clean install -Ptests,tests-2
+pause
 echo Full clean build completed.
 pause
 
@@ -37,7 +38,7 @@ pause
 
 echo Performing a full clean build.
 pause
-call mvn clean install -Ptests,samples,tutorials,templates
+call mvn clean install -Psamples,tutorials,templates
 echo Full clean build completed.
 pause
 
@@ -80,13 +81,6 @@ pause
 call mvn clean install
 echo Short clean build completed.
 pause
-
-echo Performing a full clean build.
-pause
-call mvn clean install -Ptests,samples,tutorials,templates
-echo Full clean build completed.
-pause
-
 
 echo Checking in version %2.
 pause

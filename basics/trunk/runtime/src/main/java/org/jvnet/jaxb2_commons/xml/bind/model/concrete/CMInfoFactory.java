@@ -101,36 +101,75 @@ WTI extends WildcardTypeInfo<T, C>> {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	public MModelInfo<T, C> createModel() {
 		final CMModel<T, C> model = new CMModel<T, C>(
 				createModelInfoOrigin(typeInfoSet));
 
-		Collection<? extends BuiltinLeafInfo<T, C>> builtins = typeInfoSet
-				.builtins().values();
-		for (BuiltinLeafInfo<T, C> builtinLeafInfo : builtins) {
-			model.addBuiltinLeafInfo(getTypeInfo((BLI) builtinLeafInfo));
-		}
+		createBuiltinLeafInfos(model);
+		createEnumLeafInfos(model);
+		createClassInfos(model);
+		createElementInfos(model);
+		return model;
 
-		Collection<? extends ClassInfo<T, C>> beans = typeInfoSet.beans()
-				.values();
-		for (ClassInfo<T, C> classInfo : beans) {
-			model.addClassInfo(getTypeInfo((CI) classInfo));
-		}
+	}
 
-		Collection<? extends EnumLeafInfo<T, C>> enums = typeInfoSet.enums()
-				.values();
-		for (EnumLeafInfo<T, C> enumLeafInfo : enums) {
-			model.addEnumLeafInfo(getTypeInfo((ELI) enumLeafInfo));
-		}
-
+	private void createElementInfos(final CMModel<T, C> model) {
 		Iterable<? extends ElementInfo<T, C>> elements = typeInfoSet
 				.getAllElements();
 		for (ElementInfo<T, C> element : elements) {
+			final EI ei = (EI) element;
+			elementInfos.put(ei, createElementInfo(ei));
+		}
+		for (ElementInfo<T, C> element : elements) {
 			model.addElementInfo(getElementInfo((EI) element));
 		}
-		return model;
+	}
 
+	private void createEnumLeafInfos(final CMModel<T, C> model) {
+		Collection<? extends EnumLeafInfo<T, C>> enums = typeInfoSet.enums()
+				.values();
+		for (EnumLeafInfo<T, C> enumLeafInfo : enums) {
+			@SuppressWarnings("unchecked")
+			final ELI eli = (ELI) enumLeafInfo;
+			enumLeafInfos.put(eli, createEnumLeafInfo(eli));
+		}
+		for (Map.Entry<ELI, MEnumLeafInfo<T, C>> entry : enumLeafInfos
+				.entrySet()) {
+			populateEnumLeafInfo(entry.getKey(), entry.getValue());
+		}
+		for (EnumLeafInfo<T, C> enumLeafInfo : enums) {
+			model.addEnumLeafInfo(getTypeInfo((ELI) enumLeafInfo));
+		}
+	}
+
+	private void createBuiltinLeafInfos(final CMModel<T, C> model) {
+		Collection<? extends BuiltinLeafInfo<T, C>> builtins = typeInfoSet
+				.builtins().values();
+		for (BuiltinLeafInfo<T, C> builtinLeafInfo : builtins) {
+			@SuppressWarnings("unchecked")
+			final BLI bli = (BLI) builtinLeafInfo;
+			builtinLeafInfos.put(bli, createBuiltinLeafInfo(bli));
+		}
+		for (BuiltinLeafInfo<T, C> builtinLeafInfo : builtins) {
+			model.addBuiltinLeafInfo(getTypeInfo((BLI) builtinLeafInfo));
+		}
+	}
+
+	private void createClassInfos(final CMModel<T, C> model) {
+		Collection<? extends ClassInfo<T, C>> beans = typeInfoSet.beans()
+				.values();
+
+		for (ClassInfo<T, C> classInfo : beans) {
+			@SuppressWarnings("unchecked")
+			final CI ci = (CI) classInfo;
+			classInfos.put(ci, createClassInfo(ci));
+		}
+		for (Map.Entry<CI, MClassInfo<T, C>> entry : classInfos.entrySet()) {
+			populateClassInfo(entry.getKey(), entry.getValue());
+		}
+		for (ClassInfo<T, C> classInfo : beans) {
+			model.addClassInfo(getTypeInfo((CI) classInfo));
+		}
 	}
 
 	protected MTypeInfo<T, C> getTypeInfo(PropertyInfo<T, C> propertyInfo,
@@ -182,13 +221,7 @@ WTI extends WildcardTypeInfo<T, C>> {
 	}
 
 	private MBuiltinLeafInfo<T, C> getTypeInfo(BLI typeInfo) {
-		MBuiltinLeafInfo<T, C> builtinLeafInfo = builtinLeafInfos.get(typeInfo);
-		if (builtinLeafInfo == null) {
-			builtinLeafInfo = createBuiltinLeafInfo(typeInfo);
-			builtinLeafInfos.put(typeInfo, builtinLeafInfo);
-			return builtinLeafInfo;
-		}
-		return builtinLeafInfo;
+		return builtinLeafInfos.get(typeInfo);
 	}
 
 	private MTypeInfo<T, C> getTypeInfo(EI info) {
@@ -201,53 +234,27 @@ WTI extends WildcardTypeInfo<T, C>> {
 	}
 
 	protected MClassInfo<T, C> getTypeInfo(CI info) {
-
-		MClassInfo<T, C> classInfo = classInfos.get(info);
-
-		if (classInfo == null) {
-
-			classInfo = createClassInfo(info);
-			classInfos.put(info, classInfo);
-
-			if (info.hasAttributeWildcard()) {
-				classInfo
-						.addProperty(createAnyAttributePropertyInfo(classInfo));
-			}
-
-			for (PropertyInfo<T, C> p : (List<? extends PropertyInfo<T, C>>) info
-					.getProperties()) {
-				classInfo.addProperty(createPropertyInfo(classInfo, (PI) p));
-			}
-		}
-		return classInfo;
+		return classInfos.get(info);
 	}
 
 	private MEnumLeafInfo<T, C> getTypeInfo(ELI info) {
-		MEnumLeafInfo<T, C> enumLeafInfo = enumLeafInfos.get(info);
-		if (enumLeafInfo == null) {
-			enumLeafInfo = createEnumLeafInfo(info);
-			enumLeafInfos.put(info, enumLeafInfo);
-
-			@SuppressWarnings("rawtypes")
-			Iterable<? extends EnumConstant> _constants = info.getConstants();
-			@SuppressWarnings("unchecked")
-			final Iterable<? extends EnumConstant<T, C>> enumConstants = (Iterable<? extends EnumConstant<T, C>>) _constants;
-			for (EnumConstant<?, ?> enumConstant : enumConstants) {
-				enumLeafInfo.addEnumConstantInfo(createEnumContantInfo(
-						enumLeafInfo, (EC) enumConstant));
-			}
-		}
-		return enumLeafInfo;
+		return enumLeafInfos.get(info);
 
 	}
 
-	protected MElementInfo<T, C> getElementInfo(EI info) {
-		MElementInfo<T, C> mElementInfo = elementInfos.get(info);
-		if (mElementInfo == null) {
-			mElementInfo = createElementInfo(info);
-			elementInfos.put(info, mElementInfo);
+	private void populateEnumLeafInfo(ELI info, MEnumLeafInfo<T, C> enumLeafInfo) {
+		@SuppressWarnings("rawtypes")
+		Iterable<? extends EnumConstant> _constants = info.getConstants();
+		@SuppressWarnings("unchecked")
+		final Iterable<? extends EnumConstant<T, C>> enumConstants = (Iterable<? extends EnumConstant<T, C>>) _constants;
+		for (EnumConstant<?, ?> enumConstant : enumConstants) {
+			enumLeafInfo.addEnumConstantInfo(createEnumContantInfo(
+					enumLeafInfo, (EC) enumConstant));
 		}
-		return mElementInfo;
+	}
+
+	protected MElementInfo<T, C> getElementInfo(EI info) {
+		return elementInfos.get(info);
 
 	}
 
@@ -256,6 +263,18 @@ WTI extends WildcardTypeInfo<T, C>> {
 				info.getClazz(), getPackage(info), getContainer(info),
 				getLocalName(info), createBaseTypeInfo(info),
 				info.isElement() ? info.getElementName() : null);
+	}
+
+	private void populateClassInfo(CI info, MClassInfo<T, C> classInfo) {
+
+		if (info.hasAttributeWildcard()) {
+			classInfo.addProperty(createAnyAttributePropertyInfo(classInfo));
+		}
+
+		for (PropertyInfo<T, C> p : (List<? extends PropertyInfo<T, C>>) info
+				.getProperties()) {
+			classInfo.addProperty(createPropertyInfo(classInfo, (PI) p));
+		}
 	}
 
 	protected MClassTypeInfo<T, C> createBaseTypeInfo(CI info) {

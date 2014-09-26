@@ -7,7 +7,7 @@
 	<packaging>pom</packaging>
 	<version>0.8.3-SNAPSHOT</version>
 	<name>JAXB2 Basics - Project</name>
-	<url>http://static.highsource.org/jaxb2-basics</url>
+	<url>https://github.com/highsource/jaxb2-basics</url>
 	<description>JAXB2 Basics is a part of JAXB2 Commons project which implements plugins and tools for JAXB 2.x reference implementation.</description>
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
@@ -15,8 +15,8 @@
 		<version>7</version>
 	</parent>
 	<issueManagement>
-		<system>JIRA</system>
-		<url>http://jira.highsource.org/browse/JIIB</url>
+		<system>GitHub Issues</system>
+		<url>https://github.com/highsource/jaxb2-basics/issues</url>
 	</issueManagement>
 	<inceptionYear>2005</inceptionYear>
 	<mailingLists>
@@ -52,15 +52,14 @@
 	<licenses>
 		<license>
 			<name>BSD-Style License</name>
-			<url>http://confluence.highsource.org/display/J2B/License</url>
+			<url>http://www.opensource.org/licenses/bsd-license.php</url>
 			<distribution>repo</distribution>
-			<comments>JAXB2 Basics license is the 3-clause BSD license which is compatible with GPL. JAXB2 Basics license does not require you to include any acknowledgments for JAXB2 Basics in advertising materials for your software.</comments>
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:svn:https://svn.java.net/svn/jaxb2-commons~svn/basics/trunk</connection>
-		<developerConnection>scm:svn:https://svn.java.net/svn/jaxb2-commons~svn/basics/trunk</developerConnection>
-		<url>http://java.net/projects/jaxb2-commons/sources/svn/show/basics/trunk</url>
+		<connection>scm:git:git@github.com:highsource/jaxb2-basics.git</connection>
+		<developerConnection>scm:git:git@github.com:highsource/jaxb2-basics.git</developerConnection>
+		<url>https://github.com/highsource/jaxb2-basics</url>
 	</scm>
 	<modules>
 		<module>ant</module>
@@ -92,21 +91,10 @@
 				<module>tests</module>
 			</modules>
 		</profile>
-		<profile>
-			<id>dist</id>
-			<activation>
-				<property>
-					<name>dist</name>
-				</property>
-			</activation>
-			<modules>
-				<module>dist</module>
-			</modules>
-		</profile>
 	</profiles>
 	<properties>
-		<jaxb.version>2.2.5-2</jaxb.version>
-		<maven-jaxb2-plugin.version>0.9.0</maven-jaxb2-plugin.version>
+		<jaxb.version>2.2.7</jaxb.version>
+		<maven-jaxb2-plugin.version>0.9.1</maven-jaxb2-plugin.version>
 	</properties>
 	<dependencies>
 		<!-- JUnit -->
@@ -174,7 +162,7 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>3.8.1</version>
+				<version>4.11</version>
 			</dependency>
 			<!-- Commons -->
 			<dependency>
@@ -269,17 +257,6 @@
 					</configuration>
 				</plugin>
 				<plugin>
-					<artifactId>maven-source-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>attach-source</id>
-							<goals>
-								<goal>jar</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
 					<artifactId>maven-antrun-plugin</artifactId>
 					<inherited>true</inherited>
 					<dependencies>
@@ -303,6 +280,41 @@
 						</dependency>
 					</dependencies>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.8.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.9.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.3</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.5</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>2.5.3</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-invoker-plugin</artifactId>
+					<version>1.9</version>
+				</plugin>
+				<plugin>
+					<groupId>org.jvnet.jaxb2.maven2</groupId>
+					<artifactId>maven-jaxb2-plugin</artifactId>
+					<version>${maven-jaxb2-plugin.version}</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -319,16 +331,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jxr-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</reporting>
 </project>

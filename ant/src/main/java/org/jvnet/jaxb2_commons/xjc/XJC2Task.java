@@ -1,34 +1,38 @@
 package org.jvnet.jaxb2_commons.xjc;
 
-import java.io.File;
-import java.lang.reflect.Field;
-
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.types.Path;
 
 public class XJC2Task extends com.sun.tools.xjc.XJC2Task {
 
+	private boolean disableXmlSecurity = true;
+
+	public void setDisableXmlSecurity(boolean disableXmlSecurity) {
+		this.disableXmlSecurity = disableXmlSecurity;
+	}
+
+	private String accessExternalSchema = "all";
+
+	public void setAccessExternalSchema(String accessExternalSchema) {
+		this.accessExternalSchema = accessExternalSchema;
+	}
+
+	private String accessExternalDTD = "all";
+
+	public void setAccessExternalDTD(String accessExternalDTD) {
+		this.accessExternalDTD = accessExternalDTD;
+	}
+
 	@Override
 	public void execute() throws BuildException {
-
-		hack();
+		this.options.disableXmlSecurity = this.disableXmlSecurity;
+		if (accessExternalSchema != null) {
+			System.setProperty("javax.xml.accessExternalSchema",
+					accessExternalSchema);
+		}
+		if (accessExternalDTD != null) {
+			System.setProperty("javax.xml.accessExternalDTD", accessExternalDTD);
+		}
 		super.execute();
 	}
 
-	protected void hack() {
-		try {
-			final Field declaredField = getClass().getSuperclass()
-					.getDeclaredField("classpath");
-			declaredField.setAccessible(true);
-			final Path path = (Path) declaredField.get(this);
-			if (path != null) {
-				for (String pathElement : path.list()) {
-					options.classpaths.add(new File(pathElement).toURI()
-							.toURL());
-				}
-			}
-		} catch (Exception ex) {
-			throw new BuildException(ex);
-		}
-	}
 }

@@ -1,1 +1,0 @@
-call mvn clean deploy -DperformRelease=true -Psonatype-oss-release

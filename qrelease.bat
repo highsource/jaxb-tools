@@ -10,16 +10,16 @@ rem pause
 
 echo Performing a full clean build.
 rem pause
-call mvn clean install -DperformRelease -Psamples,tests,dist
+call mvn clean install -DperformRelease -Ptests,demos,samples
 echo Full clean build completed.
 rem pause
 
 echo Setting new version to %1.
 rem pause
-call mvn versions:set -Psamples,tests,dist -DnewVersion=%1
+call mvn versions:set -Ptests,demos,samples -DnewVersion=%1
 echo Version was set to %1.
 rem pause
-call mvn versions:commit -Psamples,tests,dist
+call mvn versions:commit -Ptests,demos,samples
 echo Version %1 committed.
 rem pause
 
@@ -31,46 +31,68 @@ rem pause
 
 echo Performing a full clean build.
 rem pause
-call mvn clean install -Psamples,tests,dist -DperformRelease
+call mvn clean install -Ptests,samples -DperformRelease
 echo Full clean build completed.
 rem pause
 
 echo Checking in version %1.
 rem pause
-call mvn scm:checkin -Dmessage="Version %1"
+git commit -a -m "Version %1"
 echo Version %1 was checked in.
 rem pause
 
 echo Tagging version %1.
 rem pause
-call mvn scm:tag -Dtag=%1
+git tag -a %1 -m "Version %1"
 echo Version %1 was tagged.
+rem pause
+
+echo Pushing version %1.
+rem pause
+git push origin master
+git push --tags origin master
+echo Version %1 was pushed.
 rem pause
 
 echo Performing full clean deploy.
 rem pause
-call mvn -DperformRelease -Psonatype-oss-release,samples,tests,dist clean deploy
+call mvn -DperformRelease -Psonatype-oss-release,tests,demos,samples clean deploy
 echo Full clean deploy done.
 rem pause
 
 echo Setting new version to %2.
 rem pause
-call mvn versions:set -Psamples,tests,dist -DnewVersion=%2
+call mvn versions:set -Ptests,demos,samples -DnewVersion=%2
 echo Version was set to %2.
 rem pause
-call mvn versions:commit -Psamples,tests,dist
+call mvn versions:commit -Ptests,demos,samples
 echo Version %2 was committed.
 rem pause
 
 echo Performing a short clean build.
 rem pause
 call mvn clean install -DperformRelease
+echo Short clean build completed.
 rem pause
+
+echo Performing a full clean build.
+rem pause
+call mvn clean install -DperformRelease -Ptests,demos,samples
+echo Full clean build completed.
+rem pause
+
 
 echo Checking in version %2.
 rem pause
-call mvn scm:checkin -Dmessage="Version %2"
+git commit -a -m "Version %2"
 echo Version %2 was checked in.
+rem pause
+
+echo Pushing version %2.
+rem pause
+git push origin master
+git push --tags origin master
+echo Version %2 was pushed.
 rem pause
 
 endlocal

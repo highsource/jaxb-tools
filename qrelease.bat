@@ -4,28 +4,28 @@ set JAVA_HOME=%JAVA6_HOME%
 
 echo Performing a short clean build.
 rem pause
-call mvn clean install -DperformRelease
+call mvn clean install
 echo Short clean build completed.
 rem pause
 
 echo Performing a full clean build.
 rem pause
-call mvn clean install -DperformRelease -Ptests,demos,samples
+call mvn clean install -DperformRelease -Ptests,samples
 echo Full clean build completed.
 rem pause
 
 echo Setting new version to %1.
 rem pause
-call mvn versions:set -Ptests,demos,samples -DnewVersion=%1
+call mvn versions:set -Ptests,samples -DnewVersion=%1
 echo Version was set to %1.
 rem pause
-call mvn versions:commit -Ptests,demos,samples
+call mvn versions:commit -Ptests,samples
 echo Version %1 committed.
 rem pause
 
 echo Performing a short clean build.
 rem pause
-call mvn clean install -DperformRelease
+call mvn clean install
 echo Short clean build completed.
 rem pause
 
@@ -56,28 +56,28 @@ rem pause
 
 echo Performing full clean deploy.
 rem pause
-call mvn -DperformRelease -Psonatype-oss-release,tests,demos,samples clean deploy
+call mvn -DperformRelease -Psonatype-oss-release,tests,samples clean deploy
 echo Full clean deploy done.
 rem pause
 
 echo Setting new version to %2.
 rem pause
-call mvn versions:set -Ptests,demos,samples -DnewVersion=%2
+call mvn versions:set -Ptests,samples -DnewVersion=%2
 echo Version was set to %2.
 rem pause
-call mvn versions:commit -Ptests,demos,samples
+call mvn versions:commit -Ptests,samples
 echo Version %2 was committed.
 rem pause
 
 echo Performing a short clean build.
 rem pause
-call mvn clean install -DperformRelease
+call mvn clean install
 echo Short clean build completed.
 rem pause
 
 echo Performing a full clean build.
 rem pause
-call mvn clean install -DperformRelease -Ptests,demos,samples
+call mvn clean install -DperformRelease -Ptests,samples
 echo Full clean build completed.
 rem pause
 

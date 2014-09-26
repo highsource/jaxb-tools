@@ -1,0 +1,30 @@
+<assembly>
+	<id>ant-src</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<fileSets>
+		<fileSet>
+			<includes>
+				<include>README*</include>
+				<include>LICENSE*</include>
+				<include>NOTICE*</include>
+				<include>build.xml</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>src</directory>
+		</fileSet>
+	</fileSets>
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>lib</outputDirectory>
+		</dependencySet>
+	</dependencySets>
+	<files>
+		<file>
+			<source>${basedir}/project-build.xml</source>
+			<destName>build.xml</destName>
+		</file>
+	</files>
+</assembly>

@@ -118,7 +118,7 @@ WTI extends WildcardTypeInfo<T, C>> {
 				.getAllElements();
 		for (ElementInfo<T, C> element : elements) {
 			final EI ei = (EI) element;
-			elementInfos.put(ei, createElementInfo(ei));
+			getElementInfo(ei);
 		}
 		for (ElementInfo<T, C> element : elements) {
 			model.addElementInfo(getElementInfo((EI) element));
@@ -131,7 +131,7 @@ WTI extends WildcardTypeInfo<T, C>> {
 		for (EnumLeafInfo<T, C> enumLeafInfo : enums) {
 			@SuppressWarnings("unchecked")
 			final ELI eli = (ELI) enumLeafInfo;
-			enumLeafInfos.put(eli, createEnumLeafInfo(eli));
+			getTypeInfo(eli);
 		}
 		for (Map.Entry<ELI, MEnumLeafInfo<T, C>> entry : enumLeafInfos
 				.entrySet()) {
@@ -148,7 +148,7 @@ WTI extends WildcardTypeInfo<T, C>> {
 		for (BuiltinLeafInfo<T, C> builtinLeafInfo : builtins) {
 			@SuppressWarnings("unchecked")
 			final BLI bli = (BLI) builtinLeafInfo;
-			builtinLeafInfos.put(bli, createBuiltinLeafInfo(bli));
+			getTypeInfo(bli);
 		}
 		for (BuiltinLeafInfo<T, C> builtinLeafInfo : builtins) {
 			model.addBuiltinLeafInfo(getTypeInfo((BLI) builtinLeafInfo));
@@ -158,11 +158,10 @@ WTI extends WildcardTypeInfo<T, C>> {
 	private void createClassInfos(final CMModel<T, C> model) {
 		Collection<? extends ClassInfo<T, C>> beans = typeInfoSet.beans()
 				.values();
-
 		for (ClassInfo<T, C> classInfo : beans) {
 			@SuppressWarnings("unchecked")
 			final CI ci = (CI) classInfo;
-			classInfos.put(ci, createClassInfo(ci));
+			getTypeInfo(ci);
 		}
 		for (Map.Entry<CI, MClassInfo<T, C>> entry : classInfos.entrySet()) {
 			populateClassInfo(entry.getKey(), entry.getValue());
@@ -220,8 +219,14 @@ WTI extends WildcardTypeInfo<T, C>> {
 		}
 	}
 
-	private MBuiltinLeafInfo<T, C> getTypeInfo(BLI typeInfo) {
-		return builtinLeafInfos.get(typeInfo);
+	private MBuiltinLeafInfo<T, C> getTypeInfo(BLI info) {
+		MBuiltinLeafInfo<T, C> builtinLeafInfo = builtinLeafInfos.get(info);
+		if (builtinLeafInfo == null)
+		{
+			builtinLeafInfo = createBuiltinLeafInfo(info);
+			builtinLeafInfos.put(info, builtinLeafInfo);
+		}
+		return builtinLeafInfo;
 	}
 
 	private MTypeInfo<T, C> getTypeInfo(EI info) {
@@ -234,11 +239,22 @@ WTI extends WildcardTypeInfo<T, C>> {
 	}
 
 	protected MClassInfo<T, C> getTypeInfo(CI info) {
-		return classInfos.get(info);
+
+		MClassInfo<T, C> classInfo = classInfos.get(info);
+		if (classInfo == null) {
+			classInfo = createClassInfo(info);
+			classInfos.put(info, classInfo);
+		}
+		return classInfo;
 	}
 
 	private MEnumLeafInfo<T, C> getTypeInfo(ELI info) {
-		return enumLeafInfos.get(info);
+		MEnumLeafInfo<T, C> enumLeafInfo = enumLeafInfos.get(info);
+		if (enumLeafInfo == null) {
+			enumLeafInfo = createEnumLeafInfo(info);
+			enumLeafInfos.put(info, enumLeafInfo);
+		}
+		return enumLeafInfo;
 
 	}
 
@@ -254,7 +270,13 @@ WTI extends WildcardTypeInfo<T, C>> {
 	}
 
 	protected MElementInfo<T, C> getElementInfo(EI info) {
-		return elementInfos.get(info);
+		MElementInfo<T, C> elementInfo = elementInfos.get(info);
+		if (elementInfo == null)
+		{
+			elementInfo = createElementInfo(info);
+			elementInfos.put(info, elementInfo);
+		}
+		return elementInfo;
 
 	}
 

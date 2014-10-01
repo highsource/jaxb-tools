@@ -161,6 +161,10 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 					model, property, element);
 			classInfo.getProperties().add(index++, referencePropertyInfo);
 		}
+		if (property.isMixed()) {
+			classInfo.getProperties().add(index++,
+					createContentReferencePropertyInfo(model, property));
+		}
 		classInfo.getProperties().remove(property);
 	}
 
@@ -191,6 +195,10 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 			if (elementPropertyInfo != null) {
 				classInfo.getProperties().add(index++, elementPropertyInfo);
 			}
+		}
+		if (property.isMixed()) {
+			classInfo.getProperties().add(index++,
+					createContentReferencePropertyInfo(model, property));
 		}
 		classInfo.getProperties().remove(property);
 	}
@@ -242,11 +250,21 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 			final Model model, CReferencePropertyInfo property, CElement element) {
 		final String propertyName = createPropertyName(model, element);
 		final CReferencePropertyInfo referencePropertyInfo = new CReferencePropertyInfo(
-				propertyName, true, false, property.isMixed(),
-				element.getSchemaComponent(), element.getCustomizations(),
-				element.getLocator(), property.isDummy(), property.isContent(),
+				propertyName, true, false, false, element.getSchemaComponent(),
+				element.getCustomizations(), element.getLocator(),
+				property.isDummy(), property.isContent(),
 				property.isMixedExtendedCust());
 		referencePropertyInfo.getElements().add(element);
+		return referencePropertyInfo;
+	}
+
+	private CReferencePropertyInfo createContentReferencePropertyInfo(
+			final Model model, CReferencePropertyInfo property) {
+		final String propertyName = "content";
+		final CReferencePropertyInfo referencePropertyInfo = new CReferencePropertyInfo(
+				propertyName, true, false, true, property.getSchemaComponent(),
+				property.getCustomizations(), property.getLocator(), false,
+				true, property.isMixedExtendedCust());
 		return referencePropertyInfo;
 	}
 

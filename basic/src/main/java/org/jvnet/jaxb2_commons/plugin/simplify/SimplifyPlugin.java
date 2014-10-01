@@ -175,11 +175,11 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 		for (CElement element : property.getElements()) {
 			final CElementPropertyInfo elementPropertyInfo;
 			if (element instanceof CElementInfo) {
-				elementPropertyInfo = createElementPropertyInfo(model, element,
-						(CElementInfo) element);
+				elementPropertyInfo = createElementPropertyInfo(model,
+						property, element, (CElementInfo) element);
 			} else if (element instanceof CClassInfo) {
-				elementPropertyInfo = createElementPropertyInfo(model, element,
-						(CClassInfo) element);
+				elementPropertyInfo = createElementPropertyInfo(model,
+						property, element, (CClassInfo) element);
 
 			} else if (element instanceof CClassRef) {
 				// elementPropertyInfo = createElementPropertyInfo(model,
@@ -204,11 +204,13 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 	}
 
 	private CElementPropertyInfo createElementPropertyInfo(final Model model,
-			CElement element, final CElementInfo elementInfo) {
+			CReferencePropertyInfo property, CElement element,
+			final CElementInfo elementInfo) {
 		final CElementPropertyInfo elementPropertyInfo;
 		final String propertyName = createPropertyName(model, element);
 		elementPropertyInfo = new CElementPropertyInfo(propertyName,
-				CollectionMode.REPEATED_ELEMENT, ID.NONE, null,
+				property.isCollection() ? CollectionMode.REPEATED_ELEMENT
+						: CollectionMode.NOT_REPEATED, ID.NONE, null,
 				element.getSchemaComponent(), element.getCustomizations(),
 				element.getLocator(), false);
 		elementPropertyInfo.getTypes().add(
@@ -219,11 +221,13 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 	}
 
 	private CElementPropertyInfo createElementPropertyInfo(final Model model,
-			CElement element, final CClassInfo classInfo) {
+			CReferencePropertyInfo property, CElement element,
+			final CClassInfo classInfo) {
 		final CElementPropertyInfo elementPropertyInfo;
 		final String propertyName = createPropertyName(model, element);
 		elementPropertyInfo = new CElementPropertyInfo(propertyName,
-				CollectionMode.REPEATED_ELEMENT, ID.NONE, null,
+				property.isCollection() ? CollectionMode.REPEATED_ELEMENT
+						: CollectionMode.NOT_REPEATED, ID.NONE, null,
 				element.getSchemaComponent(), element.getCustomizations(),
 				element.getLocator(), false);
 		elementPropertyInfo.getTypes().add(
@@ -250,9 +254,9 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 			final Model model, CReferencePropertyInfo property, CElement element) {
 		final String propertyName = createPropertyName(model, element);
 		final CReferencePropertyInfo referencePropertyInfo = new CReferencePropertyInfo(
-				propertyName, true, false, false, element.getSchemaComponent(),
-				element.getCustomizations(), element.getLocator(),
-				property.isDummy(), property.isContent(),
+				propertyName, property.isCollection(), false, false,
+				element.getSchemaComponent(), element.getCustomizations(),
+				element.getLocator(), property.isDummy(), property.isContent(),
 				property.isMixedExtendedCust());
 		referencePropertyInfo.getElements().add(element);
 		return referencePropertyInfo;
@@ -273,10 +277,12 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 		final String propertyName = createPropertyName(model, typeRef);
 		boolean required = false;
 		final CElementPropertyInfo elementPropertyInfo = new CElementPropertyInfo(
-				propertyName, CollectionMode.REPEATED_ELEMENT, typeRef
-						.getTarget().idUse(), typeRef.getTarget()
-						.getExpectedMimeType(), property.getSchemaComponent(),
-				property.getCustomizations(), property.getLocator(), required);
+				propertyName,
+				property.isCollection() ? CollectionMode.REPEATED_ELEMENT
+						: CollectionMode.NOT_REPEATED, typeRef.getTarget()
+						.idUse(), typeRef.getTarget().getExpectedMimeType(),
+				property.getSchemaComponent(), property.getCustomizations(),
+				property.getLocator(), required);
 		elementPropertyInfo.getTypes().add(typeRef);
 		return elementPropertyInfo;
 	}

@@ -10,21 +10,21 @@ import javax.xml.namespace.QName;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class GhIssue4Test {
+public class Gh1Test {
 
 	@Test
 	public void contextIsSuccessfullyCreated() throws JAXBException {
-		final JAXBContext context = JAXBContext.newInstance(GhIssue4.class);
-		final GhIssue4 value = new GhIssue4();
+		final JAXBContext context = JAXBContext.newInstance(Gh1.class);
+		final Gh1 value = new Gh1();
 		value.getA().add("a");
 		value.getB().add(2);
 		value.getcontent().add("Test");
 
 		final StringWriter sw = new StringWriter();
 		context.createMarshaller().marshal(
-				new JAXBElement<GhIssue4>(new QName("test"), GhIssue4.class,
-						value), sw);
-		Assert.assertTrue(sw.toString().endsWith(
-				"<test><a>a</a><b>2</b>Test</test>"));
+				new JAXBElement<Gh1>(new QName("test"), Gh1.class, value), System.out);
+		context.createMarshaller().marshal(
+				new JAXBElement<Gh1>(new QName("test"), Gh1.class, value), sw);
+		Assert.assertTrue(sw.toString().contains("Test"));
 	}
 }

@@ -63,9 +63,10 @@ public class OptionsFactory implements
 					}
 					catalogResolver.getCatalog().parseCatalog(catalog.toURL());
 				} catch (IOException ioex) {
-					throw new MojoExecutionException(MessageFormat.format(
-							"Error parsing catalog [{0}].",
-							catalog.toString()), ioex);
+					throw new MojoExecutionException(
+							MessageFormat.format(
+									"Error parsing catalog [{0}].",
+									catalog.toString()), ioex);
 				}
 			}
 		}
@@ -114,6 +115,7 @@ public class OptionsFactory implements
 				.isEnableIntrospection();
 		options.disableXmlSecurity = optionsConfiguration
 				.isDisableXmlSecurity();
+
 		if (optionsConfiguration.getAccessExternalSchema() != null) {
 			System.setProperty("javax.xml.accessExternalSchema",
 					optionsConfiguration.getAccessExternalSchema());

@@ -54,6 +54,20 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	public void setEncoding(String encoding) {
 		this.encoding = encoding;
 	}
+	
+	/**
+	 * Locale for the generated sources.
+	 */
+	@Parameter(property = "locale")
+	private String locale;
+
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
 
 	/**
 	 * Type of input schema language. One of: DTD, XMLSCHEMA, RELAXNG,
@@ -869,6 +883,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		getLog().info("pluginArtifacts:" + getPluginArtifacts());
 		getLog().info("specVersion:" + getSpecVersion());
 		getLog().info("encoding:" + getEncoding());
+		getLog().info("locale:" + getLocale());
 		getLog().info("schemaLanguage:" + getSchemaLanguage());
 		getLog().info("schemaDirectory:" + getSchemaDirectory());
 		getLog().info("schemaIncludes:" + Arrays.toString(getSchemaIncludes()));

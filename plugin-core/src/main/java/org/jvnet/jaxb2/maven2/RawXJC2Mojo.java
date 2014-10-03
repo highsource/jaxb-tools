@@ -29,6 +29,7 @@ import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.jar.JarEntry;
@@ -50,6 +51,7 @@ import org.jvnet.jaxb2.maven2.resolver.tools.MavenCatalogResolver;
 import org.jvnet.jaxb2.maven2.util.ArtifactUtils;
 import org.jvnet.jaxb2.maven2.util.CollectionUtils;
 import org.jvnet.jaxb2.maven2.util.IOUtils;
+import org.jvnet.jaxb2.maven2.util.LocaleUtils;
 import org.sonatype.plexus.build.incremental.BuildContext;
 
 import com.sun.org.apache.xml.internal.resolver.CatalogManager;
@@ -158,10 +160,15 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 					.getContextClassLoader();
 			final ClassLoader classLoader = createClassLoader(currentClassLoader);
 			Thread.currentThread().setContextClassLoader(classLoader);
+			final Locale currentDefaultLocale= Locale.getDefault();
 			try {
+				final Locale locale = LocaleUtils.valueOf(getLocale());
+				Locale.setDefault(locale);
+				// 
 				doExecute();
 
 			} finally {
+				Locale.setDefault(currentDefaultLocale);
 				// Set back the old classloader
 				Thread.currentThread()
 						.setContextClassLoader(currentClassLoader);

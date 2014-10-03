@@ -1,13 +1,16 @@
 package org.jvnet.jaxb2.maven2;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jvnet.jaxb2.maven2.util.IOUtils;
+import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
 
@@ -100,28 +103,38 @@ public class OptionsConfiguration {
 		return schemas;
 	}
 
-	public List<InputSource> getGrammars() {
+	public List<InputSource> getGrammars(EntityResolver resolver)
+			throws IOException, SAXException {
 		final List<URL> schemas = getSchemas();
-		final List<InputSource> grammars = new ArrayList<InputSource>(
-				schemas.size());
-		for (final URL schema : schemas) {
-			grammars.add(IOUtils.getInputSource(schema));
-		}
-		return grammars;
+		return getInputSources(schemas, resolver);
 	}
 
 	public List<URL> getBindings() {
 		return bindings;
 	}
 
-	public List<InputSource> getBindFiles() {
+	public List<InputSource> getBindFiles(EntityResolver resolver)
+			throws IOException, SAXException {
 		final List<URL> bindings = getBindings();
-		final List<InputSource> bindFiles = new ArrayList<InputSource>(
-				bindings.size());
-		for (final URL binding : bindings) {
-			bindFiles.add(IOUtils.getInputSource(binding));
+		return getInputSources(bindings, resolver);
+	}
+
+	private List<InputSource> getInputSources(final List<URL> urls,
+			EntityResolver resolver) throws IOException, SAXException {
+		final List<InputSource> inputSources = new ArrayList<InputSource>(
+				urls.size());
+		for (final URL url : urls) {
+			InputSource inputSource = IOUtils.getInputSource(url);
+			if (resolver != null) {
+				final InputSource resolvedInputSource = resolver.resolveEntity(
+						inputSource.getPublicId(), inputSource.getSystemId());
+				if (resolvedInputSource != null) {
+					inputSource = resolvedInputSource;
+				}
+			}
+			inputSources.add(inputSource);
 		}
-		return bindFiles;
+		return inputSources;
 	}
 
 	public List<URL> getCatalogs() {
@@ -159,11 +172,11 @@ public class OptionsConfiguration {
 	public boolean isDisableXmlSecurity() {
 		return disableXmlSecurity;
 	}
-	
+
 	public String getAccessExternalSchema() {
 		return accessExternalSchema;
 	}
-	
+
 	public String getAccessExternalDTD() {
 		return accessExternalDTD;
 	}

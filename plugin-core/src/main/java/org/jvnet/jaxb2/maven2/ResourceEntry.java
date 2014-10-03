@@ -39,7 +39,7 @@ public class ResourceEntry {
 		if (getFileset() != null) {
 			return getFileset().toString();
 		} else if (getUrl() != null) {
-			return "URL { " + getUrl().toString() + "}";
+			return "URL {" + getUrl().toString() + "}";
 		} else if (getDependencyResource() != null) {
 			return getDependencyResource().toString();
 		} else {

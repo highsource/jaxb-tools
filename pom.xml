@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jvnet.jaxb2.maven2</groupId>
 	<artifactId>maven-jaxb2-plugin-project</artifactId>
-	<version>0.9.1</version>
+	<version>0.9.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Maven JAXB 2.x Plugin Project</name>
 	<description>Maven2 plugin for JAXB 2.x XJC compiler to generate Java sources from XML Schemas.</description>
@@ -55,7 +55,7 @@
 		<jaxb20.version>2.0.5</jaxb20.version>
 		<jaxb21.version>2.1.14</jaxb21.version>
 		<jaxb22.version>2.2.7</jaxb22.version>
-		<jaxb.version>2.2.7</jaxb.version>
+		<jaxb.version>${jaxb22.version}</jaxb.version>
 		<jaxb2-basics.version>0.8.2</jaxb2-basics.version>
 		<maven.plugin.testing.version>2.1</maven.plugin.testing.version>
 		<maven.plugin.plugin.version>3.2</maven.plugin.plugin.version>
@@ -85,10 +85,10 @@
 			</modules>
 		</profile>
 		<profile>
-			<id>versions</id>
+			<id>all</id>
 			<activation>
 				<property>
-					<name>versions</name>
+					<name>all</name>
 				</property>
 			</activation>
 			<modules>
@@ -309,8 +309,8 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.1</version>
 					<configuration>
-						<source>1.5</source>
-						<target>1.5</target>
+						<source>1.6</source>
+						<target>1.6</target>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -358,6 +358,38 @@
 						<additionalJOptions>
 							<additionalJOption>-J-Xdoclint:all</additionalJOption>
 						</additionalJOptions>
+					</configuration>
+				</plugin>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-plugin-plugin
+										</artifactId>
+										<versionRange>
+											[3.2,)
+										</versionRange>
+										<goals>
+											<goal>helpmojo</goal>
+											<goal>descriptor</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
 			</plugins>

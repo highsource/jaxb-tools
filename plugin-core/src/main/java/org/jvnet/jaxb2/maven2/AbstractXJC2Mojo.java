@@ -1050,13 +1050,16 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 				uris.add(createUri(urlDraft));
 			}
 			if (resourceEntry.getDependencyResource() != null) {
+				final String systemId = resourceEntry.getDependencyResource()
+						.getSystemId();
 				try {
-					URI uri = new URI(resourceEntry.getDependencyResource()
-							.getSystemId());
+					URI uri = new URI(systemId);
 					uris.add(uri);
-					System.out.println(uri);
 				} catch (URISyntaxException e) {
-					throw new MojoExecutionException("TODO", e);
+					throw new MojoExecutionException(
+							MessageFormat.format(
+									"Could not create the resource entry URI from the following system id: [{0}].",
+									systemId), e);
 				}
 			}
 			return uris;

@@ -16,7 +16,6 @@ package org.jvnet.jaxb2.maven2;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -537,15 +536,15 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		final List<URI> bindingUris = new ArrayList<URI>(bindingFiles.size());
 		for (final File bindingFile : bindingFiles) {
 			URI uri;
-//			try {
-				uri = bindingFile.toURI();
-				bindingUris.add(uri);
-//			} catch (MalformedURLException murlex) {
-//				throw new MojoExecutionException(
-//						MessageFormat.format(
-//								"Could not create a binding URL for the binding file [{0}].",
-//								bindingFile), murlex);
-//			}
+			// try {
+			uri = bindingFile.toURI();
+			bindingUris.add(uri);
+			// } catch (MalformedURLException murlex) {
+			// throw new MojoExecutionException(
+			// MessageFormat.format(
+			// "Could not create a binding URL for the binding file [{0}].",
+			// bindingFile), murlex);
+			// }
 		}
 		if (getBindings() != null) {
 			for (ResourceEntry resourceEntry : getBindings()) {
@@ -600,11 +599,15 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 				while (jarFileEntries.hasMoreElements()) {
 					JarEntry entry = jarFileEntries.nextElement();
 					if (entry.getName().endsWith(".xjb")) {
+						final URL resource = classLoader.getResource(entry
+								.getName());
 						try {
-							bindingUris.add(classLoader.getResource(
-									entry.getName()).toURI());
+							bindingUris.add(resource.toURI());
 						} catch (URISyntaxException urisex) {
-							throw new MojoExecutionException("TODO", urisex);
+							throw new MojoExecutionException(
+									MessageFormat.format(
+											"Could not create the URI of the binding file from [{0}]",
+											resource), urisex);
 						}
 					}
 				}

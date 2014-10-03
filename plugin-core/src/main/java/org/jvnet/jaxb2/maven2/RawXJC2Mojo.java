@@ -17,6 +17,8 @@ package org.jvnet.jaxb2.maven2;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.text.MessageFormat;
@@ -97,29 +99,29 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		return schemaFiles;
 	}
 
-	protected List<URL> getSchemaUrls() throws MojoExecutionException {
-		final List<URL> schemaUrls = new ArrayList<URL>(schemaFiles.size());
+	protected List<URI> getSchemaUris() throws MojoExecutionException {
+		final List<URI> schemaUris = new ArrayList<URI>(schemaFiles.size());
 		final List<File> schemaFiles = getSchemaFiles();
 		for (final File schemaFile : schemaFiles) {
-			try {
-				final URL schema = schemaFile.toURI().toURL();
-				schemaUrls.add(schema);
-			} catch (MalformedURLException murlex) {
-				throw new MojoExecutionException(
-						MessageFormat.format(
-								"Could not create a schema URL for the schema file [{0}].",
-								schemaFile), murlex);
-			}
+			// try {
+			final URI schema = schemaFile.toURI();
+			schemaUris.add(schema);
+			// } catch (MalformedURLException murlex) {
+			// throw new MojoExecutionException(
+			// MessageFormat.format(
+			// "Could not create a schema URL for the schema file [{0}].",
+			// schemaFile), murlex);
+			// }
 		}
 
 		if (getSchemas() != null) {
 			for (ResourceEntry resourceEntry : getSchemas()) {
-				schemaUrls.addAll(createResourceEntryUrls(resourceEntry,
+				schemaUris.addAll(createResourceEntryUris(resourceEntry,
 						getSchemaDirectory().getAbsolutePath(),
 						getSchemaIncludes(), getSchemaExcludes()));
 			}
 		}
-		return schemaUrls;
+		return schemaUris;
 	}
 
 	private List<File> bindingFiles;
@@ -511,7 +513,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		getLog().info("episodeFiles (resolved):" + getEpisodeFiles());
 	}
 
-	protected List<URL> getBindingUrls() throws MojoExecutionException {
+	protected List<URI> getBindingUris() throws MojoExecutionException {
 		final List<File> bindingFiles = new LinkedList<File>();
 		bindingFiles.addAll(getBindingFiles());
 
@@ -532,36 +534,36 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			}
 		}
 
-		final List<URL> bindingUrls = new ArrayList<URL>(bindingFiles.size());
+		final List<URI> bindingUris = new ArrayList<URI>(bindingFiles.size());
 		for (final File bindingFile : bindingFiles) {
-			URL url;
-			try {
-				url = bindingFile.toURI().toURL();
-				bindingUrls.add(url);
-			} catch (MalformedURLException murlex) {
-				throw new MojoExecutionException(
-						MessageFormat.format(
-								"Could not create a binding URL for the binding file [{0}].",
-								bindingFile), murlex);
-			}
+			URI uri;
+//			try {
+				uri = bindingFile.toURI();
+				bindingUris.add(uri);
+//			} catch (MalformedURLException murlex) {
+//				throw new MojoExecutionException(
+//						MessageFormat.format(
+//								"Could not create a binding URL for the binding file [{0}].",
+//								bindingFile), murlex);
+//			}
 		}
 		if (getBindings() != null) {
 			for (ResourceEntry resourceEntry : getBindings()) {
-				bindingUrls.addAll(createResourceEntryUrls(resourceEntry,
+				bindingUris.addAll(createResourceEntryUris(resourceEntry,
 						getBindingDirectory().getAbsolutePath(),
 						getBindingIncludes(), getBindingExcludes()));
 			}
 		}
 
 		if (getScanDependenciesForBindings()) {
-			collectBindingUrlsFromDependencies(bindingUrls);
+			collectBindingUrisFromDependencies(bindingUris);
 		}
 
-		return bindingUrls;
+		return bindingUris;
 
 	}
 
-	private void collectBindingUrlsFromDependencies(List<URL> bindingUrls)
+	private void collectBindingUrisFromDependencies(List<URI> bindingUris)
 			throws MojoExecutionException {
 		@SuppressWarnings("unchecked")
 		final Collection<Artifact> projectArtifacts = getProject()
@@ -578,8 +580,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 		for (Artifact artifact : compileScopeArtifacts) {
 			getLog().debug(
-					"Scanning artifact [" + artifact
-							+ "] for JAXB binding files.");
+					MessageFormat.format(
+							"Scanning artifact [{0}] for JAXB binding files.",
+							artifact));
 			final File file = artifact.getFile();
 			ClassLoader classLoader = null;
 			try {
@@ -597,8 +600,12 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 				while (jarFileEntries.hasMoreElements()) {
 					JarEntry entry = jarFileEntries.nextElement();
 					if (entry.getName().endsWith(".xjb")) {
-						bindingUrls
-								.add(classLoader.getResource(entry.getName()));
+						try {
+							bindingUris.add(classLoader.getResource(
+									entry.getName()).toURI());
+						} catch (URISyntaxException urisex) {
+							throw new MojoExecutionException("TODO", urisex);
+						}
 					}
 				}
 			} catch (IOException ioex) {
@@ -755,8 +762,8 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	public OptionsConfiguration createOptionsConfiguration()
 			throws MojoExecutionException {
 		final OptionsConfiguration optionsConfiguration = new OptionsConfiguration(
-				getEncoding(), getSchemaLanguage(), getSchemaUrls(),
-				getBindingUrls(), getCatalogUrls(), createCatalogResolver(),
+				getEncoding(), getSchemaLanguage(), getSchemaUris(),
+				getBindingUris(), getCatalogUris(), createCatalogResolver(),
 				getGeneratePackage(), getGenerateDirectory(), getReadOnly(),
 				getPackageLevelAnnotations(), getNoFileHeader(),
 				getEnableIntrospection(), getDisableXmlSecurity(),

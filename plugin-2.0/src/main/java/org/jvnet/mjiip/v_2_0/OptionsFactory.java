@@ -1,7 +1,7 @@
 package org.jvnet.mjiip.v_2_0;
 
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class OptionsFactory implements
 				.getCatalogResolver();
 
 		// Setup Catalog files (XML Entity Resolver).
-		for (URL catalog : optionsConfiguration.getCatalogs()) {
+		for (URI catalog : optionsConfiguration.getCatalogs()) {
 			if (catalog != null) {
 				try {
 					if (catalogResolver == null) {
@@ -49,12 +49,12 @@ public class OptionsFactory implements
 								.setIgnoreMissingProperties(true);
 						catalogResolver = new CatalogResolver(true);
 					}
-					catalogResolver.getCatalog().parseCatalog(catalog);
+					catalogResolver.getCatalog().parseCatalog(catalog.toURL());
 					// options.addCatalog(catalog);
 				} catch (IOException ioex) {
 					throw new MojoExecutionException(MessageFormat.format(
 							"Error parsing catalog [{0}].",
-							catalog.toExternalForm()), ioex);
+							catalog.toString()), ioex);
 				}
 			}
 		}

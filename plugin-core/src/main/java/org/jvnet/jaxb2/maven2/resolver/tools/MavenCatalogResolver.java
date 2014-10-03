@@ -30,10 +30,17 @@ public class MavenCatalogResolver extends
 
 	@Override
 	public String getResolvedEntity(String publicId, String systemId) {
-		final String result = super.getResolvedEntity(publicId, systemId);
+		String result = super.getResolvedEntity(publicId, systemId);
 
 		if (result == null) {
-			return null;
+			if (systemId != null)
+			{
+				result = systemId;
+			}
+			else
+			{
+				return null;
+			}
 		}
 
 		try {

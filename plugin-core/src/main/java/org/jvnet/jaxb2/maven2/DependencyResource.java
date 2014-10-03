@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.model.Dependency;
+import org.jvnet.jaxb2.maven2.resolver.tools.MavenCatalogResolver;
 import org.jvnet.jaxb2.maven2.util.StringUtils;
 
 public class DependencyResource extends Dependency {
@@ -28,6 +29,31 @@ public class DependencyResource extends Dependency {
 				+ getArtifactId() + ", version=" + getVersion() + ", type="
 				+ getType() + ", classifier=" + getClassifier() + ", resource="
 				+ getResource() + "}";
+	}
+
+	private String systemId;
+
+	public void setSystemId(String systemId) {
+		this.systemId = systemId;
+	}
+
+	public String getSystemId() {
+		if (this.systemId != null) {
+			return this.systemId;
+		} else {
+			// maven:groupId:artifactId:type:classifier:version!/resource/path/in/jar/schema.xsd
+			StringBuilder sb = new StringBuilder();
+			sb.append(MavenCatalogResolver.URI_SCHEME_MAVEN).append(':');
+			sb.append(getGroupId()).append(':');
+			sb.append(getArtifactId()).append(':');
+			sb.append(getType() == null ? "" : getType()).append(':');
+			sb.append(getClassifier() == null ? "" : getClassifier()).append(
+					':');
+			sb.append(getVersion() == null ? "" : getVersion());
+			sb.append("!/");
+			sb.append(getResource());
+			return sb.toString();
+		}
 	}
 
 	public static DependencyResource valueOf(String value)
@@ -109,6 +135,7 @@ public class DependencyResource extends Dependency {
 		if (resource != null) {
 			dependencyResource.setResource(resource);
 		}
+		dependencyResource.setSystemId(value);
 		return dependencyResource;
 	}
 }

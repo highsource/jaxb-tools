@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -259,28 +261,20 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.catalogs = catalogs;
 	}
 
-	protected List<URL> getCatalogUrls() throws MojoExecutionException {
+	protected List<URI> getCatalogUris() throws MojoExecutionException {
 		final File catalog = getCatalog();
 		final ResourceEntry[] catalogs = getCatalogs();
-		final List<URL> catalogUrls = new ArrayList<URL>((catalog == null ? 0
+		final List<URI> catalogUris = new ArrayList<URI>((catalog == null ? 0
 				: 1) + catalogs.length);
 		if (catalog != null) {
-			try {
-				catalogUrls.add(getCatalog().toURI().toURL());
-			} catch (MalformedURLException murlex) {
-				throw new MojoExecutionException(
-						MessageFormat.format(
-								"Could not create a catalog URL for the catalog file [{0}].",
-								catalog), murlex);
-
-			}
+			catalogUris.add(getCatalog().toURI());
 		}
 		for (ResourceEntry resourceEntry : catalogs) {
-			catalogUrls.addAll(createResourceEntryUrls(resourceEntry,
+			catalogUris.addAll(createResourceEntryUris(resourceEntry,
 					getSchemaDirectory().getAbsolutePath(),
 					getSchemaIncludes(), getSchemaExcludes()));
 		}
-		return catalogUrls;
+		return catalogUris;
 	}
 
 	/**
@@ -1039,27 +1033,33 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.pluginArtifacts = plugingArtifacts;
 	}
 
-	protected List<URL> createResourceEntryUrls(ResourceEntry resourceEntry,
+	protected List<URI> createResourceEntryUris(ResourceEntry resourceEntry,
 			String defaultDirectory, String[] defaultIncludes,
 			String[] defaultExcludes) throws MojoExecutionException {
 		if (resourceEntry == null) {
 			return Collections.emptyList();
 		} else {
-			final List<URL> urls = new LinkedList<URL>();
+			final List<URI> uris = new LinkedList<URI>();
 			if (resourceEntry.getFileset() != null) {
 				final FileSet fileset = resourceEntry.getFileset();
-				urls.addAll(createFileSetUrls(fileset, defaultDirectory,
+				uris.addAll(createFileSetUris(fileset, defaultDirectory,
 						defaultIncludes, defaultExcludes));
 			}
 			if (resourceEntry.getUrl() != null) {
 				String urlDraft = resourceEntry.getUrl();
-				urls.add(createUrl(urlDraft));
+				uris.add(createUri(urlDraft));
 			}
 			if (resourceEntry.getDependencyResource() != null) {
-				urls.add(resolveDependencyResource(resourceEntry
-						.getDependencyResource()));
+				try {
+					URI uri = new URI(resourceEntry.getDependencyResource()
+							.getSystemId());
+					uris.add(uri);
+					System.out.println(uri);
+				} catch (URISyntaxException e) {
+					throw new MojoExecutionException("TODO", e);
+				}
 			}
-			return urls;
+			return uris;
 		}
 	}
 
@@ -1190,12 +1190,23 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 			return url;
 		} catch (MalformedURLException murlex) {
 			throw new MojoExecutionException(MessageFormat.format(
-					"Could not create an URL from string [{0}].", urlDraft),
+					"Could not create the URL from string [{0}].", urlDraft),
 					murlex);
 		}
 	}
 
-	private List<URL> createFileSetUrls(final FileSet fileset,
+	private URI createUri(String uriDraft) throws MojoExecutionException {
+		try {
+			final URI uri = new URI(uriDraft);
+			return uri;
+		} catch (URISyntaxException urisex) {
+			throw new MojoExecutionException(MessageFormat.format(
+					"Could not create the URI from string [{0}].", uriDraft),
+					urisex);
+		}
+	}
+
+	private List<URI> createFileSetUris(final FileSet fileset,
 			String defaultDirectory, String[] defaultIncludes,
 			String defaultExcludes[]) throws MojoExecutionException {
 		final String draftDirectory = fileset.getDirectory();
@@ -1225,20 +1236,20 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 					getBuildContext(), new File(directory), includesArray,
 					excludesArray, !getDisableDefaultExcludes());
 
-			final List<URL> urls = new ArrayList<URL>(files.size());
+			final List<URI> uris = new ArrayList<URI>(files.size());
 
 			for (final File file : files) {
-				try {
-					final URL url = file.toURI().toURL();
-					urls.add(url);
-				} catch (MalformedURLException murlex) {
-					throw new MojoExecutionException(
-							MessageFormat.format(
-									"Could not create an URL for the file [{0}].",
-									file), murlex);
-				}
+				// try {
+				final URI uri = file.toURI();
+				uris.add(uri);
+				// } catch (MalformedURLException murlex) {
+				// throw new MojoExecutionException(
+				// MessageFormat.format(
+				// "Could not create an URL for the file [{0}].",
+				// file), murlex);
+				// }
 			}
-			return urls;
+			return uris;
 		} catch (IOException ioex) {
 			throw new MojoExecutionException(
 					MessageFormat

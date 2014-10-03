@@ -23,6 +23,11 @@
 			<artifactId>maven-jaxb2-plugin-tests-po</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jvnet.jaxb2.maven2</groupId>
+			<artifactId>maven-jaxb2-plugin-testing</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -64,9 +69,11 @@
 										<groupId>org.jvnet.jaxb2.maven2</groupId>
 										<artifactId>maven-jaxb2-plugin-tests-po</artifactId>
 										<!-- Can be defined in project dependencies or dependency management -->
-										<version>${project.version}</version>
+										<!--version>${project.version}</version-->
 										<resource>purchaseorder.xsd</resource>
 									</dependencyResource>
+								</schema>
+								<schema>
 									<dependencyResource>
 										<groupId>org.jvnet.jaxb2.maven2</groupId>
 										<artifactId>maven-jaxb2-plugin-tests-po-scd</artifactId>

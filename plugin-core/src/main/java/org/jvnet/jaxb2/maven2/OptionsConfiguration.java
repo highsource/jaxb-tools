@@ -2,6 +2,8 @@ package org.jvnet.jaxb2.maven2;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -19,9 +21,9 @@ public class OptionsConfiguration {
 	private final String encoding;
 
 	private final String schemaLanguage;
-	private final List<URL> schemas;
-	private final List<URL> bindings;
-	private final List<URL> catalogs;
+	private final List<URI> schemas;
+	private final List<URI> bindings;
+	private final List<URI> catalogs;
 
 	private final CatalogResolver catalogResolver;
 
@@ -54,7 +56,7 @@ public class OptionsConfiguration {
 	private final String specVersion;
 
 	public OptionsConfiguration(String encoding, String schemaLanguage,
-			List<URL> schemas, List<URL> bindings, List<URL> catalogs,
+			List<URI> schemas, List<URI> bindings, List<URI> catalogs,
 			CatalogResolver catalogResolver, String generatePackage,
 			File generateDirectory, boolean readOnly,
 			boolean packageLevelAnnotations, boolean noFileHeader,
@@ -99,32 +101,32 @@ public class OptionsConfiguration {
 		return schemaLanguage;
 	}
 
-	public List<URL> getSchemas() {
+	public List<URI> getSchemas() {
 		return schemas;
 	}
 
 	public List<InputSource> getGrammars(EntityResolver resolver)
 			throws IOException, SAXException {
-		final List<URL> schemas = getSchemas();
+		final List<URI> schemas = getSchemas();
 		return getInputSources(schemas, resolver);
 	}
 
-	public List<URL> getBindings() {
+	public List<URI> getBindings() {
 		return bindings;
 	}
 
 	public List<InputSource> getBindFiles(EntityResolver resolver)
 			throws IOException, SAXException {
-		final List<URL> bindings = getBindings();
+		final List<URI> bindings = getBindings();
 		return getInputSources(bindings, resolver);
 	}
 
-	private List<InputSource> getInputSources(final List<URL> urls,
+	private List<InputSource> getInputSources(final List<URI> uris,
 			EntityResolver resolver) throws IOException, SAXException {
 		final List<InputSource> inputSources = new ArrayList<InputSource>(
-				urls.size());
-		for (final URL url : urls) {
-			InputSource inputSource = IOUtils.getInputSource(url);
+				uris.size());
+		for (final URI uri : uris) {
+			InputSource inputSource = IOUtils.getInputSource(uri);
 			if (resolver != null) {
 				final InputSource resolvedInputSource = resolver.resolveEntity(
 						inputSource.getPublicId(), inputSource.getSystemId());
@@ -137,8 +139,26 @@ public class OptionsConfiguration {
 		return inputSources;
 	}
 
-	public List<URL> getCatalogs() {
-		return catalogs;
+	public List<URI> getCatalogs() {
+		final CatalogResolver resolver = getCatalogResolver();
+		if (resolver == null) {
+			return this.catalogs;
+		} else {
+			final List<URI> uris = new ArrayList<URI>(this.catalogs.size());
+			for (URI uri : catalogs) {
+				final String resolvedUri = resolver.getResolvedEntity(null,
+						uri.toString());
+				if (resolvedUri != null) {
+					try {
+						uri = new URI(resolvedUri);
+					} catch (URISyntaxException ignored) {
+
+					}
+				}
+				uris.add(uri);
+			}
+			return uris;
+		}
 	}
 
 	public CatalogResolver getCatalogResolver() {

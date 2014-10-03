@@ -3,6 +3,7 @@ package org.jvnet.jaxb2.maven2.util;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +36,10 @@ public class IOUtils {
 
 	public static InputSource getInputSource(final URL url) {
 		return new InputSource(StringUtils.escapeSpace(url.toExternalForm()));
+	}
+
+	public static InputSource getInputSource(final URI uri) {
+		return new InputSource(StringUtils.escapeSpace(uri.toString()));
 	}
 
 	public static final Function<File, URL> GET_URL = new Function<File, URL>() {

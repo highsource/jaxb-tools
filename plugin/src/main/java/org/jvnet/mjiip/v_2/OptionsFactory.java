@@ -56,12 +56,12 @@ public class OptionsFactory implements
 			if (catalog != null) {
 				try {
 					if (catalogResolver == null) {
-						CatalogManager.getStaticManager()
-								.setIgnoreMissingProperties(true);
-						catalogResolver = new CatalogResolver(true);
+						final CatalogManager catalogManager = new CatalogManager();
+						catalogManager.setIgnoreMissingProperties(true);
+						catalogManager.setUseStaticCatalog(false);
+						catalogResolver = new CatalogResolver(catalogManager);
 					}
 					catalogResolver.getCatalog().parseCatalog(catalog.toURL());
-					// options.addCatalog(catalog);
 				} catch (IOException ioex) {
 					throw new MojoExecutionException(MessageFormat.format(
 							"Error parsing catalog [{0}].",

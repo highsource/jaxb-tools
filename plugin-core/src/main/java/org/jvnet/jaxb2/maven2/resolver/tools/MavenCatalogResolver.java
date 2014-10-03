@@ -30,8 +30,12 @@ public class MavenCatalogResolver extends
 
 	@Override
 	public String getResolvedEntity(String publicId, String systemId) {
+//		System.out.println("Using the catalog [" + getCatalog() + "].");
+//		System.out.println(MessageFormat.format("Resolving publicId [{0}], systemId [{1}].",
+//				publicId, systemId));
 		String result = super.getResolvedEntity(publicId, systemId);
-
+//		System.out.println(MessageFormat.format("Super resolution result is [{0}].",
+//				result));
 		if (result == null) {
 			if (systemId != null)
 			{
@@ -39,6 +43,7 @@ public class MavenCatalogResolver extends
 			}
 			else
 			{
+//				System.out.println("0) Returning null.");
 				return null;
 			}
 		}
@@ -54,6 +59,7 @@ public class MavenCatalogResolver extends
 						final URL url = dependencyResourceResolver
 								.resolveDependencyResource(dependencyResource);
 						String resolved = url.toString();
+//						System.out.println(MessageFormat.format("1) Returning [{0}].", resolved));
 						return resolved;
 					} catch (Exception ex) {
 						catalogManager.debug.message(1, MessageFormat.format(
@@ -67,12 +73,14 @@ public class MavenCatalogResolver extends
 							schemeSpecificPart));
 
 				}
+//				System.out.println("2) Returning null.");
 				return null;
 			} else {
+//				System.out.println(MessageFormat.format("3) Returning [{0}].", result));
 				return result;
 			}
 		} catch (URISyntaxException urisex) {
-
+//			System.out.println(MessageFormat.format("4) Returning [{0}].", result));
 			return result;
 		}
 	}

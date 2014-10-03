@@ -634,9 +634,12 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	 */
 	protected CatalogResolver createCatalogResolver()
 			throws MojoExecutionException {
-		final CatalogManager catalogManager = CatalogManager.getStaticManager();
+		final CatalogManager catalogManager = new CatalogManager();
 		catalogManager.setIgnoreMissingProperties(true);
+		catalogManager.setUseStaticCatalog(false);
+		catalogManager.debug.setDebug(100);
 		if (getCatalogResolver() == null) {
+//			System.out.println("Creating a new maven catalog resolver.");
 			return new MavenCatalogResolver(catalogManager, this);
 		} else {
 			try {

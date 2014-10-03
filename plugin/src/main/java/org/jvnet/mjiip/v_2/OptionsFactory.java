@@ -9,8 +9,11 @@ import java.util.List;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.jvnet.jaxb2.maven2.OptionsConfiguration;
+import org.jvnet.jaxb2.maven2.resolver.tools.ReResolvingEntityResolverWrapper;
 import org.jvnet.jaxb2.maven2.util.StringUtils;
+import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import com.sun.org.apache.xml.internal.resolver.CatalogManager;
 import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
@@ -45,26 +48,19 @@ public class OptionsFactory implements
 		options.setSchemaLanguage(createLanguage(optionsConfiguration
 				.getSchemaLanguage()));
 
-		for (InputSource grammar : optionsConfiguration.getGrammars()) {
-			options.addGrammar(grammar);
-		}
+		CatalogResolver catalogResolver = optionsConfiguration
+				.getCatalogResolver();
 
-		for (InputSource bindFile : optionsConfiguration.getBindFiles()) {
-			options.addBindFile(bindFile);
-		}
-
-		options.entityResolver = optionsConfiguration.getCatalogResolver();
-
+		// Setup Catalog files (XML Entity Resolver).
 		for (URL catalog : optionsConfiguration.getCatalogs()) {
 			if (catalog != null) {
 				try {
-					if (options.entityResolver == null) {
+					if (catalogResolver == null) {
 						CatalogManager.getStaticManager()
 								.setIgnoreMissingProperties(true);
-						options.entityResolver = new CatalogResolver(true);
+						catalogResolver = new CatalogResolver(true);
 					}
-					((CatalogResolver) options.entityResolver).getCatalog()
-							.parseCatalog(catalog);
+					catalogResolver.getCatalog().parseCatalog(catalog);
 					// options.addCatalog(catalog);
 				} catch (IOException ioex) {
 					throw new MojoExecutionException(MessageFormat.format(
@@ -72,6 +68,36 @@ public class OptionsFactory implements
 							catalog.toExternalForm()), ioex);
 				}
 			}
+		}
+		final EntityResolver entityResolver = new ReResolvingEntityResolverWrapper(
+				catalogResolver);
+
+		options.entityResolver = entityResolver;
+
+		try {
+			for (InputSource grammar : optionsConfiguration
+					.getGrammars(entityResolver)) {
+				options.addGrammar(grammar);
+			}
+		} catch (IOException ioex) {
+			throw new MojoExecutionException("Could not resolve grammars.",
+					ioex);
+		} catch (SAXException ioex) {
+			throw new MojoExecutionException("Could not resolve grammars.",
+					ioex);
+		}
+
+		try {
+			for (InputSource bindFile : optionsConfiguration
+					.getBindFiles(entityResolver)) {
+				options.addBindFile(bindFile);
+			}
+		} catch (IOException ioex) {
+			throw new MojoExecutionException("Could not resolve grammars.",
+					ioex);
+		} catch (SAXException ioex) {
+			throw new MojoExecutionException("Could not resolve grammars.",
+					ioex);
 		}
 
 		// Setup Other Options

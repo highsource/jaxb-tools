@@ -454,15 +454,15 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * the schemaLocation attribute, Import and Include element. Value: a list
 	 * of protocols separated by comma. A protocol is the scheme portion of a
 	 * {@link java.net.URI}, or in the case of the JAR protocol, "jar" plus the
-	 * scheme portion separated by colon. The keyword "all" grants permission
-	 * to all protocols.
+	 * scheme portion separated by colon. The keyword "all" grants permission to
+	 * all protocols.
 	 */
 	private String accessExternalSchema = "all";
-	
+
 	public String getAccessExternalSchema() {
 		return accessExternalSchema;
 	}
-	
+
 	public void setAccessExternalSchema(String accessExternalSchema) {
 		this.accessExternalSchema = accessExternalSchema;
 	}
@@ -1086,11 +1086,15 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		}
 
 		if (getProject().getDependencyManagement() != null) {
-			merge(dependencyResource, getProject().getDependencyManagement()
-					.getDependencies());
+			@SuppressWarnings("unchecked")
+			final List<Dependency> dependencies = getProject()
+					.getDependencyManagement().getDependencies();
+			merge(dependencyResource, dependencies);
 		}
-		if (getProject().getDependencies() != null) {
-			merge(dependencyResource, getProject().getDependencies());
+		@SuppressWarnings("unchecked")
+		List<Dependency> dependencies = getProject().getDependencies();
+		if (dependencies != null) {
+			merge(dependencyResource, dependencies);
 		}
 
 		if (dependencyResource.getVersion() == null) {

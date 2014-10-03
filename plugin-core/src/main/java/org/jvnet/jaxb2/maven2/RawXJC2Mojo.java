@@ -294,7 +294,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			getLog().info("optionsConfiguration:" + optionsConfiguration);
 		}
 
-		if (optionsConfiguration.getGrammars().isEmpty()) {
+		if (optionsConfiguration.getSchemas().isEmpty()) {
 			getLog().info("Skipped XJC execution. No schemas to compile.");
 
 		} else {
@@ -304,14 +304,14 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 			if (isUpToDate() && getForceRegenerate()) {
 				getLog().info(
-						"Sources are up-to-date, but the [forceRegenerate] switch is turned on; XJC execution will not be skipped.");
+						"Sources are up-to-date, but the [forceRegenerate] switch is turned on, XJC execution will not be skipped.");
 			} else if (!isUpToDate()) {
 				getLog().info(
-						"Sources are not up-to-date; XJC execution will be executed.");
+						"Sources are not up-to-date, XJC will be executed.");
 
 			} else {
 				getLog().info(
-						"Generated sources are up-to-date; XJC execution will be skipped.");
+						"Generated sources are up-to-date, XJC execution will be skipped.");
 				return;
 			}
 			setupDirectories();
@@ -475,8 +475,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			dependsFiles.add(catalog);
 		}
 		final File projectFile = getProject().getFile();
-		if (projectFile != null)
-		{
+		if (projectFile != null) {
 			dependsFiles.add(projectFile);
 		}
 		if (getOtherDepends() != null) {

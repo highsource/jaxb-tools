@@ -160,11 +160,11 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 					.getContextClassLoader();
 			final ClassLoader classLoader = createClassLoader(currentClassLoader);
 			Thread.currentThread().setContextClassLoader(classLoader);
-			final Locale currentDefaultLocale= Locale.getDefault();
+			final Locale currentDefaultLocale = Locale.getDefault();
 			try {
 				final Locale locale = LocaleUtils.valueOf(getLocale());
 				Locale.setDefault(locale);
-				// 
+				//
 				doExecute();
 
 			} finally {
@@ -644,9 +644,12 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		final CatalogManager catalogManager = new CatalogManager();
 		catalogManager.setIgnoreMissingProperties(true);
 		catalogManager.setUseStaticCatalog(false);
-		catalogManager.debug.setDebug(100);
+		// TODO Logging
+		if (getLog().isDebugEnabled()) {
+			catalogManager.setVerbosity(Integer.MAX_VALUE);
+		}
 		if (getCatalogResolver() == null) {
-//			System.out.println("Creating a new maven catalog resolver.");
+			// System.out.println("Creating a new maven catalog resolver.");
 			return new MavenCatalogResolver(catalogManager, this);
 		} else {
 			try {

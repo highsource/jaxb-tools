@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema 
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="urn:b" elementFormDefault="qualified"
+	xmlns:b="urn:b"
+	xmlns:a="urn:a">
+
+	<import namespace="urn:a" schemaLocation="http://www.ab.org/a.xsd"/>
+	<element name="b" type="b:BType"/>
+	<complexType name="BType">
+		<sequence>
+			<element name="s" type="string"/>
+			<element name="a" type="a:AType"/>
+		</sequence>
+	</complexType>
+</schema>

@@ -35,6 +35,49 @@
 					<roundtripTestClassName>org.jvnet.hyperjaxb3.ejb.tests.po.RoundtripTest</roundtripTestClassName>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>hibernate3-maven-plugin</artifactId>
+				<version>3.0</version>
+				<executions>
+					<execution>
+						<id>generate-schema</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<hibernatetool>
+						<classpath>
+							<path location="${project.build.directory}/classes" />
+						</classpath>
+	                
+						<jpaconfiguration persistenceunit="org.jvnet.hyperjaxb3.ejb.tests.po" propertyfile="src/test/resources/persistence.properties"/>
+	                
+						<hbm2ddl export="false" create="true" update="false" format="true" outputfilename="schema.ddl" />
+	                
+					</hibernatetool>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.hibernate.javax.persistence</groupId>
+						<artifactId>hibernate-jpa-2.0-api</artifactId>
+						<version>1.0.0.Final</version>
+					</dependency>
+					<dependency>
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate-entitymanager</artifactId>
+						<version>3.6.5.Final</version>
+					</dependency>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.0.5</version>
+					</dependency>
+				</dependencies>
+			</plugin>
 		</plugins>
 	</build>
 </project>

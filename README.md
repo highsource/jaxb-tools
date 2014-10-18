@@ -1,0 +1,52 @@
+# JAXB2 Maven Plugin #
+
+Welcome to the `org.jvnet.jaxb2.maven2:maven-jaxb2-plugin`, the most advanced and feature-full Maven plugin for XML Schema compilation.
+
+This Maven plugin wraps and enhances the [JAXB](https://jaxb.java.net/) [Schema Compiler (XJC)](http://docs.oracle.com/javase/6/docs/technotes/tools/share/xjc.html) and allows
+compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Maven builds.
+
+> If you are interested in the Codehaus JAXB2 Maven Plugin (`org.codehaus.mojo:jaxb2-maven-plugin`),
+> please follow [this link](http://mojo.codehaus.org/jaxb2-maven-plugin/) to the corresponding website.
+
+
+## Quick start ##
+
+* Put your schemas (`*.xsd`) and bindings (`*.xjb`) into the `src/main/resources` folder.
+* Add the plugin to your `pom.xml`:
+
+```xml
+<project ...>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<version><!-- Current version --></version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- ... -->
+		</plugins>
+	</build>
+</project>
+```
+
+## Documentation ##
+
+Please refer to the [wiki](https://github.com/highsource/maven-jaxb2-plugin/wiki) for the full documentation.
+
+
+* [User Guide](https://github.com/highsource/maven-jaxb2-plugin/wiki/User-Guide)
+* Maven Documentation (TODO)
+* [Configuration Cheat Sheet](https://github.com/highsource/maven-jaxb2-plugin/wiki/Configuration-Cheat-Sheet)
+* [Common Pitfalls and Problems](https://github.com/highsource/maven-jaxb2-plugin/wiki/Common-Pitfalls-and-Problems)
+* [Best Practices](https://github.com/highsource/maven-jaxb2-plugin/wiki/Best-Practices)
+* [FAQ](https://github.com/highsource/maven-jaxb2-plugin/wiki/FAQ)
+* [Sample Projects](https://github.com/highsource/maven-jaxb2-plugin/wiki/Sample-Projects)
+* [Support](https://github.com/highsource/maven-jaxb2-plugin/wiki/Support)
+* [License](https://github.com/highsource/maven-jaxb2-plugin/blob/master/LICENSE)

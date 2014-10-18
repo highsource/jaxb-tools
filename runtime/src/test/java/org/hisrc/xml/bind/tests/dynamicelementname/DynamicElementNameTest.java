@@ -73,7 +73,7 @@ public class DynamicElementNameTest {
 			if (characteristic != null) {
 				return new QName(characteristic);
 			}
-			return NAME;
+			return super.getName();
 		}
 
 		private String characteristic;

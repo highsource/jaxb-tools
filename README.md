@@ -38,7 +38,7 @@ compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Mav
 </project>
 ```
 
-## Documentation ##
+## [Documentation](https://github.com/highsource/maven-jaxb2-plugin/wiki) ##
 
 Please refer to the [wiki](https://github.com/highsource/maven-jaxb2-plugin/wiki) for the full documentation.
 

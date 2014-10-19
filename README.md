@@ -18,6 +18,7 @@ compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Mav
 	...
 	<build>
 		<plugins>
+			...
 			<plugin>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin</artifactId>
@@ -30,7 +31,7 @@ compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Mav
 					</execution>
 				</executions>
 			</plugin>
-			<!-- ... -->
+			...
 		</plugins>
 	</build>
 	...

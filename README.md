@@ -15,6 +15,7 @@ compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Mav
 
 ```xml
 <project ...>
+	...
 	<build>
 		<plugins>
 			<plugin>
@@ -32,6 +33,7 @@ compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Mav
 			<!-- ... -->
 		</plugins>
 	</build>
+	...
 </project>
 ```
 

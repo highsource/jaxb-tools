@@ -55,7 +55,7 @@ Please refer to the [wiki](https://github.com/highsource/maven-jaxb2-plugin/wiki
 
 This project is not developed, supported or in any other way affiliated with Apache. The `org.jvnet.jaxb2.maven2:maven-jaxb2-plugin` is not an Apache product (and does not pretend to be one), it is a completely independent development.
 
-This project is also *not* developed by or affiliated with Oracle or Sun. Even if it is featured on [https://jaxb.java.net/](https://jaxb.java.net/) pages, 
+This project is also *not* developed by or affiliated with Oracle or Sun. Even if it is featured on [https://jaxb.java.net/](https://jaxb.java.net) pages, 
 
 **This plugin is in no way _official_ JAXB2 Maven plugin by Oracle.**
 

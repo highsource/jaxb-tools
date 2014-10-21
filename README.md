@@ -45,7 +45,7 @@ Please refer to the [wiki](https://github.com/highsource/maven-jaxb2-plugin/wiki
 
 * [User Guide](https://github.com/highsource/maven-jaxb2-plugin/wiki/User-Guide)
 * Maven Documentation  (Work in progress)
-* [Configuration Cheat Sheet](https://github.com/highsource/maven-jaxb2-plugin/wiki/Configuration-Cheat-Sheet) (Work in progress)
+* [Configuration Cheat Sheet](https://github.com/highsource/maven-jaxb2-plugin/wiki/Configuration-Cheat-Sheet)
 * [Common Pitfalls and Problems](https://github.com/highsource/maven-jaxb2-plugin/wiki/Common-Pitfalls-and-Problems) (Work in progress)
 * [Best Practices](https://github.com/highsource/maven-jaxb2-plugin/wiki/Best-Practices) (Work in progress)
 * [FAQ](https://github.com/highsource/maven-jaxb2-plugin/wiki/FAQ)

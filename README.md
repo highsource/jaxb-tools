@@ -20,7 +20,7 @@ Please refer to the [wiki](https://github.com/highsource/jaxb2-basics/wiki) for 
 * Inheritance Plugin - makes schema-derived classes extend certain class or implement certain interfaces.
 * Wildcard Plugin - allows you to specify the wildcard mode for the wildcard properties.
 * AutoInheritance Plugin - makes classes derived from global elements or complex types extend or implement certain classes or interfaces automatically.
-* Setters Plugin - generates setters for collections.
+* [Setters Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-Setters-Plugin) - generates setters for collections.
 * [Simplify Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-Simplify-Plugin) - simplifies weird properties like `aOrBOrC`.
 * [EnumValue Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-EnumValue-Plugin) - makes all the generated enums implement the `EnumValue<T>` interface.
 * JAXBIndex Plugin - generated `jaxb.index` files listing schema-derived classes.

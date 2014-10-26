@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified"
+  xmlns="urn:test" targetNamespace="urn:test" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+  xmlns:simplify="http://jaxb2-commons.dev.java.net/basic/simplify" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+  jaxb:extensionBindingPrefixes="simplify">
+  <xs:complexType name="ParentsType">
+    <xs:sequence>
+      <xs:element name="parent" minOccurs="0" maxOccurs="50">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="type1" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:choice minOccurs="1" maxOccurs="1">
+              <xs:element name="type2" type="xs:dateTime" minOccurs="1" maxOccurs="1">
+              </xs:element>
+              <xs:element name="type3" type="xs:duration" minOccurs="1" maxOccurs="1" />
+            </xs:choice>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

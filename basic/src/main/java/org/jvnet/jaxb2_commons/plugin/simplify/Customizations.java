@@ -9,6 +9,9 @@ public class Customizations {
 	public static QName IGNORED_ELEMENT_NAME = new QName(NAMESPACE_URI,
 			"ignored");
 
+	public static QName PROPERTY_ELEMENT_NAME = new QName(
+			NAMESPACE_URI, "property");
+
 	public static QName AS_ELEMENT_PROPERTY_ELEMENT_NAME = new QName(
 			NAMESPACE_URI, "as-element-property");
 

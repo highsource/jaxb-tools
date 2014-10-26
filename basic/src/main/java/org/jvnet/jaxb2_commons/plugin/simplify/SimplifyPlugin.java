@@ -1,5 +1,6 @@
 package org.jvnet.jaxb2_commons.plugin.simplify;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -61,7 +62,9 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 	@Override
 	public Collection<QName> getCustomizationElementNames() {
 		return Arrays
-				.asList(org.jvnet.jaxb2_commons.plugin.simplify.Customizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME,
+				.asList(
+						org.jvnet.jaxb2_commons.plugin.simplify.Customizations.PROPERTY_ELEMENT_NAME,
+						org.jvnet.jaxb2_commons.plugin.simplify.Customizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME,
 						org.jvnet.jaxb2_commons.plugin.simplify.Customizations.AS_REFERENCE_PROPERTY_ELEMENT_NAME,
 						org.jvnet.jaxb2_commons.plugin.simplify.Customizations.IGNORED_ELEMENT_NAME,
 						Customizations.IGNORED_ELEMENT_NAME,
@@ -110,97 +113,122 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 
 	private void postProcessElementPropertyInfo(final Model model,
 			final CClassInfo classInfo, CElementPropertyInfo property) {
-		if (property.isCollection() && property.getTypes().size() > 1) {
-			if (CustomizationUtils
-					.containsCustomization(
-							property,
-							org.jvnet.jaxb2_commons.plugin.simplify.Customizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME)) {
-				simplifyElementPropertyInfoAsElementPropertyInfo(model,
-						classInfo, property);
-			}
+		if (CustomizationUtils
+				.containsPropertyCustomizationInPropertyOrClass(
+						property,
+						org.jvnet.jaxb2_commons.plugin.simplify.Customizations.PROPERTY_ELEMENT_NAME,
+						org.jvnet.jaxb2_commons.plugin.simplify.Customizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME)) {
+			simplifyElementPropertyInfoAsElementPropertyInfo(model, classInfo,
+					property);
 		}
 	}
 
 	private void postProcessReferencePropertyInfo(final Model model,
 			final CClassInfo classInfo, CReferencePropertyInfo property) {
-		if (property.isCollection() && property.getElements().size() > 1) {
-			if (CustomizationUtils
-					.containsCustomization(
-							property,
-							org.jvnet.jaxb2_commons.plugin.simplify.Customizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME)) {
-				simplifyReferencePropertyInfoAsElementPropertyInfo(model,
-						classInfo, property);
-			} else if (CustomizationUtils
-					.containsCustomization(
-							property,
-							org.jvnet.jaxb2_commons.plugin.simplify.Customizations.AS_REFERENCE_PROPERTY_ELEMENT_NAME)) {
-				simplifyReferencePropertyInfoAsReferencePropertyInfo(model,
-						classInfo, property);
-			}
+		if (CustomizationUtils
+				.containsPropertyCustomizationInPropertyOrClass(
+						property,
+						org.jvnet.jaxb2_commons.plugin.simplify.Customizations.PROPERTY_ELEMENT_NAME,
+						org.jvnet.jaxb2_commons.plugin.simplify.Customizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME)) {
+			simplifyReferencePropertyInfoAsElementPropertyInfo(model,
+					classInfo, property);
+		} else if (CustomizationUtils
+				.containsPropertyCustomizationInPropertyOrClass(
+						property,
+						org.jvnet.jaxb2_commons.plugin.simplify.Customizations.PROPERTY_ELEMENT_NAME,
+						org.jvnet.jaxb2_commons.plugin.simplify.Customizations.AS_REFERENCE_PROPERTY_ELEMENT_NAME)) {
+			simplifyReferencePropertyInfoAsReferencePropertyInfo(model,
+					classInfo, property);
 		}
 	}
 
 	private void simplifyElementPropertyInfoAsElementPropertyInfo(
 			final Model model, final CClassInfo classInfo,
 			CElementPropertyInfo property) {
-		int index = classInfo.getProperties().indexOf(property);
-		for (CTypeRef typeRef : property.getTypes()) {
-			final CElementPropertyInfo elementPropertyInfo = createElementPropertyInfo(
-					model, property, typeRef);
-			classInfo.getProperties().add(index++, elementPropertyInfo);
+		if (property.getTypes().size() > 1) {
+			logger.debug(MessageFormat
+					.format("Element property [{0}] has several types and will be simplified.",
+							property.getName(false)));
+			int index = classInfo.getProperties().indexOf(property);
+			for (CTypeRef typeRef : property.getTypes()) {
+				final CElementPropertyInfo elementPropertyInfo = createElementPropertyInfo(
+						model, property, typeRef);
+				classInfo.getProperties().add(index++, elementPropertyInfo);
+			}
+			classInfo.getProperties().remove(property);
+		} else {
+			logger.warn(MessageFormat
+					.format("Element property [{0}] will not be simplified as it does not contain multiple types.",
+							property.getName(false)));
 		}
-		classInfo.getProperties().remove(property);
 	}
 
 	private void simplifyReferencePropertyInfoAsReferencePropertyInfo(
 			final Model model, final CClassInfo classInfo,
 			CReferencePropertyInfo property) {
-		int index = classInfo.getProperties().indexOf(property);
-		for (CElement element : property.getElements()) {
-			final CReferencePropertyInfo referencePropertyInfo = createReferencePropertyInfo(
-					model, property, element);
-			classInfo.getProperties().add(index++, referencePropertyInfo);
+		if (property.getElements().size() <= 1 && !property.isMixed()) {
+			logger.warn(MessageFormat
+					.format("Element reference property [{0}] will not be simplified as it does not contain multiple elements and is not mixed.",
+							property.getName(false)));
+		} else {
+			logger.debug(MessageFormat
+					.format("Element reference property [{0}] contains multiple elements or is mixed and will be simplified.",
+							property.getName(false)));
+			int index = classInfo.getProperties().indexOf(property);
+			for (CElement element : property.getElements()) {
+				final CReferencePropertyInfo referencePropertyInfo = createReferencePropertyInfo(
+						model, property, element);
+				classInfo.getProperties().add(index++, referencePropertyInfo);
+			}
+			if (property.isMixed()) {
+				classInfo.getProperties().add(index++,
+						createContentReferencePropertyInfo(model, property));
+			}
+			classInfo.getProperties().remove(property);
 		}
-		if (property.isMixed()) {
-			classInfo.getProperties().add(index++,
-					createContentReferencePropertyInfo(model, property));
-		}
-		classInfo.getProperties().remove(property);
 	}
 
 	private void simplifyReferencePropertyInfoAsElementPropertyInfo(
 			final Model model, final CClassInfo classInfo,
 			CReferencePropertyInfo property) {
-		int index = classInfo.getProperties().indexOf(property);
-		for (CElement element : property.getElements()) {
-			final CElementPropertyInfo elementPropertyInfo;
-			if (element instanceof CElementInfo) {
-				elementPropertyInfo = createElementPropertyInfo(model,
-						property, element, (CElementInfo) element);
-			} else if (element instanceof CClassInfo) {
-				elementPropertyInfo = createElementPropertyInfo(model,
-						property, element, (CClassInfo) element);
 
-			} else if (element instanceof CClassRef) {
-				// elementPropertyInfo = createElementPropertyInfo(model,
-				// element,
-				// (CClassRef) element);
-				elementPropertyInfo = null;
-				// TODO WARN
+		if (property.getElements().size() <= 1 && !property.isMixed()) {
+			logger.warn(MessageFormat
+					.format("Element reference property [{0}] will not be simplified as it does not contain multiple elements and is not mixed.",
+							property.getName(false)));
+		} else {
+			logger.debug(MessageFormat
+					.format("Element reference property [{0}] contains multiple elements or is mixed and will be simplified.",
+							property.getName(false)));
+			int index = classInfo.getProperties().indexOf(property);
+			for (CElement element : property.getElements()) {
+				final CElementPropertyInfo elementPropertyInfo;
+				if (element instanceof CElementInfo) {
+					elementPropertyInfo = createElementPropertyInfo(model,
+							property, element, (CElementInfo) element);
+				} else if (element instanceof CClassInfo) {
+					elementPropertyInfo = createElementPropertyInfo(model,
+							property, element, (CClassInfo) element);
 
-			} else {
-				// TODO WARN
-				elementPropertyInfo = null;
+				} else if (element instanceof CClassRef) {
+					elementPropertyInfo = createElementPropertyInfo(model,
+							property, element, (CClassRef) element);
+				} else {
+					// TODO WARN
+					elementPropertyInfo = null;
+					logger.error(MessageFormat.format(
+							"Unsupported CElement type [{0}].", element));
+				}
+				if (elementPropertyInfo != null) {
+					classInfo.getProperties().add(index++, elementPropertyInfo);
+				}
 			}
-			if (elementPropertyInfo != null) {
-				classInfo.getProperties().add(index++, elementPropertyInfo);
+			if (property.isMixed()) {
+				classInfo.getProperties().add(index++,
+						createContentReferencePropertyInfo(model, property));
 			}
+			classInfo.getProperties().remove(property);
 		}
-		if (property.isMixed()) {
-			classInfo.getProperties().add(index++,
-					createContentReferencePropertyInfo(model, property));
-		}
-		classInfo.getProperties().remove(property);
 	}
 
 	private CElementPropertyInfo createElementPropertyInfo(final Model model,
@@ -236,27 +264,30 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 		return elementPropertyInfo;
 	}
 
-	// private CElementPropertyInfo createElementPropertyInfo(final Model model,
-	// CElement element, final CClassRef cr) {
-	// final CElementPropertyInfo elementPropertyInfo;
-	// final String propertyName = createPropertyName(model, element);
-	// elementPropertyInfo = new CElementPropertyInfo(propertyName,
-	// CollectionMode.REPEATED_ELEMENT, ID.NONE, null,
-	// element.getSchemaComponent(), element.getCustomizations(),
-	// element.getLocator(), false);
-	// elementPropertyInfo.getTypes().add(
-	// new CTypeRef(cr, element.getElementName(), cr.getTypeName(),
-	// false, null));
-	// return elementPropertyInfo;
-	// }
+	private CElementPropertyInfo createElementPropertyInfo(final Model model,
+			CReferencePropertyInfo property, CElement element,
+			final CClassRef classInfo) {
+		final CElementPropertyInfo elementPropertyInfo;
+		final String propertyName = createPropertyName(model, element);
+		elementPropertyInfo = new CElementPropertyInfo(propertyName,
+				property.isCollection() ? CollectionMode.REPEATED_ELEMENT
+						: CollectionMode.NOT_REPEATED, ID.NONE, null,
+				element.getSchemaComponent(), element.getCustomizations(),
+				element.getLocator(), false);
+		elementPropertyInfo.getTypes().add(
+				new CTypeRef(classInfo, element.getElementName(), classInfo
+						.getTypeName(), false, null));
+		return elementPropertyInfo;
+	}
 
 	private CReferencePropertyInfo createReferencePropertyInfo(
 			final Model model, CReferencePropertyInfo property, CElement element) {
 		final String propertyName = createPropertyName(model, element);
 		final CReferencePropertyInfo referencePropertyInfo = new CReferencePropertyInfo(
-				propertyName, property.isCollection(), false, false,
-				element.getSchemaComponent(), element.getCustomizations(),
-				element.getLocator(), property.isDummy(), property.isContent(),
+				propertyName, property.isCollection(), /* required */false,/* mixed */
+				false, element.getSchemaComponent(),
+				element.getCustomizations(), element.getLocator(),
+				property.isDummy(), property.isContent(),
 				property.isMixedExtendedCust());
 		referencePropertyInfo.getElements().add(element);
 		return referencePropertyInfo;
@@ -266,7 +297,8 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 			final Model model, CReferencePropertyInfo property) {
 		final String propertyName = "content";
 		final CReferencePropertyInfo referencePropertyInfo = new CReferencePropertyInfo(
-				propertyName, true, false, true, property.getSchemaComponent(),
+				propertyName, /* collection */true, /* required */false, /* mixed */
+				true, property.getSchemaComponent(),
 				property.getCustomizations(), property.getLocator(), false,
 				true, property.isMixedExtendedCust());
 		return referencePropertyInfo;

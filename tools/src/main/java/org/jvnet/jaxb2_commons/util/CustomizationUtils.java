@@ -22,6 +22,7 @@ import javax.xml.transform.dom.DOMSource;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
 import com.sun.tools.xjc.model.CClassInfo;
@@ -197,6 +198,88 @@ public class CustomizationUtils {
 		return pluginCustomizations;
 	}
 
+	public static List<CPluginCustomization> findPropertyCustomizationsInPropertyAndClass(
+			CPropertyInfo propertyInfo, QName propertyCustomizationName,
+			QName customizationName) {
+
+		final List<CPluginCustomization> foundPropertyCustomizations = new LinkedList<CPluginCustomization>();
+		foundPropertyCustomizations
+				.addAll(findPropertyCustomizationsInProperty(propertyInfo,
+						customizationName));
+		if (propertyInfo.parent() instanceof CClassInfo) {
+			foundPropertyCustomizations
+					.addAll(findPropertyCustomizationsInClass(
+							(CClassInfo) propertyInfo.parent(), propertyInfo,
+							propertyCustomizationName, customizationName));
+		}
+		return foundPropertyCustomizations;
+	}
+
+	public static List<CPluginCustomization> findPropertyCustomizationsInProperty(
+			CPropertyInfo propertyInfo, QName name) {
+
+		final List<CPluginCustomization> foundPropertyCustomizations = new LinkedList<CPluginCustomization>();
+
+		final List<CPluginCustomization> propertyCustomizations = CustomizationUtils
+				.getCustomizations(propertyInfo);
+
+		for (CPluginCustomization propertyCustomization : propertyCustomizations) {
+			if (fixNull(propertyCustomization.element.getNamespaceURI())
+					.equals(name.getNamespaceURI())
+					&& fixNull(propertyCustomization.element.getLocalName())
+							.equals(name.getLocalPart())) {
+				propertyCustomization.markAsAcknowledged();
+				foundPropertyCustomizations.add(propertyCustomization);
+			}
+		}
+		return foundPropertyCustomizations;
+	}
+
+	public static List<CPluginCustomization> findPropertyCustomizationsInClass(
+			CClassInfo classInfo, CPropertyInfo propertyInfo,
+			QName propertyCustomizationName, QName customizationName) {
+
+		final List<CPluginCustomization> foundPropertyCustomizations = new LinkedList<CPluginCustomization>();
+
+		final List<CPluginCustomization> classCustomizations = CustomizationUtils
+				.getCustomizations(classInfo);
+
+		for (CPluginCustomization classCustomization : classCustomizations) {
+			if (fixNull(classCustomization.element.getNamespaceURI()).equals(
+					propertyCustomizationName.getNamespaceURI())
+					&& fixNull(classCustomization.element.getLocalName())
+							.equals(propertyCustomizationName.getLocalPart())
+					&& propertyInfo.getName(false).equals(
+							classCustomization.element.getAttribute("name"))) {
+
+				final Element classCustomizationElement = classCustomization.element;
+
+				final NodeList nodes = classCustomizationElement
+						.getChildNodes();
+				final int length = nodes.getLength();
+				for (int index = 0; index < length; index++) {
+					final Node node = nodes.item(index);
+					if (node.getNodeType() == Node.ELEMENT_NODE) {
+						final Element element = (Element) node;
+						if (fixNull(element.getNamespaceURI()).equals(
+								customizationName.getNamespaceURI())
+								&& fixNull(element.getLocalName()).equals(
+										customizationName.getLocalPart())) {
+
+							classCustomization.markAsAcknowledged();
+							final CPluginCustomization propertyCustomization = new CPluginCustomization(
+									element, classCustomization.locator);
+							propertyCustomization.markAsAcknowledged();
+							foundPropertyCustomizations
+									.add(propertyCustomization);
+						}
+					}
+				}
+			}
+		}
+		return foundPropertyCustomizations;
+	}
+
 	public static List<CPluginCustomization> findCustomizations(
 			CEnumLeafInfo enumInfo, QName name) {
 		final CCustomizations customizations = CustomizationUtils
@@ -326,6 +409,14 @@ public class CustomizationUtils {
 			customization.markAsAcknowledged();
 		}
 		return customization != null;
+	}
+
+	public static boolean containsPropertyCustomizationInPropertyOrClass(
+			CPropertyInfo propertyInfo, QName propertyCustomizationName,
+			QName customizationName) {
+		final List<CPluginCustomization> foundPropertyCustomizations = findPropertyCustomizationsInPropertyAndClass(
+				propertyInfo, propertyCustomizationName, customizationName);
+		return !foundPropertyCustomizations.isEmpty();
 	}
 
 	public static CPluginCustomization findCustomization(

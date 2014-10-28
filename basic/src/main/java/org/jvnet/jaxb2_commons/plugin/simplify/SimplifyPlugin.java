@@ -62,8 +62,7 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 	@Override
 	public Collection<QName> getCustomizationElementNames() {
 		return Arrays
-				.asList(
-						org.jvnet.jaxb2_commons.plugin.simplify.Customizations.PROPERTY_ELEMENT_NAME,
+				.asList(org.jvnet.jaxb2_commons.plugin.simplify.Customizations.PROPERTY_ELEMENT_NAME,
 						org.jvnet.jaxb2_commons.plugin.simplify.Customizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME,
 						org.jvnet.jaxb2_commons.plugin.simplify.Customizations.AS_REFERENCE_PROPERTY_ELEMENT_NAME,
 						org.jvnet.jaxb2_commons.plugin.simplify.Customizations.IGNORED_ELEMENT_NAME,
@@ -211,8 +210,13 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 							property, element, (CClassInfo) element);
 
 				} else if (element instanceof CClassRef) {
-					elementPropertyInfo = createElementPropertyInfo(model,
-							property, element, (CClassRef) element);
+					logger.error(MessageFormat
+							.format("Element reference property [{0}] contains a class reference type [{1}] and therefore cannot be fully simplified as element property.",
+									property.getName(false),
+									((CClassRef) element).fullName()));
+					elementPropertyInfo = null;
+					// createElementPropertyInfo(model,
+					// property, element, (CClassRef) element);
 				} else {
 					// TODO WARN
 					elementPropertyInfo = null;
@@ -264,22 +268,22 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 		return elementPropertyInfo;
 	}
 
-	private CElementPropertyInfo createElementPropertyInfo(final Model model,
-			CReferencePropertyInfo property, CElement element,
-			final CClassRef classInfo) {
-		final CElementPropertyInfo elementPropertyInfo;
-		final String propertyName = createPropertyName(model, element);
-		elementPropertyInfo = new CElementPropertyInfo(propertyName,
-				property.isCollection() ? CollectionMode.REPEATED_ELEMENT
-						: CollectionMode.NOT_REPEATED, ID.NONE, null,
-				element.getSchemaComponent(), element.getCustomizations(),
-				element.getLocator(), false);
-		elementPropertyInfo.getTypes().add(
-				new CTypeRef(classInfo, element.getElementName(), classInfo
-						.getTypeName(), false, null));
-		return elementPropertyInfo;
-	}
-
+	// private CElementPropertyInfo createElementPropertyInfo(final Model model,
+	// CReferencePropertyInfo property, CElement element,
+	// final CClassRef classInfo) {
+	// final CElementPropertyInfo elementPropertyInfo;
+	// final String propertyName = createPropertyName(model, element);
+	// elementPropertyInfo = new CElementPropertyInfo(propertyName,
+	// property.isCollection() ? CollectionMode.REPEATED_ELEMENT
+	// : CollectionMode.NOT_REPEATED, ID.NONE, null,
+	// element.getSchemaComponent(), element.getCustomizations(),
+	// element.getLocator(), false);
+	// elementPropertyInfo.getTypes().add(
+	// new CTypeRef(classInfo, element.getElementName(), classInfo
+	// .getTypeName(), false, null));
+	// return elementPropertyInfo;
+	// }
+	//
 	private CReferencePropertyInfo createReferencePropertyInfo(
 			final Model model, CReferencePropertyInfo property, CElement element) {
 		final String propertyName = createPropertyName(model, element);
@@ -295,7 +299,7 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 
 	private CReferencePropertyInfo createContentReferencePropertyInfo(
 			final Model model, CReferencePropertyInfo property) {
-		final String propertyName = "content";
+		final String propertyName = "Mixed" + property.getName(true);
 		final CReferencePropertyInfo referencePropertyInfo = new CReferencePropertyInfo(
 				propertyName, /* collection */true, /* required */false, /* mixed */
 				true, property.getSchemaComponent(),
@@ -320,8 +324,16 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 	}
 
 	private String createPropertyName(final Model model, CElement element) {
+		final String localPart;
+		if (element instanceof CClassRef) {
+			final CClassRef classRef = (CClassRef) element;
+			final String fullName = classRef.fullName();
+			localPart = fullName.substring(fullName.lastIndexOf('.') + 1);
+		} else {
+			localPart = element.getElementName().getLocalPart();
+		}
 		final String propertyName = model.getNameConverter().toPropertyName(
-				element.getElementName().getLocalPart());
+				localPart);
 		return propertyName;
 	}
 

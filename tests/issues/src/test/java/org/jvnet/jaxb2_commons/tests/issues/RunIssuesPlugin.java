@@ -35,7 +35,6 @@ public class RunIssuesPlugin extends RunXJC2Mojo {
 		args.add("-XautoInheritance-jaxbElementsImplement=org.jvnet.jaxb2_commons.tests.issues.IssueJIIB14BaseInterfaceThree");
 		args.add("-XautoInheritance-jaxbElementsImplement=org.jvnet.jaxb2_commons.tests.issues.IssueJIIB14BaseInterfaceFour");
 		args.add("-Xannotate");
-		args.add("-Xsimplify");
 		return args;
 	}
 

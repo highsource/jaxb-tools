@@ -9,9 +9,8 @@
 	xmlns:toString="http://jaxb2-commons.dev.java.net/basic/toString"
 	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
 	xmlns:wildcard="http://jaxb2-commons.dev.java.net/basic/wildcard"
-	xmlns:simplify="http://jaxb2-commons.dev.java.net/basic/simplify"
 	jaxb:version="2.1"
-	jaxb:extensionBindingPrefixes="basic copyable equals hashCode mergeable toString inheritance wildcard simplify">
+	jaxb:extensionBindingPrefixes="basic copyable equals hashCode mergeable toString inheritance wildcard">
 
 	<xs:annotation>
 		<xs:appinfo>
@@ -231,68 +230,6 @@
 		</xs:sequence> 
 	</xs:complexType>
 
-	<xs:element name="issueJIIB44ReferencesPropertyAsElementProperty" type="issueJIIB44ReferencesPropertyAsElementPropertyType"/>
-	<xs:element name="issueJIIB44ReferencesPropertyAsReferenceProperty" type="issueJIIB44ReferencesPropertyAsReferencePropertyType"/>
-	<xs:element name="issueJIIB44ElementsPropertyAsElementProperty" type="issueJIIB44ElementsPropertyAsElementPropertyType"/>
-
-	<xs:complexType name="issueJIIB44ReferencesPropertyAsElementPropertyType">
-		<xs:choice maxOccurs="unbounded">
-			<xs:element name="issueJIIB44DummyElementInfo" type="issueJIIB44DummyType">
-				<xs:annotation>
-					<xs:appinfo>
-						<simplify:as-element-property/>
-					</xs:appinfo>
-				</xs:annotation>
-			</xs:element>
-			<xs:element ref="issueJIIB44DummyClassInfo"/>
-			<!--xs:element ref="issueJIIB44DummyClassRef"/-->
-		</xs:choice> 
-	</xs:complexType>
-
-	<xs:complexType name="issueJIIB44ReferencesPropertyAsReferencePropertyType">
-		<xs:choice maxOccurs="unbounded">
-			<xs:element name="issueJIIB44DummyElementInfo" type="issueJIIB44DummyType">
-				<xs:annotation>
-					<xs:appinfo>
-						<simplify:as-reference-property/>
-					</xs:appinfo>
-				</xs:annotation>
-			</xs:element>
-			<xs:element ref="issueJIIB44DummyClassInfo"/>
-			<!--xs:element ref="issueJIIB44DummyClassRef"/-->
-		</xs:choice> 
-	</xs:complexType>
-
-	<xs:complexType name="issueJIIB44ElementsPropertyAsElementPropertyType">
-		<xs:choice maxOccurs="unbounded">
-			<xs:annotation>
-				<xs:appinfo>
-					<simplify:as-element-property/>
-				</xs:appinfo>
-			</xs:annotation>
-			<xs:element name="int" type="xs:int"/>
-			<xs:element name="string" type="xs:string"/>
-		</xs:choice> 
-	</xs:complexType>
-
-	<xs:element name="issueJIIB44DummyClassInfo" type="issueJIIB44DummyType">
-		<xs:annotation>
-			<xs:appinfo>
-				<jaxb:class name="IssueJIIB44DummyClassInfo"/>
-			</xs:appinfo>
-		</xs:annotation>
-	</xs:element>
-
-	<xs:element name="issueJIIB44DummyClassRef" type="issueJIIB44DummyType">
-		<xs:annotation>
-			<xs:appinfo>
-				<jaxb:class ref="org.jvnet.jaxb2_commons.tests.issues.IssueJIIB44DummyClassRef"/>
-			</xs:appinfo>
-		</xs:annotation>
-	</xs:element>
-
-	<xs:complexType name="issueJIIB44DummyType"/>
-
 	<xs:complexType name="issueJIIB48Type">
 		<xs:annotation>
 			<xs:appinfo>
@@ -331,19 +268,5 @@
 			<xs:element name="JIIB50" type="xs:int" />
 		</xs:sequence>
 	</xs:complexType>
-
-	<xs:complexType name="gh1" mixed="true">
-		<xs:sequence>
-			<xs:element name="a" type="xs:string">
-				<xs:annotation>
-				<xs:appinfo>
-					<simplify:as-element-property/>
-				</xs:appinfo>
-			</xs:annotation>
-			</xs:element>
-			<xs:element name="b" type="xs:int"/>
-		</xs:sequence> 
-	</xs:complexType>
-
 
 </xs:schema>

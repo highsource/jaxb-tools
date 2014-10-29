@@ -1,21 +1,16 @@
-<jaxb:bindings
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:simplify="http://jaxb2-commons.dev.java.net/basic/simplify"
-	jaxb:extensionBindingPrefixes="simplify"
-	jaxb:version="2.1">
-
-	<jaxb:globalBindings choiceContentProperty="true"/>
-
-	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
-		<jaxb:schemaBindings>
-			<jaxb:package name="org.jvnet.jaxb2_commons.plugin.simplify.tests01"/>
-		</jaxb:schemaBindings>
-		<jaxb:bindings node="xs:complexType[@name='gh2']">
-			<simplify:property name="bOrC">
-				<simplify:as-element-property/>
-			</simplify:property>
-		</jaxb:bindings>
-	</jaxb:bindings>
-
+<jaxb:bindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:simplify="http://jaxb2-commons.dev.java.net/basic/simplify" jaxb:extensionBindingPrefixes="simplify" jaxb:version="2.1">
+    <jaxb:globalBindings choiceContentProperty="true">
+        <jaxb:javaType name="java.util.Date" xmlType="xs:dateTime" parseMethod="com.amadeus.apt.fom.presentation.model.flights.Adapter.DateAdapter.parseDateTime" printMethod="com.amadeus.apt.fom.presentation.model.flights.Adapter.DateAdapter.printDateTime"/>
+    </jaxb:globalBindings>
+    <jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+        <jaxb:schemaBindings>
+            <jaxb:package name="org.jvnet.jaxb2_commons.plugin.simplify.tests01"/>
+        </jaxb:schemaBindings>
+        <jaxb:bindings node="xs:complexType[@name='gh2']">
+            <simplify:property name="bOrC">
+                <simplify:as-element-property/>
+            </simplify:property>
+        </jaxb:bindings>
+    </jaxb:bindings>
 </jaxb:bindings>
+

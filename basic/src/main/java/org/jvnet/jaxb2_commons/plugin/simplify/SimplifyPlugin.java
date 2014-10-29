@@ -15,6 +15,7 @@ import org.jvnet.jaxb2_commons.plugin.Ignoring;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
 import org.xml.sax.ErrorHandler;
 
+import com.sun.tools.xjc.model.CAdapter;
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CClassRef;
@@ -240,11 +241,20 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 			final CElementInfo elementInfo) {
 		final CElementPropertyInfo elementPropertyInfo;
 		final String propertyName = createPropertyName(model, element);
+
+		final CElementPropertyInfo originalPropertyInfo = elementInfo
+				.getProperty();
 		elementPropertyInfo = new CElementPropertyInfo(propertyName,
 				property.isCollection() ? CollectionMode.REPEATED_ELEMENT
 						: CollectionMode.NOT_REPEATED, ID.NONE, null,
 				element.getSchemaComponent(), element.getCustomizations(),
 				element.getLocator(), false);
+
+		final CAdapter adapter = originalPropertyInfo.getAdapter();
+		if (adapter != null) {
+			elementPropertyInfo.setAdapter(adapter);
+		}
+
 		elementPropertyInfo.getTypes().add(
 				new CTypeRef(elementInfo.getContentType(), element
 						.getElementName(), elementInfo.getContentType()
@@ -319,6 +329,10 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 						.idUse(), typeRef.getTarget().getExpectedMimeType(),
 				property.getSchemaComponent(), property.getCustomizations(),
 				property.getLocator(), required);
+		final CAdapter adapter = property.getAdapter();
+		if (adapter != null) {
+			elementPropertyInfo.setAdapter(adapter);
+		}
 		elementPropertyInfo.getTypes().add(typeRef);
 		return elementPropertyInfo;
 	}

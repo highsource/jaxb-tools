@@ -279,6 +279,7 @@ public class A implements Equals {
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlType(name = "EItem")
 	@Entity
+	@Table(name="A_EITEM")
 	public static class EItem extends PrimitiveItem<String, String> {
 
 		@XmlAttribute
@@ -298,6 +299,7 @@ public class A implements Equals {
 			setValue(value);
 		}
 
+		@Transient
 		public String getItem() {
 			return getValue();
 		}
@@ -306,6 +308,7 @@ public class A implements Equals {
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlType(name = "ENillableItem")
 	@Entity
+	@Table(name="A_ENILLABLEITEM")
 	public static class ENillableItem extends
 			PrimitiveItem<String, JAXBElement<String>> {
 
@@ -327,6 +330,7 @@ public class A implements Equals {
 
 		}
 
+		@Transient
 		public JAXBElement<String> getItem() {
 			return XmlAdapterUtils.marshallJAXBElement(String.class, new QName(
 					"eNillable"), A.class, getValue());
@@ -337,6 +341,7 @@ public class A implements Equals {
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlType(name = "FItem")
 	@Entity
+	@Table(name="A_FITEM")
 	public static class FItem extends PrimitiveItem<Date, XMLGregorianCalendar> {
 
 		@XmlAttribute
@@ -379,6 +384,7 @@ public class A implements Equals {
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlType(name = "FItemNillable")
 	@Entity
+	@Table(name="A_FNILLABLEITEM")
 	public static class FNillableItem extends
 			PrimitiveItem<Date, JAXBElement<XMLGregorianCalendar>> {
 
@@ -428,6 +434,7 @@ public class A implements Equals {
 	@XmlType(name = "G", propOrder = { "h" })
 	@XmlSeeAlso( { G1.class, G2.class })
 	@Entity
+	@Table(name="A_G")
 	@Inheritance(strategy = InheritanceType.JOINED)
 	public static class G implements Equals {
 
@@ -479,6 +486,7 @@ public class A implements Equals {
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlType(name = "G1", propOrder = { "h1" })
 	@Entity
+	@Table(name="A_G1")
 	public static class G1 extends G {
 		private String h1;
 
@@ -516,6 +524,7 @@ public class A implements Equals {
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlType(name = "g2", propOrder = { "h2" })
 	@Entity
+	@Table(name="A_G2")
 	public static class G2 extends G {
 		private String h2;
 
@@ -552,6 +561,7 @@ public class A implements Equals {
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlType(name = "GItem")
 	@Entity
+	@Table(name="A_GITEM")
 	public static class GItem implements Item<JAXBElement<? extends G>>, Equals {
 
 		@XmlAttribute

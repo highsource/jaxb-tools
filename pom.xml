@@ -63,15 +63,16 @@
 	<properties>
 		<maven.version>2.0.9</maven.version>
 		<annox.version>1.0.1</annox.version>
-		<jaxb2-basics.version>0.8.2</jaxb2-basics.version>
-		<maven-jaxb2-plugin.version>0.9.1</maven-jaxb2-plugin.version>
-		<jaxb.version>2.2.7</jaxb.version>
-		<jaxb-api.version>${jaxb.version}</jaxb-api.version>
+		<jaxb2-basics.version>0.9.1</jaxb2-basics.version>
+		<maven-jaxb2-plugin.version>0.11.0</maven-jaxb2-plugin.version>
+		<jaxb.version>2.2.11</jaxb.version>
 		<maven.plugin.testing.version>2.1</maven.plugin.testing.version>
 		<maven.plugin.plugin.version>3.2</maven.plugin.plugin.version>
 		<jaxb2-basics-annotate.version>1.0.1</jaxb2-basics-annotate.version>
-		<hsqldb17.version>1.7.3.3</hsqldb17.version>
-		<hsqldb18.version>1.8.0.7</hsqldb18.version>
+		<hsqldb.version>2.3.2</hsqldb.version>
+		<hibernate-jpa-2.0-api.version>1.0.0.Final</hibernate-jpa-2.0-api.version>
+		<hibernate-jpa-2.1-api.version>1.0.0.Final</hibernate-jpa-2.1-api.version>
+		<hibernate-entitymanager.version>4.3.7.Final</hibernate-entitymanager.version>
 	</properties>
 	<profiles>
 		<profile>
@@ -410,15 +411,20 @@
 			<dependency>
 				<groupId>javax.xml.bind</groupId>
 				<artifactId>jaxb-api</artifactId>
-				<version>${jaxb-api.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.sun.xml.bind</groupId>
-				<artifactId>jaxb-impl</artifactId>
 				<version>${jaxb.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.sun.xml.bind</groupId>
+				<groupId>org.glassfish.jaxb</groupId>
+				<artifactId>jaxb-runtime</artifactId>
+				<version>${jaxb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.jaxb</groupId>
+				<artifactId>jaxb-core</artifactId>
+				<version>${jaxb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.jaxb</groupId>
 				<artifactId>jaxb-xjc</artifactId>
 				<version>${jaxb.version}</version>
 			</dependency>
@@ -498,9 +504,9 @@
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-entitymanager</artifactId>
-				<version>3.6.5.Final</version>
+				<version>${hibernate-entitymanager.version}</version>
 			</dependency>
-			<dependency>
+			<!--dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-annotations</artifactId>
 				<version>3.5.6-Final</version>
@@ -518,7 +524,7 @@
 						<artifactId>hibernate-jpa-2.0-api</artifactId> 
 					</exclusion> 
 				</exclusions>
-			</dependency>
+			</dependency-->
 			<!-- Java Persistence API -->
 			<dependency>
 				<groupId>javax.persistence</groupId>
@@ -528,7 +534,12 @@
 			<dependency>
 				<groupId>org.hibernate.javax.persistence</groupId>
 				<artifactId>hibernate-jpa-2.0-api</artifactId>
-				<version>1.0.0.Final</version>
+				<version>${hibernate-jpa-2.0-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate.javax.persistence</groupId>
+				<artifactId>hibernate-jpa-2.1-api</artifactId>
+				<version>${hibernate-jpa-2.1-api.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>javax.transaction</groupId>
@@ -553,10 +564,11 @@
 				<artifactId>spring</artifactId>
 				<version>2.0.7</version>
 			</dependency>
+			<!-- HSQLDB -->
 			<dependency>
-				<groupId>hsqldb</groupId>
+				<groupId>org.hsqldb</groupId>
 				<artifactId>hsqldb</artifactId>
-				<version>${hsqldb18.version}</version>
+				<version>${hsqldb.version}</version>
 			</dependency>
 			<!-- Saxon -->
 			<dependency>

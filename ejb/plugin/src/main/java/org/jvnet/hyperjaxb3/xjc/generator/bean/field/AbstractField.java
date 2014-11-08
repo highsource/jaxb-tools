@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.xjc.generator.bean.field;
 
-import static com.sun.tools.xjc.outline.Aspect.IMPLEMENTATION;
+import static  com.sun.tools.xjc.model.Aspect.IMPLEMENTATION;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,7 +38,7 @@ import com.sun.tools.xjc.model.CTypeInfo;
 import com.sun.tools.xjc.model.CTypeRef;
 import com.sun.tools.xjc.model.CValuePropertyInfo;
 import com.sun.tools.xjc.model.nav.NClass;
-import com.sun.tools.xjc.outline.Aspect;
+import  com.sun.tools.xjc.model.Aspect;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldAccessor;
 import com.sun.tools.xjc.outline.FieldOutline;

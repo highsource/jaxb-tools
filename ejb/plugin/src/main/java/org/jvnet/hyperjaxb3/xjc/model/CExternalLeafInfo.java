@@ -15,7 +15,7 @@ import com.sun.tools.xjc.model.CCustomizations;
 import com.sun.tools.xjc.model.CNonElement;
 import com.sun.tools.xjc.model.nav.NType;
 import com.sun.tools.xjc.model.nav.NavigatorImpl;
-import com.sun.tools.xjc.outline.Aspect;
+import  com.sun.tools.xjc.model.Aspect;
 import com.sun.tools.xjc.outline.Outline;
 import com.sun.xml.bind.v2.model.annotation.Locatable;
 import com.sun.xml.bind.v2.model.core.ID;

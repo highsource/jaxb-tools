@@ -18,7 +18,7 @@ import com.sun.tools.xjc.model.CElementPropertyInfo;
 import com.sun.tools.xjc.model.CNonElement;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CReferencePropertyInfo;
-import com.sun.tools.xjc.outline.Aspect;
+import  com.sun.tools.xjc.model.Aspect;
 
 public class SingleWrappingReferenceField extends AdaptingWrappingField {
 

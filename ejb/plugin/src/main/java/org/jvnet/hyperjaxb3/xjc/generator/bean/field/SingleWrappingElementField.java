@@ -7,7 +7,7 @@ import com.sun.codemodel.JType;
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CTypeRef;
-import com.sun.tools.xjc.outline.Aspect;
+import  com.sun.tools.xjc.model.Aspect;
 
 public class SingleWrappingElementField extends SingleWrappingField {
 

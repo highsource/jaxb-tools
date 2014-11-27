@@ -16,7 +16,7 @@ public class StrategyClassUtils {
 	public static <T> JExpression createStrategyInstanceExpression(
 			JCodeModel codeModel, final Class<? extends T> strategyInterface,
 			final String strategyClassName) {
-		
+
 		try {
 			final Class<?> strategyClass = Class.forName(strategyClassName);
 			final JClass strategyJClass = codeModel.ref(strategyClass);
@@ -75,6 +75,22 @@ public class StrategyClassUtils {
 				// We'll assume it does implement
 				return Boolean.TRUE;
 			}
+		} else {
+			return null;
+		}
+	}
+
+	public static <T> Boolean superClassNotIgnored(ClassOutline classOutline,
+			Ignoring ignoring) {
+		if (classOutline.target.getBaseClass() != null) {
+			if (!ignoring.isIgnored(classOutline.parent().getClazz(
+					classOutline.target.getBaseClass()))) {
+				return Boolean.TRUE;
+			} else {
+				return Boolean.FALSE;
+			}
+		} else if (classOutline.target.getRefBaseClass() != null) {
+			return Boolean.TRUE;
 		} else {
 			return null;
 		}

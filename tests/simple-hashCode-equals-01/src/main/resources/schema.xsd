@@ -3,11 +3,6 @@
 	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
 	jaxb:version="1.0">
 
-	<xs:annotation>
-		<xs:appinfo>
-		</xs:appinfo>
-	</xs:annotation>
-
 	<xs:element name="heteroSequence" type="heteroSequenceType"/>
 	<xs:complexType name="heteroSequenceType">
 		<xs:sequence>
@@ -65,13 +60,14 @@
 			<xs:element name="anotherIgnored" type="xs:string"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:element name="sequence" type="sequenceType"/>
 	<xs:complexType name="sequenceType">
 		<xs:sequence>
 			<xs:element name="a" type="xs:string" minOccurs="0"/>
 			<xs:element name="b" type="xs:long" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:element name="extendedSequence" type="extendedSequenceType"/>
+	<xs:element name="extendedSequence" type="extendedSequenceType" substitutionGroup="sequence"/>
 	<xs:complexType name="extendedSequenceType">
 		<xs:complexContent>
 		    <xs:extension base="sequenceType">
@@ -251,4 +247,12 @@
 			<xs:element name="annotatedAdaptedProperty" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+
+	<xs:element name="singleElementRef" type="singleElementRefType"/>
+	<xs:complexType name="singleElementRefType">
+		<xs:sequence>
+			<xs:element ref="sequence"/>
+		</xs:sequence>
+	</xs:complexType>
+
 </xs:schema>

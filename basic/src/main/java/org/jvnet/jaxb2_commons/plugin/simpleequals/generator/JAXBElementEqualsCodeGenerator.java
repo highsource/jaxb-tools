@@ -6,6 +6,7 @@ import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb2_commons.codemodel.generator.TypedCodeGeneratorFactory;
 
 import com.sun.codemodel.JBlock;
+import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JConditional;
 import com.sun.codemodel.JExpr;
@@ -44,26 +45,14 @@ public class JAXBElementEqualsCodeGenerator implements EqualsCodeGenerator {
 
 	public void generateNonNull(JBlock block, JType type, JVar left, JVar right) {
 
+		// TODO extract type wildcard
 		generate(block, type, left, right, "Name", "getName", QName.class);
 		generate(block, type, left, right, "Value", "getValue", Object.class);
-		generate(
-				block,
-				type,
-				left,
-				right,
-				"DeclaredType",
-				"getDeclaredType",
-				codeModel.ref(Class.class).narrow(
-						codeModel.ref(Object.class).wildcard()));
-		generate(
-				block,
-				type,
-				left,
-				right,
-				"Scope",
-				"getScope",
-				codeModel.ref(Class.class).narrow(
-						codeModel.ref(Object.class).wildcard()));
+		final JClass classWildcard = codeModel.ref(Class.class).narrow(
+				codeModel.ref(Object.class).wildcard());
+		generate(block, type, left, right, "DeclaredType", "getDeclaredType",
+				classWildcard);
+		generate(block, type, left, right, "Scope", "getScope", classWildcard);
 		generate(block, type, left, right, "Nil", "isNil", codeModel.BOOLEAN);
 
 	}

@@ -4,10 +4,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.xml.bind.JAXBElement;
+
 import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb2_commons.codemodel.JCMType;
 import org.jvnet.jaxb2_commons.codemodel.JCMTypeFactory;
 import org.jvnet.jaxb2_commons.codemodel.generator.TypedCodeGeneratorFactory;
+import org.jvnet.jaxb2_commons.plugin.simpleequals.generator.JAXBElementEqualsCodeGenerator;
 
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JType;
@@ -19,6 +22,7 @@ public class HashCodeCodeGeneratorFactory implements
 	private final JCMTypeFactory typeFactory = new JCMTypeFactory();
 	// Known code generators
 	private final Map<JCMType<?>, HashCodeCodeGenerator> codeGenerators = new LinkedHashMap<JCMType<?>, HashCodeCodeGenerator>();
+	private final HashCodeCodeGenerator defaultCodeGenerator;
 
 	public HashCodeCodeGeneratorFactory(JCodeModel codeModel) {
 
@@ -39,11 +43,14 @@ public class HashCodeCodeGeneratorFactory implements
 				this.codeModel));
 		addCodeGenerator(this.codeModel.DOUBLE, new FloatHashCodeCodeGenerator(
 				this.codeModel));
+		addCodeGenerator(this.codeModel.ref(JAXBElement.class),
+				new JAXBElementHashCodeCodeGenerator(codeModel, this));
 		// TODO primitive arrays
 		// TODO Collections/Lists
 		// TODO JAXBElement
 		addCodeGenerator(this.codeModel.ref(Object.class),
 				new ObjectHashCodeCodeGenerator(this.codeModel));
+		defaultCodeGenerator = new ObjectHashCodeCodeGenerator(this.codeModel);
 	}
 
 	private void addCodeGenerator(final JType type,
@@ -61,8 +68,7 @@ public class HashCodeCodeGeneratorFactory implements
 				return entry.getValue();
 			}
 		}
-		throw new IllegalArgumentException(
-				"Could not find a code generator for [" + type + "].");
+		return defaultCodeGenerator;
 	}
 
 }

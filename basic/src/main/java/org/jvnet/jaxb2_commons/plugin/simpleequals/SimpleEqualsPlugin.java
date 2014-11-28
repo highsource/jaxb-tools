@@ -120,6 +120,7 @@ public class SimpleEqualsPlugin extends AbstractParameterizablePlugin {
 
 	protected JMethod generateObject$equals(final ClassOutline classOutline,
 			final JDefinedClass theClass) {
+
 		final JCodeModel codeModel = theClass.owner();
 		final JMethod objectEquals = theClass.method(JMod.PUBLIC,
 				codeModel.BOOLEAN, "equals");

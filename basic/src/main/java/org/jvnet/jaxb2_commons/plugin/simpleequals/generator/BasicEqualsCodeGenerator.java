@@ -8,6 +8,7 @@ import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JExpression;
 import com.sun.codemodel.JOp;
 import com.sun.codemodel.JType;
+import com.sun.codemodel.JVar;
 
 public abstract class BasicEqualsCodeGenerator implements
 		EqualsCodeGenerator {
@@ -19,8 +20,8 @@ public abstract class BasicEqualsCodeGenerator implements
 	}
 
 	@Override
-	public void generate(JBlock block, JType type, JExpression left,
-			JExpression right) {
+	public void generate(JBlock block, JType type, JVar left,
+			JVar right) {
 		// if (!(left ==null ? right == null : <comparison>))
 		// { return false; }
 		final JExpression comparison = comparison(left, right);

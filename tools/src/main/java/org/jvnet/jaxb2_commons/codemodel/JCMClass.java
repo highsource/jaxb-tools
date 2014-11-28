@@ -17,13 +17,30 @@ public class JCMClass extends JCMType<JClass> {
 	public boolean matches(JCMType<?> type) {
 		return type.accept(matchesTypeVisitor);
 	}
+	
+	private boolean matches(final JClass thatType) {
+		final JClass thisType = getType();
+		if (thisType.isAssignableFrom(thatType))
+		{
+			return true;
+		}
+		else if(thisType.erasure().isAssignableFrom(thatType.erasure()))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 	private final JCMTypeVisitor<Boolean> matchesTypeVisitor = new JCMTypeVisitor<Boolean>()
 	{
 		@Override
 		public Boolean visit(JCMClass type) {
-			return getType().isAssignableFrom(type.getType());
+			return matches(type.getType());
 		}
+
 
 		@Override
 		public Boolean visit(JCMNullType type) {
@@ -37,7 +54,7 @@ public class JCMClass extends JCMType<JClass> {
 
 		@Override
 		public Boolean visit(JCMTypeVar type) {
-			return getType().isAssignableFrom(type.getType());
+			return matches(type.getType());
 		}
 	};
 }

@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.xml.bind.JAXBElement;
+
 import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb2_commons.codemodel.JCMType;
 import org.jvnet.jaxb2_commons.codemodel.JCMTypeFactory;
@@ -19,6 +21,7 @@ public class EqualsCodeGeneratorFactory implements
 	private final JCMTypeFactory typeFactory = new JCMTypeFactory();
 	// Known code generators
 	private final Map<JCMType<?>, EqualsCodeGenerator> codeGenerators = new LinkedHashMap<JCMType<?>, EqualsCodeGenerator>();
+	private final EqualsCodeGenerator defaultCodeGenerator;
 
 	public EqualsCodeGeneratorFactory(JCodeModel codeModel) {
 		this.codeModel = Validate.notNull(codeModel);
@@ -38,11 +41,12 @@ public class EqualsCodeGeneratorFactory implements
 				this.codeModel));
 		addCodeGenerator(this.codeModel.DOUBLE, new FloatEqualsCodeGenerator(
 				this.codeModel));
+		addCodeGenerator(this.codeModel.ref(JAXBElement.class),
+				new JAXBElementEqualsCodeGenerator(codeModel, this));
 		// TODO primitive arrays
 		// TODO Collections/Lists
 		// TODO JAXBElement
-		addCodeGenerator(this.codeModel.ref(Object.class),
-				new ObjectEqualsCodeGenerator(this.codeModel));
+		defaultCodeGenerator = new ObjectEqualsCodeGenerator(this.codeModel);
 	}
 
 	private void addCodeGenerator(final JType type,
@@ -60,8 +64,7 @@ public class EqualsCodeGeneratorFactory implements
 				return entry.getValue();
 			}
 		}
-		throw new IllegalArgumentException(
-				"Could not find a code generator for [" + type + "].");
+		return defaultCodeGenerator;
 	}
 
 }

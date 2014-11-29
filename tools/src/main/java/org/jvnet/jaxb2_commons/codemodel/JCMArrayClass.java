@@ -2,15 +2,18 @@ package org.jvnet.jaxb2_commons.codemodel;
 
 import com.sun.codemodel.JClass;
 
-public class JCMClass extends JCMType<JClass> {
+// JArrayClass
+public class JCMArrayClass extends JCMType<JClass> {
 
-	public JCMClass(JCMTypeFactory factory, JClass type) {
+	private final JCMType<?> elementType;
+
+	public JCMArrayClass(JCMTypeFactory factory, JClass type) {
 		super(factory, type);
+		elementType = factory.create(type.elementType());
 	}
 
-	@Override
-	public <V> V accept(JCMTypeVisitor<V> visitor) {
-		return visitor.visit(this);
+	public JCMType<?> getElementType() {
+		return elementType;
 	}
 
 	@Override
@@ -18,27 +21,11 @@ public class JCMClass extends JCMType<JClass> {
 		return type.accept(matchesTypeVisitor);
 	}
 	
-	private boolean matches(final JClass thatType) {
-		final JClass thisType = getType();
-		if (thisType.isAssignableFrom(thatType))
-		{
-			return true;
-		}
-		else if(thisType.erasure().isAssignableFrom(thatType.erasure()))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
 	private final JCMTypeVisitor<Boolean> matchesTypeVisitor = new JCMTypeVisitor<Boolean>()
 	{
 		@Override
 		public Boolean visit(JCMClass type) {
-			return matches(type.getType());
+			return Boolean.FALSE;
 		}
 
 
@@ -54,12 +41,19 @@ public class JCMClass extends JCMType<JClass> {
 
 		@Override
 		public Boolean visit(JCMTypeVar type) {
-			return matches(type.getType());
+			return Boolean.FALSE;
 		}
 		
 		@Override
 		public Boolean visit(JCMArrayClass type) {
-			return Boolean.FALSE;
+			return getElementType().matches(type.getElementType());
 		}
 	};
+	
+
+	@Override
+	public <V> V accept(JCMTypeVisitor<V> visitor) {
+		return visitor.visit(this);
+	}
+
 }

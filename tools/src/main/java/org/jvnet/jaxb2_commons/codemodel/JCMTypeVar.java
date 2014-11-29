@@ -38,6 +38,11 @@ public class JCMTypeVar extends JCMType<JTypeVar> {
 		public Boolean visit(JCMTypeVar type) {
 			return getType().isAssignableFrom(type.getType());
 		}
+		
+		@Override
+		public Boolean visit(JCMArrayClass type) {
+			return Boolean.FALSE;
+		}
 	};
 
 }

@@ -39,5 +39,11 @@ public class JCMNullType extends JCMType<JNullType> {
 		public Boolean visit(JCMTypeVar type) {
 			return Boolean.FALSE;
 		}
+		
+		@Override
+		public Boolean visit(JCMArrayClass type) {
+			return Boolean.FALSE;
+		}
+		
 	};
 }

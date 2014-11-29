@@ -39,6 +39,11 @@ public class JCMPrimitiveType extends JCMType<JPrimitiveType> {
 		public Boolean visit(JCMTypeVar type) {
 			return Boolean.FALSE;
 		}
+		
+		@Override
+		public Boolean visit(JCMArrayClass type) {
+			return Boolean.FALSE;
+		}
 	};
 
 }

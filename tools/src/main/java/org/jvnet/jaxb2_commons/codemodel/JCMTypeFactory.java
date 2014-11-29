@@ -16,7 +16,13 @@ public class JCMTypeFactory {
 
 	public <JT extends JType> JCMType<JT> create(JT type) {
 		Validate.notNull(type);
-		if (type instanceof JTypeVar) {
+		if (type.isArray()) {
+			Validate.isInstanceOf(JClass.class, type);
+			@SuppressWarnings("unchecked")
+			final JCMType<JT> result = (JCMType<JT>) new JCMArrayClass(this,
+					(JClass) type);
+			return result;
+		} else if (type instanceof JTypeVar) {
 			@SuppressWarnings("unchecked")
 			final JCMType<JT> result = (JCMType<JT>) new JCMTypeVar(this,
 					(JTypeVar) type);

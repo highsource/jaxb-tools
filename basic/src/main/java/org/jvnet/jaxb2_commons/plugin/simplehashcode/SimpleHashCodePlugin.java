@@ -5,21 +5,15 @@ import java.util.Collection;
 
 import javax.xml.namespace.QName;
 
-import org.jvnet.jaxb2_commons.codemodel.generator.TypedCodeGeneratorFactory;
-import org.jvnet.jaxb2_commons.lang.HashCode;
-import org.jvnet.jaxb2_commons.lang.HashCodeStrategy;
-import org.jvnet.jaxb2_commons.lang.JAXBHashCodeStrategy;
-import org.jvnet.jaxb2_commons.locator.ObjectLocator;
-import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
 import org.jvnet.jaxb2_commons.plugin.AbstractParameterizablePlugin;
 import org.jvnet.jaxb2_commons.plugin.Customizations;
 import org.jvnet.jaxb2_commons.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb2_commons.plugin.Ignoring;
 import org.jvnet.jaxb2_commons.plugin.simplehashcode.generator.HashCodeCodeGenerator;
 import org.jvnet.jaxb2_commons.plugin.simplehashcode.generator.HashCodeCodeGeneratorFactory;
+import org.jvnet.jaxb2_commons.plugin.simplehashcode.generator.TypedHashCodeCodeGeneratorFactory;
 import org.jvnet.jaxb2_commons.plugin.util.FieldOutlineUtils;
 import org.jvnet.jaxb2_commons.plugin.util.StrategyClassUtils;
-import org.jvnet.jaxb2_commons.util.ClassUtils;
 import org.jvnet.jaxb2_commons.util.FieldAccessorFactory;
 import org.jvnet.jaxb2_commons.util.PropertyFieldAccessorFactory;
 import org.jvnet.jaxb2_commons.xjc.outline.FieldAccessorEx;
@@ -63,20 +57,20 @@ public class SimpleHashCodePlugin extends AbstractParameterizablePlugin {
 		this.fieldAccessorFactory = fieldAccessorFactory;
 	}
 
-	private String hashCodeStrategyClass = JAXBHashCodeStrategy.class.getName();
-
-	public void setHashCodeStrategyClass(String hashCodeStrategy) {
-		this.hashCodeStrategyClass = hashCodeStrategy;
-	}
-
-	public String getHashCodeStrategyClass() {
-		return hashCodeStrategyClass;
-	}
-
-	public JExpression createHashCodeStrategy(JCodeModel codeModel) {
-		return StrategyClassUtils.createStrategyInstanceExpression(codeModel,
-				HashCodeStrategy.class, getHashCodeStrategyClass());
-	}
+	/*
+	 * private String hashCodeStrategyClass =
+	 * JAXBHashCodeStrategy.class.getName();
+	 * 
+	 * public void setHashCodeStrategyClass(String hashCodeStrategy) {
+	 * this.hashCodeStrategyClass = hashCodeStrategy; }
+	 * 
+	 * public String getHashCodeStrategyClass() { return hashCodeStrategyClass;
+	 * }
+	 * 
+	 * public JExpression createHashCodeStrategy(JCodeModel codeModel) { return
+	 * StrategyClassUtils.createStrategyInstanceExpression(codeModel,
+	 * HashCodeStrategy.class, getHashCodeStrategyClass()); }
+	 */
 
 	private Ignoring ignoring = new CustomizedIgnoring(
 			org.jvnet.jaxb2_commons.plugin.hashcode.Customizations.IGNORED_ELEMENT_NAME,
@@ -99,9 +93,9 @@ public class SimpleHashCodePlugin extends AbstractParameterizablePlugin {
 						Customizations.GENERATED_ELEMENT_NAME);
 	}
 
-	private TypedCodeGeneratorFactory<HashCodeCodeGenerator> codeGeneratorFactory;
+	private TypedHashCodeCodeGeneratorFactory codeGeneratorFactory;
 
-	private TypedCodeGeneratorFactory<HashCodeCodeGenerator> getCodeGeneratorFactory() {
+	private TypedHashCodeCodeGeneratorFactory getCodeGeneratorFactory() {
 		if (codeGeneratorFactory == null) {
 			throw new IllegalStateException(
 					"Code generator factory was not set yet.");
@@ -124,7 +118,6 @@ public class SimpleHashCodePlugin extends AbstractParameterizablePlugin {
 
 	protected void processClassOutline(ClassOutline classOutline) {
 		final JDefinedClass theClass = classOutline.implClass;
-		ClassUtils._implements(theClass, theClass.owner().ref(HashCode.class));
 		@SuppressWarnings("unused")
 		final JMethod object$hashCode = generateObject$hashCode(classOutline,
 				theClass);
@@ -132,30 +125,30 @@ public class SimpleHashCodePlugin extends AbstractParameterizablePlugin {
 
 	protected JMethod generateObject$hashCode(final ClassOutline classOutline,
 			final JDefinedClass theClass) {
-		
+
 		final JCodeModel codeModel = theClass.owner();
 		final JMethod object$hashCode = theClass.method(JMod.PUBLIC,
 				codeModel.INT, "hashCode");
 		{
 			final JBlock body = object$hashCode.body();
 
-			final JExpression currentHashCodeExpression;
-
-			final Boolean superClassImplementsHashCode = StrategyClassUtils
-					.superClassImplements(classOutline, ignoring,
-							HashCode.class);
-
-			if (superClassImplementsHashCode == null) {
-				currentHashCodeExpression = JExpr.lit(1);
-//			} else if (superClassImplementsHashCode.booleanValue()) {
-//				currentHashCodeExpression = JExpr._super().invoke("hashCode")
-//						.arg(locator).arg(hashCodeStrategy);
-			} else {
-				currentHashCodeExpression = JExpr._super().invoke("hashCode");
-			}
+			final JExpression currentHashCodeExpression = JExpr
+					.lit(getCodeGeneratorFactory().getInitial());
 
 			final JVar currentHashCode = body.decl(codeModel.INT,
 					"currentHashCode", currentHashCodeExpression);
+
+			final Boolean superClassImplementsHashCode = StrategyClassUtils
+					.superClassNotIgnored(classOutline, ignoring);
+
+			if (superClassImplementsHashCode != null) {
+				body.assign(
+						currentHashCode,
+						currentHashCode.mul(
+								JExpr.lit(getCodeGeneratorFactory()
+										.getMultiplier())).plus(
+								JExpr._super().invoke("hashCode")));
+			}
 
 			final FieldOutline[] declaredFields = FieldOutlineUtils.filter(
 					classOutline.getDeclaredFields(), getIgnoring());
@@ -170,18 +163,20 @@ public class SimpleHashCodePlugin extends AbstractParameterizablePlugin {
 					}
 					final JBlock block = body.block();
 
-					final JVar theValue = block.decl(
+					final JVar value = block.decl(
 							fieldAccessor.getType(),
 							"the"
 									+ fieldOutline.getPropertyInfo().getName(
 											true));
 
-					fieldAccessor.toRawValue(block, theValue);
-					
-					final JType fieldType = fieldAccessor.getType();
-
-					final HashCodeCodeGenerator codeGenerator = getCodeGeneratorFactory().getCodeGenerator(fieldType);
-					codeGenerator.generate(block, fieldType, currentHashCode, theValue);
+					fieldAccessor.toRawValue(block, value);
+					final JType type = fieldAccessor.getType();
+					final boolean isAlwaysSet = fieldAccessor.isAlwaysSet();
+					final JExpression hasSetValue = fieldAccessor.hasSetValue();
+					final HashCodeCodeGenerator codeGenerator = getCodeGeneratorFactory()
+							.getCodeGenerator(type);
+					codeGenerator.generate(block, currentHashCode, type, value,
+							hasSetValue, isAlwaysSet);
 				}
 			}
 			body._return(currentHashCode);

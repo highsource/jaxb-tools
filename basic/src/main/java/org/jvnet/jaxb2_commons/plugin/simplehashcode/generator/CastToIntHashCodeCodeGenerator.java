@@ -6,13 +6,15 @@ import com.sun.codemodel.JExpression;
 import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
 
-public class ByteHashCodeCodeGenerator extends PrimitiveHashCodeCodeGenerator {
-	public ByteHashCodeCodeGenerator(JCodeModel codeModel) {
-		super(codeModel);
+public class CastToIntHashCodeCodeGenerator extends ValueBasedHashCodeCodeGenerator {
+
+	public CastToIntHashCodeCodeGenerator(
+			TypedHashCodeCodeGeneratorFactory factory, JCodeModel codeModel) {
+		super(factory, codeModel);
 	}
 
 	@Override
-	public JExpression hashCodeValue(JType type, JVar value) {
+	public JExpression valueHashCode(JType type, JVar value) {
 		return JExpr.cast(getCodeModel().INT, value);
 	}
 }

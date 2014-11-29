@@ -10,24 +10,21 @@ import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
 
 public class DoubleHashCodeCodeGenerator extends
-		PrimitiveBlockHashCodeCodeGenerator {
+		ValueBasedBlockHashCodeCodeGenerator {
 
-	public DoubleHashCodeCodeGenerator(JCodeModel codeModel) {
-		super(codeModel);
+	public DoubleHashCodeCodeGenerator(
+			TypedHashCodeCodeGeneratorFactory factory, JCodeModel codeModel) {
+		super(factory, codeModel);
 	}
 
 	@Override
-	protected JExpression hashCodeValue(JBlock block, JType type, JVar value) {
-		
+	protected JExpression valueHashCode(JBlock block, JType type, JVar value) {
+
 		// long bits = doubleToLongBits(value);
-		final JVar bits = block.decl(
-				JMod.FINAL,
-				type,
-				value.name() + "Bits",
-				getCodeModel().ref(Double.class)
+		final JVar bits = block.decl(JMod.FINAL, getCodeModel().LONG,
+				value.name() + "Bits", getCodeModel().ref(Double.class)
 						.staticInvoke("doubleToLongBits").arg(value));
 		// return (int)(bits ^ (bits >>> 32));
-
 		final JExpression valueHashCode = JExpr.cast(getCodeModel().INT,
 				JOp.xor(bits, JOp.shrz(bits, JExpr.lit(32))));
 		return valueHashCode;

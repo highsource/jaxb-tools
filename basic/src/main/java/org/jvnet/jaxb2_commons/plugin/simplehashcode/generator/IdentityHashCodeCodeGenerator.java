@@ -5,17 +5,16 @@ import com.sun.codemodel.JExpression;
 import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
 
-public class ObjectHashCodeCodeGenerator extends ValueBasedHashCodeCodeGenerator {
+public class IdentityHashCodeCodeGenerator extends
+ValueBasedHashCodeCodeGenerator {
 
-
-	public ObjectHashCodeCodeGenerator(
+	public IdentityHashCodeCodeGenerator(
 			TypedHashCodeCodeGeneratorFactory factory, JCodeModel codeModel) {
 		super(factory, codeModel);
 	}
 
 	@Override
-	protected JExpression valueHashCode(JType type, JVar value) {
-		// value.hashCode()
-		return value.invoke("hashCode");
+	public JExpression valueHashCode(JType type, JVar value) {
+		return value;
 	}
 }

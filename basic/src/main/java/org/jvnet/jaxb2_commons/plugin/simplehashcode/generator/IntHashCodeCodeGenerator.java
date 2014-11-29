@@ -5,15 +5,14 @@ import com.sun.codemodel.JExpression;
 import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
 
-public class FloatHashCodeCodeGenerator extends
+public class IntHashCodeCodeGenerator extends
 		PrimitiveHashCodeCodeGenerator {
-	public FloatHashCodeCodeGenerator(JCodeModel codeModel) {
+	public IntHashCodeCodeGenerator(JCodeModel codeModel) {
 		super(codeModel);
 	}
 
 	@Override
 	public JExpression hashCodeValue(JType type, JVar value) {
-		return getCodeModel().ref(Float.class)
-				.staticInvoke("floatToIntBits").arg(value);
+		return value;
 	}
 }

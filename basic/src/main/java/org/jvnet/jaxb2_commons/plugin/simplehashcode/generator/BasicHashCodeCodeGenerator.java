@@ -1,7 +1,5 @@
 package org.jvnet.jaxb2_commons.plugin.simplehashcode.generator;
 
-import org.apache.commons.lang3.Validate;
-
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JExpr;
@@ -10,26 +8,21 @@ import com.sun.codemodel.JOp;
 import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
 
-public abstract class BasicHashCodeCodeGenerator implements
-		HashCodeCodeGenerator {
-
-	private final JCodeModel codeModel;
+public abstract class BasicHashCodeCodeGenerator extends
+		BaseHashCodeCodeGenerator {
 
 	public BasicHashCodeCodeGenerator(JCodeModel codeModel) {
-		this.codeModel = Validate.notNull(codeModel);
+		super(codeModel);
 	}
 
 	@Override
-	public void generate(JBlock block, JType type, JVar left,
-			JVar right) {
-		// if (!(left ==null ? right == null : <comparison>))
-		// { return false; }
-		final JExpression comparison = comparison(left, right);
-		block._if(
-				JOp.cond(left.eq(JExpr._null()), right.eq(JExpr._null()),
-						comparison).not())._then()._return(JExpr.FALSE);
+	public void generate(JBlock block, JType type, JVar hashCode, JVar value) {
+		// hashCode = 31 * hashCode + (value==null ? 0 : <valueHashCode>);
+		final JExpression valueHashCode = valueHashCode(type, hashCode);
+		block.assign(hashCode, hashCode.mul(JExpr.lit(31)).plus(
+				JOp.cond(value.eq(JExpr._null()), JExpr.lit((int) 0),
+						valueHashCode)));
 	}
 
-	public abstract JExpression comparison(JExpression left,
-			JExpression right);
+	protected abstract JExpression valueHashCode(JType type, JExpression value);
 }

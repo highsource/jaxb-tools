@@ -4,13 +4,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.xml.bind.JAXBElement;
-
 import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb2_commons.codemodel.JCMType;
 import org.jvnet.jaxb2_commons.codemodel.JCMTypeFactory;
 import org.jvnet.jaxb2_commons.codemodel.generator.TypedCodeGeneratorFactory;
-import org.jvnet.jaxb2_commons.plugin.simpleequals.generator.JAXBElementEqualsCodeGenerator;
 
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JType;
@@ -28,23 +25,23 @@ public class HashCodeCodeGeneratorFactory implements
 
 		this.codeModel = Validate.notNull(codeModel);
 		addCodeGenerator(this.codeModel.BOOLEAN,
-				new PrimitiveHashCodeCodeGenerator(this.codeModel));
-		addCodeGenerator(this.codeModel.BYTE, new PrimitiveHashCodeCodeGenerator(
+				new BooleanHashCodeCodeGenerator(this.codeModel));
+		addCodeGenerator(this.codeModel.BYTE, new ByteHashCodeCodeGenerator(
 				this.codeModel));
-		addCodeGenerator(this.codeModel.SHORT,
-				new PrimitiveHashCodeCodeGenerator(this.codeModel));
-		addCodeGenerator(this.codeModel.CHAR, new PrimitiveHashCodeCodeGenerator(
+		addCodeGenerator(this.codeModel.SHORT, new ShortHashCodeCodeGenerator(
 				this.codeModel));
-		addCodeGenerator(this.codeModel.INT, new PrimitiveHashCodeCodeGenerator(
+		addCodeGenerator(this.codeModel.CHAR, new CharHashCodeCodeGenerator(
+				this.codeModel));
+		addCodeGenerator(this.codeModel.INT, new IntHashCodeCodeGenerator(
 				this.codeModel));
 		addCodeGenerator(this.codeModel.FLOAT, new FloatHashCodeCodeGenerator(
 				this.codeModel));
-		addCodeGenerator(this.codeModel.LONG, new PrimitiveHashCodeCodeGenerator(
+		addCodeGenerator(this.codeModel.LONG, new FloatHashCodeCodeGenerator(
 				this.codeModel));
-		addCodeGenerator(this.codeModel.DOUBLE, new FloatHashCodeCodeGenerator(
-				this.codeModel));
-		addCodeGenerator(this.codeModel.ref(JAXBElement.class),
-				new JAXBElementHashCodeCodeGenerator(codeModel, this));
+		addCodeGenerator(this.codeModel.DOUBLE,
+				new DoubleHashCodeCodeGenerator(this.codeModel));
+		// addCodeGenerator(this.codeModel.ref(JAXBElement.class),
+		// new JAXBElementHashCodeCodeGenerator(codeModel, this));
 		// TODO primitive arrays
 		// TODO Collections/Lists
 		// TODO JAXBElement

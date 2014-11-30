@@ -310,16 +310,17 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			final O options = getOptionsFactory().createOptions(
 					optionsConfiguration);
 
-			if (isUpToDate() && getForceRegenerate()) {
+			final boolean isUpToDate = isUpToDate();
+			if (isUpToDate && getForceRegenerate()) {
 				getLog().info(
-						"Sources are up-to-date, but the [forceRegenerate] switch is turned on, XJC execution will not be skipped.");
-			} else if (!isUpToDate()) {
+						"Sources are up-to-date, but the [forceRegenerate] switch is turned on, XJC will be executed.");
+			} else if (!isUpToDate) {
 				getLog().info(
 						"Sources are not up-to-date, XJC will be executed.");
 
 			} else {
 				getLog().info(
-						"Generated sources are up-to-date, XJC execution will be skipped.");
+						"Generated sources are up-to-date, XJC will be skipped.");
 				return;
 			}
 			setupDirectories();
@@ -738,7 +739,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		if (getVerbose()) {
 			getLog().info(
 					MessageFormat
-							.format("Depends timestamp [{0}], produces timestamp [{1}].",
+							.format("Depends timestamp [{0,date,yyyy-MM-dd HH:mm:ss.SSS}], produces timestamp [{1,date,yyyy-MM-dd HH:mm:ss.SSS}].",
 									dependsTimestamp, producesTimestamp));
 		}
 		return producesTimestamp != null

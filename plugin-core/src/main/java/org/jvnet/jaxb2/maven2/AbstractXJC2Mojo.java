@@ -172,6 +172,18 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		return bindingDirectory != null ? bindingDirectory
 				: getSchemaDirectory();
 	}
+	
+	private File catalogDirectory;
+
+	public void setCatalogDirectory(File catalogDirectory) {
+		this.catalogDirectory = catalogDirectory;
+	}
+
+	public File getCatalogDirectory() {
+		return catalogDirectory != null ? catalogDirectory
+				: getSchemaDirectory();
+	}
+	
 
 	/**
 	 * <p>
@@ -259,6 +271,26 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	public void setCatalog(File catalog) {
 		this.catalog = catalog;
 	}
+	
+	private String[] catalogIncludes = new String[] { "*.cat" };
+
+	public String[] getCatalogIncludes() {
+		return catalogIncludes;
+	}
+
+	public void setCatalogIncludes(String[] catalogIncludes) {
+		this.catalogIncludes = catalogIncludes;
+	}
+
+	private String[] catalogExcludes;
+
+	public String[] getCatalogExcludes() {
+		return catalogExcludes;
+	}
+	
+	public void setCatalogExcludes(String[] catalogExcludes) {
+		this.catalogExcludes = catalogExcludes;
+	}
 
 	/**
 	 * A list of catalog resources which could includes file sets, URLs, Maven
@@ -285,8 +317,8 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		}
 		for (ResourceEntry resourceEntry : catalogs) {
 			catalogUris.addAll(createResourceEntryUris(resourceEntry,
-					getSchemaDirectory().getAbsolutePath(),
-					getSchemaIncludes(), getSchemaExcludes()));
+					getCatalogDirectory().getAbsolutePath(),
+					getCatalogIncludes(), getCatalogExcludes()));
 		}
 		return catalogUris;
 	}
@@ -499,6 +531,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 */
 	private boolean contentForWildcard;
 
+	// TODO parameter.
 	public boolean getContentForWildcard() {
 		return contentForWildcard;
 	}

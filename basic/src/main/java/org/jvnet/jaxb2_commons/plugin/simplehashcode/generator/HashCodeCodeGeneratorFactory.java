@@ -23,8 +23,8 @@ public class HashCodeCodeGeneratorFactory implements
 	private final Map<JCMType<?>, HashCodeCodeGenerator> codeGenerators = new LinkedHashMap<JCMType<?>, HashCodeCodeGenerator>();
 	private final HashCodeCodeGenerator defaultCodeGenerator;
 
-	private final int initial = 17;
-	private final int multiplier = 37;
+	private final int initial = 1;
+	private final int multiplier = 31;
 
 	public HashCodeCodeGeneratorFactory(JCodeModel codeModel) {
 

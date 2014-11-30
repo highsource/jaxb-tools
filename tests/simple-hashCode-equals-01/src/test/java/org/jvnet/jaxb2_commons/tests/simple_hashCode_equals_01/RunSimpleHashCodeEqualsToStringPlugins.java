@@ -39,4 +39,26 @@ public class RunSimpleHashCodeEqualsToStringPlugins {
 		com.sun.codemodel.CodeWriter cw = options.createCodeWriter();
 		model.codeModel.build(cw);
 	}
+	
+	
+	@Test
+	public void compilesSchemaGwt() throws Exception {
+
+		new File("target/generated-sources/xjc").mkdirs();
+
+		URL schema = getClass().getResource("/schema_gwt.xsd");
+		URL binding = getClass().getResource("/binding_gwt.xjb");
+		final String[] arguments = new String[] { "-xmlschema",
+				schema.toExternalForm(), "-b", binding.toExternalForm(), "-d",
+				"target/generated-sources/xjc", "-extension",
+				"-XsimpleHashCode" };
+
+		Options options = new Options();
+		options.parseArguments(arguments);
+		ConsoleErrorReporter receiver = new ConsoleErrorReporter();
+		Model model = ModelLoader.load(options, new JCodeModel(), receiver);
+		model.generateCode(options, receiver);
+		com.sun.codemodel.CodeWriter cw = options.createCodeWriter();
+		model.codeModel.build(cw);
+	}
 }

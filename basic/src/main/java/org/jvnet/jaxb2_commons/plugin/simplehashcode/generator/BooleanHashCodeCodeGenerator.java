@@ -17,6 +17,6 @@ ValueBasedHashCodeCodeGenerator {
 
 	@Override
 	public JExpression valueHashCode(JType type, JVar value) {
-		return JOp.cond(value, JExpr.lit(0), JExpr.lit(1));
+		return JOp.cond(value, JExpr.lit(1231), JExpr.lit(1237));
 	}
 }

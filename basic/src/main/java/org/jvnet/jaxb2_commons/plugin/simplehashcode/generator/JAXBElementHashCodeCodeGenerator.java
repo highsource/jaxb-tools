@@ -1,7 +1,7 @@
 package org.jvnet.jaxb2_commons.plugin.simplehashcode.generator;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
 
 import javax.xml.namespace.QName;
 
@@ -24,7 +24,7 @@ public class JAXBElementHashCodeCodeGenerator extends
 
 	@Override
 	protected void generate(JBlock block, JVar currentHashCode,
-			JType exposedType, Set<JType> possibleTypes, JVar value) {
+			JType exposedType, Collection<JType> possibleTypes, JVar value) {
 		
 		// TODO multiple possible types
 		valueHashCode(block, currentHashCode, exposedType, value, "Name",
@@ -55,7 +55,7 @@ public class JAXBElementHashCodeCodeGenerator extends
 
 	private void valueHashCode(JBlock block, JVar currentHashCode, JType type,
 			JVar value, String propertyName, String method, JType propertyType,
-			Set<JType> possiblePropertyTypes) {
+			Collection<JType> possiblePropertyTypes) {
 		final HashCodeCodeGenerator codeGenerator = getFactory()
 				.getCodeGenerator(propertyType);
 		final JVar propertyValue = block.decl(JMod.FINAL, propertyType,

@@ -1,7 +1,7 @@
 package org.jvnet.jaxb2_commons.plugin.simplehashcode.generator;
 
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.Set;
 
 import org.apache.commons.lang3.Validate;
 
@@ -23,7 +23,7 @@ public class ListHashCodeCodeGenerator extends BlockHashCodeCodeGenerator {
 
 	@Override
 	protected void generate(JBlock block, JVar currentHashCode, JType exposedType,
-			Set<JType> possibleTypes,
+			Collection<JType> possibleTypes,
 			JVar value) {
 		Validate.isInstanceOf(JClass.class, exposedType);
 		final JClass listType = (JClass) exposedType;

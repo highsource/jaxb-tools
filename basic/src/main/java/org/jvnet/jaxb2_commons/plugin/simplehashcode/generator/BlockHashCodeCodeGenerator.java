@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.plugin.simplehashcode.generator;
 
-import java.util.Set;
+import java.util.Collection;
 
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JCodeModel;
@@ -20,7 +20,8 @@ public abstract class BlockHashCodeCodeGenerator extends
 
 	@Override
 	public void generate(JBlock block, JVar currentHashCode, JType exposedType,
-			Set<JType> possibleTypes, JVar value, JExpression hasSetValue, boolean isAlwaysSet) {
+			Collection<JType> possibleTypes, JVar value,
+			JExpression hasSetValue, boolean isAlwaysSet) {
 		final JBlock valueBlock;
 
 		if (isAlwaysSet) {
@@ -28,13 +29,15 @@ public abstract class BlockHashCodeCodeGenerator extends
 		} else {
 			final JConditional ifHasSetValue = block._if(hasSetValue);
 			valueBlock = ifHasSetValue._then();
-			ifHasSetValue._else().assign(currentHashCode,
-					currentHashCode.mul(JExpr.lit(getFactory().getMultiplier())));
+			ifHasSetValue._else()
+					.assign(currentHashCode,
+							currentHashCode.mul(JExpr.lit(getFactory()
+									.getMultiplier())));
 		}
 		generate(valueBlock, currentHashCode, exposedType, possibleTypes, value);
 	}
 
 	protected abstract void generate(JBlock block, JVar currentHashCode,
-			JType exposedType, Set<JType> possibleTypes, JVar value);
+			JType exposedType, Collection<JType> possibleTypes, JVar value);
 
 }

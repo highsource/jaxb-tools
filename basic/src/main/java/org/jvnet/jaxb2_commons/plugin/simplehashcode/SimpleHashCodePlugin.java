@@ -180,7 +180,7 @@ public class SimpleHashCodePlugin extends AbstractParameterizablePlugin {
 					fieldAccessor.toRawValue(block, value);
 					final JType exposedType = fieldAccessor.getType();
 					
-					final Set<JType> possibleTypes = FieldUtils.getPossibleTypes(fieldOutline, Aspect.EXPOSED);
+					final Collection<JType> possibleTypes = FieldUtils.getPossibleTypes(fieldOutline, Aspect.EXPOSED);
 					System.out.println(propertyName);
 					System.out.println(possibleTypes);
 					final boolean isAlwaysSet = fieldAccessor.isAlwaysSet();

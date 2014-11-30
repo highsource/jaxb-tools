@@ -5,8 +5,8 @@ import com.sun.codemodel.JExpression;
 import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
 
-public class ObjectHashCodeCodeGenerator extends ValueBasedHashCodeCodeGenerator {
-
+public class ObjectHashCodeCodeGenerator extends
+		ValueBasedHashCodeCodeGenerator {
 
 	public ObjectHashCodeCodeGenerator(
 			TypedHashCodeCodeGeneratorFactory factory, JCodeModel codeModel) {
@@ -15,6 +15,7 @@ public class ObjectHashCodeCodeGenerator extends ValueBasedHashCodeCodeGenerator
 
 	@Override
 	protected JExpression valueHashCode(JType type, JVar value) {
+		// TODO multiple possible types
 		// value.hashCode()
 		return value.invoke("hashCode");
 	}

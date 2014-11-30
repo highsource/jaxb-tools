@@ -1,6 +1,7 @@
 package org.jvnet.jaxb2_commons.plugin.simplehashcode.generator;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -65,6 +66,8 @@ public class HashCodeCodeGeneratorFactory implements
 		addCodeGenerator(this.codeModel.ref(JAXBElement.class),
 				new JAXBElementHashCodeCodeGenerator(this, this.codeModel));
 
+		addCodeGenerator(this.codeModel.ref(List.class).narrow(Object.class),
+				new ListHashCodeCodeGenerator(this, this.codeModel));
 		// TODO Object[]
 		// TODO Collections/Lists
 		addCodeGenerator(this.codeModel.ref(Object.class),

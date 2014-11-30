@@ -1,5 +1,8 @@
 package org.jvnet.jaxb2_commons.plugin.simplehashcode.generator;
 
+import java.util.Collections;
+import java.util.Set;
+
 import javax.xml.namespace.QName;
 
 import com.sun.codemodel.JBlock;
@@ -20,31 +23,39 @@ public class JAXBElementHashCodeCodeGenerator extends
 	}
 
 	@Override
-	protected void generate(JBlock block, JVar currentHashCode, JType type,
-			JVar value) {
-		valueHashCode(block, currentHashCode, type, value, "Name", "getName",
-				QName.class);
-		valueHashCode(block, currentHashCode, type, value, "Value", "getValue",
-				Object.class);
+	protected void generate(JBlock block, JVar currentHashCode,
+			JType exposedType, Set<JType> possibleTypes, JVar value) {
+		
+		// TODO multiple possible types
+		valueHashCode(block, currentHashCode, exposedType, value, "Name",
+				"getName", QName.class);
+		valueHashCode(block, currentHashCode, exposedType, value, "Value",
+				"getValue", Object.class);
 		final JClass classWildcard = getCodeModel().ref(Class.class).narrow(
 				getCodeModel().ref(Object.class).wildcard());
-		valueHashCode(block, currentHashCode, type, value, "DeclaredType",
-				"getDeclaredType", classWildcard);
-		valueHashCode(block, currentHashCode, type, value, "Scope", "getScope",
-				classWildcard);
-		valueHashCode(block, currentHashCode, type, value, "Nil", "isNil",
-				getCodeModel().BOOLEAN);
+		valueHashCode(block, currentHashCode, exposedType, value,
+				"DeclaredType", "getDeclaredType", classWildcard,
+				Collections.<JType> singleton(classWildcard));
+		valueHashCode(block, currentHashCode, exposedType, value, "Scope",
+				"getScope", classWildcard,
+				Collections.<JType> singleton(classWildcard));
+		valueHashCode(block, currentHashCode, exposedType, value, "Nil",
+				"isNil", getCodeModel().BOOLEAN,
+				Collections.<JType> singleton(getCodeModel().BOOLEAN));
 	}
 
 	private void valueHashCode(JBlock block, JVar currentHashCode, JType type,
 			JVar value, String propertyName, String method,
-			Class<?> propertyType) {
+			Class<?> _propertyType) {
+		final JClass propertyType = getCodeModel().ref(_propertyType);
 		valueHashCode(block, currentHashCode, type, value, propertyName,
-				method, getCodeModel().ref(propertyType));
+				method, propertyType,
+				Collections.<JType> singleton(propertyType));
 	}
 
 	private void valueHashCode(JBlock block, JVar currentHashCode, JType type,
-			JVar value, String propertyName, String method, JType propertyType) {
+			JVar value, String propertyName, String method, JType propertyType,
+			Set<JType> possiblePropertyTypes) {
 		final HashCodeCodeGenerator codeGenerator = getFactory()
 				.getCodeGenerator(propertyType);
 		final JVar propertyValue = block.decl(JMod.FINAL, propertyType,
@@ -54,7 +65,7 @@ public class JAXBElementHashCodeCodeGenerator extends
 		final JExpression hasSetValue = isAlwaysSet ? JExpr.TRUE
 				: propertyValue.ne(JExpr._null());
 		codeGenerator.generate(block, currentHashCode, propertyType,
-				propertyValue, hasSetValue, isAlwaysSet);
+				possiblePropertyTypes, propertyValue, hasSetValue, isAlwaysSet);
 	}
 
 }

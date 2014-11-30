@@ -1,5 +1,7 @@
 package org.jvnet.jaxb2_commons.plugin.simplehashcode.generator;
 
+import java.util.Set;
+
 import org.jvnet.jaxb2_commons.codemodel.generator.CodeGenerator;
 
 import com.sun.codemodel.JBlock;
@@ -9,6 +11,6 @@ import com.sun.codemodel.JVar;
 
 public interface HashCodeCodeGenerator extends CodeGenerator {
 
-	public void generate(JBlock block, JVar currentHashCode, JType type,
-			JVar value, JExpression hasSetValue, boolean isAlwaysSet);
+	public void generate(JBlock block, JVar currentHashCode, JType exposedType,
+			Set<JType> possibleTypes, JVar value, JExpression hasSetValue, boolean isAlwaysSet);
 }

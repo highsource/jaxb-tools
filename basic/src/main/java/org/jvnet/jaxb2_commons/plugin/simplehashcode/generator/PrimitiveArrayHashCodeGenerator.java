@@ -1,5 +1,8 @@
 package org.jvnet.jaxb2_commons.plugin.simplehashcode.generator;
 
+import java.util.Collections;
+import java.util.Set;
+
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JExpr;
@@ -15,14 +18,14 @@ public class PrimitiveArrayHashCodeGenerator extends BlockHashCodeCodeGenerator 
 	}
 
 	@Override
-	protected void generate(JBlock block, JVar currentHashCode, JType type,
-			JVar value) {
+	protected void generate(JBlock block, JVar currentHashCode,
+			JType possibleType, Set<JType> possibleTypes, JVar value) {
 
-		final JType elementType = type.elementType();
+		final JType elementType = possibleType.elementType();
 		final JForEach forEachElement = block.forEach(elementType, value.name()
 				+ "Element", value);
 		getFactory().getCodeGenerator(elementType).generate(
-				forEachElement.body(), currentHashCode, elementType,
+				forEachElement.body(), currentHashCode, elementType, possibleTypes,
 				forEachElement.var(), JExpr.TRUE, true);
 	}
 

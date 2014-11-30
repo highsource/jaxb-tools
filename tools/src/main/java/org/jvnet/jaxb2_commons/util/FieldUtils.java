@@ -1,14 +1,26 @@
 package org.jvnet.jaxb2_commons.util;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.xml.namespace.QName;
 
+import org.apache.commons.lang3.Validate;
+
+import com.sun.codemodel.JType;
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.generator.bean.field.FieldRendererFactory;
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
 import com.sun.tools.xjc.model.CCustomizations;
+import com.sun.tools.xjc.model.CElementInfo;
 import com.sun.tools.xjc.model.CNonElement;
 import com.sun.tools.xjc.model.CPropertyInfo;
+import com.sun.tools.xjc.model.CTypeInfo;
+import com.sun.tools.xjc.outline.Aspect;
+import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
+import com.sun.tools.xjc.outline.Outline;
 
 /**
  * Field utilities.
@@ -140,7 +152,7 @@ public class FieldUtils {
 	// FieldItem fieldItem) {
 	// return AccessorUtils.get(classContext, fieldItem) == null;
 	// }
-	//	
+	//
 	// public static FieldUse[] getFieldUses(final ClassItem classItem) {
 	// if (classItem.getSuperClass() == null)
 	// return classItem.getDeclaredFieldUses();
@@ -160,4 +172,46 @@ public class FieldUtils {
 	// return fieldUses;
 	// }
 	// }
+
+	public static Set<JType> getPossibleTypes(FieldOutline fieldOutline,
+			Aspect aspect) {
+		Validate.notNull(fieldOutline);
+		final ClassOutline classOutline = fieldOutline.parent();
+		final Outline outline = classOutline.parent();
+		final CPropertyInfo propertyInfo = fieldOutline.getPropertyInfo();
+
+		final Set<JType> types = new HashSet<JType>();
+
+		if (propertyInfo.getAdapter() != null) {
+			types.add(propertyInfo.getAdapter().customType.toType(fieldOutline
+					.parent().parent(), aspect));
+		} else if (propertyInfo.baseType != null) {
+			types.add(propertyInfo.baseType);
+		} else {
+			Collection<? extends CTypeInfo> typeInfos = propertyInfo.ref();
+			for (CTypeInfo typeInfo : typeInfos) {
+				types.addAll(getPossibleTypes(outline, aspect, typeInfo));
+			}
+		}
+		return types;
+	}
+
+	public static Set<JType> getPossibleTypes(Outline outline, Aspect aspect,
+			CTypeInfo typeInfo) {
+
+		final Set<JType> types = new HashSet<JType>();
+
+		types.add(typeInfo.getType().toType(outline, aspect));
+		if (typeInfo instanceof CElementInfo) {
+
+			final CElementInfo elementInfo = (CElementInfo) typeInfo;
+			for (CElementInfo substitutionMember : elementInfo
+					.getSubstitutionMembers()) {
+				types.addAll(getPossibleTypes(outline, aspect,
+						substitutionMember));
+			}
+		}
+		return types;
+	}
+
 }

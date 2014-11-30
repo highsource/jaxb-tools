@@ -2,6 +2,7 @@ package org.jvnet.jaxb2_commons.plugin.simplehashcode;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Set;
 
 import javax.xml.namespace.QName;
 
@@ -15,6 +16,7 @@ import org.jvnet.jaxb2_commons.plugin.simplehashcode.generator.TypedHashCodeCode
 import org.jvnet.jaxb2_commons.plugin.util.FieldOutlineUtils;
 import org.jvnet.jaxb2_commons.plugin.util.StrategyClassUtils;
 import org.jvnet.jaxb2_commons.util.FieldAccessorFactory;
+import org.jvnet.jaxb2_commons.util.FieldUtils;
 import org.jvnet.jaxb2_commons.util.PropertyFieldAccessorFactory;
 import org.jvnet.jaxb2_commons.xjc.outline.FieldAccessorEx;
 import org.xml.sax.ErrorHandler;
@@ -29,6 +31,7 @@ import com.sun.codemodel.JMod;
 import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
 import com.sun.tools.xjc.Options;
+import com.sun.tools.xjc.outline.Aspect;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.outline.Outline;
@@ -163,20 +166,29 @@ public class SimpleHashCodePlugin extends AbstractParameterizablePlugin {
 					}
 					final JBlock block = body.block();
 
+					String propertyName = fieldOutline.getPropertyInfo().getName(
+							true);
 					final JVar value = block.decl(
 							fieldAccessor.getType(),
 							"the"
-									+ fieldOutline.getPropertyInfo().getName(
-											true));
+									+ propertyName);
+					if ("CeOrCf".equalsIgnoreCase(propertyName))
+					{
+						System.out.println(fieldOutline);
+					}
 
 					fieldAccessor.toRawValue(block, value);
-					final JType type = fieldAccessor.getType();
+					final JType exposedType = fieldAccessor.getType();
+					
+					final Set<JType> possibleTypes = FieldUtils.getPossibleTypes(fieldOutline, Aspect.EXPOSED);
+					System.out.println(propertyName);
+					System.out.println(possibleTypes);
 					final boolean isAlwaysSet = fieldAccessor.isAlwaysSet();
 					final JExpression hasSetValue = fieldAccessor.hasSetValue();
 					final HashCodeCodeGenerator codeGenerator = getCodeGeneratorFactory()
-							.getCodeGenerator(type);
-					codeGenerator.generate(block, currentHashCode, type, value,
-							hasSetValue, isAlwaysSet);
+							.getCodeGenerator(exposedType);
+					codeGenerator.generate(block, currentHashCode, exposedType, possibleTypes,
+							value, hasSetValue, isAlwaysSet);
 				}
 			}
 			body._return(currentHashCode);

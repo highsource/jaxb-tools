@@ -12,9 +12,41 @@
 		</xs:appinfo>
 	</xs:annotation>
 
+	<xs:element name="base" type="tns:base" />
+	<xs:complexType name="base">
+		<xs:sequence>
+			<xs:element name="a" type="xs:string" minOccurs="0" />
+			<xs:element name="b" type="xs:long" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="extension" type="tns:extension"
+		substitutionGroup="tns:base" />
+	<xs:complexType name="extension">
+		<xs:complexContent>
+			<xs:extension base="tns:base">
+				<xs:sequence>
+					<xs:element name="c" type="xs:dateTime" minOccurs="0" />
+					<xs:element name="d" type="xs:base64Binary" minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
 	<xs:complexType name="arrays">
 		<xs:sequence>
-			<xs:element name="objects" type="xs:string">
+			<xs:element name="objectArray" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="java.lang.Object[]" />
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="objectArrays" type="xs:string"
+				maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:appinfo>
 						<jaxb:property>
@@ -25,5 +57,77 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+
+	<xs:complexType name="jaxbelement">
+		<xs:sequence>
+			<xs:choice>
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property name="AOrB" />
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:element name="a" type="xs:string" />
+				<xs:element name="b" type="xs:string" />
+			</xs:choice>
+			<xs:choice>
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property name="EOrF" />
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:element name="e" type="xs:string" />
+				<xs:element ref="tns:base" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="jaxbelements">
+		<xs:sequence>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="a" type="xs:string" />
+				<xs:element name="b" type="xs:string" />
+			</xs:choice>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="e" type="xs:string" />
+				<xs:element ref="tns:base" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="singleHeterogeneousJAXBElement">
+		<xs:sequence>
+			<xs:element ref="tns:base" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="collectionHeterogeneousJAXBElement">
+		<xs:sequence>
+			<xs:element ref="tns:base" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="serializable">
+		<xs:sequence>
+			<xs:choice>
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property name="AOrB" />
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:element name="a" type="xs:int" />
+				<xs:element name="b" type="xs:string" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="serializables">
+		<xs:sequence>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="a" type="xs:int" />
+				<xs:element name="b" type="xs:string" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
 
 </xs:schema>

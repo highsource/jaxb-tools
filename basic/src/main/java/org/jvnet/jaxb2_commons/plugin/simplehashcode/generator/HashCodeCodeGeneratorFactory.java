@@ -47,28 +47,30 @@ public class HashCodeCodeGeneratorFactory implements
 				new DoubleHashCodeCodeGenerator(this, this.codeModel));
 
 		addCodeGenerator(this.codeModel.BOOLEAN.array(),
-				new PrimitiveArrayHashCodeGenerator(this, this.codeModel));
+				new ArrayHashCodeGenerator(this, this.codeModel));
 		addCodeGenerator(this.codeModel.BYTE.array(),
-				new PrimitiveArrayHashCodeGenerator(this, this.codeModel));
+				new ArrayHashCodeGenerator(this, this.codeModel));
 		addCodeGenerator(this.codeModel.SHORT.array(),
-				new PrimitiveArrayHashCodeGenerator(this, this.codeModel));
+				new ArrayHashCodeGenerator(this, this.codeModel));
 		addCodeGenerator(this.codeModel.CHAR.array(),
-				new PrimitiveArrayHashCodeGenerator(this, this.codeModel));
+				new ArrayHashCodeGenerator(this, this.codeModel));
 		addCodeGenerator(this.codeModel.INT.array(),
-				new PrimitiveArrayHashCodeGenerator(this, this.codeModel));
+				new ArrayHashCodeGenerator(this, this.codeModel));
 		addCodeGenerator(this.codeModel.FLOAT.array(),
-				new PrimitiveArrayHashCodeGenerator(this, this.codeModel));
+				new ArrayHashCodeGenerator(this, this.codeModel));
 		addCodeGenerator(this.codeModel.LONG.array(),
-				new PrimitiveArrayHashCodeGenerator(this, this.codeModel));
+				new ArrayHashCodeGenerator(this, this.codeModel));
 		addCodeGenerator(this.codeModel.DOUBLE.array(),
-				new PrimitiveArrayHashCodeGenerator(this, this.codeModel));
+				new ArrayHashCodeGenerator(this, this.codeModel));
+		addCodeGenerator(this.codeModel.ref(Object.class).array(),
+				new ArrayHashCodeGenerator(this, this.codeModel));
 
 		addCodeGenerator(this.codeModel.ref(JAXBElement.class),
 				new JAXBElementHashCodeCodeGenerator(this, this.codeModel));
 
 		addCodeGenerator(this.codeModel.ref(List.class).narrow(Object.class),
 				new ListHashCodeCodeGenerator(this, this.codeModel));
-		// TODO Object[]
+
 		// TODO Collections/Lists
 		addCodeGenerator(this.codeModel.ref(Object.class),
 				new ObjectHashCodeCodeGenerator(this, this.codeModel));

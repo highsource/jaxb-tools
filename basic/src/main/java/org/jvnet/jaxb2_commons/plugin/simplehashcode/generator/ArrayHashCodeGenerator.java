@@ -9,9 +9,9 @@ import com.sun.codemodel.JForEach;
 import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
 
-public class PrimitiveArrayHashCodeGenerator extends BlockHashCodeCodeGenerator {
+public class ArrayHashCodeGenerator extends BlockHashCodeCodeGenerator {
 
-	public PrimitiveArrayHashCodeGenerator(
+	public ArrayHashCodeGenerator(
 			TypedHashCodeCodeGeneratorFactory factory, JCodeModel codeModel) {
 		super(factory, codeModel);
 	}

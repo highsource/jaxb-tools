@@ -1,14 +1,13 @@
-package org.jvnet.jaxb2_commons.tests.simple_hashCode_equals_01;
+package org.jvnet.jaxb2_commons.tests.simple_hashcode_equals_01.customer;
 
 import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.jvnet.jaxb2_commons.tests.SimpleHashCode_Gwt_01.Customer;
-import org.jvnet.jaxb2_commons.tests.SimpleHashCode_Gwt_01.Customer2;
+import org.jvnet.jaxb2_commons.tests.simple_hashcode_equals_01.customer.Customer;
 
-public class RunSimpleHashCodeGwt {
+public class CustomerTest {
 
 	@Before
 	public void setUp() throws Exception {

@@ -6,7 +6,7 @@
 //
 
 
-package org.jvnet.jaxb2_commons.tests.SimpleHashCode_Gwt_01;
+package org.jvnet.jaxb2_commons.tests.simple_hashcode_equals_01.customer;
 
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -40,7 +40,8 @@ public class ListHashCodeCodeGenerator extends BlockHashCodeCodeGenerator {
 				value.invoke("iterator"));
 
 		final JVar listHashCode = block.decl(JMod.NONE,
-				getCodeModel().INT, "listHashCode",
+				getCodeModel().INT, 
+				value.name() + "ListHashCode",
 				 JExpr.lit(1));
 		
 		final JBlock elementBlock = block._while(iterator.invoke("hasNext"))

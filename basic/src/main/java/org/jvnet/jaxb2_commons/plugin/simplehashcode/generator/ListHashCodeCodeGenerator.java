@@ -39,6 +39,10 @@ public class ListHashCodeCodeGenerator extends BlockHashCodeCodeGenerator {
 				getCodeModel().ref(Iterator.class).narrow(elementType), value.name() + "Iterator",
 				value.invoke("iterator"));
 
+		final JVar listHashCode = block.decl(JMod.NONE,
+				getCodeModel().INT, "listHashCode",
+				 JExpr.lit(1));
+		
 		final JBlock elementBlock = block._while(iterator.invoke("hasNext"))
 				.body();
 		final JVar elementValue = elementBlock.decl(JMod.FINAL, elementType,
@@ -48,8 +52,10 @@ public class ListHashCodeCodeGenerator extends BlockHashCodeCodeGenerator {
 		final JExpression hasSetValue = isAlwaysSet ? JExpr.TRUE : elementValue
 				.ne(JExpr._null());
 		getFactory().getCodeGenerator(elementType).generate(elementBlock,
-				currentHashCode, elementType, possibleTypes, elementValue,
+				listHashCode, elementType, possibleTypes, elementValue,
 				hasSetValue, isAlwaysSet);
-
+		block.assign(currentHashCode,
+				currentHashCode.mul(JExpr.lit(getFactory().getMultiplier()))
+						.plus(listHashCode));
 	}
 }

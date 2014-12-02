@@ -100,7 +100,7 @@ public class JAXBElementHashCodeCodeGenerator extends
 		final HashCodeCodeGenerator codeGenerator = getFactory()
 				.getCodeGenerator(propertyType);
 
-		JType declarablePropertyType = getTypeFactory().create(
+		final JType declarablePropertyType = getTypeFactory().create(
 				propertyType).getDeclarableType();
 
 		final JVar propertyValue = block.decl(JMod.FINAL,

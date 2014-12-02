@@ -1,17 +1,24 @@
 package org.jvnet.jaxb2_commons.codemodel;
 
+import com.sun.codemodel.JClass;
 import com.sun.codemodel.JType;
-import com.sun.codemodel.JTypeVar;
 
-public class JCMTypeVar extends JCMType<JTypeVar> {
+public class JCMTypeWildcard extends JCMType<JClass> {
 
-	public JCMTypeVar(JCMTypeFactory factory, JTypeVar type) {
+	private final JCMType<? extends JClass> boundType;
+	
+	public JCMTypeWildcard(JCMTypeFactory factory, JClass type) {
 		super(factory, type);
+		boundType = factory.create(type._extends());
+	}
+	
+	public JCMType<? extends JClass> getBoundType() {
+		return boundType;
 	}
 	
 	@Override
 	public JType getDeclarableType() {
-		return getType();
+		return getBoundType().getDeclarableType();
 	}
 
 	@Override
@@ -55,5 +62,4 @@ public class JCMTypeVar extends JCMType<JTypeVar> {
 			return getType().isAssignableFrom(type.getType());
 		}
 	};
-
 }

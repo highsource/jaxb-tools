@@ -1,6 +1,7 @@
 package org.jvnet.jaxb2_commons.codemodel;
 
 import com.sun.codemodel.JClass;
+import com.sun.codemodel.JType;
 
 public class JCMClass extends JCMType<JClass> {
 
@@ -11,6 +12,11 @@ public class JCMClass extends JCMType<JClass> {
 	@Override
 	public <V> V accept(JCMTypeVisitor<V> visitor) {
 		return visitor.visit(this);
+	}
+	
+	@Override
+	public JType getDeclarableType() {
+		return getType();
 	}
 
 	@Override
@@ -61,5 +67,10 @@ public class JCMClass extends JCMType<JClass> {
 		public Boolean visit(JCMArrayClass type) {
 			return Boolean.FALSE;
 		}
+		
+		public Boolean visit(JCMTypeWildcard type) {
+			return getType().isAssignableFrom(type.getType()._extends());
+			
+		};
 	};
 }

@@ -30,4 +30,9 @@ public class DefaultJCMTypeVisitor<V> implements JCMTypeVisitor<V> {
 	public V visit(JCMArrayClass type) {
 		return defaultVisit(type);
 	}
+
+	@Override
+	public V visit(JCMTypeWildcard type) {
+		return defaultVisit(type);
+	}
 }

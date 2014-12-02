@@ -9,7 +9,8 @@ public interface JCMTypeVisitor<V> {
 	public V visit(JCMPrimitiveType type);
 
 	public V visit(JCMTypeVar type);
-	
+
 	public V visit(JCMArrayClass type);
 
+	public V visit(JCMTypeWildcard type);
 }

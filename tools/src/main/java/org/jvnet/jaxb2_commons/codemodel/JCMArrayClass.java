@@ -1,6 +1,7 @@
 package org.jvnet.jaxb2_commons.codemodel;
 
 import com.sun.codemodel.JClass;
+import com.sun.codemodel.JType;
 
 // JArrayClass
 public class JCMArrayClass extends JCMType<JClass> {
@@ -15,19 +16,22 @@ public class JCMArrayClass extends JCMType<JClass> {
 	public JCMType<?> getElementType() {
 		return elementType;
 	}
+	
+	@Override
+	public JType getDeclarableType() {
+		return getElementType().getDeclarableType().array();
+	}
 
 	@Override
 	public boolean matches(JCMType<?> type) {
 		return type.accept(matchesTypeVisitor);
 	}
-	
-	private final JCMTypeVisitor<Boolean> matchesTypeVisitor = new JCMTypeVisitor<Boolean>()
-	{
+
+	private final JCMTypeVisitor<Boolean> matchesTypeVisitor = new JCMTypeVisitor<Boolean>() {
 		@Override
 		public Boolean visit(JCMClass type) {
 			return Boolean.FALSE;
 		}
-
 
 		@Override
 		public Boolean visit(JCMNullType type) {
@@ -43,13 +47,18 @@ public class JCMArrayClass extends JCMType<JClass> {
 		public Boolean visit(JCMTypeVar type) {
 			return Boolean.FALSE;
 		}
-		
+
 		@Override
 		public Boolean visit(JCMArrayClass type) {
 			return getElementType().matches(type.getElementType());
 		}
+
+		@Override
+		public Boolean visit(JCMTypeWildcard type) {
+			return Boolean.FALSE;
+		}
+
 	};
-	
 
 	@Override
 	public <V> V accept(JCMTypeVisitor<V> visitor) {

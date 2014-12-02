@@ -32,6 +32,12 @@ public class JCMTypeFactory {
 			final JCMType<JT> result = (JCMType<JT>) new JCMNullType(this,
 					(JNullType) type);
 			return result;
+		} else if ("com.sun.codemodel.JTypeWildcard".equals(type.getClass()
+				.getName())) {
+			@SuppressWarnings("unchecked")
+			final JCMType<JT> result = (JCMType<JT>) new JCMTypeWildcard(this,
+					(JClass) type);
+			return result;
 		} else if (type instanceof JClass) {
 			@SuppressWarnings("unchecked")
 			final JCMType<JT> result = (JCMType<JT>) new JCMClass(this,

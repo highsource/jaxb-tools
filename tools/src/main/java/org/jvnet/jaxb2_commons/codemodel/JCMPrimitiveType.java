@@ -1,17 +1,24 @@
 package org.jvnet.jaxb2_commons.codemodel;
 
 import com.sun.codemodel.JPrimitiveType;
+import com.sun.codemodel.JType;
 
 public class JCMPrimitiveType extends JCMType<JPrimitiveType> {
 
 	public JCMPrimitiveType(JCMTypeFactory factory, JPrimitiveType type) {
 		super(factory, type);
 	}
+	
+	@Override
+	public JType getDeclarableType() {
+		return getType();
+	}
 
 	@Override
 	public <V> V accept(JCMTypeVisitor<V> visitor) {
 		return visitor.visit(this);
 	}
+	
 
 	@Override
 	public boolean matches(JCMType<?> type) {
@@ -39,11 +46,17 @@ public class JCMPrimitiveType extends JCMType<JPrimitiveType> {
 		public Boolean visit(JCMTypeVar type) {
 			return Boolean.FALSE;
 		}
-		
+
 		@Override
 		public Boolean visit(JCMArrayClass type) {
 			return Boolean.FALSE;
 		}
+		
+		@Override
+		public Boolean visit(JCMTypeWildcard type) {
+			return Boolean.FALSE;
+		}
+
 	};
 
 }

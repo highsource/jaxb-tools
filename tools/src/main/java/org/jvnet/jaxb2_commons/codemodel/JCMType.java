@@ -21,6 +21,8 @@ public abstract class JCMType<JT extends JType> {
 	public JT getType() {
 		return type;
 	}
+	
+	public abstract JType getDeclarableType();
 
 	public abstract boolean matches(JCMType<?> type);
 

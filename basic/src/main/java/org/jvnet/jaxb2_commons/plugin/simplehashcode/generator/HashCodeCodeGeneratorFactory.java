@@ -73,13 +73,11 @@ public class HashCodeCodeGeneratorFactory implements
 		addCodeGenerator(this.codeModel.ref(List.class).narrow(Object.class),
 				new ListHashCodeCodeGenerator(this, this.codeModel));
 
-		// TODO Collections/Lists
-		
-		// TODO Object with multiple possible types
 		addCodeGenerator(this.codeModel.ref(Object.class),
-				new ObjectHashCodeCodeGenerator(this, this.codeModel));
+				new ObjectHashCodeCodeGenerator(this, this.codeModel,
+						this.typeFactory));
 		defaultCodeGenerator = new ObjectHashCodeCodeGenerator(this,
-				this.codeModel);
+				this.codeModel, this.typeFactory);
 	}
 
 	private void addCodeGenerator(final JType type,

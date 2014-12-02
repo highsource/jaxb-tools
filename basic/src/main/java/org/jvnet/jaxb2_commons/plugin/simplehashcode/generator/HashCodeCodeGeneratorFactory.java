@@ -65,13 +65,17 @@ public class HashCodeCodeGeneratorFactory implements
 		addCodeGenerator(this.codeModel.ref(Object.class).array(),
 				new ArrayHashCodeGenerator(this, this.codeModel));
 
-		addCodeGenerator(this.codeModel.ref(JAXBElement.class),
-				new JAXBElementHashCodeCodeGenerator(this, this.codeModel));
+		addCodeGenerator(
+				this.codeModel.ref(JAXBElement.class).narrow(Object.class),
+				new JAXBElementHashCodeCodeGenerator(this, this.codeModel,
+						this.typeFactory));
 
 		addCodeGenerator(this.codeModel.ref(List.class).narrow(Object.class),
 				new ListHashCodeCodeGenerator(this, this.codeModel));
 
 		// TODO Collections/Lists
+		
+		// TODO Object with multiple possible types
 		addCodeGenerator(this.codeModel.ref(Object.class),
 				new ObjectHashCodeCodeGenerator(this, this.codeModel));
 		defaultCodeGenerator = new ObjectHashCodeCodeGenerator(this,

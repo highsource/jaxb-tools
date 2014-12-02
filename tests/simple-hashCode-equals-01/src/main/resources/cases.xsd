@@ -94,13 +94,13 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:complexType name="singleHeterogeneousJAXBElement">
+	<xs:complexType name="singleHeterogeneousJaxbelement">
 		<xs:sequence>
 			<xs:element ref="tns:base" />
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:complexType name="collectionHeterogeneousJAXBElement">
+	<xs:complexType name="collectionHeterogeneousJaxbelement">
 		<xs:sequence>
 			<xs:element ref="tns:base" />
 		</xs:sequence>
@@ -126,6 +126,21 @@
 				<xs:element name="a" type="xs:int" />
 				<xs:element name="b" type="xs:string" />
 			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="objectWithStringAndJaxbelement" mixed="true">
+		<xs:sequence>
+			<xs:element name="a" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="objectWithStringAndJaxbelements" mixed="true">
+		<xs:sequence>
+			<xs:element name="a" type="xs:string"/>
+			<xs:element name="b" type="xs:positiveInteger"/>
+			<xs:element name="c" type="xs:date"/>
+			<xs:element name="d" type="xs:base64Binary"/>
 		</xs:sequence>
 	</xs:complexType>
 

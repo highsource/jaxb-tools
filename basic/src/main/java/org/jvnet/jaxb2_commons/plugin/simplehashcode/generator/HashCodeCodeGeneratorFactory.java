@@ -41,7 +41,7 @@ public class HashCodeCodeGeneratorFactory implements
 				this, this.codeModel));
 		addCodeGenerator(this.codeModel.FLOAT, new FloatHashCodeCodeGenerator(
 				this, this.codeModel));
-		addCodeGenerator(this.codeModel.LONG, new FloatHashCodeCodeGenerator(
+		addCodeGenerator(this.codeModel.LONG, new LongHashCodeCodeGenerator(
 				this, this.codeModel));
 		addCodeGenerator(this.codeModel.DOUBLE,
 				new DoubleHashCodeCodeGenerator(this, this.codeModel));

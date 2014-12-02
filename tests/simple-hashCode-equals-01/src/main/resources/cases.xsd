@@ -36,21 +36,83 @@
 
 	<xs:complexType name="arrays">
 		<xs:sequence>
-			<xs:element name="objectArray" type="xs:string">
+			<xs:element name="booleans" type="xs:boolean">
 				<xs:annotation>
 					<xs:appinfo>
 						<jaxb:property>
-							<jaxb:baseType name="java.lang.Object[]" />
+							<jaxb:baseType name="boolean[]"/>
 						</jaxb:property>
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="objectArrays" type="xs:string"
-				maxOccurs="unbounded">
+			<xs:element name="bytes" type="xs:byte">
 				<xs:annotation>
 					<xs:appinfo>
 						<jaxb:property>
-							<jaxb:baseType name="java.lang.Object[]" />
+							<jaxb:baseType name="byte[]"/>
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="chars" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="char[]"/>
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="doubles" type="xs:double">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="double[]"/>
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="floats" type="xs:float">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="float[]"/>
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="longs" type="xs:long">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="long[]"/>
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ints" type="xs:int">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="int[]"/>
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="shorts" type="xs:short">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="short[]"/>
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="objects" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="java.lang.Object[]"/>
 						</jaxb:property>
 					</xs:appinfo>
 				</xs:annotation>
@@ -128,19 +190,21 @@
 			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
-	
-	<xs:complexType name="objectWithStringAndJaxbelement" mixed="true">
+
+	<xs:complexType name="objectWithStringAndJaxbelement"
+		mixed="true">
 		<xs:sequence>
-			<xs:element name="a" type="xs:string"/>
+			<xs:element name="a" type="xs:string" />
 		</xs:sequence>
 	</xs:complexType>
-	
-	<xs:complexType name="objectWithStringAndJaxbelements" mixed="true">
+
+	<xs:complexType name="objectWithStringAndJaxbelements"
+		mixed="true">
 		<xs:sequence>
-			<xs:element name="a" type="xs:string"/>
-			<xs:element name="b" type="xs:positiveInteger"/>
-			<xs:element name="c" type="xs:date"/>
-			<xs:element name="d" type="xs:base64Binary"/>
+			<xs:element name="a" type="xs:string" />
+			<xs:element name="b" type="xs:positiveInteger" />
+			<xs:element name="c" type="xs:date" />
+			<xs:element name="d" type="xs:base64Binary" />
 		</xs:sequence>
 	</xs:complexType>
 

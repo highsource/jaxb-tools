@@ -181,8 +181,6 @@ public class SimpleHashCodePlugin extends AbstractParameterizablePlugin {
 					final JType exposedType = fieldAccessor.getType();
 					
 					final Collection<JType> possibleTypes = FieldUtils.getPossibleTypes(fieldOutline, Aspect.EXPOSED);
-					System.out.println(propertyName);
-					System.out.println(possibleTypes);
 					final boolean isAlwaysSet = fieldAccessor.isAlwaysSet();
 					final JExpression hasSetValue = fieldAccessor.hasSetValue();
 					final HashCodeCodeGenerator codeGenerator = getCodeGeneratorFactory()

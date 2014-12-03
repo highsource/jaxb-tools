@@ -99,9 +99,12 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 		public CPropertyInfo getPropertyInfo() {
 			return fieldOutline.getPropertyInfo();
 		}
-		
+
 		public boolean isAlwaysSet() {
 			if (constantField != null) {
+				return true;
+			} else if (type.isPrimitive()) {
+				// TODO this is due to a bug in JAXB - char does not get unboxed
 				return true;
 			} else {
 				return JExpr.TRUE == fieldAccessor.hasSetValue();
@@ -113,6 +116,9 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 				return JExpr.TRUE;
 			} else if (isSetter != null) {
 				return targetObject.invoke(isSetter);
+			} else if (type.isPrimitive()) {
+				// TODO this is due to a bug in JAXB - char does not get unboxed
+				return JExpr.TRUE;
 			} else {
 				return fieldAccessor.hasSetValue();
 			}

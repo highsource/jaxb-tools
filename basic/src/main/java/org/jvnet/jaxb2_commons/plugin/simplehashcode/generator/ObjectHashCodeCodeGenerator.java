@@ -88,6 +88,7 @@ public class ObjectHashCodeCodeGenerator extends BlockHashCodeCodeGenerator {
 				final JVar valueJAXBElement = _then.decl(JMod.FINAL,
 						jaxbElement, value.name() + "JAXBElement",
 						JExpr.cast(jaxbElement, value));
+				valueJAXBElement.annotate(SuppressWarnings.class).param("value", "unchecked");
 				codeGenerator.generate(_then, currentHashCode, jaxbElement,
 						new HashSet<JType>(jaxbElements), valueJAXBElement,
 						JExpr.TRUE, true);
@@ -102,6 +103,7 @@ public class ObjectHashCodeCodeGenerator extends BlockHashCodeCodeGenerator {
 
 					final JVar valueArray = _then.decl(JMod.FINAL, array,
 							value.name() + "Array", JExpr.cast(array, value));
+					valueArray.annotate(SuppressWarnings.class).param("value", "unchecked");
 					final HashCodeCodeGenerator codeGenerator = getFactory()
 							.getCodeGenerator(array);
 					codeGenerator.generate(_then, currentHashCode, array,

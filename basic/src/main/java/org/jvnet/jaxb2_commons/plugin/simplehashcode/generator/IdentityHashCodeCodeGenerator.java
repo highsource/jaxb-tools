@@ -6,7 +6,7 @@ import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
 
 public class IdentityHashCodeCodeGenerator extends
-ValueBasedHashCodeCodeGenerator {
+		ValueBasedHashCodeCodeGenerator {
 
 	public IdentityHashCodeCodeGenerator(
 			TypedHashCodeCodeGeneratorFactory factory, JCodeModel codeModel) {

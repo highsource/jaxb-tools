@@ -39,7 +39,7 @@ public class EqualsCodeGeneratorFactory implements
 				this.codeModel));
 		addCodeGenerator(this.codeModel.LONG, new PrimitiveEqualsCodeGenerator(
 				this.codeModel));
-		addCodeGenerator(this.codeModel.DOUBLE, new FloatEqualsCodeGenerator(
+		addCodeGenerator(this.codeModel.DOUBLE, new DoubleEqualsCodeGenerator(
 				this.codeModel));
 		addCodeGenerator(this.codeModel.ref(JAXBElement.class),
 				new JAXBElementEqualsCodeGenerator(codeModel, this));

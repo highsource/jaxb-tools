@@ -21,10 +21,11 @@ public abstract class ValueBasedBlockHashCodeCodeGenerator extends
 	@Override
 	public void generate(JBlock block, JVar currentHashCode, JType exposedType,
 			Collection<JType> possibleTypes, JVar value, JExpression hasSetValue, boolean isAlwaysSet) {
+
 		final JExpression valueHashCode = valueHashCode(block, exposedType, value);
 
 		final JExpression newHashCodeValue;
-		if (isAlwaysSet) {
+		if (isAlwaysSet || !isCheckForNullRequired()) {
 			newHashCodeValue = valueHashCode;
 		} else {
 			newHashCodeValue = JOp.cond(hasSetValue, valueHashCode,
@@ -33,7 +34,11 @@ public abstract class ValueBasedBlockHashCodeCodeGenerator extends
 		block.assign(currentHashCode,
 				currentHashCode.mul(JExpr.lit(getFactory().getMultiplier()))
 						.plus(newHashCodeValue));
-
+	}
+	
+	protected boolean isCheckForNullRequired()
+	{
+		return true;
 	}
 
 	protected abstract JExpression valueHashCode(JBlock block, JType type,

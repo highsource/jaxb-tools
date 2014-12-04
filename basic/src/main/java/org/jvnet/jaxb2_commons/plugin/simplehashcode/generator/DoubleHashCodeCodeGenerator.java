@@ -18,7 +18,7 @@ public class DoubleHashCodeCodeGenerator extends
 	}
 
 	@Override
-	protected JExpression valueHashCode(JBlock block, JType type, JVar value) {
+	protected JExpression generateHashCode(JBlock block, JType type, JVar value) {
 
 		// long bits = doubleToLongBits(value);
 		final JVar bits = block.decl(JMod.FINAL, getCodeModel().LONG,

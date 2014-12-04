@@ -219,6 +219,23 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 				}
 			}
 		}
+
+		@Override
+		public void getValue(JBlock block, JVar $var, boolean checkHasSetValue) {
+			if (checkHasSetValue) {
+				toRawValue(block, $var);
+			} else {
+				if (constantField != null) {
+					block.assign($var, theClass.staticRef(this.constantField));
+				} else {
+					if (getter != null) {
+						block.assign($var, targetObject.invoke(getter));
+					} else {
+						fieldAccessor.toRawValue(block, $var);
+					}
+				}
+			}
+		}
 	}
 
 }

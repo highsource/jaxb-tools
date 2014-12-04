@@ -15,9 +15,9 @@ public abstract class ValueBasedHashCodeCodeGenerator extends
 	}
 	
 	@Override
-	protected JExpression valueHashCode(JBlock block, JType type, JVar value) {
-		return valueHashCode(type, value);
+	protected JExpression generateHashCode(JBlock block, JType type, JVar value) {
+		return generateHashCode(type, value);
 	}
 
-	protected abstract JExpression valueHashCode(JType type, JVar value);
+	protected abstract JExpression generateHashCode(JType type, JVar value);
 }

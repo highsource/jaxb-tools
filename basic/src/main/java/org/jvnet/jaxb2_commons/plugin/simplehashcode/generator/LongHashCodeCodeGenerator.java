@@ -14,7 +14,7 @@ public class LongHashCodeCodeGenerator extends ValueBasedHashCodeCodeGenerator {
 	}
 
 	@Override
-	public JExpression valueHashCode(JType type, JVar value) {
+	public JExpression generateHashCode(JType type, JVar value) {
 		// return (int)(value ^ (value >>> 32));
 		return JExpr.cast(getCodeModel().INT,
 				value.xor(value.shrz(JExpr.lit(32))));

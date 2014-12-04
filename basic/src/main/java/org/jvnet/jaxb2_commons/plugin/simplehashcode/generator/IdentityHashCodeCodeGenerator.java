@@ -14,7 +14,7 @@ public class IdentityHashCodeCodeGenerator extends
 	}
 
 	@Override
-	public JExpression valueHashCode(JType type, JVar value) {
+	public JExpression generateHashCode(JType type, JVar value) {
 		return value;
 	}
 }

@@ -31,28 +31,76 @@ public class JAXBElementHashCodeCodeGenerator extends
 		super(factory, codeModel);
 		this.typeFactory = Validate.notNull(typeFactory);
 	}
-	
+
 	private JCMTypeFactory getTypeFactory() {
 		return typeFactory;
 	}
 
 	@Override
-	protected void generate(JBlock block, JVar currentHashCode,
-			JType exposedType, Collection<JType> possibleTypes, JVar value) {
-		Validate.isInstanceOf(JClass.class, exposedType);
+	protected void append(JBlock block, JVar currentHashCode, JType type,
+			Collection<JType> possibleTypes, JVar value) {
+		Validate.isInstanceOf(JClass.class, type);
 
-		final JClass exposedClass = (JClass) exposedType;
+		final JClass _class = (JClass) type;
 
 		// Get the T from JAXBElement<T>
-		final JClass exposedTypeParameter;
-		final List<JClass> typeParameters = exposedClass.getTypeParameters();
-		if (typeParameters.size() == 1) {
-			exposedTypeParameter = typeParameters.get(0);
-		} else {
-			exposedTypeParameter = getCodeModel().ref(Object.class).wildcard();
-		}
+		final JClass valueType = getValueType(_class);
 
 		// Gather possible values types
+		final Set<JType> possibleValueTypes = getPossibleValueTypes(possibleTypes);
+
+		appendName(block, currentHashCode, value);
+		appendValue(block, currentHashCode, value, valueType,
+				possibleValueTypes);
+		appendDeclaredType(block, currentHashCode, value, valueType);
+		appendScope(block, currentHashCode, value);
+		appendNil(block, currentHashCode, value);
+	}
+
+	private void appendName(JBlock block, JVar currentHashCode, JVar value) {
+		append(block, currentHashCode, value, "Name", "getName", QName.class);
+	}
+
+	private void appendValue(JBlock block, JVar currentHashCode, JVar value,
+			final JClass valueType, final Set<JType> possibleValueTypes) {
+		append(block, currentHashCode, value, "Value", "getValue", valueType,
+				possibleValueTypes);
+	}
+
+	private void appendDeclaredType(JBlock block, JVar currentHashCode,
+			JVar value, final JClass valueType) {
+		final JClass valueTypeClass = getCodeModel().ref(Class.class).narrow(
+				valueType);
+		append(block, currentHashCode, value, "DeclaredType",
+				"getDeclaredType", valueTypeClass,
+				Collections.<JType> singleton(valueTypeClass));
+	}
+
+	private void appendScope(JBlock block, JVar currentHashCode, JVar value) {
+		final JClass classWildcard = getCodeModel().ref(Class.class).narrow(
+				getCodeModel().ref(Object.class).wildcard());
+		append(block, currentHashCode, value, "Scope", "getScope",
+				classWildcard, Collections.<JType> singleton(classWildcard));
+	}
+
+	private void appendNil(JBlock block, JVar currentHashCode, JVar value) {
+		append(block, currentHashCode, value, "Nil", "isNil",
+				getCodeModel().BOOLEAN,
+				Collections.<JType> singleton(getCodeModel().BOOLEAN));
+	}
+
+	private JClass getValueType(final JClass _class) {
+		final JClass valueType;
+		final List<JClass> typeParameters = _class.getTypeParameters();
+		if (typeParameters.size() == 1) {
+			valueType = typeParameters.get(0);
+		} else {
+			valueType = getCodeModel().ref(Object.class).wildcard();
+		}
+		return valueType;
+	}
+
+	private Set<JType> getPossibleValueTypes(Collection<JType> possibleTypes) {
 		final Set<JType> possibleValueTypes = new HashSet<JType>();
 
 		for (JType possibleType : possibleTypes) {
@@ -65,52 +113,34 @@ public class JAXBElementHashCodeCodeGenerator extends
 				possibleValueTypes.add(getCodeModel().ref(Object.class));
 			}
 		}
-
-		valueHashCode(block, currentHashCode, exposedType, value, "Name",
-				"getName", QName.class);
-		valueHashCode(block, currentHashCode, exposedType, value, "Value",
-				"getValue", exposedTypeParameter, possibleValueTypes);
-		final JClass classWildcard = getCodeModel().ref(Class.class).narrow(
-				getCodeModel().ref(Object.class).wildcard());
-		final JClass exposedClassWildcard = getCodeModel().ref(Class.class)
-				.narrow(exposedTypeParameter);
-		valueHashCode(block, currentHashCode, exposedType, value,
-				"DeclaredType", "getDeclaredType", exposedClassWildcard,
-				Collections.<JType> singleton(classWildcard));
-		valueHashCode(block, currentHashCode, exposedType, value, "Scope",
-				"getScope", classWildcard,
-				Collections.<JType> singleton(classWildcard));
-		valueHashCode(block, currentHashCode, exposedType, value, "Nil",
-				"isNil", getCodeModel().BOOLEAN,
-				Collections.<JType> singleton(getCodeModel().BOOLEAN));
+		return possibleValueTypes;
 	}
 
-	private void valueHashCode(JBlock block, JVar currentHashCode, JType type,
-			JVar value, String propertyName, String method,
-			Class<?> _propertyType) {
-		final JClass propertyType = getCodeModel().ref(_propertyType);
-		valueHashCode(block, currentHashCode, type, value, propertyName,
-				method, propertyType,
-				Collections.<JType> singleton(propertyType));
+	private void append(JBlock block, JVar currentHashCode, JVar value,
+			String propertyName, String method, Class<?> valueClass) {
+		final JClass valueType = getCodeModel().ref(valueClass);
+		append(block, currentHashCode, value, propertyName, method, valueType,
+				Collections.<JType> singleton(valueType));
 	}
 
-	private void valueHashCode(JBlock block, JVar currentHashCode, JType type,
-			JVar value, String propertyName, String method, JType propertyType,
-			Collection<JType> possiblePropertyTypes) {
-		final HashCodeCodeGenerator codeGenerator = getFactory()
-				.getCodeGenerator(propertyType);
+	private void append(JBlock block, JVar currentHashCode, JVar value,
+			String propertyName, String method, JType valueType,
+			Collection<JType> possibleValueTypes) {
+		final HashCodeCodeGenerator codeGenerator = getCodeGeneratorFactory()
+				.getCodeGenerator(valueType);
 
-		final JType declarablePropertyType = getTypeFactory().create(
-				propertyType).getDeclarableType();
+		final JType declarablePropertyType = getTypeFactory().create(valueType)
+				.getDeclarableType();
 
-		final JVar propertyValue = block.decl(JMod.FINAL,
-				declarablePropertyType, value.name() + propertyName,
-				value.invoke(method));
+		final JVar subValue = block.decl(JMod.FINAL, declarablePropertyType,
+				value.name() + propertyName, value.invoke(method));
 		// We assume that primitive properties are always set
-		boolean isAlwaysSet = propertyType.isPrimitive();
-		final JExpression hasSetValue = isAlwaysSet ? JExpr.TRUE
-				: propertyValue.ne(JExpr._null());
-		codeGenerator.generate(block, currentHashCode, propertyType,
-				possiblePropertyTypes, propertyValue, hasSetValue, isAlwaysSet);
+		boolean isAlwaysSet = valueType.isPrimitive();
+		final JExpression hasSetValue = isAlwaysSet ? JExpr.TRUE : subValue
+				.ne(JExpr._null());
+		block.assign(currentHashCode, currentHashCode.mul(JExpr
+				.lit(getCodeGeneratorFactory().getMultiplier())));
+		codeGenerator.append(block, currentHashCode, valueType,
+				possibleValueTypes, subValue, hasSetValue, isAlwaysSet);
 	}
 }

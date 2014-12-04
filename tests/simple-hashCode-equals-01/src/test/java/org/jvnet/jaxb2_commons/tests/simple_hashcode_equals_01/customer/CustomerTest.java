@@ -1,11 +1,10 @@
 package org.jvnet.jaxb2_commons.tests.simple_hashcode_equals_01.customer;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.jvnet.jaxb2_commons.tests.simple_hashcode_equals_01.customer.Customer;
 
 public class CustomerTest {
 
@@ -36,13 +35,8 @@ public class CustomerTest {
 		jaxb2.getMiddleInitials().addAll(eclipse.getMiddleInitials());
 		jaxb2.setPostCode(eclipse.getPostCode());
 		jaxb2.setSingle(eclipse.isSingle());
-		
-		System.out.println("eclipse hashCode="+eclipse.hashCode());
-		System.out.println("jaxb2 hashCode="+jaxb2.hashCode());
-		System.out.println("eclipse hashCode2="+eclipse.hashCode2());
 
-		
-		assertTrue(eclipse.hashCode()==jaxb2.hashCode());
+		assertEquals(eclipse.hashCode(), jaxb2.hashCode());
 	}
 
 }

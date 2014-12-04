@@ -11,6 +11,7 @@ import com.sun.codemodel.JVar;
 
 public interface HashCodeCodeGenerator extends CodeGenerator {
 
-	public void generate(JBlock block, JVar currentHashCode, JType exposedType,
-			Collection<JType> possibleTypes, JVar value, JExpression hasSetValue, boolean isAlwaysSet);
+	public void append(JBlock block, JVar currentHashCode, JType type,
+			Collection<JType> possibleTypes, JVar value,
+			JExpression hasSetValue, boolean isAlwaysSet);
 }

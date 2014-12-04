@@ -5,7 +5,6 @@ import java.util.Collection;
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JConditional;
-import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JExpression;
 import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
@@ -19,25 +18,20 @@ public abstract class BlockHashCodeCodeGenerator extends
 	}
 
 	@Override
-	public void generate(JBlock block, JVar currentHashCode, JType exposedType,
+	public void append(JBlock block, JVar currentHashCode, JType type,
 			Collection<JType> possibleTypes, JVar value,
 			JExpression hasSetValue, boolean isAlwaysSet) {
-		final JBlock valueBlock;
-
+		final JBlock subBlock;
 		if (isAlwaysSet) {
-			valueBlock = block;
+			subBlock = block;
 		} else {
 			final JConditional ifHasSetValue = block._if(hasSetValue);
-			valueBlock = ifHasSetValue._then();
-			ifHasSetValue._else()
-					.assign(currentHashCode,
-							currentHashCode.mul(JExpr.lit(getFactory()
-									.getMultiplier())));
+			subBlock = ifHasSetValue._then();
 		}
-		generate(valueBlock, currentHashCode, exposedType, possibleTypes, value);
+		append(subBlock, currentHashCode, type, possibleTypes, value);
 	}
 
-	protected abstract void generate(JBlock block, JVar currentHashCode,
+	protected abstract void append(JBlock block, JVar currentHashCode,
 			JType exposedType, Collection<JType> possibleTypes, JVar value);
 
 }

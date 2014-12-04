@@ -13,14 +13,14 @@ public class ArrayHashCodeGenerator extends ValueBasedHashCodeCodeGenerator {
 			JCodeModel codeModel) {
 		super(factory, codeModel);
 	}
-	
+
 	@Override
 	protected boolean isCheckForNullRequired() {
 		return false;
 	}
 
 	@Override
-	protected JExpression valueHashCode(JType type, JVar value) {
+	protected JExpression generateHashCode(JType type, JVar value) {
 		return getCodeModel().ref(Arrays.class).staticInvoke("hashCode")
 				.arg(value);
 	}

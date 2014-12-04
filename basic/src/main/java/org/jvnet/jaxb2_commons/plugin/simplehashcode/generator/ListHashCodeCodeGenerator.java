@@ -26,9 +26,10 @@ public class ListHashCodeCodeGenerator extends BlockHashCodeCodeGenerator {
 	}
 
 	@Override
-	protected void generate(JBlock block, JVar currentHashCode,
-			JType exposedType, Collection<JType> possibleTypes, JVar value) {
-		Validate.isInstanceOf(JClass.class, exposedType);
+	protected void append(JBlock block, JVar currentHashCode, JType type,
+			Collection<JType> possibleTypes, JVar value) {
+		Validate.isInstanceOf(JClass.class, type);
+		final JClass _class = (JClass) type;
 
 		final JClass jaxbElementClass = getCodeModel().ref(JAXBElement.class);
 		final Set<JType> arrays = new HashSet<JType>();
@@ -48,47 +49,44 @@ public class ListHashCodeCodeGenerator extends BlockHashCodeCodeGenerator {
 		// If list items are not arrays or JAXBElements, just delegate to the
 		// hashCode of the list
 		if (arrays.isEmpty() && jaxbElements.isEmpty()) {
-			block.assign(
-					currentHashCode,
-					currentHashCode
-							.mul(JExpr.lit(getFactory().getMultiplier())).plus(
-									value.invoke("hashCode")));
-
+			block.assignPlus(currentHashCode, value.invoke("hashCode"));
 		} else {
-
-			final JClass listType = (JClass) exposedType;
-
-			final JClass elementType;
-			if (listType.getTypeParameters().size() == 1) {
-				elementType = listType.getTypeParameters().get(0);
-			} else {
-				elementType = getCodeModel().ref(Object.class);
-			}
-
-			final JVar iterator = block.decl(JMod.FINAL,
-					getCodeModel().ref(Iterator.class).narrow(elementType),
-					value.name() + "Iterator", value.invoke("iterator"));
-
-			final JVar valueHashCode = block.decl(JMod.NONE, getCodeModel().INT,
-					value.name() + "HashCode", JExpr.lit(1));
-
-			final JBlock elementBlock = block
-					._while(iterator.invoke("hasNext")).body();
-			final JVar elementValue = elementBlock.decl(JMod.FINAL,
-					elementType, value.name() + "Element",
-					iterator.invoke("next"));
-
-			final boolean isAlwaysSet = elementType.isPrimitive();
-			final JExpression hasSetValue = isAlwaysSet ? JExpr.TRUE
-					: elementValue.ne(JExpr._null());
-			getFactory().getCodeGenerator(elementType).generate(elementBlock,
-					valueHashCode, elementType, possibleTypes, elementValue,
-					hasSetValue, isAlwaysSet);
-			block.assign(
-					currentHashCode,
-					currentHashCode
-							.mul(JExpr.lit(getFactory().getMultiplier())).plus(
-									valueHashCode));
+			appendElements(block, currentHashCode, possibleTypes, value, _class);
 		}
+	}
+
+	private void appendElements(JBlock block, JVar currentHashCode,
+			Collection<JType> possibleTypes, JVar value, final JClass type) {
+		final JClass elementType = getElementType(type);
+		final JVar iterator = block.decl(JMod.FINAL,
+				getCodeModel().ref(Iterator.class).narrow(elementType),
+				value.name() + "Iterator", value.invoke("iterator"));
+		final JBlock subBlock = block._while(iterator.invoke("hasNext")).body();
+		final JVar elementValue = subBlock.decl(JMod.FINAL, elementType,
+				value.name() + "Element", iterator.invoke("next"));
+		subBlock.assign(currentHashCode, currentHashCode.mul(JExpr
+				.lit(getCodeGeneratorFactory().getMultiplier())));
+		appendElement(subBlock, currentHashCode, elementType, possibleTypes,
+				elementValue);
+	}
+
+	private void appendElement(final JBlock subBlock, JVar currentHashCode,
+			final JClass type, Collection<JType> possibleTypes, final JVar value) {
+		final boolean isAlwaysSet = type.isPrimitive();
+		final JExpression hasSetValue = isAlwaysSet ? JExpr.TRUE : value
+				.ne(JExpr._null());
+		getCodeGeneratorFactory().getCodeGenerator(type).append(subBlock,
+				currentHashCode, type, possibleTypes, value, hasSetValue,
+				isAlwaysSet);
+	}
+
+	private JClass getElementType(final JClass _class) {
+		final JClass elementType;
+		if (_class.getTypeParameters().size() == 1) {
+			elementType = _class.getTypeParameters().get(0);
+		} else {
+			elementType = getCodeModel().ref(Object.class);
+		}
+		return elementType;
 	}
 }

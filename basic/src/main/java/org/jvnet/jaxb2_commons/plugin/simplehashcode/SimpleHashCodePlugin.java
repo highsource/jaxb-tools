@@ -2,7 +2,6 @@ package org.jvnet.jaxb2_commons.plugin.simplehashcode;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Set;
 
 import javax.xml.namespace.QName;
 
@@ -166,27 +165,26 @@ public class SimpleHashCodePlugin extends AbstractParameterizablePlugin {
 					}
 					final JBlock block = body.block();
 
-					String propertyName = fieldOutline.getPropertyInfo().getName(
-							true);
-					final JVar value = block.decl(
-							fieldAccessor.getType(),
-							"the"
-									+ propertyName);
-					if ("CeOrCf".equalsIgnoreCase(propertyName))
-					{
-						System.out.println(fieldOutline);
-					}
+					String propertyName = fieldOutline.getPropertyInfo()
+							.getName(true);
+					final JVar value = block.decl(fieldAccessor.getType(),
+							"the" + propertyName);
 
 					fieldAccessor.toRawValue(block, value);
 					final JType exposedType = fieldAccessor.getType();
-					
-					final Collection<JType> possibleTypes = FieldUtils.getPossibleTypes(fieldOutline, Aspect.EXPOSED);
+
+					final Collection<JType> possibleTypes = FieldUtils
+							.getPossibleTypes(fieldOutline, Aspect.EXPOSED);
 					final boolean isAlwaysSet = fieldAccessor.isAlwaysSet();
 					final JExpression hasSetValue = fieldAccessor.hasSetValue();
 					final HashCodeCodeGenerator codeGenerator = getCodeGeneratorFactory()
 							.getCodeGenerator(exposedType);
-					codeGenerator.generate(block, currentHashCode, exposedType, possibleTypes,
-							value, hasSetValue, isAlwaysSet);
+					block.assign(
+							currentHashCode,
+							currentHashCode
+							.mul(JExpr.lit(getCodeGeneratorFactory().getMultiplier())));
+					codeGenerator.append(block, currentHashCode, exposedType,
+							possibleTypes, value, hasSetValue, isAlwaysSet);
 				}
 			}
 			body._return(currentHashCode);

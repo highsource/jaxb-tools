@@ -13,7 +13,7 @@ public class FloatHashCodeCodeGenerator extends ValueBasedHashCodeCodeGenerator 
 	}
 
 	@Override
-	public JExpression valueHashCode(JType type, JVar value) {
+	public JExpression generateHashCode(JType type, JVar value) {
 		return getCodeModel().ref(Float.class).staticInvoke("floatToIntBits")
 				.arg(value);
 	}

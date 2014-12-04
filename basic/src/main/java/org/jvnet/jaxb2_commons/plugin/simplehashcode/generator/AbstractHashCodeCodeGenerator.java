@@ -10,13 +10,13 @@ public abstract class AbstractHashCodeCodeGenerator implements
 	private final TypedHashCodeCodeGeneratorFactory factory;
 	private final JCodeModel codeModel;
 
-	public AbstractHashCodeCodeGenerator(TypedHashCodeCodeGeneratorFactory factory,
-			JCodeModel codeModel) {
+	public AbstractHashCodeCodeGenerator(
+			TypedHashCodeCodeGeneratorFactory factory, JCodeModel codeModel) {
 		this.factory = Validate.notNull(factory);
 		this.codeModel = Validate.notNull(codeModel);
 	}
 
-	public TypedHashCodeCodeGeneratorFactory getFactory() {
+	public TypedHashCodeCodeGeneratorFactory getCodeGeneratorFactory() {
 		return factory;
 	}
 

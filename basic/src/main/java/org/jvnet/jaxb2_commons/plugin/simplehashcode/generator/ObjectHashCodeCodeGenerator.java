@@ -37,15 +37,10 @@ public class ObjectHashCodeCodeGenerator extends BlockHashCodeCodeGenerator {
 	}
 
 	@Override
-	protected void generate(JBlock block, JVar currentHashCode,
+	protected void append(JBlock block, JVar currentHashCode,
 			JType exposedType, Collection<JType> possibleTypes, JVar value) {
 		if (possibleTypes.size() <= 1) {
-			block.assign(
-					currentHashCode,
-					currentHashCode
-							.mul(JExpr.lit(getFactory().getMultiplier())).plus(
-									value.invoke("hashCode")));
-
+			block.assignPlus(currentHashCode, value.invoke("hashCode"));
 		} else {
 			final JClass jaxbElementClass = getCodeModel().ref(
 					JAXBElement.class);
@@ -68,28 +63,19 @@ public class ObjectHashCodeCodeGenerator extends BlockHashCodeCodeGenerator {
 			JConditional conditional = null;
 
 			if (!jaxbElements.isEmpty()) {
-				final Set<JType> valueTypes = new HashSet<JType>();
-				for (JClass jaxbElement : jaxbElements) {
-					final JType valueType;
-					if (jaxbElement.getTypeParameters().size() == 1) {
-						valueType = jaxbElement.getTypeParameters().get(0);
-					} else {
-						valueType = getCodeModel().ref(Object.class);
-					}
-					valueTypes.add(valueType);
-				}
-				final JType valueType = TypeUtil.getCommonBaseType(
-						getCodeModel(), valueTypes);
+				final Set<JType> valueTypes = getValueTypes(jaxbElements);
+				final JType valueType = getValueType(valueTypes);
 				final JClass jaxbElement = jaxbElementClass.narrow(valueType);
-				final HashCodeCodeGenerator codeGenerator = getFactory()
+				final HashCodeCodeGenerator codeGenerator = getCodeGeneratorFactory()
 						.getCodeGenerator(jaxbElement);
 				conditional = block._if(value._instanceof(jaxbElementClass));
-				final JBlock _then = conditional._then();
-				final JVar valueJAXBElement = _then.decl(JMod.FINAL,
+				final JBlock subBlock = conditional._then();
+				final JVar valueJAXBElement = subBlock.decl(JMod.FINAL,
 						jaxbElement, value.name() + "JAXBElement",
 						JExpr.cast(jaxbElement, value));
-				valueJAXBElement.annotate(SuppressWarnings.class).param("value", "unchecked");
-				codeGenerator.generate(_then, currentHashCode, jaxbElement,
+				valueJAXBElement.annotate(SuppressWarnings.class).param(
+						"value", "unchecked");
+				codeGenerator.append(subBlock, currentHashCode, jaxbElement,
 						new HashSet<JType>(jaxbElements), valueJAXBElement,
 						JExpr.TRUE, true);
 			}
@@ -99,28 +85,50 @@ public class ObjectHashCodeCodeGenerator extends BlockHashCodeCodeGenerator {
 					final JExpression condition = value._instanceof(array);
 					conditional = conditional == null ? block._if(condition)
 							: conditional._elseif(condition);
-					final JBlock _then = conditional._then();
-
-					final JVar valueArray = _then.decl(JMod.FINAL, array,
-							value.name() + "Array", JExpr.cast(array, value));
-					valueArray.annotate(SuppressWarnings.class).param("value", "unchecked");
-					final HashCodeCodeGenerator codeGenerator = getFactory()
-							.getCodeGenerator(array);
-					codeGenerator.generate(_then, currentHashCode, array,
-							Collections.singleton(array), valueArray,
-							JExpr.TRUE, true);
+					final JBlock subBlock = conditional._then();
+					appendArray(subBlock, currentHashCode, array, value);
 				}
 			}
 
 			if (!otherTypes.isEmpty()) {
-				JBlock _else = conditional == null ? block : conditional
+				JBlock subBlock = conditional == null ? block : conditional
 						._else();
-				_else.assign(
-						currentHashCode,
-						currentHashCode.mul(
-								JExpr.lit(getFactory().getMultiplier())).plus(
-								value.invoke("hashCode")));
+				subBlock.assignPlus(currentHashCode, value.invoke("hashCode"));
 			}
 		}
+	}
+
+	private void appendArray(final JBlock block, JVar currentHashCode,
+			JType type, JVar value) {
+		final JVar valueArray = block.decl(JMod.FINAL, type,
+				value.name() + "Array", JExpr.cast(type, value));
+		// valueArray.annotate(SuppressWarnings.class).param("value",
+		// "unchecked");
+		final HashCodeCodeGenerator codeGenerator = getCodeGeneratorFactory()
+				.getCodeGenerator(type);
+		codeGenerator.append(block, currentHashCode, type,
+				Collections.singleton(type), valueArray,
+				JExpr.TRUE, true);
+	}
+
+	private JType getValueType(final Set<JType> valueTypes) {
+		final JType valueType = TypeUtil.getCommonBaseType(
+				getCodeModel(), valueTypes);
+		return valueType;
+	}
+
+	private Set<JType> getValueTypes(
+			final Collection<JClass> jaxbElements) {
+		final Set<JType> valueTypes = new HashSet<JType>();
+		for (JClass jaxbElement : jaxbElements) {
+			final JType valueType;
+			if (jaxbElement.getTypeParameters().size() == 1) {
+				valueType = jaxbElement.getTypeParameters().get(0);
+			} else {
+				valueType = getCodeModel().ref(Object.class);
+			}
+			valueTypes.add(valueType);
+		}
+		return valueTypes;
 	}
 }

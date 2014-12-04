@@ -6,7 +6,8 @@ import com.sun.codemodel.JExpression;
 import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
 
-public class CastToIntHashCodeCodeGenerator extends ValueBasedHashCodeCodeGenerator {
+public class CastToIntHashCodeCodeGenerator extends
+		ValueBasedHashCodeCodeGenerator {
 
 	public CastToIntHashCodeCodeGenerator(
 			TypedHashCodeCodeGeneratorFactory factory, JCodeModel codeModel) {
@@ -14,7 +15,7 @@ public class CastToIntHashCodeCodeGenerator extends ValueBasedHashCodeCodeGenera
 	}
 
 	@Override
-	public JExpression valueHashCode(JType type, JVar value) {
+	public JExpression generateHashCode(JType type, JVar value) {
 		return JExpr.cast(getCodeModel().INT, value);
 	}
 }

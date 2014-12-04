@@ -8,7 +8,7 @@ import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
 
 public class BooleanHashCodeCodeGenerator extends
-ValueBasedHashCodeCodeGenerator {
+		ValueBasedHashCodeCodeGenerator {
 
 	public BooleanHashCodeCodeGenerator(
 			TypedHashCodeCodeGeneratorFactory factory, JCodeModel codeModel) {
@@ -16,7 +16,7 @@ ValueBasedHashCodeCodeGenerator {
 	}
 
 	@Override
-	public JExpression valueHashCode(JType type, JVar value) {
+	public JExpression generateHashCode(JType type, JVar value) {
 		return JOp.cond(value, JExpr.lit(1231), JExpr.lit(1237));
 	}
 }

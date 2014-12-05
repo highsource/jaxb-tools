@@ -76,8 +76,8 @@ public class ListHashCodeCodeGenerator extends BlockHashCodeCodeGenerator {
 		final JExpression hasSetValue = isAlwaysSet ? JExpr.TRUE : value
 				.ne(JExpr._null());
 		getCodeGeneratorFactory().getCodeGenerator(type).append(subBlock,
-				currentHashCode, type, possibleTypes, value, hasSetValue,
-				isAlwaysSet);
+				type, possibleTypes, isAlwaysSet, currentHashCode, value,
+				hasSetValue);
 	}
 
 	private JClass getElementType(final JClass _class) {

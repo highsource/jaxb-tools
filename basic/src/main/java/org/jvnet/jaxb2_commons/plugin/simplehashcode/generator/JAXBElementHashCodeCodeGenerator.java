@@ -140,7 +140,7 @@ public class JAXBElementHashCodeCodeGenerator extends
 				.ne(JExpr._null());
 		block.assign(currentHashCode, currentHashCode.mul(JExpr
 				.lit(getCodeGeneratorFactory().getMultiplier())));
-		codeGenerator.append(block, currentHashCode, valueType,
-				possibleValueTypes, subValue, hasSetValue, isAlwaysSet);
+		codeGenerator.append(block, valueType, possibleValueTypes,
+				isAlwaysSet, currentHashCode, subValue, hasSetValue);
 	}
 }

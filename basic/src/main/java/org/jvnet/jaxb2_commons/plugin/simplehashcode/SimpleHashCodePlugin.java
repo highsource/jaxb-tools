@@ -183,8 +183,8 @@ public class SimpleHashCodePlugin extends AbstractParameterizablePlugin {
 							currentHashCode,
 							currentHashCode
 							.mul(JExpr.lit(getCodeGeneratorFactory().getMultiplier())));
-					codeGenerator.append(block, currentHashCode, exposedType,
-							possibleTypes, value, hasSetValue, isAlwaysSet);
+					codeGenerator.append(block, exposedType, possibleTypes,
+							isAlwaysSet, currentHashCode, value, hasSetValue);
 				}
 			}
 			body._return(currentHashCode);

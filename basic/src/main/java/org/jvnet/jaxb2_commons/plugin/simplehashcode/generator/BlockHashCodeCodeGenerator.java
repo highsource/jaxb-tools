@@ -18,9 +18,9 @@ public abstract class BlockHashCodeCodeGenerator extends
 	}
 
 	@Override
-	public void append(JBlock block, JVar currentHashCode, JType type,
-			Collection<JType> possibleTypes, JVar value,
-			JExpression hasSetValue, boolean isAlwaysSet) {
+	public void append(JBlock block, JType type, Collection<JType> possibleTypes,
+			boolean isAlwaysSet, JVar currentHashCode,
+			JVar value, JExpression hasSetValue) {
 		final JBlock subBlock;
 		if (isAlwaysSet) {
 			subBlock = block;

@@ -75,9 +75,9 @@ public class ObjectHashCodeCodeGenerator extends BlockHashCodeCodeGenerator {
 						JExpr.cast(jaxbElement, value));
 				valueJAXBElement.annotate(SuppressWarnings.class).param(
 						"value", "unchecked");
-				codeGenerator.append(subBlock, currentHashCode, jaxbElement,
-						new HashSet<JType>(jaxbElements), valueJAXBElement,
-						JExpr.TRUE, true);
+				codeGenerator.append(subBlock, jaxbElement, new HashSet<JType>(jaxbElements),
+						true, currentHashCode,
+						valueJAXBElement, JExpr.TRUE);
 			}
 
 			if (!arrays.isEmpty()) {
@@ -106,9 +106,9 @@ public class ObjectHashCodeCodeGenerator extends BlockHashCodeCodeGenerator {
 		// "unchecked");
 		final HashCodeCodeGenerator codeGenerator = getCodeGeneratorFactory()
 				.getCodeGenerator(type);
-		codeGenerator.append(block, currentHashCode, type,
-				Collections.singleton(type), valueArray,
-				JExpr.TRUE, true);
+		codeGenerator.append(block, type, Collections.singleton(type),
+				true, currentHashCode,
+				valueArray, JExpr.TRUE);
 	}
 
 	private JType getValueType(final Set<JType> valueTypes) {

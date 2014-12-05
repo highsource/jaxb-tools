@@ -19,9 +19,9 @@ public abstract class ValueBasedBlockHashCodeCodeGenerator extends
 	}
 
 	@Override
-	public void append(JBlock block, JVar currentHashCode, JType exposedType,
-			Collection<JType> possibleTypes, JVar value,
-			JExpression hasSetValue, boolean isAlwaysSet) {
+	public void append(JBlock block, JType exposedType, Collection<JType> possibleTypes,
+			boolean isAlwaysSet, JVar currentHashCode,
+			JVar value, JExpression hasSetValue) {
 
 		final JExpression valueHashCode = generateHashCode(block, exposedType,
 				value);

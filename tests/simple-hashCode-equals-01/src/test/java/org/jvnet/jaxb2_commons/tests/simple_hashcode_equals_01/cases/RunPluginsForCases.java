@@ -31,7 +31,10 @@ public class RunPluginsForCases {
 //				"-b", binding.toExternalForm(), 
 				"-d",
 				"target/generated-sources/xjc", "-extension",
-				"-XsimpleHashCode", "-XsimpleEquals", "-XsimpleToString" };
+				"-XsimpleHashCode"
+//				, "-XsimpleEquals", "-XsimpleToString"
+				
+		};
 
 		Options options = new Options();
 		options.parseArguments(arguments);

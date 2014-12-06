@@ -9,9 +9,9 @@ import org.jvnet.jaxb2_commons.plugin.AbstractParameterizablePlugin;
 import org.jvnet.jaxb2_commons.plugin.Customizations;
 import org.jvnet.jaxb2_commons.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb2_commons.plugin.Ignoring;
-import org.jvnet.jaxb2_commons.plugin.simplehashcode.generator.HashCodeCodeGenerator;
-import org.jvnet.jaxb2_commons.plugin.simplehashcode.generator.HashCodeCodeGeneratorFactory;
-import org.jvnet.jaxb2_commons.plugin.simplehashcode.generator.TypedHashCodeCodeGeneratorFactory;
+import org.jvnet.jaxb2_commons.plugin.simple.codegeneration.CodeGenerator;
+import org.jvnet.jaxb2_commons.plugin.simplehashcode.codegeneration.HashCodeArguments;
+import org.jvnet.jaxb2_commons.plugin.simplehashcode.codegeneration.HashCodeCodeGenerator;
 import org.jvnet.jaxb2_commons.plugin.util.FieldOutlineUtils;
 import org.jvnet.jaxb2_commons.plugin.util.StrategyClassUtils;
 import org.jvnet.jaxb2_commons.util.FieldAccessorFactory;
@@ -95,21 +95,24 @@ public class SimpleHashCodePlugin extends AbstractParameterizablePlugin {
 						Customizations.GENERATED_ELEMENT_NAME);
 	}
 
-	private TypedHashCodeCodeGeneratorFactory codeGeneratorFactory;
+	private CodeGenerator<HashCodeArguments> codeGenerator;
 
-	private TypedHashCodeCodeGeneratorFactory getCodeGeneratorFactory() {
-		if (codeGeneratorFactory == null) {
-			throw new IllegalStateException(
-					"Code generator factory was not set yet.");
+	private CodeGenerator<HashCodeArguments> getCodeGenerator() {
+		if (codeGenerator == null) {
+			throw new IllegalStateException("Code generator was not set yet.");
 		}
-		return codeGeneratorFactory;
+		return codeGenerator;
+	}
+
+	private int multiplier = 31;
+
+	private int getMultiplier() {
+		return multiplier;
 	}
 
 	@Override
 	public boolean run(Outline outline, Options opt, ErrorHandler errorHandler) {
-		this.codeGeneratorFactory = new HashCodeCodeGeneratorFactory(
-				outline.getCodeModel());
-
+		this.codeGenerator = new HashCodeCodeGenerator(outline.getCodeModel(), getMultiplier());
 		for (final ClassOutline classOutline : outline.getClasses()) {
 			if (!getIgnoring().isIgnored(classOutline)) {
 				processClassOutline(classOutline);
@@ -134,8 +137,7 @@ public class SimpleHashCodePlugin extends AbstractParameterizablePlugin {
 		{
 			final JBlock body = object$hashCode.body();
 
-			final JExpression currentHashCodeExpression = JExpr
-					.lit(getCodeGeneratorFactory().getInitial());
+			final JExpression currentHashCodeExpression = JExpr.lit(1);
 
 			final JVar currentHashCode = body.decl(codeModel.INT,
 					"currentHashCode", currentHashCodeExpression);
@@ -146,9 +148,7 @@ public class SimpleHashCodePlugin extends AbstractParameterizablePlugin {
 			if (superClassImplementsHashCode != null) {
 				body.assign(
 						currentHashCode,
-						currentHashCode.mul(
-								JExpr.lit(getCodeGeneratorFactory()
-										.getMultiplier())).plus(
+						currentHashCode.mul(JExpr.lit(getMultiplier())).plus(
 								JExpr._super().invoke("hashCode")));
 			}
 
@@ -164,6 +164,8 @@ public class SimpleHashCodePlugin extends AbstractParameterizablePlugin {
 						continue;
 					}
 					final JBlock block = body.block();
+					block.assign(currentHashCode,
+							currentHashCode.mul(JExpr.lit(getMultiplier())));
 
 					String propertyName = fieldOutline.getPropertyInfo()
 							.getName(true);
@@ -177,14 +179,13 @@ public class SimpleHashCodePlugin extends AbstractParameterizablePlugin {
 							.getPossibleTypes(fieldOutline, Aspect.EXPOSED);
 					final boolean isAlwaysSet = fieldAccessor.isAlwaysSet();
 					final JExpression hasSetValue = fieldAccessor.hasSetValue();
-					final HashCodeCodeGenerator codeGenerator = getCodeGeneratorFactory()
-							.getCodeGenerator(exposedType);
-					block.assign(
-							currentHashCode,
-							currentHashCode
-							.mul(JExpr.lit(getCodeGeneratorFactory().getMultiplier())));
-					codeGenerator.append(block, exposedType, possibleTypes,
-							isAlwaysSet, currentHashCode, value, hasSetValue);
+					getCodeGenerator().append(
+							block,
+							exposedType,
+							possibleTypes,
+							isAlwaysSet,
+							new HashCodeArguments(currentHashCode, value,
+									hasSetValue));
 				}
 			}
 			body._return(currentHashCode);

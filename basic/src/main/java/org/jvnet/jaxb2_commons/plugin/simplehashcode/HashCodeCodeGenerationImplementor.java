@@ -15,16 +15,9 @@ import com.sun.codemodel.JVar;
 public class HashCodeCodeGenerationImplementor extends
 		AbstractCodeGenerationImplementor<HashCodeArguments> {
 
-	private int multiplier;
 
-	public HashCodeCodeGenerationImplementor(JCodeModel codeModel,
-			int multiplier) {
+	public HashCodeCodeGenerationImplementor(JCodeModel codeModel) {
 		super(codeModel);
-		this.multiplier = multiplier;
-	}
-
-	public int getMultiplier() {
-		return multiplier;
 	}
 
 	private void ifHasSetValueAssignPlusValueHashCode(

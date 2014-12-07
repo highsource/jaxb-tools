@@ -52,7 +52,7 @@ public class SimpleHashCodePlugin extends
 	@Override
 	protected CodeGenerator<HashCodeArguments> createCodeGenerator(
 			JCodeModel codeModel) {
-		return new HashCodeCodeGenerator(codeModel, getMultiplier());
+		return new HashCodeCodeGenerator(codeModel);
 	}
 
 	@Override

@@ -59,6 +59,8 @@ public class HashCodeArguments implements Arguments<HashCodeArguments> {
 	public HashCodeArguments property(JBlock block, String propertyName,
 			String propertyMethod, JType declarablePropertyType,
 			JType propertyType, Collection<JType> possiblePropertyTypes) {
+		block.assign(currentHashCode(),
+				currentHashCode().mul(JExpr.lit(multiplier())));		
 		final JVar propertyValue = block.decl(JMod.FINAL,
 				declarablePropertyType, value().name() + propertyName, value()
 						.invoke(propertyMethod));

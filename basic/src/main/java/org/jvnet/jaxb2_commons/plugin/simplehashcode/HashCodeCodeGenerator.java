@@ -8,10 +8,10 @@ import com.sun.codemodel.JCodeModel;
 public class HashCodeCodeGenerator extends
 		CodeGenerationAbstraction<HashCodeArguments> {
 
-	public HashCodeCodeGenerator(JCodeModel codeModel, int multiplier) {
+	public HashCodeCodeGenerator(JCodeModel codeModel) {
 		super(
 				new HashCodeCodeGenerationImplementor(
-						Validate.notNull(codeModel), multiplier));
+						Validate.notNull(codeModel)));
 	}
 
 }

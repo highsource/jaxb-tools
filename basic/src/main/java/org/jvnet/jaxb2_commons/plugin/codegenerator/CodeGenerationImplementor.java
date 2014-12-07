@@ -1,7 +1,5 @@
 package org.jvnet.jaxb2_commons.plugin.codegenerator;
 
-import org.jvnet.jaxb2_commons.codemodel.JCMTypeFactory;
-
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JCodeModel;
 

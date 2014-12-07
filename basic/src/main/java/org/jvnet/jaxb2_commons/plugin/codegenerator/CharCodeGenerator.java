@@ -1,22 +1,22 @@
-package org.jvnet.jaxb2_commons.plugin.simple.codegeneration;
+package org.jvnet.jaxb2_commons.plugin.codegenerator;
 
 import java.util.Collection;
 
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JType;
 
-public class LongCodeGenerator<A extends Arguments> extends
+public class CharCodeGenerator<A extends Arguments<A>> extends
 		AbstractCodeGenerator<A> {
 
-	public LongCodeGenerator(CodeGenerator<A> codeGenerator,
+	public CharCodeGenerator(CodeGenerator<A> codeGenerator,
 			CodeGenerationImplementor<A> implementor) {
 		super(codeGenerator, implementor);
 	}
 
 	@Override
-	public void append(JBlock block, JType type,
+	public void generate(JBlock block, JType type,
 			Collection<JType> possibleTypes, boolean isAlwaysSet, A arguments) {
-		getImplementor().onLong(arguments, block, isAlwaysSet);
+		getImplementor().onChar(arguments, block, isAlwaysSet);
 	}
 
 }

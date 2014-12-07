@@ -25,15 +25,14 @@ public class RunPluginsForCases {
 		new File("target/generated-sources/xjc").mkdirs();
 
 		URL schema = getClass().getResource("/cases.xsd");
-//		URL binding = getClass().getResource("/cases.xjb");
+		// URL binding = getClass().getResource("/cases.xjb");
 		final String[] arguments = new String[] { "-xmlschema",
 				schema.toExternalForm(),
-//				"-b", binding.toExternalForm(), 
-				"-d",
-				"target/generated-sources/xjc", "-extension",
-				"-XsimpleHashCode"
-//				, "-XsimpleEquals", "-XsimpleToString"
-				
+				// "-b", binding.toExternalForm(),
+				"-d", "target/generated-sources/xjc", "-extension",
+				"-XsimpleHashCode", "-XsimpleEquals",
+		// "-XsimpleToString"
+
 		};
 
 		Options options = new Options();

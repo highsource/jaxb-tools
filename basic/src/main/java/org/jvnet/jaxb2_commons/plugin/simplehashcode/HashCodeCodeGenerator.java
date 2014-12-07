@@ -1,7 +1,7 @@
-package org.jvnet.jaxb2_commons.plugin.simplehashcode.codegeneration;
+package org.jvnet.jaxb2_commons.plugin.simplehashcode;
 
 import org.apache.commons.lang3.Validate;
-import org.jvnet.jaxb2_commons.plugin.simple.codegeneration.CodeGenerationAbstraction;
+import org.jvnet.jaxb2_commons.plugin.codegenerator.CodeGenerationAbstraction;
 
 import com.sun.codemodel.JCodeModel;
 

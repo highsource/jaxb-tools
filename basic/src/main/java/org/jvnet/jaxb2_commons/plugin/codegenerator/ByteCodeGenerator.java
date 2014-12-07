@@ -1,11 +1,11 @@
-package org.jvnet.jaxb2_commons.plugin.simple.codegeneration;
+package org.jvnet.jaxb2_commons.plugin.codegenerator;
 
 import java.util.Collection;
 
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JType;
 
-public class ByteCodeGenerator<A extends Arguments> extends
+public class ByteCodeGenerator<A extends Arguments<A>> extends
 		AbstractCodeGenerator<A> {
 
 	public ByteCodeGenerator(CodeGenerator<A> codeGenerator,
@@ -14,7 +14,7 @@ public class ByteCodeGenerator<A extends Arguments> extends
 	}
 
 	@Override
-	public void append(JBlock block, JType type,
+	public void generate(JBlock block, JType type,
 			Collection<JType> possibleTypes, boolean isAlwaysSet, A arguments) {
 		getImplementor().onByte(arguments, block, isAlwaysSet);
 	}

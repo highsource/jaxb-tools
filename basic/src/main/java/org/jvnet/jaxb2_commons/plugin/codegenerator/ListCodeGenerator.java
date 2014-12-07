@@ -1,4 +1,4 @@
-package org.jvnet.jaxb2_commons.plugin.simple.codegeneration;
+package org.jvnet.jaxb2_commons.plugin.codegenerator;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -12,7 +12,7 @@ import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JType;
 
-public class ListCodeGenerator<A extends Arguments> extends
+public class ListCodeGenerator<A extends Arguments<A>> extends
 		AbstractCodeGenerator<A> {
 
 	public ListCodeGenerator(CodeGenerator<A> codeGenerator,
@@ -21,7 +21,7 @@ public class ListCodeGenerator<A extends Arguments> extends
 	}
 
 	@Override
-	public void append(JBlock block, JType type,
+	public void generate(JBlock block, JType type,
 			Collection<JType> possibleTypes, boolean isAlwaysSet, A arguments) {
 		Validate.isInstanceOf(JClass.class, type);
 		final JClass _class = (JClass) type;
@@ -47,8 +47,21 @@ public class ListCodeGenerator<A extends Arguments> extends
 			getImplementor().onObject(arguments, block, false);
 		} else {
 			final JClass elementType = getElementType(_class);
-			getImplementor().onList(getCodeGeneratorFactory(), block,
-					elementType, possibleTypes, isAlwaysSet, arguments);
+
+			block = arguments.ifHasSetValue(block, isAlwaysSet, true);
+
+			final A iterator = arguments.iterator(block, elementType);
+
+			// while(e1.hasNext() && e2.hasNext()) {
+			final JBlock whileBlock = iterator._while(block);
+			// E o1 = e1.next();
+			// Object o2 = e2.next();
+			final boolean isElementAlwaysSet = elementType.isPrimitive();
+			getCodeGenerator().generate(whileBlock, elementType, possibleTypes,
+					isElementAlwaysSet,
+					iterator.element(whileBlock, elementType));
+			// }
+			// return !(e1.hasNext() || e2.hasNext());
 		}
 	}
 

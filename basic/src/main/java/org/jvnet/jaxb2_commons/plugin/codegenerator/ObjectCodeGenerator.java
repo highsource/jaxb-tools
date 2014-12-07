@@ -1,6 +1,7 @@
-package org.jvnet.jaxb2_commons.plugin.simple.codegeneration;
+package org.jvnet.jaxb2_commons.plugin.codegenerator;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,7 +16,7 @@ import com.sun.codemodel.JExpression;
 import com.sun.codemodel.JType;
 import com.sun.tools.xjc.reader.TypeUtil;
 
-public class ObjectCodeGenerator<A extends Arguments> extends
+public class ObjectCodeGenerator<A extends Arguments<A>> extends
 		AbstractCodeGenerator<A> {
 
 	public ObjectCodeGenerator(CodeGenerator<A> codeGenerator,
@@ -24,7 +25,7 @@ public class ObjectCodeGenerator<A extends Arguments> extends
 	}
 
 	@Override
-	public void append(final JBlock block, JType type,
+	public void generate(final JBlock block, JType type,
 			Collection<JType> possibleTypes, boolean isAlwaysSet, A arguments) {
 		if (possibleTypes.size() <= 1) {
 			getImplementor().onObject(arguments, block, isAlwaysSet);
@@ -72,19 +73,35 @@ public class ObjectCodeGenerator<A extends Arguments> extends
 			};
 
 			if (!jaxbElements.isEmpty()) {
-				final Set<JType> valueTypes = getValueTypes(jaxbElements);
-				final JType valueType = getValueType(valueTypes);
-				final JClass jaxbElement = jaxbElementClass.narrow(valueType);
+				final Set<JType> valueTypes = getJAXBElementValueTypes(jaxbElements);
+				final JType valueType = TypeUtil.getCommonBaseType(
+						getCodeModel(), valueTypes);
+				final JClass jaxbElementType = jaxbElementClass
+						.narrow(valueType);
 
-				getImplementor().onIfJAXBElement(getCodeGeneratorFactory(),
-						_if, jaxbElement, new HashSet<JType>(jaxbElements),
-						arguments);
+				final JBlock jaxbElementBlock = _if._ifThen(arguments
+						._instanceof(jaxbElementClass));
+				getCodeGenerator().generate(
+						jaxbElementBlock,
+						jaxbElementType,
+						new HashSet<JType>(jaxbElements),
+						true,
+						arguments.cast("JAXBElement", jaxbElementBlock,
+								jaxbElementType, true));
+
 			}
 
 			if (!arrays.isEmpty()) {
 				for (JType arrayType : arrays) {
-					getImplementor().onIfArray(getCodeGeneratorFactory(), _if,
-							arrayType, arguments);
+					final JBlock arrayBlock = _if._ifThen(arguments
+							._instanceof(arrayType));
+					getCodeGenerator().generate(
+							arrayBlock,
+							arrayType,
+							Collections.singleton(arrayType),
+							true,
+							arguments.cast("Array", arrayBlock, arrayType,
+									false));
 				}
 			}
 
@@ -94,13 +111,8 @@ public class ObjectCodeGenerator<A extends Arguments> extends
 		}
 	}
 
-	private JType getValueType(final Set<JType> valueTypes) {
-		final JType valueType = TypeUtil.getCommonBaseType(getCodeModel(),
-				valueTypes);
-		return valueType;
-	}
-
-	private Set<JType> getValueTypes(final Collection<JClass> jaxbElements) {
+	private Set<JType> getJAXBElementValueTypes(
+			final Collection<JClass> jaxbElements) {
 		final Set<JType> valueTypes = new HashSet<JType>();
 		for (JClass jaxbElement : jaxbElements) {
 			final JType valueType;

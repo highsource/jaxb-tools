@@ -1,4 +1,4 @@
-package org.jvnet.jaxb2_commons.plugin.simple.codegeneration;
+package org.jvnet.jaxb2_commons.plugin.codegenerator;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -16,11 +16,11 @@ import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JType;
 
-public class CodeGenerationAbstraction<A extends Arguments> implements
+public class CodeGenerationAbstraction<A extends Arguments<A>> implements
 		CodeGenerator<A> {
 
 	private final JCodeModel codeModel;
-	private final JCMTypeFactory typeFactory;
+	private final JCMTypeFactory typeFactory = JCMTypeFactory.INSTANCE;
 	// Known code generators
 	private final Map<JCMType<?>, CodeGenerator<A>> codeGenerators = new LinkedHashMap<JCMType<?>, CodeGenerator<A>>();
 	private final CodeGenerator<A> defaultCodeGenerator;
@@ -31,7 +31,6 @@ public class CodeGenerationAbstraction<A extends Arguments> implements
 
 		this.implementor = Validate.notNull(generationImplementor);
 		this.codeModel = generationImplementor.getCodeModel();
-		this.typeFactory = generationImplementor.getTypeFactory();
 
 		addCodeGenerator(this.codeModel.BOOLEAN, new BooleanCodeGenerator<A>(
 				this, this.implementor));
@@ -71,7 +70,7 @@ public class CodeGenerationAbstraction<A extends Arguments> implements
 
 		addCodeGenerator(
 				this.codeModel.ref(JAXBElement.class).narrow(Object.class),
-				new JAXBElementCodeGenerator<A>(this, this.implementor));
+				new JAXBElementCodeGenerator<A>(this, this.implementor, this.typeFactory));
 
 		addCodeGenerator(this.codeModel.ref(List.class).narrow(Object.class),
 				new ListCodeGenerator<A>(this, this.implementor));
@@ -100,9 +99,9 @@ public class CodeGenerationAbstraction<A extends Arguments> implements
 	}
 
 	@Override
-	public void append(JBlock block, JType type,
+	public void generate(JBlock block, JType type,
 			Collection<JType> possibleTypes, boolean isAlwaysSet, A arguments) {
-		getCodeGenerator(type).append(block, type, possibleTypes, isAlwaysSet,
+		getCodeGenerator(type).generate(block, type, possibleTypes, isAlwaysSet,
 				arguments);
 	}
 }

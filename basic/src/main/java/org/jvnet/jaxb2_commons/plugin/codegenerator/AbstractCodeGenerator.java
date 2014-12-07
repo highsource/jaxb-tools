@@ -1,10 +1,10 @@
-package org.jvnet.jaxb2_commons.plugin.simple.codegeneration;
+package org.jvnet.jaxb2_commons.plugin.codegenerator;
 
 import org.apache.commons.lang3.Validate;
 
 import com.sun.codemodel.JCodeModel;
 
-public abstract class AbstractCodeGenerator<A extends Arguments> implements
+public abstract class AbstractCodeGenerator<A extends Arguments<A>> implements
 		CodeGenerator<A> {
 
 	private final CodeGenerator<A> codeGenerator;
@@ -22,7 +22,7 @@ public abstract class AbstractCodeGenerator<A extends Arguments> implements
 		return implementor;
 	}
 
-	public CodeGenerator<A> getCodeGeneratorFactory() {
+	public CodeGenerator<A> getCodeGenerator() {
 		return codeGenerator;
 	}
 

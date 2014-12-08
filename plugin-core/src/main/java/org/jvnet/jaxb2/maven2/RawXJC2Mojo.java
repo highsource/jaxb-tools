@@ -511,7 +511,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	protected void logConfiguration() throws MojoExecutionException {
 		super.logConfiguration();
 		getLog().info("schemaFiles (calculated):" + getSchemaFiles());
+		getLog().info("schemaUris (calculated):" + getSchemaUris());
 		getLog().info("bindingFiles (calculated):" + getBindingFiles());
+		getLog().info("bindingUris (calculated):" + getBindingUris());
 		getLog().info(
 				"xjcPluginArtifacts (resolved):" + getXjcPluginArtifacts());
 		getLog().info("xjcPluginFiles (resolved):" + getXjcPluginFiles());

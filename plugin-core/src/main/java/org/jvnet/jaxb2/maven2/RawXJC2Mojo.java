@@ -301,10 +301,11 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		if (getVerbose()) {
 			getLog().info("optionsConfiguration:" + optionsConfiguration);
 		}
+		
+		checkCatalogsInStrictMode(optionsConfiguration);
 
 		if (optionsConfiguration.getSchemas().isEmpty()) {
-			getLog().info("Skipped XJC execution. No schemas to compile.");
-
+			getLog().warn("No schemas to compile. Skipping XJC execution. ");
 		} else {
 
 			final O options = getOptionsFactory().createOptions(
@@ -336,6 +337,18 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 		if (getVerbose()) {
 			getLog().info("Finished execution.");
+		}
+	}
+
+	private void checkCatalogsInStrictMode(
+			final OptionsConfiguration optionsConfiguration) {
+		if (optionsConfiguration.hasCatalogs() && optionsConfiguration.isStrict())
+		{
+			getLog().warn("The plugin is configured to use catalogs and strict at the same time.\n"
+					+ "Using catalogs to resolve schema URI in strict mode is known to be problematic and may fail.\n"
+					+ "Please refer to the following linkfor more information:\n"
+					+ "https://github.com/highsource/maven-jaxb2-plugin/wiki/Catalogs-in-Strict-Mode\n"
+					+ "Consider setting <strict>false</strict>\n");
 		}
 	}
 
@@ -653,7 +666,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 		if (getCatalogResolver() == null) {
 			// System.out.println("Creating a new maven catalog resolver.");
-			return new MavenCatalogResolver(catalogManager, this);
+			return new MavenCatalogResolver(catalogManager, this, getLog());
 		} else {
 			try {
 				final String catalogResolverClassName = getCatalogResolver()

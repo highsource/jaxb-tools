@@ -1,7 +1,6 @@
 package org.jvnet.jaxb2.maven2.resolver.tools;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
@@ -22,18 +21,18 @@ public class ReResolvingEntityResolverWrapper implements EntityResolver {
 	@Override
 	public InputSource resolveEntity(String publicId, String systemId)
 			throws SAXException, IOException {
-//		System.out.println(MessageFormat.format("Resolving publicId [{0}], systemId [{1}].",
-//				publicId, systemId));
+		// System.out.println(MessageFormat.format("Resolving publicId [{0}], systemId [{1}].",
+		// publicId, systemId));
 		final InputSource resolvedInputSource = this.entityResolver
 				.resolveEntity(publicId, systemId);
 		if (resolvedInputSource == null) {
-//			System.out.println("Resolution result is null.");
+			// System.out.println("Resolution result is null.");
 			return null;
 		} else {
-//			System.out.println(MessageFormat.format(
-//					"Resolved to publicId [{0}], systemId [{1}].",
-//					resolvedInputSource.getPublicId(),
-//					resolvedInputSource.getSystemId()));
+			// System.out.println(MessageFormat.format(
+			// "Resolved to publicId [{0}], systemId [{1}].",
+			// resolvedInputSource.getPublicId(),
+			// resolvedInputSource.getSystemId()));
 			final String pId = publicId != null ? publicId
 					: resolvedInputSource.getPublicId();
 			final String sId = systemId != null ? systemId

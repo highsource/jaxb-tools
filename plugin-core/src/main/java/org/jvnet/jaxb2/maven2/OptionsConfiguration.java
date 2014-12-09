@@ -138,6 +138,11 @@ public class OptionsConfiguration {
 		}
 		return inputSources;
 	}
+	
+	public boolean hasCatalogs()
+	{
+		return !this.catalogs.isEmpty();
+	}
 
 	public List<URI> getCatalogs() {
 		final CatalogResolver resolver = getCatalogResolver();

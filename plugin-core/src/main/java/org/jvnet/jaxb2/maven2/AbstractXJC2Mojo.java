@@ -557,7 +557,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	}
 
 	/**
-	 * If 'true', Perform strict validation of the input schema (disabled by the
+	 * If 'true' (default), Perform strict validation of the input schema (disabled by the
 	 * xjc's -nv option).
 	 */
 	@Parameter(defaultValue = "true", property = "maven.xjc2.strict")

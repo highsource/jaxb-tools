@@ -5,8 +5,10 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.MessageFormat;
 
+import org.apache.maven.plugin.logging.Log;
 import org.jvnet.jaxb2.maven2.DependencyResource;
 import org.jvnet.jaxb2.maven2.DependencyResourceResolver;
+import org.jvnet.jaxb2.maven2.plugin.logging.NullLog;
 
 import com.sun.org.apache.xml.internal.resolver.CatalogManager;
 
@@ -16,9 +18,15 @@ public class MavenCatalogResolver extends
 	public static final String URI_SCHEME_MAVEN = "maven";
 	private final DependencyResourceResolver dependencyResourceResolver;
 	private final CatalogManager catalogManager;
+	private final Log log;
 
 	public MavenCatalogResolver(CatalogManager catalogManager,
 			DependencyResourceResolver dependencyResourceResolver) {
+		this(catalogManager, dependencyResourceResolver, NullLog.INSTANCE);
+	}
+
+	public MavenCatalogResolver(CatalogManager catalogManager,
+			DependencyResourceResolver dependencyResourceResolver, Log log) {
 		super(catalogManager);
 		this.catalogManager = catalogManager;
 		if (dependencyResourceResolver == null) {
@@ -26,31 +34,39 @@ public class MavenCatalogResolver extends
 					"Dependency resource resolver must not be null.");
 		}
 		this.dependencyResourceResolver = dependencyResourceResolver;
+		this.log = log != null ? log : NullLog.INSTANCE;
+	}
+
+	protected CatalogManager getCatalogManager() {
+		return catalogManager;
+	}
+	protected Log getLog() {
+		return log;
 	}
 
 	@Override
 	public String getResolvedEntity(String publicId, String systemId) {
-//		System.out.println("Using the catalog [" + getCatalog() + "].");
-//		System.out.println(MessageFormat.format("Resolving publicId [{0}], systemId [{1}].",
-//				publicId, systemId));
-		String result = super.getResolvedEntity(publicId, systemId);
-//		System.out.println(MessageFormat.format("Super resolution result is [{0}].",
-//				result));
-		if (result == null) {
-			if (systemId != null)
-			{
-				result = systemId;
-			}
-			else
-			{
-//				System.out.println("0) Returning null.");
-				return null;
-			}
+		getLog().debug(
+				MessageFormat.format(
+						"Resolving publicId [{0}], systemId [{1}].", publicId,
+						systemId));
+		final String superResolvedEntity = super.getResolvedEntity(publicId,
+				systemId);
+		getLog().debug(
+				MessageFormat
+						.format("Parent resolver has resolved publicId [{0}], systemId [{1}] to [{2}].",
+								publicId, systemId, superResolvedEntity));
+		if (superResolvedEntity != null) {
+			systemId = superResolvedEntity;
 		}
 
 		try {
-			final URI uri = new URI(result);
+			final URI uri = new URI(systemId);
 			if (URI_SCHEME_MAVEN.equals(uri.getScheme())) {
+				getLog().debug(
+						MessageFormat
+								.format("Resolving systemId [{1}] as Maven dependency resource.",
+										publicId, systemId));
 				final String schemeSpecificPart = uri.getSchemeSpecificPart();
 				try {
 					final DependencyResource dependencyResource = DependencyResource
@@ -59,29 +75,45 @@ public class MavenCatalogResolver extends
 						final URL url = dependencyResourceResolver
 								.resolveDependencyResource(dependencyResource);
 						String resolved = url.toString();
-//						System.out.println(MessageFormat.format("1) Returning [{0}].", resolved));
+						getLog().debug(
+								MessageFormat.format(
+										"Resolved systemId [{1}] to [{2}].",
+										publicId, systemId, resolved));
 						return resolved;
 					} catch (Exception ex) {
-						catalogManager.debug.message(1, MessageFormat.format(
-								"Error resolving dependency resource [{0}].",
-								dependencyResource));
+						getLog().error(
+								MessageFormat
+										.format("Error resolving dependency resource [{0}].",
+												dependencyResource));
 					}
-
 				} catch (IllegalArgumentException iaex) {
-					catalogManager.debug.message(1, MessageFormat.format(
-							"Error parsing dependency descriptor [{0}].",
-							schemeSpecificPart));
+					getLog().error(
+							MessageFormat
+									.format("Error parsing dependency descriptor [{0}].",
+											schemeSpecificPart));
 
 				}
-//				System.out.println("2) Returning null.");
-				return null;
+				getLog().error(
+						MessageFormat
+								.format("Failed to resolve systemId [{1}] as dependency resource. "
+										+ "Returning parent resolver result [{2}].",
+										publicId, systemId, superResolvedEntity));
+				return superResolvedEntity;
 			} else {
-//				System.out.println(MessageFormat.format("3) Returning [{0}].", result));
-				return result;
+				getLog().debug(
+						MessageFormat
+								.format("SystemId [{1}] is not a Maven dependency resource URI. "
+										+ "Returning parent resolver result [{2}].",
+										publicId, systemId, superResolvedEntity));
+				return superResolvedEntity;
 			}
 		} catch (URISyntaxException urisex) {
-//			System.out.println(MessageFormat.format("4) Returning [{0}].", result));
-			return result;
+			getLog().debug(
+					MessageFormat
+							.format("Coul not parse the systemId [{1}] as URI. "
+									+ "Returning parent resolver result [{2}].",
+									publicId, systemId, superResolvedEntity));
+			return superResolvedEntity;
 		}
 	}
 

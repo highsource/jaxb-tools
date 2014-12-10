@@ -54,7 +54,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	public void setEncoding(String encoding) {
 		this.encoding = encoding;
 	}
-	
+
 	/**
 	 * Locale for the generated sources.
 	 */
@@ -172,7 +172,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		return bindingDirectory != null ? bindingDirectory
 				: getSchemaDirectory();
 	}
-	
+
 	private File catalogDirectory;
 
 	public void setCatalogDirectory(File catalogDirectory) {
@@ -183,7 +183,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		return catalogDirectory != null ? catalogDirectory
 				: getSchemaDirectory();
 	}
-	
 
 	/**
 	 * <p>
@@ -271,7 +270,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	public void setCatalog(File catalog) {
 		this.catalog = catalog;
 	}
-	
+
 	private String[] catalogIncludes = new String[] { "*.cat" };
 
 	public String[] getCatalogIncludes() {
@@ -287,7 +286,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	public String[] getCatalogExcludes() {
 		return catalogExcludes;
 	}
-	
+
 	public void setCatalogExcludes(String[] catalogExcludes) {
 		this.catalogExcludes = catalogExcludes;
 	}
@@ -557,8 +556,8 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	}
 
 	/**
-	 * If 'true' (default), Perform strict validation of the input schema (disabled by the
-	 * xjc's -nv option).
+	 * If 'true' (default), Perform strict validation of the input schema
+	 * (disabled by the xjc's -nv option).
 	 */
 	@Parameter(defaultValue = "true", property = "maven.xjc2.strict")
 	private boolean strict = true;
@@ -815,9 +814,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	}
 
 	@Component
-	private MavenProject project;
-
-	@Component
 	private ArtifactResolver artifactResolver;
 
 	@Component
@@ -959,6 +955,9 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	}
 
 	private static final String XML_SCHEMA_CLASS_NAME = "XmlSchema";
+
+	@Component
+	private MavenProject project;
 
 	public MavenProject getProject() {
 		return project;

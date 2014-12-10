@@ -301,7 +301,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		if (getVerbose()) {
 			getLog().info("optionsConfiguration:" + optionsConfiguration);
 		}
-		
+
 		checkCatalogsInStrictMode(optionsConfiguration);
 
 		if (optionsConfiguration.getSchemas().isEmpty()) {
@@ -342,13 +342,14 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 	private void checkCatalogsInStrictMode(
 			final OptionsConfiguration optionsConfiguration) {
-		if (optionsConfiguration.hasCatalogs() && optionsConfiguration.isStrict())
-		{
-			getLog().warn("The plugin is configured to use catalogs and strict at the same time.\n"
-					+ "Using catalogs to resolve schema URI in strict mode is known to be problematic and may fail.\n"
-					+ "Please refer to the following linkfor more information:\n"
-					+ "https://github.com/highsource/maven-jaxb2-plugin/wiki/Catalogs-in-Strict-Mode\n"
-					+ "Consider setting <strict>false</strict>\n");
+		if (optionsConfiguration.hasCatalogs()
+				&& optionsConfiguration.isStrict()) {
+			getLog().warn(
+					"The plugin is configured to use catalogs and strict at the same time.\n"
+							+ "Using catalogs to resolve schema URI in strict mode is known to be problematic and may fail.\n"
+							+ "Please refer to the following linkfor more information:\n"
+							+ "https://github.com/highsource/maven-jaxb2-plugin/wiki/Catalogs-in-Strict-Mode\n"
+							+ "Consider setting <strict>false</strict>\n");
 		}
 	}
 

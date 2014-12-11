@@ -306,7 +306,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.catalogs = catalogs;
 	}
 
-	protected List<URI> getCatalogUris() throws MojoExecutionException {
+	protected List<URI> createCatalogURIs() throws MojoExecutionException {
 		final File catalog = getCatalog();
 		final ResourceEntry[] catalogs = getCatalogs();
 		final List<URI> catalogUris = new ArrayList<URI>((catalog == null ? 0
@@ -785,20 +785,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	}
 
 	/**
-	 * Project classpath. Used internally when runing the XJC compiler.
-	 */
-	@Parameter(property = "project.compileClasspathElements", required = true, readonly = true)
-	private List classpathElements;
-
-	public List getClasspathElements() {
-		return classpathElements;
-	}
-
-	public void setClasspathElements(List classpathElements) {
-		this.classpathElements = classpathElements;
-	}
-
-	/**
 	 * XJC plugins to be made available to XJC. They still need to be activated
 	 * by using &lt;args/&gt; and enable plugin activation option.
 	 */
@@ -942,7 +928,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		getLog().info("otherDepends:" + getOtherDepends());
 		getLog().info("episodeFile:" + getEpisodeFile());
 		getLog().info("episode:" + getEpisode());
-		getLog().info("classpathElements:" + getClasspathElements());
 		getLog().info("plugins:" + Arrays.toString(getPlugins()));
 		getLog().info("episodes:" + Arrays.toString(getEpisodes()));
 		getLog().info(
@@ -1234,24 +1219,13 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		}
 	}
 
-	private URL createUrl(String urlDraft) throws MojoExecutionException {
+	private URI createUri(String uriString) throws MojoExecutionException {
 		try {
-			final URL url = new URL(urlDraft);
-			return url;
-		} catch (MalformedURLException murlex) {
-			throw new MojoExecutionException(MessageFormat.format(
-					"Could not create the URL from string [{0}].", urlDraft),
-					murlex);
-		}
-	}
-
-	private URI createUri(String uriDraft) throws MojoExecutionException {
-		try {
-			final URI uri = new URI(uriDraft);
+			final URI uri = new URI(uriString);
 			return uri;
 		} catch (URISyntaxException urisex) {
 			throw new MojoExecutionException(MessageFormat.format(
-					"Could not create the URI from string [{0}].", uriDraft),
+					"Could not create the URI from string [{0}].", uriString),
 					urisex);
 		}
 	}
@@ -1263,7 +1237,8 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		final String directory = draftDirectory == null ? defaultDirectory
 				: draftDirectory;
 		final List<String> includes;
-		final List<String> draftIncludes = fileset.getIncludes();
+		@SuppressWarnings("unchecked")
+		final List<String> draftIncludes = (List<String>) fileset.getIncludes();
 		if (draftIncludes == null || draftIncludes.isEmpty()) {
 			includes = defaultIncludes == null ? Collections
 					.<String> emptyList() : Arrays.asList(defaultIncludes);
@@ -1272,7 +1247,8 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		}
 
 		final List<String> excludes;
-		final List<String> draftExcludes = fileset.getExcludes();
+		@SuppressWarnings("unchecked")
+		final List<String> draftExcludes = (List<String>) fileset.getExcludes();
 		if (draftExcludes == null || draftExcludes.isEmpty()) {
 			excludes = defaultExcludes == null ? Collections
 					.<String> emptyList() : Arrays.asList(defaultExcludes);

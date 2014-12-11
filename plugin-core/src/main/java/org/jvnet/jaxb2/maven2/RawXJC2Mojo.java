@@ -48,11 +48,15 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.artifact.InvalidDependencyVersionException;
 import org.codehaus.plexus.util.FileUtils;
 import org.jvnet.jaxb2.maven2.resolver.tools.MavenCatalogResolver;
+import org.jvnet.jaxb2.maven2.resolver.tools.ReResolvingEntityResolverWrapper;
 import org.jvnet.jaxb2.maven2.util.ArtifactUtils;
 import org.jvnet.jaxb2.maven2.util.CollectionUtils;
 import org.jvnet.jaxb2.maven2.util.IOUtils;
 import org.jvnet.jaxb2.maven2.util.LocaleUtils;
 import org.sonatype.plexus.build.incremental.BuildContext;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import com.sun.org.apache.xml.internal.resolver.CatalogManager;
 import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
@@ -100,35 +104,171 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		return schemaFiles;
 	}
 
-	protected List<URI> getSchemaUris() throws MojoExecutionException {
-		final List<URI> schemaUris = new ArrayList<URI>(schemaFiles.size());
-		final List<File> schemaFiles = getSchemaFiles();
-		for (final File schemaFile : schemaFiles) {
-			// try {
-			final URI schema = schemaFile.toURI();
-			schemaUris.add(schema);
-			// } catch (MalformedURLException murlex) {
-			// throw new MojoExecutionException(
-			// MessageFormat.format(
-			// "Could not create a schema URL for the schema file [{0}].",
-			// schemaFile), murlex);
-			// }
-		}
+	private List<URI> schemaURIs;
 
-		if (getSchemas() != null) {
-			for (ResourceEntry resourceEntry : getSchemas()) {
-				schemaUris.addAll(createResourceEntryUris(resourceEntry,
+	protected List<URI> getSchemaURIs() {
+		if (schemaURIs == null) {
+			throw new IllegalStateException("Schema URIs were not set up yet.");
+		}
+		return schemaURIs;
+	}
+
+	private List<URI> resolvedSchemaURIs;
+
+	protected List<URI> getResolvedSchemaUris() {
+		if (resolvedSchemaURIs == null) {
+			throw new IllegalStateException(
+					"Resolved schema URIs were not set up yet.");
+		}
+		return resolvedSchemaURIs;
+	}
+
+	private List<InputSource> grammars;
+
+	protected List<InputSource> getGrammars() {
+		if (grammars == null) {
+			throw new IllegalArgumentException("Grammars were not set up yet.");
+		}
+		return grammars;
+	}
+
+	private void setupSchemas() throws MojoExecutionException {
+		this.schemaURIs = createSchemaURIs();
+		this.resolvedSchemaURIs = resolveURIs(getSchemaURIs());
+		this.grammars = createGrammars();
+	}
+
+	private List<URI> createSchemaURIs() throws MojoExecutionException {
+		final List<File> schemaFiles = getSchemaFiles();
+		final List<URI> schemaURIs = new ArrayList<URI>(schemaFiles.size());
+		for (final File schemaFile : schemaFiles) {
+			final URI schema = schemaFile.toURI();
+			schemaURIs.add(schema);
+		}
+		final ResourceEntry[] schemas = getSchemas();
+		if (schemas != null) {
+			for (ResourceEntry resourceEntry : schemas) {
+				schemaURIs.addAll(createResourceEntryUris(resourceEntry,
 						getSchemaDirectory().getAbsolutePath(),
 						getSchemaIncludes(), getSchemaExcludes()));
 			}
 		}
-		return schemaUris;
+		return schemaURIs;
+	}
+
+	private List<InputSource> createGrammars() throws MojoExecutionException {
+		try {
+			final List<URI> schemaURIs = getSchemaURIs();
+			return getInputSources(schemaURIs);
+		} catch (IOException ioex) {
+			throw new MojoExecutionException("Could not resolve grammars.",
+					ioex);
+		} catch (SAXException ioex) {
+			throw new MojoExecutionException("Could not resolve grammars.",
+					ioex);
+		}
 	}
 
 	private List<File> bindingFiles;
 
 	public List<File> getBindingFiles() {
 		return bindingFiles;
+	}
+
+	private List<URI> bindingURIs;
+
+	protected List<URI> getBindingURIs() {
+		if (bindingURIs == null) {
+			throw new IllegalStateException("Binding URIs were not set up yet.");
+		}
+		return bindingURIs;
+	}
+
+	private List<URI> resolvedBindingURIs;
+
+	protected List<URI> getResolvedBindingURIs() {
+		if (resolvedBindingURIs == null) {
+			throw new IllegalStateException(
+					"Resolved binding URIs were not set up yet.");
+		}
+		return resolvedBindingURIs;
+	}
+
+	private List<InputSource> bindFiles;
+
+	protected List<InputSource> getBindFiles() {
+		if (bindFiles == null) {
+			throw new IllegalStateException("BindFiles were not set up yet.");
+		}
+		return bindFiles;
+	}
+
+	private void setupBindings() throws MojoExecutionException {
+		this.bindingURIs = createBindingURIs();
+		this.resolvedBindingURIs = resolveURIs(getBindingURIs());
+		this.bindFiles = createBindFiles();
+	}
+
+	protected List<URI> createBindingURIs() throws MojoExecutionException {
+		final List<File> bindingFiles = new LinkedList<File>();
+		bindingFiles.addAll(getBindingFiles());
+
+		for (final File episodeFile : getEpisodeFiles()) {
+			getLog().debug(
+					MessageFormat.format("Checking episode file [{0}].",
+							episodeFile.getAbsolutePath()));
+			if (episodeFile.isDirectory()) {
+				final File episodeMetaInfFile = new File(episodeFile,
+						"META-INF");
+				if (episodeMetaInfFile.isDirectory()) {
+					final File episodeBindingsFile = new File(
+							episodeMetaInfFile, "sun-jaxb.episode");
+					if (episodeBindingsFile.isFile()) {
+						bindingFiles.add(episodeBindingsFile);
+					}
+				}
+			}
+		}
+
+		final List<URI> bindingUris = new ArrayList<URI>(bindingFiles.size());
+		for (final File bindingFile : bindingFiles) {
+			URI uri;
+			// try {
+			uri = bindingFile.toURI();
+			bindingUris.add(uri);
+			// } catch (MalformedURLException murlex) {
+			// throw new MojoExecutionException(
+			// MessageFormat.format(
+			// "Could not create a binding URL for the binding file [{0}].",
+			// bindingFile), murlex);
+			// }
+		}
+		if (getBindings() != null) {
+			for (ResourceEntry resourceEntry : getBindings()) {
+				bindingUris.addAll(createResourceEntryUris(resourceEntry,
+						getBindingDirectory().getAbsolutePath(),
+						getBindingIncludes(), getBindingExcludes()));
+			}
+		}
+
+		if (getScanDependenciesForBindings()) {
+			collectBindingUrisFromDependencies(bindingUris);
+		}
+
+		return bindingUris;
+	}
+
+	private List<InputSource> createBindFiles() throws MojoExecutionException {
+		try {
+			final List<URI> bindingURIs = getBindingURIs();
+			return getInputSources(bindingURIs);
+		} catch (IOException ioex) {
+			throw new MojoExecutionException(
+					"Could not resolve binding files.", ioex);
+		} catch (SAXException ioex) {
+			throw new MojoExecutionException(
+					"Could not resolve binding files.", ioex);
+		}
 	}
 
 	private List<File> dependsFiles;
@@ -292,6 +432,10 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			getLog().info("Started execution.");
 		setupMavenPaths();
 		setupFiles();
+		setupCatalogResolver();
+		setupEntityResolver();
+		setupSchemas();
+		setupBindings();
 		if (getVerbose()) {
 			logConfiguration();
 		}
@@ -302,9 +446,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			getLog().info("optionsConfiguration:" + optionsConfiguration);
 		}
 
-		checkCatalogsInStrictMode(optionsConfiguration);
+		checkCatalogsInStrictMode();
 
-		if (optionsConfiguration.getSchemas().isEmpty()) {
+		if (optionsConfiguration.getGrammars().isEmpty()) {
 			getLog().warn("No schemas to compile. Skipping XJC execution. ");
 		} else {
 
@@ -340,16 +484,14 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 	}
 
-	private void checkCatalogsInStrictMode(
-			final OptionsConfiguration optionsConfiguration) {
-		if (optionsConfiguration.hasCatalogs()
-				&& optionsConfiguration.isStrict()) {
+	private void checkCatalogsInStrictMode() {
+		if (getStrict() && !getCatalogURIs().isEmpty()) {
 			getLog().warn(
-					"The plugin is configured to use catalogs and strict at the same time.\n"
+					"The plugin is configured to use catalogs and strict mode at the same time.\n"
 							+ "Using catalogs to resolve schema URI in strict mode is known to be problematic and may fail.\n"
-							+ "Please refer to the following linkfor more information:\n"
+							+ "Please refer to the following link for more information:\n"
 							+ "https://github.com/highsource/maven-jaxb2-plugin/wiki/Catalogs-in-Strict-Mode\n"
-							+ "Consider setting <strict>false</strict>\n");
+							+ "Consider setting <strict>false</strict> in your plugin configuration.\n");
 		}
 	}
 
@@ -525,65 +667,15 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	protected void logConfiguration() throws MojoExecutionException {
 		super.logConfiguration();
 		getLog().info("schemaFiles (calculated):" + getSchemaFiles());
-		getLog().info("schemaUris (calculated):" + getSchemaUris());
+		getLog().info("schemaURIs (calculated):" + getSchemaURIs());
 		getLog().info("bindingFiles (calculated):" + getBindingFiles());
-		getLog().info("bindingUris (calculated):" + getBindingUris());
+		getLog().info("bindingURIs (calculated):" + getBindingURIs());
 		getLog().info(
 				"xjcPluginArtifacts (resolved):" + getXjcPluginArtifacts());
 		getLog().info("xjcPluginFiles (resolved):" + getXjcPluginFiles());
 		getLog().info("xjcPluginURLs (resolved):" + getXjcPluginURLs());
 		getLog().info("episodeArtifacts (resolved):" + getEpisodeArtifacts());
 		getLog().info("episodeFiles (resolved):" + getEpisodeFiles());
-	}
-
-	protected List<URI> getBindingUris() throws MojoExecutionException {
-		final List<File> bindingFiles = new LinkedList<File>();
-		bindingFiles.addAll(getBindingFiles());
-
-		for (final File episodeFile : getEpisodeFiles()) {
-			getLog().debug(
-					MessageFormat.format("Checking episode file [{0}].",
-							episodeFile.getAbsolutePath()));
-			if (episodeFile.isDirectory()) {
-				final File episodeMetaInfFile = new File(episodeFile,
-						"META-INF");
-				if (episodeMetaInfFile.isDirectory()) {
-					final File episodeBindingsFile = new File(
-							episodeMetaInfFile, "sun-jaxb.episode");
-					if (episodeBindingsFile.isFile()) {
-						bindingFiles.add(episodeBindingsFile);
-					}
-				}
-			}
-		}
-
-		final List<URI> bindingUris = new ArrayList<URI>(bindingFiles.size());
-		for (final File bindingFile : bindingFiles) {
-			URI uri;
-			// try {
-			uri = bindingFile.toURI();
-			bindingUris.add(uri);
-			// } catch (MalformedURLException murlex) {
-			// throw new MojoExecutionException(
-			// MessageFormat.format(
-			// "Could not create a binding URL for the binding file [{0}].",
-			// bindingFile), murlex);
-			// }
-		}
-		if (getBindings() != null) {
-			for (ResourceEntry resourceEntry : getBindings()) {
-				bindingUris.addAll(createResourceEntryUris(resourceEntry,
-						getBindingDirectory().getAbsolutePath(),
-						getBindingIncludes(), getBindingExcludes()));
-			}
-		}
-
-		if (getScanDependenciesForBindings()) {
-			collectBindingUrisFromDependencies(bindingUris);
-		}
-
-		return bindingUris;
-
 	}
 
 	private void collectBindingUrisFromDependencies(List<URI> bindingUris)
@@ -650,6 +742,64 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 	}
 
+	private CatalogResolver catalogResolverInstance;
+
+	private List<URI> catalogURIs;
+
+	private List<URI> resolvedCatalogURIs;
+
+	protected List<URI> getCatalogURIs() {
+		if (catalogURIs == null) {
+			throw new IllegalStateException("Catalog URIs were not set up yet.");
+		}
+		return catalogURIs;
+	}
+
+	protected List<URI> getResolvedCatalogURIs() {
+		if (resolvedCatalogURIs == null) {
+			throw new IllegalStateException(
+					"Resolved catalog URIs were not set up yet.");
+		}
+		return resolvedCatalogURIs;
+	}
+
+	protected CatalogResolver getCatalogResolverInstance() {
+		if (catalogResolverInstance == null) {
+			throw new IllegalStateException(
+					"Catalog resolver was not set up yet.");
+		}
+		return catalogResolverInstance;
+	}
+
+	private void setupCatalogResolver() throws MojoExecutionException {
+		this.catalogResolverInstance = createCatalogResolver();
+		this.catalogURIs = createCatalogURIs();
+		this.resolvedCatalogURIs = resolveURIs(getCatalogURIs());
+		parseResolvedCatalogURIs();
+
+	}
+
+	private EntityResolver entityResolver;
+
+	protected EntityResolver getEntityResolver() {
+		if (entityResolver == null) {
+			throw new IllegalStateException(
+					"Entity resolver was not set up yet.");
+		}
+		return entityResolver;
+	}
+
+	private void setupEntityResolver() {
+		this.entityResolver = createEntityResolver(getCatalogResolverInstance());
+	}
+
+	protected EntityResolver createEntityResolver(
+			CatalogResolver catalogResolver) {
+		final EntityResolver entityResolver = new ReResolvingEntityResolverWrapper(
+				catalogResolver);
+		return entityResolver;
+	}
+
 	/**
 	 * Creates an instance of catalog resolver.
 	 * 
@@ -666,44 +816,45 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			catalogManager.setVerbosity(Integer.MAX_VALUE);
 		}
 		if (getCatalogResolver() == null) {
-			// System.out.println("Creating a new maven catalog resolver.");
 			return new MavenCatalogResolver(catalogManager, this, getLog());
 		} else {
-			try {
-				final String catalogResolverClassName = getCatalogResolver()
-						.trim();
-				final Class<?> draftCatalogResolverClass = Thread
-						.currentThread().getContextClassLoader()
-						.loadClass(catalogResolverClassName);
-				if (!CatalogResolver.class
-						.isAssignableFrom(draftCatalogResolverClass)) {
-					throw new MojoExecutionException(
-							MessageFormat
-									.format("Specified catalog resolver class [{0}] could not be casted to [{1}].",
-											catalogResolver,
-											CatalogResolver.class));
-				} else {
-					@SuppressWarnings("unchecked")
-					final Class<? extends CatalogResolver> catalogResolverClass = (Class<? extends CatalogResolver>) draftCatalogResolverClass;
-					final CatalogResolver catalogResolverInstance = catalogResolverClass
-							.newInstance();
-					return catalogResolverInstance;
-				}
-			} catch (ClassNotFoundException cnfex) {
-				throw new MojoExecutionException(
-						MessageFormat.format(
-								"Could not find specified catalog resolver class [{0}].",
-								catalogResolver), cnfex);
-			} catch (InstantiationException iex) {
-				throw new MojoExecutionException(MessageFormat.format(
-						"Could not instantiate catalog resolver class [{0}].",
-						catalogResolver), iex);
-			} catch (IllegalAccessException iaex) {
-				throw new MojoExecutionException(MessageFormat.format(
-						"Could not instantiate catalog resolver class [{0}].",
-						catalogResolver), iaex);
-			}
+			final String catalogResolverClassName = getCatalogResolver().trim();
+			return createCatalogResolverByClassName(catalogResolverClassName);
+		}
+	}
 
+	private CatalogResolver createCatalogResolverByClassName(
+			final String catalogResolverClassName)
+			throws MojoExecutionException {
+		try {
+			final Class<?> draftCatalogResolverClass = Thread.currentThread()
+					.getContextClassLoader()
+					.loadClass(catalogResolverClassName);
+			if (!CatalogResolver.class
+					.isAssignableFrom(draftCatalogResolverClass)) {
+				throw new MojoExecutionException(
+						MessageFormat
+								.format("Specified catalog resolver class [{0}] could not be casted to [{1}].",
+										catalogResolver, CatalogResolver.class));
+			} else {
+				@SuppressWarnings("unchecked")
+				final Class<? extends CatalogResolver> catalogResolverClass = (Class<? extends CatalogResolver>) draftCatalogResolverClass;
+				final CatalogResolver catalogResolverInstance = catalogResolverClass
+						.newInstance();
+				return catalogResolverInstance;
+			}
+		} catch (ClassNotFoundException cnfex) {
+			throw new MojoExecutionException(MessageFormat.format(
+					"Could not find specified catalog resolver class [{0}].",
+					catalogResolver), cnfex);
+		} catch (InstantiationException iex) {
+			throw new MojoExecutionException(MessageFormat.format(
+					"Could not instantiate catalog resolver class [{0}].",
+					catalogResolver), iex);
+		} catch (IllegalAccessException iaex) {
+			throw new MojoExecutionException(MessageFormat.format(
+					"Could not instantiate catalog resolver class [{0}].",
+					catalogResolver), iaex);
 		}
 	}
 
@@ -772,7 +923,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	 * @throws MojoExecutionException
 	 */
 
-	protected List<String> getArguments() throws MojoExecutionException {
+	protected List<String> getArguments() {
 
 		final List<String> arguments = new ArrayList<String>(getArgs());
 		if (getEpisode() && getEpisodeFile() != null) {
@@ -794,10 +945,11 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 	public OptionsConfiguration createOptionsConfiguration()
 			throws MojoExecutionException {
+
 		final OptionsConfiguration optionsConfiguration = new OptionsConfiguration(
-				getEncoding(), getSchemaLanguage(), getSchemaUris(),
-				getBindingUris(), getCatalogUris(), createCatalogResolver(),
-				getGeneratePackage(), getGenerateDirectory(), getReadOnly(),
+				getEncoding(), getSchemaLanguage(), getGrammars(), getBindFiles(),
+				getEntityResolver(), getGeneratePackage(),
+				getGenerateDirectory(), getReadOnly(),
 				getPackageLevelAnnotations(), getNoFileHeader(),
 				getEnableIntrospection(), getDisableXmlSecurity(),
 				getAccessExternalSchema(), getAccessExternalDTD(),
@@ -806,4 +958,54 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 				getSpecVersion());
 		return optionsConfiguration;
 	}
+
+	private List<URI> resolveURIs(final List<URI> uris) {
+		final List<URI> resolvedURIs = new ArrayList<URI>(uris.size());
+		for (URI uri : uris) {
+			final String URI = getCatalogResolverInstance().getResolvedEntity(
+					null, uri.toString());
+			if (URI != null) {
+				try {
+					uri = new URI(URI);
+				} catch (URISyntaxException ignored) {
+
+				}
+			}
+			resolvedURIs.add(uri);
+		}
+		return resolvedURIs;
+	}
+
+	private void parseResolvedCatalogURIs() throws MojoExecutionException {
+		for (URI catalogURI : getResolvedCatalogURIs()) {
+			if (catalogURI != null) {
+				try {
+					getCatalogResolverInstance().getCatalog().parseCatalog(
+							catalogURI.toURL());
+				} catch (IOException ioex) {
+					throw new MojoExecutionException(MessageFormat.format(
+							"Error parsing catalog [{0}].",
+							catalogURI.toString()), ioex);
+				}
+			}
+		}
+	}
+
+	private List<InputSource> getInputSources(final List<URI> uris)
+			throws IOException, SAXException {
+		final List<InputSource> inputSources = new ArrayList<InputSource>(
+				uris.size());
+		for (final URI uri : uris) {
+			InputSource inputSource = IOUtils.getInputSource(uri);
+			final InputSource resolvedInputSource = getEntityResolver()
+					.resolveEntity(inputSource.getPublicId(),
+							inputSource.getSystemId());
+			if (resolvedInputSource != null) {
+				inputSource = resolvedInputSource;
+			}
+			inputSources.add(inputSource);
+		}
+		return inputSources;
+	}
+
 }

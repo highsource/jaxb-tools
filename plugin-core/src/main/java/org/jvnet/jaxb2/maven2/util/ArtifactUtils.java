@@ -114,6 +114,7 @@ public class ArtifactUtils {
 			dep.setType(def.getType());
 		}
 	
+		@SuppressWarnings("rawtypes")
 		List exclusions = dep.getExclusions();
 		if (exclusions == null || exclusions.isEmpty()) {
 			dep.setExclusions(def.getExclusions());

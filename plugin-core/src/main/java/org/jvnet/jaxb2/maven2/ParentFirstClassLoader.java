@@ -39,6 +39,7 @@ public class ParentFirstClassLoader extends URLClassLoader {
 			throws ClassNotFoundException {
 
 		// First, check if the class has already been loaded
+		@SuppressWarnings("rawtypes")
 		Class c = findLoadedClass(name);
 
 		// if not loaded, search the system class loader

@@ -67,9 +67,11 @@ public class CollectionUtils {
 		return candidateValue;
 	}
 
-	public static Comparator<?> LT = new NegativeComparator();
+	@SuppressWarnings("rawtypes")
+	private static Comparator<?> LT = new NegativeComparator();
 
-	public static Comparator<?> GT = new PositiveComparator();
+	@SuppressWarnings("rawtypes")
+	private static Comparator<?> GT = new PositiveComparator();
 
 	public static <V extends Object & Comparable<? super V>> Comparator<V> lt() {
 		@SuppressWarnings("unchecked")

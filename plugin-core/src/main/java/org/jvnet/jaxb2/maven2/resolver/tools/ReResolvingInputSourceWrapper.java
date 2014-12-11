@@ -40,39 +40,6 @@ public class ReResolvingInputSourceWrapper extends InputSource {
 			} catch (SAXException saxex) {
 				return originalReader;
 			}
-			// return new DelegatingReaderWrapper() {
-			// private Reader reader = null;
-			//
-			// private Reader openReader() throws IOException {
-			// Reader r = null;
-			// try {
-			// final String publicId = getPublicId();
-			// final String systemId = getSystemId();
-			// final InputSource resolvedInputSource =
-			// ReResolvingInputSourceWrapper.this.entityResolver
-			// .resolveEntity(publicId, systemId);
-			// final Reader resolvedReader = resolvedInputSource
-			// .getCharacterStream();
-			// if (resolvedReader != null) {
-			// r = resolvedReader;
-			// } else {
-			// // Fallback to the original reader;
-			// r = originalReader;
-			// }
-			// } catch (SAXException saxex) {
-			// throw new IOException(saxex);
-			// }
-			// return r;
-			// }
-			//
-			// @Override
-			// protected Reader getReader() throws IOException {
-			// if (reader == null) {
-			// reader = openReader();
-			// }
-			// return reader;
-			// }
-			// };
 		}
 	}
 
@@ -99,39 +66,6 @@ public class ReResolvingInputSourceWrapper extends InputSource {
 			} catch (SAXException saxex) {
 				return originalInputStream;
 			}
-			// return new DelegatingInputStreamWrapper() {
-			// private InputStream inputStream = null;
-			//
-			// private InputStream openInputStream() throws IOException {
-			// InputStream is = null;
-			// try {
-			// final String publicId = getPublicId();
-			// final String systemId = getSystemId();
-			// final InputSource resolvedInputSource =
-			// ReResolvingInputSourceWrapper.this.entityResolver
-			// .resolveEntity(publicId, systemId);
-			// final InputStream resolvedInputStream = resolvedInputSource
-			// .getByteStream();
-			// if (resolvedInputStream != null) {
-			// is = resolvedInputStream;
-			// } else {
-			// // Fallback to the original InputStream;
-			// is = originalInputStream;
-			// }
-			// } catch (SAXException saxex) {
-			// throw new IOException(saxex);
-			// }
-			// return is;
-			// }
-			//
-			// @Override
-			// protected InputStream getInputStream() throws IOException {
-			// if (inputStream == null) {
-			// inputStream = openInputStream();
-			// }
-			// return inputStream;
-			// }
-			// };
 		}
 	}
 

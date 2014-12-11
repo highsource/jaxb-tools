@@ -1,31 +1,23 @@
 package org.jvnet.jaxb2.maven2;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jvnet.jaxb2.maven2.util.IOUtils;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
-import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
 
 public class OptionsConfiguration {
 
 	private final String encoding;
 
 	private final String schemaLanguage;
-	private final List<URI> schemas;
-	private final List<URI> bindings;
-	private final List<URI> catalogs;
+	private List<InputSource> grammars;
+	private List<InputSource> bindFiles;
 
-	private final CatalogResolver catalogResolver;
+	private final EntityResolver entityResolver;
 
 	private final String generatePackage;
 
@@ -56,8 +48,8 @@ public class OptionsConfiguration {
 	private final String specVersion;
 
 	public OptionsConfiguration(String encoding, String schemaLanguage,
-			List<URI> schemas, List<URI> bindings, List<URI> catalogs,
-			CatalogResolver catalogResolver, String generatePackage,
+			List<InputSource> grammars, List<InputSource> bindFiles,
+			EntityResolver entityResolver, String generatePackage,
 			File generateDirectory, boolean readOnly,
 			boolean packageLevelAnnotations, boolean noFileHeader,
 			boolean enableIntrospection, boolean disableXmlSecurity,
@@ -70,10 +62,9 @@ public class OptionsConfiguration {
 		super();
 		this.encoding = encoding;
 		this.schemaLanguage = schemaLanguage;
-		this.schemas = schemas;
-		this.bindings = bindings;
-		this.catalogs = catalogs;
-		this.catalogResolver = catalogResolver;
+		this.grammars = grammars;
+		this.bindFiles = bindFiles;
+		this.entityResolver = entityResolver;
 		this.generatePackage = generatePackage;
 		this.generateDirectory = generateDirectory;
 		this.readOnly = readOnly;
@@ -101,73 +92,16 @@ public class OptionsConfiguration {
 		return schemaLanguage;
 	}
 
-	public List<URI> getSchemas() {
-		return schemas;
+	public List<InputSource> getGrammars() {
+		return grammars;
 	}
 
-	public List<InputSource> getGrammars(EntityResolver resolver)
-			throws IOException, SAXException {
-		final List<URI> schemas = getSchemas();
-		return getInputSources(schemas, resolver);
+	public List<InputSource> getBindFiles() {
+		return bindFiles;
 	}
 
-	public List<URI> getBindings() {
-		return bindings;
-	}
-
-	public List<InputSource> getBindFiles(EntityResolver resolver)
-			throws IOException, SAXException {
-		final List<URI> bindings = getBindings();
-		return getInputSources(bindings, resolver);
-	}
-
-	private List<InputSource> getInputSources(final List<URI> uris,
-			EntityResolver resolver) throws IOException, SAXException {
-		final List<InputSource> inputSources = new ArrayList<InputSource>(
-				uris.size());
-		for (final URI uri : uris) {
-			InputSource inputSource = IOUtils.getInputSource(uri);
-			if (resolver != null) {
-				final InputSource resolvedInputSource = resolver.resolveEntity(
-						inputSource.getPublicId(), inputSource.getSystemId());
-				if (resolvedInputSource != null) {
-					inputSource = resolvedInputSource;
-				}
-			}
-			inputSources.add(inputSource);
-		}
-		return inputSources;
-	}
-	
-	public boolean hasCatalogs()
-	{
-		return !this.catalogs.isEmpty();
-	}
-
-	public List<URI> getCatalogs() {
-		final CatalogResolver resolver = getCatalogResolver();
-		if (resolver == null) {
-			return this.catalogs;
-		} else {
-			final List<URI> uris = new ArrayList<URI>(this.catalogs.size());
-			for (URI uri : catalogs) {
-				final String resolvedUri = resolver.getResolvedEntity(null,
-						uri.toString());
-				if (resolvedUri != null) {
-					try {
-						uri = new URI(resolvedUri);
-					} catch (URISyntaxException ignored) {
-
-					}
-				}
-				uris.add(uri);
-			}
-			return uris;
-		}
-	}
-
-	public CatalogResolver getCatalogResolver() {
-		return catalogResolver;
+	public EntityResolver getEntityResolver() {
+		return entityResolver;
 	}
 
 	public String getGeneratePackage() {
@@ -240,61 +174,78 @@ public class OptionsConfiguration {
 
 	@Override
 	public String toString() {
-		return MessageFormat.format("OptionsConfiguration [" +
-		//
+		return MessageFormat.format(
+				"OptionsConfiguration [" +
+				//
 
-				"specVersion={0}\n " +
-				//
-				"generateDirectory={1}\n " +
-				//
-				"generatePackage={2}\n " +
-				//
-				"schemaLanguage={3}\n " +
-				//
-				"schemas={4}\n " +
-				//
-				"bindings={5}\n " +
-				//
-				"plugins={6}\n " +
-				//
-				"catalogs={7}\n " +
-				//
-				"catalogResolver={8}\n " +
-				//
-				"readOnly={9}\n " +
-				//
-				"packageLevelAnnotations={10}\n " +
-				//
-				"noFileHeader={11}\n " +
-				//
-				"enableIntrospection={12}\n " +
-				//
-				"disableXmlSecurity={13}\n " +
-				//
-				"accessExternalSchema={14}\n " +
-				//
-				"accessExternalDTD={15}\n " +
-
-				//
-				"contentForWildcard={16}\n " +
-				//
-				"extension={17}\n " +
-				//
-				"strict={18}\n " +
-				//
-				"verbose={19}\n " +
-				//
-				"debugMode={20}\n " +
-				//
-				"arguments={19}" +
-				//
-				"]", specVersion, generateDirectory, generatePackage,
-				schemaLanguage, schemas, bindings, plugins, catalogs,
-				catalogResolver, readOnly, packageLevelAnnotations,
-				noFileHeader, enableIntrospection, disableXmlSecurity,
-				accessExternalSchema, accessExternalDTD, contentForWildcard,
+						"specVersion={0}\n " +
+						//
+						"generateDirectory={1}\n " +
+						//
+						"generatePackage={2}\n " +
+						//
+						"schemaLanguage={3}\n " +
+						//
+						"grammars.systemIds={4}\n " +
+						//
+						"bindFiles.systemIds={5}\n " +
+						//
+						"plugins={6}\n " +
+						//
+						"readOnly={7}\n " +
+						//
+						"packageLevelAnnotations={8}\n " +
+						//
+						"noFileHeader={9}\n " +
+						//
+						"enableIntrospection={10}\n " +
+						//
+						"disableXmlSecurity={11}\n " +
+						//
+						"accessExternalSchema={12}\n " +
+						//
+						"accessExternalDTD={13}\n " +
+						//
+						"contentForWildcard={14}\n " +
+						//
+						"extension={15}\n " +
+						//
+						"strict={16}\n " +
+						//
+						"verbose={17}\n " +
+						//
+						"debugMode={18}\n " +
+						//
+						"arguments={19}" +
+						//
+						"]",
+				// 0
+				specVersion, generateDirectory, generatePackage,
+				schemaLanguage,
+				getSystemIds(grammars),
+				// 5
+				getSystemIds(bindFiles), plugins, readOnly,
+				packageLevelAnnotations, noFileHeader,
+				// 10
+				enableIntrospection, disableXmlSecurity, accessExternalSchema,
+				accessExternalDTD, contentForWildcard,
+				// 15
 				extension, strict, verbose, debugMode, arguments);
 
+	}
+
+	private List<String> getSystemIds(List<InputSource> inputSources) {
+		if (inputSources == null) {
+			return null;
+		} else {
+			final List<String> systemIds = new ArrayList<String>(
+					inputSources.size());
+			for (InputSource inputSource : inputSources) {
+				systemIds.add(inputSource == null ? null : inputSource
+						.getSystemId());
+			}
+			return systemIds;
+		}
 	}
 
 }

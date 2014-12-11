@@ -115,7 +115,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 	private List<URI> resolvedSchemaURIs;
 
-	protected List<URI> getResolvedSchemaUris() {
+	protected List<URI> getResolvedSchemaURIs() {
 		if (resolvedSchemaURIs == null) {
 			throw new IllegalStateException(
 					"Resolved schema URIs were not set up yet.");
@@ -666,10 +666,18 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	 */
 	protected void logConfiguration() throws MojoExecutionException {
 		super.logConfiguration();
+		// TODO clean up
+		getLog().info("catalogURIs (calculated):" + getCatalogURIs());
+		getLog().info(
+				"resolvedCatalogURIs (calculated):" + getResolvedCatalogURIs());
 		getLog().info("schemaFiles (calculated):" + getSchemaFiles());
 		getLog().info("schemaURIs (calculated):" + getSchemaURIs());
+		getLog().info(
+				"resolvedSchemaURIs (calculated):" + getResolvedSchemaURIs());
 		getLog().info("bindingFiles (calculated):" + getBindingFiles());
 		getLog().info("bindingURIs (calculated):" + getBindingURIs());
+		getLog().info(
+				"resolvedBindingURIs (calculated):" + getResolvedBindingURIs());
 		getLog().info(
 				"xjcPluginArtifacts (resolved):" + getXjcPluginArtifacts());
 		getLog().info("xjcPluginFiles (resolved):" + getXjcPluginFiles());
@@ -947,8 +955,8 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			throws MojoExecutionException {
 
 		final OptionsConfiguration optionsConfiguration = new OptionsConfiguration(
-				getEncoding(), getSchemaLanguage(), getGrammars(), getBindFiles(),
-				getEntityResolver(), getGeneratePackage(),
+				getEncoding(), getSchemaLanguage(), getGrammars(),
+				getBindFiles(), getEntityResolver(), getGeneratePackage(),
 				getGenerateDirectory(), getReadOnly(),
 				getPackageLevelAnnotations(), getNoFileHeader(),
 				getEnableIntrospection(), getDisableXmlSecurity(),

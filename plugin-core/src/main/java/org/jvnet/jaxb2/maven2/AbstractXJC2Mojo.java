@@ -704,7 +704,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	}
 
 	/**
-	 * Specifies patters of files produced by this plugin. This is used to check
+	 * Specifies patterns of files produced by this plugin. This is used to check
 	 * if produced files are up-to-date. Default value is ** /*.*, ** /*.java,
 	 * ** /bgm.ser, ** /jaxb.properties.
 	 */

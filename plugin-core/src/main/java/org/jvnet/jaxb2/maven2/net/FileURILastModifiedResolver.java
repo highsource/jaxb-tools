@@ -22,6 +22,10 @@ public class FileURILastModifiedResolver extends
 			if (file.exists()) {
 				long lastModified = file.lastModified();
 				if (lastModified != 0) {
+					getLogger()
+							.debug(MessageFormat
+									.format("Last modification timestamp of the file URI [{0}] is [{1,date,yyyy-MM-dd HH:mm:ss.SSS}].",
+											uri, lastModified));
 					return lastModified;
 				} else {
 					getLogger()

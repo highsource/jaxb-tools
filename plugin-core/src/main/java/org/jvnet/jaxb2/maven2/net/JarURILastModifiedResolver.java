@@ -30,6 +30,10 @@ public class JarURILastModifiedResolver extends
 	protected Long getLastModifiedForScheme(URI uri) {
 		try {
 			final URI mainURI = getMainURI(uri);
+			getLogger()
+					.debug(MessageFormat
+							.format("Retrieving the last modification timestamp of the URI [{0}] via the main URI [{1}].",
+									uri, mainURI));
 			return getParent().getLastModified(mainURI);
 		} catch (Exception ex) {
 			getLogger()

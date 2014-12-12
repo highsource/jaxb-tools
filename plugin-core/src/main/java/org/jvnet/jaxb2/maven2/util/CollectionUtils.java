@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CollectionUtils {
 
-	public static class PositiveComparator<V extends Object & Comparable<? super V>>
+	public static class PositiveComparatorWithNullAsGreatest<V extends Object & Comparable<? super V>>
 			implements Comparator<V> {
 		public int compare(V o1, V o2) {
 			if (o1 == null && o2 == null)
@@ -22,15 +22,15 @@ public class CollectionUtils {
 		}
 	}
 
-	public static class NegativeComparator<V extends Object & Comparable<? super V>>
+	public static class NegativeComparatorWithNullAsSmallest<V extends Object & Comparable<? super V>>
 			implements Comparator<V> {
 		public int compare(V o1, V o2) {
 			if (o1 == null && o2 == null)
 				return 0;
 			else if (o1 == null)
-				return -1;
-			else if (o2 == null)
 				return 1;
+			else if (o2 == null)
+				return -1;
 			else
 				return -o1.compareTo(o2);
 		}
@@ -68,20 +68,20 @@ public class CollectionUtils {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private static Comparator<?> LT = new NegativeComparator();
+	private static Comparator<?> LT_NULL_SMALLEST = new NegativeComparatorWithNullAsSmallest();
 
 	@SuppressWarnings("rawtypes")
-	private static Comparator<?> GT = new PositiveComparator();
+	private static Comparator<?> GT_NULL_GREATEST = new PositiveComparatorWithNullAsGreatest();
 
-	public static <V extends Object & Comparable<? super V>> Comparator<V> lt() {
+	public static <V extends Object & Comparable<? super V>> Comparator<V> ltWithNullAsSmallest() {
 		@SuppressWarnings("unchecked")
-		final Comparator<V> comparator = (Comparator<V>) LT;
+		final Comparator<V> comparator = (Comparator<V>) LT_NULL_SMALLEST;
 		return comparator;
 	}
 
-	public static <V extends Object & Comparable<? super V>> Comparator<V> gt() {
+	public static <V extends Object & Comparable<? super V>> Comparator<V> gtWithNullAsGreatest() {
 		@SuppressWarnings("unchecked")
-		final Comparator<V> comparator = (Comparator<V>) GT;
+		final Comparator<V> comparator = (Comparator<V>) GT_NULL_GREATEST;
 		return comparator;
 	}
 

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,20 +51,6 @@ public class IOUtils {
 			}
 		}
 	};
-
-	public static final Function<File, Long> LAST_MODIFIED = new Function<File, Long>() {
-		public Long eval(File file) {
-			return lastModified(file);
-		}
-	};
-
-	public static long lastModified(File file) {
-		if (file == null || !file.exists()) {
-			return 0;
-		} else {
-			return file.lastModified();
-		}
-	}
 
 	/**
 	 * Scans given directory for files satisfying given inclusion/exclusion

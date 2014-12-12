@@ -45,6 +45,10 @@ public abstract class AbstractHTTPURILastModifiedResolver extends
 												uri));
 
 					} else {
+						getLogger()
+								.debug(MessageFormat
+										.format("HTTP connection to the URI [{0}] returned the last modification timestamp [{1,date,yyyy-MM-dd HH:mm:ss.SSS}].",
+												uri, lastModified));
 						return lastModified;
 					}
 				} else {

@@ -22,7 +22,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -47,10 +46,14 @@ import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.artifact.InvalidDependencyVersionException;
 import org.codehaus.plexus.util.FileUtils;
+import org.jvnet.jaxb2.maven2.net.CompositeURILastModifiedResolver;
+import org.jvnet.jaxb2.maven2.net.FileURILastModifiedResolver;
+import org.jvnet.jaxb2.maven2.net.URILastModifiedResolver;
 import org.jvnet.jaxb2.maven2.resolver.tools.MavenCatalogResolver;
 import org.jvnet.jaxb2.maven2.resolver.tools.ReResolvingEntityResolverWrapper;
 import org.jvnet.jaxb2.maven2.util.ArtifactUtils;
 import org.jvnet.jaxb2.maven2.util.CollectionUtils;
+import org.jvnet.jaxb2.maven2.util.CollectionUtils.Function;
 import org.jvnet.jaxb2.maven2.util.IOUtils;
 import org.jvnet.jaxb2.maven2.util.LocaleUtils;
 import org.sonatype.plexus.build.incremental.BuildContext;
@@ -271,16 +274,16 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 	}
 
-	private List<File> dependsFiles;
+	private List<URI> dependsURIs;
 
-	public List<File> getDependsFiles() {
-		return dependsFiles;
+	public List<URI> getDependsURIs() {
+		return dependsURIs;
 	}
 
-	private List<File> producesFiles;
+	private List<URI> producesURIs;
 
-	public List<File> getProducesFiles() {
-		return producesFiles;
+	public List<URI> getProducesURIs() {
+		return producesURIs;
 	}
 
 	private static final Object lock = new Object();
@@ -431,11 +434,15 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		if (getVerbose())
 			getLog().info("Started execution.");
 		setupMavenPaths();
-		setupFiles();
 		setupCatalogResolver();
 		setupEntityResolver();
+		setupSchemaFiles();
+		setupBindingFiles();
 		setupSchemas();
 		setupBindings();
+		setupDependsURIs();
+		setupProducesURIs();
+		setupURILastModifiedResolver();
 		if (getVerbose()) {
 			logConfiguration();
 		}
@@ -448,40 +455,63 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 		checkCatalogsInStrictMode();
 
-		if (optionsConfiguration.getGrammars().isEmpty()) {
+		if (getGrammars().isEmpty()) {
 			getLog().warn("No schemas to compile. Skipping XJC execution. ");
 		} else {
 
 			final O options = getOptionsFactory().createOptions(
 					optionsConfiguration);
 
-			final boolean isUpToDate = isUpToDate();
-			if (isUpToDate && getForceRegenerate()) {
+			if (getForceRegenerate()) {
+				getLog().warn(
+						"You are using forceRegenerate=true in your configuration.\n"
+								+ "This configuration setting is deprecated and not recommended "
+								+ "as it causes problems with incremental builds in IDEs.\n"
+								+ "Please refer to the following link for more information:\n"
+								+ "https://github.com/highsource/maven-jaxb2-plugin/wiki/Do-Not-Use-forceRegenerate\n"
+								+ "Consider removing this setting from your plugin configuration.\n");
 				getLog().info(
-						"Sources are up-to-date, but the [forceRegenerate] switch is turned on, XJC will be executed.");
-			} else if (!isUpToDate) {
-				getLog().info(
-						"Sources are not up-to-date, XJC will be executed.");
-
+						"The [forceRegenerate] switch is turned on, XJC will be executed.");
 			} else {
-				getLog().info(
-						"Generated sources are up-to-date, XJC will be skipped.");
-				return;
+				final boolean isUpToDate = isUpToDate();
+				if (!isUpToDate) {
+					getLog().info(
+							"Sources are not up-to-date, XJC will be executed.");
+				} else {
+					getLog().info(
+							"Sources are up-to-date, XJC will be skipped.");
+					return;
+				}
 			}
+
 			setupDirectories();
 			doExecute(options);
 			final BuildContext buildContext = getBuildContext();
 			getLog().debug(
 					MessageFormat.format(
-							"Refreshing generated directory [{0}].",
+							"Refreshing the generated directory [{0}].",
 							getGenerateDirectory().getAbsolutePath()));
 			buildContext.refresh(getGenerateDirectory());
-
 		}
 
 		if (getVerbose()) {
 			getLog().info("Finished execution.");
 		}
+	}
+
+	private URILastModifiedResolver uriLastModifiedResolver;
+
+	private void setupURILastModifiedResolver() {
+		this.uriLastModifiedResolver = new CompositeURILastModifiedResolver(
+				getLog());
+	}
+
+	protected URILastModifiedResolver getURILastModifiedResolver() {
+		if (uriLastModifiedResolver == null) {
+			throw new IllegalStateException(
+					"URILastModifiedResolver was not set up yet.");
+		}
+		return uriLastModifiedResolver;
 	}
 
 	private void checkCatalogsInStrictMode() {
@@ -576,13 +606,6 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 	}
 
-	protected void setupFiles() throws MojoExecutionException {
-		setupSchemaFiles();
-		setupBindingFiles();
-		setupDependsFiles();
-		setupProducesFiles();
-	}
-
 	protected void setupSchemaFiles() throws MojoExecutionException {
 		try {
 			final File schemaDirectory = getSchemaDirectory();
@@ -630,30 +653,45 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 	}
 
-	protected void setupDependsFiles() {
-		final List<File> dependsFiles = new ArrayList<File>();
+	protected void setupDependsURIs() {
 
-		dependsFiles.addAll(getSchemaFiles());
-		dependsFiles.addAll(getBindingFiles());
-		final File catalog = getCatalog();
-		if (catalog != null) {
-			dependsFiles.add(catalog);
-		}
+		final List<URI> dependsURIs = new LinkedList<URI>();
+
+		dependsURIs.addAll(getResolvedCatalogURIs());
+		dependsURIs.addAll(getResolvedSchemaURIs());
+		dependsURIs.addAll(getResolvedBindingURIs());
 		final File projectFile = getProject().getFile();
 		if (projectFile != null) {
-			dependsFiles.add(projectFile);
+			dependsURIs.add(projectFile.toURI());
 		}
 		if (getOtherDepends() != null) {
-			dependsFiles.addAll(Arrays.asList(getOtherDepends()));
+			for (File file : getOtherDepends()) {
+				if (file != null) {
+					dependsURIs.add(file.toURI());
+				}
+			}
 		}
-		this.dependsFiles = dependsFiles;
+		this.dependsURIs = dependsURIs;
 	}
 
-	protected void setupProducesFiles() throws MojoExecutionException {
+	private void setupProducesURIs() throws MojoExecutionException {
+		this.producesURIs = createProducesURIs();
+	}
+
+	protected List<URI> createProducesURIs() throws MojoExecutionException {
+		final List<URI> producesURIs = new LinkedList<URI>();
 		try {
-			this.producesFiles = IOUtils.scanDirectoryForFiles(
+			final List<File> producesFiles = IOUtils.scanDirectoryForFiles(
 					getBuildContext(), getGenerateDirectory(), getProduces(),
 					new String[0], !getDisableDefaultExcludes());
+			if (producesFiles != null) {
+				for (File producesFile : producesFiles) {
+					if (producesFile != null) {
+						producesURIs.add(producesFile.toURI());
+					}
+				}
+			}
+			return producesURIs;
 		} catch (IOException ioex) {
 			throw new MojoExecutionException("Could not setup produced files.",
 					ioex);
@@ -872,54 +910,85 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	 *         files (meaning no re-execution required).
 	 */
 	protected boolean isUpToDate() throws MojoExecutionException {
-		final List<File> dependsFiles = getDependsFiles();
-		final List<File> producesFiles = getProducesFiles();
+		final List<URI> dependsURIs = getDependsURIs();
+		final List<URI> producesURIs = getProducesURIs();
+		
+		getLog().info(
+				MessageFormat
+						.format("Up-to-date check for source resources [{0}] and taret resources [{1}].",
+								dependsURIs, producesURIs));
 
-		boolean delta = false;
+
+		boolean itIsKnownThatNoDependsURIsWereChanged = true;
 		{
-			for (File dependsFile : dependsFiles) {
-				if (getBuildContext().hasDelta(dependsFile)) {
-					if (getVerbose()) {
-						getLog().info(
-								"File ["
-										+ dependsFile.getAbsolutePath()
-										+ "] might have been changed since the last build.");
+			for (URI dependsURI : dependsURIs) {
+				if (FileURILastModifiedResolver.SCHEME
+						.equalsIgnoreCase(dependsURI.getScheme())) {
+					final File dependsFile = new File(dependsURI);
+					if (getBuildContext().hasDelta(dependsFile)) {
+						if (getVerbose()) {
+							getLog().debug(
+									MessageFormat
+											.format("File [{0}] might have been changed since the last build.",
+													dependsFile
+															.getAbsolutePath()));
+						}
+						// It is known that something was changed.
+						itIsKnownThatNoDependsURIsWereChanged = false;
 					}
-					delta = true;
+				} else {
+					// If this is not a file URI, we can't be sure
+					itIsKnownThatNoDependsURIsWereChanged = false;
 				}
 			}
 		}
-		if (!delta) {
-			if (getVerbose()) {
-				getLog().info("No files were changed since the last build.");
-			}
+		if (itIsKnownThatNoDependsURIsWereChanged) {
+			getLog().info(
+					"According to the build context, all of the [dependURIs] are up-to-date.");
 			return true;
 		}
-		if (getVerbose()) {
-			getLog().info(
-					MessageFormat.format("Checking up-to-date depends [{0}].",
-							dependsFiles));
-		}
-		if (getVerbose()) {
-			getLog().info(
-					MessageFormat.format("Checking up-to-date produces [{0}].",
-							producesFiles));
-		}
 
-		final Long dependsTimestamp = CollectionUtils.bestValue(dependsFiles,
-				IOUtils.LAST_MODIFIED, CollectionUtils.<Long> gt());
-		final Long producesTimestamp = CollectionUtils.bestValue(producesFiles,
-				IOUtils.LAST_MODIFIED, CollectionUtils.<Long> lt());
+		final Function<URI, Long> LAST_MODIFIED = new Function<URI, Long>() {
+			public Long eval(URI uri) {
+				return getURILastModifiedResolver().getLastModified(uri);
+			}
+		};
 
-		if (getVerbose()) {
-			getLog().info(
+		getLog().debug(
+				MessageFormat
+						.format("Checking the last modification timestamp of the source resources [{0}].",
+								dependsURIs));
+
+		final Long dependsTimestamp = CollectionUtils.bestValue(dependsURIs,
+				LAST_MODIFIED, CollectionUtils.<Long> gtWithNullAsGreatest());
+
+		getLog().debug(
+				MessageFormat
+						.format("Checking the last modification timestamp of the target resources [{0}].",
+								producesURIs));
+
+		final Long producesTimestamp = CollectionUtils.bestValue(producesURIs,
+				LAST_MODIFIED, CollectionUtils.<Long> ltWithNullAsSmallest());
+
+		if (dependsTimestamp == null) {
+			getLog().debug(
+					"Latest timestamp of the source resources is unknown. Assuming that something was changed.");
+			return false;
+		}
+		if (producesTimestamp == null) {
+			getLog().debug(
 					MessageFormat
-							.format("Depends timestamp [{0,date,yyyy-MM-dd HH:mm:ss.SSS}], produces timestamp [{1,date,yyyy-MM-dd HH:mm:ss.SSS}].",
-									dependsTimestamp, producesTimestamp));
+							.format("Latest Timestamp of the source resources is [{0,date,yyyy-MM-dd HH:mm:ss.SSS}], however the ealiest timestamp of the target resources is not unknown. Assuming that something was changed.",
+									dependsTimestamp));
+			return false;
 		}
-		return producesTimestamp != null
-				&& CollectionUtils.<Long> lt().compare(dependsTimestamp,
-						producesTimestamp) > 0;
+
+		getLog().info(
+				MessageFormat
+						.format("Latest timestamp of the source resources is [{0,date,yyyy-MM-dd HH:mm:ss.SSS}], ealiest timestamp of the target resources is [{1,date,yyyy-MM-dd HH:mm:ss.SSS}].",
+								dependsTimestamp, producesTimestamp));
+		final boolean upToDate = dependsTimestamp < producesTimestamp;
+		return upToDate;
 	}
 
 	/**

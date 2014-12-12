@@ -32,7 +32,7 @@ public class URILastModifiedResolverTest {
 		Assert.assertNotNull(resolver.getLastModified(fileURI));
 
 		// Switch to true to tests HTTP/HTTPs
-		boolean online = true;
+		boolean online = false;
 		if (online) {
 			final URI httpsURI = new URI("https://ya.ru/");
 			final URI httpURI = new URI("http://schemas.opengis.net/ogc_schema_updates.rss");

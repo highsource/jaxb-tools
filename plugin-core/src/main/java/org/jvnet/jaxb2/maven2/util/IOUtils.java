@@ -113,42 +113,4 @@ public class IOUtils {
 
 		return files;
 	}
-
-	public static final String JAR_SCHEME = "jar";
-	public static final String SEPARATOR = "!/";
-
-	public static URI getMainURIFromJarURI(URI uri)
-			throws MalformedURLException, URISyntaxException {
-		final URL url = uri.toURL();
-		final String spec = url.getFile();
-		final int separatorPosition = spec.indexOf(SEPARATOR);
-		if (separatorPosition == -1) {
-			throw new MalformedURLException("no !/ found in url spec:" + spec);
-		}
-		final String mainURIString = separatorPosition < 0 ? spec : spec
-				.substring(0, separatorPosition);
-		return new URI(mainURIString);
-	}
-
-	public static Long getLastModifiedForFileURI(URI uri) {
-		try {
-			final File file = new File(uri);
-			if (file.exists()) {
-				long lastModified = file.lastModified();
-				if (lastModified == 0) {
-					// File does not exist or IO exception occured - return null
-					// for unknown
-					return null;
-				} else {
-					return lastModified;
-				}
-			} else {
-				// File does not exist - return null for unknown
-				return null;
-			}
-		} catch (IllegalArgumentException iaex) {
-			// Error creating a file from URI - return null for unknown
-			return null;
-		}
-	}
 }

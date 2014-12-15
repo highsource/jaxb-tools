@@ -62,11 +62,11 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 			this.type = this.getter != null ? this.getter.type() : fieldOutline
 					.getRawType();
 
-			final JFieldVar field = theClass.fields().get(publicName);
-			this.constantField = field != null
-					&& ((field.mods().getValue() & JMod.PUBLIC) != 0)
-					&& ((field.mods().getValue() & JMod.STATIC) != 0)
-					&& ((field.mods().getValue() & JMod.FINAL) != 0) ? field
+			final JFieldVar constantField = theClass.fields().get(publicName);
+			this.constantField = constantField != null
+					&& ((constantField.mods().getValue() & JMod.PUBLIC) != 0)
+					&& ((constantField.mods().getValue() & JMod.STATIC) != 0)
+					&& ((constantField.mods().getValue() & JMod.FINAL) != 0) ? constantField
 					: null;
 			// fieldOutline.getRawType();
 			final JType rawType = fieldOutline.getRawType();
@@ -237,5 +237,4 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 			}
 		}
 	}
-
 }

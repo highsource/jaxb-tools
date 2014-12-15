@@ -40,6 +40,7 @@ public class MavenCatalogResolver extends
 	protected CatalogManager getCatalogManager() {
 		return catalogManager;
 	}
+
 	protected Log getLog() {
 		return log;
 	}
@@ -58,6 +59,10 @@ public class MavenCatalogResolver extends
 								publicId, systemId, superResolvedEntity));
 		if (superResolvedEntity != null) {
 			systemId = superResolvedEntity;
+		}
+
+		if (systemId == null) {
+			return null;
 		}
 
 		try {

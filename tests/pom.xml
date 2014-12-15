@@ -2,7 +2,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jvnet.jaxb2_commons</groupId>
 	<artifactId>jaxb2-basics-tests</artifactId>
 	<packaging>pom</packaging>
 	<name>JAXB2 Basics - Tests</name>
@@ -10,18 +9,21 @@
 		<groupId>org.jvnet.jaxb2_commons</groupId>
 		<artifactId>jaxb2-basics-project</artifactId>
 		<version>0.9.2-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<modules>
 		<module>episodes</module>
-		<module>one</module>
+		<module>ignoring</module>
 		<module>issues</module>
+		<module>JAXB-1058</module>
+		<module>one</module>
+		<module>simplify-01</module>
+		<module>wildcard</module>
 		<module>zj</module>
 	</modules>
 	<dependencies>
 		<dependency>
-			<groupId>com.sun.xml.bind</groupId>
-			<artifactId>jaxb-impl</artifactId>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.jvnet.jaxb2_commons</groupId>

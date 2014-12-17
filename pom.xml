@@ -54,6 +54,7 @@
 		<jaxb2-basics.version>0.9.0</jaxb2-basics.version>
 		<maven.plugin.testing.version>2.1</maven.plugin.testing.version>
 		<maven.plugin.plugin.version>3.2</maven.plugin.plugin.version>
+		<slf4j.version>1.7.7</slf4j.version>
 	</properties>
 	<profiles>
 		<profile>
@@ -244,34 +245,16 @@
 				<artifactId>commons-lang3</artifactId>
 				<version>3.2.1</version>
 			</dependency>
+			<!-- SLF4J -->
 			<dependency>
-				<groupId>commons-logging</groupId>
-				<artifactId>commons-logging</artifactId>
-				<version>1.1.1</version>
-				<exclusions>
-					<exclusion>
-						<groupId>log4j</groupId>
-						<artifactId>log4j</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>logkit</groupId>
-						<artifactId>logkit</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>avalon-framework</groupId>
-						<artifactId>avalon-framework</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>javax.servlet</groupId>
-						<artifactId>servlet-api</artifactId>
-					</exclusion>
-				</exclusions>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
 			</dependency>
-			<!-- Log4j -->
 			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>1.2.13</version>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>${slf4j.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

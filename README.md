@@ -12,8 +12,8 @@ Please refer to the [wiki](https://github.com/highsource/jaxb2-basics/wiki) for 
 * [Using JAXB2 Basics Plugins](https://github.com/highsource/jaxb2-basics/wiki/Using-JAXB2-Basics-Plugins)
 
 ## JAXB2 Basics Plugins
-* [[Equals Plugin|JAXB2 SimpleEquals Plugin]] - generates runtime-free reflection-free `equals(...)` methods.
-* [[HashCode Plugin|JAXB2 SimpleHashCode Plugin]] - generates runtime-free reflection-free `hashCode()` methods.
+* [SimpleEquals Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-SimpleEquals-Plugin) - generates runtime-free reflection-free `equals(...)` methods.
+* [SimpleHashCode Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-SimpleHashCode-Plugin) - generates runtime-free reflection-free `hashCode()` methods.
 * Equals Plugin - generates reflection-free strategic `equals(...)` method.
 * HashCode Plugin - generates reflection-free strategic `hashCode()` method.
 * ToString Plugin - generates reflection-free strategic `toString()` methods.
@@ -29,4 +29,4 @@ Please refer to the [wiki](https://github.com/highsource/jaxb2-basics/wiki) for 
 
 ## Credits ##
 
-* Many thanks to **James Annesley** for his ideas and help with the [[JAXB2 SimpleEquals Plugin]] and [[JAXB2 SimpleHashCode Plugin]].
+* Many thanks to **James Annesley** for his ideas and help with the [SimpleEquals Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-SimpleEquals-Plugin) and the [SimpleHashCode Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-SimpleHashCode-Plugin).

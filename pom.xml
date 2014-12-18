@@ -37,6 +37,7 @@
 		</developer>
 	</developers>
 	<modules>
+		<module>slf4j</module>
 		<module>plugin-core</module>
 		<module>plugin-2.0</module>
 		<module>plugin-2.1</module>
@@ -104,6 +105,16 @@
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin-slf4j-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin-slf4j-binding</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin-core</artifactId>

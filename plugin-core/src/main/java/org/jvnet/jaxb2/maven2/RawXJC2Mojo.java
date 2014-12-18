@@ -30,7 +30,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
 import java.util.TreeMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -47,8 +46,6 @@ import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.artifact.InvalidDependencyVersionException;
 import org.codehaus.plexus.util.FileUtils;
-import org.hisrc.maven.plugin.logging.slfj4.LogLoggerFactory;
-import org.hisrc.slf4j.impl.StaticLoggerFactoryBinder;
 import org.jvnet.jaxb2.maven2.net.CompositeURILastModifiedResolver;
 import org.jvnet.jaxb2.maven2.net.FileURILastModifiedResolver;
 import org.jvnet.jaxb2.maven2.net.URILastModifiedResolver;
@@ -59,8 +56,6 @@ import org.jvnet.jaxb2.maven2.util.CollectionUtils;
 import org.jvnet.jaxb2.maven2.util.CollectionUtils.Function;
 import org.jvnet.jaxb2.maven2.util.IOUtils;
 import org.jvnet.jaxb2.maven2.util.LocaleUtils;
-import org.slf4j.ILoggerFactory;
-import org.slf4j.LoggerFactory;
 import org.sonatype.plexus.build.incremental.BuildContext;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
@@ -547,13 +542,6 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		if (getVerbose()) {
 			System.setProperty("com.sun.tools.xjc.Options.findServices", "true");
 		}
-
-		// TODO properties
-		final ILoggerFactory loggerFactory = new LogLoggerFactory(getLog(),
-				new Properties());
-		
-		StaticLoggerFactoryBinder.INSTANCE.setLoggerFactory(loggerFactory);
-		LoggerFactory.getLogger(getClass()).info("SLF4J logging was set up successfully");
 	}
 
 	/**

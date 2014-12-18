@@ -4,7 +4,6 @@ import org.apache.maven.plugin.logging.Log;
 import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MarkerIgnoringBase;
 import org.slf4j.helpers.MessageFormatter;
-import org.slf4j.impl.SimpleLoggerFactory;
 import org.slf4j.spi.LocationAwareLogger;
 
 public class LogLogger extends MarkerIgnoringBase {

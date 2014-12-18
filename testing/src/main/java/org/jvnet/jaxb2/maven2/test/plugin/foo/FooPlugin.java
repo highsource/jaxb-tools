@@ -3,8 +3,8 @@ package org.jvnet.jaxb2.maven2.test.plugin.foo;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.ErrorHandler;
 
 import com.sun.tools.xjc.Options;
@@ -18,7 +18,7 @@ import com.sun.tools.xjc.outline.Outline;
 
 public class FooPlugin extends Plugin {
 
-	private Log logger = LogFactory.getLog(getClass());
+	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public String getOptionName() {

@@ -8,7 +8,6 @@ import java.util.Properties;
 
 import org.apache.commons.lang3.Validate;
 import org.slf4j.helpers.Util;
-import org.slf4j.impl.SimpleLoggerFactory;
 import org.slf4j.spi.LocationAwareLogger;
 
 public class LogLoggerConfiguration {

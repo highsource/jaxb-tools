@@ -6,12 +6,12 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.maven.plugin.Mojo;
 import org.apache.maven.project.MavenProject;
 import org.jvnet.jaxb2.maven2.AbstractXJC2Mojo;
 import org.jvnet.mjiip.v_2.XJC2Mojo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract test for plugins.
@@ -23,7 +23,7 @@ public class RunXJC2Mojo extends TestCase {
 	/**
 	 * Logger.
 	 */
-	protected Log log = LogFactory.getLog(RunXJC2Mojo.class);
+	protected Logger log = LoggerFactory.getLogger(RunXJC2Mojo.class);
 
 	public void testExecute() throws Exception {
 		final Mojo mojo = initMojo();

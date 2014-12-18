@@ -34,8 +34,8 @@ public class SimpleHashCodePlugin extends
 
 	@Override
 	public String getUsage() {
-		// TODO
-		return "TBD";
+		return "  -XsimpleEquals :  Generate reflection-free runtime-free hashCode() methods.\n" +
+		       "                    See https://github.com/highsource/jaxb2-basics/wiki/JAXB2-SimpleHashCode-Plugin";
 	}
 
 	@Override

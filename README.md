@@ -26,6 +26,7 @@ Please refer to the [wiki](https://github.com/highsource/jaxb2-basics/wiki) for 
 * [Simplify Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-Simplify-Plugin) - simplifies weird properties like `aOrBOrC`.
 * [EnumValue Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-EnumValue-Plugin) - makes all the generated enums implement the `EnumValue<T>` interface.
 * JAXBIndex Plugin - generated `jaxb.index` files listing schema-derived classes.
+* [FixJAXB1058 Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-FixJAXB1058-Plugin) - fixes [JAXB-1058](https://java.net/jira/browse/JAXB-1058).
 
 ## Credits ##
 

@@ -1,11 +1,12 @@
 package org.jvnet.jaxb2_commons.tests.issues;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class JIIB36Test extends TestCase {
+public class JIIB36Test {
 
-	public void testException() throws Exception {
+	@Test
+	public void runsWithoutException() {
 
 		final IssueJIIB36 one = new IssueJIIB36();
 		final IssueJIIB36 two = new IssueJIIB36();

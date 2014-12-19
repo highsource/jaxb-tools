@@ -14,6 +14,4 @@ public interface FieldAccessorEx extends FieldAccessor {
 	public boolean isVirtual();
 
 	public boolean isAlwaysSet();
-
-	public void getValue(JBlock block, JVar $var, boolean checkHasSetValue);
 }

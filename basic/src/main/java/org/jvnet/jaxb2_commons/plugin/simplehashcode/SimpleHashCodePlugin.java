@@ -99,7 +99,7 @@ public class SimpleHashCodePlugin extends
 					final JVar value = block.decl(fieldAccessor.getType(),
 							"the" + propertyName);
 
-					fieldAccessor.getValue(block, value, false);
+					fieldAccessor.toRawValue(block, value);
 					final JType exposedType = fieldAccessor.getType();
 
 					final Collection<JType> possibleTypes = FieldUtils

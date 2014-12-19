@@ -5,9 +5,9 @@
 
 	<xs:annotation>
 		<xs:appinfo>
-			<!-- jaxb:globalBindings optionalProperty="primitive"
+			<jaxb:globalBindings optionalProperty="primitive"
 				generateIsSetMethod="true">
-			</jaxb:globalBindings-->
+			</jaxb:globalBindings>
 			<jaxb:schemaBindings>
 				<jaxb:package
 					name="org.jvnet.jaxb2_commons.tests.simple_hashcode_equals_01.cases" />
@@ -56,7 +56,8 @@
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="char" type="xs:string">
+			<!-- See JAXB-1061 -->
+			<!--  xs:element name="char">
 				<xs:annotation>
 					<xs:appinfo>
 						<jaxb:property>
@@ -64,7 +65,13 @@
 						</jaxb:property>
 					</xs:appinfo>
 				</xs:annotation>
-			</xs:element>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element-->
 			<xs:element name="double" type="xs:double">
 				<xs:annotation>
 					<xs:appinfo>
@@ -112,6 +119,19 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+
+	<xs:element name="unboxedPrimitives">
+		<xs:complexType>
+			<xs:attribute name="unboxedBoolean" type="xs:boolean" use="optional" />
+			<xs:attribute name="unboxedByte" type="xs:byte" use="optional" />
+			<!--xs:attribute name="unboxedChar" type="xs:char" use="optional" /-->
+			<xs:attribute name="unboxedDouble" type="xs:double" use="optional" />
+			<xs:attribute name="unboxedFloat" type="xs:float" use="optional" />
+			<xs:attribute name="unboxedLong" type="xs:long" use="optional" />
+			<xs:attribute name="unboxedInt" type="xs:int" use="optional" />
+			<xs:attribute name="unboxedShort" type="xs:short" use="optional" />
+		</xs:complexType>
+	</xs:element>
 
 	<xs:complexType name="arbitraryObject">
 		<xs:sequence>

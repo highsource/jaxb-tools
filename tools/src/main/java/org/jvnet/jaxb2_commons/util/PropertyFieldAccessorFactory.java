@@ -40,8 +40,11 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 		private final JMethod getter;
 		private final JMethod setter;
 		private final JFieldVar constantField;
+		private final JFieldVar field;
 		private FieldAccessor fieldAccessor;
 		private final JType type;
+		@SuppressWarnings("unused")
+		private final JType fieldType;
 
 		public PropertyFieldAccessor(final FieldOutline fieldOutline,
 				JExpression targetObject) {
@@ -51,16 +54,25 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 			this.fieldAccessor = fieldOutline.create(targetObject);
 			final String publicName = fieldOutline.getPropertyInfo().getName(
 					true);
+			final String privateName = fieldOutline.getPropertyInfo().getName(
+					false);
 			this.theClass = fieldOutline.parent().implClass;
 			final String setterName = "set" + publicName;
 			final JMethod getGetter = theClass.getMethod("get" + publicName,
 					ABSENT);
 			final JMethod isGetter = theClass.getMethod("is" + publicName,
 					ABSENT);
+			final JFieldVar field = theClass.fields().get(privateName);
+			this.field = field != null
+					&& ((field.mods().getValue() & JMod.PROTECTED) != 0)
+					&& ((field.mods().getValue() & JMod.STATIC) == 0)
+					&& ((field.mods().getValue() & JMod.FINAL) == 0) ? field
+					: null;
 			this.getter = getGetter != null ? getGetter
 					: (isGetter != null ? isGetter : null);
 			this.type = this.getter != null ? this.getter.type() : fieldOutline
 					.getRawType();
+			this.fieldType = this.field != null ? this.field.type() : this.type;
 
 			final JFieldVar constantField = theClass.fields().get(publicName);
 			this.constantField = constantField != null
@@ -103,9 +115,6 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 		public boolean isAlwaysSet() {
 			if (constantField != null) {
 				return true;
-			} else if (type.isPrimitive()) {
-				// TODO this is due to a bug in JAXB - char does not get unboxed
-				return true;
 			} else {
 				return JExpr.TRUE == fieldAccessor.hasSetValue();
 			}
@@ -116,9 +125,6 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 				return JExpr.TRUE;
 			} else if (isSetter != null) {
 				return targetObject.invoke(isSetter);
-			} else if (type.isPrimitive()) {
-				// TODO this is due to a bug in JAXB - char does not get unboxed
-				return JExpr.TRUE;
 			} else {
 				return fieldAccessor.hasSetValue();
 			}
@@ -216,23 +222,6 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 					block.assign($var, targetObject.invoke(getter));
 				} else {
 					fieldAccessor.toRawValue(block, $var);
-				}
-			}
-		}
-
-		@Override
-		public void getValue(JBlock block, JVar $var, boolean checkHasSetValue) {
-			if (checkHasSetValue) {
-				toRawValue(block, $var);
-			} else {
-				if (constantField != null) {
-					block.assign($var, theClass.staticRef(this.constantField));
-				} else {
-					if (getter != null) {
-						block.assign($var, targetObject.invoke(getter));
-					} else {
-						fieldAccessor.toRawValue(block, $var);
-					}
 				}
 			}
 		}

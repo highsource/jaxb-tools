@@ -98,11 +98,11 @@ public class SimpleEqualsPlugin extends
 
 				final JType type = leftFieldAccessor.getType();
 				final JVar leftValue = block.decl(type, "left" + name);
-				leftFieldAccessor.getValue(block, leftValue, false);
+				leftFieldAccessor.toRawValue(block, leftValue);
 
 				final JVar rightValue = block.decl(
 						rightFieldAccessor.getType(), "right" + name);
-				rightFieldAccessor.getValue(block, rightValue, false);
+				rightFieldAccessor.toRawValue(block, rightValue);
 
 				final JType exposedType = leftFieldAccessor.getType();
 

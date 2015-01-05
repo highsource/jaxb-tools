@@ -19,8 +19,8 @@ public class Gh6Test {
 	@Test
 	public void compiles() {
 		final SimplifyElementsPropertyAsElementPropertyType item = new SimplifyElementsPropertyAsElementPropertyType();
-		item.getInt();
-		item.getString();
+		item.getInts();
+		item.getStrings();
 	}
 	
 	public void testElementsPropertyAsElementPropertyType() throws Exception {
@@ -31,7 +31,7 @@ public class Gh6Test {
 						getClass().getResourceAsStream("simplifyElementsPropertyAsElementProperty.xml")))
 				.getValue();
 
-		Assert.assertEquals(3, value.getString().size());
-		Assert.assertEquals(3, value.getInt().size());
+		Assert.assertEquals(3, value.getStrings().size());
+		Assert.assertEquals(3, value.getInts().size());
 	}
 }

@@ -15,6 +15,7 @@ import org.jvnet.jaxb2_commons.plugin.Ignoring;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
 import org.xml.sax.ErrorHandler;
 
+import com.sun.codemodel.JJavaName;
 import com.sun.tools.xjc.model.CAdapter;
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
 import com.sun.tools.xjc.model.CClassInfo;
@@ -32,6 +33,16 @@ import com.sun.tools.xjc.model.Model;
 import com.sun.xml.bind.v2.model.core.ID;
 
 public class SimplifyPlugin extends AbstractParameterizablePlugin {
+
+	private boolean usePluralForm = true;
+
+	public boolean isUsePluralForm() {
+		return usePluralForm;
+	}
+
+	public void setUsePluralForm(boolean usePluralForm) {
+		this.usePluralForm = usePluralForm;
+	}
 
 	@Override
 	public String getOptionName() {
@@ -240,8 +251,7 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 			CReferencePropertyInfo property, CElement element,
 			final CElementInfo elementInfo) {
 		final CElementPropertyInfo elementPropertyInfo;
-		final String propertyName = createPropertyName(model, element);
-
+		final String propertyName = createPropertyName(model, property, element);
 		final CElementPropertyInfo originalPropertyInfo = elementInfo
 				.getProperty();
 		elementPropertyInfo = new CElementPropertyInfo(propertyName,
@@ -266,7 +276,7 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 			CReferencePropertyInfo property, CElement element,
 			final CClassInfo classInfo) {
 		final CElementPropertyInfo elementPropertyInfo;
-		final String propertyName = createPropertyName(model, element);
+		final String propertyName = createPropertyName(model, property, element);
 		elementPropertyInfo = new CElementPropertyInfo(propertyName,
 				property.isCollection() ? CollectionMode.REPEATED_ELEMENT
 						: CollectionMode.NOT_REPEATED, ID.NONE, null,
@@ -296,7 +306,7 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 	//
 	private CReferencePropertyInfo createReferencePropertyInfo(
 			final Model model, CReferencePropertyInfo property, CElement element) {
-		final String propertyName = createPropertyName(model, element);
+		final String propertyName = createPropertyName(model, property, element);
 		final CReferencePropertyInfo referencePropertyInfo = new CReferencePropertyInfo(
 				propertyName, property.isCollection(), /* required */false,/* mixed */
 				false, element.getSchemaComponent(),
@@ -320,7 +330,7 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 
 	private CElementPropertyInfo createElementPropertyInfo(final Model model,
 			CElementPropertyInfo property, CTypeRef typeRef) {
-		final String propertyName = createPropertyName(model, typeRef);
+		final String propertyName = createPropertyName(model, property, typeRef);
 		boolean required = false;
 		final CElementPropertyInfo elementPropertyInfo = new CElementPropertyInfo(
 				propertyName,
@@ -337,7 +347,8 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 		return elementPropertyInfo;
 	}
 
-	private String createPropertyName(final Model model, CElement element) {
+	private String createPropertyName(final Model model,
+			CPropertyInfo propertyInfo, CElement element) {
 		final String localPart;
 		if (element instanceof CClassRef) {
 			final CClassRef classRef = (CClassRef) element;
@@ -348,13 +359,20 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 		}
 		final String propertyName = model.getNameConverter().toPropertyName(
 				localPart);
-		return propertyName;
+		return pluralizeIfNecessary(propertyInfo, propertyName);
 	}
 
-	private String createPropertyName(final Model model, CTypeRef element) {
+	private String createPropertyName(final Model model,
+			CPropertyInfo propertyInfo, CTypeRef element) {
 		final String propertyName = model.getNameConverter().toPropertyName(
 				element.getTagName().getLocalPart());
-		return propertyName;
+		return pluralizeIfNecessary(propertyInfo, propertyName);
+	}
+
+	private String pluralizeIfNecessary(CPropertyInfo propertyInfo,
+			final String propertyName) {
+		return (propertyInfo.isCollection() && isUsePluralForm())? JJavaName
+				.getPluralForm(propertyName) : propertyName;
 	}
 
 }

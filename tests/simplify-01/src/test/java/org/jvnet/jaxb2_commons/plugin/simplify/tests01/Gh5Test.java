@@ -19,8 +19,8 @@ public class Gh5Test {
 	@Test
 	public void compiles() {
 		final SimplifyReferencesPropertyAsReferencePropertyType item = new SimplifyReferencesPropertyAsReferencePropertyType();
-		item.getBase();
-		item.getBaseElement();
+		item.getBases();
+		item.getBaseElements();
 	}
 
 	@Test
@@ -35,7 +35,7 @@ public class Gh5Test {
 										"simplifyReferencesPropertyAsReferenceProperty.xml")))
 				.getValue();
 
-		Assert.assertEquals(3, value.getBase().size());
-		Assert.assertEquals(3, value.getBaseElement().size());
+		Assert.assertEquals(3, value.getBases().size());
+		Assert.assertEquals(3, value.getBaseElements().size());
 	}
 }

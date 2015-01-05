@@ -16,8 +16,8 @@ public class Gh1Test {
 	public void compiles()
 	{
 		final Gh1 item = new Gh1();
-		item.getA();
-		item.getB();
+		item.getAS();
+		item.getBS();
 		item.getMixedContent();
 		
 	}
@@ -26,8 +26,8 @@ public class Gh1Test {
 	public void contextIsSuccessfullyCreated() throws JAXBException {
 		final JAXBContext context = JAXBContext.newInstance(Gh1.class);
 		final Gh1 value = new Gh1();
-		value.getA().add("a");
-		value.getB().add(2);
+		value.getAS().add("a");
+		value.getBS().add(2);
 		value.getMixedContent().add("Test");
 
 		final StringWriter sw = new StringWriter();

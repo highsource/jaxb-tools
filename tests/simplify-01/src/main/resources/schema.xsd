@@ -101,4 +101,15 @@
 		</xs:annotation>
 	</xs:element>
 
+	<xs:complexType name="gh18">
+		<xs:sequence>
+			<xs:element name="a" type="xs:string" />
+			<xs:choice>
+				<xs:element name="child" type="xs:dateTime" maxOccurs="unbounded" />
+				<xs:element name="foot" type="xs:duration" maxOccurs="unbounded" />
+				<xs:element name="foo" type="xs:int" maxOccurs="unbounded" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
 </xs:schema>

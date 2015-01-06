@@ -28,7 +28,7 @@ public class RunSimplifyPlugin {
 		URL binding = getClass().getResource("/binding.xjb");
 		final String[] arguments = new String[] { "-xmlschema",
 				schema.toExternalForm(), "-b", binding.toExternalForm(), "-d",
-				"target/generated-sources/xjc", "-extension", "-Xsimplify"};
+				"target/generated-sources/xjc", "-extension", "-Xsimplify", "-Xsimplify-usePluralForm=true"};
 
 		Options options = new Options();
 		options.parseArguments(arguments);

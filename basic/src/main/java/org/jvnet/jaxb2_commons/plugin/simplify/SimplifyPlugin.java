@@ -34,7 +34,7 @@ import com.sun.xml.bind.v2.model.core.ID;
 
 public class SimplifyPlugin extends AbstractParameterizablePlugin {
 
-	private boolean usePluralForm = true;
+	private boolean usePluralForm = false;
 
 	public boolean isUsePluralForm() {
 		return usePluralForm;
@@ -358,15 +358,15 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 			localPart = element.getElementName().getLocalPart();
 		}
 		final String propertyName = model.getNameConverter().toPropertyName(
-				localPart);
-		return pluralizeIfNecessary(propertyInfo, propertyName);
+				pluralizeIfNecessary(propertyInfo, localPart));
+		return propertyName;
 	}
 
 	private String createPropertyName(final Model model,
 			CPropertyInfo propertyInfo, CTypeRef element) {
 		final String propertyName = model.getNameConverter().toPropertyName(
-				element.getTagName().getLocalPart());
-		return pluralizeIfNecessary(propertyInfo, propertyName);
+				pluralizeIfNecessary(propertyInfo, element.getTagName().getLocalPart()));
+		return propertyName;
 	}
 
 	private String pluralizeIfNecessary(CPropertyInfo propertyInfo,

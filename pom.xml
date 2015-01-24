@@ -5,7 +5,7 @@
 	<groupId>org.jvnet.jaxb2_commons</groupId>
 	<artifactId>jaxb2-basics-project</artifactId>
 	<packaging>pom</packaging>
-	<version>0.9.3-SNAPSHOT</version>
+	<version>0.9.3</version>
 	<name>JAXB2 Basics - Project</name>
 	<url>https://github.com/highsource/jaxb2-basics</url>
 	<description>JAXB2 Basics is a part of JAXB2 Commons project which implements plugins and tools for JAXB 2.x reference implementation.</description>
@@ -84,10 +84,17 @@
 			</modules>
 		</profile>
 		<profile>
+			<id>dist</id>
+			<modules>
+				<module>dist</module>
+			</modules>
+		</profile>
+		<profile>
 			<id>all</id>
 			<modules>
 				<module>samples</module>
 				<module>tests</module>
+				<module>dist</module>
 			</modules>
 		</profile>
 	</profiles>

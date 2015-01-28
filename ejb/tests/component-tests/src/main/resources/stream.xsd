@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+           xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+           targetNamespace="http://schemas.hp.com/bto/dwh/v1/dw_etl_stream"
+           elementFormDefault="qualified" version="1.0"
+           jaxb:extensionBindingPrefixes="hj orm"
+           jaxb:version="1.0">
+    <xs:annotation>
+        <!-- ******************** -->
+        <!-- Target Schema Header -->
+        <!-- ******************** -->
+        <xs:documentation>
+            BTO DWH
+        </xs:documentation>
+        <!-- Global JAXB directives -->
+        <xs:appinfo>
+            <jaxb:globalBindings generateIsSetMethod="true" localScoping="toplevel">
+                <jaxb:serializable/>
+            </jaxb:globalBindings>
+            <jaxb:schemaBindings>
+                <jaxb:package name="org.hyperjaxbtests.component" />
+            </jaxb:schemaBindings>
+            <hj:persistence>
+                <hj:default-one-to-many>
+                    <orm:join-column/>
+                </hj:default-one-to-many>
+            </hj:persistence>
+        </xs:appinfo>
+    </xs:annotation>
+    <xs:element name="JobStream">
+        <xs:annotation>
+            <xs:documentation>JobStream element is the root element in the stream file.
+
+            </xs:documentation>
+            <xs:appinfo>
+                <hj:class>
+                    <hj:table name="JOB_STREAM_DT" />
+                    <id name="Hjid"	type="org.hibernate.type.LongType">
+                        <generator class="AUTO"/>
+                    </id>
+                </hj:class>
+            </xs:appinfo></xs:annotation>
+
+        <xs:complexType>
+            <xs:sequence>
+            <xs:element name="JobStreamSteps">
+                <xs:complexType>
+                    <!--<xs:annotation>
+                                     <xs:appinfo>
+                                         <hj:embedded/>
+                                     </xs:appinfo>
+                                 </xs:annotation>                       --> <xs:annotation>
+                    <xs:documentation>The JobStreamStep element represents a task in a stream.</xs:documentation></xs:annotation>
+                    <xs:sequence>
+                        <xs:element name="JobStreamStep" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <!-- customize table name -->
+                                        <hj:entity>
+                                            <hj:table name="JOB_STREAM_STEP_DT" />
+                                        </hj:entity>
+                                        <!-- end of table name customization -->
+                                    </xs:appinfo>
+                                </xs:annotation>
+                                <xs:attribute name="dwid" use="required">
+                                    <xs:annotation>
+                                        <xs:documentation>Unique id of the step</xs:documentation></xs:annotation>
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:maxLength value="80" />
+                                            <xs:minLength value="1" />
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:attribute>
+                                <xs:attribute name="businessname" use="required">
+                                    <xs:annotation>
+                                        <xs:documentation>Label for step</xs:documentation></xs:annotation>
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:maxLength value="255" />
+                                            <xs:minLength value="1" />
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:attribute>
+                                <xs:attribute name="catalog" use="required">
+                                    <xs:annotation>
+                                        <xs:documentation>catalog	Yes	ABC catalog from which the executables are referred. The value is always set to &quot;platform&quot; catalog which has a set of mnemonics.</xs:documentation></xs:annotation>
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:maxLength value="80" />
+                                            <xs:minLength value="1" />
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:attribute>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

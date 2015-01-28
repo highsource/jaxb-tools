@@ -1,7 +1,6 @@
-package org.hyperjaxb3tests;
+package org.jvnet.hyperjaxb3.ejb.tests.componentjpa2.tests;
 
 
-import org.hyperjaxbtests.component.JobStream;
 import org.junit.Test;
 import org.jvnet.hyperjaxb3.xml.bind.JAXBContextUtils;
 
@@ -32,7 +31,7 @@ public class TestHyperJaxb {
         EntityManager em = emf.createEntityManager();
 
         // deserialize test XML document
-        JobStream jaxbElement = (JobStream) JAXBContextUtils.unmarshal("org.hyperjaxbtests.component", readFileAsString("src/test/resources/tests.xml"));
+        JobStream jaxbElement = (JobStream) JAXBContextUtils.unmarshal("org.jvnet.hyperjaxb3.ejb.tests.componentjpa2.tests", readFileAsString("src/test/resources/tests.xml"));
         //JobStream mails = (JobStream) JAXBElementUtils.getValue(jaxbElement);
 
         // persist object
@@ -84,7 +83,7 @@ public class TestHyperJaxb {
     }
 
     private String getPersistenceUnitName() {
-        return "org.hyperjaxbtests.component";
+        return "org.jvnet.hyperjaxb3.ejb.tests.componentjpa2.tests";
     }
 
     public Properties getEntityManagerFactoryProperties() {

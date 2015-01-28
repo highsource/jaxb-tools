@@ -19,7 +19,7 @@
                 <jaxb:serializable/>
             </jaxb:globalBindings>
             <jaxb:schemaBindings>
-                <jaxb:package name="org.hyperjaxbtests.component" />
+                <jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.componentjpa2.tests" />
             </jaxb:schemaBindings>
             <hj:persistence>
                 <hj:default-one-to-many>
@@ -46,11 +46,10 @@
             <xs:sequence>
             <xs:element name="JobStreamSteps">
                 <xs:complexType>
-                    <!--<xs:annotation>
+			<xs:annotation>
                                      <xs:appinfo>
-                                         <hj:embedded/>
+                                         <hj:embeddable/>
                                      </xs:appinfo>
-                                 </xs:annotation>                       --> <xs:annotation>
                     <xs:documentation>The JobStreamStep element represents a task in a stream.</xs:documentation></xs:annotation>
                     <xs:sequence>
                         <xs:element name="JobStreamStep" maxOccurs="unbounded">

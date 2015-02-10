@@ -296,13 +296,13 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 					&& Customizations.NAMESPACE_URI
 							.equals(pluginCustomization.element
 									.getNamespaceURI())) {
-				logger.error("Unacknowledged customization [" +
+				logger.warn("Unacknowledged customization [" +
 
 				getName(pluginCustomization.element) + "] in the property ["
 						+ classInfo.getName() + "."
 						+ customizable.getName(true) + "].");
 
-				// pluginCustomization.markAsAcknowledged();
+				pluginCustomization.markAsAcknowledged();
 			}
 		}
 
@@ -318,10 +318,13 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 			// && Customizations.NAMESPACE_URI.equals(element
 			// .getNamespaceURI())
 			) {
-				logger.error("Unacknowledged customization [" +
+				logger.warn("Unacknowledged customization [" +
 
 				getName(element) + "] in the class [" + customizable.getName()
 						+ "].");
+
+				pluginCustomization.markAsAcknowledged();
+
 			}
 		}
 

@@ -518,7 +518,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		if (getStrict() && !getCatalogURIs().isEmpty()) {
 			getLog().warn(
 					"The plugin is configured to use catalogs and strict mode at the same time.\n"
-							+ "Using catalogs to resolve schema URI in strict mode is known to be problematic and may fail.\n"
+							+ "Using catalogs to resolve schema URIs in strict mode is known to be problematic and may fail.\n"
 							+ "Please refer to the following link for more information:\n"
 							+ "https://github.com/highsource/maven-jaxb2-plugin/wiki/Catalogs-in-Strict-Mode\n"
 							+ "Consider setting <strict>false</strict> in your plugin configuration.\n");
@@ -624,7 +624,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 								schemaDirectory.getPath()));
 			}
 		} catch (IOException ioex) {
-			throw new MojoExecutionException("Could not setup schema files.",
+			throw new MojoExecutionException("Could not set up schema files.",
 					ioex);
 		}
 	}
@@ -647,7 +647,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 								bindingDirectory.getPath()));
 			}
 		} catch (IOException ioex) {
-			throw new MojoExecutionException("Could not setup binding files.",
+			throw new MojoExecutionException("Could not set up binding files.",
 					ioex);
 		}
 	}
@@ -692,7 +692,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			}
 			return producesURIs;
 		} catch (IOException ioex) {
-			throw new MojoExecutionException("Could not setup produced files.",
+			throw new MojoExecutionException("Could not set up produced files.",
 					ioex);
 		}
 	}
@@ -976,14 +976,14 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		if (producesTimestamp == null) {
 			getLog().debug(
 					MessageFormat
-							.format("Latest Timestamp of the source resources is [{0,date,yyyy-MM-dd HH:mm:ss.SSS}], however the ealiest timestamp of the target resources is not unknown. Assuming that something was changed.",
+							.format("Latest Timestamp of the source resources is [{0,date,yyyy-MM-dd HH:mm:ss.SSS}], however the earliest timestamp of the target resources is unknown. Assuming that something was changed.",
 									dependsTimestamp));
 			return false;
 		}
 
 		getLog().info(
 				MessageFormat
-						.format("Latest timestamp of the source resources is [{0,date,yyyy-MM-dd HH:mm:ss.SSS}], ealiest timestamp of the target resources is [{1,date,yyyy-MM-dd HH:mm:ss.SSS}].",
+						.format("Latest timestamp of the source resources is [{0,date,yyyy-MM-dd HH:mm:ss.SSS}], earliest timestamp of the target resources is [{1,date,yyyy-MM-dd HH:mm:ss.SSS}].",
 								dependsTimestamp, producesTimestamp));
 		final boolean upToDate = dependsTimestamp < producesTimestamp;
 		return upToDate;

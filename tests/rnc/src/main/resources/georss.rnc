@@ -1,0 +1,63 @@
+# -*- rnc -*-
+# RELAX NG Compact Syntax Grammar for the GEORSS 
+# This defines the conformance to the rules of GEORSS
+#
+# OGC Web Services Context 1.0 is an OGC Standard.
+# Copyright (c) 2014 Open Geospatial Consortium.
+# To obtain additional rights of use, visit http://www.opengeospatial.org/legal/ .
+#
+# Version: 1.0.0
+#
+
+namespace georss="http://www.georss.org/georss" 
+namespace gml="http://www.opengis.net/gml"
+namespace local = ""
+
+start |= georssElement
+
+georssElement = ( georssSimple | georssWhere)
+
+georssWhere = element georss:where { gmlAttribute*, gmlElement }
+
+georssSimple = georssPoint | georssLine | georssPolygon | georssBox | georssCircle 
+            | georssFeatureTypeTag | georssFeatureName | georssElev | georssFloor
+
+georssPoint = element georss:point { list { xsd:decimal, xsd:decimal } } 
+georssLine = element georss:line { list { (xsd:decimal, xsd:decimal)+ } }
+georssPolygon = element georss:polygon { list { (xsd:decimal, xsd:decimal)+ }  }
+georssBox = element georss:box { 
+   list { (xsd:decimal, xsd:decimal, xsd:decimal, xsd:decimal) } }
+georssCircle = element georss:circle {  
+   list { (xsd:decimal, xsd:decimal, xsd:decimal) } }
+georssFeatureTypeTag = element georss:featureTypeTag { text } 
+georssRelationshipTag = element georss:relationshipTag { text }
+georssFeatureName = element georss:featureName { text }
+georssElev = element georss:elev {xsd:decimal}
+georssFloor = element georss:floor {xsd:decimal}
+georssRadius = element georss:radius {xsd:decimal}
+	   	      
+gmlAttribute = attribute (xml:base | xml:lang | local:* | gml:* ) { text }
+
+gmlElement = (gmlPointElement | gmlLineStringElement | 
+                 gmlPolygonElement | gmlEnvelopeElement )
+   
+gmlPointElement = 
+   element gml:Point { gmlAttribute*,
+     element gml:pos  { gmlAttribute*, list { xsd:decimal, xsd:decimal }}}
+
+gmlLineStringElement = element gml:LineString { gmlAttribute*, 
+   	element gml:posList  {gmlAttribute*, list { (xsd:decimal, xsd:decimal)+ }}}
+
+gmlPolygonElement = element gml:Polygon { gmlAttribute*,
+     element gml:exterior  { gmlAttribute*,
+       element gml:LinearRing { gmlAttribute*,
+         element gml:posList  { gmlAttribute*, 
+                                list { (xsd:decimal, xsd:decimal)+ }}}}}
+   
+gmlEnvelopeElement = element  gml:Envelope { gmlAttribute*, 
+         (  element gml:lowerCorner { gmlAttribute*,  
+                                      list { xsd:decimal, xsd:decimal } }
+           & element gml:upperCorner { gmlAttribute*, 
+                                      list { xsd:decimal, xsd:decimal } }) }
+
+# EOF

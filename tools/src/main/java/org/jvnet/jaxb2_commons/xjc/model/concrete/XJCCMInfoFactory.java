@@ -120,7 +120,7 @@ public class XJCCMInfoFactory
 	}
 
 	protected MClassRef<NType, NClass> createClassRef(Class<?> _class) {
-		return new CMClassRef<NType, NClass>(getClazz(_class),
+		return new CMClassRef<NType, NClass>(getClazz(_class), _class,
 				getPackage(_class), getContainer(_class), getLocalName(_class));
 	}
 
@@ -137,8 +137,9 @@ public class XJCCMInfoFactory
 	}
 
 	protected MClassRef<NType, NClass> createClassRef(CClassRef info) {
-		return new CMClassRef<NType, NClass>(getClazz(info), getPackage(info),
-				getContainer(info), getLocalName(info));
+		final NClass targetType = getClazz(info);
+		return new CMClassRef<NType, NClass>(targetType, loadClass(targetType),
+				getPackage(info), getContainer(info), getLocalName(info));
 	}
 
 	@Override
@@ -388,6 +389,16 @@ public class XJCCMInfoFactory
 		} else if (info.getRefBaseClass() != null) {
 			return getTypeInfo(info.getRefBaseClass());
 		} else {
+			return null;
+		}
+	}
+
+	@Override
+	protected Class<?> loadClass(NType referencedType) {
+		final String name = referencedType.fullName();
+		try {
+			return Class.forName(name);
+		} catch (ClassNotFoundException cnfex) {
 			return null;
 		}
 	}

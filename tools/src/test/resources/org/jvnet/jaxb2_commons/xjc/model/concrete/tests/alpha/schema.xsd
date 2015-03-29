@@ -1,0 +1,96 @@
+<xsd:schema targetNamespace="urn:test" xmlns:test="urn:test"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" jaxb:version="2.1"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" elementFormDefault="qualified"
+	attributeFormDefault="unqualified" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+
+	jaxb:extensionBindingPrefixes="xjc">
+
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="org.jvnet.jaxb2_commons.xjc.model.concrete.tests.alpha" />
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+	<xsd:element name="NamedComplexTypeElement" type="test:NamedComplexType" />
+
+	<xsd:complexType name="NamedComplexType">
+		<xsd:sequence>
+			<xsd:element name="str" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="UnnamedComplexTypeElement">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="str" type="xsd:string" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="StringElement" type="xsd:string">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<jaxb:class name="StringElement" />
+			</xsd:appinfo>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="KnownReferencedTypeElement" type="test:KnownReferencedType" />
+
+	<xsd:complexType name="KnownReferencedType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<jaxb:class
+					ref="org.jvnet.jaxb2_commons.xjc.model.concrete.tests.ahpla.KnownReferencedType" />
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="str" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="UnknownReferencedTypeElement" type="test:UnknownReferencedType" />
+
+	<xsd:complexType name="UnknownReferencedType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<jaxb:class
+					ref="org.jvnet.jaxb2_commons.xjc.model.concrete.tests.ahpla.UnknownReferencedType" />
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="str" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="NamedSimpleTypeElement" type="test:NamedSimpleType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<jaxb:class name="NamedSimpleTypeElement" />
+			</xsd:appinfo>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:simpleType name="NamedSimpleType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<jaxb:class name="NamedSimpleType" />
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:list itemType="xsd:string" />
+	</xsd:simpleType>
+
+	<xsd:element name="UnnamedSimpleTypeElement">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<jaxb:class name="UnnamedSimpleTypeElement" />
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:simpleType>
+			<xsd:list itemType="xsd:string" />
+		</xsd:simpleType>
+	</xsd:element>
+</xsd:schema>

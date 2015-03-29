@@ -11,7 +11,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MElementInfoOrigin;
 
-public class CMElementInfo<T, C> implements MElementInfo<T, C> {
+public class CMElementInfo<T, C extends T> implements MElementInfo<T, C> {
 
 	private final MElementInfoOrigin origin;
 

@@ -6,7 +6,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MSingleTypePropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public abstract class CMSingleTypePropertyInfo<T, C> extends
+public abstract class CMSingleTypePropertyInfo<T, C extends T> extends
 		CMPropertyInfo<T, C> implements MSingleTypePropertyInfo<T, C> {
 
 	private final MTypeInfo<T, C> typeInfo;

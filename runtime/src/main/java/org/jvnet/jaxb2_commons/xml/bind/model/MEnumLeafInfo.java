@@ -7,8 +7,8 @@ import javax.xml.namespace.QName;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MEnumLeafInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MOriginated;
 
-public interface MEnumLeafInfo<T, C> extends MPackagedTypeInfo<T, C>,
-		MOriginated<MEnumLeafInfoOrigin> {
+public interface MEnumLeafInfo<T, C extends T> extends MPackagedTypeInfo<T, C>,
+		MTypeInfo<T, C>, MOriginated<MEnumLeafInfoOrigin> {
 
 	public C getTargetClass();
 

@@ -1,6 +1,12 @@
 package org.jvnet.jaxb2_commons.xml.bind.model;
 
-public interface MTypeInfo<T, C> extends MCustomizable {
+import javax.xml.namespace.QName;
+
+public interface MTypeInfo<T, C extends T> extends MCustomizable {
+
+	public QName getTypeName();
+
+	public boolean isSimpleType();
 
 	public T getTargetType();
 

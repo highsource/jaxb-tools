@@ -5,7 +5,8 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MEnumConstantInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MEnumConstantInfoOrigin;
 
-public class CMEnumConstantInfo<T, C> implements MEnumConstantInfo<T, C> {
+public class CMEnumConstantInfo<T, C extends T> implements
+		MEnumConstantInfo<T, C> {
 
 	private final MEnumConstantInfoOrigin origin;
 	private final MEnumLeafInfo<T, C> enumLeafInfo;

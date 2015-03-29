@@ -1,12 +1,15 @@
 package org.jvnet.jaxb2_commons.xml.bind.model.concrete;
 
+import javax.xml.namespace.QName;
+
 import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizations;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MWildcardTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MWildcardTypeInfoOrigin;
 
-public class CMWildcardTypeInfo<T, C> implements MWildcardTypeInfo<T, C> {
+public class CMWildcardTypeInfo<T, C extends T> implements
+		MWildcardTypeInfo<T, C> {
 
 	private final T targetType;
 	private final MWildcardTypeInfoOrigin origin;
@@ -24,6 +27,16 @@ public class CMWildcardTypeInfo<T, C> implements MWildcardTypeInfo<T, C> {
 
 	public T getTargetType() {
 		return targetType;
+	}
+
+	@Override
+	public QName getTypeName() {
+		return null;
+	}
+
+	@Override
+	public boolean isSimpleType() {
+		return false;
 	}
 
 	public MWildcardTypeInfoOrigin getOrigin() {

@@ -5,11 +5,12 @@ import java.text.MessageFormat;
 import org.jvnet.jaxb2_commons.xml.bind.model.MIDREFS;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
+import org.jvnet.jaxb2_commons.xmlschema.XmlSchemaConstants;
 
-public class CMIDREFS<T, C> extends CMList<T, C> implements MIDREFS<T, C> {
+public class CMIDREFS<T, C extends T> extends CMList<T, C> implements MIDREFS<T, C> {
 
 	public CMIDREFS(T targetType, MTypeInfo<T, C> itemTypeInfo) {
-		super(targetType, itemTypeInfo);
+		super(targetType, itemTypeInfo, XmlSchemaConstants.IDREFS);
 	}
 
 	@Override

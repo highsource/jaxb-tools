@@ -11,7 +11,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
 import org.jvnet.jaxb2_commons.xmlschema.XmlSchemaConstants;
 
-public class CMID<T, C> implements MID<T, C> {
+public class CMID<T, C extends T> implements MID<T, C> {
 
 	private final MTypeInfo<T, C> valueTypeInfo;
 	private final T targetType;
@@ -38,6 +38,11 @@ public class CMID<T, C> implements MID<T, C> {
 
 	public QName getTypeName() {
 		return XmlSchemaConstants.ID;
+	}
+	
+	@Override
+	public boolean isSimpleType() {
+		return getValueTypeInfo().isSimpleType();
 	}
 
 	@Override

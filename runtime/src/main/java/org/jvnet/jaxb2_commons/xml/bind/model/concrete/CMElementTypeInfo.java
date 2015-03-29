@@ -6,7 +6,7 @@ import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 
-public class CMElementTypeInfo<T, C> implements MElementTypeInfo<T, C> {
+public class CMElementTypeInfo<T, C extends T> implements MElementTypeInfo<T, C> {
 
 	private final QName elementName;
 

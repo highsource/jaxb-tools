@@ -7,7 +7,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizations;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public abstract class CMPropertyInfo<T, C> implements MPropertyInfo<T, C>,
+public abstract class CMPropertyInfo<T, C extends T> implements MPropertyInfo<T, C>,
 		MCustomizable {
 
 	private CMCustomizations customizations = new CMCustomizations();

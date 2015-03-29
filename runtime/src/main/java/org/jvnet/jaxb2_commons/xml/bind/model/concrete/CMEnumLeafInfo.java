@@ -40,10 +40,11 @@ public class CMEnumLeafInfo<T, C extends T> implements MEnumLeafInfo<T, C>,
 	private final List<MEnumConstantInfo<T, C>> _constants = Collections
 			.unmodifiableList(constants);
 	private final QName elementName;
+	private final QName typeName;
 
 	public CMEnumLeafInfo(MEnumLeafInfoOrigin origin, C targetClass,
 			MPackageInfo _package, MContainer container, String localName,
-			MTypeInfo<T, C> baseTypeInfo, QName elementName) {
+			MTypeInfo<T, C> baseTypeInfo, QName elementName, QName typeName) {
 
 		Validate.notNull(origin);
 		Validate.notNull(targetClass);
@@ -59,6 +60,7 @@ public class CMEnumLeafInfo<T, C extends T> implements MEnumLeafInfo<T, C>,
 		this.baseTypeInfo = baseTypeInfo;
 		// May be null
 		this.elementName = elementName;
+		this.typeName = typeName;
 	}
 
 	public MCustomizations getCustomizations() {
@@ -77,14 +79,21 @@ public class CMEnumLeafInfo<T, C extends T> implements MEnumLeafInfo<T, C>,
 		return targetClass;
 	}
 
+	@Override
+	public QName getTypeName() {
+		return this.typeName;
+	}
+
+	@Override
+	public boolean isSimpleType() {
+		return true;
+	}
+
 	public MElementInfo<T, C> createElementInfo(MTypeInfo<T, C> scope,
 			QName substitutionHead) {
 		return new CMElementInfo<T, C>(getOrigin().createElementInfoOrigin(),
-				getPackageInfo(), 
-				getContainer(),
-				getLocalName(),
-				getElementName(), scope, this,
-				substitutionHead);
+				getPackageInfo(), getContainer(), getLocalName(),
+				getElementName(), scope, this, substitutionHead);
 	}
 
 	public String getName() {
@@ -94,7 +103,6 @@ public class CMEnumLeafInfo<T, C extends T> implements MEnumLeafInfo<T, C>,
 	public String getLocalName() {
 		return localName;
 	}
-
 
 	public MPackageInfo getPackageInfo() {
 		return _package;

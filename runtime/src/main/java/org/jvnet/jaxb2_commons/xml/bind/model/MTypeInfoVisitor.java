@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.xml.bind.model;
 
-public interface MTypeInfoVisitor<T, C, V> extends
+public interface MTypeInfoVisitor<T, C extends T, V> extends
 		MClassTypeInfoVisitor<T, C, V> {
 
 	public V visitList(MList<T, C> info);

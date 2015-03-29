@@ -5,7 +5,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public class CMAnyElementPropertyInfo<T, C> extends CMPropertyInfo<T, C>
+public class CMAnyElementPropertyInfo<T, C extends T> extends CMPropertyInfo<T, C>
 		implements MAnyElementPropertyInfo<T, C> {
 
 	private final boolean mixed;

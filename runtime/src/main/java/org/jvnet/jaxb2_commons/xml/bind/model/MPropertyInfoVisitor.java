@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.xml.bind.model;
 
-public interface MPropertyInfoVisitor<T, C, V> {
+public interface MPropertyInfoVisitor<T, C extends T, V> {
 
 	public V visitElementPropertyInfo(MElementPropertyInfo<T,C> info);
 

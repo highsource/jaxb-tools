@@ -8,7 +8,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizations;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MBuiltinLeafInfoOrigin;
 
-public class CMBuiltinLeafInfo<T, C> implements MBuiltinLeafInfo<T, C> {
+public class CMBuiltinLeafInfo<T, C extends T> implements MBuiltinLeafInfo<T, C> {
 
 	private final MBuiltinLeafInfoOrigin origin;
 	private final T targetType;
@@ -39,6 +39,11 @@ public class CMBuiltinLeafInfo<T, C> implements MBuiltinLeafInfo<T, C> {
 
 	public QName getTypeName() {
 		return typeName;
+	}
+
+	@Override
+	public boolean isSimpleType() {
+		return true;
 	}
 
 	public String toString() {

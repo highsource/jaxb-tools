@@ -14,7 +14,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MElementsPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public class CMElementsPropertyInfo<T, C> extends CMPropertyInfo<T, C>
+public class CMElementsPropertyInfo<T, C extends T> extends CMPropertyInfo<T, C>
 		implements MElementsPropertyInfo<T, C> {
 
 	private final List<MElementTypeInfo<T, C>> elementTypeInfos = new ArrayList<MElementTypeInfo<T, C>>();

@@ -182,12 +182,13 @@ WTI extends WildcardTypeInfo<T, C>> {
 				final MTypeInfo<T, C> tid = new CMID<T, C>(ti.getTargetType(),
 						ti);
 				return new CMList<T, C>(createListType(tid.getTargetType()),
-						tid);
+						tid, null);
 			case IDREF:
 				return new CMIDREFS<T, C>(createListType(ti.getTargetType()),
 						ti);
 			default:
-				return new CMList<T, C>(createListType(ti.getTargetType()), ti);
+				return new CMList<T, C>(createListType(ti.getTargetType()), ti,
+						null);
 			}
 		} else {
 			switch (id) {
@@ -221,8 +222,7 @@ WTI extends WildcardTypeInfo<T, C>> {
 
 	private MBuiltinLeafInfo<T, C> getTypeInfo(BLI info) {
 		MBuiltinLeafInfo<T, C> builtinLeafInfo = builtinLeafInfos.get(info);
-		if (builtinLeafInfo == null)
-		{
+		if (builtinLeafInfo == null) {
 			builtinLeafInfo = createBuiltinLeafInfo(info);
 			builtinLeafInfos.put(info, builtinLeafInfo);
 		}
@@ -271,8 +271,7 @@ WTI extends WildcardTypeInfo<T, C>> {
 
 	protected MElementInfo<T, C> getElementInfo(EI info) {
 		MElementInfo<T, C> elementInfo = elementInfos.get(info);
-		if (elementInfo == null)
-		{
+		if (elementInfo == null) {
 			elementInfo = createElementInfo(info);
 			elementInfos.put(info, elementInfo);
 		}
@@ -284,7 +283,8 @@ WTI extends WildcardTypeInfo<T, C>> {
 		return new CMClassInfo<T, C>(createClassInfoOrigin(info),
 				info.getClazz(), getPackage(info), getContainer(info),
 				getLocalName(info), createBaseTypeInfo(info),
-				info.isElement() ? info.getElementName() : null);
+				info.isElement() ? info.getElementName() : null,
+				info.getTypeName());
 	}
 
 	private void populateClassInfo(CI info, MClassInfo<T, C> classInfo) {
@@ -489,7 +489,7 @@ WTI extends WildcardTypeInfo<T, C>> {
 		return new CMEnumLeafInfo<T, C>(createEnumLeafInfoOrigin(info),
 				info.getClazz(), getPackage(info), getContainer(info),
 				getLocalName(info), getTypeInfo(baseType),
-				info.getElementName());
+				info.getElementName(), info.getTypeName());
 	}
 
 	protected CMEnumConstantInfo<T, C> createEnumContantInfo(
@@ -556,5 +556,14 @@ WTI extends WildcardTypeInfo<T, C>> {
 	}
 
 	protected abstract T createListType(T elementType);
+
+	/**
+	 * Returns Java class for the reference type or null if it can't be found.
+	 * 
+	 * @param referencedType
+	 *            referenced type.
+	 * @return Java class for the reference type or null.
+	 */
+	protected abstract Class<?> loadClass(T referencedType);
 
 }

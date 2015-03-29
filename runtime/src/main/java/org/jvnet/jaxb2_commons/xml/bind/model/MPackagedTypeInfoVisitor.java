@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.xml.bind.model;
 
-public abstract class MPackagedTypeInfoVisitor<T, C, V> implements
+public abstract class MPackagedTypeInfoVisitor<T, C extends T, V> implements
 		MTypeInfoVisitor<T, C, V> {
 
 	public abstract V visitPackagedTypeInfo(MPackagedTypeInfo<T, C> info);
@@ -12,11 +12,11 @@ public abstract class MPackagedTypeInfoVisitor<T, C, V> implements
 	public V visitBuiltinLeafInfo(MBuiltinLeafInfo<T, C> info) {
 		return null;
 	}
-	
+
 	public V visitID(MID<T, C> info) {
 		return null;
 	}
-	
+
 	public V visitIDREF(MIDREF<T, C> info) {
 		return null;
 	}

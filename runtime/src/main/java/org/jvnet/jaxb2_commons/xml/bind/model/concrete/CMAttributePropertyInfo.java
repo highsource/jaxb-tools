@@ -9,7 +9,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public class CMAttributePropertyInfo<T, C> extends
+public class CMAttributePropertyInfo<T, C extends T> extends
 		CMSingleTypePropertyInfo<T, C> implements MAttributePropertyInfo<T, C> {
 
 	private final QName attributeName;

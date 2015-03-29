@@ -11,7 +11,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
 import org.jvnet.jaxb2_commons.xmlschema.XmlSchemaConstants;
 
-public class CMIDREF<T, C> implements MIDREF<T, C> {
+public class CMIDREF<T, C extends T> implements MIDREF<T, C> {
 
 	private final MTypeInfo<T, C> valueTypeInfo;
 	private final T targetType;
@@ -37,7 +37,12 @@ public class CMIDREF<T, C> implements MIDREF<T, C> {
 	}
 
 	public QName getTypeName() {
-		return XmlSchemaConstants.ID;
+		return XmlSchemaConstants.IDREF;
+	}
+	
+	@Override
+	public boolean isSimpleType() {
+		return getValueTypeInfo().isSimpleType(); 
 	}
 
 	@Override

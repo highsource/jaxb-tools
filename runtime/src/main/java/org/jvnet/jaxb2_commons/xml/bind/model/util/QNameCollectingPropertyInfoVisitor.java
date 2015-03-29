@@ -14,7 +14,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MElementsPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MValuePropertyInfo;
 
-public class QNameCollectingPropertyInfoVisitor<T, C> implements
+public class QNameCollectingPropertyInfoVisitor<T, C extends T> implements
 		MPropertyInfoVisitor<T, C, Void> {
 
 	private final QNameCollector collector;

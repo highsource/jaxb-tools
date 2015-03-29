@@ -1,5 +1,7 @@
 package org.jvnet.jaxb2_commons.xml.bind.model.concrete;
 
+import javax.xml.namespace.QName;
+
 import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassRef;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassTypeInfoVisitor;
@@ -7,29 +9,36 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MContainer;
 import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizations;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
+import org.jvnet.jaxb2_commons.xml.bind.model.util.XmlTypeUtils;
 
 public class CMClassRef<T, C extends T> implements MClassRef<T, C> {
 
 	private CMCustomizations customizations = new CMCustomizations();
-	private final C targetClass;
+	private final C targetType;
+	private final Class<?> targetClass;
 	private final MPackageInfo _package;
 	private final String name;
 	private final String localName;
 	private final MContainer container;
+	private final QName typeName;
 
-	public CMClassRef(/* MClassInfoOrigin origin, */C targetClass,
-			MPackageInfo _package, MContainer container, String localName) {
+	public CMClassRef(/* MClassInfoOrigin origin, */C targetType,
+			Class<?> targetClass, MPackageInfo _package, MContainer container,
+			String localName) {
 		super();
 		// Validate.notNull(origin);
-		Validate.notNull(targetClass);
+		Validate.notNull(targetType);
 		Validate.notNull(_package);
 		Validate.notNull(localName);
 		// this.origin = origin;
-		this.targetClass = targetClass;
+		this.targetType = targetType;
 		this.name = _package.getPackagedName(localName);
 		this.localName = localName;
 		this._package = _package;
 		this.container = container;
+		this.targetClass = targetClass;
+		this.typeName = targetClass == null ? null : XmlTypeUtils
+				.getTypeName(targetClass);
 	}
 
 	public String getName() {
@@ -40,8 +49,18 @@ public class CMClassRef<T, C extends T> implements MClassRef<T, C> {
 		return localName;
 	}
 
-	public T getTargetType() {
-		return targetClass;
+	public C getTargetType() {
+		return targetType;
+	}
+
+	@Override
+	public QName getTypeName() {
+		return typeName;
+	}
+
+	@Override
+	public boolean isSimpleType() {
+		return false;
 	}
 
 	public <V> V acceptTypeInfoVisitor(MTypeInfoVisitor<T, C, V> visitor) {
@@ -78,7 +97,7 @@ public class CMClassRef<T, C extends T> implements MClassRef<T, C> {
 	}
 
 	public C getTargetClass() {
-		return targetClass;
+		return targetType;
 	}
 
 	@Override

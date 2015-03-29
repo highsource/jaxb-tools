@@ -8,7 +8,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public class CMElementPropertyInfo<T, C> extends CMPropertyInfo<T, C> implements
+public class CMElementPropertyInfo<T, C extends T> extends CMPropertyInfo<T, C> implements
 		MElementPropertyInfo<T, C> {
 
 	private final MTypeInfo<T, C> typeInfo;

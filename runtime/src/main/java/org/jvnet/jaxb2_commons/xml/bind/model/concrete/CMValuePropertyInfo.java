@@ -6,7 +6,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MValuePropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public class CMValuePropertyInfo<T, C> extends CMSingleTypePropertyInfo<T, C>
+public class CMValuePropertyInfo<T, C extends T> extends CMSingleTypePropertyInfo<T, C>
 		implements MValuePropertyInfo<T, C> {
 
 	public CMValuePropertyInfo(MPropertyInfoOrigin origin,

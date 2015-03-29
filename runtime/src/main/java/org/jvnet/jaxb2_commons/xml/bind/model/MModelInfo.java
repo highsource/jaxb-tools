@@ -2,21 +2,29 @@ package org.jvnet.jaxb2_commons.xml.bind.model;
 
 import java.util.Collection;
 
+import javax.xml.namespace.QName;
+
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MModelInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MOriginated;
 
-public interface MModelInfo<T, C> extends MCustomizable,
+public interface MModelInfo<T, C extends T> extends MCustomizable,
 		MOriginated<MModelInfoOrigin> {
 
 	public Collection<MBuiltinLeafInfo<T, C>> getBuiltinLeafInfos();
 
 	public Collection<MClassInfo<T, C>> getClassInfos();
 
+	public MClassInfo<T, C> getClassInfo(String name);
+
 	public Collection<MEnumLeafInfo<T, C>> getEnumLeafInfos();
 
 	public Collection<MTypeInfo<T, C>> getTypeInfos();
 
+	public MTypeInfo<T, C> getTypeInfo(QName typeNam);
+
 	public Collection<MElementInfo<T, C>> getElementInfos();
+
+	public MElementInfo<T, C> getGlobalElementInfo(QName elementName);
 
 	public void addBuiltinLeafInfo(MBuiltinLeafInfo<T, C> builtinLeafInfo);
 

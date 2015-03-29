@@ -11,7 +11,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MValuePropertyInfo;
 
-public class DefaultPropertyInfoVisitor<T, C, V> implements
+public class DefaultPropertyInfoVisitor<T, C extends T, V> implements
 		MPropertyInfoVisitor<T, C, V> {
 
 	public V visitPropertyInfo(MPropertyInfo<T, C> info) {

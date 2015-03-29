@@ -12,7 +12,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MWildcardTypeInfo;
 
-public class DefaultTypeInfoVisitor<T, C, V> implements
+public class DefaultTypeInfoVisitor<T, C extends T, V> implements
 		MTypeInfoVisitor<T, C, V> {
 
 	public V visitTypeInfo(MTypeInfo<T, C> typeInfo) {

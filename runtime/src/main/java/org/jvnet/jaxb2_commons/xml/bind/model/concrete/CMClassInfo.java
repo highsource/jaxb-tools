@@ -28,7 +28,7 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 
 	private final MClassInfoOrigin origin;
 	private CMCustomizations customizations = new CMCustomizations();
-	private final C targetClass;
+	private final C targetType;
 	private final MPackageInfo _package;
 	private final String name;
 	private final String localName;
@@ -39,23 +39,25 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 	private List<MPropertyInfo<T, C>> properties = new ArrayList<MPropertyInfo<T, C>>();
 	private List<MPropertyInfo<T, C>> unmodifiableProperties = Collections
 			.unmodifiableList(properties);
+	private QName typeName;
 
-	public CMClassInfo(MClassInfoOrigin origin, C targetClass,
+	public CMClassInfo(MClassInfoOrigin origin, C targetType,
 			MPackageInfo _package, MContainer container, String localName,
-			MClassTypeInfo<T, C> baseTypeInfo, QName elementName) {
+			MClassTypeInfo<T, C> baseTypeInfo, QName elementName, QName typeName) {
 		super();
 		Validate.notNull(origin);
-		Validate.notNull(targetClass);
+		Validate.notNull(targetType);
 		Validate.notNull(_package);
 		Validate.notNull(localName);
 		this.origin = origin;
-		this.targetClass = targetClass;
+		this.targetType = targetType;
 		this.name = _package.getPackagedName(localName);
 		this.localName = localName;
 		this._package = _package;
 		this.container = container;
 		this.baseTypeInfo = baseTypeInfo;
 		this.elementName = elementName;
+		this.typeName = typeName;
 	}
 
 	public MCustomizations getCustomizations() {
@@ -66,12 +68,18 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 		return origin;
 	}
 
-	public C getTargetClass() {
-		return targetClass;
+	public C getTargetType() {
+		return targetType;
 	}
 
-	public T getTargetType() {
-		return targetClass;
+	@Override
+	public QName getTypeName() {
+		return typeName;
+	}
+
+	@Override
+	public boolean isSimpleType() {
+		return false;
 	}
 
 	public MElementInfo<T, C> createElementInfo(MTypeInfo<T, C> scope,
@@ -157,7 +165,7 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 	public <V> V acceptTypeInfoVisitor(MTypeInfoVisitor<T, C, V> visitor) {
 		return visitor.visitClassInfo(this);
 	}
-	
+
 	@Override
 	public <V> V acceptClassTypeInfoVisitor(
 			MClassTypeInfoVisitor<T, C, V> visitor) {

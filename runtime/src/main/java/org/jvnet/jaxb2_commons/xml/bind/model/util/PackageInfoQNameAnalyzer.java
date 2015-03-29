@@ -13,7 +13,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 
-public class PackageInfoQNameAnalyzer<T, C> {
+public class PackageInfoQNameAnalyzer<T, C extends T> {
 
 	private final MModelInfo<T, C> modelInfo;
 

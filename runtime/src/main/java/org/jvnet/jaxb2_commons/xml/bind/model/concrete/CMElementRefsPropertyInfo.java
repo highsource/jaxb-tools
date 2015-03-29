@@ -14,7 +14,7 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MElementTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public class CMElementRefsPropertyInfo<T, C> extends CMPropertyInfo<T, C>
+public class CMElementRefsPropertyInfo<T, C extends T> extends CMPropertyInfo<T, C>
 		implements MElementRefsPropertyInfo<T, C> {
 
 	private final QName wrapperElementName;

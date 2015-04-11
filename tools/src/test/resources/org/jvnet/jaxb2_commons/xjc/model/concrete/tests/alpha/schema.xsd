@@ -93,4 +93,45 @@
 			<xsd:list itemType="xsd:string" />
 		</xsd:simpleType>
 	</xsd:element>
+	
+	<xsd:complexType name="ComplexTypeWithElementAndAttributeWithDefaultValues">
+		<xsd:sequence>
+			<xsd:element name="ElementWithDefaultValue" type="xsd:string" minOccurs="0" maxOccurs="1" default="test"/>
+			<xsd:choice maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jaxb:property name="ElementsWithDefaultValue" />
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:element name="ElementsWithDefaultValue1" type="xsd:string" minOccurs="0" maxOccurs="1" default="test"/>
+				<xsd:element name="ElementsWithDefaultValue2" type="xsd:int" minOccurs="0" maxOccurs="1" default="1"/>
+			</xsd:choice>
+			<xsd:element name="ElementRefWithDefaultValue" type="xsd:string" minOccurs="0" maxOccurs="1" default="test" nillable="true"/>
+			<xsd:choice maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jaxb:property name="ElementRefsWithDefaultValue" />
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:element name="ElementRefsWithDefaultValue1" type="xsd:string" minOccurs="0" maxOccurs="1" default="test"/>
+				<xsd:element name="ElementRefsWithDefaultValue2" type="xsd:string" minOccurs="0" maxOccurs="1" default="tset"/>
+			</xsd:choice>
+		</xsd:sequence>
+		<xsd:attribute name="AttributeWithDefaultValue" type="xsd:string" default="test"/>
+	</xsd:complexType>
+	
+	<xsd:element name="UnnamedEnumerationTypeElement" default="TWO">
+		<xsd:simpleType>
+		<xsd:annotation>
+			<xsd:appinfo>
+				<jaxb:typesafeEnumClass name="UnnamedEnumerationTypeElement" />
+			</xsd:appinfo>
+		</xsd:annotation>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="ONE"/>
+				<xsd:enumeration value="TWO"/>
+				<xsd:enumeration value="THREE"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
 </xsd:schema>

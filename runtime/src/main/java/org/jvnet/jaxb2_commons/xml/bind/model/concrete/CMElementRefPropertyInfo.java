@@ -18,12 +18,13 @@ public class CMElementRefPropertyInfo<T, C extends T> extends CMPropertyInfo<T, 
 	private final boolean mixed;
 	private final boolean domAllowed;
 	private final boolean typedObjectAllowed;
+	private final String defaultValue;
 
 	public CMElementRefPropertyInfo(MPropertyInfoOrigin origin,
 			MClassInfo<T, C> classInfo, String privateName, boolean collection,
 			MTypeInfo<T, C> typeInfo, QName elementName,
 			QName wrapperElementName, boolean mixed, boolean domAllowed,
-			boolean typedObjectAllowed) {
+			boolean typedObjectAllowed, String defaultValue) {
 		super(origin, classInfo, privateName, collection);
 		this.typeInfo = typeInfo;
 		this.elementName = elementName;
@@ -31,6 +32,7 @@ public class CMElementRefPropertyInfo<T, C extends T> extends CMPropertyInfo<T, 
 		this.mixed = mixed;
 		this.domAllowed = domAllowed;
 		this.typedObjectAllowed = typedObjectAllowed;
+		this.defaultValue = defaultValue;
 	}
 
 	public MTypeInfo<T, C> getTypeInfo() {
@@ -60,6 +62,11 @@ public class CMElementRefPropertyInfo<T, C extends T> extends CMPropertyInfo<T, 
 	@Override
 	public boolean isNillable() {
 		return true;
+	}
+
+	@Override
+	public String getDefaultValue() {
+		return defaultValue;
 	}
 
 	public <V> V acceptPropertyInfoVisitor(MPropertyInfoVisitor<T, C, V> visitor) {

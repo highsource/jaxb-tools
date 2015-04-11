@@ -369,7 +369,8 @@ WTI extends WildcardTypeInfo<T, C>> {
 				createPropertyInfoOrigin((PI) ep), classInfo, ep.getName(),
 				ep.isCollection() && !ep.isValueList(),
 				getTypeInfo(ep, typeRef), typeRef.getTagName(),
-				ep.getXmlName(), typeRef.isNillable());
+				ep.getXmlName(), typeRef.isNillable(),
+				typeRef.getDefaultValue());
 	}
 
 	protected MPropertyInfo<T, C> createElementsPropertyInfo(
@@ -379,7 +380,8 @@ WTI extends WildcardTypeInfo<T, C>> {
 				types.size());
 		for (TypeRef<T, C> typeRef : types) {
 			typedElements.add(new CMElementTypeInfo<T, C>(typeRef.getTagName(),
-					getTypeInfo(ep, typeRef), typeRef.isNillable()));
+					getTypeInfo(ep, typeRef), typeRef.isNillable(), typeRef
+							.getDefaultValue()));
 		}
 		return new CMElementsPropertyInfo<T, C>(
 				createPropertyInfoOrigin((PI) ep), classInfo, ep.getName(),
@@ -406,7 +408,8 @@ WTI extends WildcardTypeInfo<T, C>> {
 				rp.isMixed(), rp.getWildcard() == null ? false
 						: rp.getWildcard().allowDom,
 				rp.getWildcard() == null ? true
-						: rp.getWildcard().allowTypedObject);
+						: rp.getWildcard().allowTypedObject,
+				getDefaultValue(element));
 	}
 
 	protected MPropertyInfo<T, C> createElementRefsPropertyInfo(
@@ -414,7 +417,8 @@ WTI extends WildcardTypeInfo<T, C>> {
 		final List<MElementTypeInfo<T, C>> typedElements = new ArrayList<MElementTypeInfo<T, C>>();
 		for (Element<T, C> element : rp.getElements()) {
 			typedElements.add(new CMElementTypeInfo<T, C>(element
-					.getElementName(), getTypeInfo(rp, element), true));
+					.getElementName(), getTypeInfo(rp, element), true,
+					getDefaultValue(element)));
 		}
 		return new CMElementRefsPropertyInfo<T, C>(
 				createPropertyInfoOrigin((PI) rp), classInfo, rp.getName(),
@@ -455,6 +459,22 @@ WTI extends WildcardTypeInfo<T, C>> {
 			Element<T, C> element) {
 		return getTypeInfo(rp, (TI) element, false, rp.getAdapter(), rp.id(),
 				rp.getExpectedMimeType());
+	}
+
+	private String getDefaultValue(Element<T, C> element) {
+		if (element instanceof ElementInfo) {
+			final ElementInfo<T, C> elementInfo = (ElementInfo<T, C>) element;
+			final ElementPropertyInfo<T, C> property = elementInfo
+					.getProperty();
+			if (property != null) {
+				final List<? extends TypeRef<T, C>> types = property.getTypes();
+				if (types.size() == 1) {
+					final TypeRef<T, C> typeRef = types.get(0);
+					return typeRef.getDefaultValue();
+				}
+			}
+		}
+		return null;
 	}
 
 	protected abstract MPackageInfo getPackage(CI info);
@@ -511,7 +531,7 @@ WTI extends WildcardTypeInfo<T, C>> {
 				createElementInfoOrigin(element), getPackage(element),
 				getContainer(element), getLocalName(element),
 				element.getElementName(), scope, getTypeInfo(element),
-				substitutionHead);
+				substitutionHead, getDefaultValue(element));
 		return elementInfo;
 	}
 

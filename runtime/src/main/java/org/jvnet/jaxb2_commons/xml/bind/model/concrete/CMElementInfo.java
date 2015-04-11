@@ -29,10 +29,12 @@ public class CMElementInfo<T, C extends T> implements MElementInfo<T, C> {
 
 	private final QName substitutionHead;
 
+	private final String defaultValue;
+
 	public CMElementInfo(MElementInfoOrigin origin, MPackageInfo _package,
 			MContainer container, String localName, QName elementName,
 			MTypeInfo<T, C> scope, MTypeInfo<T, C> typeInfo,
-			QName substitutionHead) {
+			QName substitutionHead, String defaultValue) {
 		super();
 		Validate.notNull(origin);
 		Validate.notNull(elementName);
@@ -45,6 +47,7 @@ public class CMElementInfo<T, C extends T> implements MElementInfo<T, C> {
 		this.scope = scope;
 		this.typeInfo = typeInfo;
 		this.substitutionHead = substitutionHead;
+		this.defaultValue = defaultValue;
 	}
 
 	public MElementInfoOrigin getOrigin() {
@@ -95,10 +98,15 @@ public class CMElementInfo<T, C extends T> implements MElementInfo<T, C> {
 	public QName getSubstitutionHead() {
 		return substitutionHead;
 	}
-	
+
 	@Override
 	public boolean isNillable() {
 		return true;
+	}
+
+	@Override
+	public String getDefaultValue() {
+		return defaultValue;
 	}
 
 	public String toString() {

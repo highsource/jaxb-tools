@@ -86,7 +86,7 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 			QName substitutionHead) {
 		return new CMElementInfo<T, C>(getOrigin().createElementInfoOrigin(),
 				getPackageInfo(), getContainer(), getLocalName(),
-				getElementName(), scope, this, substitutionHead);
+				getElementName(), scope, this, substitutionHead, null);
 	}
 
 	public MPackageInfo getPackageInfo() {

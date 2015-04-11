@@ -95,6 +95,11 @@ public class CMElementInfo<T, C extends T> implements MElementInfo<T, C> {
 	public QName getSubstitutionHead() {
 		return substitutionHead;
 	}
+	
+	@Override
+	public boolean isNillable() {
+		return true;
+	}
 
 	public String toString() {
 		return MessageFormat.format("ElementInfo [{0}: {1}]", getElementName(),

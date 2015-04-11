@@ -56,6 +56,11 @@ public class CMElementRefPropertyInfo<T, C extends T> extends CMPropertyInfo<T, 
 	public boolean isTypedObjectAllowed() {
 		return typedObjectAllowed;
 	}
+	
+	@Override
+	public boolean isNillable() {
+		return true;
+	}
 
 	public <V> V acceptPropertyInfoVisitor(MPropertyInfoVisitor<T, C, V> visitor) {
 		return visitor.visitElementRefPropertyInfo(this);

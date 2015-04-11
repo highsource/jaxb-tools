@@ -368,7 +368,8 @@ WTI extends WildcardTypeInfo<T, C>> {
 		return new CMElementPropertyInfo<T, C>(
 				createPropertyInfoOrigin((PI) ep), classInfo, ep.getName(),
 				ep.isCollection() && !ep.isValueList(),
-				getTypeInfo(ep, typeRef), typeRef.getTagName(), ep.getXmlName());
+				getTypeInfo(ep, typeRef), typeRef.getTagName(),
+				ep.getXmlName(), typeRef.isNillable());
 	}
 
 	protected MPropertyInfo<T, C> createElementsPropertyInfo(
@@ -378,7 +379,7 @@ WTI extends WildcardTypeInfo<T, C>> {
 				types.size());
 		for (TypeRef<T, C> typeRef : types) {
 			typedElements.add(new CMElementTypeInfo<T, C>(typeRef.getTagName(),
-					getTypeInfo(ep, typeRef)));
+					getTypeInfo(ep, typeRef), typeRef.isNillable()));
 		}
 		return new CMElementsPropertyInfo<T, C>(
 				createPropertyInfoOrigin((PI) ep), classInfo, ep.getName(),
@@ -404,7 +405,7 @@ WTI extends WildcardTypeInfo<T, C>> {
 
 				rp.isMixed(), rp.getWildcard() == null ? false
 						: rp.getWildcard().allowDom,
-				rp.getWildcard() == null ? false
+				rp.getWildcard() == null ? true
 						: rp.getWildcard().allowTypedObject);
 	}
 
@@ -413,14 +414,14 @@ WTI extends WildcardTypeInfo<T, C>> {
 		final List<MElementTypeInfo<T, C>> typedElements = new ArrayList<MElementTypeInfo<T, C>>();
 		for (Element<T, C> element : rp.getElements()) {
 			typedElements.add(new CMElementTypeInfo<T, C>(element
-					.getElementName(), getTypeInfo(rp, element)));
+					.getElementName(), getTypeInfo(rp, element), true));
 		}
 		return new CMElementRefsPropertyInfo<T, C>(
 				createPropertyInfoOrigin((PI) rp), classInfo, rp.getName(),
 				rp.isCollection(), typedElements, rp.getXmlName(),
 				rp.isMixed(), rp.getWildcard() == null ? false
 						: rp.getWildcard().allowDom,
-				rp.getWildcard() == null ? false
+				rp.getWildcard() == null ? true
 						: rp.getWildcard().allowTypedObject);
 	}
 

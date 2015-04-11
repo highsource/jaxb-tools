@@ -12,11 +12,14 @@ public class CMElementTypeInfo<T, C extends T> implements MElementTypeInfo<T, C>
 
 	private final MTypeInfo<T, C> typeInfo;
 
-	public CMElementTypeInfo(QName elementName, MTypeInfo<T, C> typeInfo) {
+	private final boolean nillable;
+
+	public CMElementTypeInfo(QName elementName, MTypeInfo<T, C> typeInfo, boolean nillable) {
 		Validate.notNull(elementName);
 		Validate.notNull(typeInfo);
 		this.elementName = elementName;
 		this.typeInfo = typeInfo;
+		this.nillable = nillable;
 	}
 
 	public QName getElementName() {
@@ -26,7 +29,12 @@ public class CMElementTypeInfo<T, C extends T> implements MElementTypeInfo<T, C>
 	public MTypeInfo<T, C> getTypeInfo() {
 		return typeInfo;
 	}
-
+	
+	public boolean isNillable()
+	{
+		return this.nillable;
+	}
+	
 	@Override
 	public String toString() {
 		return "Element [" + getElementName() + ":" + getTypeInfo() + "]";

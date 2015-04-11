@@ -184,7 +184,8 @@ public class ElementWrapperPlugin extends AbstractModelPlugin {
 				wrappedPropertyInfo.isCollection(),
 				wrappedPropertyInfo.getTypeInfo(),
 				wrappedPropertyInfo.getElementName(),
-				wrapperPropertyInfo.getElementName());
+				wrapperPropertyInfo.getWrapperElementName(),
+				wrappedPropertyInfo.isNillable());
 
 		rootClassInfo.addProperty(propertyInfo);
 

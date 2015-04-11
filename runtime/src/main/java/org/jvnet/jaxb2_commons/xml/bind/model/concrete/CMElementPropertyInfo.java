@@ -14,15 +14,17 @@ public class CMElementPropertyInfo<T, C extends T> extends CMPropertyInfo<T, C> 
 	private final MTypeInfo<T, C> typeInfo;
 	private final QName elementName;
 	private final QName wrapperElementName;
+	private final boolean nillable;
 
 	public CMElementPropertyInfo(MPropertyInfoOrigin origin,
 			MClassInfo<T, C> classInfo, String privateName, boolean collection,
 			MTypeInfo<T, C> typeInfo, QName elementName,
-			QName wrapperElementName) {
+			QName wrapperElementName, boolean nillable) {
 		super(origin, classInfo, privateName, collection);
 		this.typeInfo = typeInfo;
 		this.elementName = elementName;
 		this.wrapperElementName = wrapperElementName;
+		this.nillable = nillable;
 	}
 
 	public MTypeInfo<T, C> getTypeInfo() {
@@ -35,6 +37,11 @@ public class CMElementPropertyInfo<T, C extends T> extends CMPropertyInfo<T, C> 
 
 	public QName getWrapperElementName() {
 		return wrapperElementName;
+	}
+	
+	@Override
+	public boolean isNillable() {
+		return nillable;
 	}
 
 	public <V> V acceptPropertyInfoVisitor(MPropertyInfoVisitor<T, C, V> visitor) {

@@ -65,7 +65,7 @@ public class SettersPlugin extends AbstractParameterizablePlugin {
 				final FieldAccessor accessor = fieldOutline.create(JExpr
 						._this());
 				accessor.unsetValues(setter.body());
-				accessor.fromRawValue(setter.body(), "draft", value);
+				accessor.fromRawValue(setter.body()._if(value.ne(JExpr._null()))._then(), "draft", value);
 			}
 		},
 		direct {

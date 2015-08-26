@@ -774,15 +774,15 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	* See https://github.com/highsource/maven-jaxb2-plugin/issues/41 for more
 	* information
 	*/
-	@Parameter(property = "maven.xjc2.allowUnusedSchemaBindingsInEpisodes", defaultValue = "false")
-	private boolean allowUnusedSchemaBindingsInEpisodes;
+	@Parameter(property = "maven.xjc2.applyEpisodeHackForUnusedSchemaBindings", defaultValue = "false")
+	private boolean applyEpisodeHackForUnusedSchemaBindings;
 
-	public boolean getAllowUnusedSchemaBindingsInEpisodes() {
-		return this.allowUnusedSchemaBindingsInEpisodes;
+	public boolean getApplyEpisodeHackForUnusedSchemaBindings() {
+		return this.applyEpisodeHackForUnusedSchemaBindings;
 	}
 
-	public void setAllowUnusedSchemaBindingsInEpisodes(boolean allowUnusedSchemaBindingsInEpisodes) {
-		this.allowUnusedSchemaBindingsInEpisodes = allowUnusedSchemaBindingsInEpisodes;
+	public void setApplyEpisodeHackForUnusedSchemaBindings(boolean applyEpisodeHackForUnusedSchemaBindings) {
+		this.applyEpisodeHackForUnusedSchemaBindings = applyEpisodeHackForUnusedSchemaBindings;
 	}	
 
 	/**

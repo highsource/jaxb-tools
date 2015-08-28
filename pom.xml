@@ -1,3 +1,33 @@
+<!--
+
+    Copyright © 2005-2015, Alexey Valikov
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+
+    1. Redistributions of source code must retain the above copyright notice, this
+       list of conditions and the following disclaimer.
+    2. Redistributions in binary form must reproduce the above copyright notice,
+       this list of conditions and the following disclaimer in the documentation
+       and/or other materials provided with the distribution.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+    ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+    (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+    ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+    The views and conclusions contained in the software and documentation are those
+    of the authors and should not be interpreted as representing official policies,
+    either expressed or implied, of the FreeBSD Project.
+
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -84,11 +114,11 @@
 		</profile>
 	</profiles>
 	<properties>
-		<jaxb.version>2.2.5-2</jaxb.version>
-		<jaxb-api.version>2.1</jaxb-api.version>
+		<jaxb.version>2.2.7</jaxb.version>
+		<jaxb-api.version>2.2.11</jaxb-api.version>
 		<maven-jaxb2-plugin.version>0.9.0</maven-jaxb2-plugin.version>
-		<annox.version>1.0.0</annox.version>
-		<jaxb2-basics.version>0.8.0</jaxb2-basics.version>
+		<annox.version>1.0.1</annox.version>
+		<jaxb2-basics.version>0.8.1</jaxb2-basics.version>
 	</properties>
 	<dependencies>
 		<!-- JUnit -->
@@ -310,6 +340,45 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.mycila</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>2.11</version>
+				<executions>
+					<execution>
+						<id>license-checkheaders</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<header>com/mycila/maven/plugin/license/templates/BSD-2.txt</header>
+					<properties>
+						<owner>Alexey Valikov</owner>
+						<project.inceptionYear>2005-2015</project.inceptionYear>
+					</properties>
+					<mapping>
+						<xjb>XML_STYLE</xjb>
+					</mapping>
+					<excludes>
+						<exclude>LICENSE</exclude>
+						<!--exclude>**/src/test/**</exclude>
+						<exclude>samples/**</exclude>
+						<exclude>tests/**</exclude-->
+						<!--exclude>**/*.md</exclude-->
+						<!--exclude>**/pom.xml</exclude>
+						<exclude>**/src/test/**</exclude-->
+						<!--exclude>src/site/naturaldocs/**</exclude>
+						<exclude>src/test/resources/**</exclude>
+						<exclude>target-eclipse/**</exclude>
+						<exclude>**/*.txt</exclude>
+						<exclude>**/*.scripts</exclude>
+						<exclude>**/ThirdParty/**</exclude-->
+					</excludes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

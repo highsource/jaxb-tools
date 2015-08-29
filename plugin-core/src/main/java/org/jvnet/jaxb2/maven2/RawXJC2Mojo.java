@@ -35,11 +35,12 @@ import java.util.TreeMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
@@ -81,6 +82,10 @@ import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
  * @author Aleksei Valikov (valikov@gmx.net)
  */
 public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
+
+	public static final String ADD_IF_EXISTS_TO_EPISODE_SCHEMA_BINDINGS_TRANSFORMATION_RESOURCE_NAME = "/"
+			+ RawXJC2Mojo.class.getPackage().getName().replace('.', '/')
+			+ "/addIfExistsToEpisodeSchemaBindings.xslt";
 
 	private Collection<Artifact> xjcPluginArtifacts;
 
@@ -497,12 +502,12 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 			setupDirectories();
 			doExecute(options);
+			addIfExistsToEpisodeSchemaBindings();
 			final BuildContext buildContext = getBuildContext();
 			getLog().debug(
 					MessageFormat.format(
 							"Refreshing the generated directory [{0}].",
 							getGenerateDirectory().getAbsolutePath()));
-			setupEpisodeHackForUnusedSchemaBindings();
 			buildContext.refresh(getGenerateDirectory());
 		}
 
@@ -510,31 +515,50 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			getLog().info("Finished execution.");
 		}
 	}
-	
-	
-	private void setupEpisodeHackForUnusedSchemaBindings() throws MojoExecutionException {
-		if(!getApplyEpisodeHackForUnusedSchemaBindings()) {
-			getLog().debug("allowImporWithUnusedSchemaBindingsInEpisode disabled");
+
+	private void addIfExistsToEpisodeSchemaBindings()
+			throws MojoExecutionException {
+		if (!isAddIfExistsToEpisodeSchemaBindings()) {
 			return;
 		}
-		File episodeFile = getEpisodeFile();
-		if(!episodeFile.canWrite()) {
-			getLog().debug(MessageFormat.format("Episode file [{0}] not writable, applyEpisodeHackForUnusedSchemaBindings configuration aborted", episodeFile));
+		final File episodeFile = getEpisodeFile();
+		if (!episodeFile.canWrite()) {
+			getLog().warn(
+					MessageFormat
+							.format("Episode file [{0}] is not writable, could not add if-exists attributes.",
+									episodeFile));
 			return;
 		}
 		try {
-			File tempEpisode = File.createTempFile("maven.xjc2", "episode");
-			Transformer transformer = TransformerFactory.newInstance().newTransformer(new StreamSource(getClass().getResourceAsStream("/episodeHackForUnusedSchemaBindings.xslt")));
-			transformer.transform(new StreamSource(episodeFile), new StreamResult(tempEpisode));
-			FileUtils.copyFile(tempEpisode, episodeFile);
-			FileUtils.forceDelete(tempEpisode);
-			getLog().info(MessageFormat.format("Episode file [{0}] transformed to allow import with unused schema bindings", episodeFile));
-		} catch(IOException e) {
-			throw new MojoExecutionException(MessageFormat.format("IO error transforming [{0}] to allow import with unused schema bindings", episodeFile), e);
+			final TransformerFactory transformerFactory = TransformerFactory
+					.newInstance();
+			final InputStream is = getClass()
+					.getResourceAsStream(
+							ADD_IF_EXISTS_TO_EPISODE_SCHEMA_BINDINGS_TRANSFORMATION_RESOURCE_NAME);
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+			System.out.println(is);
+			final Transformer addIfExistsToEpisodeSchemaBindingsTransformer = transformerFactory
+					.newTransformer(new StreamSource(is));
+			final DOMResult result = new DOMResult();
+			addIfExistsToEpisodeSchemaBindingsTransformer.transform(
+					new StreamSource(episodeFile), result);
+			final DOMSource source = new DOMSource(result.getNode());
+			final Transformer identityTransformer = transformerFactory
+					.newTransformer();
+			identityTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			identityTransformer
+					.transform(source, new StreamResult(episodeFile));
+			getLog().info(
+					MessageFormat
+							.format("Episode file [{0}] was augmented with if-exists=\"true\" attributes.",
+									episodeFile));
 		} catch (TransformerException e) {
-			throw new MojoExecutionException(MessageFormat.format("Unexpected transformation error in [{0}] to allow import with unused schema bindings", episodeFile), e);
-		}		
-	}	
+			throw new MojoExecutionException(
+					MessageFormat.format(
+							"Unexpected transformation error in [{0}] to allow import with unused schema bindings",
+							episodeFile), e);
+		}
+	}
 
 	private URILastModifiedResolver uriLastModifiedResolver;
 

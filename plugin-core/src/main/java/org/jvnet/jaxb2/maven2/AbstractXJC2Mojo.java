@@ -798,22 +798,25 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	public void setEpisode(boolean episode) {
 		this.episode = episode;
 	}
-	
-	/**
-	* If <b>true</b>, adds <b>if-exists="true"</b> in <b>bindings</b> elements.
-	* See https://github.com/highsource/maven-jaxb2-plugin/issues/41 for more
-	* information
-	*/
-	@Parameter(property = "maven.xjc2.applyEpisodeHackForUnusedSchemaBindings", defaultValue = "false")
-	private boolean applyEpisodeHackForUnusedSchemaBindings;
 
-	public boolean getApplyEpisodeHackForUnusedSchemaBindings() {
-		return this.applyEpisodeHackForUnusedSchemaBindings;
+	/**
+	 * If <code>true</code> (default), adds <code>if-exists="true"</code>
+	 * attributes to the <code>bindings</code> elements associated with schemas
+	 * (via <code>scd="x-schema::..."</code>) in the generated episode files.
+	 * This is necessary to avoid the annoying <quote>SCD "x-schema::tns" didn't
+	 * match any schema component</quote> errors.
+	 */
+	@Parameter(property = "maven.xjc2.addIfExistsToEpisodeSchemaBindings", defaultValue = "true")
+	private boolean addIfExistsToEpisodeSchemaBindings;
+
+	public boolean isAddIfExistsToEpisodeSchemaBindings() {
+		return this.addIfExistsToEpisodeSchemaBindings;
 	}
 
-	public void setApplyEpisodeHackForUnusedSchemaBindings(boolean applyEpisodeHackForUnusedSchemaBindings) {
-		this.applyEpisodeHackForUnusedSchemaBindings = applyEpisodeHackForUnusedSchemaBindings;
-	}	
+	public void setAddIfExistsToEpisodeSchemaBindings(
+			boolean addIfExistsToEpisodeSchemaBindings) {
+		this.addIfExistsToEpisodeSchemaBindings = addIfExistsToEpisodeSchemaBindings;
+	}
 
 	/**
 	 * If true, marks generated classes using a @Generated annotation - i.e.

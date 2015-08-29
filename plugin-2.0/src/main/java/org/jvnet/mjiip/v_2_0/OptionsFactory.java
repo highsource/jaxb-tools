@@ -16,7 +16,7 @@ public class OptionsFactory implements
 		org.jvnet.jaxb2.maven2.OptionsFactory<Options> {
 	/**
 	 * Creates and initializes an instance of XJC options.
-	 * 
+	 *
 	 */
 	public Options createOptions(OptionsConfiguration optionsConfiguration)
 			throws MojoExecutionException {
@@ -67,6 +67,16 @@ public class OptionsFactory implements
 
 		if (optionsConfiguration.isExtension()) {
 			options.compatibilityMode = Options.EXTENSION;
+		}
+
+		String proxy = optionsConfiguration.getProxy();
+		if ((proxy != null) && (proxy.length() > 0)) {
+			try {
+				options.parseArguments(new String[] { "-httpproxy", proxy });
+			}
+			catch (BadCommandLineException bclex) {
+				throw new MojoExecutionException("Error parsing the proxy line ", bclex);
+			}
 		}
 
 		final List<String> arguments = optionsConfiguration.getArguments();

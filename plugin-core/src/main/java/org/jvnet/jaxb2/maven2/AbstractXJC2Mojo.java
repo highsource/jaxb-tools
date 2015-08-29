@@ -32,6 +32,8 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectBuilder;
 import org.apache.maven.project.artifact.InvalidDependencyVersionException;
 import org.apache.maven.project.artifact.MavenMetadataSource;
+import org.apache.maven.settings.Proxy;
+import org.apache.maven.settings.Settings;
 import org.jvnet.jaxb2.maven2.util.ArtifactUtils;
 import org.jvnet.jaxb2.maven2.util.IOUtils;
 import org.sonatype.plexus.build.incremental.BuildContext;
@@ -625,7 +627,60 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.debug = debug;
 	}
 
+	// NOTE
+	// Code extracted from jaxb2-maven-plugin of justinsb (see https://github.com/justinsb/jaxb2-maven-plugin)
+
 	/**
+     * <p>Sets the HTTP/HTTPS proxy to be used by the XJC, on the format
+     * {@code [user[:password]@]proxyHost[:proxyPort]}.
+     * All information is retrieved from the active proxy within the standard maven settings file.</p>
+     */
+    @Parameter(defaultValue = "${settings}", readonly = true)
+    protected Settings settings;
+
+    // NOTE: code extractec from
+    public String getProxy() {
+
+    	if (settings == null) {
+    		return null;
+    	}
+
+    	Proxy activeProxy = settings.getActiveProxy();
+
+        // Check sanity
+        if (activeProxy == null) {
+            return null;
+        }
+
+        // The XJC proxy argument should be on the form
+        // [user[:password]@]proxyHost[:proxyPort]
+        //
+        // builder.withNamedArgument("httpproxy", httpproxy);
+        //
+        final StringBuilder proxyBuilder = new StringBuilder();
+        if (activeProxy.getUsername() != null) {
+
+            // Start with the username.
+            proxyBuilder.append(activeProxy.getUsername());
+
+            // Append the password if provided.
+            if (activeProxy.getPassword() != null) {
+                proxyBuilder.append(":").append(activeProxy.getPassword());
+            }
+
+            proxyBuilder.append("@");
+        }
+
+        // Append hostname and port.
+        proxyBuilder.append(activeProxy.getHost()).append(":").append(activeProxy.getPort());
+
+        // All done.
+        return proxyBuilder.toString();
+    }
+
+    // END NOTE
+
+    /**
 	 * <p>
 	 * A list of extra XJC's command-line arguments (items must include the dash
 	 * '-'). Use this argument to enable the JAXB2 plugins you want to use.
@@ -649,7 +704,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * If true, no up-to-date check is performed and the XJC always re-generates
 	 * the sources. Otherwise schemas will only be recompiled if anything has
 	 * changed.
-	 * 
+	 *
 	 */
 	@Parameter(defaultValue = "false", property = "maven.xjc2.forceRegenerate")
 	private boolean forceRegenerate;
@@ -672,7 +727,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * XJC does not regenerate all files (i.e. files for "any" elements under
 	 * 'xjc/org/w3/_2001/xmlschema' directory).
 	 * </p>
-	 * 
+	 *
 	 */
 	@Parameter(defaultValue = "false", property = "maven.xjc2.removeOldOutput")
 	private boolean removeOldOutput;
@@ -690,7 +745,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * If 'true', package directories will be cleaned before the XJC binding
 	 * compiler generates the source files.
 	 * </p>
-	 * 
+	 *
 	 */
 	@Parameter(defaultValue = "true", property = "maven.xjc2.removeOldPackages")
 	private boolean cleanPackageDirectories = true;

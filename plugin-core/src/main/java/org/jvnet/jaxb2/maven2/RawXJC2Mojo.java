@@ -1030,7 +1030,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 				getAccessExternalSchema(), getAccessExternalDTD(),
 				getContentForWildcard(), getExtension(), getStrict(),
 				getVerbose(), getDebug(), getArguments(), getXjcPluginURLs(),
-				getSpecVersion());
+				getSpecVersion(), getProxy());
 		return optionsConfiguration;
 	}
 

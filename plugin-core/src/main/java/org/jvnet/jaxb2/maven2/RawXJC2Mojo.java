@@ -16,6 +16,7 @@ package org.jvnet.jaxb2.maven2;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -33,6 +34,14 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.DefaultArtifact;
@@ -493,6 +502,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 					MessageFormat.format(
 							"Refreshing the generated directory [{0}].",
 							getGenerateDirectory().getAbsolutePath()));
+			setupEpisodeHackForUnusedSchemaBindings();
 			buildContext.refresh(getGenerateDirectory());
 		}
 
@@ -500,6 +510,31 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			getLog().info("Finished execution.");
 		}
 	}
+	
+	
+	private void setupEpisodeHackForUnusedSchemaBindings() throws MojoExecutionException {
+		if(!getApplyEpisodeHackForUnusedSchemaBindings()) {
+			getLog().debug("allowImporWithUnusedSchemaBindingsInEpisode disabled");
+			return;
+		}
+		File episodeFile = getEpisodeFile();
+		if(!episodeFile.canWrite()) {
+			getLog().debug(MessageFormat.format("Episode file [{0}] not writable, applyEpisodeHackForUnusedSchemaBindings configuration aborted", episodeFile));
+			return;
+		}
+		try {
+			File tempEpisode = File.createTempFile("maven.xjc2", "episode");
+			Transformer transformer = TransformerFactory.newInstance().newTransformer(new StreamSource(getClass().getResourceAsStream("/episodeHackForUnusedSchemaBindings.xslt")));
+			transformer.transform(new StreamSource(episodeFile), new StreamResult(tempEpisode));
+			FileUtils.copyFile(tempEpisode, episodeFile);
+			FileUtils.forceDelete(tempEpisode);
+			getLog().info(MessageFormat.format("Episode file [{0}] transformed to allow import with unused schema bindings", episodeFile));
+		} catch(IOException e) {
+			throw new MojoExecutionException(MessageFormat.format("IO error transforming [{0}] to allow import with unused schema bindings", episodeFile), e);
+		} catch (TransformerException e) {
+			throw new MojoExecutionException(MessageFormat.format("Unexpected transformation error in [{0}] to allow import with unused schema bindings", episodeFile), e);
+		}		
+	}	
 
 	private URILastModifiedResolver uriLastModifiedResolver;
 

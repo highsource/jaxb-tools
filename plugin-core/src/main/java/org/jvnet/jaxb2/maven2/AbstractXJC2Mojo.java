@@ -798,6 +798,22 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	public void setEpisode(boolean episode) {
 		this.episode = episode;
 	}
+	
+	/**
+	* If <b>true</b>, adds <b>if-exists="true"</b> in <b>bindings</b> elements.
+	* See https://github.com/highsource/maven-jaxb2-plugin/issues/41 for more
+	* information
+	*/
+	@Parameter(property = "maven.xjc2.applyEpisodeHackForUnusedSchemaBindings", defaultValue = "false")
+	private boolean applyEpisodeHackForUnusedSchemaBindings;
+
+	public boolean getApplyEpisodeHackForUnusedSchemaBindings() {
+		return this.applyEpisodeHackForUnusedSchemaBindings;
+	}
+
+	public void setApplyEpisodeHackForUnusedSchemaBindings(boolean applyEpisodeHackForUnusedSchemaBindings) {
+		this.applyEpisodeHackForUnusedSchemaBindings = applyEpisodeHackForUnusedSchemaBindings;
+	}	
 
 	/**
 	 * If true, marks generated classes using a @Generated annotation - i.e.

@@ -32,7 +32,6 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectBuilder;
 import org.apache.maven.project.artifact.InvalidDependencyVersionException;
 import org.apache.maven.project.artifact.MavenMetadataSource;
-import org.apache.maven.settings.Proxy;
 import org.apache.maven.settings.Settings;
 import org.jvnet.jaxb2.maven2.util.ArtifactUtils;
 import org.jvnet.jaxb2.maven2.util.IOUtils;
@@ -41,6 +40,35 @@ import org.sonatype.plexus.build.incremental.DefaultBuildContext;
 
 public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		DependencyResourceResolver {
+
+	@Parameter(defaultValue = "${settings}", readonly = true)
+	private Settings settings;
+
+	public Settings getSettings() {
+		return settings;
+	}
+
+	public void setSettings(Settings settings) {
+		this.settings = settings;
+	}
+
+	/**
+	 * If set to <code>true</code>, passes Maven's active proxy settings to XJC.
+	 * Default value is <code>false</code>. Proxy settings are passed using the
+	 * <code>-httpproxy</code> argument in the form
+	 * <code>[user[:password]@]proxyHost[:proxyPort]</code>. This sets both HTTP
+	 * as well as HTTPS proxy.
+	 */
+	@Parameter(property = "maven.xjc2.useActiveProxyAsHttpproxy", defaultValue = "false")
+	private boolean useActiveProxyAsHttpproxy = false;
+
+	public boolean isUseActiveProxyAsHttpproxy() {
+		return this.useActiveProxyAsHttpproxy;
+	}
+
+	public void setUseActiveProxyAsHttpproxy(boolean useActiveProxyAsHttpproxy) {
+		this.useActiveProxyAsHttpproxy = useActiveProxyAsHttpproxy;
+	}
 
 	/**
 	 * Encoding for the generated sources, defaults to
@@ -627,60 +655,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.debug = debug;
 	}
 
-	// NOTE
-	// Code extracted from jaxb2-maven-plugin of justinsb (see https://github.com/justinsb/jaxb2-maven-plugin)
-
 	/**
-     * <p>Sets the HTTP/HTTPS proxy to be used by the XJC, on the format
-     * {@code [user[:password]@]proxyHost[:proxyPort]}.
-     * All information is retrieved from the active proxy within the standard maven settings file.</p>
-     */
-    @Parameter(defaultValue = "${settings}", readonly = true)
-    protected Settings settings;
-
-    // NOTE: code extractec from
-    public String getProxy() {
-
-    	if (settings == null) {
-    		return null;
-    	}
-
-    	Proxy activeProxy = settings.getActiveProxy();
-
-        // Check sanity
-        if (activeProxy == null) {
-            return null;
-        }
-
-        // The XJC proxy argument should be on the form
-        // [user[:password]@]proxyHost[:proxyPort]
-        //
-        // builder.withNamedArgument("httpproxy", httpproxy);
-        //
-        final StringBuilder proxyBuilder = new StringBuilder();
-        if (activeProxy.getUsername() != null) {
-
-            // Start with the username.
-            proxyBuilder.append(activeProxy.getUsername());
-
-            // Append the password if provided.
-            if (activeProxy.getPassword() != null) {
-                proxyBuilder.append(":").append(activeProxy.getPassword());
-            }
-
-            proxyBuilder.append("@");
-        }
-
-        // Append hostname and port.
-        proxyBuilder.append(activeProxy.getHost()).append(":").append(activeProxy.getPort());
-
-        // All done.
-        return proxyBuilder.toString();
-    }
-
-    // END NOTE
-
-    /**
 	 * <p>
 	 * A list of extra XJC's command-line arguments (items must include the dash
 	 * '-'). Use this argument to enable the JAXB2 plugins you want to use.
@@ -759,9 +734,9 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	}
 
 	/**
-	 * Specifies patterns of files produced by this plugin. This is used to check
-	 * if produced files are up-to-date. Default value is ** /*.*, ** /*.java,
-	 * ** /bgm.ser, ** /jaxb.properties.
+	 * Specifies patterns of files produced by this plugin. This is used to
+	 * check if produced files are up-to-date. Default value is ** /*.*, **
+	 * /*.java, ** /bgm.ser, ** /jaxb.properties.
 	 */
 	@Parameter
 	private String[] produces = new String[] { "**/*.*", "**/*.java",

@@ -33,8 +33,6 @@ public class OptionsConfiguration {
 	private final String accessExternalDTD;
 	private final boolean contentForWildcard;
 
-	private final String proxy;
-
 	private final boolean extension;
 
 	private final boolean strict;
@@ -60,7 +58,7 @@ public class OptionsConfiguration {
 
 			boolean extension, boolean strict, boolean verbose,
 			boolean debugMode, List<String> arguments, List<URL> plugins,
-			String specVersion, String proxy) {
+			String specVersion) {
 		super();
 		this.encoding = encoding;
 		this.schemaLanguage = schemaLanguage;
@@ -84,7 +82,6 @@ public class OptionsConfiguration {
 		this.arguments = arguments;
 		this.plugins = plugins;
 		this.specVersion = specVersion;
-		this.proxy = proxy;
 	}
 
 	public String getEncoding() {
@@ -169,10 +166,6 @@ public class OptionsConfiguration {
 
 	public String getSpecVersion() {
 		return specVersion;
-	}
-
-	public String getProxy() {
-		return proxy;
 	}
 
 	public List<URL> getPlugins() {

@@ -807,7 +807,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * match any schema component</quote> errors.
 	 */
 	@Parameter(property = "maven.xjc2.addIfExistsToEpisodeSchemaBindings", defaultValue = "true")
-	private boolean addIfExistsToEpisodeSchemaBindings;
+	private boolean addIfExistsToEpisodeSchemaBindings = true;
 
 	public boolean isAddIfExistsToEpisodeSchemaBindings() {
 		return this.addIfExistsToEpisodeSchemaBindings;

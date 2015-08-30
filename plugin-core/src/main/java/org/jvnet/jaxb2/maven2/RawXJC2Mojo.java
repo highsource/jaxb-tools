@@ -58,6 +58,7 @@ import org.apache.maven.project.artifact.InvalidDependencyVersionException;
 import org.apache.maven.settings.Proxy;
 import org.apache.maven.settings.Settings;
 import org.codehaus.plexus.util.FileUtils;
+import org.codehaus.plexus.util.IOUtil;
 import org.jvnet.jaxb2.maven2.net.CompositeURILastModifiedResolver;
 import org.jvnet.jaxb2.maven2.net.FileURILastModifiedResolver;
 import org.jvnet.jaxb2.maven2.net.URILastModifiedResolver;
@@ -529,14 +530,13 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 									episodeFile));
 			return;
 		}
+		InputStream is = null;
 		try {
 			final TransformerFactory transformerFactory = TransformerFactory
 					.newInstance();
-			final InputStream is = getClass()
+			is = getClass()
 					.getResourceAsStream(
 							ADD_IF_EXISTS_TO_EPISODE_SCHEMA_BINDINGS_TRANSFORMATION_RESOURCE_NAME);
-			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-			System.out.println(is);
 			final Transformer addIfExistsToEpisodeSchemaBindingsTransformer = transformerFactory
 					.newTransformer(new StreamSource(is));
 			final DOMResult result = new DOMResult();
@@ -555,8 +555,10 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		} catch (TransformerException e) {
 			throw new MojoExecutionException(
 					MessageFormat.format(
-							"Unexpected transformation error in [{0}] to allow import with unused schema bindings",
+							"Error augmenting the episode file [{0}] with if-exists=\"true\" attributes. Transformation failed with an unexpected error.",
 							episodeFile), e);
+		} finally {
+			IOUtil.close(is);
 		}
 	}
 

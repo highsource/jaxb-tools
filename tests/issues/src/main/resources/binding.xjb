@@ -42,5 +42,14 @@
 			<annox:annotate target="package">@javax.xml.bind.annotation.XmlSchema(elementFormDefault=javax.xml.bind.annotation.XmlNsForm.QUALIFIED)</annox:annotate>
 			<annox:annotatePackage>@javax.annotation.Generated({"XJC"})</annox:annotatePackage>
 		</jaxb:bindings>
+
+		<jaxb:bindings node="xsd:complexType[@name='gh16Type']/xsd:sequence/xsd:element[@name='x']">
+			<jaxb:class ref="org.jvnet.jaxb2_commons.tests.issues.Gh16Type" />
+		</jaxb:bindings>
+		<jaxb:bindings node="xsd:complexType[@name='gh16Type']/xsd:sequence/xsd:element[@name='x']">
+			<annox:annotate target="field">
+				<annox:annotate annox:class="java.lang.Deprecated" />
+			</annox:annotate>
+		</jaxb:bindings>
 	</jaxb:bindings>
 </jaxb:bindings>

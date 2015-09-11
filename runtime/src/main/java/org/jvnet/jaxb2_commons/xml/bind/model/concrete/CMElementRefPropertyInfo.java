@@ -8,8 +8,8 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public class CMElementRefPropertyInfo<T, C extends T> extends CMPropertyInfo<T, C>
-		implements MElementRefPropertyInfo<T, C> {
+public class CMElementRefPropertyInfo<T, C extends T> extends
+		CMPropertyInfo<T, C> implements MElementRefPropertyInfo<T, C> {
 
 	private final MTypeInfo<T, C> typeInfo;
 	private final QName elementName;
@@ -22,10 +22,10 @@ public class CMElementRefPropertyInfo<T, C extends T> extends CMPropertyInfo<T, 
 
 	public CMElementRefPropertyInfo(MPropertyInfoOrigin origin,
 			MClassInfo<T, C> classInfo, String privateName, boolean collection,
-			MTypeInfo<T, C> typeInfo, QName elementName,
+			boolean required, MTypeInfo<T, C> typeInfo, QName elementName,
 			QName wrapperElementName, boolean mixed, boolean domAllowed,
 			boolean typedObjectAllowed, String defaultValue) {
-		super(origin, classInfo, privateName, collection);
+		super(origin, classInfo, privateName, collection, required);
 		this.typeInfo = typeInfo;
 		this.elementName = elementName;
 		this.wrapperElementName = wrapperElementName;
@@ -58,7 +58,7 @@ public class CMElementRefPropertyInfo<T, C extends T> extends CMPropertyInfo<T, 
 	public boolean isTypedObjectAllowed() {
 		return typedObjectAllowed;
 	}
-	
+
 	@Override
 	public boolean isNillable() {
 		return true;

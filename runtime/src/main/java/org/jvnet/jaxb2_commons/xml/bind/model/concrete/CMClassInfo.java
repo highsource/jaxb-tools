@@ -2,7 +2,9 @@ package org.jvnet.jaxb2_commons.xml.bind.model.concrete;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.namespace.QName;
 
@@ -36,6 +38,7 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 	private final MClassTypeInfo<T, C> baseTypeInfo;
 	private final QName elementName;
 
+	private Map<String, MPropertyInfo<T, C>> propertiesMap = new HashMap<String, MPropertyInfo<T, C>>();
 	private List<MPropertyInfo<T, C>> properties = new ArrayList<MPropertyInfo<T, C>>();
 	private List<MPropertyInfo<T, C>> unmodifiableProperties = Collections
 			.unmodifiableList(properties);
@@ -133,6 +136,11 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 	public List<MPropertyInfo<T, C>> getProperties() {
 		return unmodifiableProperties;
 	}
+	
+	@Override
+	public MPropertyInfo<T, C> getProperty(String privateName) {
+		return this.propertiesMap.get(privateName);
+	}
 
 	public QName getElementName() {
 		return elementName;
@@ -141,12 +149,14 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 	public void addProperty(MPropertyInfo<T, C> propertyInfo) {
 		Validate.notNull(propertyInfo);
 		this.properties.add(propertyInfo);
+		this.propertiesMap.put(propertyInfo.getPrivateName(), propertyInfo);
 	}
 
 	@SuppressWarnings("unchecked")
 	public void removeProperty(MPropertyInfo<T, C> propertyInfo) {
 		Validate.notNull(propertyInfo);
 		this.properties.remove(propertyInfo);
+		this.propertiesMap.remove(propertyInfo.getPrivateName());
 
 		if (getOrigin() instanceof ClassInfoOrigin
 				&& propertyInfo.getOrigin() instanceof PropertyInfoOrigin) {

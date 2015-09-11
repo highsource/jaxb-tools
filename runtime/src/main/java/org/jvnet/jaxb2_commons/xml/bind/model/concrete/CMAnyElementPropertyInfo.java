@@ -5,8 +5,8 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public class CMAnyElementPropertyInfo<T, C extends T> extends CMPropertyInfo<T, C>
-		implements MAnyElementPropertyInfo<T, C> {
+public class CMAnyElementPropertyInfo<T, C extends T> extends
+		CMPropertyInfo<T, C> implements MAnyElementPropertyInfo<T, C> {
 
 	private final boolean mixed;
 	private final boolean domAllowed;
@@ -14,8 +14,9 @@ public class CMAnyElementPropertyInfo<T, C extends T> extends CMPropertyInfo<T, 
 
 	public CMAnyElementPropertyInfo(MPropertyInfoOrigin origin,
 			MClassInfo<T, C> classInfo, String privateName, boolean collection,
-			boolean mixed, boolean domAllowed, boolean typedObjectAllowed) {
-		super(origin, classInfo, privateName, collection);
+			boolean required, boolean mixed, boolean domAllowed,
+			boolean typedObjectAllowed) {
+		super(origin, classInfo, privateName, collection, required);
 		this.mixed = mixed;
 		this.domAllowed = domAllowed;
 		this.typedObjectAllowed = typedObjectAllowed;

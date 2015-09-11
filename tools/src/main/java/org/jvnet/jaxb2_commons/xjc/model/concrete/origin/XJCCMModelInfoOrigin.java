@@ -9,6 +9,7 @@ import com.sun.tools.xjc.model.Model;
 import com.sun.tools.xjc.model.nav.NClass;
 import com.sun.tools.xjc.model.nav.NType;
 import com.sun.tools.xjc.outline.Outline;
+import com.sun.xml.xsom.XSSchemaSet;
 
 public class XJCCMModelInfoOrigin extends
 		CMModelInfoOrigin<NType, NClass, Model> implements
@@ -20,6 +21,10 @@ public class XJCCMModelInfoOrigin extends
 
 	public MModelOutlineGenerator createGenerator(Outline outline) {
 		return new CMModelOutlineGenerator(outline, getSource());
+	}
+
+	public XSSchemaSet getSchemaComponent() {
+		return getSource().schemaComponent;
 	}
 
 }

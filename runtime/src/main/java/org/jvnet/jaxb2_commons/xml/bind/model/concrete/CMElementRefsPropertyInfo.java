@@ -14,8 +14,8 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MElementTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public class CMElementRefsPropertyInfo<T, C extends T> extends CMPropertyInfo<T, C>
-		implements MElementRefsPropertyInfo<T, C> {
+public class CMElementRefsPropertyInfo<T, C extends T> extends
+		CMPropertyInfo<T, C> implements MElementRefsPropertyInfo<T, C> {
 
 	private final QName wrapperElementName;
 
@@ -29,13 +29,14 @@ public class CMElementRefsPropertyInfo<T, C extends T> extends CMPropertyInfo<T,
 
 	public CMElementRefsPropertyInfo(MPropertyInfoOrigin origin,
 			MClassInfo<T, C> classInfo, String privateName, boolean collection,
+			boolean required,
 			Collection<MElementTypeInfo<T, C>> elementTypeInfos,
 			QName wrapperElementName, boolean mixed, boolean domAllowed,
 			boolean typedObjectAllowed) {
-		super(origin, classInfo, privateName, collection);
+		super(origin, classInfo, privateName, collection, required);
 		Validate.noNullElements(elementTypeInfos);
-//		Validate.notEmpty(elementTypeInfos);
-//		Validate.isTrue(elementTypeInfos.size() > 1);
+		// Validate.notEmpty(elementTypeInfos);
+		// Validate.isTrue(elementTypeInfos.size() > 1);
 		this.elementTypeInfos.addAll(elementTypeInfos);
 		this.wrapperElementName = wrapperElementName;
 		this.mixed = mixed;

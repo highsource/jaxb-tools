@@ -7,8 +7,8 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizations;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public abstract class CMPropertyInfo<T, C extends T> implements MPropertyInfo<T, C>,
-		MCustomizable {
+public abstract class CMPropertyInfo<T, C extends T> implements
+		MPropertyInfo<T, C>, MCustomizable {
 
 	private CMCustomizations customizations = new CMCustomizations();
 	private MPropertyInfoOrigin origin;
@@ -18,8 +18,11 @@ public abstract class CMPropertyInfo<T, C extends T> implements MPropertyInfo<T,
 
 	private final boolean collection;
 
+	private final boolean required;
+
 	public CMPropertyInfo(MPropertyInfoOrigin origin,
-			MClassInfo<T, C> classInfo, String privateName, boolean collection) {
+			MClassInfo<T, C> classInfo, String privateName, boolean collection,
+			boolean required) {
 		Validate.notNull(origin);
 		Validate.notNull(classInfo);
 		Validate.notNull(privateName);
@@ -27,6 +30,7 @@ public abstract class CMPropertyInfo<T, C extends T> implements MPropertyInfo<T,
 		this.classInfo = classInfo;
 		this.privateName = privateName;
 		this.collection = collection;
+		this.required = required;
 	}
 
 	public MCustomizations getCustomizations() {
@@ -52,6 +56,10 @@ public abstract class CMPropertyInfo<T, C extends T> implements MPropertyInfo<T,
 
 	public boolean isCollection() {
 		return collection;
+	}
+
+	public boolean isRequired() {
+		return required;
 	}
 
 }

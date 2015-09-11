@@ -10,7 +10,7 @@ public class CMAnyAttributePropertyInfo<T, C extends T> extends
 
 	public CMAnyAttributePropertyInfo(MPropertyInfoOrigin origin,
 			MClassInfo<T, C> classInfo, String privateName) {
-		super(origin, classInfo, privateName, false);
+		super(origin, classInfo, privateName, false, false);
 	}
 
 	public <V> V acceptPropertyInfoVisitor(MPropertyInfoVisitor<T, C, V> visitor) {

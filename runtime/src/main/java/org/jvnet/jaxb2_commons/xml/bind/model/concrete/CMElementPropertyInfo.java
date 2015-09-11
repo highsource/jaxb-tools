@@ -19,9 +19,9 @@ public class CMElementPropertyInfo<T, C extends T> extends CMPropertyInfo<T, C>
 
 	public CMElementPropertyInfo(MPropertyInfoOrigin origin,
 			MClassInfo<T, C> classInfo, String privateName, boolean collection,
-			MTypeInfo<T, C> typeInfo, QName elementName,
+			boolean required, MTypeInfo<T, C> typeInfo, QName elementName,
 			QName wrapperElementName, boolean nillable, String defaultValue) {
-		super(origin, classInfo, privateName, collection);
+		super(origin, classInfo, privateName, collection, required);
 		this.typeInfo = typeInfo;
 		this.elementName = elementName;
 		this.wrapperElementName = wrapperElementName;

@@ -12,6 +12,8 @@ public interface MPropertyInfo<T, C extends T> extends MOriginated<MPropertyInfo
 	public String getPublicName();
 
 	public boolean isCollection();
+	
+	public boolean isRequired();
 
 	public <V> V acceptPropertyInfoVisitor(MPropertyInfoVisitor<T, C, V> visitor);
 }

@@ -12,7 +12,7 @@ public class CMValuePropertyInfo<T, C extends T> extends CMSingleTypePropertyInf
 	public CMValuePropertyInfo(MPropertyInfoOrigin origin,
 			MClassInfo<T, C> classInfo, String privateName,
 			MTypeInfo<T, C> typeInfo) {
-		super(origin, classInfo, privateName, false, typeInfo);
+		super(origin, classInfo, privateName, false, typeInfo, /* required */ true);
 	}
 
 	public <V> V acceptPropertyInfoVisitor(MPropertyInfoVisitor<T, C, V> visitor) {

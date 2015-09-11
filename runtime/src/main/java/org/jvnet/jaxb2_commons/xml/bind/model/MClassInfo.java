@@ -14,6 +14,8 @@ public interface MClassInfo<T, C extends T> extends MClassTypeInfo<T, C>,
 
 	public List<MPropertyInfo<T, C>> getProperties();
 
+	public MPropertyInfo<T, C> getProperty(String publicName);
+
 	public QName getElementName();
 
 	public MElementInfo<T, C> createElementInfo(MTypeInfo<T, C> scope,

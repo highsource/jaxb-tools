@@ -13,11 +13,11 @@ public class CMAttributePropertyInfo<T, C extends T> extends
 		CMSingleTypePropertyInfo<T, C> implements MAttributePropertyInfo<T, C> {
 
 	private final QName attributeName;
-
+	
 	public CMAttributePropertyInfo(MPropertyInfoOrigin origin,
 			MClassInfo<T, C> classInfo, String privateName,
-			MTypeInfo<T, C> typeInfo, QName attributeName) {
-		super(origin, classInfo, privateName, false, typeInfo);
+			MTypeInfo<T, C> typeInfo, QName attributeName, boolean required) {
+		super(origin, classInfo, privateName, false, typeInfo, required);
 		Validate.notNull(attributeName);
 		this.attributeName = attributeName;
 	}

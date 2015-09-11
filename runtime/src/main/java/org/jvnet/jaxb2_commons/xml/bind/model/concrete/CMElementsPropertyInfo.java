@@ -14,8 +14,8 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MElementsPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
-public class CMElementsPropertyInfo<T, C extends T> extends CMPropertyInfo<T, C>
-		implements MElementsPropertyInfo<T, C> {
+public class CMElementsPropertyInfo<T, C extends T> extends
+		CMPropertyInfo<T, C> implements MElementsPropertyInfo<T, C> {
 
 	private final List<MElementTypeInfo<T, C>> elementTypeInfos = new ArrayList<MElementTypeInfo<T, C>>();
 	private final List<MElementTypeInfo<T, C>> unmodifiableElementTypeInfos = Collections
@@ -24,9 +24,10 @@ public class CMElementsPropertyInfo<T, C extends T> extends CMPropertyInfo<T, C>
 
 	public CMElementsPropertyInfo(MPropertyInfoOrigin origin,
 			MClassInfo<T, C> classInfo, String privateName, boolean collection,
+			boolean required,
 			Collection<MElementTypeInfo<T, C>> elementTypeInfos,
 			QName wrapperElementName) {
-		super(origin, classInfo, privateName, collection);
+		super(origin, classInfo, privateName, collection, required);
 		Validate.noNullElements(elementTypeInfos);
 		Validate.notEmpty(elementTypeInfos);
 		Validate.isTrue(elementTypeInfos.size() > 1);

@@ -182,6 +182,7 @@ public class ElementWrapperPlugin extends AbstractModelPlugin {
 				new DummyPropertyInfoOrigin(), wrapperClassInfo,
 				wrapperPropertyInfo.getPrivateName(),
 				wrappedPropertyInfo.isCollection(),
+				wrappedPropertyInfo.isRequired(),
 				wrappedPropertyInfo.getTypeInfo(),
 				wrappedPropertyInfo.getElementName(),
 				wrapperPropertyInfo.getWrapperElementName(),
@@ -212,7 +213,7 @@ public class ElementWrapperPlugin extends AbstractModelPlugin {
 				new DummyPropertyInfoOrigin(), wrapperClassInfo,
 				wrapperPropertyInfo.getPrivateName(),
 				wrappedPropertyInfo.isCollection(),
-
+				wrappedPropertyInfo.isRequired(),
 				wrappedPropertyInfo.getElementTypeInfos(),
 				wrapperPropertyInfo.getElementName());
 
@@ -240,6 +241,7 @@ public class ElementWrapperPlugin extends AbstractModelPlugin {
 				new DummyPropertyInfoOrigin(), wrapperClassInfo,
 				wrapperPropertyInfo.getPrivateName(),
 				wrappedPropertyInfo.isCollection(),
+				wrappedPropertyInfo.isRequired(),
 				wrappedPropertyInfo.getTypeInfo(),
 				wrappedPropertyInfo.getElementName(),
 				wrapperPropertyInfo.getElementName(),
@@ -272,7 +274,7 @@ public class ElementWrapperPlugin extends AbstractModelPlugin {
 				new DummyPropertyInfoOrigin(), wrapperClassInfo,
 				wrapperPropertyInfo.getPrivateName(),
 				wrappedPropertyInfo.isCollection(),
-
+				wrappedPropertyInfo.isRequired(),
 				wrappedPropertyInfo.getElementTypeInfos(),
 				wrapperPropertyInfo.getElementName(),
 				wrappedPropertyInfo.isMixed(),

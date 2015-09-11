@@ -13,8 +13,8 @@ public abstract class CMSingleTypePropertyInfo<T, C extends T> extends
 
 	public CMSingleTypePropertyInfo(MPropertyInfoOrigin origin,
 			MClassInfo<T, C> classInfo, String privateName, boolean collection,
-			MTypeInfo<T, C> typeInfo) {
-		super(origin, classInfo, privateName, collection);
+			MTypeInfo<T, C> typeInfo, boolean required) {
+		super(origin, classInfo, privateName, collection, required);
 		Validate.notNull(typeInfo);
 		this.typeInfo = typeInfo;
 	}

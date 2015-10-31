@@ -6,7 +6,7 @@
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:copy>
 	</xsl:template>
-	<xsl:template match="jaxb:bindings[starts-with(@scd,'x-schema::')]">
+	<xsl:template match="jaxb:bindings">
 		<xsl:copy>
 			<xsl:attribute name="if-exists">true</xsl:attribute>
 			<xsl:apply-templates select="@*|node()" />

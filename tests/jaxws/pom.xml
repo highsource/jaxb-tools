@@ -32,64 +32,61 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jvnet.jaxb2_commons</groupId>
-	<artifactId>jaxb2-annotate-plugin-tests</artifactId>
-	<packaging>pom</packaging>
-	<name>JAXB2 Annotate Plugin - Tests</name>
 	<parent>
 		<groupId>org.jvnet.jaxb2_commons</groupId>
-		<artifactId>jaxb2-annotate-plugin-project</artifactId>
+		<artifactId>jaxb2-annotate-plugin-tests</artifactId>
 		<version>1.0.3-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<modules>
-		<module>annotate</module>
-		<module>annox</module>
-		<module>issues</module>
-		<module>one</module>
-		<module>jaxws</module>
-	</modules>
+	<artifactId>jaxb2-annotate-plugin-tests-jaxws</artifactId>
+	<packaging>jar</packaging>
+	<name>JAXB2 Annotate Plugin - Test [jaxws]</name>
 	<dependencies>
-		<dependency>
-			<groupId>com.sun.xml.bind</groupId>
-			<artifactId>jaxb-impl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-basics-runtime</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-basics-testing</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 	<build>
-		<defaultGoal>test</defaultGoal>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.jvnet.jaxb2.maven2</groupId>
-					<artifactId>maven-jaxb2-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>generate</id>
-							<goals>
-								<goal>generate</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<version>2.8.1</version>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
+				<groupId>org.jvnet.jax-ws-commons</groupId>
+				<artifactId>jaxws-maven-plugin</artifactId>
+				<version>2.3</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.jvnet.jaxb2_commons</groupId>
+						<artifactId>jaxb2-basics-annotate</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<goals>
+							<goal>wsimport</goal>
+						</goals>
+						<phase>generate-sources</phase>
+						<configuration>
+							<extension>true</extension>                                 
+							<xjcArgs>
+								<xjcArg>-Xannotate</xjcArg>
+							</xjcArgs>
+							<wsdlDirectory>${project.basedir}/src/main/resources</wsdlDirectory>
+							<wsdlFiles>
+								<wsdlFile>main.wsdl</wsdlFile>
+							</wsdlFiles>
+							<bindingDirectory>${project.basedir}/src/main/resources</bindingDirectory>
+							<bindingFiles>
+								<bindingFile>bindings.xjb</bindingFile>
+								<bindingFile>wsdl-bindings.xjb</bindingFile>
+							</bindingFiles>
+
+							<sourceDestDir>${project.build.directory}/generated-sources/jaxws</sourceDestDir>
+							<verbose>true</verbose>
+							<!--<keep>true</keep>-->
+							<vmArgs>
+								<!--These are necessary as the default restrictions have changed in Java8-->
+								<!--<vmArg>-Djavax.xml.accessExternalDTD=all</vmArg>-->
+								<vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+							</vmArgs>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

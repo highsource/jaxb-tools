@@ -183,7 +183,7 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 					"strategy");
 
             JExpression objectIsNull = object.eq(JExpr._null());
-            JExpression notTheSameType = JExpr.invoke("getClass").ne(object.invoke("getClass"));
+            JExpression notTheSameType = JExpr._this().invoke("getClass").ne(object.invoke("getClass"));
             body._if(JOp.cor(objectIsNull, notTheSameType))
                     ._then()._return(JExpr.FALSE);
 

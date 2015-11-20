@@ -24,7 +24,6 @@ import org.xml.sax.ErrorHandler;
 
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JCodeModel;
-import com.sun.codemodel.JConditional;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JExpression;
@@ -183,9 +182,10 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 			final JVar equalsStrategy = equals.param(EqualsStrategy.class,
 					"strategy");
 
-			final JConditional ifNotInstanceof = body._if(JOp.not(object
-					._instanceof(theClass)));
-			ifNotInstanceof._then()._return(JExpr.FALSE);
+            JExpression objectIsNull = object.eq(JExpr._null());
+            JExpression notTheSameType = JExpr.invoke("getClass").ne(object.invoke("getClass"));
+            body._if(JOp.cor(objectIsNull, notTheSameType))
+                    ._then()._return(JExpr.FALSE);
 
 			//
 			body._if(JExpr._this().eq(object))._then()._return(JExpr.TRUE);

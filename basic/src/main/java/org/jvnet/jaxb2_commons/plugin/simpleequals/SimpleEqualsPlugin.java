@@ -13,7 +13,6 @@ import org.jvnet.jaxb2_commons.xjc.outline.FieldAccessorEx;
 
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JCodeModel;
-import com.sun.codemodel.JConditional;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JExpression;
@@ -58,9 +57,12 @@ public class SimpleEqualsPlugin extends
 				codeModel.BOOLEAN, "equals");
 		final JVar object = objectEquals.param(Object.class, "object");
 		final JBlock body = objectEquals.body();
-		final JConditional ifNotInstanceof = body._if(JOp.not(object
-				._instanceof(theClass)));
-		ifNotInstanceof._then()._return(JExpr.FALSE);
+
+		JExpression objectIsNull = object.eq(JExpr._null());
+		JExpression notTheSameType = JExpr._this().invoke("getClass").ne(object.invoke("getClass"));
+		body._if(JOp.cor(objectIsNull, notTheSameType))
+				._then()._return(JExpr.FALSE);
+
 		body._if(JExpr._this().eq(object))._then()._return(JExpr.TRUE);
 		final Boolean superClassNotIgnored = StrategyClassUtils
 				.superClassNotIgnored(classOutline, getIgnoring());

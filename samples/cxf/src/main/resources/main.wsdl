@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<wsdl:definitions
+	targetNamespace="urn:test:wsdl" 
+	xmlns:test-wsdl="urn:test:wsdl" 
+	xmlns:test-schema="urn:test:schema"
+	xmlns:test-wsdl-schema="urn:test:wsdl:schema"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	name="main">
+
+	<wsdl:types>
+		<xsd:schema targetNamespace="urn:test:wsdl:schema">
+
+			<xsd:import namespace="urn:test:schema" schemaLocation="schema.xsd"/>
+
+			<xsd:complexType name="RequestType">
+				<xsd:complexContent>
+					<xsd:extension base="test-schema:RequestType"/>
+				</xsd:complexContent>
+			</xsd:complexType>
+
+			<xsd:complexType name="ResponseType">
+				<xsd:complexContent>
+					<xsd:extension base="test-schema:ResponseType"/>
+				</xsd:complexContent>
+			</xsd:complexType>
+
+			<xsd:complexType name="FaultType">
+				<xsd:complexContent>
+					<xsd:extension base="test-schema:FaultType"/>
+				</xsd:complexContent>
+			</xsd:complexType>
+
+			<xsd:element name="Request" type="test-wsdl-schema:RequestType"/>
+			<xsd:element name="Response" type="test-wsdl-schema:ResponseType"/>
+			<xsd:element name="Fault" type="test-wsdl-schema:FaultType"/>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="RequestMessage" >
+		<wsdl:part name="in" element="test-wsdl-schema:Request"/>
+	</wsdl:message>
+
+	<wsdl:message name="ResponseMessage" >
+		<wsdl:part name="out" element="test-wsdl-schema:Response"/>
+	</wsdl:message>
+
+	<wsdl:message name="FaultMessage" >
+		<wsdl:part name="fault" element="test-wsdl-schema:Fault"/>
+	</wsdl:message>
+
+		<!-- 
+	WSDL portType element describes a web service, the operations that can be performed, 
+				and the messages that are involved.
+		-->
+	<wsdl:portType name="RequestResponsePortType" >
+		<wsdl:operation name="RequestResponseOperation" >
+			 <wsdl:input message="test-wsdl:RequestMessage"/>
+			 <wsdl:output message="test-wsdl:ResponseMessage"/>
+			 <wsdl:fault name="fault" message="test-wsdl:FaultMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	 <!-- 
+			 WSDL Bindings element defines the message format and protocol details for each port.
+	 -->
+	<wsdl:binding name="RequestResponseBinding" type="test-wsdl:RequestResponsePortType" >
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+		<wsdl:operation name="RequestResponseOperation" >
+			<soap:operation soapAction=""/>
+
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+
+			 <wsdl:fault name="fault" >
+				 <soap:fault name="fault" use="literal"/>
+			 </wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	 <!-- 
+	The service element defines the ports supported by the Web service. 
+	 -->
+	<wsdl:service name="RequestResponseService" >
+		<wsdl:port name="RequestResponsePort" binding="test-wsdl:RequestResponseBinding" >
+			 <soap:address location="https://http://jaxb2-annotate-plugin.github.io/RequestResponseService"/>
+		</wsdl:port>
+	</wsdl:service>
+
+</wsdl:definitions>

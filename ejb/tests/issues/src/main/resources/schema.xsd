@@ -677,6 +677,10 @@ x
 			<xsd:appinfo>
 				<hj:generated-property name="AnyElement" propertyName="Anything">
 					<hj:jaxb-context contextPath="org.jvnet.hyperjaxb3.ejb.tests.po"/>
+					<hj:basic merged="false">
+						<orm:column name="EVERYTHING" length="1024000"/>
+						<orm:lob/>
+					</hj:basic>
 				</hj:generated-property>
 			</xsd:appinfo>
 		</xsd:annotation>
@@ -694,8 +698,24 @@ x
 	<xsd:element name="issueHJIII48BElement" type="test:issueHJIII48BType"/>
 
 	<xsd:complexType name="issueHJIII48BType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<hj:generated-property name="AnyElement" propertyName="Anything">
+					<hj:basic merged="false">
+						<orm:column name="ANYTHING" length="1024000"/>
+						<orm:lob/>
+					</hj:basic>
+				</hj:generated-property>
+			</xsd:appinfo>
+		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:any namespace="##other" processContents="strict" minOccurs="0" maxOccurs="1"/>
+			<xsd:any namespace="##other" processContents="strict" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jaxb:property name="AnyElement"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:any>
 		</xsd:sequence>
 	</xsd:complexType> 
 
@@ -709,7 +729,8 @@ x
 						<hj:generated-property propertyName="Anything">
 							<hj:jaxb-context contextPath="org.jvnet.hyperjaxb3.ejb.tests.po"/>
 							<hj:basic merged="false">
-								<orm:column name="EVERYTHING" length="3000"/>
+								<orm:column name="EVERYTHING" length="1024000"/>
+								<orm:lob/>
 							</hj:basic>
 						</hj:generated-property>
 					</xsd:appinfo>

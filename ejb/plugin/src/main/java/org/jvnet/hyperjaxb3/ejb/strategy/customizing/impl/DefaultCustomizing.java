@@ -425,17 +425,21 @@ public class DefaultCustomizing implements Customizing {
 			if (length != null) {
 				defaultBasic.getColumn().setLength(length);
 			}
-
-			final Integer precision = createColumn$Precision(property);
-			if (precision != null) {
-				defaultBasic.getColumn().setPrecision(precision);
+			
+			final Integer defaultPrecision = defaultBasic.getColumn().getPrecision();
+			final Integer defaultScale = defaultBasic.getColumn().getScale();
+			final Integer fractionDigits = createColumn$FractionDigits(property);
+			if (fractionDigits != null && fractionDigits.intValue() != 0)
+			{
+				if (defaultPrecision != null)
+				{
+					final int integerDigits = defaultPrecision - (defaultScale == null ? 0 : defaultScale.intValue());
+					final Integer precision = integerDigits + fractionDigits.intValue();
+					defaultBasic.getColumn().setPrecision(precision);
+					defaultBasic.getColumn().setScale(fractionDigits);
+					
+				}
 			}
-
-			final Integer scale = createColumn$Scale(property);
-			if (scale != null && scale.intValue() != 0) {
-				defaultBasic.getColumn().setScale(scale);
-			}
-
 		}
 		return defaultBasic;
 	}
@@ -480,8 +484,11 @@ public class DefaultCustomizing implements Customizing {
 			} else {
 				defaultItem = (ElementCollection) item
 						.copyTo(new ElementCollection());
-				mergeFrom(defaultItem, (ElementCollection) persistence
-						.getDefaultElementCollection().copyTo(new ElementCollection()));
+				mergeFrom(
+						defaultItem,
+						(ElementCollection) persistence
+								.getDefaultElementCollection().copyTo(
+										new ElementCollection()));
 			}
 		}
 
@@ -493,12 +500,7 @@ public class DefaultCustomizing implements Customizing {
 				defaultItem.getColumn().setLength(length);
 			}
 
-			final Integer precision = createColumn$Precision(property);
-			if (precision != null) {
-				defaultItem.getColumn().setPrecision(precision);
-			}
-
-			final Integer scale = createColumn$Scale(property);
+			final Integer scale = createColumn$FractionDigits(property);
 			if (scale != null && scale.intValue() != 0) {
 				defaultItem.getColumn().setScale(scale);
 			}
@@ -547,28 +549,28 @@ public class DefaultCustomizing implements Customizing {
 		return basic;
 	}
 
-	public Integer createColumn$Scale(CPropertyInfo property) {
-		final Integer scale;
+	public Integer createColumn$FractionDigits(CPropertyInfo property) {
+		final Integer fractionDigitsAsInteger;
 		final Long fractionDigits = SimpleTypeAnalyzer
 				.getFractionDigits(property.getSchemaComponent());
 		if (fractionDigits != null) {
-			scale = fractionDigits.intValue();
+			fractionDigitsAsInteger = fractionDigits.intValue();
 		} else {
-			scale = null;
+			fractionDigitsAsInteger = null;
 		}
-		return scale;
+		return fractionDigitsAsInteger;
 	}
 
-	public Integer createColumn$Precision(CPropertyInfo property) {
-		final Integer precision;
+	public Integer createColumn$TotalDigits(CPropertyInfo property) {
+		final Integer totalDigitsAsInteger;
 		final Long totalDigits = SimpleTypeAnalyzer.getTotalDigits(property
 				.getSchemaComponent());
 		if (totalDigits != null) {
-			precision = totalDigits.intValue();
+			totalDigitsAsInteger = totalDigits.intValue();
 		} else {
-			precision = null;
+			totalDigitsAsInteger = null;
 		}
-		return precision;
+		return totalDigitsAsInteger;
 	}
 
 	public Integer createColumn$Length(CPropertyInfo property) {

@@ -183,7 +183,7 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 
 	}
 
-	protected List<String> getArguments() throws MojoExecutionException {
+	protected List<String> getArguments() {
 		final List<String> arguments = new ArrayList<String>();
 
 		if (this.preArgs != null) {

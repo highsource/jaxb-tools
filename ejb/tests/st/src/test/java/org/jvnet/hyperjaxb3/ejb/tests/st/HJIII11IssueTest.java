@@ -17,7 +17,7 @@ public class HJIII11IssueTest extends TestCase {
 		assertEquals(8, getColumn(theClass, "getLength").length());
 		assertEquals(5, getColumn(theClass, "getDigits").precision());
 		assertEquals(2, getColumn(theClass, "getDigits").scale());
-		assertEquals(3, getColumn(theClass, "getTotalDigits").precision());
+		assertEquals(20, getColumn(theClass, "getTotalDigits").precision());
 		assertEquals(10, getColumn(theClass, "getTotalDigits").scale());
 		assertEquals(20, getColumn(theClass, "getFractionDigits").precision());
 		assertEquals(2, getColumn(theClass, "getFractionDigits").scale());

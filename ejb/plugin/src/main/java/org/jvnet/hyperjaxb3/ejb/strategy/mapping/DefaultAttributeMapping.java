@@ -53,41 +53,48 @@ public final class DefaultAttributeMapping implements AttributeMapping {
 			column.setLength(createColumn$Length(fieldOutline));
 		}
 
-		if (column.getPrecision() == null) {
-			column.setPrecision(createColumn$Precision(fieldOutline));
-		}
+		final Integer defaultPrecision = column.getPrecision();
+		final Integer defaultScale = column.getScale();
+		final Integer fractionDigits = createColumn$FractionDigits(fieldOutline);
+		if (fractionDigits != null && fractionDigits.intValue() != 0) {
+			if (defaultPrecision != null) {
+				final int integerDigits = defaultPrecision
+						- (defaultScale == null ? 0 : defaultScale.intValue());
+				final Integer precision = integerDigits
+						+ fractionDigits.intValue();
+				column.setPrecision(precision);
+				column.setScale(fractionDigits);
 
-		if (column.getScale() == null) {
-			column.setScale(createColumn$Scale(fieldOutline));
+			}
 		}
 
 		return column;
 	}
 
-	private Integer createColumn$Scale(FieldOutline fieldOutline) {
-		final Integer scale;
+	private Integer createColumn$FractionDigits(FieldOutline fieldOutline) {
+		final Integer fractionDigitsAsInteger;
 		final Long fractionDigits = SimpleTypeAnalyzer
 				.getFractionDigits(fieldOutline.getPropertyInfo()
 						.getSchemaComponent());
 		if (fractionDigits != null) {
-			scale = fractionDigits.intValue();
+			fractionDigitsAsInteger = fractionDigits.intValue();
 		} else {
-			scale = null;
+			fractionDigitsAsInteger = null;
 		}
-		return scale;
+		return fractionDigitsAsInteger;
 	}
 
-	private Integer createColumn$Precision(FieldOutline fieldOutline) {
-		final Integer precision;
-		final Long totalDigits = SimpleTypeAnalyzer.getTotalDigits(fieldOutline
-				.getPropertyInfo().getSchemaComponent());
-		if (totalDigits != null) {
-			precision = totalDigits.intValue();
-		} else {
-			precision = null;
-		}
-		return precision;
-	}
+	// private Integer createColumn$TotalDigits(FieldOutline fieldOutline) {
+	// final Integer totalDigitsAsInteger;
+	// final Long totalDigits = SimpleTypeAnalyzer.getTotalDigits(fieldOutline
+	// .getPropertyInfo().getSchemaComponent());
+	// if (totalDigits != null) {
+	// totalDigitsAsInteger = totalDigits.intValue();
+	// } else {
+	// totalDigitsAsInteger = null;
+	// }
+	// return totalDigitsAsInteger;
+	// }
 
 	private Integer createColumn$Length(FieldOutline fieldOutline) {
 		final Integer finalLength;
@@ -183,8 +190,8 @@ public final class DefaultAttributeMapping implements AttributeMapping {
 	public final boolean isEnumerated(Mapping context, FieldOutline fieldOutline) {
 		final CPropertyInfo propertyInfo = fieldOutline.getPropertyInfo();
 
-		final Collection<? extends CTypeInfo> types = 
-				context.getGetTypes().process(context, propertyInfo);
+		final Collection<? extends CTypeInfo> types = context.getGetTypes()
+				.process(context, propertyInfo);
 
 		assert types.size() == 1;
 
@@ -225,7 +232,8 @@ public final class DefaultAttributeMapping implements AttributeMapping {
 			attributeOverridesMap.put(attributeOverride.getName(),
 					attributeOverride);
 		}
-		Mapping embeddedMapping = context.createEmbeddedMapping(context, fieldOutline);
+		Mapping embeddedMapping = context.createEmbeddedMapping(context,
+				fieldOutline);
 
 		final EmbeddableAttributes embeddableAttributes = embeddedMapping
 				.getEmbeddableAttributesMapping().process(embeddedMapping,

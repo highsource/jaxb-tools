@@ -76,6 +76,12 @@
 	</properties>
 	<profiles>
 		<profile>
+			<id>all</id>
+			<modules>
+				<module>dist</module>
+			</modules>
+		</profile>
+		<profile>
 			<id>java-home-parent-lib-tools-jar</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
@@ -593,16 +599,6 @@
 				<artifactId>annox</artifactId>
 				<version>${annox.version}</version>
 			</dependency>
-			<!--dependency>
-				<groupId>br.com.ingenieux.maven.annomojo</groupId>
-				<artifactId>org.jfrog.maven.maven-plugin-anno</artifactId>
-				<version>1.4.1</version>
-			</dependency>
-			<dependency>
-				<groupId>br.com.ingenieux.maven.annomojo</groupId>
-				<artifactId>org.jfrog.maven.maven-plugin-tools-anno</artifactId>
-				<version>1.4.1</version>
-			</dependency-->
         		<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-artifact</artifactId>
@@ -620,12 +616,6 @@
 				<version>${maven.plugin.testing.version}</version>
 				<scope>test</scope>
 			</dependency>
-			<!--dependency>
-				<groupId>org.codehaus.plexus</groupId>
-				<artifactId>plexus-interpolation</artifactId>
-				<version>1.9</version>
-				<scope>test</scope>
-			</dependency-->
 		</dependencies>
 	</dependencyManagement>
 </project>

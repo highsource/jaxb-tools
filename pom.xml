@@ -59,7 +59,6 @@
 		<module>ejb</module>
 		<module>maven</module>
 	</modules>
-
 	<properties>
 		<maven.version>2.0.9</maven.version>
 		<annox.version>1.0.1</annox.version>
@@ -77,6 +76,12 @@
 	<profiles>
 		<profile>
 			<id>all</id>
+			<modules>
+				<module>dist</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>release</id>
 			<modules>
 				<module>dist</module>
 			</modules>

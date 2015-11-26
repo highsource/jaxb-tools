@@ -2,6 +2,12 @@ setlocal
 echo Setting JAVA_HOME to %JAVA7_HOME%.
 set JAVA_HOME=%JAVA7_HOME%
 
+echo Performing a short clean build.
+rem pause
+call mvn clean install -DperformRelease
+echo Short clean build completed.
+rem pause
+
 echo Performing a full clean build.
 rem pause
 call mvn clean install -DperformRelease -Prelease
@@ -15,6 +21,12 @@ echo Version was set to %1.
 rem pause
 call mvn versions:commit -Pall
 echo Version %1 committed.
+rem pause
+
+echo Performing a short clean build.
+rem pause
+call mvn clean install -DperformRelease
+echo Short clean build completed.
 rem pause
 
 echo Performing a full clean build.
@@ -42,12 +54,6 @@ git push --tags origin master
 echo Version %1 was pushed.
 rem pause
 
-echo Performing full clean deploy.
-rem pause
-call mvn -DperformRelease -Psonatype-oss-release,all clean deploy
-echo Full clean deploy done.
-rem pause
-
 echo Setting new version to %2.
 rem pause
 call mvn versions:set -Pall -DnewVersion=%2
@@ -55,6 +61,12 @@ echo Version was set to %2.
 rem pause
 call mvn versions:commit -Pall
 echo Version %2 was committed.
+rem pause
+
+echo Performing a short clean build.
+rem pause
+call mvn clean install -DperformRelease
+echo Short clean build completed.
 rem pause
 
 echo Performing a full clean build.

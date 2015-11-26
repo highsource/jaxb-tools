@@ -48,55 +48,76 @@ public final class DefaultAttributeMapping implements AttributeMapping {
 					fieldOutline));
 		}
 
-		// If string
+		assignColumn$LengthPrecisionScale(fieldOutline, column);
+		return column;
+	}
+
+	private void assignColumn$LengthPrecisionScale(FieldOutline fieldOutline,
+			final Column column) {
 		if (column.getLength() == null) {
 			column.setLength(createColumn$Length(fieldOutline));
 		}
 
-		final Integer defaultPrecision = column.getPrecision();
-		final Integer defaultScale = column.getScale();
-		final Integer fractionDigits = createColumn$FractionDigits(fieldOutline);
-		if (fractionDigits != null && fractionDigits.intValue() != 0) {
-			if (defaultPrecision != null) {
-				final int integerDigits = defaultPrecision
-						- (defaultScale == null ? 0 : defaultScale.intValue());
-				final Integer precision = integerDigits
-						+ fractionDigits.intValue();
-				column.setPrecision(precision);
-				column.setScale(fractionDigits);
+		final Integer precision = createColumn$Precision(fieldOutline);
+		final Integer scale = createColumn$Scale(fieldOutline);
 
+		if (precision != null && precision.intValue() != 0) {
+			column.setPrecision(precision);
+		} else {
+			if (scale != null && scale.intValue() != 0) {
+				final Integer defaultPrecision = column.getPrecision();
+				if (defaultPrecision != null) {
+					final Integer defaultScale = column.getScale();
+					final int integerDigits = defaultPrecision
+							- (defaultScale == null ? 0 : defaultScale
+									.intValue());
+					column.setPrecision(integerDigits + scale.intValue());
+					column.setScale(scale);
+				}
 			}
 		}
-
-		return column;
+		if (scale != null && scale.intValue() != 0) {
+			column.setScale(scale);
+		}
 	}
 
-	private Integer createColumn$FractionDigits(FieldOutline fieldOutline) {
-		final Integer fractionDigitsAsInteger;
+	public Integer createColumn$Precision(FieldOutline fieldOutline) {
+		final Integer precision;
+		final Long totalDigits = SimpleTypeAnalyzer.getTotalDigits(fieldOutline
+				.getPropertyInfo().getSchemaComponent());
 		final Long fractionDigits = SimpleTypeAnalyzer
 				.getFractionDigits(fieldOutline.getPropertyInfo()
 						.getSchemaComponent());
-		if (fractionDigits != null) {
-			fractionDigitsAsInteger = fractionDigits.intValue();
+		if (totalDigits != null) {
+			if (fractionDigits != null) {
+				precision = totalDigits.intValue() + fractionDigits.intValue();
+			} else {
+				precision = totalDigits.intValue() * 2;
+			}
 		} else {
-			fractionDigitsAsInteger = null;
+			precision = null;
 		}
-		return fractionDigitsAsInteger;
+		return precision;
 	}
 
-	// private Integer createColumn$TotalDigits(FieldOutline fieldOutline) {
-	// final Integer totalDigitsAsInteger;
-	// final Long totalDigits = SimpleTypeAnalyzer.getTotalDigits(fieldOutline
-	// .getPropertyInfo().getSchemaComponent());
-	// if (totalDigits != null) {
-	// totalDigitsAsInteger = totalDigits.intValue();
-	// } else {
-	// totalDigitsAsInteger = null;
-	// }
-	// return totalDigitsAsInteger;
-	// }
+	public Integer createColumn$Scale(FieldOutline fieldOutline) {
+		final Integer scale;
+		final Long fractionDigits = SimpleTypeAnalyzer
+				.getFractionDigits(fieldOutline.getPropertyInfo()
+						.getSchemaComponent());
+		final Long totalDigits = SimpleTypeAnalyzer.getTotalDigits(fieldOutline
+				.getPropertyInfo().getSchemaComponent());
+		if (fractionDigits != null) {
+			scale = fractionDigits.intValue();
+		} else if (totalDigits != null) {
+			scale = totalDigits.intValue();
+		} else {
+			scale = null;
+		}
+		return scale;
+	}
 
-	private Integer createColumn$Length(FieldOutline fieldOutline) {
+	public Integer createColumn$Length(FieldOutline fieldOutline) {
 		final Integer finalLength;
 		final Long length = SimpleTypeAnalyzer.getLength(fieldOutline
 				.getPropertyInfo().getSchemaComponent());

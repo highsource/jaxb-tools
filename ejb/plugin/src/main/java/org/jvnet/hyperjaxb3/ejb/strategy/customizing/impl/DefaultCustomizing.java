@@ -47,6 +47,7 @@ import org.jvnet.jaxb2_commons.lang.MergeStrategy;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
 import org.springframework.beans.factory.annotation.Required;
 
+import com.sun.java.xml.ns.persistence.orm.Column;
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CCustomizable;
 import com.sun.tools.xjc.model.CPluginCustomization;
@@ -418,30 +419,44 @@ public class DefaultCustomizing implements Customizing {
 			}
 		}
 
-		if (defaultBasic.getColumn() != null) {
+		final Column column = defaultBasic.getColumn();
+		if (column != null) {
 
-			final Integer length = createColumn$Length(property);
+			assignColumn$LengthPrecisionScale(property, column);
+		}
+		return defaultBasic;
+	}
 
-			if (length != null) {
-				defaultBasic.getColumn().setLength(length);
-			}
-			
-			final Integer defaultPrecision = defaultBasic.getColumn().getPrecision();
-			final Integer defaultScale = defaultBasic.getColumn().getScale();
-			final Integer fractionDigits = createColumn$FractionDigits(property);
-			if (fractionDigits != null && fractionDigits.intValue() != 0)
-			{
-				if (defaultPrecision != null)
-				{
-					final int integerDigits = defaultPrecision - (defaultScale == null ? 0 : defaultScale.intValue());
-					final Integer precision = integerDigits + fractionDigits.intValue();
-					defaultBasic.getColumn().setPrecision(precision);
-					defaultBasic.getColumn().setScale(fractionDigits);
-					
+	private void assignColumn$LengthPrecisionScale(CPropertyInfo property,
+			final Column column) {
+		final Integer length = createColumn$Length(property);
+
+		if (length != null) {
+			column.setLength(length);
+		}
+
+
+		final Integer precision = createColumn$Precision(property);
+		final Integer scale = createColumn$Scale(property);
+
+		if (precision != null && precision.intValue() != 0) {
+			column.setPrecision(precision);
+		} else {
+			if (scale != null && scale.intValue() != 0) {
+				final Integer defaultPrecision = column.getPrecision();
+				if (defaultPrecision != null) {
+					final Integer defaultScale = column.getScale();
+					final int integerDigits = defaultPrecision
+							- (defaultScale == null ? 0 : defaultScale
+									.intValue());
+					column.setPrecision(integerDigits + scale.intValue());
+					column.setScale(scale);
 				}
 			}
 		}
-		return defaultBasic;
+		if (scale != null && scale.intValue() != 0) {
+			column.setScale(scale);
+		}
 	}
 
 	public ElementCollection getDefaultElementCollection(CPropertyInfo property)
@@ -493,18 +508,7 @@ public class DefaultCustomizing implements Customizing {
 		}
 
 		if (defaultItem.getColumn() != null) {
-
-			final Integer length = createColumn$Length(property);
-
-			if (length != null) {
-				defaultItem.getColumn().setLength(length);
-			}
-
-			final Integer scale = createColumn$FractionDigits(property);
-			if (scale != null && scale.intValue() != 0) {
-				defaultItem.getColumn().setScale(scale);
-			}
-
+			assignColumn$LengthPrecisionScale(property, defaultItem.getColumn());
 		}
 		return defaultItem;
 	}
@@ -549,28 +553,38 @@ public class DefaultCustomizing implements Customizing {
 		return basic;
 	}
 
-	public Integer createColumn$FractionDigits(CPropertyInfo property) {
-		final Integer fractionDigitsAsInteger;
+	public Integer createColumn$Scale(CPropertyInfo property) {
+		final Integer scale;
 		final Long fractionDigits = SimpleTypeAnalyzer
 				.getFractionDigits(property.getSchemaComponent());
-		if (fractionDigits != null) {
-			fractionDigitsAsInteger = fractionDigits.intValue();
-		} else {
-			fractionDigitsAsInteger = null;
-		}
-		return fractionDigitsAsInteger;
-	}
-
-	public Integer createColumn$TotalDigits(CPropertyInfo property) {
-		final Integer totalDigitsAsInteger;
 		final Long totalDigits = SimpleTypeAnalyzer.getTotalDigits(property
 				.getSchemaComponent());
-		if (totalDigits != null) {
-			totalDigitsAsInteger = totalDigits.intValue();
+		if (fractionDigits != null) {
+			scale = fractionDigits.intValue();
+		} else if (totalDigits != null) {
+			scale = totalDigits.intValue();
 		} else {
-			totalDigitsAsInteger = null;
+			scale = null;
 		}
-		return totalDigitsAsInteger;
+		return scale;
+	}
+
+	public Integer createColumn$Precision(CPropertyInfo property) {
+		final Integer precision;
+		final Long totalDigits = SimpleTypeAnalyzer.getTotalDigits(property
+				.getSchemaComponent());
+		final Long fractionDigits = SimpleTypeAnalyzer
+				.getFractionDigits(property.getSchemaComponent());
+		if (totalDigits != null) {
+			if (fractionDigits != null) {
+				precision = totalDigits.intValue() + fractionDigits.intValue();
+			} else {
+				precision = totalDigits.intValue() * 2;
+			}
+		} else {
+			precision = null;
+		}
+		return precision;
 	}
 
 	public Integer createColumn$Length(CPropertyInfo property) {

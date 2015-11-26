@@ -56,7 +56,7 @@ rem pause
 
 echo Performing full clean deploy.
 rem pause
-call mvn -DperformRelease -Psonatype-oss-release,all clean deploy
+call mvn -DperformRelease -Psonatype-oss-release,release clean deploy
 echo Full clean deploy done.
 rem pause
 

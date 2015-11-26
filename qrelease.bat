@@ -54,6 +54,12 @@ git push --tags origin master
 echo Version %1 was pushed.
 rem pause
 
+echo Performing full clean deploy.
+rem pause
+call mvn -DperformRelease -Psonatype-oss-release,all clean deploy
+echo Full clean deploy done.
+rem pause
+
 echo Setting new version to %2.
 rem pause
 call mvn versions:set -Pall -DnewVersion=%2

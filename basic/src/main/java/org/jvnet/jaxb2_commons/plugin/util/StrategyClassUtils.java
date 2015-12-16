@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import org.jvnet.jaxb2_commons.plugin.Ignoring;
+import org.jvnet.jaxb2_commons.util.JClassUtils;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
@@ -55,6 +56,14 @@ public class StrategyClassUtils {
 
 	public static <T> Boolean superClassImplements(ClassOutline classOutline,
 			Ignoring ignoring, Class<? extends T> theInterface) {
+		if (classOutline.implClass != null
+				&& classOutline.implClass._extends() != null) {
+			if (JClassUtils.isInstanceOf(classOutline.implClass._extends(),
+					theInterface)) {
+				return Boolean.TRUE;
+			}
+		}
+
 		if (classOutline.target.getBaseClass() != null) {
 			if (!ignoring.isIgnored(classOutline.parent().getClazz(
 					classOutline.target.getBaseClass()))) {
@@ -62,7 +71,9 @@ public class StrategyClassUtils {
 			} else {
 				return Boolean.FALSE;
 			}
-		} else if (classOutline.target.getRefBaseClass() != null) {
+		}
+
+		if (classOutline.target.getRefBaseClass() != null) {
 			try {
 				if (theInterface.isAssignableFrom(Class
 						.forName(classOutline.target.getRefBaseClass()
@@ -75,9 +86,9 @@ public class StrategyClassUtils {
 				// We'll assume it does implement
 				return Boolean.TRUE;
 			}
-		} else {
-			return null;
 		}
+		// Unknown
+		return null;
 	}
 
 	public static <T> Boolean superClassNotIgnored(ClassOutline classOutline,

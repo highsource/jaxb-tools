@@ -29,7 +29,9 @@ public class RunPlugins {
 		final String[] arguments = new String[] { "-xmlschema",
 				schema.toExternalForm(), "-b", binding.toExternalForm(), "-d",
 				"target/generated-sources/xjc", "-extension", "-XhashCode",
-				"-Xequals", "-XtoString", "-Xcopyable", "-Xmergeable", "-Xinheritance", "-Xwildcard"
+				"-Xequals", "-XtoString", "-Xcopyable", "-Xmergeable",
+				"-Xinheritance", "-Xsetters", "-Xsetters-mode=direct",
+				"-Xwildcard"
 		// "-XsimpleToString"
 
 		};

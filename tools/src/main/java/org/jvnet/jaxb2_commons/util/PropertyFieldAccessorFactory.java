@@ -13,6 +13,7 @@ import com.sun.codemodel.JMod;
 import com.sun.codemodel.JOp;
 import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
+import com.sun.tools.xjc.model.CDefaultValue;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.outline.FieldAccessor;
 import com.sun.tools.xjc.outline.FieldOutline;
@@ -166,7 +167,13 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 					|| fieldOutline.getPropertyInfo().isCollection()) {
 				final JExpression defaultExpression;
 				if (type.isPrimitive()) {
-					if (type.fullName().equals(type.owner().BOOLEAN.fullName())) {
+					final CDefaultValue defaultValue = fieldOutline
+							.getPropertyInfo().defaultValue;
+					if (defaultValue != null) {
+						defaultExpression = defaultValue.compute(fieldOutline
+								.parent().parent());
+					} else if (type.fullName().equals(
+							type.owner().BOOLEAN.fullName())) {
 						defaultExpression = JExpr.FALSE;
 					} else if (type.fullName().equals(
 							type.owner().BYTE.fullName())) {

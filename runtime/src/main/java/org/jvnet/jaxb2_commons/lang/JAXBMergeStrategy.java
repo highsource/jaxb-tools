@@ -27,6 +27,6 @@ public class JAXBMergeStrategy extends DefaultMergeStrategy {
 		return !leftCollection.isEmpty() ? leftCollection : rightCollection;
 	}
 
-	public static final MergeStrategy INSTANCE = new JAXBMergeStrategy();
+	public static final MergeStrategy2 INSTANCE = new JAXBMergeStrategy();
 
 }

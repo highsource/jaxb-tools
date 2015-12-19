@@ -2,7 +2,15 @@ package org.jvnet.jaxb2_commons.lang;
 
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
-public class DefaultMergeStrategy implements MergeStrategy {
+public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
+
+	public static final MergeStrategy2 INSTANCE = new DefaultMergeStrategy();
+
+	@Override
+	public Boolean shouldBeSet(ObjectLocator leftLocator,
+			ObjectLocator rightLocator, boolean leftSet, boolean rightSet) {
+		return leftSet || rightSet;
+	}
 
 	protected Object mergeInternal(ObjectLocator leftLocator,
 			ObjectLocator rightLocator, Object leftValue, Object rightValue) {
@@ -11,10 +19,22 @@ public class DefaultMergeStrategy implements MergeStrategy {
 		} else if (rightValue == null) {
 			return leftValue;
 		} else {
-			if (leftValue instanceof MergeFrom) {
+			if (leftValue instanceof MergeFrom2) {
+				final Object newInstance = ((MergeFrom2) leftValue)
+						.createNewInstance();
+				((MergeFrom2) newInstance).mergeFrom(leftLocator, rightLocator,
+						leftValue, rightValue, this);
+				return newInstance;
+			} else if (leftValue instanceof MergeFrom) {
 				final Object newInstance = ((MergeFrom) leftValue)
 						.createNewInstance();
 				((MergeFrom) newInstance).mergeFrom(leftLocator, rightLocator,
+						leftValue, rightValue, this);
+				return newInstance;
+			} else if (rightValue instanceof MergeFrom2) {
+				final Object newInstance = ((MergeFrom2) rightValue)
+						.createNewInstance();
+				((MergeFrom2) newInstance).mergeFrom(leftLocator, rightLocator,
 						leftValue, rightValue, this);
 				return newInstance;
 			} else if (rightValue instanceof MergeFrom) {
@@ -246,6 +266,280 @@ public class DefaultMergeStrategy implements MergeStrategy {
 		}
 	}
 
-	public static final MergeStrategy INSTANCE = new DefaultMergeStrategy();
+	@Override
+	public boolean merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
+			boolean left, boolean leftSet, boolean right, boolean rightSet) {
+		if (leftSet && !rightSet) {
+			return left;
+		} else if (!leftSet && rightSet) {
+			return right;
+		} else {
+			return merge(leftLocator, rightLocator, left, right);
+		}
+	}
 
+	@Override
+	public boolean[] merge(ObjectLocator leftLocator,
+			ObjectLocator rightLocator, boolean[] left, boolean leftSet,
+			boolean[] right, boolean rightSet) {
+		if (leftSet && !rightSet) {
+			return left;
+		} else if (!leftSet && rightSet) {
+			return right;
+		} else {
+			return merge(leftLocator, rightLocator, left, right);
+		}
+	}
+
+	@Override
+	public byte merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
+			byte left, boolean leftSet, byte right, boolean rightSet) {
+		if (leftSet && !rightSet) {
+			return left;
+		} else if (!leftSet && rightSet) {
+			return right;
+		} else {
+			return merge(leftLocator, rightLocator, left, right);
+		}
+	}
+
+	@Override
+	public byte[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
+			byte[] left, boolean leftSet, byte[] right, boolean rightSet) {
+		if (leftSet && !rightSet) {
+			return left;
+		} else if (!leftSet && rightSet) {
+			return right;
+		} else {
+			return merge(leftLocator, rightLocator, left, right);
+		}
+	}
+
+	@Override
+	public char merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
+			char left, boolean leftSet, char right, boolean rightSet) {
+		if (leftSet && !rightSet) {
+			return left;
+		} else if (!leftSet && rightSet) {
+			return right;
+		} else {
+			return merge(leftLocator, rightLocator, left, right);
+		}
+	}
+
+	@Override
+	public char[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
+			char[] left, boolean leftSet, char[] right, boolean rightSet) {
+		if (leftSet && !rightSet) {
+			return left;
+		} else if (!leftSet && rightSet) {
+			return right;
+		} else {
+			return merge(leftLocator, rightLocator, left, right);
+		}
+	}
+
+	@Override
+	public double merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
+			double left, boolean leftSet, double right, boolean rightSet) {
+		if (leftSet && !rightSet) {
+			return left;
+		} else if (!leftSet && rightSet) {
+			return right;
+		} else {
+			return merge(leftLocator, rightLocator, left, right);
+		}
+	}
+
+	@Override
+	public double[] merge(ObjectLocator leftLocator,
+			ObjectLocator rightLocator, double[] left, boolean leftSet,
+			double[] right, boolean rightSet) {
+		if (leftSet && !rightSet) {
+			return left;
+		} else if (!leftSet && rightSet) {
+			return right;
+		} else {
+			return merge(leftLocator, rightLocator, left, right);
+		}
+	}
+
+	@Override
+	public float merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
+			float left, boolean leftSet, float right, boolean rightSet) {
+		if (leftSet && !rightSet) {
+			return left;
+		} else if (!leftSet && rightSet) {
+			return right;
+		} else {
+			return merge(leftLocator, rightLocator, left, right);
+		}
+	}
+
+	@Override
+	public float[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
+			float[] left, boolean leftSet, float[] right, boolean rightSet) {
+		if (leftSet && !rightSet) {
+			return left;
+		} else if (!leftSet && rightSet) {
+			return right;
+		} else {
+			return merge(leftLocator, rightLocator, left, right);
+		}
+	}
+
+	@Override
+	public int merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
+			int left, boolean leftSet, int right, boolean rightSet) {
+		if (leftSet && !rightSet) {
+			return left;
+		} else if (!leftSet && rightSet) {
+			return right;
+		} else {
+			return merge(leftLocator, rightLocator, left, right);
+		}
+	}
+
+	@Override
+	public int[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
+			int[] left, boolean leftSet, int[] right, boolean rightSet) {
+		if (leftSet && !rightSet) {
+			return left;
+		} else if (!leftSet && rightSet) {
+			return right;
+		} else {
+			return merge(leftLocator, rightLocator, left, right);
+		}
+	}
+
+	@Override
+	public long merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
+			long left, boolean leftSet, long right, boolean rightSet) {
+		if (leftSet && !rightSet) {
+			return left;
+		} else if (!leftSet && rightSet) {
+			return right;
+		} else {
+			return merge(leftLocator, rightLocator, left, right);
+		}
+	}
+
+	@Override
+	public long[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
+			long[] left, boolean leftSet, long[] right, boolean rightSet) {
+		if (leftSet && !rightSet) {
+			return left;
+		} else if (!leftSet && rightSet) {
+			return right;
+		} else {
+			return merge(leftLocator, rightLocator, left, right);
+		}
+	}
+
+	@Override
+	public Object[] merge(ObjectLocator leftLocator,
+			ObjectLocator rightLocator, Object[] left, boolean leftSet,
+			Object[] right, boolean rightSet) {
+		if (leftSet && !rightSet) {
+			return left;
+		} else if (!leftSet && rightSet) {
+			return right;
+		} else {
+			return merge(leftLocator, rightLocator, left, right);
+		}
+	}
+
+	@Override
+	public short merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
+			short left, boolean leftSet, short right, boolean rightSet) {
+		if (leftSet && !rightSet) {
+			return left;
+		} else if (!leftSet && rightSet) {
+			return right;
+		} else {
+			return merge(leftLocator, rightLocator, left, right);
+		}
+	}
+
+	@Override
+	public short[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
+			short[] left, boolean leftSet, short[] right, boolean rightSet) {
+		if (leftSet && !rightSet) {
+			return left;
+		} else if (!leftSet && rightSet) {
+			return right;
+		} else {
+			return merge(leftLocator, rightLocator, left, right);
+		}
+	}
+
+	public Object merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
+			Object left, boolean leftSet, Object right, boolean rightSet) {
+
+		if (leftSet && !rightSet) {
+			return left;
+		} else if (!leftSet && rightSet) {
+			return right;
+		} else {
+			if (left == null) {
+				return right;
+			}
+			if (right == null) {
+				return left;
+			}
+			Class<?> lhsClass = left.getClass();
+			if (!lhsClass.isArray()) {
+				return mergeInternal(leftLocator, rightLocator, left, leftSet,
+						right, rightSet);
+			} else if (left.getClass() != right.getClass()) {
+				// Here when we compare different dimensions, for example: a
+				// boolean[][] to a boolean[]
+				return false;
+			}
+			// 'Switch' on type of array, to dispatch to the correct handler
+			// This handles multi dimensional arrays of the same depth
+			else if (left instanceof long[]) {
+				return merge(leftLocator, rightLocator, (long[]) left, leftSet,
+						(long[]) right, rightSet);
+			} else if (left instanceof int[]) {
+				return merge(leftLocator, rightLocator, (int[]) left, leftSet,
+						(int[]) right, rightSet);
+			} else if (left instanceof short[]) {
+				return merge(leftLocator, rightLocator, (short[]) left,
+						leftSet, (short[]) right, rightSet);
+			} else if (left instanceof char[]) {
+				return merge(leftLocator, rightLocator, (char[]) left, leftSet,
+						(char[]) right, rightSet);
+			} else if (left instanceof byte[]) {
+				return merge(leftLocator, rightLocator, (byte[]) left, leftSet,
+						(byte[]) right, rightSet);
+			} else if (left instanceof double[]) {
+				return merge(leftLocator, rightLocator, (double[]) left,
+						leftSet, (double[]) right, rightSet);
+			} else if (left instanceof float[]) {
+				return merge(leftLocator, rightLocator, (float[]) left,
+						leftSet, (float[]) right, rightSet);
+			} else if (left instanceof boolean[]) {
+				return merge(leftLocator, rightLocator, (boolean[]) left,
+						leftSet, (boolean[]) right, rightSet);
+			} else {
+				// Not an array of primitives
+				return merge(leftLocator, rightLocator, (Object[]) left,
+						leftSet, (Object[]) right, rightSet);
+			}
+		}
+	}
+
+	protected Object mergeInternal(ObjectLocator leftLocator,
+			ObjectLocator rightLocator, Object leftValue, boolean leftValueSet,
+			Object rightValue, boolean rightValueSet) {
+		if (leftValueSet && !rightValueSet) {
+			return leftValue;
+		} else if (!leftValueSet && rightValueSet) {
+			return rightValue;
+		} else {
+			return mergeInternal(leftLocator, rightLocator, leftValue,
+					rightValue);
+		}
+	}
 }

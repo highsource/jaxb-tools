@@ -2,8 +2,7 @@ package org.jvnet.jaxb2_commons.lang;
 
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
-@Deprecated
-public interface MergeFrom {
+public interface MergeFrom2 {
 
 	public Object createNewInstance();
 
@@ -11,6 +10,6 @@ public interface MergeFrom {
 
 	public void mergeFrom(ObjectLocator leftLocator,
 			ObjectLocator rightLocator, Object left, Object right,
-			MergeStrategy mergeStrategy);
+			MergeStrategy2 mergeStrategy);
 
 }

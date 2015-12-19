@@ -6,8 +6,8 @@ import java.util.Collection;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.lang.JAXBMergeStrategy;
-import org.jvnet.jaxb2_commons.lang.MergeFrom;
-import org.jvnet.jaxb2_commons.lang.MergeStrategy;
+import org.jvnet.jaxb2_commons.lang.MergeFrom2;
+import org.jvnet.jaxb2_commons.lang.MergeStrategy2;
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
 import org.jvnet.jaxb2_commons.plugin.AbstractParameterizablePlugin;
@@ -24,11 +24,13 @@ import org.xml.sax.ErrorHandler;
 
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JCodeModel;
+import com.sun.codemodel.JConditional;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JExpression;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
+import com.sun.codemodel.JOp;
 import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
 import com.sun.tools.xjc.Options;
@@ -61,8 +63,7 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 
 	private String mergeStrategyClass = JAXBMergeStrategy.class.getName();
 
-	public void setMergeStrategyClass(
-			final String mergeStrategyClass) {
+	public void setMergeStrategyClass(final String mergeStrategyClass) {
 		this.mergeStrategyClass = mergeStrategyClass;
 	}
 
@@ -72,7 +73,7 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 
 	public JExpression createMergeStrategy(JCodeModel codeModel) {
 		return StrategyClassUtils.createStrategyInstanceExpression(codeModel,
-				MergeStrategy.class, getMergeStrategyClass());
+				MergeStrategy2.class, getMergeStrategyClass());
 	}
 
 	private Ignoring ignoring = new CustomizedIgnoring(
@@ -107,7 +108,7 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 
 	protected void processClassOutline(ClassOutline classOutline) {
 		final JDefinedClass theClass = classOutline.implClass;
-		ClassUtils._implements(theClass, theClass.owner().ref(MergeFrom.class));
+		ClassUtils._implements(theClass, theClass.owner().ref(MergeFrom2.class));
 
 		@SuppressWarnings("unused")
 		final JMethod mergeFrom$mergeFrom0 = generateMergeFrom$mergeFrom0(
@@ -136,7 +137,7 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 			final JBlock body = mergeFrom$mergeFrom.body();
 
 			final JVar mergeStrategy = body.decl(JMod.FINAL,
-					codeModel.ref(MergeStrategy.class), "strategy",
+					codeModel.ref(MergeStrategy2.class), "strategy",
 					createMergeStrategy(codeModel));
 
 			body.invoke("mergeFrom").arg(JExpr._null()).arg(JExpr._null())
@@ -159,14 +160,14 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 			final JVar left = mergeFrom.param(Object.class, "left");
 			final JVar right = mergeFrom.param(Object.class, "right");
 
-			final JVar mergeStrategy = mergeFrom.param(MergeStrategy.class,
+			final JVar mergeStrategy = mergeFrom.param(MergeStrategy2.class,
 					"strategy");
 
 			final JBlock methodBody = mergeFrom.body();
 
 			Boolean superClassImplementsMergeFrom = StrategyClassUtils
 					.superClassImplements(classOutline, getIgnoring(),
-							MergeFrom.class);
+							MergeFrom2.class);
 
 			if (superClassImplementsMergeFrom == null) {
 
@@ -201,20 +202,57 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 							|| rightFieldAccessor.isConstant()) {
 						continue;
 					}
+
 					final JBlock block = body.block();
-					final JVar leftField = block.decl(
+
+					final JExpression leftFieldHasSetValue = (leftFieldAccessor
+							.isAlwaysSet() || leftFieldAccessor.hasSetValue() == null) ? JExpr.TRUE
+							: leftFieldAccessor.hasSetValue();
+
+					final JExpression rightFieldHasSetValue = (rightFieldAccessor
+							.isAlwaysSet() || rightFieldAccessor.hasSetValue() == null) ? JExpr.TRUE
+							: rightFieldAccessor.hasSetValue();
+
+					final JVar shouldBeSet = block.decl(
+							codeModel.ref(Boolean.class),
+							fieldOutline.getPropertyInfo().getName(false)
+									+ "ShouldBeSet",
+							mergeStrategy.invoke("shouldBeSet")
+									.arg(leftLocator).arg(rightLocator)
+									.arg(leftFieldHasSetValue)
+									.arg(rightFieldHasSetValue));
+
+					final JConditional ifShouldBeSetConditional = block._if(JOp
+							.eq(shouldBeSet, codeModel.ref(Boolean.class)
+									.staticRef("TRUE")));
+
+					final JBlock ifShouldBeSetBlock = ifShouldBeSetConditional
+							._then();
+					final JConditional ifShouldNotBeSetConditional = ifShouldBeSetConditional
+							._elseif(JOp.eq(
+									shouldBeSet,
+									codeModel.ref(Boolean.class).staticRef(
+											"FALSE")));
+					final JBlock ifShouldBeUnsetBlock = ifShouldNotBeSetConditional
+							._then();
+					// final JBlock ifShouldBeIgnoredBlock =
+					// ifShouldNotBeSetConditional
+					// ._else();
+
+					final JVar leftField = ifShouldBeSetBlock.decl(
 							leftFieldAccessor.getType(),
 							"lhs"
 									+ fieldOutline.getPropertyInfo().getName(
 											true));
-					leftFieldAccessor.toRawValue(block, leftField);
-					final JVar rightField = block.decl(
+					leftFieldAccessor.toRawValue(ifShouldBeSetBlock, leftField);
+					final JVar rightField = ifShouldBeSetBlock.decl(
 							rightFieldAccessor.getType(),
 							"rhs"
 									+ fieldOutline.getPropertyInfo().getName(
 											true));
 
-					rightFieldAccessor.toRawValue(block, rightField);
+					rightFieldAccessor.toRawValue(ifShouldBeSetBlock,
+							rightField);
 
 					final JExpression leftFieldLocator = codeModel
 							.ref(LocatorUtils.class).staticInvoke("property")
@@ -233,18 +271,22 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 							targetFieldAccessor.getType(),
 							mergeStrategy.invoke("merge").arg(leftFieldLocator)
 									.arg(rightFieldLocator).arg(leftField)
-									.arg(rightField));
+									.arg(leftFieldHasSetValue).arg(rightField)
+									.arg(rightFieldHasSetValue));
 
-					final JVar merged = block.decl(
+					final JVar merged = ifShouldBeSetBlock.decl(
 							rightFieldAccessor.getType(),
 							"merged"
 									+ fieldOutline.getPropertyInfo().getName(
 											true), mergedValue);
 
-					targetFieldAccessor.fromRawValue(block, "unique"
-							+ fieldOutline.getPropertyInfo().getName(true),
+					targetFieldAccessor.fromRawValue(
+							ifShouldBeSetBlock,
+							"unique"
+									+ fieldOutline.getPropertyInfo().getName(
+											true), merged);
 
-					merged);
+					targetFieldAccessor.unsetValues(ifShouldBeUnsetBlock);
 				}
 			}
 		}

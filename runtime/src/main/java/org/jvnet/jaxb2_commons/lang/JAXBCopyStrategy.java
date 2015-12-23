@@ -40,7 +40,8 @@ public class JAXBCopyStrategy extends DefaultCopyStrategy {
 	protected Object copyInternal(ObjectLocator locator,
 			final JAXBElement jaxbElement) {
 		final Object sourceObject = jaxbElement.getValue();
-		final Object copyObject = copy(property(locator, "value", sourceObject), sourceObject);
+		final Object copyObject = copy(
+				property(locator, "value", sourceObject), sourceObject);
 		final JAXBElement copyElement = new JAXBElement(jaxbElement.getName(),
 				jaxbElement.getDeclaredType(), jaxbElement.getScope(),
 				copyObject);
@@ -52,12 +53,13 @@ public class JAXBCopyStrategy extends DefaultCopyStrategy {
 		final List copy = new ArrayList(list.size());
 		for (int index = 0; index < list.size(); index++) {
 			final Object element = list.get(index);
-			final Object copyElement = copy(item(locator, index, element), element);
+			final Object copyElement = copy(item(locator, index, element),
+					element);
 			copy.add(copyElement);
 		}
 		return copy;
 	}
-	
-	public static final CopyStrategy INSTANCE = new JAXBCopyStrategy();
+
+	public static final JAXBCopyStrategy INSTANCE = new JAXBCopyStrategy();
 
 }

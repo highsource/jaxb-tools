@@ -2,13 +2,12 @@ package org.jvnet.jaxb2_commons.lang;
 
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
-@Deprecated
-public interface ToString {
+public interface ToString2 {
 
 	public StringBuilder append(ObjectLocator locator, StringBuilder stringBuilder,
-			ToStringStrategy toStringStrategy);
+			ToStringStrategy2 toStringStrategy);
 
 	public StringBuilder appendFields(ObjectLocator locator, StringBuilder stringBuilder,
-			ToStringStrategy toStringStrategy);
+			ToStringStrategy2 toStringStrategy);
 
 }

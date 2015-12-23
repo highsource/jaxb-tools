@@ -4,7 +4,7 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
 public interface MergeStrategy2 {
 
-	public Boolean shouldBeSet(ObjectLocator leftLocator,
+	public Boolean shouldBeMergedAndSet(ObjectLocator leftLocator,
 			ObjectLocator rightLocator, boolean leftSet, boolean rightSet);
 
 	public boolean merge(ObjectLocator leftLocator, ObjectLocator rightLocator,

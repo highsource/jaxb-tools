@@ -217,8 +217,8 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 					final JVar shouldBeSet = block.decl(
 							codeModel.ref(Boolean.class),
 							fieldOutline.getPropertyInfo().getName(false)
-									+ "ShouldBeSet",
-							mergeStrategy.invoke("shouldBeSet")
+									+ "ShouldBeMergedAndSet",
+							mergeStrategy.invoke("shouldBeMergedAndSet")
 									.arg(leftLocator).arg(rightLocator)
 									.arg(leftFieldHasSetValue)
 									.arg(rightFieldHasSetValue));

@@ -4,10 +4,10 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
 public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
-	public static final MergeStrategy2 INSTANCE = new DefaultMergeStrategy();
+	public static final DefaultMergeStrategy INSTANCE = new DefaultMergeStrategy();
 
 	@Override
-	public Boolean shouldBeSet(ObjectLocator leftLocator,
+	public Boolean shouldBeMergedAndSet(ObjectLocator leftLocator,
 			ObjectLocator rightLocator, boolean leftSet, boolean rightSet) {
 		return leftSet || rightSet;
 	}
@@ -473,73 +473,16 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 		}
 	}
 
+	@Override
 	public Object merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
 			Object left, Object right, boolean leftSet, boolean rightSet) {
-
 		if (leftSet && !rightSet) {
 			return left;
 		} else if (!leftSet && rightSet) {
 			return right;
 		} else {
-			if (left == null) {
-				return right;
-			}
-			if (right == null) {
-				return left;
-			}
-			Class<?> lhsClass = left.getClass();
-			if (!lhsClass.isArray()) {
-				return mergeInternal(leftLocator, rightLocator, left, right,
-						leftSet, rightSet);
-			} else if (left.getClass() != right.getClass()) {
-				// Here when we compare different dimensions, for example: a
-				// boolean[][] to a boolean[]
-				return false;
-			}
-			// 'Switch' on type of array, to dispatch to the correct handler
-			// This handles multi dimensional arrays of the same depth
-			else if (left instanceof long[]) {
-				return merge(leftLocator, rightLocator, (long[]) left, (long[]) right,
-						leftSet, rightSet);
-			} else if (left instanceof int[]) {
-				return merge(leftLocator, rightLocator, (int[]) left, (int[]) right,
-						leftSet, rightSet);
-			} else if (left instanceof short[]) {
-				return merge(leftLocator, rightLocator, (short[]) left,
-						(short[]) right, leftSet, rightSet);
-			} else if (left instanceof char[]) {
-				return merge(leftLocator, rightLocator, (char[]) left, (char[]) right,
-						leftSet, rightSet);
-			} else if (left instanceof byte[]) {
-				return merge(leftLocator, rightLocator, (byte[]) left, (byte[]) right,
-						leftSet, rightSet);
-			} else if (left instanceof double[]) {
-				return merge(leftLocator, rightLocator, (double[]) left,
-						(double[]) right, leftSet, rightSet);
-			} else if (left instanceof float[]) {
-				return merge(leftLocator, rightLocator, (float[]) left,
-						(float[]) right, leftSet, rightSet);
-			} else if (left instanceof boolean[]) {
-				return merge(leftLocator, rightLocator, (boolean[]) left,
-						(boolean[]) right, leftSet, rightSet);
-			} else {
-				// Not an array of primitives
-				return merge(leftLocator, rightLocator, (Object[]) left,
-						(Object[]) right, leftSet, rightSet);
-			}
+			return merge(leftLocator, rightLocator, left, right);
 		}
 	}
 
-	protected Object mergeInternal(ObjectLocator leftLocator,
-			ObjectLocator rightLocator, Object leftValue, Object rightValue,
-			boolean leftValueSet, boolean rightValueSet) {
-		if (leftValueSet && !rightValueSet) {
-			return leftValue;
-		} else if (!leftValueSet && rightValueSet) {
-			return rightValue;
-		} else {
-			return mergeInternal(leftLocator, rightLocator, leftValue,
-					rightValue);
-		}
-	}
 }

@@ -108,7 +108,8 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 
 	protected void processClassOutline(ClassOutline classOutline) {
 		final JDefinedClass theClass = classOutline.implClass;
-		ClassUtils._implements(theClass, theClass.owner().ref(MergeFrom2.class));
+		ClassUtils
+				._implements(theClass, theClass.owner().ref(MergeFrom2.class));
 
 		@SuppressWarnings("unused")
 		final JMethod mergeFrom$mergeFrom0 = generateMergeFrom$mergeFrom0(
@@ -271,7 +272,7 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 							targetFieldAccessor.getType(),
 							mergeStrategy.invoke("merge").arg(leftFieldLocator)
 									.arg(rightFieldLocator).arg(leftField)
-									.arg(leftFieldHasSetValue).arg(rightField)
+									.arg(rightField).arg(leftFieldHasSetValue)
 									.arg(rightFieldHasSetValue));
 
 					final JVar merged = ifShouldBeSetBlock.decl(

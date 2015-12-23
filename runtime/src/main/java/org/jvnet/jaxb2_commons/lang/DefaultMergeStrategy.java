@@ -268,7 +268,7 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
 	@Override
 	public boolean merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			boolean left, boolean leftSet, boolean right, boolean rightSet) {
+			boolean left, boolean right, boolean leftSet, boolean rightSet) {
 		if (leftSet && !rightSet) {
 			return left;
 		} else if (!leftSet && rightSet) {
@@ -280,8 +280,8 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
 	@Override
 	public boolean[] merge(ObjectLocator leftLocator,
-			ObjectLocator rightLocator, boolean[] left, boolean leftSet,
-			boolean[] right, boolean rightSet) {
+			ObjectLocator rightLocator, boolean[] left, boolean[] right,
+			boolean leftSet, boolean rightSet) {
 		if (leftSet && !rightSet) {
 			return left;
 		} else if (!leftSet && rightSet) {
@@ -293,7 +293,7 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
 	@Override
 	public byte merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			byte left, boolean leftSet, byte right, boolean rightSet) {
+			byte left, byte right, boolean leftSet, boolean rightSet) {
 		if (leftSet && !rightSet) {
 			return left;
 		} else if (!leftSet && rightSet) {
@@ -305,7 +305,7 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
 	@Override
 	public byte[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			byte[] left, boolean leftSet, byte[] right, boolean rightSet) {
+			byte[] left, byte[] right, boolean leftSet, boolean rightSet) {
 		if (leftSet && !rightSet) {
 			return left;
 		} else if (!leftSet && rightSet) {
@@ -317,7 +317,7 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
 	@Override
 	public char merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			char left, boolean leftSet, char right, boolean rightSet) {
+			char left, char right, boolean leftSet, boolean rightSet) {
 		if (leftSet && !rightSet) {
 			return left;
 		} else if (!leftSet && rightSet) {
@@ -329,7 +329,7 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
 	@Override
 	public char[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			char[] left, boolean leftSet, char[] right, boolean rightSet) {
+			char[] left, char[] right, boolean leftSet, boolean rightSet) {
 		if (leftSet && !rightSet) {
 			return left;
 		} else if (!leftSet && rightSet) {
@@ -341,7 +341,7 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
 	@Override
 	public double merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			double left, boolean leftSet, double right, boolean rightSet) {
+			double left, double right, boolean leftSet, boolean rightSet) {
 		if (leftSet && !rightSet) {
 			return left;
 		} else if (!leftSet && rightSet) {
@@ -353,8 +353,8 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
 	@Override
 	public double[] merge(ObjectLocator leftLocator,
-			ObjectLocator rightLocator, double[] left, boolean leftSet,
-			double[] right, boolean rightSet) {
+			ObjectLocator rightLocator, double[] left, double[] right,
+			boolean leftSet, boolean rightSet) {
 		if (leftSet && !rightSet) {
 			return left;
 		} else if (!leftSet && rightSet) {
@@ -366,7 +366,7 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
 	@Override
 	public float merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			float left, boolean leftSet, float right, boolean rightSet) {
+			float left, float right, boolean leftSet, boolean rightSet) {
 		if (leftSet && !rightSet) {
 			return left;
 		} else if (!leftSet && rightSet) {
@@ -378,7 +378,7 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
 	@Override
 	public float[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			float[] left, boolean leftSet, float[] right, boolean rightSet) {
+			float[] left, float[] right, boolean leftSet, boolean rightSet) {
 		if (leftSet && !rightSet) {
 			return left;
 		} else if (!leftSet && rightSet) {
@@ -390,7 +390,7 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
 	@Override
 	public int merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			int left, boolean leftSet, int right, boolean rightSet) {
+			int left, int right, boolean leftSet, boolean rightSet) {
 		if (leftSet && !rightSet) {
 			return left;
 		} else if (!leftSet && rightSet) {
@@ -402,7 +402,7 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
 	@Override
 	public int[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			int[] left, boolean leftSet, int[] right, boolean rightSet) {
+			int[] left, int[] right, boolean leftSet, boolean rightSet) {
 		if (leftSet && !rightSet) {
 			return left;
 		} else if (!leftSet && rightSet) {
@@ -414,7 +414,7 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
 	@Override
 	public long merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			long left, boolean leftSet, long right, boolean rightSet) {
+			long left, long right, boolean leftSet, boolean rightSet) {
 		if (leftSet && !rightSet) {
 			return left;
 		} else if (!leftSet && rightSet) {
@@ -426,7 +426,7 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
 	@Override
 	public long[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			long[] left, boolean leftSet, long[] right, boolean rightSet) {
+			long[] left, long[] right, boolean leftSet, boolean rightSet) {
 		if (leftSet && !rightSet) {
 			return left;
 		} else if (!leftSet && rightSet) {
@@ -438,8 +438,8 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
 	@Override
 	public Object[] merge(ObjectLocator leftLocator,
-			ObjectLocator rightLocator, Object[] left, boolean leftSet,
-			Object[] right, boolean rightSet) {
+			ObjectLocator rightLocator, Object[] left, Object[] right,
+			boolean leftSet, boolean rightSet) {
 		if (leftSet && !rightSet) {
 			return left;
 		} else if (!leftSet && rightSet) {
@@ -451,7 +451,7 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
 	@Override
 	public short merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			short left, boolean leftSet, short right, boolean rightSet) {
+			short left, short right, boolean leftSet, boolean rightSet) {
 		if (leftSet && !rightSet) {
 			return left;
 		} else if (!leftSet && rightSet) {
@@ -463,7 +463,7 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
 	@Override
 	public short[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			short[] left, boolean leftSet, short[] right, boolean rightSet) {
+			short[] left, short[] right, boolean leftSet, boolean rightSet) {
 		if (leftSet && !rightSet) {
 			return left;
 		} else if (!leftSet && rightSet) {
@@ -474,7 +474,7 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 	}
 
 	public Object merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			Object left, boolean leftSet, Object right, boolean rightSet) {
+			Object left, Object right, boolean leftSet, boolean rightSet) {
 
 		if (leftSet && !rightSet) {
 			return left;
@@ -489,8 +489,8 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 			}
 			Class<?> lhsClass = left.getClass();
 			if (!lhsClass.isArray()) {
-				return mergeInternal(leftLocator, rightLocator, left, leftSet,
-						right, rightSet);
+				return mergeInternal(leftLocator, rightLocator, left, right,
+						leftSet, rightSet);
 			} else if (left.getClass() != right.getClass()) {
 				// Here when we compare different dimensions, for example: a
 				// boolean[][] to a boolean[]
@@ -499,40 +499,40 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 			// 'Switch' on type of array, to dispatch to the correct handler
 			// This handles multi dimensional arrays of the same depth
 			else if (left instanceof long[]) {
-				return merge(leftLocator, rightLocator, (long[]) left, leftSet,
-						(long[]) right, rightSet);
+				return merge(leftLocator, rightLocator, (long[]) left, (long[]) right,
+						leftSet, rightSet);
 			} else if (left instanceof int[]) {
-				return merge(leftLocator, rightLocator, (int[]) left, leftSet,
-						(int[]) right, rightSet);
+				return merge(leftLocator, rightLocator, (int[]) left, (int[]) right,
+						leftSet, rightSet);
 			} else if (left instanceof short[]) {
 				return merge(leftLocator, rightLocator, (short[]) left,
-						leftSet, (short[]) right, rightSet);
+						(short[]) right, leftSet, rightSet);
 			} else if (left instanceof char[]) {
-				return merge(leftLocator, rightLocator, (char[]) left, leftSet,
-						(char[]) right, rightSet);
+				return merge(leftLocator, rightLocator, (char[]) left, (char[]) right,
+						leftSet, rightSet);
 			} else if (left instanceof byte[]) {
-				return merge(leftLocator, rightLocator, (byte[]) left, leftSet,
-						(byte[]) right, rightSet);
+				return merge(leftLocator, rightLocator, (byte[]) left, (byte[]) right,
+						leftSet, rightSet);
 			} else if (left instanceof double[]) {
 				return merge(leftLocator, rightLocator, (double[]) left,
-						leftSet, (double[]) right, rightSet);
+						(double[]) right, leftSet, rightSet);
 			} else if (left instanceof float[]) {
 				return merge(leftLocator, rightLocator, (float[]) left,
-						leftSet, (float[]) right, rightSet);
+						(float[]) right, leftSet, rightSet);
 			} else if (left instanceof boolean[]) {
 				return merge(leftLocator, rightLocator, (boolean[]) left,
-						leftSet, (boolean[]) right, rightSet);
+						(boolean[]) right, leftSet, rightSet);
 			} else {
 				// Not an array of primitives
 				return merge(leftLocator, rightLocator, (Object[]) left,
-						leftSet, (Object[]) right, rightSet);
+						(Object[]) right, leftSet, rightSet);
 			}
 		}
 	}
 
 	protected Object mergeInternal(ObjectLocator leftLocator,
-			ObjectLocator rightLocator, Object leftValue, boolean leftValueSet,
-			Object rightValue, boolean rightValueSet) {
+			ObjectLocator rightLocator, Object leftValue, Object rightValue,
+			boolean leftValueSet, boolean rightValueSet) {
 		if (leftValueSet && !rightValueSet) {
 			return leftValue;
 		} else if (!leftValueSet && rightValueSet) {

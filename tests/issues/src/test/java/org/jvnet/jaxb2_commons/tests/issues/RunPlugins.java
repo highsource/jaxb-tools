@@ -31,7 +31,7 @@ public class RunPlugins {
 				"target/generated-sources/xjc", "-extension", "-XhashCode",
 				"-Xequals", "-XtoString", "-Xcopyable", "-Xmergeable",
 				"-Xinheritance", "-Xsetters", "-Xsetters-mode=direct",
-				"-Xwildcard"
+				"-Xwildcard", "-XenumValue"
 		// "-XsimpleToString"
 
 		};

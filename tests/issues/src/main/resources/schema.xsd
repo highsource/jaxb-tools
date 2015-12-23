@@ -273,4 +273,15 @@
 		<xs:attribute name="testBoolean" type="xs:boolean" default="true"/>
 	</xs:complexType>
 
+	<xs:simpleType name="issueGH31Type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Male"/>
+			<xs:enumeration value="Female"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="issueGH31ComplexType">
+		<xs:attribute name="testEnum" type="issueGH31Type" default="Male"/>
+	</xs:complexType>
+
 </xs:schema>

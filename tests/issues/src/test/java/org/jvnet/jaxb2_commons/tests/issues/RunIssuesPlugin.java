@@ -19,6 +19,7 @@ public class RunIssuesPlugin extends RunXJC2Mojo {
 	public List<String> getArgs() {
 		final List<String> args = new ArrayList<String>(super.getArgs());
 //		args.add("-XelementWrapper");
+		args.add("-XenumValue");
 		args.add("-XtoString");
 		args.add("-Xequals");
 		args.add("-XhashCode");

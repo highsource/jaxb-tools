@@ -3,8 +3,9 @@ package org.jvnet.jaxb2_commons.tests.issues;
 import java.util.Arrays;
 import java.util.List;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
+
+import org.junit.Assert;
 
 public class JIIB20Test extends TestCase {
 

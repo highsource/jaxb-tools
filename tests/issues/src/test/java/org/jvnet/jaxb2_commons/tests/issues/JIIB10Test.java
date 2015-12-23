@@ -4,8 +4,9 @@ import java.lang.reflect.Field;
 
 import javax.xml.bind.annotation.XmlAnyElement;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
+
+import org.junit.Assert;
 
 public class JIIB10Test extends TestCase {
 

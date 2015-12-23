@@ -1,7 +1,8 @@
 package org.jvnet.jaxb2_commons.tests.issues;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
+
+import org.junit.Assert;
 
 public class JIIB14Test extends TestCase {
 

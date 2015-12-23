@@ -2,7 +2,7 @@ package org.jvnet.jaxb2_commons.tests.issues;
 
 import javax.xml.bind.JAXBContext;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.TestCase;
 
 import org.jvnet.jaxb2_commons.lang.ContextUtils;

@@ -2,7 +2,7 @@ package org.jvnet.jaxb2_commons.tests.issues;
 
 import java.util.Arrays;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import junit.framework.TestCase;
 
 public class JIIB8Test extends TestCase {

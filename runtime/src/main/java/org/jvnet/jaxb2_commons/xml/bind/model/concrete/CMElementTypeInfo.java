@@ -1,5 +1,6 @@
 package org.jvnet.jaxb2_commons.xml.bind.model.concrete;
 
+import javax.xml.namespace.NamespaceContext;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
@@ -17,14 +18,18 @@ public class CMElementTypeInfo<T, C extends T> implements
 
 	private final String defaultValue;
 
+	private final NamespaceContext defaultValueNamespaceContext;
+
 	public CMElementTypeInfo(QName elementName, MTypeInfo<T, C> typeInfo,
-			boolean nillable, String defaultValue) {
+			boolean nillable, String defaultValue,
+			NamespaceContext defaultValueNamespaceContext) {
 		Validate.notNull(elementName);
 		Validate.notNull(typeInfo);
 		this.elementName = elementName;
 		this.typeInfo = typeInfo;
 		this.nillable = nillable;
 		this.defaultValue = defaultValue;
+		this.defaultValueNamespaceContext = defaultValueNamespaceContext;
 	}
 
 	public QName getElementName() {
@@ -42,6 +47,11 @@ public class CMElementTypeInfo<T, C extends T> implements
 	@Override
 	public String getDefaultValue() {
 		return defaultValue;
+	}
+	
+	@Override
+	public NamespaceContext getDefaultValueNamespaceContext() {
+		return defaultValueNamespaceContext;
 	}
 
 	@Override

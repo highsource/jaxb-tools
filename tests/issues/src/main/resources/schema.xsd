@@ -284,4 +284,19 @@
 		<xs:attribute name="testEnum" type="issueGH31Type" default="Male"/>
 	</xs:complexType>
 
+	<xs:complexType name="issueGH26Type">
+		<xs:sequence>
+			<xs:element name="a" type="xs:string" default="a"/>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="b" type="xs:string" default="b"/>
+				<xs:element name="c" type="xs:int" default="3"/>
+			</xs:choice>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="d" type="xs:string" default="d"/>
+				<xs:element name="e" type="xs:string" default="e"/>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="z" type="xs:string" default="z"/>
+	</xs:complexType>
+
 </xs:schema>

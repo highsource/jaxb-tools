@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.activation.MimeType;
+import javax.xml.namespace.NamespaceContext;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
@@ -349,17 +350,20 @@ WTI extends WildcardTypeInfo<T, C>> {
 
 	protected MPropertyInfo<T, C> createAttributePropertyInfo(
 			final MClassInfo<T, C> classInfo, final API propertyInfo) {
+
 		return new CMAttributePropertyInfo<T, C>(
 				createPropertyInfoOrigin((PI) propertyInfo), classInfo,
 				propertyInfo.getName(), getTypeInfo(propertyInfo),
-				propertyInfo.getXmlName(), propertyInfo.isRequired());
+				propertyInfo.getXmlName(), propertyInfo.isRequired(),
+				getDefaultValue(propertyInfo),
+				getDefaultValueNamespaceContext(propertyInfo));
 	}
 
 	protected MPropertyInfo<T, C> createValuePropertyInfo(
 			final MClassInfo<T, C> classInfo, final VPI propertyInfo) {
 		return new CMValuePropertyInfo<T, C>(
 				createPropertyInfoOrigin((PI) propertyInfo), classInfo,
-				propertyInfo.getName(), getTypeInfo(propertyInfo));
+				propertyInfo.getName(), getTypeInfo(propertyInfo), null, null);
 	}
 
 	protected MPropertyInfo<T, C> createElementPropertyInfo(
@@ -370,7 +374,8 @@ WTI extends WildcardTypeInfo<T, C>> {
 				ep.isCollection() && !ep.isValueList(), ep.isRequired(),
 				getTypeInfo(ep, typeRef), typeRef.getTagName(),
 				ep.getXmlName(), typeRef.isNillable(),
-				typeRef.getDefaultValue());
+				getDefaultValue(typeRef),
+				getDefaultValueNamespaceContext(typeRef));
 	}
 
 	protected MPropertyInfo<T, C> createElementsPropertyInfo(
@@ -380,8 +385,9 @@ WTI extends WildcardTypeInfo<T, C>> {
 				types.size());
 		for (TypeRef<T, C> typeRef : types) {
 			typedElements.add(new CMElementTypeInfo<T, C>(typeRef.getTagName(),
-					getTypeInfo(ep, typeRef), typeRef.isNillable(), typeRef
-							.getDefaultValue()));
+					getTypeInfo(ep, typeRef), typeRef.isNillable(),
+					getDefaultValue(typeRef),
+					getDefaultValueNamespaceContext(typeRef)));
 		}
 		return new CMElementsPropertyInfo<T, C>(
 				createPropertyInfoOrigin((PI) ep), classInfo, ep.getName(),
@@ -409,7 +415,8 @@ WTI extends WildcardTypeInfo<T, C>> {
 						: rp.getWildcard().allowDom,
 				rp.getWildcard() == null ? true
 						: rp.getWildcard().allowTypedObject,
-				getDefaultValue(element));
+				getDefaultValue(element),
+				getDefaultValueNamespaceContext(element));
 	}
 
 	protected MPropertyInfo<T, C> createElementRefsPropertyInfo(
@@ -418,7 +425,8 @@ WTI extends WildcardTypeInfo<T, C>> {
 		for (Element<T, C> element : rp.getElements()) {
 			typedElements.add(new CMElementTypeInfo<T, C>(element
 					.getElementName(), getTypeInfo(rp, element), true,
-					getDefaultValue(element)));
+					getDefaultValue(element),
+					getDefaultValueNamespaceContext(element)));
 		}
 		return new CMElementRefsPropertyInfo<T, C>(
 				createPropertyInfoOrigin((PI) rp), classInfo, rp.getName(),
@@ -470,7 +478,24 @@ WTI extends WildcardTypeInfo<T, C>> {
 				final List<? extends TypeRef<T, C>> types = property.getTypes();
 				if (types.size() == 1) {
 					final TypeRef<T, C> typeRef = types.get(0);
-					return typeRef.getDefaultValue();
+					return getDefaultValue(typeRef);
+				}
+			}
+		}
+		return null;
+	}
+
+	private NamespaceContext getDefaultValueNamespaceContext(
+			Element<T, C> element) {
+		if (element instanceof ElementInfo) {
+			final ElementInfo<T, C> elementInfo = (ElementInfo<T, C>) element;
+			final ElementPropertyInfo<T, C> property = elementInfo
+					.getProperty();
+			if (property != null) {
+				final List<? extends TypeRef<T, C>> types = property.getTypes();
+				if (types.size() == 1) {
+					final TypeRef<T, C> typeRef = types.get(0);
+					return getDefaultValueNamespaceContext(typeRef);
 				}
 			}
 		}
@@ -531,7 +556,8 @@ WTI extends WildcardTypeInfo<T, C>> {
 				createElementInfoOrigin(element), getPackage(element),
 				getContainer(element), getLocalName(element),
 				element.getElementName(), scope, getTypeInfo(element),
-				substitutionHead, getDefaultValue(element));
+				substitutionHead, getDefaultValue(element),
+				getDefaultValueNamespaceContext(element));
 		return elementInfo;
 	}
 
@@ -587,4 +613,13 @@ WTI extends WildcardTypeInfo<T, C>> {
 	 */
 	protected abstract Class<?> loadClass(T referencedType);
 
+	protected abstract String getDefaultValue(API propertyInfo);
+
+	protected abstract NamespaceContext getDefaultValueNamespaceContext(
+			API propertyInfo);
+
+	protected abstract String getDefaultValue(TypeRef<T, C> typeRef);
+
+	protected abstract NamespaceContext getDefaultValueNamespaceContext(
+			TypeRef<T, C> typeRef);
 }

@@ -5,6 +5,8 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.namespace.NamespaceContext;
+
 import org.jvnet.jaxb2_commons.xjc.model.concrete.origin.XJCCMClassInfoOrigin;
 import org.jvnet.jaxb2_commons.xjc.model.concrete.origin.XJCCMElementInfoOrigin;
 import org.jvnet.jaxb2_commons.xjc.model.concrete.origin.XJCCMEnumConstantInfoOrigin;
@@ -46,12 +48,18 @@ import com.sun.tools.xjc.model.CEnumLeafInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CReferencePropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
+import com.sun.tools.xjc.model.CTypeRef;
 import com.sun.tools.xjc.model.CValuePropertyInfo;
 import com.sun.tools.xjc.model.CWildcardTypeInfo;
 import com.sun.tools.xjc.model.Model;
 import com.sun.tools.xjc.model.nav.NClass;
 import com.sun.tools.xjc.model.nav.NType;
 import com.sun.tools.xjc.outline.Outline;
+import com.sun.tools.xjc.util.NamespaceContextAdapter;
+import com.sun.xml.bind.v2.model.core.TypeRef;
+import com.sun.xml.xsom.XSAttributeUse;
+import com.sun.xml.xsom.XSComponent;
+import com.sun.xml.xsom.XmlString;
 
 public class XJCCMInfoFactory
 		extends
@@ -399,6 +407,56 @@ public class XJCCMInfoFactory
 		try {
 			return Class.forName(name);
 		} catch (ClassNotFoundException cnfex) {
+			return null;
+		}
+	}
+
+	private XSAttributeUse getAttributeUse(CAttributePropertyInfo propertyInfo) {
+		final XSComponent schemaComponent = propertyInfo.getSchemaComponent();
+		if (schemaComponent instanceof XSAttributeUse) {
+			return (XSAttributeUse) schemaComponent;
+		} else {
+			return null;
+		}
+	}
+
+	protected String getDefaultValue(CAttributePropertyInfo propertyInfo) {
+
+		final XSAttributeUse attributeUse = getAttributeUse(propertyInfo);
+		if (attributeUse != null) {
+			final XmlString defaultValue = attributeUse.getDefaultValue();
+			if (defaultValue != null) {
+				return defaultValue.value;
+			}
+		}
+		return null;
+	}
+
+	protected NamespaceContext getDefaultValueNamespaceContext(
+			CAttributePropertyInfo propertyInfo) {
+		final XSAttributeUse attributeUse = getAttributeUse(propertyInfo);
+		if (attributeUse != null) {
+			final XmlString defaultValue = attributeUse.getDefaultValue();
+			if (defaultValue != null) {
+				return new NamespaceContextAdapter(defaultValue);
+			}
+		}
+		return null;
+
+	}
+
+	@Override
+	protected String getDefaultValue(TypeRef<NType, NClass> typeRef) {
+		return typeRef == null ? null : typeRef.getDefaultValue();
+	}
+
+	@Override
+	protected NamespaceContext getDefaultValueNamespaceContext(
+			TypeRef<NType, NClass> typeRef) {
+		if (typeRef instanceof CTypeRef) {
+			final CTypeRef cTypeRef = (CTypeRef) typeRef;
+			return new NamespaceContextAdapter(cTypeRef.defaultValue);
+		} else {
 			return null;
 		}
 	}

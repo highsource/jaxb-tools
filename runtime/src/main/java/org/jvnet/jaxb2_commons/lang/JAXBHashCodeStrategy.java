@@ -66,6 +66,6 @@ public class JAXBHashCodeStrategy extends DefaultHashCodeStrategy {
 		}
 	}
 
-	public static HashCodeStrategy INSTANCE = new JAXBHashCodeStrategy();
+	public static JAXBHashCodeStrategy INSTANCE = new JAXBHashCodeStrategy();
 
 }

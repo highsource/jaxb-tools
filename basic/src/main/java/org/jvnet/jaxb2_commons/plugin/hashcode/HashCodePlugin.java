@@ -5,8 +5,8 @@ import java.util.Collection;
 
 import javax.xml.namespace.QName;
 
-import org.jvnet.jaxb2_commons.lang.HashCode;
-import org.jvnet.jaxb2_commons.lang.HashCodeStrategy;
+import org.jvnet.jaxb2_commons.lang.HashCode2;
+import org.jvnet.jaxb2_commons.lang.HashCodeStrategy2;
 import org.jvnet.jaxb2_commons.lang.JAXBHashCodeStrategy;
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
@@ -70,7 +70,7 @@ public class HashCodePlugin extends AbstractParameterizablePlugin {
 
 	public JExpression createHashCodeStrategy(JCodeModel codeModel) {
 		return StrategyClassUtils.createStrategyInstanceExpression(codeModel,
-				HashCodeStrategy.class, getHashCodeStrategyClass());
+				HashCodeStrategy2.class, getHashCodeStrategyClass());
 	}
 
 	private Ignoring ignoring = new CustomizedIgnoring(
@@ -111,7 +111,7 @@ public class HashCodePlugin extends AbstractParameterizablePlugin {
 
 	protected void processClassOutline(ClassOutline classOutline) {
 		final JDefinedClass theClass = classOutline.implClass;
-		ClassUtils._implements(theClass, theClass.owner().ref(HashCode.class));
+		ClassUtils._implements(theClass, theClass.owner().ref(HashCode2.class));
 
 		// @SuppressWarnings("unused")
 		// final JMethod hashCode$hashCode0 = generateHashCode$hashCode0(
@@ -155,7 +155,7 @@ public class HashCodePlugin extends AbstractParameterizablePlugin {
 		{
 			final JBlock body = object$hashCode.body();
 			final JVar hashCodeStrategy = body.decl(JMod.FINAL, theClass
-					.owner().ref(HashCodeStrategy.class), "strategy",
+					.owner().ref(HashCodeStrategy2.class), "strategy",
 					createHashCodeStrategy(theClass.owner()));
 			body._return(JExpr._this().invoke("hashCode").arg(JExpr._null())
 					.arg(hashCodeStrategy));
@@ -173,14 +173,14 @@ public class HashCodePlugin extends AbstractParameterizablePlugin {
 			final JVar locator = hashCode$hashCode.param(ObjectLocator.class,
 					"locator");
 			final JVar hashCodeStrategy = hashCode$hashCode.param(
-					HashCodeStrategy.class, "strategy");
+					HashCodeStrategy2.class, "strategy");
 			final JBlock body = hashCode$hashCode.body();
 
 			final JExpression currentHashCodeExpression;
 
 			final Boolean superClassImplementsHashCode = StrategyClassUtils
 					.superClassImplements(classOutline, ignoring,
-							HashCode.class);
+							HashCode2.class);
 
 			if (superClassImplementsHashCode == null) {
 				currentHashCodeExpression = JExpr.lit(1);
@@ -213,6 +213,10 @@ public class HashCodePlugin extends AbstractParameterizablePlugin {
 									+ fieldOutline.getPropertyInfo().getName(
 											true));
 
+					final JExpression valueIsSet = (fieldAccessor.isAlwaysSet() || fieldAccessor
+							.hasSetValue() == null) ? JExpr.TRUE
+							: fieldAccessor.hasSetValue();
+
 					fieldAccessor.toRawValue(block, theValue);
 
 					block.assign(
@@ -226,7 +230,8 @@ public class HashCodePlugin extends AbstractParameterizablePlugin {
 											.arg(fieldOutline.getPropertyInfo()
 													.getName(false))
 											.arg(theValue))
-									.arg(currentHashCode).arg(theValue));
+									.arg(currentHashCode).arg(theValue)
+									.arg(valueIsSet));
 				}
 			}
 			body._return(currentHashCode);

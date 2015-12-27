@@ -15,8 +15,9 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MBuiltinLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MContainer;
+import org.jvnet.jaxb2_commons.xml.bind.model.MElement;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
-import org.jvnet.jaxb2_commons.xml.bind.model.MElementTypeInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MElementTypeRef;
 import org.jvnet.jaxb2_commons.xml.bind.model.MEnumLeafInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
@@ -26,6 +27,8 @@ import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMAnyAttributeProp
 import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMBuiltinLeafInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMClassInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMElementInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMElementOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMElementTypeRefOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMEnumConstantInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMEnumLeafInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMModelInfoOrigin;
@@ -34,6 +37,8 @@ import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.CMWildcardTypeInfo
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MBuiltinLeafInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MClassInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MElementInfoOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MElementOrigin;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MElementTypeRefOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MEnumConstantInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MEnumLeafInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MModelInfoOrigin;
@@ -65,6 +70,8 @@ TI extends TypeInfo<T, C>,
 //
 BLI extends BuiltinLeafInfo<T, C>,
 //
+E extends Element<T, C>,
+//
 EI extends ElementInfo<T, C>,
 //
 ELI extends EnumLeafInfo<T, C>,
@@ -83,7 +90,9 @@ EPI extends ElementPropertyInfo<T, C>,
 //
 RPI extends ReferencePropertyInfo<T, C>,
 //
-WTI extends WildcardTypeInfo<T, C>> {
+WTI extends WildcardTypeInfo<T, C>,
+//
+TR extends TypeRef<T, C>> {
 
 	private final Map<BLI, MBuiltinLeafInfo<T, C>> builtinLeafInfos = new IdentityHashMap<BLI, MBuiltinLeafInfo<T, C>>();
 
@@ -364,7 +373,7 @@ WTI extends WildcardTypeInfo<T, C>> {
 
 	protected MPropertyInfo<T, C> createElementPropertyInfo(
 			final MClassInfo<T, C> classInfo, final EPI ep) {
-		final TypeRef<T, C> typeRef = ep.getTypes().get(0);
+		final TR typeRef = (TR) ep.getTypes().get(0);
 		return new CMElementPropertyInfo<T, C>(
 				createPropertyInfoOrigin((PI) ep), classInfo, ep.getName(),
 				ep.isCollection() && !ep.isValueList(), ep.isRequired(),
@@ -375,13 +384,14 @@ WTI extends WildcardTypeInfo<T, C>> {
 
 	protected MPropertyInfo<T, C> createElementsPropertyInfo(
 			final MClassInfo<T, C> classInfo, final EPI ep) {
-		List<? extends TypeRef<T, C>> types = ep.getTypes();
-		final Collection<MElementTypeInfo<T, C>> typedElements = new ArrayList<MElementTypeInfo<T, C>>(
+		List<? extends TR> types = (List<? extends TR>) ep.getTypes();
+		final Collection<MElementTypeRef<T, C>> typedElements = new ArrayList<MElementTypeRef<T, C>>(
 				types.size());
-		for (TypeRef<T, C> typeRef : types) {
-			typedElements.add(new CMElementTypeInfo<T, C>(typeRef.getTagName(),
-					getTypeInfo(ep, typeRef), typeRef.isNillable(), typeRef
-							.getDefaultValue()));
+		for (TR typeRef : types) {
+			typedElements.add(new CMElementTypeRef<T, C>(
+					createElementTypeRefOrigin(ep, typeRef), typeRef
+							.getTagName(), getTypeInfo(ep, typeRef), typeRef
+							.isNillable(), typeRef.getDefaultValue()));
 		}
 		return new CMElementsPropertyInfo<T, C>(
 				createPropertyInfoOrigin((PI) ep), classInfo, ep.getName(),
@@ -414,10 +424,11 @@ WTI extends WildcardTypeInfo<T, C>> {
 
 	protected MPropertyInfo<T, C> createElementRefsPropertyInfo(
 			final MClassInfo<T, C> classInfo, final RPI rp) {
-		final List<MElementTypeInfo<T, C>> typedElements = new ArrayList<MElementTypeInfo<T, C>>();
-		for (Element<T, C> element : rp.getElements()) {
-			typedElements.add(new CMElementTypeInfo<T, C>(element
-					.getElementName(), getTypeInfo(rp, element), true,
+		final List<MElement<T, C>> typedElements = new ArrayList<MElement<T, C>>();
+		for (Element<T, C> e : rp.getElements()) {
+			final E element = (E) e;
+			typedElements.add(new CMElement<T, C>(createElementOrigin(element),
+					element.getElementName(), getTypeInfo(rp, element), true,
 					getDefaultValue(element)));
 		}
 		return new CMElementRefsPropertyInfo<T, C>(
@@ -449,7 +460,7 @@ WTI extends WildcardTypeInfo<T, C>> {
 	}
 
 	protected MTypeInfo<T, C> getTypeInfo(final ElementPropertyInfo<T, C> ep,
-			final TypeRef<T, C> typeRef) {
+			final TR typeRef) {
 		return getTypeInfo(ep, (TI) typeRef.getTarget(),
 
 		ep.isValueList(), ep.getAdapter(), ep.id(), ep.getExpectedMimeType());
@@ -467,9 +478,9 @@ WTI extends WildcardTypeInfo<T, C>> {
 			final ElementPropertyInfo<T, C> property = elementInfo
 					.getProperty();
 			if (property != null) {
-				final List<? extends TypeRef<T, C>> types = property.getTypes();
+				final List<? extends TR> types = (List<? extends TR>) property.getTypes();
 				if (types.size() == 1) {
-					final TypeRef<T, C> typeRef = types.get(0);
+					final TR typeRef = types.get(0);
 					return typeRef.getDefaultValue();
 				}
 			}
@@ -558,6 +569,15 @@ WTI extends WildcardTypeInfo<T, C>> {
 
 	protected MPropertyInfoOrigin createPropertyInfoOrigin(PI info) {
 		return new CMPropertyInfoOrigin<T, C, PI>(info);
+	}
+
+	protected MElementOrigin createElementOrigin(E info) {
+		return new CMElementOrigin<T, C, E>(info);
+	}
+
+	private MElementTypeRefOrigin createElementTypeRefOrigin(EPI ep,
+			TR typeRef) {
+		return new CMElementTypeRefOrigin<T, C, EPI, TR>(ep, typeRef);
 	}
 
 	protected MElementInfoOrigin createElementInfoOrigin(EI info) {

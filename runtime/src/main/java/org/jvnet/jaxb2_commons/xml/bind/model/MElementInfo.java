@@ -5,8 +5,9 @@ import javax.xml.namespace.QName;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MElementInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MOriginated;
 
-public interface MElementInfo<T, C extends T> extends MElementTypeInfo<T, C>, MPackaged,
-		MOriginated<MElementInfoOrigin>, MContained, MContainer {
+public interface MElementInfo<T, C extends T> extends
+		MElementTypeInfo<T, C, MElementInfoOrigin>, MPackaged, MContained,
+		MContainer {
 
 	public QName getElementName();
 

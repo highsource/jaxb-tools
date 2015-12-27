@@ -39,6 +39,7 @@ import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CClassInfoParent;
 import com.sun.tools.xjc.model.CClassInfoParent.Visitor;
 import com.sun.tools.xjc.model.CClassRef;
+import com.sun.tools.xjc.model.CElement;
 import com.sun.tools.xjc.model.CElementInfo;
 import com.sun.tools.xjc.model.CElementPropertyInfo;
 import com.sun.tools.xjc.model.CEnumConstant;
@@ -46,6 +47,7 @@ import com.sun.tools.xjc.model.CEnumLeafInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CReferencePropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
+import com.sun.tools.xjc.model.CTypeRef;
 import com.sun.tools.xjc.model.CValuePropertyInfo;
 import com.sun.tools.xjc.model.CWildcardTypeInfo;
 import com.sun.tools.xjc.model.Model;
@@ -55,7 +57,7 @@ import com.sun.tools.xjc.outline.Outline;
 
 public class XJCCMInfoFactory
 		extends
-		CMInfoFactory<NType, NClass, Model, CTypeInfo, CBuiltinLeafInfo, CElementInfo, CEnumLeafInfo, CEnumConstant, CClassInfo, CPropertyInfo, CAttributePropertyInfo, CValuePropertyInfo, CElementPropertyInfo, CReferencePropertyInfo, CWildcardTypeInfo> {
+		CMInfoFactory<NType, NClass, Model, CTypeInfo, CBuiltinLeafInfo, CElement, CElementInfo, CEnumLeafInfo, CEnumConstant, CClassInfo, CPropertyInfo, CAttributePropertyInfo, CValuePropertyInfo, CElementPropertyInfo, CReferencePropertyInfo, CWildcardTypeInfo, CTypeRef> {
 
 	private final Map<CClassRef, MClassRef<NType, NClass>> classRefs =
 
@@ -243,6 +245,7 @@ public class XJCCMInfoFactory
 			}
 
 			public MContainer onElement(CElementInfo element) {
+				System.out.println(element.fullName());
 				return getElementInfo(element);
 			}
 		});

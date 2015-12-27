@@ -6,10 +6,11 @@ import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MAnyAttributePropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MAnyElementPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MAttributePropertyInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MElement;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementRefPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementRefsPropertyInfo;
-import org.jvnet.jaxb2_commons.xml.bind.model.MElementTypeInfo;
+import org.jvnet.jaxb2_commons.xml.bind.model.MElementTypeRef;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementsPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MValuePropertyInfo;
@@ -39,8 +40,7 @@ public class QNameCollectingPropertyInfoVisitor<T, C extends T> implements
 		if (wrapperElementName != null) {
 			collector.element(wrapperElementName);
 		}
-		for (MElementTypeInfo<T, C> elementTypeInfo : info
-				.getElementTypeInfos()) {
+		for (MElementTypeRef<T, C> elementTypeInfo : info.getElementTypeInfos()) {
 			QName elementName = elementTypeInfo.getElementName();
 			collector.element(elementName);
 		}
@@ -80,8 +80,7 @@ public class QNameCollectingPropertyInfoVisitor<T, C extends T> implements
 		if (wrapperElementName != null) {
 			collector.element(wrapperElementName);
 		}
-		for (MElementTypeInfo<T, C> elementTypeInfo : info
-				.getElementTypeInfos()) {
+		for (MElement<T, C> elementTypeInfo : info.getElementTypeInfos()) {
 			QName elementName = elementTypeInfo.getElementName();
 			collector.element(elementName);
 		}

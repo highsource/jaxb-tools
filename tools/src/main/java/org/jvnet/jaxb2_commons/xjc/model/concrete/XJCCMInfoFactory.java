@@ -273,7 +273,6 @@ public class XJCCMInfoFactory
 			}
 
 			public MContainer onElement(CElementInfo element) {
-				System.out.println(element.fullName());
 				return getElementInfo(element);
 			}
 		});

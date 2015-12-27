@@ -197,6 +197,7 @@ public class CMModel<T, C extends T> implements MModelInfo<T, C> {
 
 		final QName elementName = classInfo.getElementName();
 		if (elementName != null) {
+			// TODO why null, null?
 			final MElementInfo<T, C> elementInfo = classInfo.createElementInfo(
 					null, null);
 			this.elementInfos.add(elementInfo);

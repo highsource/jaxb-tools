@@ -16,17 +16,22 @@ public class XJCCMElementInfoOrigin extends
 		CMElementInfoOrigin<NType, NClass, CElementInfo> implements
 		ElementOutlineGeneratorFactory, SchemaComponentAware {
 
+	private final XSComponent component;
+
 	public XJCCMElementInfoOrigin(CElementInfo source) {
 		super(source);
+		component = source.getSchemaComponent() != null ? source
+				.getSchemaComponent() : source.getProperty()
+				.getSchemaComponent();
 	}
 
 	public MElementOutlineGenerator createGenerator(Outline outline) {
 		return new CMElementOutlineGenerator(outline, getSource());
 	}
-	
+
 	@Override
 	public XSComponent getSchemaComponent() {
-		return getSource().getSchemaComponent();
+		return component;
 	}
 
 }

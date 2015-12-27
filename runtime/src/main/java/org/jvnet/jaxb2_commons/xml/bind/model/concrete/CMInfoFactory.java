@@ -110,6 +110,10 @@ TR extends TypeRef<T, C>> {
 		this.typeInfoSet = typeInfoSet;
 
 	}
+	
+	public TIS getTypeInfoSet() {
+		return typeInfoSet;
+	}
 
 	public MModelInfo<T, C> createModel() {
 		final CMModel<T, C> model = new CMModel<T, C>(
@@ -309,7 +313,7 @@ TR extends TypeRef<T, C>> {
 		}
 	}
 
-	protected MClassTypeInfo<T, C> createBaseTypeInfo(CI info) {
+	protected MClassTypeInfo<T, C, ?> createBaseTypeInfo(CI info) {
 		return info.getBaseClass() == null ? null : getTypeInfo((CI) info
 				.getBaseClass());
 	}
@@ -601,7 +605,7 @@ TR extends TypeRef<T, C>> {
 		return new CMElementOrigin<T, C, E>(info);
 	}
 
-	private MElementTypeRefOrigin createElementTypeRefOrigin(EPI ep,
+	protected MElementTypeRefOrigin createElementTypeRefOrigin(EPI ep,
 			TR typeRef) {
 		return new CMElementTypeRefOrigin<T, C, EPI, TR>(ep, typeRef);
 	}

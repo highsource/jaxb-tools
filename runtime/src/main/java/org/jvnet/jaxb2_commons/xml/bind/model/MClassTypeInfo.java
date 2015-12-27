@@ -1,7 +1,9 @@
 package org.jvnet.jaxb2_commons.xml.bind.model;
 
-public interface MClassTypeInfo<T, C extends T> extends
-		MPackagedTypeInfo<T, C>, MTypeInfo<T, C>, MContainer {
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MOriginated;
+
+public interface MClassTypeInfo<T, C extends T, O> extends
+		MPackagedTypeInfo<T, C>, MTypeInfo<T, C>, MOriginated<O>, MContainer {
 
 	public C getTargetType();
 

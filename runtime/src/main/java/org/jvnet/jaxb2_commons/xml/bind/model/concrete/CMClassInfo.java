@@ -17,7 +17,6 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizations;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
-import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
 import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.ClassInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.PropertyInfoOrigin;
@@ -35,7 +34,7 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 	private final String name;
 	private final String localName;
 	private final MContainer container;
-	private final MClassTypeInfo<T, C> baseTypeInfo;
+	private final MClassTypeInfo<T, C, ?> baseTypeInfo;
 	private final QName elementName;
 
 	private Map<String, MPropertyInfo<T, C>> propertiesMap = new HashMap<String, MPropertyInfo<T, C>>();
@@ -46,7 +45,7 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 
 	public CMClassInfo(MClassInfoOrigin origin, C targetType,
 			MPackageInfo _package, MContainer container, String localName,
-			MClassTypeInfo<T, C> baseTypeInfo, QName elementName, QName typeName) {
+			MClassTypeInfo<T, C, ?> baseTypeInfo, QName elementName, QName typeName) {
 		super();
 		Validate.notNull(origin);
 		Validate.notNull(targetType);
@@ -85,7 +84,7 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 		return false;
 	}
 
-	public MElementInfo<T, C> createElementInfo(MTypeInfo<T, C> scope,
+	public MElementInfo<T, C> createElementInfo(MClassInfo<T, C> scope,
 			QName substitutionHead) {
 		return new CMElementInfo<T, C>(getOrigin().createElementInfoOrigin(),
 				getPackageInfo(), getContainer(), getLocalName(),
@@ -125,11 +124,7 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 		}
 	}
 
-	public MContainer getScope() {
-		return container;
-	}
-
-	public MClassTypeInfo<T, C> getBaseTypeInfo() {
+	public MClassTypeInfo<T, C, ?> getBaseTypeInfo() {
 		return baseTypeInfo;
 	}
 

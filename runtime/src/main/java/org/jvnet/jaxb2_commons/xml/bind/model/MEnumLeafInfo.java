@@ -22,7 +22,7 @@ public interface MEnumLeafInfo<T, C extends T> extends MPackagedTypeInfo<T, C>,
 
 	public QName getElementName();
 
-	public MElementInfo<T, C> createElementInfo(MTypeInfo<T, C> scope,
+	public MElementInfo<T, C> createElementInfo(MClassInfo<T, C> scope,
 			QName substitutionHead);
 
 }

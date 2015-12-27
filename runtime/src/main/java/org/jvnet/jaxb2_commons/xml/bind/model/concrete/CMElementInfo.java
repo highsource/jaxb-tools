@@ -6,6 +6,7 @@ import javax.xml.namespace.NamespaceContext;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
+import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MContainer;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
@@ -24,7 +25,7 @@ public class CMElementInfo<T, C extends T> implements MElementInfo<T, C> {
 
 	private final QName elementName;
 
-	private final MTypeInfo<T, C> scope;
+	private final MClassInfo<T, C> scope;
 
 	private final MTypeInfo<T, C> typeInfo;
 
@@ -36,7 +37,7 @@ public class CMElementInfo<T, C extends T> implements MElementInfo<T, C> {
 
 	public CMElementInfo(MElementInfoOrigin origin, MPackageInfo _package,
 			MContainer container, String localName, QName elementName,
-			MTypeInfo<T, C> scope, MTypeInfo<T, C> typeInfo,
+			MClassInfo<T, C> scope, MTypeInfo<T, C> typeInfo,
 			QName substitutionHead, String defaultValue,
 			NamespaceContext defaultValueNamespaceContext) {
 		super();
@@ -92,7 +93,7 @@ public class CMElementInfo<T, C extends T> implements MElementInfo<T, C> {
 		return elementName;
 	}
 
-	public MTypeInfo<T, C> getScope() {
+	public MClassInfo<T, C> getScope() {
 		return scope;
 	}
 

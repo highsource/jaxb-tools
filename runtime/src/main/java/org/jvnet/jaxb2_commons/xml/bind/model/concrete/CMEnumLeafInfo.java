@@ -9,6 +9,7 @@ import java.util.List;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
+import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MContainer;
 import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizable;
 import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizations;
@@ -89,7 +90,7 @@ public class CMEnumLeafInfo<T, C extends T> implements MEnumLeafInfo<T, C>,
 		return true;
 	}
 
-	public MElementInfo<T, C> createElementInfo(MTypeInfo<T, C> scope,
+	public MElementInfo<T, C> createElementInfo(MClassInfo<T, C> scope,
 			QName substitutionHead) {
 		return new CMElementInfo<T, C>(getOrigin().createElementInfoOrigin(),
 				getPackageInfo(), getContainer(), getLocalName(),

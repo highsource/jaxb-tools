@@ -9,11 +9,13 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MContainer;
 import org.jvnet.jaxb2_commons.xml.bind.model.MCustomizations;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPackageInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MTypeInfoVisitor;
+import org.jvnet.jaxb2_commons.xml.bind.model.origin.MClassRefOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.util.XmlTypeUtils;
 
 public class CMClassRef<T, C extends T> implements MClassRef<T, C> {
 
 	private CMCustomizations customizations = new CMCustomizations();
+	private final MClassRefOrigin origin;
 	private final C targetType;
 	private final Class<?> targetClass;
 	private final MPackageInfo _package;
@@ -22,15 +24,15 @@ public class CMClassRef<T, C extends T> implements MClassRef<T, C> {
 	private final MContainer container;
 	private final QName typeName;
 
-	public CMClassRef(/* MClassInfoOrigin origin, */C targetType,
+	public CMClassRef(MClassRefOrigin origin, C targetType,
 			Class<?> targetClass, MPackageInfo _package, MContainer container,
 			String localName) {
 		super();
-		// Validate.notNull(origin);
+		Validate.notNull(origin);
 		Validate.notNull(targetType);
 		Validate.notNull(_package);
 		Validate.notNull(localName);
-		// this.origin = origin;
+		this.origin = origin;
 		this.targetType = targetType;
 		this.name = _package.getPackagedName(localName);
 		this.localName = localName;
@@ -39,6 +41,11 @@ public class CMClassRef<T, C extends T> implements MClassRef<T, C> {
 		this.targetClass = targetClass;
 		this.typeName = targetClass == null ? null : XmlTypeUtils
 				.getTypeName(targetClass);
+	}
+
+	@Override
+	public MClassRefOrigin getOrigin() {
+		return this.origin;
 	}
 
 	public String getName() {

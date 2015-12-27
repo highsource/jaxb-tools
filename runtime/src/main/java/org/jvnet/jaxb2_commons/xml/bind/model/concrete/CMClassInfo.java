@@ -89,7 +89,7 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 			QName substitutionHead) {
 		return new CMElementInfo<T, C>(getOrigin().createElementInfoOrigin(),
 				getPackageInfo(), getContainer(), getLocalName(),
-				getElementName(), scope, this, substitutionHead, null);
+				getElementName(), scope, this, substitutionHead, null, null);
 	}
 
 	public MPackageInfo getPackageInfo() {
@@ -136,7 +136,7 @@ public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 	public List<MPropertyInfo<T, C>> getProperties() {
 		return unmodifiableProperties;
 	}
-	
+
 	@Override
 	public MPropertyInfo<T, C> getProperty(String privateName) {
 		return this.propertiesMap.get(privateName);

@@ -11,8 +11,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import junit.framework.TestCase;
 
 import org.apache.commons.io.IOUtils;
-import org.jvnet.jaxb2_commons.lang.CopyStrategy;
-import org.jvnet.jaxb2_commons.lang.CopyTo;
+import org.jvnet.jaxb2_commons.lang.CopyStrategy2;
+import org.jvnet.jaxb2_commons.lang.CopyTo2;
 import org.jvnet.jaxb2_commons.lang.JAXBCopyStrategy;
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
@@ -52,7 +52,7 @@ public class CopyStrategyTest extends TestCase {
 
 	@XmlRootElement(name = "a")
 	@XmlAccessorType(XmlAccessType.FIELD)
-	public static class A implements CopyTo {
+	public static class A implements CopyTo2 {
 		@XmlAnyElement(lax = true)
 		private Object any;
 
@@ -73,13 +73,13 @@ public class CopyStrategyTest extends TestCase {
 		}
 
 		public Object copyTo(ObjectLocator locator, Object target,
-				CopyStrategy copyStrategy) {
+				CopyStrategy2 copyStrategy) {
 			final A copy = ((target == null) ? ((A) createNewInstance())
 					: ((A) target));
 			{
 				Object sourceAny;
 				sourceAny = this.getAny();
-				Object copyAny = ((Object) copyStrategy.copy(null, sourceAny));
+				Object copyAny = ((Object) copyStrategy.copy(null, sourceAny, any != null));
 				copy.setAny(copyAny);
 			}
 			return copy;

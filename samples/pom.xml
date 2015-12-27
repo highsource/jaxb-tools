@@ -8,18 +8,21 @@
 	<parent>
 		<groupId>org.jvnet.jaxb2_commons</groupId>
 		<artifactId>jaxb2-basics-project</artifactId>
-		<version>0.9.6-SNAPSHOT</version>
+		<version>0.10.1-SNAPSHOT</version>
 	</parent>
 	<modules>
 		<module>po</module>
 		<module>basic</module>
 		<module>po-simple</module>
+		<module>cxf</module>
+		<module>jaxws</module>
 	</modules>
 	<build>
 		<defaultGoal>install</defaultGoal>
 		<plugins>
-				<plugin>
+			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.6</version>
 				<inherited>true</inherited>
 				<executions>
 					<execution>
@@ -33,6 +36,7 @@
 							<descriptors>
 								<descriptor>../src/main/assembly/maven-src.xml</descriptor>
 							</descriptors>
+							<escapeString>\</escapeString>
 						</configuration>
 					</execution>
 					<execution>
@@ -46,6 +50,7 @@
 							<descriptors>
 								<descriptor>../src/main/assembly/ant-src.xml</descriptor>
 							</descriptors>
+							<escapeString>\</escapeString>
 						</configuration>
 					</execution>
 				</executions>

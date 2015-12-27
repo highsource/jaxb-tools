@@ -2,6 +2,7 @@ package org.jvnet.jaxb2_commons.xml.bind.model.concrete;
 
 import java.text.MessageFormat;
 
+import javax.xml.namespace.NamespaceContext;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
@@ -31,10 +32,13 @@ public class CMElementInfo<T, C extends T> implements MElementInfo<T, C> {
 
 	private final String defaultValue;
 
+	private final NamespaceContext defaultValueNamespaceContext;
+
 	public CMElementInfo(MElementInfoOrigin origin, MPackageInfo _package,
 			MContainer container, String localName, QName elementName,
 			MTypeInfo<T, C> scope, MTypeInfo<T, C> typeInfo,
-			QName substitutionHead, String defaultValue) {
+			QName substitutionHead, String defaultValue,
+			NamespaceContext defaultValueNamespaceContext) {
 		super();
 		Validate.notNull(origin);
 		Validate.notNull(elementName);
@@ -48,6 +52,7 @@ public class CMElementInfo<T, C extends T> implements MElementInfo<T, C> {
 		this.typeInfo = typeInfo;
 		this.substitutionHead = substitutionHead;
 		this.defaultValue = defaultValue;
+		this.defaultValueNamespaceContext = defaultValueNamespaceContext;
 	}
 
 	public MElementInfoOrigin getOrigin() {
@@ -107,6 +112,11 @@ public class CMElementInfo<T, C extends T> implements MElementInfo<T, C> {
 	@Override
 	public String getDefaultValue() {
 		return defaultValue;
+	}
+
+	@Override
+	public NamespaceContext getDefaultValueNamespaceContext() {
+		return defaultValueNamespaceContext;
 	}
 
 	public String toString() {

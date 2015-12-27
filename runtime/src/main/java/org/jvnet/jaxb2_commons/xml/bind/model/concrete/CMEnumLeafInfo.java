@@ -93,7 +93,7 @@ public class CMEnumLeafInfo<T, C extends T> implements MEnumLeafInfo<T, C>,
 			QName substitutionHead) {
 		return new CMElementInfo<T, C>(getOrigin().createElementInfoOrigin(),
 				getPackageInfo(), getContainer(), getLocalName(),
-				getElementName(), scope, this, substitutionHead, null);
+				getElementName(), scope, this, substitutionHead, null, null);
 	}
 
 	public String getName() {

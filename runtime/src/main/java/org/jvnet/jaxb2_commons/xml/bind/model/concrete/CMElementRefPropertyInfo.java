@@ -1,5 +1,6 @@
 package org.jvnet.jaxb2_commons.xml.bind.model.concrete;
 
+import javax.xml.namespace.NamespaceContext;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
@@ -19,12 +20,14 @@ public class CMElementRefPropertyInfo<T, C extends T> extends
 	private final boolean domAllowed;
 	private final boolean typedObjectAllowed;
 	private final String defaultValue;
+	private final NamespaceContext defaultValueNamespaceContext;
 
 	public CMElementRefPropertyInfo(MPropertyInfoOrigin origin,
 			MClassInfo<T, C> classInfo, String privateName, boolean collection,
 			boolean required, MTypeInfo<T, C> typeInfo, QName elementName,
 			QName wrapperElementName, boolean mixed, boolean domAllowed,
-			boolean typedObjectAllowed, String defaultValue) {
+			boolean typedObjectAllowed, String defaultValue,
+			NamespaceContext defaultValueNamespaceContext) {
 		super(origin, classInfo, privateName, collection, required);
 		this.typeInfo = typeInfo;
 		this.elementName = elementName;
@@ -33,6 +36,7 @@ public class CMElementRefPropertyInfo<T, C extends T> extends
 		this.domAllowed = domAllowed;
 		this.typedObjectAllowed = typedObjectAllowed;
 		this.defaultValue = defaultValue;
+		this.defaultValueNamespaceContext = defaultValueNamespaceContext;
 	}
 
 	public MTypeInfo<T, C> getTypeInfo() {
@@ -67,6 +71,11 @@ public class CMElementRefPropertyInfo<T, C extends T> extends
 	@Override
 	public String getDefaultValue() {
 		return defaultValue;
+	}
+
+	@Override
+	public NamespaceContext getDefaultValueNamespaceContext() {
+		return defaultValueNamespaceContext;
 	}
 
 	public <V> V acceptPropertyInfoVisitor(MPropertyInfoVisitor<T, C, V> visitor) {

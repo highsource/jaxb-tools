@@ -2,6 +2,7 @@ package org.jvnet.jaxb2_commons.lang;
 
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
+@Deprecated
 public interface EqualsStrategy {
 
 	public boolean equals(ObjectLocator leftLocator,

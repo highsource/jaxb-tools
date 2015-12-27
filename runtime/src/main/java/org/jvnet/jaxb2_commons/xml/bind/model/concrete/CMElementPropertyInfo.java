@@ -1,5 +1,6 @@
 package org.jvnet.jaxb2_commons.xml.bind.model.concrete;
 
+import javax.xml.namespace.NamespaceContext;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
@@ -16,17 +17,20 @@ public class CMElementPropertyInfo<T, C extends T> extends CMPropertyInfo<T, C>
 	private final QName wrapperElementName;
 	private final boolean nillable;
 	private final String defaultValue;
+	private final NamespaceContext defaultValueNamespaceContext;
 
 	public CMElementPropertyInfo(MPropertyInfoOrigin origin,
 			MClassInfo<T, C> classInfo, String privateName, boolean collection,
 			boolean required, MTypeInfo<T, C> typeInfo, QName elementName,
-			QName wrapperElementName, boolean nillable, String defaultValue) {
+			QName wrapperElementName, boolean nillable, String defaultValue,
+			NamespaceContext defaultValueNamespaceContext) {
 		super(origin, classInfo, privateName, collection, required);
 		this.typeInfo = typeInfo;
 		this.elementName = elementName;
 		this.wrapperElementName = wrapperElementName;
 		this.nillable = nillable;
 		this.defaultValue = defaultValue;
+		this.defaultValueNamespaceContext = defaultValueNamespaceContext;
 	}
 
 	public MTypeInfo<T, C> getTypeInfo() {
@@ -49,6 +53,11 @@ public class CMElementPropertyInfo<T, C extends T> extends CMPropertyInfo<T, C>
 	@Override
 	public String getDefaultValue() {
 		return defaultValue;
+	}
+
+	@Override
+	public NamespaceContext getDefaultValueNamespaceContext() {
+		return defaultValueNamespaceContext;
 	}
 
 	public <V> V acceptPropertyInfoVisitor(MPropertyInfoVisitor<T, C, V> visitor) {

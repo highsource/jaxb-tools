@@ -1,5 +1,6 @@
 package org.jvnet.jaxb2_commons.xml.bind.model.concrete;
 
+import javax.xml.namespace.NamespaceContext;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.xml.bind.model.MElement;
@@ -10,8 +11,10 @@ public class CMElement<T, C extends T> extends
 		CMElementTypeInfo<T, C, MElementOrigin> implements MElement<T, C> {
 
 	public CMElement(MElementOrigin origin, QName elementName,
-			MTypeInfo<T, C> typeInfo, boolean nillable, String defaultValue) {
-		super(origin, elementName, typeInfo, nillable, defaultValue);
+			MTypeInfo<T, C> typeInfo, boolean nillable, String defaultValue,
+			NamespaceContext defaultValueNamespaceContext) {
+		super(origin, elementName, typeInfo, nillable, defaultValue,
+				defaultValueNamespaceContext);
 	}
 
 	@Override

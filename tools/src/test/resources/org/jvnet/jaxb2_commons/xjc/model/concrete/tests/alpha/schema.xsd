@@ -134,4 +134,33 @@
 			</xsd:restriction>
 		</xsd:simpleType>
 	</xsd:element>
+	
+	<xsd:complexType name="ComplexTypeWithOccurs">
+		<xsd:sequence>
+			<xsd:element name="Element" type="xsd:string" minOccurs="2" maxOccurs="8"/>
+			<xsd:choice maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jaxb:property name="Elements" />
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:element name="Elements1" type="xsd:string" minOccurs="3" maxOccurs="9"/>
+				<xsd:element name="Elements2" type="xsd:int" minOccurs="4" maxOccurs="10"/>
+			</xsd:choice>
+			<xsd:element name="ElementRef" type="xsd:string" minOccurs="5" maxOccurs="11" nillable="true"/>
+			<xsd:choice maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jaxb:property name="ElementRefs" />
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:element name="ElementRefs1" type="xsd:string" minOccurs="6" maxOccurs="12"/>
+				<xsd:element name="ElementRefs2" type="xsd:string" minOccurs="7" maxOccurs="13"/>
+			</xsd:choice>
+		</xsd:sequence>
+		<xsd:attribute name="DefaultAttribute" type="xsd:string" default="test"/>
+		<xsd:attribute name="OptionalAttribute" type="xsd:string"/>
+		<xsd:attribute name="RequiredAttribute" type="xsd:string" use="required"/>
+		<xsd:attribute name="ProhibitedAttribute" type="xsd:string" use="prohibited"/>
+	</xsd:complexType>
 </xsd:schema>

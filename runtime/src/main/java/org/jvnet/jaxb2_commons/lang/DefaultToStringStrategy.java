@@ -7,12 +7,18 @@ import java.util.Collection;
 
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
-public class DefaultToStringStrategy implements ToStringStrategy {
+public class DefaultToStringStrategy implements ToStringStrategy2,
+		ToStringStrategy {
 
 	/**
 	 * Whether to use the field names, the default is <code>true</code>.
 	 */
 	private boolean useFieldNames = true;
+
+	/**
+	 * Whether to mark default field values, the default is <code>true</code>.
+	 */
+	private boolean useDefaultFieldValueMarkers = true;
 
 	/**
 	 * Whether to use the class name, the default is <code>true</code>.
@@ -43,6 +49,11 @@ public class DefaultToStringStrategy implements ToStringStrategy {
 	 * The field name value separator <code>'='</code>.
 	 */
 	private String fieldNameValueSeparator = "=";
+
+	/**
+	 * Marker for the default field values (vs. explicitly set).
+	 */
+	private String defaultFieldValueMarker = "(default)";
 
 	/**
 	 * Whether the field separator should be added before any other fields.
@@ -101,6 +112,10 @@ public class DefaultToStringStrategy implements ToStringStrategy {
 
 	public boolean isUseIdentityHashCode() {
 		return useIdentityHashCode;
+	}
+
+	public boolean isUseDefaultFieldValueMarkers() {
+		return useDefaultFieldValueMarkers;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -217,6 +232,24 @@ public class DefaultToStringStrategy implements ToStringStrategy {
 
 	/**
 	 * <p>
+	 * Append to the <code>toString</code> the field start.
+	 * </p>
+	 * 
+	 * @param buffer
+	 *            the <code>StringBuilder</code> to populate
+	 * @param propertyName
+	 *            the field name
+	 */
+	protected void appendFieldStart(ObjectLocator parentLocator, Object parent,
+			String fieldName, StringBuilder buffer, boolean valueSet) {
+		if (useFieldNames && fieldName != null) {
+			buffer.append(fieldName);
+			buffer.append(fieldNameValueSeparator);
+		}
+	}
+
+	/**
+	 * <p>
 	 * Append to the <code>toString<code> the field end.
 	 * </p>
 	 * 
@@ -232,6 +265,26 @@ public class DefaultToStringStrategy implements ToStringStrategy {
 
 	/**
 	 * <p>
+	 * Append to the <code>toString<code> the field end.
+	 * </p>
+	 * 
+	 * @param buffer
+	 *            the <code>StringBuilder</code> to populate
+	 * @param propertyName
+	 *            the field name, typically not used as already appended
+	 */
+	protected void appendFieldEnd(ObjectLocator parentLocator, Object parent,
+			String fieldName, StringBuilder buffer, boolean valueSet) {
+		if (!valueSet) {
+			if (isUseDefaultFieldValueMarkers()) {
+				appendDefaultFieldValueMarker(buffer);
+			}
+		}
+		appendFieldSeparator(buffer);
+	}
+
+	/**
+	 * <p>
 	 * Append to the <code>toString</code> the field separator.
 	 * </p>
 	 * 
@@ -240,6 +293,10 @@ public class DefaultToStringStrategy implements ToStringStrategy {
 	 */
 	protected void appendFieldSeparator(StringBuilder buffer) {
 		buffer.append(fieldSeparator);
+	}
+
+	protected void appendDefaultFieldValueMarker(StringBuilder buffer) {
+		buffer.append(defaultFieldValueMarker);
 	}
 
 	/**
@@ -457,6 +514,8 @@ public class DefaultToStringStrategy implements ToStringStrategy {
 			StringBuilder buffer, Object value) {
 		if (value instanceof Collection) {
 			append(locator, buffer, (Collection) value);
+		} else if (value instanceof ToString2) {
+			((ToString2) value).append(locator, buffer, this);
 		} else if (value instanceof ToString) {
 			((ToString) value).append(locator, buffer, this);
 		} else {
@@ -916,5 +975,221 @@ public class DefaultToStringStrategy implements ToStringStrategy {
 		}
 	}
 
-	public static final ToStringStrategy INSTANCE = new DefaultToStringStrategy();
+	@Override
+	public StringBuilder appendField(ObjectLocator parentLocator,
+			Object parent, String fieldName, StringBuilder stringBuilder,
+			boolean value, boolean valueSet) {
+		appendFieldStart(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		append(property(parentLocator, fieldName, value), stringBuilder, value);
+		appendFieldEnd(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		return stringBuilder;
+	}
+
+	@Override
+	public StringBuilder appendField(ObjectLocator parentLocator,
+			Object parent, String fieldName, StringBuilder stringBuilder,
+			byte value, boolean valueSet) {
+		appendFieldStart(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		append(property(parentLocator, fieldName, value), stringBuilder, value);
+		appendFieldEnd(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		return stringBuilder;
+	}
+
+	@Override
+	public StringBuilder appendField(ObjectLocator parentLocator,
+			Object parent, String fieldName, StringBuilder stringBuilder,
+			char value, boolean valueSet) {
+		appendFieldStart(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		append(property(parentLocator, fieldName, value), stringBuilder, value);
+		appendFieldEnd(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		return stringBuilder;
+	}
+
+	@Override
+	public StringBuilder appendField(ObjectLocator parentLocator,
+			Object parent, String fieldName, StringBuilder stringBuilder,
+			double value, boolean valueSet) {
+		appendFieldStart(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		append(property(parentLocator, fieldName, value), stringBuilder, value);
+		appendFieldEnd(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		return stringBuilder;
+	}
+
+	@Override
+	public StringBuilder appendField(ObjectLocator parentLocator,
+			Object parent, String fieldName, StringBuilder stringBuilder,
+			float value, boolean valueSet) {
+		appendFieldStart(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		append(property(parentLocator, fieldName, value), stringBuilder, value);
+		appendFieldEnd(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		return stringBuilder;
+	}
+
+	@Override
+	public StringBuilder appendField(ObjectLocator parentLocator,
+			Object parent, String fieldName, StringBuilder stringBuilder,
+			int value, boolean valueSet) {
+		appendFieldStart(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		append(property(parentLocator, fieldName, value), stringBuilder, value);
+		appendFieldEnd(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		return stringBuilder;
+	}
+
+	@Override
+	public StringBuilder appendField(ObjectLocator parentLocator,
+			Object parent, String fieldName, StringBuilder stringBuilder,
+			long value, boolean valueSet) {
+		appendFieldStart(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		append(property(parentLocator, fieldName, value), stringBuilder, value);
+		appendFieldEnd(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		return stringBuilder;
+	}
+
+	@Override
+	public StringBuilder appendField(ObjectLocator parentLocator,
+			Object parent, String fieldName, StringBuilder stringBuilder,
+			short value, boolean valueSet) {
+		appendFieldStart(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		append(property(parentLocator, fieldName, value), stringBuilder, value);
+		appendFieldEnd(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		return stringBuilder;
+	}
+
+	@Override
+	public StringBuilder appendField(ObjectLocator parentLocator,
+			Object parent, String fieldName, StringBuilder stringBuilder,
+			Object value, boolean valueSet) {
+		appendFieldStart(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		append(property(parentLocator, fieldName, value), stringBuilder, value);
+		appendFieldEnd(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		return stringBuilder;
+	}
+
+	@Override
+	public StringBuilder appendField(ObjectLocator parentLocator,
+			Object parent, String fieldName, StringBuilder stringBuilder,
+			boolean[] value, boolean valueSet) {
+		appendFieldStart(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		append(property(parentLocator, fieldName, value), stringBuilder, value);
+		appendFieldEnd(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		return stringBuilder;
+	}
+
+	@Override
+	public StringBuilder appendField(ObjectLocator parentLocator,
+			Object parent, String fieldName, StringBuilder stringBuilder,
+			byte[] value, boolean valueSet) {
+		appendFieldStart(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		append(property(parentLocator, fieldName, value), stringBuilder, value);
+		appendFieldEnd(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		return stringBuilder;
+	}
+
+	@Override
+	public StringBuilder appendField(ObjectLocator parentLocator,
+			Object parent, String fieldName, StringBuilder stringBuilder,
+			char[] value, boolean valueSet) {
+		appendFieldStart(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		append(property(parentLocator, fieldName, value), stringBuilder, value);
+		appendFieldEnd(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		return stringBuilder;
+	}
+
+	@Override
+	public StringBuilder appendField(ObjectLocator parentLocator,
+			Object parent, String fieldName, StringBuilder stringBuilder,
+			double[] value, boolean valueSet) {
+		appendFieldStart(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		append(property(parentLocator, fieldName, value), stringBuilder, value);
+		appendFieldEnd(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		return stringBuilder;
+	}
+
+	@Override
+	public StringBuilder appendField(ObjectLocator parentLocator,
+			Object parent, String fieldName, StringBuilder stringBuilder,
+			float[] value, boolean valueSet) {
+		appendFieldStart(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		append(property(parentLocator, fieldName, value), stringBuilder, value);
+		appendFieldEnd(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		return stringBuilder;
+	}
+
+	@Override
+	public StringBuilder appendField(ObjectLocator parentLocator,
+			Object parent, String fieldName, StringBuilder stringBuilder,
+			int[] value, boolean valueSet) {
+		appendFieldStart(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		append(property(parentLocator, fieldName, value), stringBuilder, value);
+		appendFieldEnd(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		return stringBuilder;
+	}
+
+	@Override
+	public StringBuilder appendField(ObjectLocator parentLocator,
+			Object parent, String fieldName, StringBuilder stringBuilder,
+			long[] value, boolean valueSet) {
+		appendFieldStart(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		append(property(parentLocator, fieldName, value), stringBuilder, value);
+		appendFieldEnd(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		return stringBuilder;
+	}
+
+	@Override
+	public StringBuilder appendField(ObjectLocator parentLocator,
+			Object parent, String fieldName, StringBuilder stringBuilder,
+			short[] value, boolean valueSet) {
+		appendFieldStart(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		append(property(parentLocator, fieldName, value), stringBuilder, value);
+		appendFieldEnd(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		return stringBuilder;
+	}
+
+	@Override
+	public StringBuilder appendField(ObjectLocator parentLocator,
+			Object parent, String fieldName, StringBuilder stringBuilder,
+			Object[] value, boolean valueSet) {
+		appendFieldStart(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		append(property(parentLocator, fieldName, value), stringBuilder, value);
+		appendFieldEnd(parentLocator, parent, fieldName, stringBuilder,
+				valueSet);
+		return stringBuilder;
+	}
+
+	public static final DefaultToStringStrategy INSTANCE = new DefaultToStringStrategy();
 }

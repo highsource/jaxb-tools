@@ -7,7 +7,7 @@ import java.lang.reflect.Modifier;
 
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
-public class DefaultCopyStrategy implements CopyStrategy {
+public class DefaultCopyStrategy implements CopyStrategy2, CopyStrategy {
 
 	protected Object copyInternal(ObjectLocator locator, Object object) {
 		if (object == null) {
@@ -16,6 +16,9 @@ public class DefaultCopyStrategy implements CopyStrategy {
 			return object;
 		} else if (object instanceof Number) {
 			return object;
+		} else if (object instanceof CopyTo2) {
+			return ((CopyTo2) object).copyTo(locator,
+					((CopyTo2) object).createNewInstance(), this);
 		} else if (object instanceof CopyTo) {
 			return ((CopyTo) object).copyTo(locator,
 					((CopyTo) object).createNewInstance(), this);
@@ -264,5 +267,101 @@ public class DefaultCopyStrategy implements CopyStrategy {
 		}
 	}
 
-	public static final CopyStrategy INSTANCE = new DefaultCopyStrategy();
+	@Override
+	public Boolean shouldBeCopiedAndSet(ObjectLocator locator, boolean valueSet) {
+		return valueSet;
+	}
+
+	@Override
+	public boolean copy(ObjectLocator locator, boolean value, boolean valueSet) {
+		return copy(locator, value);
+	}
+
+	@Override
+	public byte copy(ObjectLocator locator, byte value, boolean valueSet) {
+		return copy(locator, value);
+	}
+
+	@Override
+	public char copy(ObjectLocator locator, char value, boolean valueSet) {
+		return copy(locator, value);
+	}
+
+	@Override
+	public double copy(ObjectLocator locator, double value, boolean valueSet) {
+		return copy(locator, value);
+	}
+
+	@Override
+	public float copy(ObjectLocator locator, float value, boolean valueSet) {
+		return copy(locator, value);
+	}
+
+	@Override
+	public int copy(ObjectLocator locator, int value, boolean valueSet) {
+		return copy(locator, value);
+	}
+
+	@Override
+	public long copy(ObjectLocator locator, long value, boolean valueSet) {
+		return copy(locator, value);
+	}
+
+	@Override
+	public short copy(ObjectLocator locator, short value, boolean valueSet) {
+		return copy(locator, value);
+	}
+
+	@Override
+	public Object copy(ObjectLocator locator, Object value, boolean valueSet) {
+		return copy(locator, value);
+	}
+
+	@Override
+	public boolean[] copy(ObjectLocator locator, boolean[] value,
+			boolean valueSet) {
+		return copy(locator, value);
+	}
+
+	@Override
+	public byte[] copy(ObjectLocator locator, byte[] value, boolean valueSet) {
+		return copy(locator, value);
+	}
+
+	@Override
+	public char[] copy(ObjectLocator locator, char[] value, boolean valueSet) {
+		return copy(locator, value);
+	}
+
+	@Override
+	public double[] copy(ObjectLocator locator, double[] value, boolean valueSet) {
+		return copy(locator, value);
+	}
+
+	@Override
+	public float[] copy(ObjectLocator locator, float[] value, boolean valueSet) {
+		return copy(locator, value);
+	}
+
+	@Override
+	public int[] copy(ObjectLocator locator, int[] value, boolean valueSet) {
+		return copy(locator, value);
+	}
+
+	@Override
+	public long[] copy(ObjectLocator locator, long[] value, boolean valueSet) {
+		return copy(locator, value);
+	}
+
+	@Override
+	public short[] copy(ObjectLocator locator, short[] value, boolean valueSet) {
+		return copy(locator, value);
+	}
+
+	@Override
+	public Object[] copy(ObjectLocator locator, Object[] value, boolean valueSet) {
+		return copy(locator, value);
+	}
+
+	public static final DefaultCopyStrategy INSTANCE = new DefaultCopyStrategy();
 }

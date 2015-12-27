@@ -5,8 +5,8 @@ import java.util.Collection;
 
 import javax.xml.namespace.QName;
 
-import org.jvnet.jaxb2_commons.lang.Equals;
-import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
+import org.jvnet.jaxb2_commons.lang.Equals2;
+import org.jvnet.jaxb2_commons.lang.EqualsStrategy2;
 import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
@@ -24,7 +24,6 @@ import org.xml.sax.ErrorHandler;
 
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JCodeModel;
-import com.sun.codemodel.JConditional;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JExpression;
@@ -72,7 +71,7 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 
 	public JExpression createEqualsStrategy(JCodeModel codeModel) {
 		return StrategyClassUtils.createStrategyInstanceExpression(codeModel,
-				EqualsStrategy.class, getEqualsStrategyClass());
+				EqualsStrategy2.class, getEqualsStrategyClass());
 	}
 
 	private Ignoring ignoring = new CustomizedIgnoring(
@@ -113,7 +112,7 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 
 	protected void processClassOutline(ClassOutline classOutline) {
 		final JDefinedClass theClass = classOutline.implClass;
-		ClassUtils._implements(theClass, theClass.owner().ref(Equals.class));
+		ClassUtils._implements(theClass, theClass.owner().ref(Equals2.class));
 
 		// @SuppressWarnings("unused")
 		// final JMethod equals0 = generateEquals$Equals0(classOutline,
@@ -143,7 +142,7 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 			final JVar object = objectEquals.param(Object.class, "object");
 			final JBlock body = objectEquals.body();
 			final JVar equalsStrategy = body.decl(JMod.FINAL,
-					codeModel.ref(EqualsStrategy.class), "strategy",
+					codeModel.ref(EqualsStrategy2.class), "strategy",
 					createEqualsStrategy(codeModel));
 			body._return(JExpr.invoke("equals").arg(JExpr._null())
 					.arg(JExpr._null()).arg(object).arg(equalsStrategy));
@@ -180,19 +179,21 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 			final JVar rightLocator = equals.param(ObjectLocator.class,
 					"thatLocator");
 			final JVar object = equals.param(Object.class, "object");
-			final JVar equalsStrategy = equals.param(EqualsStrategy.class,
+			final JVar equalsStrategy = equals.param(EqualsStrategy2.class,
 					"strategy");
 
-			final JConditional ifNotInstanceof = body._if(JOp.not(object
-					._instanceof(theClass)));
-			ifNotInstanceof._then()._return(JExpr.FALSE);
+			JExpression objectIsNull = object.eq(JExpr._null());
+			JExpression notTheSameType = JExpr._this().invoke("getClass")
+					.ne(object.invoke("getClass"));
+			body._if(JOp.cor(objectIsNull, notTheSameType))._then()
+					._return(JExpr.FALSE);
 
 			//
 			body._if(JExpr._this().eq(object))._then()._return(JExpr.TRUE);
 
 			final Boolean superClassImplementsEquals = StrategyClassUtils
 					.superClassImplements(classOutline, getIgnoring(),
-							Equals.class);
+							Equals2.class);
 
 			if (superClassImplementsEquals == null) {
 				// No superclass
@@ -235,6 +236,14 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 					final String name = fieldOutline.getPropertyInfo().getName(
 							true);
 
+					final JExpression leftFieldHasSetValue = (leftFieldAccessor
+							.isAlwaysSet() || leftFieldAccessor.hasSetValue() == null) ? JExpr.TRUE
+							: leftFieldAccessor.hasSetValue();
+
+					final JExpression rightFieldHasSetValue = (rightFieldAccessor
+							.isAlwaysSet() || rightFieldAccessor.hasSetValue() == null) ? JExpr.TRUE
+							: rightFieldAccessor.hasSetValue();
+
 					final JVar lhsValue = block.decl(
 							leftFieldAccessor.getType(), "lhs" + name);
 					leftFieldAccessor.toRawValue(block, lhsValue);
@@ -257,7 +266,8 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 							JOp.not(JExpr.invoke(equalsStrategy, "equals")
 									.arg(leftFieldLocator)
 									.arg(rightFieldLocator).arg(lhsValue)
-									.arg(rhsValue)))._then()
+									.arg(rhsValue).arg(leftFieldHasSetValue)
+									.arg(rightFieldHasSetValue)))._then()
 							._return(JExpr.FALSE);
 				}
 			}

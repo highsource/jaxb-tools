@@ -187,7 +187,8 @@ public class ElementWrapperPlugin extends AbstractModelPlugin {
 				wrappedPropertyInfo.getElementName(),
 				wrapperPropertyInfo.getWrapperElementName(),
 				wrappedPropertyInfo.isNillable(),
-				wrappedPropertyInfo.getDefaultValue());
+				wrappedPropertyInfo.getDefaultValue(),
+				wrappedPropertyInfo.getDefaultValueNamespaceContext());
 
 		rootClassInfo.addProperty(propertyInfo);
 
@@ -248,7 +249,8 @@ public class ElementWrapperPlugin extends AbstractModelPlugin {
 				wrappedPropertyInfo.isMixed(),
 				wrappedPropertyInfo.isDomAllowed(),
 				wrappedPropertyInfo.isTypedObjectAllowed(),
-				wrappedPropertyInfo.getDefaultValue());
+				wrappedPropertyInfo.getDefaultValue(),
+				wrappedPropertyInfo.getDefaultValueNamespaceContext());
 
 		rootClassInfo.addProperty(propertyInfo);
 

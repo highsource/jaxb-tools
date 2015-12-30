@@ -30,28 +30,62 @@
 
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="urn:issues:element"
+	targetNamespace="urn:issues:element"
+	elementFormDefault="qualified"
 	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:annox="http://annox.dev.java.net"
+
+	jaxb:extensionBindingPrefixes="annox"
 	jaxb:version="2.1">
 
 	<xs:annotation>
 		<xs:appinfo>
-			<jaxb:globalBindings generateIsSetMethod="true"
-				localScoping="toplevel"
-				fixedAttributeAsConstantProperty="true"/>
 			<jaxb:schemaBindings>
-				<jaxb:package name="org.jvnet.jaxb2_commons.tests.issues" />
+				<jaxb:package name="org.jvnet.jaxb2_commons.tests.issues.element" />
 			</jaxb:schemaBindings>
 		</xs:appinfo>
 	</xs:annotation>
-	<xs:complexType name="issueJIIB43Type" mixed="true">
+	<xs:element name="issueGH1Annotate" type="issueGH1AnnotateType">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class/>
+				<annox:annotate>@javax.annotation.Generated({"annotate"})</annox:annotate>
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="issueGH1AnnotateType">
 		<xs:sequence>
-			<xs:element type="issueJIIB43Type" name="someElement" maxOccurs="unbounded" minOccurs="0"/>
+			<xs:element name="a" type="xs:string">
+			</xs:element>
 		</xs:sequence> 
 	</xs:complexType>
-
-	<xs:complexType name="gh16Type">
+	<xs:element name="issueGH1AnnotateTargetElement" type="issueGH1AnnotateTargetElementType">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class/>
+				<annox:annotate target="element">@javax.annotation.Generated({"annotate.target.element"})</annox:annotate>
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="issueGH1AnnotateTargetElementType">
 		<xs:sequence>
-			<xs:element name="x" minOccurs="0"/>
-		</xs:sequence>
+			<xs:element name="a" type="xs:string">
+			</xs:element>
+		</xs:sequence> 
+	</xs:complexType>
+	<xs:element name="issueGH1AnnotateElement" type="issueGH1AnnotateElementType">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class/>
+				<annox:annotateElement>@javax.annotation.Generated({"annotateElement"})</annox:annotateElement>
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="issueGH1AnnotateElementType">
+		<xs:sequence>
+			<xs:element name="a" type="xs:string">
+			</xs:element>
+		</xs:sequence> 
 	</xs:complexType>
 </xs:schema>

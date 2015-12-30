@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <!--
 
     Copyright © 2005-2015, Alexey Valikov
@@ -28,28 +29,33 @@
     either expressed or implied, of the FreeBSD Project.
 
 -->
-<jaxb:bindings
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="urn:issues:enum:annotate:target:package"
+	targetNamespace="urn:issues:enum:annotate:target:package"
+	elementFormDefault="qualified"
 	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:annox="http://annox.dev.java.net"
-	jaxb:extensionBindingPrefixes="annox"
 
+	jaxb:extensionBindingPrefixes="annox"
 	jaxb:version="2.1">
 
-	<jaxb:bindings schemaLocation="schema.xsd" node="/xsd:schema">
-		<jaxb:bindings node="xsd:complexType[@name='issueJIIB43Type']">
-			<annox:annotate target="class">@javax.xml.bind.annotation.XmlRootElement("someElement")</annox:annotate>
-			<annox:annotate target="package">@javax.xml.bind.annotation.XmlSchema(elementFormDefault=javax.xml.bind.annotation.XmlNsForm.QUALIFIED)</annox:annotate>
-			<annox:annotatePackage>@javax.annotation.Generated({"XJC"})</annox:annotatePackage>
-		</jaxb:bindings>
-
-		<jaxb:bindings node="xsd:complexType[@name='gh16Type']/xsd:sequence/xsd:element[@name='x']">
-			<!--jaxb:class ref="org.jvnet.jaxb2_commons.tests.issues.Gh16Type" /-->
-		</jaxb:bindings>
-		<jaxb:bindings node="xsd:complexType[@name='gh16Type']/xsd:sequence/xsd:element[@name='x']">
-			<annox:annotate target="field">
-				<annox:annotate annox:class="java.lang.Deprecated" />
-			</annox:annotate>
-		</jaxb:bindings>
-	</jaxb:bindings>
-</jaxb:bindings>
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.jvnet.jaxb2_commons.tests.issues._enum.annotate.target._package" />
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+	
+	<xs:simpleType name="issueGH1Type">
+		<xs:annotation>
+			<xs:appinfo>
+				<annox:annotate target="package">@javax.annotation.Generated({"enum.annotate.target.package"})</annox:annotate>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="a"/>
+			<xs:enumeration value="b"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

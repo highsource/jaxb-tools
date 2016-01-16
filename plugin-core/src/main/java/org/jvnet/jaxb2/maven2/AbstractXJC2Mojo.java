@@ -526,6 +526,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * scheme portion separated by colon. The keyword "all" grants permission to
 	 * all protocols.
 	 */
+	@Parameter(defaultValue = "all", property = "maven.xjc2.accessExternalSchema")
 	private String accessExternalSchema = "all";
 
 	public String getAccessExternalSchema() {

@@ -1051,8 +1051,14 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		final boolean upToDate = dependsTimestamp < producesTimestamp;
 		return upToDate;
 	}
+
 	protected String getCustomHttpproxy() {
-		return createXJCProxyArgument(getProxyHost(), getProxyPort(), getProxyUsername(), getProxyPassword());
+		final String proxyHost = getProxyHost();
+		final int proxyPort = getProxyPort();
+		final String proxyUsername = getProxyUsername();
+		final String proxyPassword = getProxyPassword();
+		return proxyHost != null ? createXJCProxyArgument(proxyHost, proxyPort,
+				proxyUsername, proxyPassword) : null;
 	}
 
 	protected String getActiveProxyAsHttpproxy() {
@@ -1063,34 +1069,73 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		final Settings settings = getSettings();
 
 		final Proxy activeProxy = settings.getActiveProxy();
-		if (activeProxy == null) {
+		if (activeProxy == null || activeProxy.getHost() == null) {
 			return null;
 		}
 
-		return createXJCProxyArgument(activeProxy.getHost(), activeProxy.getPort(), activeProxy.getUsername(), activeProxy.getPassword());
+		return createXJCProxyArgument(activeProxy.getHost(),
+				activeProxy.getPort(), activeProxy.getUsername(),
+				activeProxy.getPassword());
 	}
 
-	private String createXJCProxyArgument(String host, int port, String username, String password) {
-		// The XJC proxy argument should be on the form
-		// [user[:password]@]proxyHost[:proxyPort]
-		final StringBuilder proxyStringBuilder = new StringBuilder();
-		if (username != null) {
-			// Start with the username.
-			proxyStringBuilder.append(username);
-			// Append the password if provided.
-			if (password != null) {
-				proxyStringBuilder.append(":").append(password);
+	private String createXJCProxyArgument(String host, int port,
+			String username, String password) {
+
+		if (host == null) {
+			if (port != -1) {
+				getLog().warn(
+						MessageFormat.format(
+								"Proxy port is configured to [{0,number,#}] but proxy host is missing. "
+										+ "Proxy port will be ignored.", port));
 			}
-			proxyStringBuilder.append("@");
-		}
+			if (username != null) {
+				getLog().warn(
+						MessageFormat.format(
+								"Proxy username is configured to [{0}] but proxy host is missing. "
+										+ "Proxy username will be ignored.",
+								username));
 
-		// Append hostname and port.
-		proxyStringBuilder.append(host);
+			}
+			if (password != null) {
+				getLog().warn(
+						MessageFormat.format(
+								"Proxy password is set but proxy host is missing. "
+										+ "Proxy password will be ignored.",
+								password));
 
-		if (port != -1) {
-			proxyStringBuilder.append(":").append(port);
+			}
+			return null;
+		} else {
+
+			// The XJC proxy argument should be on the form
+			// [user[:password]@]proxyHost[:proxyPort]
+			final StringBuilder proxyStringBuilder = new StringBuilder();
+			if (username != null) {
+				// Start with the username.
+				proxyStringBuilder.append(username);
+				// Append the password if provided.
+				if (password != null) {
+					proxyStringBuilder.append(":").append(password);
+				}
+				proxyStringBuilder.append("@");
+			} else {
+				if (password != null) {
+					getLog().warn(
+							MessageFormat
+									.format("Proxy password is set but proxy username is missing. "
+											+ "Proxy password will be ignored.",
+											password));
+				}
+			}
+
+			// Append hostname and port.
+			proxyStringBuilder.append(host);
+
+			if (port != -1) {
+				proxyStringBuilder.append(":").append(port);
+			}
+			return proxyStringBuilder.toString();
 		}
-		return proxyStringBuilder.toString();
 	}
 
 	/**
@@ -1105,16 +1150,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	protected List<String> getArguments() {
 		final List<String> arguments = new ArrayList<String>(getArgs());
 
-		String httpproxy = null;
-		if (isUseActiveProxyAsHttpproxy()) {
-			httpproxy = getActiveProxyAsHttpproxy();
-		}
-		if (isUseCustomProxyConfiguration()) {
-			httpproxy = getCustomHttpproxy();
-			if (isUseActiveProxyAsHttpproxy()) {
-				getLog().warn("active proxy settings will be overwritten by custom proxy configuration");
-			}
-		}
+		final String httpproxy = getHttpproxy();
 		if (httpproxy != null) {
 			arguments.add("-httpproxy");
 			arguments.add(httpproxy);
@@ -1135,6 +1171,54 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			}
 		}
 		return arguments;
+	}
+
+	protected String getHttpproxy() {
+		final String httpproxy;
+		final String activeHttpproxy = getActiveProxyAsHttpproxy();
+		final String customHttpproxy = getCustomHttpproxy();
+		if (isUseActiveProxyAsHttpproxy()) {
+			if (customHttpproxy != null) {
+				getLog().warn(
+						MessageFormat
+								.format("Both [useActiveProxyAsHttpproxy=true] as well as custom proxy [{0}] are configured. "
+										+ "Please remove either [useActiveProxyAsHttpproxy=true] or custom proxy configuration.",
+										customHttpproxy));
+
+				getLog().debug(
+						MessageFormat.format("Using custom proxy [{0}].",
+								customHttpproxy));
+
+				httpproxy = customHttpproxy;
+			} else if (activeHttpproxy != null) {
+				getLog().debug(
+						MessageFormat
+								.format("Using active proxy [{0}] from Maven settings.",
+										activeHttpproxy));
+				httpproxy = activeHttpproxy;
+			} else {
+				getLog().warn(
+						MessageFormat
+								.format("Configured [useActiveProxyAsHttpproxy=true] but no active proxy is configured in Maven settings. "
+										+ "Please configure an active proxy in Maven settings or remove [useActiveProxyAsHttpproxy=true].",
+										customHttpproxy));
+				httpproxy = activeHttpproxy;
+
+			}
+		} else {
+			if (customHttpproxy != null) {
+				getLog().debug(
+						MessageFormat.format("Using custom proxy [{0}].",
+								customHttpproxy));
+
+				httpproxy = customHttpproxy;
+			} else {
+				httpproxy = null;
+
+			}
+
+		}
+		return httpproxy;
 	}
 
 	public OptionsConfiguration createOptionsConfiguration()

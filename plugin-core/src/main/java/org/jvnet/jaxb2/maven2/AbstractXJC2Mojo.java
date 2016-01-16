@@ -70,17 +70,10 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.useActiveProxyAsHttpproxy = useActiveProxyAsHttpproxy;
 	}
 
-	private boolean useCustomProxyConfiguration = false;
-
-	public boolean isUseCustomProxyConfiguration() {
-		return useCustomProxyConfiguration;
-	}
-
 	@Parameter(property = "maven.xjc2.proxyHost")
 	private String proxyHost;
 
 	public void setProxyHost(String proxyHost) {
-		useCustomProxyConfiguration = true;
 		this.proxyHost = proxyHost;
 	}
 
@@ -92,7 +85,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	private int proxyPort;
 
 	public void setProxyPort(int proxyPort) {
-		useCustomProxyConfiguration = true;
 		this.proxyPort = proxyPort;
 	}
 
@@ -104,7 +96,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	private String proxyUsername;
 
 	public void setProxyUsername(String proxyUsername) {
-		useCustomProxyConfiguration = true;
 		this.proxyUsername = proxyUsername;
 	}
 
@@ -116,7 +107,6 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	private String proxyPassword;
 
 	public void setProxyPassword(String proxyPassword) {
-		useCustomProxyConfiguration = true;
 		this.proxyPassword = proxyPassword;
 	}
 

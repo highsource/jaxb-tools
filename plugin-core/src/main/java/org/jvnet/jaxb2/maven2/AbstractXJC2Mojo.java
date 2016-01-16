@@ -70,6 +70,60 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.useActiveProxyAsHttpproxy = useActiveProxyAsHttpproxy;
 	}
 
+	private boolean useCustomProxyConfiguration = false;
+
+	public boolean isUseCustomProxyConfiguration() {
+		return useCustomProxyConfiguration;
+	}
+
+	@Parameter(property = "maven.xjc2.proxyHost")
+	private String proxyHost;
+
+	public void setProxyHost(String proxyHost) {
+		useCustomProxyConfiguration = true;
+		this.proxyHost = proxyHost;
+	}
+
+	public String getProxyHost() {
+		return this.proxyHost;
+	}
+
+	@Parameter(property = "maven.xjc2.proxyPort")
+	private int proxyPort;
+
+	public void setProxyPort(int proxyPort) {
+		useCustomProxyConfiguration = true;
+		this.proxyPort = proxyPort;
+	}
+
+	public int getProxyPort() {
+		return this.proxyPort;
+	}
+
+	@Parameter(property = "maven.xjc2.proxyUsername")
+	private String proxyUsername;
+
+	public void setProxyUsername(String proxyUsername) {
+		useCustomProxyConfiguration = true;
+		this.proxyUsername = proxyUsername;
+	}
+
+	public String getProxyUsername() {
+		return this.proxyUsername;
+	}
+
+	@Parameter(property = "maven.xjc2.proxyPassword")
+	private String proxyPassword;
+
+	public void setProxyPassword(String proxyPassword) {
+		useCustomProxyConfiguration = true;
+		this.proxyPassword = proxyPassword;
+	}
+
+	public String getProxyPassword() {
+		return this.proxyPassword;
+	}
+
 	/**
 	 * Encoding for the generated sources, defaults to
 	 * ${project.build.sourceEncoding}.

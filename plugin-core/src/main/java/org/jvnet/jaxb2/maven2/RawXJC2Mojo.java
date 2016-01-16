@@ -1051,6 +1051,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		final boolean upToDate = dependsTimestamp < producesTimestamp;
 		return upToDate;
 	}
+	protected String getCustomHttpproxy() {
+		return createXJCProxyArgument(getProxyHost(), getProxyPort(), getProxyUsername(), getProxyPassword());
+	}
 
 	protected String getActiveProxyAsHttpproxy() {
 		if (getSettings() == null) {
@@ -1064,15 +1067,17 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			return null;
 		}
 
+		return createXJCProxyArgument(activeProxy.getHost(), activeProxy.getPort(), activeProxy.getUsername(), activeProxy.getPassword());
+	}
+
+	private String createXJCProxyArgument(String host, int port, String username, String password) {
 		// The XJC proxy argument should be on the form
 		// [user[:password]@]proxyHost[:proxyPort]
 		final StringBuilder proxyStringBuilder = new StringBuilder();
-		final String username = activeProxy.getUsername();
 		if (username != null) {
 			// Start with the username.
 			proxyStringBuilder.append(username);
 			// Append the password if provided.
-			final String password = activeProxy.getPassword();
 			if (password != null) {
 				proxyStringBuilder.append(":").append(password);
 			}
@@ -1080,12 +1085,10 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 
 		// Append hostname and port.
-		final String host = activeProxy.getHost();
 		proxyStringBuilder.append(host);
 
-		final int port = activeProxy.getPort();
 		if (port != -1) {
-			proxyStringBuilder.append(":").append(activeProxy.getPort());
+			proxyStringBuilder.append(":").append(port);
 		}
 		return proxyStringBuilder.toString();
 	}
@@ -1105,6 +1108,12 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		String httpproxy = null;
 		if (isUseActiveProxyAsHttpproxy()) {
 			httpproxy = getActiveProxyAsHttpproxy();
+		}
+		if (isUseCustomProxyConfiguration()) {
+			httpproxy = getCustomHttpproxy();
+			if (isUseActiveProxyAsHttpproxy()) {
+				getLog().warn("active proxy settings will be overwritten by custom proxy configuration");
+			}
 		}
 		if (httpproxy != null) {
 			arguments.add("-httpproxy");

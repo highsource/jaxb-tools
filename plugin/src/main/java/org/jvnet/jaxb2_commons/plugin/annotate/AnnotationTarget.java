@@ -38,10 +38,11 @@ import org.jvnet.jaxb2_commons.util.OutlineUtils;
 import org.w3c.dom.Element;
 
 import com.sun.codemodel.JAnnotatable;
+import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JFieldVar;
 import com.sun.codemodel.JMethod;
+import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
-import com.sun.tools.xjc.model.CElementInfo;
 import com.sun.tools.xjc.model.CEnumLeafInfo;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.ElementOutline;
@@ -209,6 +210,38 @@ public enum AnnotationTarget {
 				EnumConstantOutline enumConstantOutline)
 				throws IllegalArgumentException, UnsupportedOperationException {
 			return enumConstantOutline.constRef;
+		}
+	},
+	//
+	ENUM_VALUE_METHOD("enum-value-method", AnnotatePlugin.ANNOTATE_ENUM_VALUE_METHOD_QNAME) {
+		@Override
+		public JAnnotatable getAnnotatable(Outline outline,
+										   EnumOutline enumOutline)
+				throws IllegalArgumentException, UnsupportedOperationException {
+			final JMethod valueMethod = enumOutline.clazz.getMethod("value", new JType[0]);
+			if (null == valueMethod) {
+				throw new UnsupportedOperationException(MessageFormat.format(
+						"Method value() not found in enum [{0}]",
+						enumOutline.clazz.name()));
+			}
+			return valueMethod;
+		}
+	},
+	//
+	ENUM_FROM_VALUE_METHOD("enum-fromValue-method", AnnotatePlugin.ANNOTATE_ENUM_FROM_VALUE_METHOD_QNAME) {
+		@Override
+		public JAnnotatable getAnnotatable(Outline outline,
+										   EnumOutline enumOutline)
+				throws IllegalArgumentException, UnsupportedOperationException {
+			final JCodeModel codeModel = enumOutline.clazz.owner();
+			final JType jTypeString = codeModel._ref(String.class);
+			final JMethod fromValueMethod = enumOutline.clazz.getMethod("fromValue", new JType[]{jTypeString});
+			if (null == fromValueMethod) {
+				throw new UnsupportedOperationException(MessageFormat.format(
+						"Method fromValue(String) not found in enum [{0}]",
+						enumOutline.clazz.name()));
+			}
+			return fromValueMethod;
 		}
 	},
 	//

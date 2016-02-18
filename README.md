@@ -61,6 +61,19 @@ You can put your annotations directly in schema:
 		</xsd:sequence>
 	</xsd:complexType>
 
+    <xs:simpleType name="FooEnum">
+        <xs:annotation>
+            <xs:appinfo>
+                <annox:annotateEnumValueMethod>@java.lang.Deprecated</annox:annotateEnumValueMethod>
+            </xs:appinfo>
+        </xs:annotation>
+
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="BAR"/>
+            <xs:enumeration value="BAZ"/>
+        </xs:restriction>
+    </xs:simpleType>
+
 </xsd:schema>
 ````
 
@@ -97,12 +110,16 @@ You can use the following customization elements in the `http://annox.dev.java.n
  * `setter`
  * `setter-parameter`
  * `field`
+ * `enum-value-method`
+ * `enum-fromValue-method`
 * `annotateProperty`
 * `annotatePackage`
 * `annotateClass`
 * `annotateElement`
 * `annotateEnum`
 * `annotateEnumConstant`
+* `annotateEnumValueMethod` - place annotation above `value()` method
+* `annotateEnumFromValueMethod` - place annotation above `fromValue(String)` method
 
 The `http://annox.dev.java.net` namespace must be declared in the `jaxb:extensionBindingPrefixes` attribute via prefix, ex.:
 

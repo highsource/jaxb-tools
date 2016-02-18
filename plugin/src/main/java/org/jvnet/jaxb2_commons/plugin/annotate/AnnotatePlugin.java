@@ -81,6 +81,10 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 			Constants.NAMESPACE_URI, "annotateEnum");
 	public static final QName ANNOTATE_ENUM_CONSTANT_QNAME = new QName(
 			Constants.NAMESPACE_URI, "annotateEnumConstant");
+	public static final QName ANNOTATE_ENUM_VALUE_METHOD_QNAME = new QName(
+			Constants.NAMESPACE_URI, "annotateEnumValueMethod");
+	public static final QName ANNOTATE_ENUM_FROM_VALUE_METHOD_QNAME = new QName(
+			Constants.NAMESPACE_URI, "annotateEnumFromValueMethod");
 	public static final QName ANNOTATE_QNAME = new QName(
 			Constants.NAMESPACE_URI, "annotate");
 
@@ -394,7 +398,8 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 				ANNOTATE_PROPERTY_QNAME, ANNOTATE_PROPERTY_FIELD_QNAME,
 				ANNOTATE_PROPERTY_GETTER_QNAME, ANNOTATE_PROPERTY_SETTER_QNAME,
 				ANNOTATE_PROPERTY_SETTER_PARAMETER_QNAME, ANNOTATE_ENUM_QNAME,
-				ANNOTATE_ENUM_CONSTANT_QNAME);
+				ANNOTATE_ENUM_CONSTANT_QNAME, ANNOTATE_ENUM_VALUE_METHOD_QNAME,
+				ANNOTATE_ENUM_FROM_VALUE_METHOD_QNAME);
 	}
 
 }

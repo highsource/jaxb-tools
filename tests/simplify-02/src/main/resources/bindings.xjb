@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="1.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:simplify="http://jaxb2-commons.dev.java.net/basic/simplify"
+  jaxb:extensionBindingPrefixes="simplify">
+
+  <jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema/xs:complexType[@name='oai_dcType']/xs:choice/xs:element[@ref='dc:subject']">
+    <simplify:as-element-property />
+  </jaxb:bindings>
+
+</jaxb:bindings>

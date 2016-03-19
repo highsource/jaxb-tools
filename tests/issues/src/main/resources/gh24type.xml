@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <!--
 
     Copyright © 2005-2015, Alexey Valikov
@@ -29,37 +28,6 @@
     either expressed or implied, of the FreeBSD Project.
 
 -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-	jaxb:version="2.1">
-
-	<xs:annotation>
-		<xs:appinfo>
-			<jaxb:globalBindings generateIsSetMethod="true"
-				localScoping="toplevel"
-				fixedAttributeAsConstantProperty="true"/>
-			<jaxb:schemaBindings>
-				<jaxb:package name="org.jvnet.jaxb2_commons.tests.issues" />
-			</jaxb:schemaBindings>
-		</xs:appinfo>
-	</xs:annotation>
-	<xs:complexType name="issueJIIB43Type" mixed="true">
-		<xs:sequence>
-			<xs:element type="issueJIIB43Type" name="someElement" maxOccurs="unbounded" minOccurs="0"/>
-		</xs:sequence> 
-	</xs:complexType>
-
-	<xs:complexType name="gh16Type">
-		<xs:sequence>
-			<xs:element name="x" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-
-	<xs:complexType name="gh24Type">
-		<xs:simpleContent>
-			<xs:extension base="xs:string">
-				<xs:attribute name="attr" type="xs:normalizedString"/>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
-</xs:schema>
+<jaxb:bindings node="xsd:complexType[@name='gh24Type']">
+	<annox:annotate>@javax.annotation.Generated({"jaxb2-annotate-plugin"})</annox:annotate>
+</jaxb:bindings>

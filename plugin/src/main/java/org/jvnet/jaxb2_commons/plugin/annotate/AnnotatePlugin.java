@@ -196,7 +196,6 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 	protected void processFieldOutline(ClassOutline classOutline,
 			FieldOutline fieldOutline, Options options,
 			ErrorHandler errorHandler) {
-
 		final CCustomizations customizations = CustomizationUtils
 				.getCustomizations(fieldOutline);
 		annotate(fieldOutline.parent().ref.owner(), fieldOutline,

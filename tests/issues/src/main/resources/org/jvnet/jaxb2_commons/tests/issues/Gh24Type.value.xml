@@ -28,31 +28,4 @@
     either expressed or implied, of the FreeBSD Project.
 
 -->
-<!DOCTYPE jaxb:bindings [
-<!ENTITY gh24type SYSTEM "gh24type.xml">
-]>
-<jaxb:bindings
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:annox="http://annox.dev.java.net"
-	jaxb:extensionBindingPrefixes="annox"
-
-	jaxb:version="2.1">
-
-	<jaxb:bindings schemaLocation="schema.xsd" node="/xsd:schema">
-		<jaxb:bindings node="xsd:complexType[@name='issueJIIB43Type']">
-			<annox:annotate target="class">@javax.xml.bind.annotation.XmlRootElement("someElement")</annox:annotate>
-			<annox:annotate target="package">@javax.xml.bind.annotation.XmlSchema(elementFormDefault=javax.xml.bind.annotation.XmlNsForm.QUALIFIED)</annox:annotate>
-			<annox:annotatePackage>@javax.annotation.Generated({"XJC"})</annox:annotatePackage>
-		</jaxb:bindings>
-
-		<jaxb:bindings node="xsd:complexType[@name='gh16Type']/xsd:sequence/xsd:element[@name='x']">
-			<!--jaxb:class ref="org.jvnet.jaxb2_commons.tests.issues.Gh16Type" /-->
-		</jaxb:bindings>
-		<jaxb:bindings node="xsd:complexType[@name='gh16Type']/xsd:sequence/xsd:element[@name='x']">
-			<annox:annotate target="field">
-				<annox:annotate annox:class="java.lang.Deprecated" />
-			</annox:annotate>
-		</jaxb:bindings>
-	</jaxb:bindings>
-</jaxb:bindings>
+<annox:annotate xmlns:annox="http://annox.dev.java.net">@javax.annotation.Generated({"jaxb2-annotate-plugin"})</annox:annotate>

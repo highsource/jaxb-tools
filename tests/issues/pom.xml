@@ -61,9 +61,16 @@
 				<configuration>
 					<extension>true</extension>
 					<args>
+						<arg>-Xcustomizations</arg>
+						<arg>-Xcustomizations-directory=${basedir}/src/main/resources</arg>
+						<arg>-Xcustomizations-verbose=true</arg>
 						<arg>-Xannotate</arg>
 					</args>
 					<plugins>
+						<plugin>
+							<groupId>org.jvnet.jaxb2_commons</groupId>
+							<artifactId>jaxb2-basics</artifactId>
+						</plugin>
 						<plugin>
 							<groupId>org.jvnet.jaxb2_commons</groupId>
 							<artifactId>jaxb2-basics-annotate</artifactId>

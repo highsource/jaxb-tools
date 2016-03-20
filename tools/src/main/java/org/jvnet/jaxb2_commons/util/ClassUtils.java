@@ -9,6 +9,7 @@ import java.util.List;
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.tools.xjc.model.CClassInfo;
+import com.sun.tools.xjc.model.CEnumLeafInfo;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
 
@@ -77,6 +78,20 @@ public class ClassUtils {
 					.asList(getFields(classOutline.getSuperClass())));
 		}
 		return fields.toArray(new FieldOutline[fields.size()]);
+	}
+
+	public static String getPackagedClassName(final CEnumLeafInfo enumLeafInfo) {
+		
+		if (enumLeafInfo.parent instanceof CClassInfo) {
+			return getPackagedClassName((CClassInfo) enumLeafInfo.parent) + '$'
+					+ enumLeafInfo.shortName;
+		} else {
+			final String r = enumLeafInfo.parent.fullName();
+			if (r.length() == 0)
+				return enumLeafInfo.shortName;
+			else
+				return r + '.' + enumLeafInfo.shortName;
+		}
 	}
 
 	public static String getPackagedClassName(final CClassInfo classInfo) {

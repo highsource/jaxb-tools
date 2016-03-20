@@ -108,7 +108,7 @@ public class CustomizationsPlugin extends AbstractParameterizablePlugin {
 
 	private void postProcessPropertyInfo(Model model, CClassInfo classInfo, CPropertyInfo propertyInfo) {
 		final String packagedClassName = ClassUtils.getPackagedClassName(classInfo);
-		final String customizationsFileName = packagedClassName.replace(".", "/") + propertyInfo.getName(false) + ".xml";
+		final String customizationsFileName = packagedClassName.replace(".", "/") + "." +propertyInfo.getName(false) + ".xml";
 		final List<CPluginCustomization> customizations = readCustomizations(customizationsFileName);
 		propertyInfo.getCustomizations().addAll(customizations);
 	}
@@ -127,7 +127,7 @@ public class CustomizationsPlugin extends AbstractParameterizablePlugin {
 
 	private void postProcessEnumConstant(Model model, CEnumLeafInfo enumLeafInfo, CEnumConstant enumConstant) {
 		final String packagedClassName = ClassUtils.getPackagedClassName(enumLeafInfo);
-		final String customizationsFileName = packagedClassName.replace(".", "/") + enumConstant.getName() + ".xml";
+		final String customizationsFileName = packagedClassName.replace(".", "/") + "." +enumConstant.getName() + ".xml";
 		final List<CPluginCustomization> customizations = readCustomizations(customizationsFileName);
 		enumConstant.getCustomizations().addAll(customizations);
 	}

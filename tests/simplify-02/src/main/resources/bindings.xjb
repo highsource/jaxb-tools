@@ -4,8 +4,10 @@
   xmlns:simplify="http://jaxb2-commons.dev.java.net/basic/simplify"
   jaxb:extensionBindingPrefixes="simplify">
 
-  <jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema/xs:complexType[@name='oai_dcType']/xs:choice/xs:element[@ref='dc:subject']">
-    <simplify:as-element-property />
+  <jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema/xs:complexType[@name='oai_dcType']">
+    <simplify:property name="titleOrCreatorOrSubject">
+      <simplify:as-element-property/>
+    </simplify:property>
   </jaxb:bindings>
 
 </jaxb:bindings>

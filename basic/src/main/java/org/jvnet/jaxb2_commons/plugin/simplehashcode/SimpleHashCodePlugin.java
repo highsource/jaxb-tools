@@ -105,8 +105,12 @@ public class SimpleHashCodePlugin extends
 					final Collection<JType> possibleTypes = FieldUtils
 							.getPossibleTypes(fieldOutline, Aspect.EXPOSED);
 					final boolean isAlwaysSet = fieldAccessor.isAlwaysSet();
-					final JExpression hasSetValue = exposedType.isPrimitive() ? JExpr.TRUE
-							: value.ne(JExpr._null());
+//					final JExpression hasSetValue = exposedType.isPrimitive() ? JExpr.TRUE
+//							: value.ne(JExpr._null());
+					
+					final JExpression hasSetValue = (fieldAccessor.isAlwaysSet() || fieldAccessor
+							.hasSetValue() == null) ? JExpr.TRUE
+							: fieldAccessor.hasSetValue();					
 					getCodeGenerator().generate(
 							block,
 							exposedType,

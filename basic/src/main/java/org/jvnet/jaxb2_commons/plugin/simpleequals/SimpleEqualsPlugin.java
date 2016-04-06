@@ -111,10 +111,18 @@ public class SimpleEqualsPlugin extends
 				final Collection<JType> possibleTypes = FieldUtils
 						.getPossibleTypes(fieldOutline, Aspect.EXPOSED);
 				final boolean isAlwaysSet = leftFieldAccessor.isAlwaysSet();
-				final JExpression leftHasSetValue = exposedType.isPrimitive() ? JExpr.TRUE
-						: leftValue.ne(JExpr._null());
-				final JExpression rightHasSetValue = exposedType.isPrimitive() ? JExpr.TRUE
-						: rightValue.ne(JExpr._null());
+//				final JExpression leftHasSetValue = exposedType.isPrimitive() ? JExpr.TRUE
+//						: leftValue.ne(JExpr._null());
+				final JExpression leftHasSetValue = (leftFieldAccessor.isAlwaysSet() || leftFieldAccessor
+						.hasSetValue() == null) ? JExpr.TRUE
+						: leftFieldAccessor.hasSetValue();					
+				
+//				final JExpression rightHasSetValue = exposedType.isPrimitive() ? JExpr.TRUE
+//						: rightValue.ne(JExpr._null());
+				
+				final JExpression rightHasSetValue = (rightFieldAccessor.isAlwaysSet() || rightFieldAccessor
+						.hasSetValue() == null) ? JExpr.TRUE
+						: rightFieldAccessor.hasSetValue();
 
 				getCodeGenerator().generate(
 						block,

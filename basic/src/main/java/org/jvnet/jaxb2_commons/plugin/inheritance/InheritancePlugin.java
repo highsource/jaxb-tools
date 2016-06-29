@@ -86,12 +86,15 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 
 		generateExtends(classOutline, knownClasses, knownClassInfos);
 		generateImplements(classOutline, knownClasses);
+		ignoreCustomzationsOnProperties(classOutline);
+	}
+
+	private void ignoreCustomzationsOnProperties(ClassOutline classOutline) {
 		for (CPropertyInfo propertyInfo : classOutline.target.getProperties())
 		{
 			CustomizationUtils.findCustomization(propertyInfo, Customizations.EXTENDS_ELEMENT_NAME);
 			CustomizationUtils.findCustomization(propertyInfo, Customizations.IMPLEMENTS_ELEMENT_NAME);
 		}
-
 	}
 
 	private void processEnumOutline(EnumOutline enumOutline,

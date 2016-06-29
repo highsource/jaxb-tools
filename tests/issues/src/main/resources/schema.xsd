@@ -299,4 +299,13 @@
 		<xs:attribute name="z" type="xs:string" default="z"/>
 	</xs:complexType>
 
+	<xs:complexType name="issueGH70Type">
+		<xs:complexContent mixed="true">
+			<xs:extension base="xs:anyType">
+				<xs:attribute name="id" type="xs:anyURI" use="required"/>
+				<xs:anyAttribute processContents="lax"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
 </xs:schema>

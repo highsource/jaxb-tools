@@ -24,6 +24,7 @@ import com.sun.tools.xjc.model.CClassRef;
 import com.sun.tools.xjc.model.CCustomizations;
 import com.sun.tools.xjc.model.CElementInfo;
 import com.sun.tools.xjc.model.CPluginCustomization;
+import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.Model;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.ElementOutline;
@@ -85,6 +86,11 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 
 		generateExtends(classOutline, knownClasses, knownClassInfos);
 		generateImplements(classOutline, knownClasses);
+		for (CPropertyInfo propertyInfo : classOutline.target.getProperties())
+		{
+			CustomizationUtils.findCustomization(propertyInfo, Customizations.EXTENDS_ELEMENT_NAME);
+			CustomizationUtils.findCustomization(propertyInfo, Customizations.IMPLEMENTS_ELEMENT_NAME);
+		}
 
 	}
 

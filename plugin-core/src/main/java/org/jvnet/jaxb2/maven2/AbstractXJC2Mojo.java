@@ -799,17 +799,42 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * A list of of input files or URLs to consider during the up-to-date. By
 	 * default it always considers: 1. schema files, 2. binding files, 3.
 	 * catalog file, and 4. the pom.xml file of the project executing this
-	 * plugin.
+	 * plugin. Deprecated, use {@link #otherDependsIncludes} and {@link #otherDependsExcludes} instead.
 	 */
+	@Deprecated
 	@Parameter
 	private File[] otherDepends;
 
+	@Deprecated
 	public File[] getOtherDepends() {
 		return otherDepends;
 	}
 
+	@Deprecated
 	public void setOtherDepends(File[] otherDepends) {
 		this.otherDepends = otherDepends;
+	}
+	
+	@Parameter
+	private String[] otherDependsIncludes;
+
+	public String[] getOtherDependsIncludes() {
+		return otherDependsIncludes;
+	}
+
+	public void setOtherDependsIncludes(String[] otherDependsIncludes) {
+		this.otherDependsIncludes = otherDependsIncludes;
+	}
+
+	@Parameter
+	private String[] otherDependsExcludes;
+
+	public String[] getOtherDependsExcludes() {
+		return otherDependsExcludes;
+	}
+
+	public void setOtherDependsExcludes(String[] otherDependsExcludes) {
+		this.otherDependsExcludes = catalogExcludes;
 	}
 
 	/**
@@ -1020,6 +1045,8 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		getLog().info("removeOldOutput:" + getRemoveOldOutput());
 		getLog().info("produces:" + Arrays.toString(getProduces()));
 		getLog().info("otherDepends:" + getOtherDepends());
+		getLog().info("otherDependIncludes:" + getOtherDependsIncludes());
+		getLog().info("otherDependExcludes:" + getOtherDependsExcludes());
 		getLog().info("episodeFile:" + getEpisodeFile());
 		getLog().info("episode:" + getEpisode());
 		getLog().info("plugins:" + Arrays.toString(getPlugins()));

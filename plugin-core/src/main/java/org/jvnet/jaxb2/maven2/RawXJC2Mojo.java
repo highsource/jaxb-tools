@@ -85,8 +85,7 @@ import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
 public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 	public static final String ADD_IF_EXISTS_TO_EPISODE_SCHEMA_BINDINGS_TRANSFORMATION_RESOURCE_NAME = "/"
-			+ RawXJC2Mojo.class.getPackage().getName().replace('.', '/')
-			+ "/addIfExistsToEpisodeSchemaBindings.xslt";
+			+ RawXJC2Mojo.class.getPackage().getName().replace('.', '/') + "/addIfExistsToEpisodeSchemaBindings.xslt";
 
 	private Collection<Artifact> xjcPluginArtifacts;
 
@@ -137,8 +136,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 	protected List<URI> getResolvedSchemaURIs() {
 		if (resolvedSchemaURIs == null) {
-			throw new IllegalStateException(
-					"Resolved schema URIs were not set up yet.");
+			throw new IllegalStateException("Resolved schema URIs were not set up yet.");
 		}
 		return resolvedSchemaURIs;
 	}
@@ -168,8 +166,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		final ResourceEntry[] schemas = getSchemas();
 		if (schemas != null) {
 			for (ResourceEntry resourceEntry : schemas) {
-				schemaURIs.addAll(createResourceEntryUris(resourceEntry,
-						getSchemaDirectory().getAbsolutePath(),
+				schemaURIs.addAll(createResourceEntryUris(resourceEntry, getSchemaDirectory().getAbsolutePath(),
 						getSchemaIncludes(), getSchemaExcludes()));
 			}
 		}
@@ -181,11 +178,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			final List<URI> schemaURIs = getSchemaURIs();
 			return getInputSources(schemaURIs);
 		} catch (IOException ioex) {
-			throw new MojoExecutionException("Could not resolve grammars.",
-					ioex);
+			throw new MojoExecutionException("Could not resolve grammars.", ioex);
 		} catch (SAXException ioex) {
-			throw new MojoExecutionException("Could not resolve grammars.",
-					ioex);
+			throw new MojoExecutionException("Could not resolve grammars.", ioex);
 		}
 	}
 
@@ -208,8 +203,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 	protected List<URI> getResolvedBindingURIs() {
 		if (resolvedBindingURIs == null) {
-			throw new IllegalStateException(
-					"Resolved binding URIs were not set up yet.");
+			throw new IllegalStateException("Resolved binding URIs were not set up yet.");
 		}
 		return resolvedBindingURIs;
 	}
@@ -234,15 +228,11 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		bindingFiles.addAll(getBindingFiles());
 
 		for (final File episodeFile : getEpisodeFiles()) {
-			getLog().debug(
-					MessageFormat.format("Checking episode file [{0}].",
-							episodeFile.getAbsolutePath()));
+			getLog().debug(MessageFormat.format("Checking episode file [{0}].", episodeFile.getAbsolutePath()));
 			if (episodeFile.isDirectory()) {
-				final File episodeMetaInfFile = new File(episodeFile,
-						"META-INF");
+				final File episodeMetaInfFile = new File(episodeFile, "META-INF");
 				if (episodeMetaInfFile.isDirectory()) {
-					final File episodeBindingsFile = new File(
-							episodeMetaInfFile, "sun-jaxb.episode");
+					final File episodeBindingsFile = new File(episodeMetaInfFile, "sun-jaxb.episode");
 					if (episodeBindingsFile.isFile()) {
 						bindingFiles.add(episodeBindingsFile);
 					}
@@ -265,8 +255,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 		if (getBindings() != null) {
 			for (ResourceEntry resourceEntry : getBindings()) {
-				bindingUris.addAll(createResourceEntryUris(resourceEntry,
-						getBindingDirectory().getAbsolutePath(),
+				bindingUris.addAll(createResourceEntryUris(resourceEntry, getBindingDirectory().getAbsolutePath(),
 						getBindingIncludes(), getBindingExcludes()));
 			}
 		}
@@ -283,11 +272,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			final List<URI> bindingURIs = getBindingURIs();
 			return getInputSources(bindingURIs);
 		} catch (IOException ioex) {
-			throw new MojoExecutionException(
-					"Could not resolve binding files.", ioex);
+			throw new MojoExecutionException("Could not resolve binding files.", ioex);
 		} catch (SAXException ioex) {
-			throw new MojoExecutionException(
-					"Could not resolve binding files.", ioex);
+			throw new MojoExecutionException("Could not resolve binding files.", ioex);
 		}
 	}
 
@@ -316,8 +303,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 			// Install project dependencies into classloader's class path
 			// and execute xjc2.
-			final ClassLoader currentClassLoader = Thread.currentThread()
-					.getContextClassLoader();
+			final ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
 			final ClassLoader classLoader = createClassLoader(currentClassLoader);
 			Thread.currentThread().setContextClassLoader(classLoader);
 			final Locale currentDefaultLocale = Locale.getDefault();
@@ -330,8 +316,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			} finally {
 				Locale.setDefault(currentDefaultLocale);
 				// Set back the old classloader
-				Thread.currentThread()
-						.setContextClassLoader(currentClassLoader);
+				Thread.currentThread().setContextClassLoader(currentClassLoader);
 			}
 		}
 	}
@@ -357,8 +342,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 				dependencyMap.put(dependency.getManagementKey(), dependency);
 			}
 
-			final DependencyManagement dependencyManagement = getProject()
-					.getDependencyManagement();
+			final DependencyManagement dependencyManagement = getProject().getDependencyManagement();
 
 			if (dependencyManagement != null) {
 				merge(dependencyMap, dependencyManagement.getDependencies());
@@ -369,14 +353,12 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 	}
 
-	private void merge(final Map<String, Dependency> dependencyMap,
-			final List<Dependency> managedDependencies) {
+	private void merge(final Map<String, Dependency> dependencyMap, final List<Dependency> managedDependencies) {
 		for (final Dependency managedDependency : managedDependencies) {
 			final String key = managedDependency.getManagementKey();
 			final Dependency dependency = (Dependency) dependencyMap.get(key);
 			if (dependency != null) {
-				ArtifactUtils.mergeDependencyWithDefaults(dependency,
-						managedDependency);
+				ArtifactUtils.mergeDependencyWithDefaults(dependency, managedDependency);
 			}
 		}
 	}
@@ -387,47 +369,37 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			resolveXJCPluginArtifacts();
 			resolveEpisodeArtifacts();
 		} catch (ArtifactResolutionException arex) {
-			throw new MojoExecutionException("Could not resolve the artifact.",
-					arex);
+			throw new MojoExecutionException("Could not resolve the artifact.", arex);
 		} catch (ArtifactNotFoundException anfex) {
 			throw new MojoExecutionException("Artifact not found.", anfex);
 		} catch (InvalidDependencyVersionException idvex) {
-			throw new MojoExecutionException("Invalid dependency version.",
-					idvex);
+			throw new MojoExecutionException("Invalid dependency version.", idvex);
 		}
 	}
 
 	protected void resolveXJCPluginArtifacts()
-			throws ArtifactResolutionException, ArtifactNotFoundException,
-			InvalidDependencyVersionException {
+			throws ArtifactResolutionException, ArtifactNotFoundException, InvalidDependencyVersionException {
 
-		this.xjcPluginArtifacts = ArtifactUtils.resolveTransitively(
-				getArtifactFactory(), getArtifactResolver(),
-				getLocalRepository(), getArtifactMetadataSource(),
-				getPlugins(), getProject());
+		this.xjcPluginArtifacts = ArtifactUtils.resolveTransitively(getArtifactFactory(), getArtifactResolver(),
+				getLocalRepository(), getArtifactMetadataSource(), getPlugins(), getProject());
 		this.xjcPluginFiles = ArtifactUtils.getFiles(this.xjcPluginArtifacts);
-		this.xjcPluginURLs = CollectionUtils.apply(this.xjcPluginFiles,
-				IOUtils.GET_URL);
+		this.xjcPluginURLs = CollectionUtils.apply(this.xjcPluginFiles, IOUtils.GET_URL);
 	}
 
 	protected void resolveEpisodeArtifacts()
-			throws ArtifactResolutionException, ArtifactNotFoundException,
-			InvalidDependencyVersionException {
+			throws ArtifactResolutionException, ArtifactNotFoundException, InvalidDependencyVersionException {
 		this.episodeArtifacts = new LinkedHashSet<Artifact>();
 		{
-			final Collection<Artifact> episodeArtifacts = ArtifactUtils
-					.resolve(getArtifactFactory(), getArtifactResolver(),
-							getLocalRepository(), getArtifactMetadataSource(),
-							getEpisodes(), getProject());
+			final Collection<Artifact> episodeArtifacts = ArtifactUtils.resolve(getArtifactFactory(),
+					getArtifactResolver(), getLocalRepository(), getArtifactMetadataSource(), getEpisodes(),
+					getProject());
 			this.episodeArtifacts.addAll(episodeArtifacts);
 		}
 		{
 			if (getUseDependenciesAsEpisodes()) {
 				@SuppressWarnings("unchecked")
-				final Collection<Artifact> projectArtifacts = getProject()
-						.getArtifacts();
-				final ArtifactFilter filter = new ScopeArtifactFilter(
-						DefaultArtifact.SCOPE_COMPILE);
+				final Collection<Artifact> projectArtifacts = getProject().getArtifacts();
+				final ArtifactFilter filter = new ScopeArtifactFilter(DefaultArtifact.SCOPE_COMPILE);
 				for (Artifact artifact : projectArtifacts) {
 					if (filter.include(artifact)) {
 						this.episodeArtifacts.add(artifact);
@@ -442,8 +414,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 		final Collection<URL> xjcPluginURLs = getXjcPluginURLs();
 
-		return new ParentFirstClassLoader(
-				xjcPluginURLs.toArray(new URL[xjcPluginURLs.size()]), parent);
+		return new ParentFirstClassLoader(xjcPluginURLs.toArray(new URL[xjcPluginURLs.size()]), parent);
 	}
 
 	protected void doExecute() throws MojoExecutionException {
@@ -476,27 +447,22 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			getLog().warn("No schemas to compile. Skipping XJC execution. ");
 		} else {
 
-			final O options = getOptionsFactory().createOptions(
-					optionsConfiguration);
+			final O options = getOptionsFactory().createOptions(optionsConfiguration);
 
 			if (getForceRegenerate()) {
-				getLog().warn(
-						"You are using forceRegenerate=true in your configuration.\n"
-								+ "This configuration setting is deprecated and not recommended "
-								+ "as it causes problems with incremental builds in IDEs.\n"
-								+ "Please refer to the following link for more information:\n"
-								+ "https://github.com/highsource/maven-jaxb2-plugin/wiki/Do-Not-Use-forceRegenerate\n"
-								+ "Consider removing this setting from your plugin configuration.\n");
-				getLog().info(
-						"The [forceRegenerate] switch is turned on, XJC will be executed.");
+				getLog().warn("You are using forceRegenerate=true in your configuration.\n"
+						+ "This configuration setting is deprecated and not recommended "
+						+ "as it causes problems with incremental builds in IDEs.\n"
+						+ "Please refer to the following link for more information:\n"
+						+ "https://github.com/highsource/maven-jaxb2-plugin/wiki/Do-Not-Use-forceRegenerate\n"
+						+ "Consider removing this setting from your plugin configuration.\n");
+				getLog().info("The [forceRegenerate] switch is turned on, XJC will be executed.");
 			} else {
 				final boolean isUpToDate = isUpToDate();
 				if (!isUpToDate) {
-					getLog().info(
-							"Sources are not up-to-date, XJC will be executed.");
+					getLog().info("Sources are not up-to-date, XJC will be executed.");
 				} else {
-					getLog().info(
-							"Sources are up-to-date, XJC will be skipped.");
+					getLog().info("Sources are up-to-date, XJC will be skipped.");
 					return;
 				}
 			}
@@ -505,10 +471,8 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			doExecute(options);
 			addIfExistsToEpisodeSchemaBindings();
 			final BuildContext buildContext = getBuildContext();
-			getLog().debug(
-					MessageFormat.format(
-							"Refreshing the generated directory [{0}].",
-							getGenerateDirectory().getAbsolutePath()));
+			getLog().debug(MessageFormat.format("Refreshing the generated directory [{0}].",
+					getGenerateDirectory().getAbsolutePath()));
 			buildContext.refresh(getGenerateDirectory());
 		}
 
@@ -517,46 +481,34 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 	}
 
-	private void addIfExistsToEpisodeSchemaBindings()
-			throws MojoExecutionException {
+	private void addIfExistsToEpisodeSchemaBindings() throws MojoExecutionException {
 		if (!isAddIfExistsToEpisodeSchemaBindings()) {
 			return;
 		}
 		final File episodeFile = getEpisodeFile();
 		if (!episodeFile.canWrite()) {
-			getLog().warn(
-					MessageFormat
-							.format("Episode file [{0}] is not writable, could not add if-exists attributes.",
-									episodeFile));
+			getLog().warn(MessageFormat
+					.format("Episode file [{0}] is not writable, could not add if-exists attributes.", episodeFile));
 			return;
 		}
 		InputStream is = null;
 		try {
-			final TransformerFactory transformerFactory = TransformerFactory
-					.newInstance();
-			is = getClass()
-					.getResourceAsStream(
-							ADD_IF_EXISTS_TO_EPISODE_SCHEMA_BINDINGS_TRANSFORMATION_RESOURCE_NAME);
+			final TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			is = getClass().getResourceAsStream(ADD_IF_EXISTS_TO_EPISODE_SCHEMA_BINDINGS_TRANSFORMATION_RESOURCE_NAME);
 			final Transformer addIfExistsToEpisodeSchemaBindingsTransformer = transformerFactory
 					.newTransformer(new StreamSource(is));
 			final DOMResult result = new DOMResult();
-			addIfExistsToEpisodeSchemaBindingsTransformer.transform(
-					new StreamSource(episodeFile), result);
+			addIfExistsToEpisodeSchemaBindingsTransformer.transform(new StreamSource(episodeFile), result);
 			final DOMSource source = new DOMSource(result.getNode());
-			final Transformer identityTransformer = transformerFactory
-					.newTransformer();
+			final Transformer identityTransformer = transformerFactory.newTransformer();
 			identityTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
-			identityTransformer
-					.transform(source, new StreamResult(episodeFile));
-			getLog().info(
-					MessageFormat
-							.format("Episode file [{0}] was augmented with if-exists=\"true\" attributes.",
-									episodeFile));
+			identityTransformer.transform(source, new StreamResult(episodeFile));
+			getLog().info(MessageFormat.format("Episode file [{0}] was augmented with if-exists=\"true\" attributes.",
+					episodeFile));
 		} catch (TransformerException e) {
-			throw new MojoExecutionException(
-					MessageFormat.format(
-							"Error augmenting the episode file [{0}] with if-exists=\"true\" attributes. Transformation failed with an unexpected error.",
-							episodeFile), e);
+			throw new MojoExecutionException(MessageFormat.format(
+					"Error augmenting the episode file [{0}] with if-exists=\"true\" attributes. Transformation failed with an unexpected error.",
+					episodeFile), e);
 		} finally {
 			IOUtil.close(is);
 		}
@@ -565,26 +517,23 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	private URILastModifiedResolver uriLastModifiedResolver;
 
 	private void setupURILastModifiedResolver() {
-		this.uriLastModifiedResolver = new CompositeURILastModifiedResolver(
-				getLog());
+		this.uriLastModifiedResolver = new CompositeURILastModifiedResolver(getLog());
 	}
 
 	protected URILastModifiedResolver getURILastModifiedResolver() {
 		if (uriLastModifiedResolver == null) {
-			throw new IllegalStateException(
-					"URILastModifiedResolver was not set up yet.");
+			throw new IllegalStateException("URILastModifiedResolver was not set up yet.");
 		}
 		return uriLastModifiedResolver;
 	}
 
 	private void checkCatalogsInStrictMode() {
 		if (getStrict() && !getCatalogURIs().isEmpty()) {
-			getLog().warn(
-					"The plugin is configured to use catalogs and strict mode at the same time.\n"
-							+ "Using catalogs to resolve schema URIs in strict mode is known to be problematic and may fail.\n"
-							+ "Please refer to the following link for more information:\n"
-							+ "https://github.com/highsource/maven-jaxb2-plugin/wiki/Catalogs-in-Strict-Mode\n"
-							+ "Consider setting <strict>false</strict> in your plugin configuration.\n");
+			getLog().warn("The plugin is configured to use catalogs and strict mode at the same time.\n"
+					+ "Using catalogs to resolve schema URIs in strict mode is known to be problematic and may fail.\n"
+					+ "Please refer to the following link for more information:\n"
+					+ "https://github.com/highsource/maven-jaxb2-plugin/wiki/Catalogs-in-Strict-Mode\n"
+					+ "Consider setting <strict>false</strict> in your plugin configuration.\n");
 		}
 	}
 
@@ -616,18 +565,14 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			getProject().addCompileSourceRoot(getGenerateDirectory().getPath());
 		}
 		if (getAddTestCompileSourceRoot()) {
-			getProject().addTestCompileSourceRoot(
-					getGenerateDirectory().getPath());
+			getProject().addTestCompileSourceRoot(getGenerateDirectory().getPath());
 		}
 		if (getEpisode() && getEpisodeFile() != null) {
 			final String episodeFilePath = getEpisodeFile().getAbsolutePath();
-			final String generatedDirectoryPath = getGenerateDirectory()
-					.getAbsolutePath();
+			final String generatedDirectoryPath = getGenerateDirectory().getAbsolutePath();
 
-			if (episodeFilePath.startsWith(generatedDirectoryPath
-					+ File.separator)) {
-				final String path = episodeFilePath
-						.substring(generatedDirectoryPath.length() + 1);
+			if (episodeFilePath.startsWith(generatedDirectoryPath + File.separator)) {
+				final String path = episodeFilePath.substring(generatedDirectoryPath.length() + 1);
 
 				final Resource resource = new Resource();
 				resource.setDirectory(generatedDirectoryPath);
@@ -650,9 +595,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			try {
 				FileUtils.deleteDirectory(this.getGenerateDirectory());
 			} catch (IOException ex) {
-				getLog().warn(
-						"Failed to remove old generateDirectory ["
-								+ generateDirectory + "].", ex);
+				getLog().warn("Failed to remove old generateDirectory [" + generateDirectory + "].", ex);
 			}
 		}
 
@@ -674,21 +617,16 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			if (schemaDirectory == null || !schemaDirectory.exists()) {
 				this.schemaFiles = Collections.emptyList();
 			} else if (schemaDirectory.isDirectory()) {
-				this.schemaFiles = IOUtils.scanDirectoryForFiles(
-						getBuildContext(), schemaDirectory,
-						getSchemaIncludes(), getSchemaExcludes(),
-						!getDisableDefaultExcludes());
+				this.schemaFiles = IOUtils.scanDirectoryForFiles(getBuildContext(), schemaDirectory,
+						getSchemaIncludes(), getSchemaExcludes(), !getDisableDefaultExcludes());
 
 			} else {
 				this.schemaFiles = Collections.emptyList();
 				getLog().warn(
-						MessageFormat.format(
-								"Schema directory [{0}] is not a directory.",
-								schemaDirectory.getPath()));
+						MessageFormat.format("Schema directory [{0}] is not a directory.", schemaDirectory.getPath()));
 			}
 		} catch (IOException ioex) {
-			throw new MojoExecutionException("Could not set up schema files.",
-					ioex);
+			throw new MojoExecutionException("Could not set up schema files.", ioex);
 		}
 	}
 
@@ -698,24 +636,19 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			if (bindingDirectory == null || !bindingDirectory.exists()) {
 				this.bindingFiles = Collections.emptyList();
 			} else if (bindingDirectory.isDirectory()) {
-				this.bindingFiles = IOUtils.scanDirectoryForFiles(
-						getBuildContext(), bindingDirectory,
-						getBindingIncludes(), getBindingExcludes(),
-						!getDisableDefaultExcludes());
+				this.bindingFiles = IOUtils.scanDirectoryForFiles(getBuildContext(), bindingDirectory,
+						getBindingIncludes(), getBindingExcludes(), !getDisableDefaultExcludes());
 			} else {
 				this.bindingFiles = Collections.emptyList();
-				getLog().warn(
-						MessageFormat.format(
-								"Binding directory [{0}] is not a directory.",
-								bindingDirectory.getPath()));
+				getLog().warn(MessageFormat.format("Binding directory [{0}] is not a directory.",
+						bindingDirectory.getPath()));
 			}
 		} catch (IOException ioex) {
-			throw new MojoExecutionException("Could not set up binding files.",
-					ioex);
+			throw new MojoExecutionException("Could not set up binding files.", ioex);
 		}
 	}
 
-	protected void setupDependsURIs() {
+	protected void setupDependsURIs() throws MojoExecutionException {
 
 		final List<URI> dependsURIs = new LinkedList<URI>();
 
@@ -727,10 +660,27 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			dependsURIs.add(projectFile.toURI());
 		}
 		if (getOtherDepends() != null) {
+			getLog().warn(
+					"Configuration element [otherDepends] is deprecated, please use [otherDependsIncludes] and [otherDependsExcludes] instead.");
+
 			for (File file : getOtherDepends()) {
 				if (file != null) {
 					dependsURIs.add(file.toURI());
 				}
+			}
+		}
+		if (getOtherDependsIncludes() != null) {
+			try {
+				List<File> otherDependsFiles = IOUtils.scanDirectoryForFiles(getBuildContext(),
+						getProject().getBasedir(), getOtherDependsIncludes(), getOtherDependsExcludes(),
+						!getDisableDefaultExcludes());
+				for (File file : otherDependsFiles) {
+					if (file != null) {
+						dependsURIs.add(file.toURI());
+					}
+				}
+			} catch (IOException ioex) {
+				throw new MojoExecutionException("Could not set up [otherDepends] files.", ioex);
 			}
 		}
 		this.dependsURIs = dependsURIs;
@@ -743,9 +693,8 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	protected List<URI> createProducesURIs() throws MojoExecutionException {
 		final List<URI> producesURIs = new LinkedList<URI>();
 		try {
-			final List<File> producesFiles = IOUtils.scanDirectoryForFiles(
-					getBuildContext(), getGenerateDirectory(), getProduces(),
-					new String[0], !getDisableDefaultExcludes());
+			final List<File> producesFiles = IOUtils.scanDirectoryForFiles(getBuildContext(), getGenerateDirectory(),
+					getProduces(), new String[0], !getDisableDefaultExcludes());
 			if (producesFiles != null) {
 				for (File producesFile : producesFiles) {
 					if (producesFile != null) {
@@ -755,8 +704,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			}
 			return producesURIs;
 		} catch (IOException ioex) {
-			throw new MojoExecutionException(
-					"Could not set up produced files.", ioex);
+			throw new MojoExecutionException("Could not set up produced files.", ioex);
 		}
 	}
 
@@ -768,33 +716,26 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		super.logConfiguration();
 		// TODO clean up
 		getLog().info("catalogURIs (calculated):" + getCatalogURIs());
-		getLog().info(
-				"resolvedCatalogURIs (calculated):" + getResolvedCatalogURIs());
+		getLog().info("resolvedCatalogURIs (calculated):" + getResolvedCatalogURIs());
 		getLog().info("schemaFiles (calculated):" + getSchemaFiles());
 		getLog().info("schemaURIs (calculated):" + getSchemaURIs());
-		getLog().info(
-				"resolvedSchemaURIs (calculated):" + getResolvedSchemaURIs());
+		getLog().info("resolvedSchemaURIs (calculated):" + getResolvedSchemaURIs());
 		getLog().info("bindingFiles (calculated):" + getBindingFiles());
 		getLog().info("bindingURIs (calculated):" + getBindingURIs());
-		getLog().info(
-				"resolvedBindingURIs (calculated):" + getResolvedBindingURIs());
-		getLog().info(
-				"xjcPluginArtifacts (resolved):" + getXjcPluginArtifacts());
+		getLog().info("resolvedBindingURIs (calculated):" + getResolvedBindingURIs());
+		getLog().info("xjcPluginArtifacts (resolved):" + getXjcPluginArtifacts());
 		getLog().info("xjcPluginFiles (resolved):" + getXjcPluginFiles());
 		getLog().info("xjcPluginURLs (resolved):" + getXjcPluginURLs());
 		getLog().info("episodeArtifacts (resolved):" + getEpisodeArtifacts());
 		getLog().info("episodeFiles (resolved):" + getEpisodeFiles());
+		getLog().info("dependsURIs (resolved):" + getDependsURIs());
 	}
 
-	private void collectBindingUrisFromDependencies(List<URI> bindingUris)
-			throws MojoExecutionException {
+	private void collectBindingUrisFromDependencies(List<URI> bindingUris) throws MojoExecutionException {
 		@SuppressWarnings("unchecked")
-		final Collection<Artifact> projectArtifacts = getProject()
-				.getArtifacts();
-		final List<Artifact> compileScopeArtifacts = new ArrayList<Artifact>(
-				projectArtifacts.size());
-		final ArtifactFilter filter = new ScopeArtifactFilter(
-				DefaultArtifact.SCOPE_COMPILE);
+		final Collection<Artifact> projectArtifacts = getProject().getArtifacts();
+		final List<Artifact> compileScopeArtifacts = new ArrayList<Artifact>(projectArtifacts.size());
+		final ArtifactFilter filter = new ScopeArtifactFilter(DefaultArtifact.SCOPE_COMPILE);
 		for (Artifact artifact : projectArtifacts) {
 			if (filter.include(artifact)) {
 				compileScopeArtifacts.add(artifact);
@@ -802,19 +743,14 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 
 		for (Artifact artifact : compileScopeArtifacts) {
-			getLog().debug(
-					MessageFormat.format(
-							"Scanning artifact [{0}] for JAXB binding files.",
-							artifact));
+			getLog().debug(MessageFormat.format("Scanning artifact [{0}] for JAXB binding files.", artifact));
 			final File file = artifact.getFile();
 			ClassLoader classLoader = null;
 			try {
-				classLoader = new URLClassLoader(new URL[] { file.toURI()
-						.toURL() });
+				classLoader = new URLClassLoader(new URL[] { file.toURI().toURL() });
 			} catch (IOException ioex) {
 				throw new MojoExecutionException(
-						"Unable to create a classloader for the artifact file ["
-								+ file.getAbsolutePath() + "].", ioex);
+						"Unable to create a classloader for the artifact file [" + file.getAbsolutePath() + "].", ioex);
 			}
 			JarFile jarFile = null;
 			try {
@@ -823,22 +759,18 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 				while (jarFileEntries.hasMoreElements()) {
 					JarEntry entry = jarFileEntries.nextElement();
 					if (entry.getName().endsWith(".xjb")) {
-						final URL resource = classLoader.getResource(entry
-								.getName());
+						final URL resource = classLoader.getResource(entry.getName());
 						try {
 							bindingUris.add(resource.toURI());
 						} catch (URISyntaxException urisex) {
-							throw new MojoExecutionException(
-									MessageFormat.format(
-											"Could not create the URI of the binding file from [{0}]",
-											resource), urisex);
+							throw new MojoExecutionException(MessageFormat.format(
+									"Could not create the URI of the binding file from [{0}]", resource), urisex);
 						}
 					}
 				}
 			} catch (IOException ioex) {
 				throw new MojoExecutionException(
-						"Unable to read the artifact JAR file ["
-								+ file.getAbsolutePath() + "].", ioex);
+						"Unable to read the artifact JAR file [" + file.getAbsolutePath() + "].", ioex);
 			} finally {
 				if (jarFile != null) {
 					try {
@@ -865,16 +797,14 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 	protected List<URI> getResolvedCatalogURIs() {
 		if (resolvedCatalogURIs == null) {
-			throw new IllegalStateException(
-					"Resolved catalog URIs were not set up yet.");
+			throw new IllegalStateException("Resolved catalog URIs were not set up yet.");
 		}
 		return resolvedCatalogURIs;
 	}
 
 	protected CatalogResolver getCatalogResolverInstance() {
 		if (catalogResolverInstance == null) {
-			throw new IllegalStateException(
-					"Catalog resolver was not set up yet.");
+			throw new IllegalStateException("Catalog resolver was not set up yet.");
 		}
 		return catalogResolverInstance;
 	}
@@ -891,8 +821,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 	protected EntityResolver getEntityResolver() {
 		if (entityResolver == null) {
-			throw new IllegalStateException(
-					"Entity resolver was not set up yet.");
+			throw new IllegalStateException("Entity resolver was not set up yet.");
 		}
 		return entityResolver;
 	}
@@ -901,10 +830,8 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		this.entityResolver = createEntityResolver(getCatalogResolverInstance());
 	}
 
-	protected EntityResolver createEntityResolver(
-			CatalogResolver catalogResolver) {
-		final EntityResolver entityResolver = new ReResolvingEntityResolverWrapper(
-				catalogResolver);
+	protected EntityResolver createEntityResolver(CatalogResolver catalogResolver) {
+		final EntityResolver entityResolver = new ReResolvingEntityResolverWrapper(catalogResolver);
 		return entityResolver;
 	}
 
@@ -914,8 +841,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	 * @return
 	 * @throws MojoExecutionException
 	 */
-	protected CatalogResolver createCatalogResolver()
-			throws MojoExecutionException {
+	protected CatalogResolver createCatalogResolver() throws MojoExecutionException {
 		final CatalogManager catalogManager = new CatalogManager();
 		catalogManager.setIgnoreMissingProperties(true);
 		catalogManager.setUseStaticCatalog(false);
@@ -931,38 +857,31 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 	}
 
-	private CatalogResolver createCatalogResolverByClassName(
-			final String catalogResolverClassName)
+	private CatalogResolver createCatalogResolverByClassName(final String catalogResolverClassName)
 			throws MojoExecutionException {
 		try {
-			final Class<?> draftCatalogResolverClass = Thread.currentThread()
-					.getContextClassLoader()
+			final Class<?> draftCatalogResolverClass = Thread.currentThread().getContextClassLoader()
 					.loadClass(catalogResolverClassName);
-			if (!CatalogResolver.class
-					.isAssignableFrom(draftCatalogResolverClass)) {
+			if (!CatalogResolver.class.isAssignableFrom(draftCatalogResolverClass)) {
 				throw new MojoExecutionException(
-						MessageFormat
-								.format("Specified catalog resolver class [{0}] could not be casted to [{1}].",
-										catalogResolver, CatalogResolver.class));
+						MessageFormat.format("Specified catalog resolver class [{0}] could not be casted to [{1}].",
+								catalogResolver, CatalogResolver.class));
 			} else {
 				@SuppressWarnings("unchecked")
 				final Class<? extends CatalogResolver> catalogResolverClass = (Class<? extends CatalogResolver>) draftCatalogResolverClass;
-				final CatalogResolver catalogResolverInstance = catalogResolverClass
-						.newInstance();
+				final CatalogResolver catalogResolverInstance = catalogResolverClass.newInstance();
 				return catalogResolverInstance;
 			}
 		} catch (ClassNotFoundException cnfex) {
-			throw new MojoExecutionException(MessageFormat.format(
-					"Could not find specified catalog resolver class [{0}].",
-					catalogResolver), cnfex);
+			throw new MojoExecutionException(
+					MessageFormat.format("Could not find specified catalog resolver class [{0}].", catalogResolver),
+					cnfex);
 		} catch (InstantiationException iex) {
-			throw new MojoExecutionException(MessageFormat.format(
-					"Could not instantiate catalog resolver class [{0}].",
-					catalogResolver), iex);
+			throw new MojoExecutionException(
+					MessageFormat.format("Could not instantiate catalog resolver class [{0}].", catalogResolver), iex);
 		} catch (IllegalAccessException iaex) {
-			throw new MojoExecutionException(MessageFormat.format(
-					"Could not instantiate catalog resolver class [{0}].",
-					catalogResolver), iaex);
+			throw new MojoExecutionException(
+					MessageFormat.format("Could not instantiate catalog resolver class [{0}].", catalogResolver), iaex);
 		}
 	}
 
@@ -975,24 +894,19 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		final List<URI> dependsURIs = getDependsURIs();
 		final List<URI> producesURIs = getProducesURIs();
 
-		getLog().info(
-				MessageFormat
-						.format("Up-to-date check for source resources [{0}] and target resources [{1}].",
-								dependsURIs, producesURIs));
+		getLog().info(MessageFormat.format("Up-to-date check for source resources [{0}] and target resources [{1}].",
+				dependsURIs, producesURIs));
 
 		boolean itIsKnownThatNoDependsURIsWereChanged = true;
 		{
 			for (URI dependsURI : dependsURIs) {
-				if (FileURILastModifiedResolver.SCHEME
-						.equalsIgnoreCase(dependsURI.getScheme())) {
+				if (FileURILastModifiedResolver.SCHEME.equalsIgnoreCase(dependsURI.getScheme())) {
 					final File dependsFile = new File(dependsURI);
 					if (getBuildContext().hasDelta(dependsFile)) {
 						if (getVerbose()) {
 							getLog().debug(
-									MessageFormat
-											.format("File [{0}] might have been changed since the last build.",
-													dependsFile
-															.getAbsolutePath()));
+									MessageFormat.format("File [{0}] might have been changed since the last build.",
+											dependsFile.getAbsolutePath()));
 						}
 						// It is known that something was changed.
 						itIsKnownThatNoDependsURIsWereChanged = false;
@@ -1004,8 +918,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			}
 		}
 		if (itIsKnownThatNoDependsURIsWereChanged) {
-			getLog().info(
-					"According to the build context, all of the [dependURIs] are up-to-date.");
+			getLog().info("According to the build context, all of the [dependURIs] are up-to-date.");
 			return true;
 		}
 
@@ -1015,39 +928,32 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			}
 		};
 
-		getLog().debug(
-				MessageFormat
-						.format("Checking the last modification timestamp of the source resources [{0}].",
-								dependsURIs));
+		getLog().debug(MessageFormat.format("Checking the last modification timestamp of the source resources [{0}].",
+				dependsURIs));
 
-		final Long dependsTimestamp = CollectionUtils.bestValue(dependsURIs,
-				LAST_MODIFIED, CollectionUtils.<Long> gtWithNullAsGreatest());
+		final Long dependsTimestamp = CollectionUtils.bestValue(dependsURIs, LAST_MODIFIED,
+				CollectionUtils.<Long>gtWithNullAsGreatest());
 
-		getLog().debug(
-				MessageFormat
-						.format("Checking the last modification timestamp of the target resources [{0}].",
-								producesURIs));
+		getLog().debug(MessageFormat.format("Checking the last modification timestamp of the target resources [{0}].",
+				producesURIs));
 
-		final Long producesTimestamp = CollectionUtils.bestValue(producesURIs,
-				LAST_MODIFIED, CollectionUtils.<Long> ltWithNullAsSmallest());
+		final Long producesTimestamp = CollectionUtils.bestValue(producesURIs, LAST_MODIFIED,
+				CollectionUtils.<Long>ltWithNullAsSmallest());
 
 		if (dependsTimestamp == null) {
-			getLog().debug(
-					"Latest timestamp of the source resources is unknown. Assuming that something was changed.");
+			getLog().debug("Latest timestamp of the source resources is unknown. Assuming that something was changed.");
 			return false;
 		}
 		if (producesTimestamp == null) {
-			getLog().debug(
-					MessageFormat
-							.format("Latest Timestamp of the source resources is [{0,date,yyyy-MM-dd HH:mm:ss.SSS}], however the earliest timestamp of the target resources is unknown. Assuming that something was changed.",
-									dependsTimestamp));
+			getLog().debug(MessageFormat.format(
+					"Latest Timestamp of the source resources is [{0,date,yyyy-MM-dd HH:mm:ss.SSS}], however the earliest timestamp of the target resources is unknown. Assuming that something was changed.",
+					dependsTimestamp));
 			return false;
 		}
 
-		getLog().info(
-				MessageFormat
-						.format("Latest timestamp of the source resources is [{0,date,yyyy-MM-dd HH:mm:ss.SSS}], earliest timestamp of the target resources is [{1,date,yyyy-MM-dd HH:mm:ss.SSS}].",
-								dependsTimestamp, producesTimestamp));
+		getLog().info(MessageFormat.format(
+				"Latest timestamp of the source resources is [{0,date,yyyy-MM-dd HH:mm:ss.SSS}], earliest timestamp of the target resources is [{1,date,yyyy-MM-dd HH:mm:ss.SSS}].",
+				dependsTimestamp, producesTimestamp));
 		final boolean upToDate = dependsTimestamp < producesTimestamp;
 		return upToDate;
 	}
@@ -1057,8 +963,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		final int proxyPort = getProxyPort();
 		final String proxyUsername = getProxyUsername();
 		final String proxyPassword = getProxyPassword();
-		return proxyHost != null ? createXJCProxyArgument(proxyHost, proxyPort,
-				proxyUsername, proxyPassword) : null;
+		return proxyHost != null ? createXJCProxyArgument(proxyHost, proxyPort, proxyUsername, proxyPassword) : null;
 	}
 
 	protected String getActiveProxyAsHttpproxy() {
@@ -1073,35 +978,27 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			return null;
 		}
 
-		return createXJCProxyArgument(activeProxy.getHost(),
-				activeProxy.getPort(), activeProxy.getUsername(),
+		return createXJCProxyArgument(activeProxy.getHost(), activeProxy.getPort(), activeProxy.getUsername(),
 				activeProxy.getPassword());
 	}
 
-	private String createXJCProxyArgument(String host, int port,
-			String username, String password) {
+	private String createXJCProxyArgument(String host, int port, String username, String password) {
 
 		if (host == null) {
 			if (port != -1) {
 				getLog().warn(
-						MessageFormat.format(
-								"Proxy port is configured to [{0,number,#}] but proxy host is missing. "
-										+ "Proxy port will be ignored.", port));
+						MessageFormat.format("Proxy port is configured to [{0,number,#}] but proxy host is missing. "
+								+ "Proxy port will be ignored.", port));
 			}
 			if (username != null) {
-				getLog().warn(
-						MessageFormat.format(
-								"Proxy username is configured to [{0}] but proxy host is missing. "
-										+ "Proxy username will be ignored.",
-								username));
+				getLog().warn(MessageFormat.format("Proxy username is configured to [{0}] but proxy host is missing. "
+						+ "Proxy username will be ignored.", username));
 
 			}
 			if (password != null) {
-				getLog().warn(
-						MessageFormat.format(
-								"Proxy password is set but proxy host is missing. "
-										+ "Proxy password will be ignored.",
-								password));
+				getLog().warn(MessageFormat.format(
+						"Proxy password is set but proxy host is missing. " + "Proxy password will be ignored.",
+						password));
 
 			}
 			return null;
@@ -1120,11 +1017,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 				proxyStringBuilder.append("@");
 			} else {
 				if (password != null) {
-					getLog().warn(
-							MessageFormat
-									.format("Proxy password is set but proxy username is missing. "
-											+ "Proxy password will be ignored.",
-											password));
+					getLog().warn(MessageFormat.format(
+							"Proxy password is set but proxy username is missing. " + "Proxy password will be ignored.",
+							password));
 				}
 			}
 
@@ -1179,37 +1074,28 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		final String customHttpproxy = getCustomHttpproxy();
 		if (isUseActiveProxyAsHttpproxy()) {
 			if (customHttpproxy != null) {
-				getLog().warn(
-						MessageFormat
-								.format("Both [useActiveProxyAsHttpproxy=true] as well as custom proxy [{0}] are configured. "
-										+ "Please remove either [useActiveProxyAsHttpproxy=true] or custom proxy configuration.",
-										customHttpproxy));
+				getLog().warn(MessageFormat.format(
+						"Both [useActiveProxyAsHttpproxy=true] as well as custom proxy [{0}] are configured. "
+								+ "Please remove either [useActiveProxyAsHttpproxy=true] or custom proxy configuration.",
+						customHttpproxy));
 
-				getLog().debug(
-						MessageFormat.format("Using custom proxy [{0}].",
-								customHttpproxy));
+				getLog().debug(MessageFormat.format("Using custom proxy [{0}].", customHttpproxy));
 
 				httpproxy = customHttpproxy;
 			} else if (activeHttpproxy != null) {
-				getLog().debug(
-						MessageFormat
-								.format("Using active proxy [{0}] from Maven settings.",
-										activeHttpproxy));
+				getLog().debug(MessageFormat.format("Using active proxy [{0}] from Maven settings.", activeHttpproxy));
 				httpproxy = activeHttpproxy;
 			} else {
-				getLog().warn(
-						MessageFormat
-								.format("Configured [useActiveProxyAsHttpproxy=true] but no active proxy is configured in Maven settings. "
-										+ "Please configure an active proxy in Maven settings or remove [useActiveProxyAsHttpproxy=true].",
-										customHttpproxy));
+				getLog().warn(MessageFormat.format(
+						"Configured [useActiveProxyAsHttpproxy=true] but no active proxy is configured in Maven settings. "
+								+ "Please configure an active proxy in Maven settings or remove [useActiveProxyAsHttpproxy=true].",
+						customHttpproxy));
 				httpproxy = activeHttpproxy;
 
 			}
 		} else {
 			if (customHttpproxy != null) {
-				getLog().debug(
-						MessageFormat.format("Using custom proxy [{0}].",
-								customHttpproxy));
+				getLog().debug(MessageFormat.format("Using custom proxy [{0}].", customHttpproxy));
 
 				httpproxy = customHttpproxy;
 			} else {
@@ -1221,18 +1107,13 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		return httpproxy;
 	}
 
-	public OptionsConfiguration createOptionsConfiguration()
-			throws MojoExecutionException {
+	public OptionsConfiguration createOptionsConfiguration() throws MojoExecutionException {
 
-		final OptionsConfiguration optionsConfiguration = new OptionsConfiguration(
-				getEncoding(), getSchemaLanguage(), getGrammars(),
-				getBindFiles(), getEntityResolver(), getGeneratePackage(),
-				getGenerateDirectory(), getReadOnly(),
-				getPackageLevelAnnotations(), getNoFileHeader(),
-				getEnableIntrospection(), getDisableXmlSecurity(),
-				getAccessExternalSchema(), getAccessExternalDTD(),
-				getContentForWildcard(), getExtension(), getStrict(),
-				getVerbose(), getDebug(), getArguments(), getXjcPluginURLs(),
+		final OptionsConfiguration optionsConfiguration = new OptionsConfiguration(getEncoding(), getSchemaLanguage(),
+				getGrammars(), getBindFiles(), getEntityResolver(), getGeneratePackage(), getGenerateDirectory(),
+				getReadOnly(), getPackageLevelAnnotations(), getNoFileHeader(), getEnableIntrospection(),
+				getDisableXmlSecurity(), getAccessExternalSchema(), getAccessExternalDTD(), getContentForWildcard(),
+				getExtension(), getStrict(), getVerbose(), getDebug(), getArguments(), getXjcPluginURLs(),
 				getSpecVersion());
 		return optionsConfiguration;
 	}
@@ -1240,8 +1121,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	private List<URI> resolveURIs(final List<URI> uris) {
 		final List<URI> resolvedURIs = new ArrayList<URI>(uris.size());
 		for (URI uri : uris) {
-			final String URI = getCatalogResolverInstance().getResolvedEntity(
-					null, uri.toString());
+			final String URI = getCatalogResolverInstance().getResolvedEntity(null, uri.toString());
 			if (URI != null) {
 				try {
 					uri = new URI(URI);
@@ -1258,26 +1138,21 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		for (URI catalogURI : getResolvedCatalogURIs()) {
 			if (catalogURI != null) {
 				try {
-					getCatalogResolverInstance().getCatalog().parseCatalog(
-							catalogURI.toURL());
+					getCatalogResolverInstance().getCatalog().parseCatalog(catalogURI.toURL());
 				} catch (IOException ioex) {
-					throw new MojoExecutionException(MessageFormat.format(
-							"Error parsing catalog [{0}].",
-							catalogURI.toString()), ioex);
+					throw new MojoExecutionException(
+							MessageFormat.format("Error parsing catalog [{0}].", catalogURI.toString()), ioex);
 				}
 			}
 		}
 	}
 
-	private List<InputSource> getInputSources(final List<URI> uris)
-			throws IOException, SAXException {
-		final List<InputSource> inputSources = new ArrayList<InputSource>(
-				uris.size());
+	private List<InputSource> getInputSources(final List<URI> uris) throws IOException, SAXException {
+		final List<InputSource> inputSources = new ArrayList<InputSource>(uris.size());
 		for (final URI uri : uris) {
 			InputSource inputSource = IOUtils.getInputSource(uri);
-			final InputSource resolvedInputSource = getEntityResolver()
-					.resolveEntity(inputSource.getPublicId(),
-							inputSource.getSystemId());
+			final InputSource resolvedInputSource = getEntityResolver().resolveEntity(inputSource.getPublicId(),
+					inputSource.getSystemId());
 			if (resolvedInputSource != null) {
 				inputSource = resolvedInputSource;
 			}

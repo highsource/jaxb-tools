@@ -17,7 +17,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 /**
  * Created by Lucas Le on 11/10/16.
  */
-public class WsdlDownloader {
+public class SchemaDownloader {
     private BasicAuthentication basicAuthentication;
 
     public BasicAuthentication getBasicAuthentication() {
@@ -28,7 +28,7 @@ public class WsdlDownloader {
         this.basicAuthentication = basicAuthentication;
     }
 
-    public WsdlDownloader(BasicAuthentication basicAuthentication) {
+    public SchemaDownloader(BasicAuthentication basicAuthentication) {
         this.basicAuthentication = basicAuthentication;
     }
 
@@ -48,7 +48,7 @@ public class WsdlDownloader {
                 HttpURLConnection connection = initConnection(wsdlUrl, encoded);
 
                 writeStringToFile(
-                        createWsdlFile(downloadDirectory, basicAuthentication.getWsdlPrefixName(), index),
+                        createSchemaFile(downloadDirectory, basicAuthentication.getWsdlPrefixName(), index),
                         IOUtils.toString(connection.getInputStream(), Charset.defaultCharset()),
                         Charset.defaultCharset()
                 );
@@ -59,7 +59,7 @@ public class WsdlDownloader {
         }
     }
 
-    private File createWsdlFile(String downloadDirectory, String wsdlPrefixName, int index) {
+    private File createSchemaFile(String downloadDirectory, String wsdlPrefixName, int index) {
         wsdlPrefixName = StringUtils.isEmpty(wsdlPrefixName) ? "webservice_" : wsdlPrefixName + "_";
         return new File(downloadDirectory + File.separator + wsdlPrefixName + (index + 1) + ".wsdl");
     }

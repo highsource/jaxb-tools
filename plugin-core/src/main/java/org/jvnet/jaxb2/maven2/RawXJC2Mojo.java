@@ -423,8 +423,8 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 		if (hasBasicAuthentication()){
 			getBasicAuthentication().setDownloadDirectory(processDownloadDirectory());
-			WsdlDownloader wsdlDownloader = new WsdlDownloader(getBasicAuthentication());
-			wsdlDownloader.execute();
+			SchemaDownloader schemaDownloader = new SchemaDownloader(getBasicAuthentication());
+			schemaDownloader.execute();
 		}
 		setupMavenPaths();
 		setupCatalogResolver();

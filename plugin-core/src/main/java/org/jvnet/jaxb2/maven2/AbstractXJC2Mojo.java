@@ -172,7 +172,9 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	}
 
 	public boolean hasBasicAuthentication() {
-		return StringUtils.isNotEmpty(basicAuthentication.getUsername()) && basicAuthentication.getUrls().length > 0;
+		return null != basicAuthentication
+				&& StringUtils.isNotEmpty(basicAuthentication.getUsername())
+				&& basicAuthentication.getUrls().length > 0;
 	}
 
 	/**

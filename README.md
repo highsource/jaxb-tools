@@ -22,7 +22,7 @@ compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Mav
 			<plugin>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin</artifactId>
-				<version>0.12.3</version>
+				<version>0.13.1</version>
 				<executions>
 					<execution>
 						<goals>

@@ -555,5 +555,7 @@ public class DefaultEqualsStrategy implements EqualsStrategy2, EqualsStrategy {
 				right) : leftSet == rightSet;
 	}
 
-	public static DefaultEqualsStrategy INSTANCE = new DefaultEqualsStrategy();
+	public static DefaultEqualsStrategy INSTANCE2 = new DefaultEqualsStrategy();
+	@SuppressWarnings("deprecation")
+	public static EqualsStrategy INSTANCE = INSTANCE2;
 }

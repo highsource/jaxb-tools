@@ -43,6 +43,8 @@ public class JAXBToStringStrategy extends DefaultToStringStrategy {
 		return stringBuilder;
 	}
 	
-	public static final JAXBToStringStrategy INSTANCE = new JAXBToStringStrategy();
+	public static final JAXBToStringStrategy INSTANCE2 = new JAXBToStringStrategy();
+	@SuppressWarnings("deprecation")
+	public static final ToStringStrategy INSTANCE = INSTANCE2;
 
 }

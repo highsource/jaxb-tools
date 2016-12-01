@@ -383,6 +383,8 @@ public class DefaultHashCodeStrategy implements HashCodeStrategy2, HashCodeStrat
 		return valueSet ? hashCode(locator, hashCode * iConstant, value) : (hashCode * iConstant + 1);
 	}
 
-	public static final DefaultHashCodeStrategy INSTANCE = new DefaultHashCodeStrategy();
+	public static final DefaultHashCodeStrategy INSTANCE2 = new DefaultHashCodeStrategy();
+	@SuppressWarnings("deprecation")
+	public static final HashCodeStrategy INSTANCE = INSTANCE2;
 
 }

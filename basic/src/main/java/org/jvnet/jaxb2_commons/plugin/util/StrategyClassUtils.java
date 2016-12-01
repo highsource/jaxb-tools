@@ -36,6 +36,18 @@ public class StrategyClassUtils {
 				// Nothing to do
 			}
 			try {
+				final Field instance2Field = strategyClass.getField("INSTANCE2");
+				if (instance2Field != null
+						&& strategyInterface.isAssignableFrom(instance2Field
+								.getType())
+						&& Modifier.isStatic(instance2Field.getModifiers())
+						&& Modifier.isPublic(instance2Field.getModifiers())) {
+					return strategyJClass.staticRef("INSTANCE2");
+				}
+			} catch (Exception ignored) {
+				// Nothing to do
+			}
+			try {
 				final Field instanceField = strategyClass.getField("INSTANCE");
 				if (instanceField != null
 						&& strategyInterface.isAssignableFrom(instanceField

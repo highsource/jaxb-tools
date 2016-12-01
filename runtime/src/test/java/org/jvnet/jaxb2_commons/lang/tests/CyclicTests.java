@@ -25,7 +25,7 @@ public class CyclicTests extends TestCase {
 		}
 
 		public Object copyTo(Object target) {
-			return copyTo(null, target, JAXBCopyStrategy.INSTANCE);
+			return copyTo(null, target, JAXBCopyStrategy.INSTANCE2);
 		}
 
 		public Object copyTo(ObjectLocator locator, Object target,
@@ -47,7 +47,7 @@ public class CyclicTests extends TestCase {
 		}
 
 		public Object copyTo(Object target) {
-			return copyTo(null, target, JAXBCopyStrategy.INSTANCE);
+			return copyTo(null, target, JAXBCopyStrategy.INSTANCE2);
 		}
 
 		public Object copyTo(ObjectLocator locator, Object target,

@@ -363,5 +363,7 @@ public class DefaultCopyStrategy implements CopyStrategy2, CopyStrategy {
 		return copy(locator, value);
 	}
 
-	public static final DefaultCopyStrategy INSTANCE = new DefaultCopyStrategy();
+	public static final DefaultCopyStrategy INSTANCE2 = new DefaultCopyStrategy();
+	@SuppressWarnings("deprecation")
+	public static final CopyStrategy INSTANCE = INSTANCE2;
 }

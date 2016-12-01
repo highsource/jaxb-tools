@@ -27,6 +27,8 @@ public class JAXBMergeStrategy extends DefaultMergeStrategy {
 		return !leftCollection.isEmpty() ? leftCollection : rightCollection;
 	}
 
-	public static final JAXBMergeStrategy INSTANCE = new JAXBMergeStrategy();
+	public static final JAXBMergeStrategy INSTANCE2 = new JAXBMergeStrategy();
+	@SuppressWarnings("deprecation")
+	public static final MergeStrategy INSTANCE = INSTANCE2;
 
 }

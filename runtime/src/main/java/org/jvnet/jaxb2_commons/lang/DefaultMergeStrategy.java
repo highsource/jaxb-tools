@@ -4,7 +4,9 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
 public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
-	public static final DefaultMergeStrategy INSTANCE = new DefaultMergeStrategy();
+	public static final DefaultMergeStrategy INSTANCE2 = new DefaultMergeStrategy();
+	@SuppressWarnings("deprecation")
+	public static final MergeStrategy INSTANCE = INSTANCE2;
 
 	@Override
 	public Boolean shouldBeMergedAndSet(ObjectLocator leftLocator,

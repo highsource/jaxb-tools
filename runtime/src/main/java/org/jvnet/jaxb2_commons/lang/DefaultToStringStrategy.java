@@ -1191,5 +1191,7 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 		return stringBuilder;
 	}
 
-	public static final DefaultToStringStrategy INSTANCE = new DefaultToStringStrategy();
+	public static final DefaultToStringStrategy INSTANCE2 = new DefaultToStringStrategy();
+	@SuppressWarnings("deprecation")
+	public static final ToStringStrategy INSTANCE = INSTANCE2;
 }

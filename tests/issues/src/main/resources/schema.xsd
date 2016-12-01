@@ -308,4 +308,20 @@
 		</xs:complexContent>
 	</xs:complexType>
 
+
+	<xs:complexType name="issueGH77Type">
+		<xs:sequence>
+			<xs:element ref="issueGH77Extension"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="issueGH77ExtensionType">
+		<xs:sequence>
+			<xs:element name="a" type="xs:string" default="a"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="issueGH77Extension" type="issueGH77ExtensionType"/>
+	<xs:element name="anotherIssueGH77Extension" type="issueGH77ExtensionType" substitutionGroup="issueGH77Extension"/>
+
 </xs:schema>

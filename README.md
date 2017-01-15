@@ -116,9 +116,12 @@ This is just a namespace, there must not necessarily be content there. Treat it 
 
 Using JAXB2 Annotate Plugin with Maven
 --------------------------------------
-See [this example](https://github.com/highsource/jaxb2-annotate-plugin/tree/master/tests/annox).
 
-Note that annotations are first compiled in the `annotations` module and the added to the classpath of the `maven-jaxb2-plugin` in the `schema` module:
+* Add `org.jvnet.jaxb2_commons:jaxb2-basics-annotate` as XJC plugin
+* Turn on the plugin using `-Xannotate` switch
+* Add artifact with your annotations as another XJC plugin
+
+Example:
 
 ````xml
 <plugin>
@@ -134,14 +137,18 @@ Note that annotations are first compiled in the `annotations` module and the add
 				<groupId>org.jvnet.jaxb2_commons</groupId>
 				<artifactId>jaxb2-basics-annotate</artifactId>
 			</plugin>
+			<!-- Artifact with custom annotations -->
 			<plugin>
-				<groupId>org.jvnet.jaxb2_commons</groupId>
-				<artifactId>jaxb2-annotate-plugin-test-annox-annotations</artifactId>
+				<groupId>com.acme.foo</groupId>
+				<artifactId>my-custom-annotations</artifactId>
 			</plugin>
 		</plugins>
 	</configuration>
 </plugin>
 ````
+See [this example](https://github.com/highsource/jaxb2-annotate-plugin/tree/master/tests/annox).
+
+Note that annotations are first compiled in the `annotations` module and the added to the classpath of the `maven-jaxb2-plugin` in the `schema` module:
 
 Using JAXB2 Annotate Plugin with Ant
 ------------------------------------

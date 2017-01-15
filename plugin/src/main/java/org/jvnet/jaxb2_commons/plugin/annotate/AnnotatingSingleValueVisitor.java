@@ -51,6 +51,8 @@ import org.jvnet.jaxb2_commons.util.CodeModelUtils;
 import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
+import com.sun.codemodel.JExpressionImpl;
+import com.sun.codemodel.JFormatter;
 import com.sun.codemodel.JType;
 
 public class AnnotatingSingleValueVisitor implements
@@ -140,13 +142,13 @@ public class AnnotatingSingleValueVisitor implements
 	}
 
 	public JAnnotationUse visit(XClassAnnotationValue<?> value) {
-		final JType type = this.codeModel.ref(value.getValue());
-		return annotationUse.param(this.name, type);
+		final JType type = this.codeModel._ref(value.getValue());
+		return param(type);
 	}
 
 	public JAnnotationUse visit(XClassByNameAnnotationValue<?> value) {
 		JType type = CodeModelUtils.ref(this.codeModel, value.getClassName());
-		return annotationUse.param(this.name, type);
+		return param(type);
 	}
 
 	public JAnnotationUse visit(XArrayClassAnnotationValue<?, ?> value) {
@@ -155,7 +157,19 @@ public class AnnotatingSingleValueVisitor implements
 		for (int index = 0; index < value.getDimension(); index++) {
 			type = type.array();
 		}
-		return annotationUse.param(this.name, type);
+		return param(type);
+	}
+
+	private JAnnotationUse param(final JType type) {
+		if (type instanceof JClass) {
+			return annotationUse.param(this.name, (JClass) type);
+		} else {
+			return annotationUse.param(this.name, new JExpressionImpl() {
+				public void generate(JFormatter f) {
+					f.g(type).p(".class");
+				}
+			});
+		}
 	}
 
 }

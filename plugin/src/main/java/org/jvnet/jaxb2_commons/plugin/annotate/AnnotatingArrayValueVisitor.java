@@ -52,6 +52,8 @@ import com.sun.codemodel.JAnnotationArrayMember;
 import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
+import com.sun.codemodel.JExpressionImpl;
+import com.sun.codemodel.JFormatter;
 import com.sun.codemodel.JType;
 
 public class AnnotatingArrayValueVisitor implements
@@ -141,13 +143,13 @@ public class AnnotatingArrayValueVisitor implements
 	}
 
 	public JAnnotationArrayMember visit(XClassAnnotationValue<?> value) {
-		final Class<?> _class = value.getValue();
-		return annotationArrayMember.param(_class);
+		final JType type = this.codeModel._ref(value.getValue());
+		return param(type);
 	}
 
 	public JAnnotationArrayMember visit(XClassByNameAnnotationValue<?> value) {
 		final JType ref = CodeModelUtils.ref(codeModel, value.getClassName());
-		return annotationArrayMember.param(ref);
+		return param(ref);
 	}
 
 	public JAnnotationArrayMember visit(XArrayClassAnnotationValue<?, ?> value) {
@@ -156,7 +158,19 @@ public class AnnotatingArrayValueVisitor implements
 		for (int index = 0; index < value.getDimension(); index++) {
 			type = type.array();
 		}
-		return annotationArrayMember.param(type);
+		return param(type);
+	}
+
+	private JAnnotationArrayMember param(final JType type) {
+		if (type instanceof JClass) {
+			return annotationArrayMember.param((JClass) type);
+		} else {
+			return annotationArrayMember.param(new JExpressionImpl() {
+				public void generate(JFormatter f) {
+					f.g(type).p(".class");
+				}
+			});
+		}
 	}
 
 }

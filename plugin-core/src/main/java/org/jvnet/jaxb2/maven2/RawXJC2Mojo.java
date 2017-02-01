@@ -23,6 +23,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -693,7 +694,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	protected List<URI> createProducesURIs() throws MojoExecutionException {
 		final List<URI> producesURIs = new LinkedList<URI>();
 		try {
-			final List<File> producesFiles = IOUtils.scanDirectoryForFiles(getBuildContext(), getGenerateDirectory(),
+
+			File directoryToCheck = new File(getGenerateDirectory().toString() + "\\" + getGeneratePackage().toString().replace(".", "\\"));
+			final List<File> producesFiles = IOUtils.scanDirectoryForFiles(getBuildContext(), directoryToCheck,
 					getProduces(), new String[0], !getDisableDefaultExcludes());
 			if (producesFiles != null) {
 				for (File producesFile : producesFiles) {

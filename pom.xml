@@ -49,8 +49,13 @@
 		<jaxb20.version>2.0.5</jaxb20.version>
 		<jaxb21.version>2.1.13</jaxb21.version>
 		<jaxb22.version>2.2.11</jaxb22.version>
-		<jaxb-api.version>2.2.11</jaxb-api.version>
+		<jaxb-api.version>2.2.12-b140109</jaxb-api.version>
 		<jaxb.version>${jaxb22.version}</jaxb.version>
+		<stax-ex.version>1.7.7</stax-ex.version>
+		<fastinfoset.version>1.2.13</fastinfoset.version>
+		<xsom.version>20140925</xsom.version>
+		<dtd-parser.version>1.1</dtd-parser.version>
+		<istack.version>2.21</istack.version>
 		<jaxb2-basics.version>0.9.0</jaxb2-basics.version>
 		<maven.plugin.testing.version>2.1</maven.plugin.testing.version>
 		<maven.plugin.plugin.version>3.4</maven.plugin.plugin.version>
@@ -109,11 +114,81 @@
 				<artifactId>jaxb-runtime</artifactId>
 				<version>${jaxb.version}</version>
 			</dependency>
+			<!-- Start of jaxb-runtime dependencies -->
+			<dependency>
+				<groupId>org.glassfish.jaxb</groupId>
+				<artifactId>jaxb-core</artifactId>
+				<version>${jaxb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.xml.bind</groupId>
+				<artifactId>jaxb-api</artifactId>
+				<version>${jaxb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.jaxb</groupId>
+				<artifactId>txw2</artifactId>
+				<version>${jaxb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.istack</groupId>
+				<artifactId>istack-commons-runtime</artifactId>
+				<version>${istack.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jvnet.staxex</groupId>
+				<artifactId>stax-ex</artifactId>
+				<version>${stax-ex.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.xml.fastinfoset</groupId>
+				<artifactId>FastInfoset</artifactId>
+				<version>${fastinfoset.version}</version>
+			</dependency>
+			<!-- End of jaxb-runtime dependencies -->
+
 			<dependency>
 				<groupId>org.glassfish.jaxb</groupId>
 				<artifactId>jaxb-xjc</artifactId>
 				<version>${jaxb.version}</version>
 			</dependency>
+			<!-- Start jaxb-xjc dependencies -->
+			<dependency>
+				<groupId>com.sun.xsom</groupId>
+				<artifactId>xsom</artifactId>
+				<version>${xsom.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.jaxb</groupId>
+				<artifactId>codemodel</artifactId>
+				<version>${jaxb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.xml.bind.external</groupId>
+				<artifactId>rngom</artifactId>
+				<version>${jaxb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.xml.dtd-parser</groupId>
+				<artifactId>dtd-parser</artifactId>
+				<version>${dtd-parser.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.istack</groupId>
+				<artifactId>istack-commons-tools</artifactId>
+				<version>${istack.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>com.sun</groupId>
+						<artifactId>tools</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<!-- End of jaxb-xjc dependencies -->
 			<dependency>
 				<groupId>com.sun.xml.bind</groupId>
 				<artifactId>jaxb-extra-osgi</artifactId>
@@ -234,7 +309,7 @@
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-			<groupId>org.apache.maven.plugin-testing</groupId>
+				<groupId>org.apache.maven.plugin-testing</groupId>
 				<artifactId>maven-plugin-testing-harness</artifactId>
 				<version>${maven.plugin.testing.version}</version>
 				<scope>test</scope>

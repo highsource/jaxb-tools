@@ -14,6 +14,14 @@
 
 package org.jvnet.jaxb2.maven2;
 
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,15 +42,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMResult;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.DefaultArtifact;
@@ -421,6 +420,12 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		setupLogging();
 		if (getVerbose())
 			getLog().info("Started execution.");
+
+		if (hasBasicAuthentication()){
+			getBasicAuthentication().setDownloadDirectory(processDownloadDirectory());
+			SchemaDownloader schemaDownloader = new SchemaDownloader(getBasicAuthentication());
+			schemaDownloader.execute();
+		}
 		setupMavenPaths();
 		setupCatalogResolver();
 		setupEntityResolver();
@@ -479,6 +484,10 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		if (getVerbose()) {
 			getLog().info("Finished execution.");
 		}
+	}
+
+	private String processDownloadDirectory() {
+		return getSchemaDirectory() == null ? getBasicAuthentication().getDownloadDirectory() : getSchemaDirectory().getAbsolutePath();
 	}
 
 	private void addIfExistsToEpisodeSchemaBindings() throws MojoExecutionException {

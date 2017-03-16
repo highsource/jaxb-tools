@@ -15,6 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
@@ -157,6 +158,23 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 
 	public void setSchemaLanguage(String schemaLanguage) {
 		this.schemaLanguage = schemaLanguage;
+	}
+
+	@Parameter
+	private BasicAuthentication basicAuthentication;
+
+	public BasicAuthentication getBasicAuthentication() {
+		return basicAuthentication;
+	}
+
+	public void setBasicAuthentication(BasicAuthentication basicAuthentication) {
+		this.basicAuthentication = basicAuthentication;
+	}
+
+	public boolean hasBasicAuthentication() {
+		return null != basicAuthentication
+				&& StringUtils.isNotEmpty(basicAuthentication.getUsername())
+				&& basicAuthentication.getUrls().length > 0;
 	}
 
 	/**

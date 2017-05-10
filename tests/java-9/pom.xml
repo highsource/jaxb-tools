@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>maven-jaxb2-plugin-tests-java-9</artifactId>
+	<parent>
+		<groupId>org.jvnet.jaxb2.maven2</groupId>
+		<artifactId>maven-jaxb2-plugin-tests</artifactId>
+		<version>0.13.3-SNAPSHOT</version>
+	</parent>
+	<packaging>jar</packaging>
+	<name>Maven JAXB 2.x Plugin Tests [Java 9]</name>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<!-- disabling the generation of the episode file (whatever it does!)
+                   prevents the "Prefix '' is already bound to ''" error on Java 9 -->
+							<episode>false</episode>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

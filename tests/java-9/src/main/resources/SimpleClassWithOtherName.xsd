@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0"
+    targetNamespace="class_name" elementFormDefault="qualified">
+
+    <xsd:complexType name="SimpleClassWithWrongName">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <jaxb:class name="SimpleClassWithRightName" />
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="attribute" type="xsd:string" minOccurs="1" maxOccurs="1">
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

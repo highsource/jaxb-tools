@@ -137,9 +137,11 @@ public class OptionsFactory implements
 		else if ("DTD".equalsIgnoreCase(schemaLanguage))
 			return Language.DTD;
 		else if ("RELAXNG".equalsIgnoreCase(schemaLanguage))
-			return Language.RELAXNG;
+//			return Language.RELAXNG;
+			throw new IllegalArgumentException("Should've been 'Language.RELAXNG'");
 		else if ("RELAXNG_COMPACT".equalsIgnoreCase(schemaLanguage))
-			return Language.RELAXNG_COMPACT;
+//			return Language.RELAXNG_COMPACT;
+			throw new IllegalArgumentException("Should've been 'Language.RELAXNG_COMPACT'");
 		else if ("WSDL".equalsIgnoreCase(schemaLanguage))
 			return Language.WSDL;
 		else {

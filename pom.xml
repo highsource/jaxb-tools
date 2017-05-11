@@ -49,16 +49,17 @@
 		<jaxb20.version>2.0.5</jaxb20.version>
 		<jaxb21.version>2.1.13</jaxb21.version>
 		<jaxb22.version>2.2.11</jaxb22.version>
-		<jaxb-api.version>2.2.12-b140109</jaxb-api.version>
-		<jaxb.version>${jaxb22.version}</jaxb.version>
+		<jaxb23.version>2.3.0-b170127.1453</jaxb23.version>
+		<jaxb-api.version>2.3.0-b170201.1204</jaxb-api.version>
+		<jaxb.version>${jaxb23.version}</jaxb.version>
 		<stax-ex.version>1.7.7</stax-ex.version>
 		<fastinfoset.version>1.2.13</fastinfoset.version>
 		<xsom.version>20140925</xsom.version>
 		<dtd-parser.version>1.1</dtd-parser.version>
-		<istack.version>2.21</istack.version>
+		<istack.version>3.0.5</istack.version>
 		<jaxb2-basics.version>0.9.0</jaxb2-basics.version>
 		<maven.plugin.testing.version>2.1</maven.plugin.testing.version>
-		<maven.plugin.plugin.version>3.4</maven.plugin.plugin.version>
+		<maven.plugin.plugin.version>3.5</maven.plugin.plugin.version>
 		<slf4j.version>1.7.7</slf4j.version>
 	</properties>
 	<profiles>
@@ -123,7 +124,7 @@
 			<dependency>
 				<groupId>javax.xml.bind</groupId>
 				<artifactId>jaxb-api</artifactId>
-				<version>${jaxb.version}</version>
+				<version>${jaxb-api.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.glassfish.jaxb</groupId>
@@ -150,6 +151,11 @@
 			<dependency>
 				<groupId>org.glassfish.jaxb</groupId>
 				<artifactId>jaxb-xjc</artifactId>
+				<version>${jaxb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.jaxb</groupId>
+				<artifactId>jaxb-xjc-jdk9</artifactId>
 				<version>${jaxb.version}</version>
 			</dependency>
 			<!-- Start jaxb-xjc dependencies -->
@@ -376,7 +382,6 @@
 							</goals>
 						</execution>
 					</executions>
-
 				</plugin>
 				<plugin>
 					<inherited>true</inherited>

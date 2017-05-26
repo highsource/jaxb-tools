@@ -1,3 +1,11 @@
+# :boom: JAVA 9 ALERT :boom:
+
+This branch builds a 0.13.3-SNAPSHOT version ([in `plugin`](plugin)) that requires the Java 9 compiler because the updated dependency `org.glassfish.jaxb:jaxb-xjc-jdk9` contains Java 9 bytecode.
+The easiest way to use the new version's compiler is to set `JAVA_HOME`, e.g. in `~/.mavenrc`.
+Even that build does not pass [the Java 9 test](tests/java-9), though, because it fails to process schema bindings.
+
+***
+
 # JAXB2 Maven Plugin #
 
 Welcome to the `org.jvnet.jaxb2.maven2:maven-jaxb2-plugin`, the most advanced and feature-full Maven plugin for XML Schema compilation.

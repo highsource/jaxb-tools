@@ -220,9 +220,10 @@ public enum AnnotationTarget {
 				throws IllegalArgumentException, UnsupportedOperationException {
 			final JMethod valueMethod = enumOutline.clazz.getMethod("value", new JType[0]);
 			if (null == valueMethod) {
-				throw new UnsupportedOperationException(MessageFormat.format(
-						"Method value() not found in enum [{0}]",
-						enumOutline.clazz.name()));
+				throw new IllegalArgumentException(
+						MessageFormat
+								.format("Could not annotate the value() method of the enum [{0}] since it could not be found.",
+										enumOutline.clazz.name()));
 			}
 			return valueMethod;
 		}
@@ -237,9 +238,11 @@ public enum AnnotationTarget {
 			final JType jTypeString = codeModel._ref(String.class);
 			final JMethod fromValueMethod = enumOutline.clazz.getMethod("fromValue", new JType[]{jTypeString});
 			if (null == fromValueMethod) {
-				throw new UnsupportedOperationException(MessageFormat.format(
-						"Method fromValue(String) not found in enum [{0}]",
-						enumOutline.clazz.name()));
+				throw new IllegalArgumentException(
+						MessageFormat
+								.format("Could not annotate the fromValue(String) method of the enum [{0}] since it could not be found.",
+										enumOutline.clazz.name()));
+				
 			}
 			return fromValueMethod;
 		}

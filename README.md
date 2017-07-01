@@ -118,8 +118,8 @@ You can use the following customization elements in the `http://annox.dev.java.n
 * `annotateElement`
 * `annotateEnum`
 * `annotateEnumConstant`
-* `annotateEnumValueMethod` - place annotation above `value()` method
-* `annotateEnumFromValueMethod` - place annotation above `fromValue(String)` method
+* `annotateEnumValueMethod` - annotate the `value()` method of the enum
+* `annotateEnumFromValueMethod` - annotate the `fromValue(String)` method of the enum
 
 The `http://annox.dev.java.net` namespace must be declared in the `jaxb:extensionBindingPrefixes` attribute via prefix, ex.:
 

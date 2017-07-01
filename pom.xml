@@ -217,7 +217,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.sun.xml.bind</groupId>
-				<artifactId>jaxb-core</artifactId>
+				<artifactId>jaxb-impl</artifactId>
 				<version>${jaxb.version}</version>
 			</dependency>
 			<dependency>
@@ -329,8 +329,8 @@
 					<inherited>true</inherited>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<configuration>
-						<source>1.8</source>
-						<target>1.8</target>
+						<source>1.6</source>
+						<target>1.6</target>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -368,6 +368,11 @@
 							<version>1.5.3-1</version>
 						</dependency>
 					</dependencies>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-invoker-plugin</artifactId>
+					<version>3.0.0</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

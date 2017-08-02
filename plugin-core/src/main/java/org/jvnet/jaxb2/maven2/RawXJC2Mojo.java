@@ -894,7 +894,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		final List<URI> dependsURIs = getDependsURIs();
 		final List<URI> producesURIs = getProducesURIs();
 
-		getLog().info(MessageFormat.format("Up-to-date check for source resources [{0}] and target resources [{1}].",
+		getLog().debug(MessageFormat.format("Up-to-date check for source resources [{0}] and target resources [{1}].",
 				dependsURIs, producesURIs));
 
 		boolean itIsKnownThatNoDependsURIsWereChanged = true;

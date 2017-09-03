@@ -347,9 +347,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			if (dependencyManagement != null) {
 				merge(dependencyMap, dependencyManagement.getDependencies());
 			}
-			if (getProject().getDependencies() != null) {
-				merge(dependencyMap, getProject().getDependencies());
-			}
+			merge(dependencyMap, getProjectDependencies());
 		}
 	}
 

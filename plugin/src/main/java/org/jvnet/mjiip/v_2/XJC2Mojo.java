@@ -12,7 +12,7 @@ import com.sun.tools.xjc.Options;
  * 
  * @author Aleksei Valikov (valikov@gmx.net)
  */
-@Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.COMPILE, threadSafe = true)
+@Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.COMPILE, requiresDependencyCollection = ResolutionScope.COMPILE, threadSafe = true)
 public class XJC2Mojo extends XJC22Mojo {
 
 	private final org.jvnet.jaxb2.maven2.OptionsFactory<Options> optionsFactory = new OptionsFactory();

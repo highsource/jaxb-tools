@@ -1185,6 +1185,29 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 			List<org.apache.maven.artifact.Artifact> plugingArtifacts) {
 		this.pluginArtifacts = plugingArtifacts;
 	}
+	
+	public List<Dependency> getProjectDependencies() {
+		
+		@SuppressWarnings("unchecked")
+		final Set<Artifact> artifacts = getProject().getArtifacts();
+		
+		if (artifacts == null) {
+			return Collections.emptyList();
+		} else {
+			final List<Dependency> dependencies = new ArrayList<Dependency>(artifacts.size());
+			for (Artifact artifact : artifacts) {
+				final Dependency dependency = new Dependency();
+				dependency.setGroupId(artifact.getGroupId());
+				dependency.setArtifactId(artifact.getArtifactId());
+				dependency.setVersion(artifact.getVersion());
+				dependency.setClassifier(artifact.getClassifier());
+				dependency.setScope(artifact.getScope());
+				dependency.setType(artifact.getType());
+				dependencies.add(dependency);
+			}
+			return dependencies;
+		}
+	}
 
 	protected List<URI> createResourceEntryUris(ResourceEntry resourceEntry,
 			String defaultDirectory, String[] defaultIncludes,
@@ -1247,8 +1270,8 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 					.getDependencyManagement().getDependencies();
 			merge(dependencyResource, dependencies);
 		}
-		@SuppressWarnings("unchecked")
-		List<Dependency> dependencies = getProject().getDependencies();
+
+		List<Dependency> dependencies = getProjectDependencies();
 		if (dependencies != null) {
 			merge(dependencyResource, dependencies);
 		}

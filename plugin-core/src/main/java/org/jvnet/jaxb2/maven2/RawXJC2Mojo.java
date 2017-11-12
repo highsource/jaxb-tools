@@ -48,8 +48,10 @@ import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.DefaultArtifact;
 import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
 import org.apache.maven.artifact.resolver.ArtifactResolutionException;
+import org.apache.maven.artifact.resolver.filter.AndArtifactFilter;
 import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
 import org.apache.maven.artifact.resolver.filter.ScopeArtifactFilter;
+import org.apache.maven.artifact.resolver.filter.TypeArtifactFilter;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.DependencyManagement;
 import org.apache.maven.model.Resource;
@@ -397,7 +399,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			if (getUseDependenciesAsEpisodes()) {
 				@SuppressWarnings("unchecked")
 				final Collection<Artifact> projectArtifacts = getProject().getArtifacts();
-				final ArtifactFilter filter = new ScopeArtifactFilter(DefaultArtifact.SCOPE_COMPILE);
+				final AndArtifactFilter filter = new AndArtifactFilter();
+				filter.add(new ScopeArtifactFilter(DefaultArtifact.SCOPE_COMPILE));
+				filter.add(new TypeArtifactFilter("jar"));
 				for (Artifact artifact : projectArtifacts) {
 					if (filter.include(artifact)) {
 						this.episodeArtifacts.add(artifact);

@@ -1,10 +1,5 @@
 package org.jvnet.jaxb2.maven2.net.tests;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,12 +7,16 @@ import org.jvnet.jaxb2.maven2.net.CompositeURILastModifiedResolver;
 import org.jvnet.jaxb2.maven2.net.JarURILastModifiedResolver;
 import org.jvnet.jaxb2.maven2.net.URILastModifiedResolver;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 public class URILastModifiedResolverTest {
 
 	@Test
-	public void getsFileURIFromJarFileURICorrectly() throws URISyntaxException,
-			MalformedURLException, IOException {
-		final URI jarURI = Object.class.getResource("Object.class").toURI();
+	public void getsFileURIFromJarFileURICorrectly() throws URISyntaxException {
+		// Test with a class that resides in a jar (Assert.class).
+		// Note that Object.class is NOT in a jar but in a module under Java9 or later.
+		final URI jarURI = Assert.class.getResource("Assert.class").toURI();
 		final String jarURIString = jarURI.toString();
 		final String partJarURIString = jarURIString.substring(0,
 				jarURIString.indexOf(JarURILastModifiedResolver.SEPARATOR));

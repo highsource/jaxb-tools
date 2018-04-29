@@ -1062,7 +1062,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 
 	private static final String XML_SCHEMA_CLASS_NAME = "XmlSchema";
 
-	@Component
+	@Parameter( defaultValue = "${project}", readonly = true )
 	private MavenProject project;
 
 	public MavenProject getProject() {

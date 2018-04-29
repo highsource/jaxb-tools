@@ -17,8 +17,9 @@ public class URILastModifiedResolverTest {
 	@Test
 	public void getsFileURIFromJarFileURICorrectly() throws URISyntaxException,
 			MalformedURLException, IOException {
-		final URI jarURI = Object.class.getResource("Object.class").toURI();
+		final URI jarURI = Test.class.getResource("Test.class").toURI();
 		final String jarURIString = jarURI.toString();
+		System.out.println(jarURIString);
 		final String partJarURIString = jarURIString.substring(0,
 				jarURIString.indexOf(JarURILastModifiedResolver.SEPARATOR));
 		final URI partJarURI = new URI(partJarURIString);

@@ -79,6 +79,7 @@ import org.xml.sax.SAXException;
 
 import com.sun.org.apache.xml.internal.resolver.CatalogManager;
 import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
+import com.sun.xml.txw2.annotation.XmlNamespace;
 
 /**
  * Maven JAXB 2.x Mojo.
@@ -427,6 +428,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		if (getVerbose())
 			getLog().info("Started execution.");
 		setupBindInfoPackage();
+		setupEpisodePackage();
 		setupMavenPaths();
 		setupCatalogResolver();
 		setupEntityResolver();
@@ -500,10 +502,39 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			}
 			else {
 				final String namespace = xmlSchema.namespace();
-				if (JAXB_NSURI.equals(namespace)) {
+				if (!JAXB_NSURI.equals(namespace)) {
 					getLog().warn(MessageFormat.format(
-							"Namespace of the [{0}] annotation does not match [{1}]. Processing bindings will probably fail.",
+							"Namespace of the [{0}] annotation is [{1}] and does not match [{2}]. Processing bindings will probably fail.",
+							namespace,
 							XmlSchema.class.getName(),
+							JAXB_NSURI));
+				}
+			}
+			
+		} catch (ClassNotFoundException cnfex) {
+			getLog().warn(MessageFormat.format("Class [{0}] could not be found. Processing bindings will probably faile.", packageInfoClassName), cnfex);
+		}
+
+	}
+
+	private void setupEpisodePackage() {
+		String packageInfoClassName = "com.sun.xml.bind.v2.schemagen.episode.package-info";
+		try {
+			final Class<?> packageInfoClass = Class.forName(packageInfoClassName);
+			final XmlNamespace xmlNamespace = packageInfoClass.getAnnotation(XmlNamespace.class);
+			if (xmlNamespace == null) {
+				getLog().warn(MessageFormat.format(
+						"Class [{0}] is missing the [{1}] annotation. Processing bindings will probably fail.",
+						packageInfoClassName,
+						XmlNamespace.class.getName()));
+			}
+			else {
+				final String namespace = xmlNamespace.value();
+				if (!JAXB_NSURI.equals(namespace)) {
+					getLog().warn(MessageFormat.format(
+							"Namespace of the [{0}] annotation is [{1}] and does not match [{2}]. Processing bindings will probably fail.",
+							XmlNamespace.class.getName(),
+							namespace,
 							JAXB_NSURI));
 				}
 			}

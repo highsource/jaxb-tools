@@ -1300,7 +1300,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 			@SuppressWarnings("unchecked")
 			final Set<Artifact> artifacts = MavenMetadataSource
 					.createArtifacts(getArtifactFactory(),
-							Arrays.asList(dependencyResource),
+							Arrays.<Dependency>asList(dependencyResource),
 							Artifact.SCOPE_RUNTIME, null, getProject());
 
 			if (artifacts.size() != 1) {

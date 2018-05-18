@@ -598,6 +598,20 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	public void setAccessExternalDTD(String accessExternalDTD) {
 		this.accessExternalDTD = accessExternalDTD;
 	}
+	
+	/**
+	 * Enables external entity processing.
+	 */
+	@Parameter(defaultValue = "true", property = "maven.xjc2.enableExternalEntityProcessing")
+	private boolean enableExternalEntityProcessing;
+	
+	public boolean isEnableExternalEntityProcessing() {
+		return enableExternalEntityProcessing;
+	}
+	
+	public void setEnableExternalEntityProcessing(boolean enableExternalEntityProcessing) {
+		this.enableExternalEntityProcessing = enableExternalEntityProcessing;
+	}
 
 	/**
 	 * If 'true', generates content property for types with multiple xs:any

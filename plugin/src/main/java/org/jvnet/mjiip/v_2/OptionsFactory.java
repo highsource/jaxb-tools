@@ -75,6 +75,9 @@ public class OptionsFactory implements
 			System.setProperty("javax.xml.accessExternalDTD",
 					optionsConfiguration.getAccessExternalDTD());
 		}
+		if (optionsConfiguration.isEnableExternalEntityProcessing()) {
+			System.setProperty("enableExternalEntityProcessing", Boolean.TRUE.toString());
+		}
 		options.contentForWildcard = optionsConfiguration
 				.isContentForWildcard();
 

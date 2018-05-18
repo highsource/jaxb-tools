@@ -31,6 +31,7 @@ public class OptionsConfiguration {
 	private final boolean disableXmlSecurity;
 	private final String accessExternalSchema;
 	private final String accessExternalDTD;
+	private final boolean enableExternalEntityProcessing;
 	private final boolean contentForWildcard;
 
 	private final boolean extension;
@@ -54,8 +55,8 @@ public class OptionsConfiguration {
 			boolean packageLevelAnnotations, boolean noFileHeader,
 			boolean enableIntrospection, boolean disableXmlSecurity,
 			String accessExternalSchema, String accessExternalDTD,
+			boolean enableExternalEntityProcessing,
 			boolean contentForWildcard,
-
 			boolean extension, boolean strict, boolean verbose,
 			boolean debugMode, List<String> arguments, List<URL> plugins,
 			String specVersion) {
@@ -74,6 +75,7 @@ public class OptionsConfiguration {
 		this.disableXmlSecurity = disableXmlSecurity;
 		this.accessExternalSchema = accessExternalSchema;
 		this.accessExternalDTD = accessExternalDTD;
+		this.enableExternalEntityProcessing = enableExternalEntityProcessing;
 		this.contentForWildcard = contentForWildcard;
 		this.extension = extension;
 		this.strict = strict;
@@ -138,6 +140,10 @@ public class OptionsConfiguration {
 
 	public String getAccessExternalDTD() {
 		return accessExternalDTD;
+	}
+	
+	public boolean isEnableExternalEntityProcessing() {
+		return enableExternalEntityProcessing;
 	}
 
 	public boolean isContentForWildcard() {

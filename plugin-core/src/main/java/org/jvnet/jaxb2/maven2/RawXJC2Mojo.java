@@ -328,8 +328,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	}
 
 	/**
-	 * *************************************************************************
-	 * *
+	 * ************************************************************************* *
 	 */
 
 	protected void injectDependencyDefaults() {
@@ -497,22 +496,21 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			if (xmlSchema == null) {
 				getLog().warn(MessageFormat.format(
 						"Class [{0}] is missing the [{1}] annotation. Processing bindings will probably fail.",
-						packageInfoClassName,
-						XmlSchema.class.getName()));
-			}
-			else {
+						packageInfoClassName, XmlSchema.class.getName()));
+			} else {
 				final String namespace = xmlSchema.namespace();
 				if (!JAXB_NSURI.equals(namespace)) {
 					getLog().warn(MessageFormat.format(
 							"Namespace of the [{0}] annotation is [{1}] and does not match [{2}]. Processing bindings will probably fail.",
-							namespace,
-							XmlSchema.class.getName(),
-							JAXB_NSURI));
+							namespace, XmlSchema.class.getName(), JAXB_NSURI));
 				}
 			}
-			
+
 		} catch (ClassNotFoundException cnfex) {
-			getLog().warn(MessageFormat.format("Class [{0}] could not be found. Processing bindings will probably faile.", packageInfoClassName), cnfex);
+			getLog().warn(
+					MessageFormat.format("Class [{0}] could not be found. Processing bindings will probably faile.",
+							packageInfoClassName),
+					cnfex);
 		}
 
 	}
@@ -525,22 +523,21 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			if (xmlNamespace == null) {
 				getLog().warn(MessageFormat.format(
 						"Class [{0}] is missing the [{1}] annotation. Processing bindings will probably fail.",
-						packageInfoClassName,
-						XmlNamespace.class.getName()));
-			}
-			else {
+						packageInfoClassName, XmlNamespace.class.getName()));
+			} else {
 				final String namespace = xmlNamespace.value();
 				if (!JAXB_NSURI.equals(namespace)) {
 					getLog().warn(MessageFormat.format(
 							"Namespace of the [{0}] annotation is [{1}] and does not match [{2}]. Processing bindings will probably fail.",
-							XmlNamespace.class.getName(),
-							namespace,
-							JAXB_NSURI));
+							XmlNamespace.class.getName(), namespace, JAXB_NSURI));
 				}
 			}
-			
+
 		} catch (ClassNotFoundException cnfex) {
-			getLog().warn(MessageFormat.format("Class [{0}] could not be found. Processing bindings will probably faile.", packageInfoClassName), cnfex);
+			getLog().warn(
+					MessageFormat.format("Class [{0}] could not be found. Processing bindings will probably faile.",
+							packageInfoClassName),
+					cnfex);
 		}
 
 	}
@@ -604,11 +601,10 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	public abstract void doExecute(O options) throws MojoExecutionException;
 
 	/**
-	 * Initializes logging. If Maven is run in debug mode (that is, debug level
-	 * is enabled in the log), turn on the verbose mode in Mojo. Further on, if
-	 * vebose mode is on, set the
-	 * <code>com.sun.tools.xjc.Options.findServices</code> system property on to
-	 * enable debuggin of XJC plugins.
+	 * Initializes logging. If Maven is run in debug mode (that is, debug level is
+	 * enabled in the log), turn on the verbose mode in Mojo. Further on, if vebose
+	 * mode is on, set the <code>com.sun.tools.xjc.Options.findServices</code>
+	 * system property on to enable debuggin of XJC plugins.
 	 * 
 	 */
 	protected void setupLogging() {
@@ -773,8 +769,8 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	}
 
 	/**
-	 * Log the configuration settings. Shown when exception thrown or when
-	 * verbose is true.
+	 * Log the configuration settings. Shown when exception thrown or when verbose
+	 * is true.
 	 */
 	protected void logConfiguration() throws MojoExecutionException {
 		super.logConfiguration();
@@ -902,8 +898,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	/**
 	 * Creates an instance of catalog resolver.
 	 * 
-	 * @return
+	 * @return Instance of the catalog resolver.
 	 * @throws MojoExecutionException
+	 *             If catalog resolver cannot be instantiated.
 	 */
 	protected CatalogResolver createCatalogResolver() throws MojoExecutionException {
 		final CatalogManager catalogManager = new CatalogManager();
@@ -951,10 +948,10 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 	/**
 	 * @return true to indicate results are up-to-date, that is, when the latest
-	 *         from input files is earlier than the younger from the output
-	 *         files (meaning no re-execution required).
+	 *         from input files is earlier than the younger from the output files
+	 *         (meaning no re-execution required).
 	 */
-	protected boolean isUpToDate() throws MojoExecutionException {
+	protected boolean isUpToDate() {
 		final List<URI> dependsURIs = getDependsURIs();
 		final List<URI> producesURIs = getProducesURIs();
 
@@ -1098,12 +1095,11 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	}
 
 	/**
-	 * Returns array of command line arguments for XJC. These arguments are
-	 * based on the configured arguments (see {@link #getArgs()}) but also
-	 * include episode arguments.
+	 * Returns array of command line arguments for XJC. These arguments are based on
+	 * the configured arguments (see {@link #getArgs()}) but also include episode
+	 * arguments.
 	 * 
 	 * @return String array of XJC command line options.
-	 * @throws MojoExecutionException
 	 */
 
 	protected List<String> getArguments() {
@@ -1176,7 +1172,8 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		final OptionsConfiguration optionsConfiguration = new OptionsConfiguration(getEncoding(), getSchemaLanguage(),
 				getGrammars(), getBindFiles(), getEntityResolver(), getGeneratePackage(), getGenerateDirectory(),
 				getReadOnly(), getPackageLevelAnnotations(), getNoFileHeader(), getEnableIntrospection(),
-				getDisableXmlSecurity(), getAccessExternalSchema(), getAccessExternalDTD(), getContentForWildcard(),
+				getDisableXmlSecurity(), getAccessExternalSchema(), getAccessExternalDTD(), isEnableExternalEntityProcessing(), 
+				getContentForWildcard(),
 				getExtension(), getStrict(), getVerbose(), getDebug(), getArguments(), getXjcPluginURLs(),
 				getSpecVersion());
 		return optionsConfiguration;

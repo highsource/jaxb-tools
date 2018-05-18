@@ -56,6 +56,8 @@ public class IOUtils {
 	 * Scans given directory for files satisfying given inclusion/exclusion
 	 * patterns.
 	 * 
+	 * @param buildContext
+	 *            Build context provided by the environment, used to scan for files.
 	 * @param directory
 	 *            Directory to scan.
 	 * @param includes
@@ -66,11 +68,13 @@ public class IOUtils {
 	 *            default exclusion flag.
 	 * @return Files from the given directory which satisfy given patterns. The
 	 *         files are {@link File#getCanonicalFile() canonical}.
+	 * @throws IOException
+	 *             If an I/O error occurs, which is possible because the
+	 *             construction of the canonical pathname may require filesystem
+	 *             queries.
 	 */
-	public static List<File> scanDirectoryForFiles(BuildContext buildContext,
-			final File directory, final String[] includes,
-			final String[] excludes, boolean defaultExcludes)
-			throws IOException {
+	public static List<File> scanDirectoryForFiles(BuildContext buildContext, final File directory,
+			final String[] includes, final String[] excludes, boolean defaultExcludes) throws IOException {
 		if (!directory.exists()) {
 			return Collections.emptyList();
 		}

@@ -26,13 +26,19 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-package org.jvnet.jaxb2_commons.plugin.annotate;
+package org.jvnet.jaxb2_commons.plugin;
 
 import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.xml.namespace.QName;
 
 import org.apache.commons.lang3.Validate;
+import org.jvnet.jaxb2_commons.plugin.annotate.AnnotatePlugin;
+import org.jvnet.jaxb2_commons.plugin.removeannotation.RemoveAnnotationPlugin;
 import org.jvnet.jaxb2_commons.util.FieldAccessorUtils;
 import org.jvnet.jaxb2_commons.util.OutlineUtils;
 import org.w3c.dom.Element;
@@ -258,15 +264,15 @@ public enum AnnotationTarget {
 	};
 
 	private final String target;
-	private final QName name;
+	private final Set<QName> names;
 
-	AnnotationTarget(String target, QName name) {
+	AnnotationTarget(String target, QName... names) {
 		this.target = target;
-		this.name = name;
+		this.names = Collections.unmodifiableSet(new HashSet<QName>(Arrays.asList(names)));
 	}
 
-	public QName getName() {
-		return name;
+	public Set<QName> getNames() {
+		return names;
 	}
 
 	public String getTarget() {
@@ -322,7 +328,9 @@ public enum AnnotationTarget {
 				element.getLocalName());
 
 		if (AnnotatePlugin.ANNOTATE_QNAME.equals(name)
-				|| AnnotatePlugin.ANNOTATE_PROPERTY_QNAME.equals(name)) {
+				|| AnnotatePlugin.ANNOTATE_PROPERTY_QNAME.equals(name)
+				|| RemoveAnnotationPlugin.REMOVE_ANNOTATION_QNAME.equals(name)
+				|| RemoveAnnotationPlugin.REMOVE_ANNOTATION_FROM_PROPERTY_QNAME.equals(name)) {
 			final String target = element.getAttribute("target");
 			if (target == null || "".equals(target)) {
 				return defaultAnnotationTarget;
@@ -332,7 +340,7 @@ public enum AnnotationTarget {
 		} else {
 			for (AnnotationTarget possibleAnnotationTarget : AnnotationTarget
 					.values()) {
-				if (possibleAnnotationTarget.getName().equals(name)) {
+				if (possibleAnnotationTarget.names.contains(name)) {
 					return possibleAnnotationTarget;
 				}
 			}

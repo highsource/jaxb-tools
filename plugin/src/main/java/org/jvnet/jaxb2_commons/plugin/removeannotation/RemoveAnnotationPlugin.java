@@ -26,8 +26,9 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-package org.jvnet.jaxb2_commons.plugin.annotate;
+package org.jvnet.jaxb2_commons.plugin.removeannotation;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -38,20 +39,17 @@ import javax.xml.namespace.QName;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jvnet.annox.Constants;
-import org.jvnet.annox.model.XAnnotation;
-import org.jvnet.annox.parser.XAnnotationParser;
 import org.jvnet.jaxb2_commons.plugin.AbstractParameterizablePlugin;
 import org.jvnet.jaxb2_commons.plugin.AnnotationTarget;
-import org.jvnet.jaxb2_commons.plugin.removeannotation.RemoveAnnotationPlugin;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import com.sun.codemodel.JAnnotatable;
+import com.sun.codemodel.JAnnotationUse;
+import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CCustomizations;
@@ -64,55 +62,56 @@ import com.sun.tools.xjc.outline.EnumOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.outline.Outline;
 
-public class AnnotatePlugin extends AbstractParameterizablePlugin {
+public class RemoveAnnotationPlugin extends AbstractParameterizablePlugin {
 
-	public static final QName ANNOTATE_PROPERTY_QNAME = new QName(
-			Constants.NAMESPACE_URI, "annotateProperty");
-	public static final QName ANNOTATE_PROPERTY_GETTER_QNAME = new QName(
-			Constants.NAMESPACE_URI, "annotatePropertyGetter");
-	public static final QName ANNOTATE_PROPERTY_SETTER_QNAME = new QName(
-			Constants.NAMESPACE_URI, "annotatePropertySetter");
-	public static final QName ANNOTATE_PROPERTY_FIELD_QNAME = new QName(
-			Constants.NAMESPACE_URI, "annotatePropertyField");
-	public static final QName ANNOTATE_PROPERTY_SETTER_PARAMETER_QNAME = new QName(
-			Constants.NAMESPACE_URI, "annotatePropertySetterParameter");
-	public static final QName ANNOTATE_PACKAGE_QNAME = new QName(
-			Constants.NAMESPACE_URI, "annotatePackage");
-	public static final QName ANNOTATE_CLASS_QNAME = new QName(
-			Constants.NAMESPACE_URI, "annotateClass");
-	public static final QName ANNOTATE_ELEMENT_QNAME = new QName(
-			Constants.NAMESPACE_URI, "annotateElement");
-	public static final QName ANNOTATE_ENUM_QNAME = new QName(
-			Constants.NAMESPACE_URI, "annotateEnum");
-	public static final QName ANNOTATE_ENUM_CONSTANT_QNAME = new QName(
-			Constants.NAMESPACE_URI, "annotateEnumConstant");
-	public static final QName ANNOTATE_ENUM_VALUE_METHOD_QNAME = new QName(
-			Constants.NAMESPACE_URI, "annotateEnumValueMethod");
-	public static final QName ANNOTATE_ENUM_FROM_VALUE_METHOD_QNAME = new QName(
-			Constants.NAMESPACE_URI, "annotateEnumFromValueMethod");
-	public static final QName ANNOTATE_QNAME = new QName(
-			Constants.NAMESPACE_URI, "annotate");
+	public static final QName REMOVE_ANNOTATION_FROM_PROPERTY_QNAME = new QName(
+			Constants.NAMESPACE_URI, "removeAnnotationFromProperty");
+	public static final QName REMOVE_ANNOTATION_FROM_PROPERTY_GETTER_QNAME = new QName(
+			Constants.NAMESPACE_URI, "removeAnnotationFromPropertyGetter");
+	public static final QName REMOVE_ANNOTATION_FROM_PROPERTY_SETTER_QNAME = new QName(
+			Constants.NAMESPACE_URI, "removeAnnotationFromPropertySetter");
+	public static final QName REMOVE_ANNOTATION_FROM_PROPERTY_FIELD_QNAME = new QName(
+			Constants.NAMESPACE_URI, "removeAnnotationFromPropertyField");
+	public static final QName REMOVE_ANNOTATION_FROM_PROPERTY_SETTER_PARAMETER_QNAME = new QName(
+			Constants.NAMESPACE_URI, "removeAnnotationFromPropertySetterParameter");
+	public static final QName REMOVE_ANNOTATION_FROM_PACKAGE_QNAME = new QName(
+			Constants.NAMESPACE_URI, "removeAnnotationFromPackage");
+	public static final QName REMOVE_ANNOTATION_FROM_CLASS_QNAME = new QName(
+			Constants.NAMESPACE_URI, "removeAnnotationFromClass");
+	public static final QName REMOVE_ANNOTATION_FROM_ELEMENT_QNAME = new QName(
+			Constants.NAMESPACE_URI, "removeAnnotationFromElement");
+	public static final QName REMOVE_ANNOTATION_FROM_ENUM_QNAME = new QName(
+			Constants.NAMESPACE_URI, "removeAnnotationFromEnum");
+	public static final QName REMOVE_ANNOTATION_FROM_ENUM_CONSTANT_QNAME = new QName(
+			Constants.NAMESPACE_URI, "removeAnnotationFromEnumConstant");
+	public static final QName REMOVE_ANNOTATION_FROM_ENUM_VALUE_METHOD_QNAME = new QName(
+			Constants.NAMESPACE_URI, "removeAnnotationFromEnumValueMethod");
+	public static final QName REMOVE_ANNOTATION_FROM_ENUM_FROM_VALUE_METHOD_QNAME = new QName(
+			Constants.NAMESPACE_URI, "removeAnnotationFromEnumFromValueMethod");
+	public static final QName REMOVE_ANNOTATION_QNAME = new QName(
+			Constants.NAMESPACE_URI, "removeAnnotation");
 	
 	public static final Set<QName> CUSTOMIZATION_ELEMENT_QNAMES = Collections.unmodifiableSet(
 			new HashSet<QName>(Arrays.asList(
-					ANNOTATE_QNAME,
-					ANNOTATE_PACKAGE_QNAME,
-					ANNOTATE_CLASS_QNAME,
-					ANNOTATE_ELEMENT_QNAME,
-					ANNOTATE_PROPERTY_QNAME,
-					ANNOTATE_PROPERTY_FIELD_QNAME,
-					ANNOTATE_PROPERTY_GETTER_QNAME,
-					ANNOTATE_PROPERTY_SETTER_QNAME,
-					ANNOTATE_PROPERTY_SETTER_PARAMETER_QNAME,
-					ANNOTATE_ENUM_QNAME,
-					ANNOTATE_ENUM_CONSTANT_QNAME,
-					ANNOTATE_ENUM_VALUE_METHOD_QNAME,
-					ANNOTATE_ENUM_FROM_VALUE_METHOD_QNAME)));
+					REMOVE_ANNOTATION_QNAME,
+					REMOVE_ANNOTATION_FROM_PACKAGE_QNAME,
+					REMOVE_ANNOTATION_FROM_CLASS_QNAME,
+					REMOVE_ANNOTATION_FROM_ELEMENT_QNAME,
+					REMOVE_ANNOTATION_FROM_PROPERTY_QNAME,
+					REMOVE_ANNOTATION_FROM_PROPERTY_FIELD_QNAME,
+					REMOVE_ANNOTATION_FROM_PROPERTY_GETTER_QNAME,
+					REMOVE_ANNOTATION_FROM_PROPERTY_SETTER_QNAME,
+					REMOVE_ANNOTATION_FROM_PROPERTY_SETTER_PARAMETER_QNAME,
+					REMOVE_ANNOTATION_FROM_ENUM_QNAME,
+					REMOVE_ANNOTATION_FROM_ENUM_CONSTANT_QNAME,
+					REMOVE_ANNOTATION_FROM_ENUM_VALUE_METHOD_QNAME,
+					REMOVE_ANNOTATION_FROM_ENUM_FROM_VALUE_METHOD_QNAME)));
 	
+	public static final String CLASS_ATTRIBUTE_NAME = "class";
 
 	@Override
 	public String getOptionName() {
-		return "Xannotate";
+		return "XremoveAnnotation";
 	}
 
 	@Override
@@ -135,26 +134,6 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 		} else {
 			throw new IllegalArgumentException("Invalid default field target.");
 		}
-	}
-
-	private XAnnotationParser annotationParser = XAnnotationParser.INSTANCE;
-
-	public XAnnotationParser getAnnotationParser() {
-		return annotationParser;
-	}
-
-	public void setAnnotationParser(XAnnotationParser annotationParser) {
-		this.annotationParser = annotationParser;
-	}
-
-	private Annotator annotator = new Annotator();
-
-	public Annotator getAnnotator() {
-		return annotator;
-	}
-
-	public void setAnnotator(Annotator annotator) {
-		this.annotator = annotator;
 	}
 
 	@Override
@@ -185,7 +164,7 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 		final CCustomizations customizations = CustomizationUtils
 				.getCustomizations(elementOutline);
 
-		annotateElementOutline(elementOutline.implClass.owner(),
+		removeAnnotationFromElementOutline(elementOutline.implClass.owner(),
 				elementOutline, customizations, errorHandler);
 	}
 
@@ -193,7 +172,7 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 			ErrorHandler errorHandler) {
 		final CCustomizations customizations = CustomizationUtils
 				.getCustomizations(enumOutline);
-		annotateEnumOutline(enumOutline.clazz.owner(), enumOutline,
+		removeAnnotationFromEnumOutline(enumOutline.clazz.owner(), enumOutline,
 				customizations, errorHandler);
 
 		for (final EnumConstantOutline enumConstantOutline : enumOutline.constants) {
@@ -209,7 +188,7 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 		final CCustomizations customizations = CustomizationUtils
 				.getCustomizations(classOutline);
 
-		annotateClassOutline(classOutline.ref.owner(), classOutline,
+		removeAnnotationFromClassOutline(classOutline.ref.owner(), classOutline,
 				customizations, errorHandler);
 
 		for (final FieldOutline fieldOutline : classOutline.getDeclaredFields()) {
@@ -224,7 +203,7 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 			ErrorHandler errorHandler) {
 		final CCustomizations customizations = CustomizationUtils
 				.getCustomizations(fieldOutline);
-		annotateFieldOutline(fieldOutline.parent().ref.owner(), fieldOutline,
+		removeAnnotationFromFieldOutline(fieldOutline.parent().ref.owner(), fieldOutline,
 				customizations, errorHandler);
 	}
 
@@ -235,12 +214,12 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 		final CCustomizations customizations = CustomizationUtils
 				.getCustomizations(enumConstantOutline);
 
-		annotateEnumConstantOutline(enumOutline.parent().getCodeModel(),
+		removeAnnotationFromEnumConstantOutline(enumOutline.parent().getCodeModel(),
 				enumOutline.parent(), enumConstantOutline, customizations,
 				errorHandler);
 	}
 
-	protected void annotateElementOutline(final JCodeModel codeModel,
+	protected void removeAnnotationFromElementOutline(final JCodeModel codeModel,
 			final ElementOutline elementOutline,
 			final CCustomizations customizations,
 			final ErrorHandler errorHandler) {
@@ -256,7 +235,7 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 					final JAnnotatable annotatable = annotationTarget
 							.getAnnotatable(elementOutline.parent(),
 									elementOutline);
-					annotate(codeModel, errorHandler, customization, element,
+					removeAnnotation(codeModel, errorHandler, customization, element,
 							annotatable);
 				} catch (IllegalArgumentException iaex) {
 					logger.error("Error applying the annotation.", iaex);
@@ -265,7 +244,7 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 		}
 	}
 
-	protected void annotateEnumOutline(final JCodeModel codeModel,
+	protected void removeAnnotationFromEnumOutline(final JCodeModel codeModel,
 			final EnumOutline enumOutline,
 			final CCustomizations customizations,
 			final ErrorHandler errorHandler) {
@@ -280,7 +259,7 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 				try {
 					final JAnnotatable annotatable = annotationTarget
 							.getAnnotatable(enumOutline.parent(), enumOutline);
-					annotate(codeModel, errorHandler, customization, element,
+					removeAnnotation(codeModel, errorHandler, customization, element,
 							annotatable);
 				} catch (IllegalArgumentException iaex) {
 					logger.error("Error applying the annotation.", iaex);
@@ -289,7 +268,7 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 		}
 	}
 
-	protected void annotateEnumConstantOutline(final JCodeModel codeModel,
+	protected void removeAnnotationFromEnumConstantOutline(final JCodeModel codeModel,
 			final Outline outline,
 			final EnumConstantOutline enumConstantOutline,
 			final CCustomizations customizations,
@@ -306,7 +285,7 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 				try {
 					final JAnnotatable annotatable = annotationTarget
 							.getAnnotatable(outline, enumConstantOutline);
-					annotate(codeModel, errorHandler, customization, element,
+					removeAnnotation(codeModel, errorHandler, customization, element,
 							annotatable);
 				} catch (IllegalArgumentException iaex) {
 					logger.error("Error applying the annotation.", iaex);
@@ -316,7 +295,7 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 		}
 	}
 
-	protected void annotateClassOutline(final JCodeModel codeModel,
+	protected void removeAnnotationFromClassOutline(final JCodeModel codeModel,
 			final ClassOutline classOutline,
 			final CCustomizations customizations, ErrorHandler errorHandler) {
 		for (final CPluginCustomization customization : customizations) {
@@ -330,7 +309,7 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 				try {
 					final JAnnotatable annotatable = annotationTarget
 							.getAnnotatable(classOutline.parent(), classOutline);
-					annotate(codeModel, errorHandler, customization, element,
+					removeAnnotation(codeModel, errorHandler, customization, element,
 							annotatable);
 				} catch (IllegalArgumentException iaex) {
 					logger.error("Error applying the annotation.", iaex);
@@ -339,7 +318,7 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 		}
 	}
 
-	protected void annotateFieldOutline(final JCodeModel codeModel,
+	protected void removeAnnotationFromFieldOutline(final JCodeModel codeModel,
 			final FieldOutline fieldOutline,
 			final CCustomizations customizations, ErrorHandler errorHandler) {
 		for (final CPluginCustomization customization : customizations) {
@@ -357,66 +336,61 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 					final JAnnotatable annotatable = annotationTarget
 							.getAnnotatable(fieldOutline.parent().parent(),
 									fieldOutline);
-					annotate(codeModel, errorHandler, customization, element,
+					removeAnnotation(codeModel, errorHandler, customization, element,
 							annotatable);
 				} catch (IllegalArgumentException iaex) {
-					logger.error("Error applying the annotation.", iaex);
+					logger.error("Error removing the annotation.", iaex);
 				}
 
 			}
 		}
 	}
 
-	private void annotate(final JCodeModel codeModel,
+	private void removeAnnotation(final JCodeModel codeModel,
 			ErrorHandler errorHandler,
-			final CPluginCustomization customization, final Element element,
+			final CPluginCustomization customization,
+			final Element element,
 			final JAnnotatable annotatable) {
-		final NodeList elements = element.getChildNodes();
-		for (int index = 0; index < elements.getLength(); index++) {
-			final Node node = elements.item(index);
-			if (node.getNodeType() == Node.ELEMENT_NODE) {
-				final Element child = (Element) node;
-
+		
+		final String aClass = element.getAttribute(CLASS_ATTRIBUTE_NAME);
+		if (StringUtils.isBlank(aClass)) {
+			try {
+			errorHandler.error(new SAXParseException(
+					"Could not remove the annotation, annotation class is not specified. "
+					+ "Annotation class must be specified using the class attribute of the customization element.",
+					customization.locator));
+			} catch (SAXException ignored) {
+				// Nothing to do
+			}
+		}
+		else {
+			JClass annotationClass = codeModel.ref(aClass);
+			
+			JAnnotationUse annotationUse = null;
+			for (JAnnotationUse annotation : annotatable.annotations()) {
+				if (annotationClass.equals(annotation.getAnnotationClass())) {
+					annotationUse = annotation;
+				}
+			}
+			if (annotationUse == null) {
 				try {
-					final XAnnotation<?> annotation = getAnnotationParser()
-							.parse(child);
-					getAnnotator().annotate(codeModel, annotatable, annotation);
-				} catch (Exception ex) {
-					try {
-						errorHandler.error(new SAXParseException(
-								"Error parsing annotation.",
-								customization.locator, ex));
+					errorHandler.warning(new SAXParseException(
+							MessageFormat.format(
+									"Could not remove the annotation, target element is not annotated with annotation class [{0}].",
+									annotationClass),
+							customization.locator));
 					} catch (SAXException ignored) {
 						// Nothing to do
 					}
-				}
-			} else if (node.getNodeType() == Node.TEXT_NODE) {
-				final String nodeValue = node.getNodeValue();
-				if (nodeValue != null && StringUtils.isNotBlank(nodeValue)) {
-					try {
-						final XAnnotation<?> annotation = getAnnotationParser()
-								.parse(nodeValue);
-						getAnnotator().annotate(codeModel, annotatable,
-								annotation);
-
-					} catch (Exception ex) {
-						try {
-							errorHandler.error(new SAXParseException(
-									"Error parsing annotation.",
-									customization.locator, ex));
-						} catch (SAXException ignored) {
-							// Nothing to do
-						}
-					}
-				}
+			}
+			else {
+				annotatable.removeAnnotation(annotationUse);
 			}
 		}
 	}
-	
+
 	private boolean isCustomizationElementName(final QName name) {
-		return name != null &&
-				Constants.NAMESPACE_URI.equals(name.getNamespaceURI()) &&
-				!RemoveAnnotationPlugin.CUSTOMIZATION_ELEMENT_QNAMES.contains(name);
+		return RemoveAnnotationPlugin.CUSTOMIZATION_ELEMENT_QNAMES.contains(name);
 	}
 
 	@Override

@@ -278,4 +278,18 @@
 			<xs:element name="four" type="xs:string"/>
 		</xs:sequence>
 	</xs:complexType>
+	
+	<xs:complexType name="five">
+		<xs:sequence>
+			<xs:element name="x" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<annox:removeAnnotation class="javax.xml.bind.annotation.XmlElement" target="field"/>
+						<jaxb:property name="y"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
 </xs:schema>

@@ -1,7 +1,7 @@
 jaxb2-annotate-plugin
 =====================
 
-JAXB2 Annotate Plugin is capable of adding arbitrary annotations to the generated sources.
+JAXB2 Annotate Plugin is capable of adding or removing arbitrary annotations to/from the generated sources.
 
 Usage overview
 --------------
@@ -131,11 +131,106 @@ jaxb:extensionBindingPrefixes="xjc annox"
 Note: yes, I know that `http://annox.dev.java.net` no longer exists. Changing this namespace would break old builds.
 This is just a namespace, there must not necessarily be content there. Treat it as a logical identifier, nothing else.
 
+Removing annotations
+--------------
+
+* Customize your schema using binding files or directly in schema
+* Add the plugin to the XJC classpath.
+* Activate the plugin using `-XremoveAnnotation`-switch.
+
+You can remove annotations using customizations directly in schema:
+
+````xml
+<xsd:schema
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	jaxb:version="2.1" 
+	xmlns:annox="http://annox.dev.java.net" 
+	jaxb:extensionBindingPrefixes="annox">
+
+
+
+	<xsd:complexType name="FooType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<annox:removeAnnotation class="javax.xml.bind.annotation.XmlType" />
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="bar" type="xsd:string"/>
+			<xsd:element name="foobar" type="xsd:string">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<annox:removeAnnotation class="javax.xml.bind.annotation.XmlElement" target="field" />
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>
+````
+
+Or in binding files:
+
+````xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:annox="http://annox.dev.java.net"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+	jaxb:extensionBindingPrefixes="xjc annox"
+	version="2.1">
+
+	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+		<jaxb:bindings node="xs:complexType[@name='FooType']">
+			<annox:removeAnnotation class="javax.xml.bind.annotation.XmlType" />
+		</jaxb:bindings>
+		<jaxb:bindings node="xs:complexType[@name='FooType']//xs:element[@name='foobar']">
+			<annox:removeAnnotation class="javax.xml.bind.annotation.XmlElement" target="field" />
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+</jaxb:bindings>
+````
+
+You can use the following customization elements in the `http://annox.dev.java.net` namespace:
+* `removeAnnotation` with the optional `target` attribute:
+ * `package`
+ * `class`
+ * `getter`
+ * `setter`
+ * `setter-parameter`
+ * `field`
+ * `enum-value-method`
+ * `enum-fromValue-method`
+* `removeAnnotationFromProperty`
+* `removeAnnotationFromPackage`
+* `removeAnnotationFromClass`
+* `removeAnnotationFromElement`
+* `removeAnnotationFromeEnum`
+* `removeAnnotationFromEnumConstant`
+* `removeAnnotationFromEnumValueMethod` - removes annotation from the `value()` method of the enum
+* `removeAnnotationFromEnumFromValueMethod` - removes annotation from the `fromValue(String)` method of the enum
+
+The `http://annox.dev.java.net` namespace must be declared in the `jaxb:extensionBindingPrefixes` attribute via prefix, ex.:
+
+````
+xmlns:annox="http://annox.dev.java.net"
+jaxb:extensionBindingPrefixes="xjc annox"
+````
+
+Note: yes, I know that `http://annox.dev.java.net` no longer exists. Changing this namespace would break old builds.
+This is just a namespace, there must not necessarily be content there. Treat it as a logical identifier, nothing else.
+
+
 Using JAXB2 Annotate Plugin with Maven
 --------------------------------------
 
 * Add `org.jvnet.jaxb2_commons:jaxb2-basics-annotate` as XJC plugin
-* Turn on the plugin using `-Xannotate` switch
+* Turn on the plugin using `-Xannotate` or `-XremoveAnnotation`switch
 * Add artifact with your annotations as another XJC plugin
 
 Example:
@@ -148,6 +243,7 @@ Example:
 		<extension>true</extension>
 		<args>
 			<arg>-Xannotate</arg>
+			<arg>-XremoveAnnotation</arg>
 		</args>
 		<plugins>
 			<plugin>

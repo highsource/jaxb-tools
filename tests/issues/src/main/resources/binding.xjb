@@ -54,6 +54,9 @@
 		<jaxb:bindings node="xsd:complexType[@name='gh36Type']/xsd:simpleContent/xsd:extension/xsd:attribute[@name='attr']">
 			<annox:annotate>@com.fasterxml.jackson.annotation.JsonView(java.lang.Object.class)</annox:annotate>
 		</jaxb:bindings>
+		<jaxb:bindings node="xsd:complexType[@name='gh26Type']/xsd:sequence/xsd:element[@name='x']">
+			<annox:removeAnnotation class="javax.xml.bind.annotation.XmlElement" target="field"/>
+		</jaxb:bindings>
 
 	</jaxb:bindings>
 </jaxb:bindings>

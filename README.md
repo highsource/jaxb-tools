@@ -1,3 +1,5 @@
+[![Maven Central](https://img.shields.io/maven-central/v/org.jvnet.jaxb2_commons/jaxb2-basics-annotate.svg)](https://github.com/highsource/jaxb2-annotate-plugin)
+
 jaxb2-annotate-plugin
 =====================
 

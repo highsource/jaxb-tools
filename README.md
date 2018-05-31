@@ -1,11 +1,3 @@
-# :boom: JAVA 9 ALERT :boom:
-
-This branch builds a 0.13.3-SNAPSHOT version ([in `plugin`](plugin)) that requires the Java 9 compiler because the updated dependency `org.glassfish.jaxb:jaxb-xjc-jdk9` contains Java 9 bytecode.
-The easiest way to use the new version's compiler is to set `JAVA_HOME`, e.g. in `~/.mavenrc`.
-Even that build does not pass [the Java 9 test](tests/java-9), though, because it fails to process schema bindings.
-
-***
-
 # JAXB2 Maven Plugin #
 
 Welcome to the `org.jvnet.jaxb2.maven2:maven-jaxb2-plugin`, the most advanced and feature-full Maven plugin for XML Schema compilation.
@@ -30,7 +22,7 @@ compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Mav
 			<plugin>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin</artifactId>
-				<version>0.13.1</version>
+				<version>0.14.0</version>
 				<executions>
 					<execution>
 						<goals>
@@ -45,6 +37,22 @@ compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Mav
 	...
 </project>
 ```
+
+### JAXB Versions
+
+If you need a specific JAXB version, you can explicitly use one of the following variants:
+
+* `org.jvnet.jaxb2.maven2:maven-jaxb20-plugin` - JAXB 2.0.
+* `org.jvnet.jaxb2.maven2:maven-jaxb21-plugin` - JAXB 2.1.
+* `org.jvnet.jaxb2.maven2:maven-jaxb22-plugin` - JAXB 2.2.
+* `org.jvnet.jaxb2.maven2:maven-jaxb23-plugin` - JAXB 2.3.
+* `org.jvnet.jaxb2.maven2:maven-jaxb2-plugin` - "most actual version", at the moment same as `org.jvnet.jaxb2.maven2:maven-jaxb23-plugin`.
+
+### Java versions
+
+Supported Java versions are `1.7`, `1.8`, `9` (only `maven-jaxb2-plugin` and `maven-jaxb23-plugin`).
+
+Java version `1.6` is no longer supported (since version `0.14.0`).
 
 ## [Documentation](https://github.com/highsource/maven-jaxb2-plugin/wiki) ##
 
@@ -68,6 +76,6 @@ This project is not developed, supported or in any other way affiliated with Apa
 
 This project is also *not* developed by or affiliated with Oracle or Sun. Even if it is featured on [https://jaxb.java.net/](https://jaxb.java.net) pages, 
 
-**This plugin is in no way _official_ JAXB2 Maven plugin by Oracle.**
+**This plugin is in no way _official_ JAXB2 Maven plugin by Sun or Oracle.**
 
 This is a completely indepentent development. [I](https://github.com/highsource) am *not* an Oracle employee.

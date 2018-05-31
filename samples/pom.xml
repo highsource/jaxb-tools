@@ -20,7 +20,6 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<inherited>true</inherited>
 				<configuration>
 					<descriptors>
 						<descriptor>src/main/assembly/maven-src.xml</descriptor>
@@ -39,7 +38,6 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
-				<inherited>true</inherited>
 				<executions>
 					<execution>
 						<id>maven-unpack</id>
@@ -60,7 +58,6 @@
 			<plugin>
 				<artifactId>maven-invoker-plugin</artifactId>
 				<version>2.0.0</version>
-				<inherited>true</inherited>
 				<executions>
 					<execution>
 						<id>maven-integration-test</id>
@@ -72,7 +69,6 @@
 						<configuration>
 							<debug>true</debug>
 							<projectsDirectory>${basedir}/target/test-maven-assembly</projectsDirectory>
-							<!--localRepositoryPath>${basedir}/target/test-maven-repository</localRepositoryPath-->
 						</configuration>
 					</execution>
 				</executions>

@@ -887,8 +887,8 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * If <code>true</code> (default), adds <code>if-exists="true"</code>
 	 * attributes to the <code>bindings</code> elements associated with schemas
 	 * (via <code>scd="x-schema::..."</code>) in the generated episode files.
-	 * This is necessary to avoid the annoying <quote>SCD "x-schema::tns" didn't
-	 * match any schema component</quote> errors.
+	 * This is necessary to avoid the annoying `SCD "x-schema::tns" didn't
+	 * match any schema component` errors.
 	 */
 	@Parameter(property = "maven.xjc2.addIfExistsToEpisodeSchemaBindings", defaultValue = "true")
 	private boolean addIfExistsToEpisodeSchemaBindings = true;

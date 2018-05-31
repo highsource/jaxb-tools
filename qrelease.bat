@@ -4,7 +4,7 @@ set JAVA_HOME=%JAVA9_HOME%
 
 echo Performing a full clean build.
 rem pause
-call mvn clean install -DperformRelease -Pall
+call mvn clean install -Pall,sonatype-oss-release -DperformRelease
 echo Full clean build completed.
 rem pause
 
@@ -19,7 +19,7 @@ rem pause
 
 echo Performing a full clean build.
 rem pause
-call mvn clean install -Pall -DperformRelease
+call mvn clean install -Pall,sonatype-oss-release -DperformRelease
 echo Full clean build completed.
 rem pause
 
@@ -44,7 +44,7 @@ rem pause
 
 echo Performing full clean deploy.
 rem pause
-call mvn -DperformRelease -Psonatype-oss-release,all clean deploy
+call mvn -Pall,sonatype-oss-release -DperformRelease clean deploy
 echo Full clean deploy done.
 rem pause
 
@@ -59,7 +59,7 @@ rem pause
 
 echo Performing a full clean build.
 rem pause
-call mvn clean install -DperformRelease -Pall
+call mvn clean install -Pall,sonatype-oss-release -DperformRelease
 echo Full clean build completed.
 rem pause
 

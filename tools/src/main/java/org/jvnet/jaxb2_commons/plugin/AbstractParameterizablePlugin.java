@@ -11,13 +11,13 @@ import com.sun.tools.xjc.Options;
  * Abstract base class for parameterizable JAXB plugins.
  * <p>
  * This plugin looks for the arguments of the form
- * <code>-<em>myPlugin</em>-<em>name</em>=<em>value</code>
+ * <code>-<em>myPlugin</em>-<em>name</em>=<em>value</em></code>
  * (<code><em>myPlugin</em></code> is the plugin option name) and
  * then invokes <code>set<em>Name</em>(<em>value</em>)</code> on itself.</p>
  * <p>For instance, the argument <code>-Xfoo-bar=test</code> triggers
  * <code>setBar("test")</code> invocation.</p>
  * <p>Values are injected using Commons BeanUtils as bean properties, so
- * types will be converted correspondingly</code>
+ * types will be converted correspondingly</p>
  *  
  * @author valikov
  */

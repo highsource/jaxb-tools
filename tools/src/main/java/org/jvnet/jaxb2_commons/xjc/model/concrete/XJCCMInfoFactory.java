@@ -40,7 +40,6 @@ import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JPackage;
-import com.sun.tools.xjc.model.Aspect;
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
 import com.sun.tools.xjc.model.CBuiltinLeafInfo;
 import com.sun.tools.xjc.model.CClassInfo;
@@ -62,6 +61,7 @@ import com.sun.tools.xjc.model.CWildcardTypeInfo;
 import com.sun.tools.xjc.model.Model;
 import com.sun.tools.xjc.model.nav.NClass;
 import com.sun.tools.xjc.model.nav.NType;
+import com.sun.tools.xjc.outline.Aspect;
 import com.sun.tools.xjc.outline.Outline;
 import com.sun.tools.xjc.reader.xmlschema.bindinfo.BIEnum;
 import com.sun.tools.xjc.util.NamespaceContextAdapter;

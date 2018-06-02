@@ -9,6 +9,7 @@ import org.jvnet.jaxb2_commons.lang.ExtendedJAXBEqualsStrategy;
 import org.jvnet.jaxb2_commons.lang.JAXBCopyStrategy;
 import org.jvnet.jaxb2_commons.test.AbstractSamplesTest;
 
+@SuppressWarnings("deprecation")
 public class CopyableTest extends AbstractSamplesTest {
 
 	@Override

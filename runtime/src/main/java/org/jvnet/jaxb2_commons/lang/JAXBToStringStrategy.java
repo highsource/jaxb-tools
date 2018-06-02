@@ -18,7 +18,6 @@ public class JAXBToStringStrategy extends DefaultToStringStrategy {
 		stringBuilder.append(jaxbElementEnd);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected StringBuilder appendInternal(ObjectLocator locator,
 			StringBuilder stringBuilder, Object value) {
@@ -31,7 +30,6 @@ public class JAXBToStringStrategy extends DefaultToStringStrategy {
 		return stringBuilder;
 	}
 
-	@SuppressWarnings("unchecked")
 	protected StringBuilder appendInternal(ObjectLocator locator,
 			StringBuilder stringBuilder, JAXBElement value) {
 		appendJAXBElementStart(stringBuilder);

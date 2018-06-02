@@ -4,6 +4,7 @@ import static org.jvnet.jaxb2_commons.locator.util.LocatorUtils.item;
 
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
+@SuppressWarnings("deprecation")
 public class DefaultEqualsStrategy implements EqualsStrategy2, EqualsStrategy {
 
 	public boolean equals(ObjectLocator leftLocator,
@@ -556,6 +557,5 @@ public class DefaultEqualsStrategy implements EqualsStrategy2, EqualsStrategy {
 	}
 
 	public static DefaultEqualsStrategy INSTANCE2 = new DefaultEqualsStrategy();
-	@SuppressWarnings("deprecation")
 	public static EqualsStrategy INSTANCE = INSTANCE2;
 }

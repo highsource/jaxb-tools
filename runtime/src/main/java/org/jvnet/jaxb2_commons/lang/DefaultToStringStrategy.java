@@ -7,6 +7,7 @@ import java.util.Collection;
 
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
+@SuppressWarnings("deprecation")
 public class DefaultToStringStrategy implements ToStringStrategy2,
 		ToStringStrategy {
 
@@ -118,7 +119,6 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 		return useDefaultFieldValueMarkers;
 	}
 
-	@SuppressWarnings("unchecked")
 	protected String getShortClassName(Class cls) {
 		return ClassUtils.getShortClassName(cls);
 	}
@@ -434,7 +434,6 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 		return buffer;
 	}
 
-	@SuppressWarnings("unchecked")
 	public StringBuilder append(ObjectLocator parentLocator, Object parent,
 			String fieldName, StringBuilder buffer, Collection value) {
 		appendFieldStart(parentLocator, parent, fieldName, buffer);
@@ -509,7 +508,6 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 		return buffer;
 	}
 
-	@SuppressWarnings("unchecked")
 	protected StringBuilder appendInternal(ObjectLocator locator,
 			StringBuilder buffer, Object value) {
 		if (value instanceof Collection) {
@@ -621,7 +619,6 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 		return buffer;
 	}
 
-	@SuppressWarnings("unchecked")
 	public StringBuilder append(ObjectLocator locator, StringBuilder buffer,
 			Collection array) {
 		if (array == null) {
@@ -802,7 +799,6 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 		return buffer;
 	}
 
-	@SuppressWarnings("unchecked")
 	protected StringBuilder appendSummary(ObjectLocator locator,
 			StringBuilder buffer, Collection value) {
 		appendSummarySize(locator, buffer, value.size());
@@ -932,7 +928,6 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 		return buffer;
 	}
 
-	@SuppressWarnings("unchecked")
 	protected StringBuilder appendDetail(ObjectLocator locator,
 			StringBuilder buffer, Collection array) {
 		appendArrayStart(buffer);
@@ -1192,6 +1187,5 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	}
 
 	public static final DefaultToStringStrategy INSTANCE2 = new DefaultToStringStrategy();
-	@SuppressWarnings("deprecation")
 	public static final ToStringStrategy INSTANCE = INSTANCE2;
 }

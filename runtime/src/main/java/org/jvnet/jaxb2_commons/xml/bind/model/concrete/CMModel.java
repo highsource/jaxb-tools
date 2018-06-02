@@ -175,9 +175,11 @@ public class CMModel<T, C extends T> implements MModelInfo<T, C> {
 		if (getOrigin() instanceof TypeInfoSetOrigin
 				&& enumLeafInfo.getOrigin() instanceof EnumLeafInfoOrigin) {
 
+			@SuppressWarnings("unchecked")
 			final TypeInfoSet<T, C, ?, ?> tis = ((TypeInfoSetOrigin<T, C, TypeInfoSet<T, C, ?, ?>>) getOrigin())
 					.getSource();
 
+			@SuppressWarnings("unchecked")
 			final EnumLeafInfo<T, C> eli = ((EnumLeafInfoOrigin<T, C, EnumLeafInfo<T, C>>) enumLeafInfo
 					.getOrigin()).getSource();
 			tis.enums().remove(eli.getClazz());
@@ -228,8 +230,10 @@ public class CMModel<T, C extends T> implements MModelInfo<T, C> {
 		}
 		if (getOrigin() instanceof TypeInfoSetOrigin
 				&& classInfo.getOrigin() instanceof ClassInfoOrigin) {
+			@SuppressWarnings("unchecked")
 			final TypeInfoSet<T, C, ?, ?> tis = ((TypeInfoSetOrigin<T, C, TypeInfoSet<T, C, ?, ?>>) getOrigin())
 					.getSource();
+			@SuppressWarnings("unchecked")
 			final ClassInfo<T, C> ci = ((ClassInfoOrigin<T, C, ClassInfo<T, C>>) classInfo
 					.getOrigin()).getSource();
 			tis.beans().remove(ci);
@@ -257,9 +261,11 @@ public class CMModel<T, C extends T> implements MModelInfo<T, C> {
 		// TODO Not very good
 		if (getOrigin() instanceof TypeInfoSetOrigin
 				&& elementInfo.getOrigin() instanceof ElementInfoOrigin) {
+			@SuppressWarnings("unchecked")
 			final TypeInfoSet<T, C, ?, ?> tis = ((TypeInfoSetOrigin<T, C, TypeInfoSet<T, C, ?, ?>>) getOrigin())
 					.getSource();
 
+			@SuppressWarnings("unchecked")
 			final ElementInfo<T, C> ei = ((ElementInfoOrigin<T, C, ElementInfo<T, C>>) elementInfo
 					.getOrigin()).getSource();
 

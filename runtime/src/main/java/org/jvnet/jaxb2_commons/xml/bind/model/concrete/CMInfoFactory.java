@@ -65,6 +65,7 @@ import com.sun.xml.bind.v2.model.core.TypeRef;
 import com.sun.xml.bind.v2.model.core.ValuePropertyInfo;
 import com.sun.xml.bind.v2.model.core.WildcardTypeInfo;
 
+@SuppressWarnings("unchecked")
 public abstract class CMInfoFactory<T, C extends T, TIS extends TypeInfoSet<T, C, ?, ?>,
 //
 TI extends TypeInfo<T, C>,
@@ -143,7 +144,6 @@ TR extends TypeRef<T, C>> {
 		Collection<? extends EnumLeafInfo<T, C>> enums = typeInfoSet.enums()
 				.values();
 		for (EnumLeafInfo<T, C> enumLeafInfo : enums) {
-			@SuppressWarnings("unchecked")
 			final ELI eli = (ELI) enumLeafInfo;
 			getTypeInfo(eli);
 		}
@@ -160,7 +160,6 @@ TR extends TypeRef<T, C>> {
 		Collection<? extends BuiltinLeafInfo<T, C>> builtins = typeInfoSet
 				.builtins().values();
 		for (BuiltinLeafInfo<T, C> builtinLeafInfo : builtins) {
-			@SuppressWarnings("unchecked")
 			final BLI bli = (BLI) builtinLeafInfo;
 			getTypeInfo(bli);
 		}
@@ -173,7 +172,6 @@ TR extends TypeRef<T, C>> {
 		Collection<? extends ClassInfo<T, C>> beans = typeInfoSet.beans()
 				.values();
 		for (ClassInfo<T, C> classInfo : beans) {
-			@SuppressWarnings("unchecked")
 			final CI ci = (CI) classInfo;
 			getTypeInfo(ci);
 		}
@@ -244,9 +242,7 @@ TR extends TypeRef<T, C>> {
 	}
 
 	private MTypeInfo<T, C> getTypeInfo(EI info) {
-		@SuppressWarnings("unchecked")
 		EPI p = (EPI) info.getProperty();
-		@SuppressWarnings("unchecked")
 		TI contentType = (TI) info.getContentType();
 		return getTypeInfo(p, contentType, p.isValueList(), p.getAdapter(),
 				p.id(), p.getExpectedMimeType());
@@ -275,7 +271,6 @@ TR extends TypeRef<T, C>> {
 	private void populateEnumLeafInfo(ELI info, MEnumLeafInfo<T, C> enumLeafInfo) {
 		@SuppressWarnings("rawtypes")
 		Iterable<? extends EnumConstant> _constants = info.getConstants();
-		@SuppressWarnings("unchecked")
 		final Iterable<? extends EnumConstant<T, C>> enumConstants = (Iterable<? extends EnumConstant<T, C>>) _constants;
 		for (EnumConstant<?, ?> enumConstant : enumConstants) {
 			enumLeafInfo.addEnumConstantInfo(createEnumContantInfo(
@@ -322,15 +317,12 @@ TR extends TypeRef<T, C>> {
 			final MClassInfo<T, C> classInfo, PI p) {
 
 		if (p instanceof AttributePropertyInfo) {
-			@SuppressWarnings("unchecked")
 			final API api = (API) p;
 			return createAttributePropertyInfo(classInfo, api);
 		} else if (p instanceof ValuePropertyInfo) {
-			@SuppressWarnings("unchecked")
 			final VPI vpi = (VPI) p;
 			return createValuePropertyInfo(classInfo, vpi);
 		} else if (p instanceof ElementPropertyInfo) {
-			@SuppressWarnings("unchecked")
 			final EPI ep = (EPI) p;
 			if (ep.getTypes().size() == 1) {
 				return createElementPropertyInfo(classInfo, ep);
@@ -339,7 +331,6 @@ TR extends TypeRef<T, C>> {
 
 			}
 		} else if (p instanceof ReferencePropertyInfo) {
-			@SuppressWarnings("unchecked")
 			final RPI rp = (RPI) p;
 			final Set<? extends Element<T, C>> elements = rp.getElements();
 			if (elements.size() == 0
@@ -545,7 +536,6 @@ TR extends TypeRef<T, C>> {
 	}
 
 	protected MEnumLeafInfo<T, C> createEnumLeafInfo(final ELI info) {
-		@SuppressWarnings("unchecked")
 		final TI baseType = (TI) info.getBaseType();
 		return new CMEnumLeafInfo<T, C>(createEnumLeafInfoOrigin(info),
 				info.getClazz(), getPackage(info), getContainer(info),
@@ -561,7 +551,6 @@ TR extends TypeRef<T, C>> {
 	}
 
 	protected MElementInfo<T, C> createElementInfo(EI element) {
-		@SuppressWarnings("unchecked")
 		final CI scopeCI = (CI) element.getScope();
 		final MClassInfo<T, C> scope = element.getScope() == null ? null
 				: getTypeInfo(scopeCI);

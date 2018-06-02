@@ -2,10 +2,10 @@ package org.jvnet.jaxb2_commons.lang;
 
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
+@SuppressWarnings("deprecation")
 public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
 	public static final DefaultMergeStrategy INSTANCE2 = new DefaultMergeStrategy();
-	@SuppressWarnings("deprecation")
 	public static final MergeStrategy INSTANCE = INSTANCE2;
 
 	@Override
@@ -486,5 +486,4 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 			return merge(leftLocator, rightLocator, left, right);
 		}
 	}
-
 }

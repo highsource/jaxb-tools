@@ -4,6 +4,7 @@ import static org.jvnet.jaxb2_commons.locator.util.LocatorUtils.item;
 
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
+@SuppressWarnings("deprecation")
 public class DefaultHashCodeStrategy implements HashCodeStrategy2, HashCodeStrategy {
 
 	private int iConstant;
@@ -384,7 +385,5 @@ public class DefaultHashCodeStrategy implements HashCodeStrategy2, HashCodeStrat
 	}
 
 	public static final DefaultHashCodeStrategy INSTANCE2 = new DefaultHashCodeStrategy();
-	@SuppressWarnings("deprecation")
 	public static final HashCodeStrategy INSTANCE = INSTANCE2;
-
 }

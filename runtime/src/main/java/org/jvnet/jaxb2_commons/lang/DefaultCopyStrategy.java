@@ -7,6 +7,7 @@ import java.lang.reflect.Modifier;
 
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
+@SuppressWarnings("deprecation")
 public class DefaultCopyStrategy implements CopyStrategy2, CopyStrategy {
 
 	protected Object copyInternal(ObjectLocator locator, Object object) {
@@ -364,6 +365,5 @@ public class DefaultCopyStrategy implements CopyStrategy2, CopyStrategy {
 	}
 
 	public static final DefaultCopyStrategy INSTANCE2 = new DefaultCopyStrategy();
-	@SuppressWarnings("deprecation")
 	public static final CopyStrategy INSTANCE = INSTANCE2;
 }

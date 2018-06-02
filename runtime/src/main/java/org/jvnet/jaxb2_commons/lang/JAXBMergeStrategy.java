@@ -6,7 +6,6 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
 public class JAXBMergeStrategy extends DefaultMergeStrategy {
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected Object mergeInternal(ObjectLocator leftLocator,
 			ObjectLocator rightLocator, Object left, Object right) {
@@ -20,7 +19,6 @@ public class JAXBMergeStrategy extends DefaultMergeStrategy {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	protected Object mergeInternal(ObjectLocator leftLocator,
 			ObjectLocator rightLocator, Collection leftCollection,
 			Collection rightCollection) {

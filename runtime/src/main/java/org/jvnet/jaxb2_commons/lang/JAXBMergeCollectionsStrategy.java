@@ -10,6 +10,7 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 
 public class JAXBMergeCollectionsStrategy extends JAXBMergeStrategy {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected Object mergeInternal(ObjectLocator leftLocator,
 			ObjectLocator rightLocator, Collection leftCollection,

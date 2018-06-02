@@ -19,11 +19,11 @@ public final class DefaultPropertyObjectLocator extends AbstractObjectLocator
 	 * Constructs a new validation event locator.
 	 * 
 	 * @param parentLocator
-	 *            parent location (may be <code>null</code>).
-	 * @param object
-	 *            object.
+	 *            locator of the parent object.
 	 * @param propertyName
-	 *            field name.
+	 *            name of the property.
+	 * @param propertyValue
+	 *            value of the property.
 	 */
 	protected DefaultPropertyObjectLocator(final ObjectLocator parentLocator,
 			final String propertyName, final Object propertyValue) {

@@ -217,10 +217,14 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	 * Append to the <code>toString</code> the field start.
 	 * </p>
 	 * 
+	 * @param parentLocator
+	 *            locator of the parent object.
+	 * @param parent
+	 *            parent object.
+	 * @param fieldName
+	 *            name of the field.
 	 * @param buffer
 	 *            the <code>StringBuilder</code> to populate
-	 * @param propertyName
-	 *            the field name
 	 */
 	protected void appendFieldStart(ObjectLocator parentLocator, Object parent,
 			String fieldName, StringBuilder buffer) {
@@ -235,10 +239,16 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	 * Append to the <code>toString</code> the field start.
 	 * </p>
 	 * 
+	 * @param parentLocator
+	 *            locator of the parent object.
+	 * @param parent
+	 *            parent object.
+	 * @param fieldName
+	 *            name of the field.
 	 * @param buffer
 	 *            the <code>StringBuilder</code> to populate
-	 * @param propertyName
-	 *            the field name
+	 * @param valueSet
+	 *            whether or not the field is set.
 	 */
 	protected void appendFieldStart(ObjectLocator parentLocator, Object parent,
 			String fieldName, StringBuilder buffer, boolean valueSet) {
@@ -250,13 +260,17 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 
 	/**
 	 * <p>
-	 * Append to the <code>toString<code> the field end.
+	 * Append to the <code>toString</code> the field end.
 	 * </p>
 	 * 
+	 * @param parentLocator
+	 *            locator of the parent object.
+	 * @param parent
+	 *            parent object.
+	 * @param fieldName
+	 *            name of the field.
 	 * @param buffer
 	 *            the <code>StringBuilder</code> to populate
-	 * @param propertyName
-	 *            the field name, typically not used as already appended
 	 */
 	protected void appendFieldEnd(ObjectLocator parentLocator, Object parent,
 			String fieldName, StringBuilder buffer) {
@@ -265,13 +279,19 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 
 	/**
 	 * <p>
-	 * Append to the <code>toString<code> the field end.
+	 * Append to the <code>toString</code> the field end.
 	 * </p>
 	 * 
+	 * @param parentLocator
+	 *            locator of the parent object.
+	 * @param parent
+	 *            parent object.
+	 * @param fieldName
+	 *            name of the field.
 	 * @param buffer
 	 *            the <code>StringBuilder</code> to populate
-	 * @param propertyName
-	 *            the field name, typically not used as already appended
+	 * @param valueSet
+	 *            whether or not the field is set.
 	 */
 	protected void appendFieldEnd(ObjectLocator parentLocator, Object parent,
 			String fieldName, StringBuilder buffer, boolean valueSet) {
@@ -314,15 +334,15 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	 * </p>
 	 * 
 	 * <p>
-	 * The default format is <code>'&lt;size=n&gt;'<code>.
+	 * The default format is <code>'&lt;size=n&gt;'</code>.
 	 * </p>
 	 * 
+	 * @param locator
+	 *            locator.
 	 * @param buffer
-	 *            the <code>StringBuilder</code> to populate
-	 * @param propertyName
-	 *            the field name, typically not used as already appended
+	 *            the <code>StringBuilder</code> to populate.
 	 * @param size
-	 *            the size to append
+	 *            the size to append.
 	 */
 	protected void appendSummarySize(ObjectLocator locator,
 			StringBuilder buffer, int size) {

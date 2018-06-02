@@ -29,8 +29,6 @@ public abstract class AbstractObjectLocator implements ObjectLocator {
 	 *            parent location (may be <code>null</code>).
 	 * @param object
 	 *            object.
-	 * @param propertyName
-	 *            field name.
 	 */
 	protected AbstractObjectLocator(final ObjectLocator parentLocator,
 			final Object object) {

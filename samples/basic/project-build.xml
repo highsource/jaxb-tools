@@ -10,7 +10,7 @@
 	</path>
 	<path id="test-compile.path">
 		<fileset dir="${basedir}/lib">
-			<include name="activation-*.jar"/>
+			<include name="javax.activation-*.jar"/>
 			<include name="jaxb-api-*.jar"/>
 			<include name="jaxb-impl-*.jar"/>
 			<include name="jaxb-runtime-*.jar"/>
@@ -30,7 +30,7 @@
 	</path>
 	<path id="test.path">
 		<fileset dir="${basedir}/lib">
-			<include name="activation-*.jar"/>
+			<include name="javax.activation-*.jar"/>
 			<include name="jaxb-api-*.jar"/>
 			<include name="jaxb-impl-*.jar"/>
 			<include name="jaxb-runtime-*.jar"/>
@@ -59,7 +59,7 @@
 			<!-- XJC2 Task classpath -->
 			<classpath>
 				<fileset dir="${basedir}/lib">
-					<include name="activation-*.jar"/>
+					<include name="javax.activation-*.jar"/>
 					<include name="jaxb-api-*.jar"/>
 					<include name="jaxb-impl-*.jar"/>
 					<include name="jaxb-runtime-*.jar"/>
@@ -70,13 +70,12 @@
 					<include name="jaxb-xjc-*.jar"/>
 					<include name="jaxb2-basics-ant-*.jar"/>
 
-					<include name="slf4j-*.jar"/>
 					<include name="jcl-over-slf4j-*.jar"/>
 				</fileset>
 			</classpath>
 		</taskdef>
 		<mkdir dir="${basedir}/target/generated-sources/xjc"/>
-		<xjc destdir="${basedir}/target/generated-sources/xjc" extension="true">
+		<xjc destdir="${basedir}/target/generated-sources/xjc" extension="true" failonerror="false">
 			<arg line="
 				-Xequals
 				-XhashCode

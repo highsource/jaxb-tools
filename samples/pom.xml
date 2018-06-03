@@ -28,7 +28,7 @@
 						<!--phase>package</phase-->
 						<phase>none</phase>
 						<goals>
-							 <goal>attached</goal>
+							 <goal>single</goal>
 						</goals>
 						<configuration>
 							<descriptors>
@@ -42,7 +42,7 @@
 						<!--phase>package</phase-->
 						<phase>none</phase>
 						<goals>
-							 <goal>attached</goal>
+							 <goal>single</goal>
 						</goals>
 						<configuration>
 							<descriptors>
@@ -61,10 +61,10 @@
 						<!--phase>pre-integration-test</phase-->
 						<phase>none</phase>
 						<configuration>
-							<tasks>
+							<target>
 								<mkdir dir="target/test-maven-repository" />
 								<unzip src="target/${project.artifactId}-${project.version}-maven-src.zip" dest="${basedir}/target/test-maven-assembly" />
-							</tasks>
+							</target>
 						</configuration>
 						<goals>
 							<goal>run</goal>
@@ -75,9 +75,9 @@
 						<!--phase>pre-integration-test</phase-->
 						<phase>none</phase>
 						<configuration>
-							<tasks>
+							<target>
 								<unzip src="${basedir}/target/${project.artifactId}-${project.version}-ant-src.zip" dest="${basedir}/target/test-ant-assembly"/>
-							</tasks>
+							</target>
 						</configuration>
 						<goals>
 							<goal>run</goal>
@@ -88,9 +88,9 @@
 						<!--phase>integration-test</phase-->
 						<phase>none</phase>
 						<configuration>
-							<tasks>
+							<target>
 								<ant dir="${basedir}/target/test-ant-assembly/${project.artifactId}-${project.version}" target="package"/>
-							</tasks>
+							</target>
 						</configuration>
 						<goals>
 							<goal>run</goal>

@@ -70,7 +70,6 @@ public abstract class AbstractSamplesTest extends TestCase {
 		return DEFAULT_SAMPLES_DIRECTORY_NAME;
 	}
 
-	@SuppressWarnings("unchecked")
 	protected File[] getSampleFiles() {
 		File samplesDirectory = getSamplesDirectory();
 		logger.debug("Sample directory [" + samplesDirectory.getAbsolutePath()

@@ -36,7 +36,7 @@ public class DefaultGetTypes<C> implements GetTypes<C> {
 		final ID id = propertyInfo.id();
 
 		final CTypeInfo parent = propertyInfo.parent();
-		if (ID.IDREF.equals(id)) {
+		if (ID.IDREF.equals(id) && baseType != null) {
 			if (parent instanceof CClassInfo) {
 				final CClassInfo parentClassInfo = (CClassInfo) parent;
 				final String fullName = baseType.fullName();

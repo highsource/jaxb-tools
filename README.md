@@ -7,6 +7,10 @@ which provides useful plugins and tools for [JAXB 2.x reference implementation](
 
 Please refer to the [wiki](https://github.com/highsource/jaxb2-basics/wiki) for documentation.
 
+JAXB2 Basics can only be used with JAXB/XJC 2.3.0 and higher. JAXB/XJC versions 2.2.x and earlier are no longer supported.
+
+JAXB2 Basics can only be used with Java 1.7 and above.
+
 ## Using JAXB2 Basics
 
 * [Using JAXB2 Basics Plugins](https://github.com/highsource/jaxb2-basics/wiki/Using-JAXB2-Basics-Plugins)

@@ -44,7 +44,7 @@ rem pause
 
 echo Performing full clean deploy.
 rem pause
-call mvn -Pall,sonatype-oss-release -DperformRelease clean deploy
+call mvn -DperformRelease -Pall,sonatype-oss-release clean deploy
 echo Full clean deploy done.
 rem pause
 
@@ -59,7 +59,7 @@ rem pause
 
 echo Performing a full clean build.
 rem pause
-call mvn clean install -Pall,sonatype-oss-release -DperformRelease
+call mvn clean install -DperformRelease -Pall,sonatype-oss-release
 echo Full clean build completed.
 rem pause
 

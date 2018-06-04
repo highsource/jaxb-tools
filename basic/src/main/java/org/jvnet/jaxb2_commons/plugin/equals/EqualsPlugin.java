@@ -102,11 +102,6 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 				processClassOutline(classOutline);
 			}
 		}
-		// for (final EnumOutline enumOutline : outline.getEnums()) {
-		// if (!getIgnoring().isIgnored(enumOutline)) {
-		// processEnumOutline(enumOutline);
-		// }
-		// }
 		return true;
 	}
 
@@ -114,9 +109,6 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 		final JDefinedClass theClass = classOutline.implClass;
 		ClassUtils._implements(theClass, theClass.owner().ref(Equals2.class));
 
-		// @SuppressWarnings("unused")
-		// final JMethod equals0 = generateEquals$Equals0(classOutline,
-		// theClass);
 		@SuppressWarnings("unused")
 		final JMethod equals = generateEquals$equals(classOutline, theClass);
 		@SuppressWarnings("unused")
@@ -124,20 +116,12 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 				theClass);
 	}
 
-	// protected void processEnumOutline(EnumOutline enumOutline) {
-	// final JDefinedClass theClass = enumOutline.clazz;
-	// ClassUtils._implements(theClass, theClass.owner().ref(Equals.class));
-	//
-	// @SuppressWarnings("unused")
-	// final JMethod equals$equals = generateEquals$equals(enumOutline,
-	// theClass);
-	// }
-
 	protected JMethod generateObject$equals(final ClassOutline classOutline,
 			final JDefinedClass theClass) {
 		final JCodeModel codeModel = theClass.owner();
 		final JMethod objectEquals = theClass.method(JMod.PUBLIC,
 				codeModel.BOOLEAN, "equals");
+		objectEquals.annotate(Override.class);
 		{
 			final JVar object = objectEquals.param(Object.class, "object");
 			final JBlock body = objectEquals.body();
@@ -150,28 +134,13 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 		return objectEquals;
 	}
 
-	// protected JMethod generateEquals$Equals0(final ClassOutline classOutline,
-	// final JDefinedClass theClass) {
-	// final JMethod equalsEquals0 = theClass.method(JMod.PUBLIC, theClass
-	// .owner().BOOLEAN, "equals");
-	// {
-	// final JVar object = equalsEquals0.param(Object.class, "object");
-	// final JVar equalsStrategy = equalsEquals0.param(
-	// EqualsStrategy.class, "strategy");
-	// final JBlock body = equalsEquals0.body();
-	//
-	// body._return(JExpr.invoke("equals").arg(JExpr._null()).arg(
-	// JExpr._null()).arg(object).arg(equalsStrategy));
-	// }
-	// return equalsEquals0;
-	// }
-
 	protected JMethod generateEquals$equals(ClassOutline classOutline,
 			final JDefinedClass theClass) {
 
 		final JCodeModel codeModel = theClass.owner();
 		final JMethod equals = theClass.method(JMod.PUBLIC, codeModel.BOOLEAN,
 				"equals");
+		equals.annotate(Override.class);
 		{
 			final JBlock body = equals.body();
 			final JVar leftLocator = equals.param(ObjectLocator.class,
@@ -188,7 +157,6 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 			body._if(JOp.cor(objectIsNull, notTheSameType))._then()
 					._return(JExpr.FALSE);
 
-			//
 			body._if(JExpr._this().eq(object))._then()._return(JExpr.TRUE);
 
 			final Boolean superClassImplementsEquals = StrategyClassUtils
@@ -275,35 +243,4 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 		}
 		return equals;
 	}
-
-	// protected JMethod generateEquals$equals(EnumOutline enumOutline,
-	// final JDefinedClass theClass) {
-	//
-	// final JCodeModel codeModel = theClass.owner();
-	// final JMethod equals = theClass.method(JMod.PUBLIC, codeModel.BOOLEAN,
-	// "equals");
-	//
-	// {
-	// final JBlock body = equals.body();
-	// final JVar leftLocator = equals.param(ObjectLocator.class,
-	// "thisLocator");
-	// final JVar rightLocator = equals.param(ObjectLocator.class,
-	// "thatLocator");
-	// final JVar object = equals.param(Object.class, "object");
-	// final JVar equalsStrategy = equals.param(EqualsStrategy.class,
-	// "strategy");
-	//
-	// body._return(equalsStrategy
-	// .invoke("equals")
-	// .arg(codeModel.ref(LocatorUtils.class)
-	// .staticInvoke("property").arg(leftLocator)
-	// .arg("value").arg(JExpr._this().ref("value")))
-	// .arg(codeModel.ref(LocatorUtils.class)
-	// .staticInvoke("property").arg(rightLocator)
-	// .arg("value").arg(object.ref("value")))
-	// .arg(JExpr._this().ref("value")).arg(object.ref("value")));
-	//
-	// }
-	// return equals;
-	// }
 }

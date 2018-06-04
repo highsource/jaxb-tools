@@ -79,6 +79,7 @@ public class EnumValuePlugin extends AbstractParameterizablePlugin {
 
 		final JMethod enumValue$enumValue = theClass.method(JMod.PUBLIC,
 				enumType, "enumValue");
+		enumValue$enumValue.annotate(Override.class);
 		enumValue$enumValue.body()._return(JExpr._this().invoke("value"));
 	}
 }

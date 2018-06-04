@@ -154,6 +154,7 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 
 			final JMethod newMethod = theClass.method(JMod.PUBLIC, theClass
 					.owner().ref(Object.class), "createNewInstance");
+			newMethod.annotate(Override.class);
 			{
 				final JBlock body = newMethod.body();
 				body._return(JExpr._new(theClass));
@@ -169,6 +170,7 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 
 		final JMethod clone = theClass.method(JMod.PUBLIC, theClass.owner()
 				.ref(Object.class), "clone");
+		clone.annotate(Override.class);
 		{
 			final JBlock body = clone.body();
 			body._return(JExpr.invoke("copyTo").arg(
@@ -183,6 +185,7 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 		final JCodeModel codeModel = theClass.owner();
 		final JMethod copyTo$copyTo = theClass.method(JMod.PUBLIC,
 				codeModel.ref(Object.class), "copyTo");
+		copyTo$copyTo.annotate(Override.class);
 		{
 			final JVar target = copyTo$copyTo.param(Object.class, "target");
 
@@ -204,6 +207,7 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 
 		final JMethod copyTo = theClass.method(JMod.PUBLIC,
 				codeModel.ref(Object.class), "copyTo");
+		copyTo.annotate(Override.class);
 		{
 			final JVar locator = copyTo.param(ObjectLocator.class, "locator");
 			final JVar target = copyTo.param(Object.class, "target");

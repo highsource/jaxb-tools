@@ -122,6 +122,7 @@ public class ToStringPlugin extends AbstractParameterizablePlugin {
 		final JCodeModel codeModel = theClass.owner();
 		final JMethod object$toString = theClass.method(JMod.PUBLIC,
 				codeModel.ref(String.class), "toString");
+		object$toString.annotate(Override.class);
 		{
 			final JBlock body = object$toString.body();
 
@@ -145,6 +146,7 @@ public class ToStringPlugin extends AbstractParameterizablePlugin {
 		final JCodeModel codeModel = theClass.owner();
 		final JMethod toString$append = theClass.method(JMod.PUBLIC,
 				codeModel.ref(StringBuilder.class), "append");
+		toString$append.annotate(Override.class);
 		{
 
 			final JVar locator = toString$append.param(ObjectLocator.class,
@@ -173,6 +175,7 @@ public class ToStringPlugin extends AbstractParameterizablePlugin {
 
 		final JMethod toString$appendFields = theClass.method(JMod.PUBLIC,
 				codeModel.ref(StringBuilder.class), "appendFields");
+		toString$appendFields.annotate(Override.class);
 		{
 			final JVar locator = toString$appendFields.param(
 					ObjectLocator.class, "locator");

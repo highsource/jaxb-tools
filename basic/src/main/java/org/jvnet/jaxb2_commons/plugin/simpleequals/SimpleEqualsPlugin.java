@@ -55,6 +55,7 @@ public class SimpleEqualsPlugin extends
 		final JCodeModel codeModel = theClass.owner();
 		final JMethod objectEquals = theClass.method(JMod.PUBLIC,
 				codeModel.BOOLEAN, "equals");
+		objectEquals.annotate(Override.class);
 		final JVar object = objectEquals.param(Object.class, "object");
 		final JBlock body = objectEquals.body();
 

@@ -132,6 +132,7 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 		JCodeModel codeModel = theClass.owner();
 		final JMethod mergeFrom$mergeFrom = theClass.method(JMod.PUBLIC,
 				codeModel.VOID, "mergeFrom");
+		mergeFrom$mergeFrom.annotate(Override.class);
 		{
 			final JVar left = mergeFrom$mergeFrom.param(Object.class, "left");
 			final JVar right = mergeFrom$mergeFrom.param(Object.class, "right");
@@ -153,6 +154,7 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 
 		final JMethod mergeFrom = theClass.method(JMod.PUBLIC, codeModel.VOID,
 				"mergeFrom");
+		mergeFrom.annotate(Override.class);
 		{
 			final JVar leftLocator = mergeFrom.param(ObjectLocator.class,
 					"leftLocator");
@@ -303,6 +305,7 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 
 			final JMethod newMethod = theClass.method(JMod.PUBLIC, theClass
 					.owner().ref(Object.class), "createNewInstance");
+			newMethod.annotate(Override.class);
 			{
 				final JBlock body = newMethod.body();
 				body._return(JExpr._new(theClass));

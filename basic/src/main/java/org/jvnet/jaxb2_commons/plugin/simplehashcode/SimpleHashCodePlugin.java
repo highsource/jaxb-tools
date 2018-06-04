@@ -61,6 +61,7 @@ public class SimpleHashCodePlugin extends
 		final JCodeModel codeModel = theClass.owner();
 		final JMethod object$hashCode = theClass.method(JMod.PUBLIC,
 				codeModel.INT, "hashCode");
+		object$hashCode.annotate(Override.class);
 		{
 			final JBlock body = object$hashCode.body();
 

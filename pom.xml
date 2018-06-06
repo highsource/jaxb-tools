@@ -60,15 +60,6 @@
 			<email>valikov@gmx.net</email>
 		</developer>
 	</developers>
-	<contributors>
-		<!--contributor>
-			<name></name>
-			<email></email>
-			<organization></organization>
-			<organizationUrl></organizationUrl>
-			<timezone></timezone>
-		</contributor-->
-	</contributors>
 	<licenses>
 		<license>
 			<name>BSD 2-Clause License</name>
@@ -86,7 +77,6 @@
 	</modules>
 	<profiles>
 		<profile>
-			<!-- Disable syntax validation for javadoc in Java8 -->
 			<id>disable-java8-doclint</id>
 			<activation>
 				<jdk>[1.8,)</jdk>
@@ -178,15 +168,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jaxb.version>2.3.0</jaxb.version>
 		<jaxb-api.version>2.3.0</jaxb-api.version>
+		<activation.version>1.2.0</activation.version>
 		<maven-jaxb2-plugin.version>0.14.0</maven-jaxb2-plugin.version>
 		<annox.version>1.0.2</annox.version>
 		<jaxb2-basics.version>0.12.0</jaxb2-basics.version>
 	</properties>
-	<prerequisites>
-		<maven>3.1</maven>
-	</prerequisites>
 	<dependencies>
-		<!-- JUnit -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -278,6 +265,11 @@
 				<artifactId>jaxb-xjc</artifactId>
 				<version>${jaxb.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.sun.activation</groupId>
+				<artifactId>javax.activation</artifactId>
+				<version>${activation.version}</version>
+			</dependency>
 			<!-- JUnit -->
 			<dependency>
 				<groupId>junit</groupId>
@@ -356,6 +348,11 @@
 		<defaultGoal>install</defaultGoal>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>3.0.0-M1</version>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
@@ -486,6 +483,28 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>enforce-java-maven</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+						<rules>
+								<requireJavaVersion>
+									<version>9</version>
+                						</requireJavaVersion>
+								<requireMavenVersion>
+									<version>3.0</version>
+                						</requireMavenVersion>
+							</rules>    
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<artifactId>maven-source-plugin</artifactId>
 				<executions>

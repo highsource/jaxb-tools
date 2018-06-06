@@ -51,7 +51,13 @@
 		<xsd:annotation>
 			<xsd:appinfo>
 				<annox:annotate>@java.lang.SuppressWarnings({"unchecked","rawtypes"})</annox:annotate>
-				<annox:annotate target="package">@javax.annotation.Generated({"XJC","JAXB2 Annotate Plugin"})</annox:annotate>
+				<annox:annotate target="package">
+					@javax.xml.bind.annotation.XmlSchema(
+						elementFormDefault = javax.xml.bind.annotation.XmlNsForm.UNQUALIFIED,
+						xmlns = {
+							@javax.xml.bind.annotation.XmlNs(prefix = "a", namespaceURI = "")
+						})
+				</annox:annotate>
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:sequence>

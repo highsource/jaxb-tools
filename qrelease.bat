@@ -28,12 +28,12 @@
 @REM
 
 setlocal
-echo Setting JAVA_HOME to %JAVA7_HOME%.
-set JAVA_HOME=%JAVA7_HOME%
+echo Setting JAVA_HOME to %JAVA9_HOME%.
+set JAVA_HOME=%JAVA9_HOME%
 
 echo Performing a full clean build.
 rem pause
-call mvn clean install -DperformRelease -Pall
+call mvn clean install -Pall,sonatype-oss-release -DperformRelease
 echo Full clean build completed.
 rem pause
 
@@ -48,7 +48,7 @@ rem pause
 
 echo Performing a full clean build.
 rem pause
-call mvn clean install -Pall -DperformRelease
+call mvn clean install -Pall,sonatype-oss-release -DperformRelease
 echo Full clean build completed.
 rem pause
 
@@ -73,7 +73,7 @@ rem pause
 
 echo Performing full clean deploy.
 rem pause
-call mvn -DperformRelease -Psonatype-oss-release,all clean deploy
+call mvn -DperformRelease -Pall,sonatype-oss-release clean deploy
 echo Full clean deploy done.
 rem pause
 
@@ -88,10 +88,9 @@ rem pause
 
 echo Performing a full clean build.
 rem pause
-call mvn clean install -DperformRelease -Pall
+call mvn clean install -DperformRelease -Pall,sonatype-oss-release
 echo Full clean build completed.
 rem pause
-
 
 echo Checking in version %2.
 rem pause

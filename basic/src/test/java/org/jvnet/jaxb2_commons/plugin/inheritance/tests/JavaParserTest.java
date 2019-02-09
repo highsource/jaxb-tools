@@ -11,8 +11,6 @@ public class JavaParserTest extends TestCase {
 
 	public void testParse() throws Exception {
 
-		final String text = "public class Dummy implements java.util.Comparator<java.lang.Integer>{}";
-
 		final JavaTypeParser javaTypeParser = new JavaTypeParser();
 		final JCodeModel codeModel = new JCodeModel();
 		JClass comparator = javaTypeParser.parseClass("java.util.Comparator",

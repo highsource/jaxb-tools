@@ -9,7 +9,6 @@ import com.sun.tools.xjc.model.CTypeRef;
 import com.sun.tools.xjc.model.nav.NClass;
 import com.sun.tools.xjc.model.nav.NType;
 import com.sun.xml.xsom.XSComponent;
-import com.sun.xml.xsom.XSElementDecl;
 
 public class XJCCMElementTypeRefOrigin extends
 		CMElementTypeRefOrigin<NType, NClass, CElementPropertyInfo, CTypeRef>

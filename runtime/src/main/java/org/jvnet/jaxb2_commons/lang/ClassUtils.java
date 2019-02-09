@@ -18,8 +18,7 @@ public class ClassUtils {
 	 *            the class to get the short name for.
 	 * @return the class name without the package name or an empty string
 	 */
-	@SuppressWarnings("unchecked")
-	public static String getShortClassName(Class cls) {
+	public static String getShortClassName(@SuppressWarnings("rawtypes") Class cls) {
 		if (cls == null) {
 			return "";
 		}

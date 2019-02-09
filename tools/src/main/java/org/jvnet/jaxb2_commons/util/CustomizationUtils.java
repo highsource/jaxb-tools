@@ -626,7 +626,7 @@ public class CustomizationUtils {
 				if (introspector.isElement(object)) {
 					value = object;
 				} else {
-					@SuppressWarnings("unchecked")
+					@SuppressWarnings({ "unchecked", "rawtypes" })
 					final JAXBElement jaxbElement = new JAXBElement(name, object.getClass(), object);
 					value = jaxbElement;
 				}

@@ -6,11 +6,11 @@
     <groupId>org.jvnet.jaxb</groupId>
     <artifactId>jaxb2-basics-tests</artifactId>
     <version>2.0.5-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
-  <artifactId>jaxb2-basics-test-po</artifactId>
+  <artifactId>jaxb2-basics-tests-qa-strategic</artifactId>
   <packaging>jar</packaging>
-  <name>JAXB Tools :: JAXB Basics :: Test [po]</name>
+  <name>JAXB Tools :: JAXB Basics :: Test [qa-strategic]</name>
+
   <dependencies>
     <dependency>
       <groupId>org.jvnet.jaxb</groupId>
@@ -31,8 +31,11 @@
         <configuration>
           <extension>true</extension>
           <args>
+            <arg>-XtoString</arg>
             <arg>-Xequals</arg>
             <arg>-XhashCode</arg>
+            <arg>-Xcopyable</arg>
+            <arg>-Xmergeable</arg>
           </args>
           <plugins>
             <plugin>

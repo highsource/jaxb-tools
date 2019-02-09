@@ -126,8 +126,6 @@ public class AlphaMInfoFactoryTest {
 
 	@Test
 	public void createsCorrectTypeNameForUnnownReferencedType() {
-		final QName typeName = new QName("urn:test", "UnknownReferencedType",
-				"test");
 		final MElementInfo<NType, NClass> elementInfo = MODEL_INFO
 				.getGlobalElementInfo(new QName("urn:test",
 						"UnknownReferencedTypeElement"));

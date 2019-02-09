@@ -5,9 +5,6 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 @SuppressWarnings("deprecation")
 public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 
-	public static final DefaultMergeStrategy INSTANCE2 = new DefaultMergeStrategy();
-	public static final MergeStrategy INSTANCE = INSTANCE2;
-
 	@Override
 	public Boolean shouldBeMergedAndSet(ObjectLocator leftLocator,
 			ObjectLocator rightLocator, boolean leftSet, boolean rightSet) {
@@ -485,5 +482,12 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 		} else {
 			return merge(leftLocator, rightLocator, left, right);
 		}
+	}
+	
+	public static final DefaultMergeStrategy INSTANCE2 = new DefaultMergeStrategy();
+	public static final MergeStrategy INSTANCE = INSTANCE2;
+
+	public static DefaultMergeStrategy getInstance() {
+		return INSTANCE2;
 	}
 }

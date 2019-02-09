@@ -15,12 +15,12 @@ public class HashCodeTest extends AbstractSamplesTest {
 				sample);
 		final Object rhs = createContext().createUnmarshaller().unmarshal(
 				sample);
-		final Object chs = JAXBCopyStrategy.INSTANCE.copy(null, rhs);
-		final int leftHashCode = JAXBHashCodeStrategy.INSTANCE.hashCode(null,
+		final Object chs = JAXBCopyStrategy.getInstance().copy(null, rhs);
+		final int leftHashCode = JAXBHashCodeStrategy.getInstance().hashCode(null,
 				0, lhs);
-		final int rightHashCode = JAXBHashCodeStrategy.INSTANCE.hashCode(null,
+		final int rightHashCode = JAXBHashCodeStrategy.getInstance().hashCode(null,
 				0, rhs);
-		final int copyHashCode = JAXBHashCodeStrategy.INSTANCE.hashCode(null,
+		final int copyHashCode = JAXBHashCodeStrategy.getInstance().hashCode(null,
 				0, chs);
 		assertEquals("Values must be equal.", leftHashCode, rightHashCode);
 		assertEquals("Values must be equal.", leftHashCode, copyHashCode);

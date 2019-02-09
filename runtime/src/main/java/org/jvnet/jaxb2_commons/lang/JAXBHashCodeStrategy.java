@@ -69,4 +69,8 @@ public class JAXBHashCodeStrategy extends DefaultHashCodeStrategy {
 	public static JAXBHashCodeStrategy INSTANCE2 = new JAXBHashCodeStrategy();
 	@SuppressWarnings("deprecation")
 	public static HashCodeStrategy INSTANCE = INSTANCE2;
+
+	public static JAXBHashCodeStrategy getInstance() {
+		return INSTANCE2;
+	}
 }

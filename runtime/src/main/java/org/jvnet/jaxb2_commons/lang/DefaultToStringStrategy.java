@@ -119,7 +119,7 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 		return useDefaultFieldValueMarkers;
 	}
 
-	protected String getShortClassName(Class cls) {
+	protected String getShortClassName(@SuppressWarnings("rawtypes") Class cls) {
 		return ClassUtils.getShortClassName(cls);
 	}
 
@@ -455,7 +455,7 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	}
 
 	public StringBuilder append(ObjectLocator parentLocator, Object parent,
-			String fieldName, StringBuilder buffer, Collection value) {
+			String fieldName, StringBuilder buffer, @SuppressWarnings("rawtypes") Collection value) {
 		appendFieldStart(parentLocator, parent, fieldName, buffer);
 		append(property(parentLocator, fieldName, value), buffer, value);
 		appendFieldEnd(parentLocator, parent, fieldName, buffer);
@@ -531,11 +531,15 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	protected StringBuilder appendInternal(ObjectLocator locator,
 			StringBuilder buffer, Object value) {
 		if (value instanceof Collection) {
-			append(locator, buffer, (Collection) value);
+			@SuppressWarnings("rawtypes")
+			final Collection collection = (Collection) value;
+			append(locator, buffer, collection);
 		} else if (value instanceof ToString2) {
-			((ToString2) value).append(locator, buffer, this);
+			final ToString2 toString2 = (ToString2) value;
+			toString2.append(locator, buffer, this);
 		} else if (value instanceof ToString) {
-			((ToString) value).append(locator, buffer, this);
+			final ToString toString = (ToString) value;
+			toString.append(locator, buffer, this);
 		} else {
 			buffer.append(value.toString());
 		}
@@ -640,7 +644,7 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	}
 
 	public StringBuilder append(ObjectLocator locator, StringBuilder buffer,
-			Collection array) {
+			@SuppressWarnings("rawtypes") Collection array) {
 		if (array == null) {
 			appendNullText(buffer);
 
@@ -820,7 +824,7 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	}
 
 	protected StringBuilder appendSummary(ObjectLocator locator,
-			StringBuilder buffer, Collection value) {
+			StringBuilder buffer, @SuppressWarnings("rawtypes") Collection value) {
 		appendSummarySize(locator, buffer, value.size());
 		return buffer;
 	}
@@ -949,7 +953,7 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	}
 
 	protected StringBuilder appendDetail(ObjectLocator locator,
-			StringBuilder buffer, Collection array) {
+			StringBuilder buffer, @SuppressWarnings("rawtypes") Collection array) {
 		appendArrayStart(buffer);
 		int i = 0;
 		for (Object item : array) {
@@ -1208,4 +1212,8 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 
 	public static final DefaultToStringStrategy INSTANCE2 = new DefaultToStringStrategy();
 	public static final ToStringStrategy INSTANCE = INSTANCE2;
+	
+	public static DefaultToStringStrategy getInstance() {
+		return INSTANCE2;
+	}
 }

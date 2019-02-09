@@ -15,7 +15,7 @@ public class CopyableTest extends AbstractSamplesTest {
 
 		final Object original = createContext().createUnmarshaller().unmarshal(
 				sample);
-		final Object copy = JAXBCopyStrategy.INSTANCE.copy(null, original);
+		final Object copy = JAXBCopyStrategy.getInstance().copy(null, original);
 		Assert.assertTrue("Source and copy must be equal.",
 				JAXBEqualsStrategy.INSTANCE.equals(null, null, original, copy));
 	}

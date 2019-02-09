@@ -16,6 +16,6 @@ public class EqualsTest extends AbstractSamplesTest {
   protected void checkSample(File sample) throws Exception {
     final Object lhs = createContext().createUnmarshaller().unmarshal(sample);
     final Object rhs = createContext().createUnmarshaller().unmarshal(sample);
-    assertTrue("Values must be equal.", JAXBEqualsStrategy.INSTANCE.equals(null, null, lhs, rhs));
+    assertTrue("Values must be equal.", JAXBEqualsStrategy.getInstance().equals(null, null, lhs, rhs));
   }
 }

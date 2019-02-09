@@ -22,6 +22,7 @@ public class JAXBToStringStrategy extends DefaultToStringStrategy {
 	protected StringBuilder appendInternal(ObjectLocator locator,
 			StringBuilder stringBuilder, Object value) {
 		if (value instanceof JAXBElement) {
+			@SuppressWarnings("rawtypes")
 			final JAXBElement jaxbElement = (JAXBElement) value;
 			appendInternal(locator, stringBuilder, jaxbElement);
 		} else {
@@ -31,7 +32,7 @@ public class JAXBToStringStrategy extends DefaultToStringStrategy {
 	}
 
 	protected StringBuilder appendInternal(ObjectLocator locator,
-			StringBuilder stringBuilder, JAXBElement value) {
+			StringBuilder stringBuilder, @SuppressWarnings("rawtypes") JAXBElement value) {
 		appendJAXBElementStart(stringBuilder);
 		stringBuilder.append(value.getName());
 		appendContentStart(stringBuilder);
@@ -45,4 +46,7 @@ public class JAXBToStringStrategy extends DefaultToStringStrategy {
 	@SuppressWarnings("deprecation")
 	public static final ToStringStrategy INSTANCE = INSTANCE2;
 
+	public static JAXBToStringStrategy getInstance() {
+		return INSTANCE2;
+	}
 }

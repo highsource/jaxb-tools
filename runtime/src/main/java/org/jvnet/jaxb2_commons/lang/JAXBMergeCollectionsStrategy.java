@@ -13,8 +13,8 @@ public class JAXBMergeCollectionsStrategy extends JAXBMergeStrategy {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected Object mergeInternal(ObjectLocator leftLocator,
-			ObjectLocator rightLocator, Collection leftCollection,
-			Collection rightCollection) {
+			ObjectLocator rightLocator, @SuppressWarnings("rawtypes") Collection leftCollection,
+			@SuppressWarnings("rawtypes") Collection rightCollection) {
 
 		if (leftCollection instanceof List && rightCollection instanceof List) {
 			final List<Object> list = new ArrayList<Object>(leftCollection
@@ -39,4 +39,8 @@ public class JAXBMergeCollectionsStrategy extends JAXBMergeStrategy {
 	public static final JAXBMergeCollectionsStrategy INSTANCE2 = new JAXBMergeCollectionsStrategy();
 	@SuppressWarnings("deprecation")
 	public static final MergeStrategy INSTANCE = INSTANCE2;
+
+	public static JAXBMergeCollectionsStrategy getInstance() {
+		return INSTANCE2;
+	}
 }

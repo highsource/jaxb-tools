@@ -7,14 +7,14 @@ import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
 public class GH22Test {
 	@Test
 	public void testJAXBEqualsSymmetryConcreteClassAndEnum() {
-		Assert.assertFalse(JAXBEqualsStrategy.INSTANCE.equals(null, null,
+		Assert.assertFalse(JAXBEqualsStrategy.getInstance().equals(null, null,
 				new SomeConcreteClass(), SomeEnum.ENUM));
 	}
 
 	@Test
 	public void testJAXBEqualsSymmetryEnumAndConcreteClass() {
 		// This test fails and throws a ClassCastException
-		Assert.assertFalse(JAXBEqualsStrategy.INSTANCE.equals(null, null,
+		Assert.assertFalse(JAXBEqualsStrategy.getInstance().equals(null, null,
 				SomeEnum.ENUM, new SomeConcreteClass()));
 	}
 

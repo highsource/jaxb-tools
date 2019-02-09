@@ -366,4 +366,8 @@ public class DefaultCopyStrategy implements CopyStrategy2, CopyStrategy {
 
 	public static final DefaultCopyStrategy INSTANCE2 = new DefaultCopyStrategy();
 	public static final CopyStrategy INSTANCE = INSTANCE2;
+
+	public static DefaultCopyStrategy getInstance() {
+		return INSTANCE2;
+	}
 }

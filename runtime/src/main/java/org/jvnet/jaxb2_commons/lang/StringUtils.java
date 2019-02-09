@@ -30,6 +30,7 @@ public class StringUtils {
 		if (len == 0) {
 			return EMPTY_STRING_ARRAY;
 		}
+		@SuppressWarnings("rawtypes")
 		List list = new ArrayList();
 		int i = 0, start = 0;
 		boolean match = false;
@@ -54,8 +55,7 @@ public class StringUtils {
 		return (String[]) list.toArray(new String[list.size()]);
 	}
 
-	@SuppressWarnings("unchecked")
-	public static String join(Iterator iterator, String separator) {
+	public static String join(@SuppressWarnings("rawtypes") Iterator iterator, String separator) {
 
 		// handle null, zero and one elements before building a buffer
 		if (iterator == null) {

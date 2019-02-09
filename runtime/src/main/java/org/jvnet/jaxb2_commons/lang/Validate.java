@@ -18,7 +18,7 @@ public class Validate {
 		}
 	}
 
-	public static void notEmpty(Collection collection) {
+	public static void notEmpty(@SuppressWarnings("rawtypes") Collection collection) {
 		if (collection == null || collection.size() == 0) {
 			throw new IllegalArgumentException(
 					"The validated collection is empty");

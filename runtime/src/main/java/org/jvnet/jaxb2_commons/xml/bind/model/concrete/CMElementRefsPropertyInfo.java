@@ -11,9 +11,7 @@ import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElement;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementRefsPropertyInfo;
-import org.jvnet.jaxb2_commons.xml.bind.model.MElementTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
-import org.jvnet.jaxb2_commons.xml.bind.model.origin.MElementOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
 public class CMElementRefsPropertyInfo<T, C extends T> extends

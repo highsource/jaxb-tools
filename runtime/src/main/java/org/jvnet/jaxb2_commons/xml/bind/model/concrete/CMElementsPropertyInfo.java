@@ -9,11 +9,9 @@ import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
-import org.jvnet.jaxb2_commons.xml.bind.model.MElementTypeInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementTypeRef;
 import org.jvnet.jaxb2_commons.xml.bind.model.MElementsPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfoVisitor;
-import org.jvnet.jaxb2_commons.xml.bind.model.origin.MElementOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
 public class CMElementsPropertyInfo<T, C extends T> extends

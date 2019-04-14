@@ -247,6 +247,10 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 				: getSchemaDirectory();
 	}
 
+	/**
+	 * The source directory containing <code>*.cat</code> catalog files. Defaults to the <code>schemaDirectory</code>.
+	 */
+	@Parameter(property = "maven.xjc2.catalogDirectory")
 	private File catalogDirectory;
 
 	public void setCatalogDirectory(File catalogDirectory) {
@@ -345,6 +349,18 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.catalog = catalog;
 	}
 
+	/**
+	 * <p>
+	 * A list of regular expression file search patterns to specify the catalogs
+	 * to be processed. Searching is based from the root of
+	 * <code>catalogDirectory</code>.
+	 * </p>
+	 * <p>
+	 * If left undefined, then all <code>*.cat</code> files in
+	 * <code>catalogDirectory</code> will be processed.
+	 * </p>
+	 */
+	@Parameter
 	private String[] catalogIncludes = new String[] { "*.cat" };
 
 	public String[] getCatalogIncludes() {
@@ -355,6 +371,12 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.catalogIncludes = catalogIncludes;
 	}
 
+	/**
+	 * A list of regular expression file search patterns to specify the catalogs
+	 * to be excluded from the <code>catalogIncludes</code> list. Searching is
+	 * based from the root of <code>catalogDirectory</code>.
+	 */
+	@Parameter
 	private String[] catalogExcludes;
 
 	public String[] getCatalogExcludes() {
@@ -614,12 +636,12 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	}
 
 	/**
-	 * If 'true', generates content property for types with multiple xs:any
-	 * derived elements; xjc's -contentForWildcard option.
+	 * If <code>true</code>, generates content property for types with multiple <code>xs:any</code>
+	 * derived elements; corresponds to the XJC <code>-contentForWildcard</code> option.
 	 */
+	@Parameter(defaultValue="false")
 	private boolean contentForWildcard;
 
-	// TODO parameter.
 	public boolean getContentForWildcard() {
 		return contentForWildcard;
 	}
@@ -848,7 +870,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	}
 
 	public void setOtherDependsExcludes(String[] otherDependsExcludes) {
-		this.otherDependsExcludes = catalogExcludes;
+		this.otherDependsExcludes = otherDependsExcludes;
 	}
 
 	/**

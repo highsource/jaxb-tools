@@ -20,7 +20,6 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -804,39 +803,34 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 		for (Artifact artifact : compileScopeArtifacts) {
 			getLog().debug(MessageFormat.format("Scanning artifact [{0}] for JAXB binding files.", artifact));
-			final File file = artifact.getFile();
-			ClassLoader classLoader = null;
-			try {
-				classLoader = new URLClassLoader(new URL[] { file.toURI().toURL() });
-			} catch (IOException ioex) {
-				throw new MojoExecutionException(
-						"Unable to create a classloader for the artifact file [" + file.getAbsolutePath() + "].", ioex);
-			}
-			JarFile jarFile = null;
-			try {
-				jarFile = new JarFile(file);
-				final Enumeration<JarEntry> jarFileEntries = jarFile.entries();
-				while (jarFileEntries.hasMoreElements()) {
-					JarEntry entry = jarFileEntries.nextElement();
-					if (entry.getName().endsWith(".xjb")) {
-						final URL resource = classLoader.getResource(entry.getName());
-						try {
-							bindingUris.add(resource.toURI());
-						} catch (URISyntaxException urisex) {
-							throw new MojoExecutionException(MessageFormat.format(
-									"Could not create the URI of the binding file from [{0}]", resource), urisex);
-						}
+			collectBindingUrisFromArtifact(artifact.getFile(), bindingUris);
+		}
+	}
+
+	static void collectBindingUrisFromArtifact(File file, List<URI> bindingUris) throws MojoExecutionException {
+		JarFile jarFile = null;
+		try {
+			jarFile = new JarFile(file);
+			final Enumeration<JarEntry> jarFileEntries = jarFile.entries();
+			while (jarFileEntries.hasMoreElements()) {
+				JarEntry entry = jarFileEntries.nextElement();
+				if (entry.getName().endsWith(".xjb")) {
+					try {
+						bindingUris.add(new URI("jar:" + file.toURI() + "!/" + entry.getName()));
+					} catch (URISyntaxException urisex) {
+						throw new MojoExecutionException(MessageFormat.format(
+								"Could not create the URI of the binding file from [{0}]", entry.getName()), urisex);
 					}
 				}
-			} catch (IOException ioex) {
-				throw new MojoExecutionException(
-						"Unable to read the artifact JAR file [" + file.getAbsolutePath() + "].", ioex);
-			} finally {
-				if (jarFile != null) {
-					try {
-						jarFile.close();
-					} catch (IOException ignored) {
-					}
+			}
+		} catch (IOException ioex) {
+			throw new MojoExecutionException(
+					"Unable to read the artifact JAR file [" + file.getAbsolutePath() + "].", ioex);
+		} finally {
+			if (jarFile != null) {
+				try {
+					jarFile.close();
+				} catch (IOException ignored) {
 				}
 			}
 		}

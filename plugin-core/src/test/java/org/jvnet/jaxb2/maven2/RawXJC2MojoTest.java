@@ -1,5 +1,6 @@
 package org.jvnet.jaxb2.maven2;
 
+import org.apache.maven.plugin.MojoExecutionException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,12 +24,12 @@ public class RawXJC2MojoTest {
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-    private File file;
+    private File testJarFile;
 
     @Before
     public void createJarFile() throws Exception {
-        file = temporaryFolder.newFile("my.jar");
-        try (JarOutputStream out = new JarOutputStream(new FileOutputStream(file))) {
+        testJarFile = temporaryFolder.newFile("test.jar");
+        try (JarOutputStream out = new JarOutputStream(new FileOutputStream(testJarFile))) {
             out.putNextEntry(new JarEntry("dir/"));
             out.closeEntry();
             out.putNextEntry(new JarEntry("dir/nested.xjb"));
@@ -43,12 +44,25 @@ public class RawXJC2MojoTest {
     @Test
     public void collectsBindingUrisFromArtifact() throws Exception {
         List<URI> bindings = new ArrayList<>();
+        
+        final RawXJC2Mojo<Void> mojo = new RawXJC2Mojo<Void>() {
+			
+			@Override
+			protected OptionsFactory<Void> getOptionsFactory() {
+				throw new UnsupportedOperationException();
+			}
+			
+			@Override
+			public void doExecute(Void options) throws MojoExecutionException {
+				throw new UnsupportedOperationException();
+			}
+		}; 
 
-        RawXJC2Mojo.collectBindingUrisFromArtifact(file, bindings);
+        mojo.collectBindingUrisFromArtifact(testJarFile, bindings);
 
         assertEquals(2, bindings.size());
-        assertEquals(URI.create("jar:" + file.toURI() + "!/dir/nested.xjb"), bindings.get(0));
-        assertEquals(URI.create("jar:" + file.toURI() + "!/root.xjb"), bindings.get(1));
+        assertEquals(URI.create("jar:" + testJarFile.toURI() + "!/dir/nested.xjb"), bindings.get(0));
+        assertEquals(URI.create("jar:" + testJarFile.toURI() + "!/root.xjb"), bindings.get(1));
         assertEquals("nested binding", readContent(bindings.get(0)));
         assertEquals("root binding", readContent(bindings.get(1)));
     }

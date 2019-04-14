@@ -807,10 +807,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 	}
 
-	static void collectBindingUrisFromArtifact(File file, List<URI> bindingUris) throws MojoExecutionException {
-		JarFile jarFile = null;
-		try {
-			jarFile = new JarFile(file);
+	void collectBindingUrisFromArtifact(File file, List<URI> bindingUris) throws MojoExecutionException {
+		try (JarFile jarFile = new JarFile(file))
+		{
 			final Enumeration<JarEntry> jarFileEntries = jarFile.entries();
 			while (jarFileEntries.hasMoreElements()) {
 				JarEntry entry = jarFileEntries.nextElement();
@@ -826,13 +825,6 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		} catch (IOException ioex) {
 			throw new MojoExecutionException(
 					"Unable to read the artifact JAR file [" + file.getAbsolutePath() + "].", ioex);
-		} finally {
-			if (jarFile != null) {
-				try {
-					jarFile.close();
-				} catch (IOException ignored) {
-				}
-			}
 		}
 	}
 

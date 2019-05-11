@@ -542,7 +542,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	}
 
 	private void addIfExistsToEpisodeSchemaBindings() throws MojoExecutionException {
-		if (!isAddIfExistsToEpisodeSchemaBindings()) {
+		if (!getEpisode() || !isAddIfExistsToEpisodeSchemaBindings()) {
 			return;
 		}
 		final File episodeFile = getEpisodeFile();

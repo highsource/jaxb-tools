@@ -100,6 +100,70 @@ public class IOUtils {
 			files.add(new File(directory, name).getCanonicalFile());
 		}
 
-		return files;
+		return reorderFiles (files, includes);
 	}
+
+  private static boolean isWildcard (final String s)
+  {
+    return s.indexOf ('*') >= 0 || s.indexOf ('?') >= 0;
+  }
+
+  /**
+   * Reorder the result of "scanner.getIncludedFile" so that the order of the
+   * source includes is maintained as good as possible. Source wildcard matches
+   * are postponed to the end.<br>
+   * Examples:<br>
+   * If the includes contain [a, b, c] and the resulting list should be in that
+   * order.<br>
+   * If the includes contain [a, b*, c] the resulting list should be [a, c,
+   * matches-of(b*)]
+   *
+   * @param resolvedFiles
+   *        resolved files from scanner.getIncludedFiles. May not be
+   *        <code>null</code>.
+   * @param includes
+   *        The source includes in the correct order. May be <code>null</code>
+   *        or empty.
+   * @return The ordered list of files, that tries to take the source order as
+   *         good as possible
+   */
+  private static List <File> reorderFiles (final List <File> resolvedFiles, final String [] includes)
+  {
+    if (includes == null || includes.length == 0)
+    {
+      // return "as is"
+      return resolvedFiles;
+    }
+
+    final List <File> ret = new ArrayList <> (resolvedFiles.size ());
+    for (final String inc : includes)
+    {
+      // Only deal with fixed files
+      if (!isWildcard (inc))
+      {
+        // Ensure to use the system path separator
+        final String sUnifiedInclude = inc.replace ('\\', File.separatorChar).replace ('/', File.separatorChar);
+
+        // Find all matches in the resolved files list
+        final List <File> matches = new ArrayList <> ();
+        for (final File resFile : resolvedFiles)
+          if (resFile.getAbsolutePath ().endsWith (sUnifiedInclude))
+            matches.add (resFile);
+
+        for (final File match : matches)
+        {
+          // Add all matches to the result list
+          ret.add (match);
+
+          // Remove from the main list
+          resolvedFiles.remove (match);
+        }
+      }
+    }
+
+    // Add all remaining resolved files in the order "as is"
+    ret.addAll (resolvedFiles);
+
+    return ret;
+  }
 }

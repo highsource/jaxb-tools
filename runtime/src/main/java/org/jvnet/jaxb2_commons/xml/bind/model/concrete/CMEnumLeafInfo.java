@@ -23,8 +23,8 @@ import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.EnumConstantOrigin
 import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.EnumLeafInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MEnumLeafInfoOrigin;
 
-import com.sun.xml.bind.v2.model.core.EnumConstant;
-import com.sun.xml.bind.v2.model.core.EnumLeafInfo;
+import org.glassfish.jaxb.core.v2.model.core.EnumConstant;
+import org.glassfish.jaxb.core.v2.model.core.EnumLeafInfo;
 
 public class CMEnumLeafInfo<T, C extends T> implements MEnumLeafInfo<T, C>,
 		MCustomizable {

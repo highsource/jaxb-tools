@@ -2,7 +2,7 @@ package org.jvnet.jaxb2_commons.tests.posimple;
 
 import java.io.File;
 
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 
 import org.jvnet.jaxb2_commons.test.AbstractSamplesTest;
 

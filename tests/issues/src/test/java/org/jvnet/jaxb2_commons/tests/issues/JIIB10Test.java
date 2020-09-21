@@ -2,7 +2,7 @@ package org.jvnet.jaxb2_commons.tests.issues;
 
 import java.lang.reflect.Field;
 
-import javax.xml.bind.annotation.XmlAnyElement;
+import jakarta.xml.bind.annotation.XmlAnyElement;
 
 import junit.framework.TestCase;
 

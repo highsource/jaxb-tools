@@ -3,14 +3,13 @@ package org.jvnet.jaxb2_commons.xml.bind.model.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.bind.annotation.XmlNs;
-import javax.xml.bind.annotation.XmlSchema;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlNs;
+import jakarta.xml.bind.annotation.XmlSchema;
+import jakarta.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
 
+import org.glassfish.jaxb.core.api.impl.NameConverter;
 import org.jvnet.jaxb2_commons.lang.Validate;
-
-import com.sun.xml.bind.api.impl.NameConverter;
 
 public class XmlTypeUtils {
 

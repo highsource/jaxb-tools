@@ -3,7 +3,7 @@ package org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin;
 import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MWildcardTypeInfoOrigin;
 
-import com.sun.xml.bind.v2.model.core.WildcardTypeInfo;
+import org.glassfish.jaxb.core.v2.model.core.WildcardTypeInfo;
 
 public class CMWildcardTypeInfoOrigin<T, C, WTI extends WildcardTypeInfo<T, C>>
 		implements MWildcardTypeInfoOrigin, WildcardTypeInfoOrigin<T, C, WTI> {

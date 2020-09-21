@@ -6,7 +6,7 @@ import static org.jvnet.jaxb2_commons.locator.util.LocatorUtils.property;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 

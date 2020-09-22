@@ -3,10 +3,10 @@ package org.hisrc.xml.bind.tests.dogs;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.XmlElementRef;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.annotation.XmlElementRef;
+import jakarta.xml.bind.annotation.XmlElementWrapper;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "listOfDogs")
 public class Dogs {

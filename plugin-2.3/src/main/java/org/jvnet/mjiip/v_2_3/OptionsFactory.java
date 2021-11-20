@@ -30,7 +30,8 @@ public class OptionsFactory implements
 
 		options.classpaths.addAll(optionsConfiguration.getPlugins());
 
-		options.target = SpecVersion.V2_2;
+		//options.target = SpecVersion.V2_2;
+		options.target = SpecVersion.LATEST;
 
 		final String encoding = optionsConfiguration.getEncoding();
 

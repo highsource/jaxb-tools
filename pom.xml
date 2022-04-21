@@ -16,10 +16,10 @@
 		</license>
 	</licenses>
 	<inceptionYear>2006</inceptionYear>
-	<scm>
-		<connection>scm:svn:https://svn.java.net/svn/maven-jaxb2-plugin~svn/trunk</connection>
-		<developerConnection>scm:svn:https://svn.java.net/svn/maven-jaxb2-plugin~svn/trunk</developerConnection>
-		<url>http://java.net/projects/maven-jaxb2-plugin/sources/svn/show/trunk</url>
+        <scm>
+		<connection>scm:git:https://github.com/highsource/maven-jaxb2-plugin.git</connection>
+		<url>https://github.com/highsource/maven-jaxb2-plugin</url>
+		<tag>${project.version}</tag>
 	</scm>
 	<developers>
 		<developer>
@@ -66,6 +66,7 @@
 		<jaxb2-basics.version>0.12.0</jaxb2-basics.version>
 		<maven.plugin.testing.version>2.1</maven.plugin.testing.version>
 		<maven.plugin.plugin.version>3.5</maven.plugin.plugin.version>
+                <maven-nexus-staging-maven-plugin.version>1.6.8</maven-nexus-staging-maven-plugin.version>
 		<slf4j.version>1.7.25</slf4j.version>
 	</properties>
 	<profiles>
@@ -146,6 +147,30 @@
 								</goals>
 							</execution>
 						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-release-plugin</artifactId>
+                                                <version>2.5.3</version>
+						<configuration>
+							<pushChanges>true</pushChanges>
+							<localCheckout>true</localCheckout>
+							<tagNameFormat>@{project.version}</tagNameFormat>
+							<autoVersionSubmodules>true</autoVersionSubmodules>
+							<goals>clean package deploy</goals>
+						</configuration>
+					</plugin>
+                                        <plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>${maven-nexus-staging-maven-plugin.version}</version>
+						<extensions>true</extensions>
+						<configuration>
+							<serverId>oss-sonatype-staging</serverId>
+							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+							<autoReleaseAfterClose>false</autoReleaseAfterClose>
+							<stagingProgressTimeoutMinutes>30</stagingProgressTimeoutMinutes>
+						</configuration>
 					</plugin>
 				</plugins>
 			</build>

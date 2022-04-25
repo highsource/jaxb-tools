@@ -66,6 +66,7 @@
 		<jaxb2-basics.version>0.12.0</jaxb2-basics.version>
 		<maven.plugin.testing.version>2.1</maven.plugin.testing.version>
 		<maven.plugin.plugin.version>3.5</maven.plugin.plugin.version>
+                <maven-nexus-staging-maven-plugin.version>1.6.8</maven-nexus-staging-maven-plugin.version>
 		<slf4j.version>1.7.25</slf4j.version>
 	</properties>
 	<profiles>
@@ -157,6 +158,18 @@
 							<tagNameFormat>@{project.version}</tagNameFormat>
 							<autoVersionSubmodules>true</autoVersionSubmodules>
 							<goals>clean package deploy</goals>
+						</configuration>
+					</plugin>
+                                        <plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>${maven-nexus-staging-maven-plugin.version}</version>
+						<extensions>true</extensions>
+						<configuration>
+							<serverId>oss-sonatype-staging</serverId>
+							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+							<autoReleaseAfterClose>false</autoReleaseAfterClose>
+							<stagingProgressTimeoutMinutes>30</stagingProgressTimeoutMinutes>
 						</configuration>
 					</plugin>
 				</plugins>

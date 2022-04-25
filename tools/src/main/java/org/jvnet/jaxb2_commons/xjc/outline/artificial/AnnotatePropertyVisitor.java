@@ -1,8 +1,8 @@
 package org.jvnet.jaxb2_commons.xjc.outline.artificial;
 
-import jakarta.xml.bind.annotation.XmlAnyAttribute;
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.XmlAnyAttribute;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlValue;
 
 import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.MAnyAttributePropertyInfo;

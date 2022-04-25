@@ -2,7 +2,7 @@ package org.jvnet.jaxb2_commons.plugin.simplify.tests01;
 
 import java.util.Date;
 
-import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;

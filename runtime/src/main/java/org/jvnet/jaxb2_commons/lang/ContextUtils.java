@@ -2,9 +2,9 @@ package org.jvnet.jaxb2_commons.lang;
 
 import java.io.StringWriter;
 
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBException;
-import jakarta.xml.bind.Marshaller;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 public class ContextUtils {
 

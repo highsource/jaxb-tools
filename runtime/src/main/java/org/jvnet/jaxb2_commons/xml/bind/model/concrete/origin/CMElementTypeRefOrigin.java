@@ -3,8 +3,8 @@ package org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin;
 import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MElementTypeRefOrigin;
 
-import org.glassfish.jaxb.core.v2.model.core.ElementPropertyInfo;
-import org.glassfish.jaxb.core.v2.model.core.TypeRef;
+import com.sun.xml.bind.v2.model.core.ElementPropertyInfo;
+import com.sun.xml.bind.v2.model.core.TypeRef;
 
 public class CMElementTypeRefOrigin<T, C, EPI extends ElementPropertyInfo<T, C>, TR extends TypeRef<T, C>>
 		implements MElementTypeRefOrigin {

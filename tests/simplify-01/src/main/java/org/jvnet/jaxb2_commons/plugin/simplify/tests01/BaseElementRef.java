@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.plugin.simplify.tests01;
 
-import jakarta.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
 @SuppressWarnings("serial")

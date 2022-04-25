@@ -3,7 +3,7 @@ package org.jvnet.jaxb2_commons.xjc.outline.artificial;
 import java.util.HashMap;
 import java.util.Map;
 
-import jakarta.xml.bind.annotation.XmlAnyAttribute;
+import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb2_commons.xjc.outline.MClassOutline;

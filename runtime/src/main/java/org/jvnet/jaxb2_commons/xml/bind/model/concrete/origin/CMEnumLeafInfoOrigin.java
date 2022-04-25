@@ -4,7 +4,7 @@ import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MElementInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MEnumLeafInfoOrigin;
 
-import org.glassfish.jaxb.core.v2.model.core.EnumLeafInfo;
+import com.sun.xml.bind.v2.model.core.EnumLeafInfo;
 
 public class CMEnumLeafInfoOrigin<T, C, ELI extends EnumLeafInfo<T, C>>
 		implements MEnumLeafInfoOrigin, EnumLeafInfoOrigin<T, C, ELI> {

@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.lang;
 
-import jakarta.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBElement;
 
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 

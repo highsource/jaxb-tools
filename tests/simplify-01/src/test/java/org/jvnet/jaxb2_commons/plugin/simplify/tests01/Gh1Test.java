@@ -2,9 +2,9 @@ package org.jvnet.jaxb2_commons.plugin.simplify.tests01;
 
 import java.io.StringWriter;
 
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBElement;
-import jakarta.xml.bind.JAXBException;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
 
 import org.junit.Assert;

@@ -30,7 +30,7 @@ import com.sun.tools.xjc.model.CReferencePropertyInfo;
 import com.sun.tools.xjc.model.CTypeRef;
 import com.sun.tools.xjc.model.CValuePropertyInfo;
 import com.sun.tools.xjc.model.Model;
-import org.glassfish.jaxb.core.v2.model.core.ID;
+import com.sun.xml.bind.v2.model.core.ID;
 
 public class SimplifyPlugin extends AbstractParameterizablePlugin {
 

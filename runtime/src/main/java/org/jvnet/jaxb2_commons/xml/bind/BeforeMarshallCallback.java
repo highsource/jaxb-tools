@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.xml.bind;
 
-import jakarta.xml.bind.Marshaller;
+import javax.xml.bind.Marshaller;
 
 public interface BeforeMarshallCallback {
 

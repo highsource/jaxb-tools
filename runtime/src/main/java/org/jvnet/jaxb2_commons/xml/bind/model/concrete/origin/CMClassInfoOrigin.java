@@ -4,7 +4,7 @@ import org.jvnet.jaxb2_commons.lang.Validate;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MClassInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MElementInfoOrigin;
 
-import org.glassfish.jaxb.core.v2.model.core.ClassInfo;
+import com.sun.xml.bind.v2.model.core.ClassInfo;
 
 public class CMClassInfoOrigin<T, C, CI extends ClassInfo<T, C>> implements
 		MClassInfoOrigin, ClassInfoOrigin<T, C, CI> {

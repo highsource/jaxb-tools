@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.xml.bind;
 
-import jakarta.xml.bind.Unmarshaller;
+import javax.xml.bind.Unmarshaller;
 
 public interface BeforeUnmarshallCallback {
 

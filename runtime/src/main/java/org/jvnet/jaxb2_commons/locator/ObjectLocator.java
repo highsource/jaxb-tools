@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.locator;
 
-import jakarta.xml.bind.ValidationEventLocator;
+import javax.xml.bind.ValidationEventLocator;
 
 import org.jvnet.jaxb2_commons.i18n.Reportable;
 

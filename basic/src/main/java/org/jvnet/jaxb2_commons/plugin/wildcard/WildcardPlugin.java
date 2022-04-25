@@ -13,7 +13,7 @@ import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CReferencePropertyInfo;
 import com.sun.tools.xjc.model.Model;
-import org.glassfish.jaxb.core.v2.model.core.WildcardMode;
+import com.sun.xml.bind.v2.model.core.WildcardMode;
 
 public class WildcardPlugin extends AbstractParameterizablePlugin {
 

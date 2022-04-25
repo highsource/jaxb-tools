@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import jakarta.activation.MimeType;
+import javax.activation.MimeType;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.namespace.QName;
 
@@ -46,24 +46,24 @@ import org.jvnet.jaxb2_commons.xml.bind.model.origin.MModelInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MWildcardTypeInfoOrigin;
 
-import org.glassfish.jaxb.core.v2.model.core.Adapter;
-import org.glassfish.jaxb.core.v2.model.core.AttributePropertyInfo;
-import org.glassfish.jaxb.core.v2.model.core.BuiltinLeafInfo;
-import org.glassfish.jaxb.core.v2.model.core.ClassInfo;
-import org.glassfish.jaxb.core.v2.model.core.Element;
-import org.glassfish.jaxb.core.v2.model.core.ElementInfo;
-import org.glassfish.jaxb.core.v2.model.core.ElementPropertyInfo;
-import org.glassfish.jaxb.core.v2.model.core.EnumConstant;
-import org.glassfish.jaxb.core.v2.model.core.EnumLeafInfo;
-import org.glassfish.jaxb.core.v2.model.core.ID;
-import org.glassfish.jaxb.core.v2.model.core.MapPropertyInfo;
-import org.glassfish.jaxb.core.v2.model.core.PropertyInfo;
-import org.glassfish.jaxb.core.v2.model.core.ReferencePropertyInfo;
-import org.glassfish.jaxb.core.v2.model.core.TypeInfo;
-import org.glassfish.jaxb.core.v2.model.core.TypeInfoSet;
-import org.glassfish.jaxb.core.v2.model.core.TypeRef;
-import org.glassfish.jaxb.core.v2.model.core.ValuePropertyInfo;
-import org.glassfish.jaxb.core.v2.model.core.WildcardTypeInfo;
+import com.sun.xml.bind.v2.model.core.Adapter;
+import com.sun.xml.bind.v2.model.core.AttributePropertyInfo;
+import com.sun.xml.bind.v2.model.core.BuiltinLeafInfo;
+import com.sun.xml.bind.v2.model.core.ClassInfo;
+import com.sun.xml.bind.v2.model.core.Element;
+import com.sun.xml.bind.v2.model.core.ElementInfo;
+import com.sun.xml.bind.v2.model.core.ElementPropertyInfo;
+import com.sun.xml.bind.v2.model.core.EnumConstant;
+import com.sun.xml.bind.v2.model.core.EnumLeafInfo;
+import com.sun.xml.bind.v2.model.core.ID;
+import com.sun.xml.bind.v2.model.core.MapPropertyInfo;
+import com.sun.xml.bind.v2.model.core.PropertyInfo;
+import com.sun.xml.bind.v2.model.core.ReferencePropertyInfo;
+import com.sun.xml.bind.v2.model.core.TypeInfo;
+import com.sun.xml.bind.v2.model.core.TypeInfoSet;
+import com.sun.xml.bind.v2.model.core.TypeRef;
+import com.sun.xml.bind.v2.model.core.ValuePropertyInfo;
+import com.sun.xml.bind.v2.model.core.WildcardTypeInfo;
 
 @SuppressWarnings("unchecked")
 public abstract class CMInfoFactory<T, C extends T, TIS extends TypeInfoSet<T, C, ?, ?>,

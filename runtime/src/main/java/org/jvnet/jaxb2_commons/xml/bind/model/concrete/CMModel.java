@@ -23,10 +23,10 @@ import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.EnumLeafInfoOrigin
 import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.TypeInfoSetOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MModelInfoOrigin;
 
-import org.glassfish.jaxb.core.v2.model.core.ClassInfo;
-import org.glassfish.jaxb.core.v2.model.core.ElementInfo;
-import org.glassfish.jaxb.core.v2.model.core.EnumLeafInfo;
-import org.glassfish.jaxb.core.v2.model.core.TypeInfoSet;
+import com.sun.xml.bind.v2.model.core.ClassInfo;
+import com.sun.xml.bind.v2.model.core.ElementInfo;
+import com.sun.xml.bind.v2.model.core.EnumLeafInfo;
+import com.sun.xml.bind.v2.model.core.TypeInfoSet;
 
 public class CMModel<T, C extends T> implements MModelInfo<T, C> {
 

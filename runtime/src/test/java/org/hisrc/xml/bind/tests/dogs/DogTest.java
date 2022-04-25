@@ -1,7 +1,7 @@
 package org.hisrc.xml.bind.tests.dogs;
 
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBException;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -9,7 +9,7 @@ Please refer to the [wiki](https://github.com/highsource/jaxb2-basics/wiki) for 
 
 JAXB2 Basics can only be used with JAXB/XJC 2.3.0 and higher. JAXB/XJC versions 2.2.x and earlier are no longer supported.
 
-JAXB2 Basics can only be used with Java 1.7 and above.
+JAXB2 Basics can only be used with Java 1.8 and above.
 
 ## Using JAXB2 Basics
 

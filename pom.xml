@@ -138,11 +138,13 @@
 	</profiles>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jaxb.version>2.3.0</jaxb.version>
+		<jaxb.version>2.3.6</jaxb.version>
+		<jaxb-api.version>2.3.1</jaxb-api.version>
+		<jaxb-core.version>2.3.0.1</jaxb-core.version>
 		<activation.version>1.2.0</activation.version>
-		<maven-jaxb2-plugin.version>0.14.0</maven-jaxb2-plugin.version>
-		<cxf-codegen-plugin.version>3.2.4</cxf-codegen-plugin.version>
-		<slf4j.version>1.7.7</slf4j.version>
+		<maven-jaxb2-plugin.version>0.15.1</maven-jaxb2-plugin.version>
+		<cxf-codegen-plugin.version>3.3.13</cxf-codegen-plugin.version>
+		<slf4j.version>1.7.36</slf4j.version>
 	</properties>
 	<prerequisites>
 		<maven>3.1</maven>
@@ -212,7 +214,7 @@
 			<dependency>
 				<groupId>javax.xml.bind</groupId>
 				<artifactId>jaxb-api</artifactId>
-				<version>${jaxb.version}</version>
+				<version>${jaxb-api.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.glassfish.jaxb</groupId>
@@ -222,7 +224,7 @@
 			<dependency>
 				<groupId>org.glassfish.jaxb</groupId>
 				<artifactId>jaxb-core</artifactId>
-				<version>${jaxb.version}</version>
+				<version>${jaxb-core.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.glassfish.jaxb</groupId>
@@ -300,12 +302,12 @@
 			<dependency>
 				<groupId>org.apache.ant</groupId>
 				<artifactId>ant</artifactId>
-				<version>1.7.0</version>
+				<version>1.10.12</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.ant</groupId>
 				<artifactId>ant-launcher</artifactId>
-				<version>1.7.0</version>
+				<version>1.10.12</version>
 			</dependency>
 			<!-- Java Parser -->
 			<dependency>
@@ -331,15 +333,15 @@
 				</plugin>
 				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.7.0</version>
+					<version>3.10.1</version>
 					<configuration>
-						<source>1.7</source>
-						<target>1.7</target>
+						<source>1.8</source>
+						<target>1.8</target>
 					</configuration>
 				</plugin>
 				<plugin>
 					<artifactId>maven-antrun-plugin</artifactId>
-					<version>1.8</version>
+					<version>3.1.0</version>
 					<dependencies>
 						<!--dependency>
 							<groupId>sun.jdk</groupId>
@@ -355,10 +357,15 @@
 							<scope>runtime</scope>
 						</dependency>
 						<dependency>
-							<groupId>ant</groupId>
-							<artifactId>ant-optional</artifactId>
-							<version>1.5.3-1</version>
+							<groupId>org.apache.ant</groupId>
+							<artifactId>ant</artifactId>
+							<version>1.10.12</version>
 						</dependency>
+						<dependency>
+                                                        <groupId>org.apache.ant</groupId>
+                                                        <artifactId>ant-junit</artifactId>
+                                                        <version>1.10.12</version>
+                                                </dependency>
 					</dependencies>
 				</plugin>
 				<plugin>

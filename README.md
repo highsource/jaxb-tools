@@ -42,9 +42,6 @@ compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Mav
 
 If you need a specific JAXB version, you can explicitly use one of the following variants:
 
-* `org.jvnet.jaxb2.maven2:maven-jaxb20-plugin` - JAXB 2.0.
-* `org.jvnet.jaxb2.maven2:maven-jaxb21-plugin` - JAXB 2.1.
-* `org.jvnet.jaxb2.maven2:maven-jaxb22-plugin` - JAXB 2.2.
 * `org.jvnet.jaxb2.maven2:maven-jaxb23-plugin` - JAXB 2.3.
 * `org.jvnet.jaxb2.maven2:maven-jaxb2-plugin` - "most actual version", at the moment same as `org.jvnet.jaxb2.maven2:maven-jaxb23-plugin`.
 

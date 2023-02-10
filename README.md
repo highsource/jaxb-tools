@@ -1,6 +1,6 @@
 # JAXB2 Maven Plugin #
 
-Welcome to the `org.jvnet.jaxb2.maven2:maven-jaxb2-plugin`, the most advanced and feature-full Maven plugin for XML Schema compilation.
+Welcome to the `org.jvnet.jaxb:jaxb40-maven-plugin`, the most advanced and feature-full Maven plugin for XML Schema compilation.
 
 This Maven plugin wraps and enhances the [JAXB](https://jaxb.java.net/) [Schema Compiler (XJC)](http://docs.oracle.com/javase/6/docs/technotes/tools/share/xjc.html) and allows
 compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Maven builds.
@@ -20,9 +20,9 @@ compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Mav
 		<plugins>
 			...
 			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
-				<version>0.14.0</version>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb23-maven-plugin</artifactId>
+				<version>4.0.0</version>
 				<executions>
 					<execution>
 						<goals>
@@ -42,14 +42,15 @@ compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Mav
 
 If you need a specific JAXB version, you can explicitly use one of the following variants:
 
-* `org.jvnet.jaxb2.maven2:maven-jaxb23-plugin` - JAXB 2.3.
-* `org.jvnet.jaxb2.maven2:maven-jaxb2-plugin` - "most actual version", at the moment same as `org.jvnet.jaxb2.maven2:maven-jaxb23-plugin`.
+* `org.jvnet.jaxb:jaxb40-maven-plugin` - JAXB 4.0.
+* `org.jvnet.jaxb:jaxb30-maven-plugin` - JAXB 3.0.
+* `org.jvnet.jaxb:jaxb23-maven-plugin` - JAXB 2.3.
 
 ### Java versions
 
-Supported Java versions are `1.7`, `1.8`, `9` (only `maven-jaxb2-plugin` and `maven-jaxb23-plugin`).
+Supported Java versions are `1.8` (only for JAXB 2.3 and JAXB 3.0), `11`, `17`
 
-Java version `1.6` is no longer supported (since version `0.14.0`).
+Java version `1.6`, `1.7` is no longer supported (since version `4.0.0`).
 
 ## [Documentation](https://github.com/highsource/maven-jaxb2-plugin/wiki) ##
 
@@ -69,7 +70,7 @@ Please refer to the [wiki](https://github.com/highsource/maven-jaxb2-plugin/wiki
 
 ## Disclaimer ##
 
-This project is not developed, supported or in any other way affiliated with Apache. The `org.jvnet.jaxb2.maven2:maven-jaxb2-plugin` is not an Apache product (and does not pretend to be one), it is a completely independent development.
+This project is not developed, supported or in any other way affiliated with Apache. The `org.jvnet.jaxb:jaxb40-maven-plugin` is not an Apache product (and does not pretend to be one), it is a completely independent development.
 
 This project is also *not* developed by or affiliated with Oracle or Sun. Even if it is featured on [https://jaxb.java.net/](https://jaxb.java.net) pages, 
 

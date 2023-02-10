@@ -6,8 +6,8 @@ import java.text.MessageFormat;
 import java.util.List;
 
 import org.apache.maven.plugin.MojoExecutionException;
-import org.jvnet.jaxb2.maven2.OptionsConfiguration;
-import org.jvnet.jaxb2.maven2.util.StringUtils;
+import org.jvnet.jaxb.OptionsConfiguration;
+import org.jvnet.jaxb.util.StringUtils;
 import org.xml.sax.InputSource;
 
 import com.sun.tools.xjc.BadCommandLineException;
@@ -16,7 +16,7 @@ import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.api.SpecVersion;
 
 public class OptionsFactory implements
-		org.jvnet.jaxb2.maven2.OptionsFactory<Options> {
+		org.jvnet.jaxb.OptionsFactory<Options> {
 	/**
 	 * Creates and initializes an instance of XJC options.
 	 *

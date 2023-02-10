@@ -9,7 +9,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.ResolutionScope;
-import org.jvnet.jaxb2.maven2.RawXJC2Mojo;
+import org.jvnet.jaxb.RawXJC2Mojo;
 
 import com.sun.codemodel.CodeWriter;
 import com.sun.codemodel.JCodeModel;
@@ -28,10 +28,10 @@ import com.sun.tools.xjc.outline.Outline;
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.COMPILE, threadSafe = true)
 public class XJC23Mojo extends RawXJC2Mojo<Options> {
 
-	private final org.jvnet.jaxb2.maven2.OptionsFactory<Options> optionsFactory = new OptionsFactory();
+	private final org.jvnet.jaxb.OptionsFactory<Options> optionsFactory = new OptionsFactory();
 
 	@Override
-	protected org.jvnet.jaxb2.maven2.OptionsFactory<Options> getOptionsFactory() {
+	protected org.jvnet.jaxb.OptionsFactory<Options> getOptionsFactory() {
 		return optionsFactory;
 	}
 

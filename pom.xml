@@ -1,18 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jvnet.jaxb2.maven2</groupId>
-	<artifactId>maven-jaxb2-plugin-project</artifactId>
-	<version>0.15.3-SNAPSHOT</version>
+	<groupId>org.jvnet.jaxb</groupId>
+	<artifactId>jaxb-maven-plugin-project</artifactId>
+	<version>4.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Maven JAXB 2.x Plugin Project</name>
-	<description>Maven2 plugin for JAXB 2.x XJC compiler to generate Java sources from XML Schemas.</description>
+	<name>Maven JAXB 2 / 3 / 4 Plugin Project</name>
+	<description>Maven plugin for JAXB 2.x, 3.x and 4.x XJC compiler to generate Java sources from XML Schemas.</description>
 	<url>https://github.com/highsource/maven-jaxb2-plugin</url>
 	<licenses>
 		<license>
 			<name>BSD-Style License</name>
 			<url>https://github.com/highsource/maven-jaxb2-plugin/blob/master/LICENSE</url>
 			<distribution>repo</distribution>
-			<comments>Maven JAXB2 Plugin license is the 3-clause BSD license which is compatible with GPL. Maven JAXB2 Plugin license does not require you to include any acknowledgments for Maven JAXB2 Plugin in advertising materials for your software.</comments>
+			<comments>Maven JAXB Plugin license is the 3-clause BSD license which is compatible with GPL. Maven JAXB Plugin license does not require you to include any acknowledgments for Maven JAXB Plugin in advertising materials for your software.</comments>
 		</license>
 	</licenses>
 	<inceptionYear>2006</inceptionYear>
@@ -31,36 +31,45 @@
 			</roles>
 		</developer>
 		<developer>
-                        <id>mattrpav</id>
-                        <name>Matt Pavlovich</name>
-                        <email>mattrpav@gmail.com</email>
-                        <roles>
-                                <role>maintainer</role>
-                        </roles>
-                </developer>
+			<id>mattrpav</id>
+			<name>Matt Pavlovich</name>
+			<email>mattrpav@gmail.com</email>
+			<roles>
+				<role>maintainer</role>
+			</roles>
+		</developer>
 	</developers>
 	<modules>
 		<module>plugin-core</module>
 		<module>plugin-2.3</module>
-		<module>plugin</module>
+		<module>plugin3-core</module>
+		<module>plugin-3.0</module>
+		<module>plugin-4.0</module>
 		<module>testing</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.version>2.0.9</maven.version>
+		<maven.version>3.3.9</maven.version>
 		<jaxb23.version>2.3.7</jaxb23.version>
-		<jaxb-api.version>2.3.3</jaxb-api.version>
+		<jaxb23-api.version>2.3.3</jaxb23-api.version>
+		<jaxb30.version>3.0.2</jaxb30.version>
+		<jaxb30-api.version>3.0.1</jaxb30-api.version>
+		<jaxb40.version>4.0.2</jaxb40.version>
+		<jaxb40-api.version>4.0.0</jaxb40-api.version>
 		<jaxb.version>${jaxb23.version}</jaxb.version>
+		<jaxb-api.version>${jaxb23-api.version}</jaxb-api.version>
 		<stax-ex.version>1.8.3</stax-ex.version>
 		<fastinfoset.version>1.2.18</fastinfoset.version>
 		<dtd-parser.version>1.4.5</dtd-parser.version>
 		<istack.version>3.0.12</istack.version>
-		<activation.version>1.2.2</activation.version>
+		<activation-javax.version>1.2.2</activation-javax.version>
+		<activation-jakarta.version>2.0.1</activation-jakarta.version>
+		<activation.version>${activation-javax.version}</activation.version>
 		<jaxb2-basics.version>0.12.0</jaxb2-basics.version>
-		<maven.plugin.testing.version>2.1</maven.plugin.testing.version>
+		<maven.plugin.testing.version>3.3.0</maven.plugin.testing.version>
 		<maven.plugin.plugin.version>3.7.1</maven.plugin.plugin.version>
 		<maven-nexus-staging-maven-plugin.version>1.6.8</maven-nexus-staging-maven-plugin.version>
-		<slf4j.version>1.7.25</slf4j.version>
+		<slf4j.version>1.7.36</slf4j.version>
 	</properties>
 	<profiles>
 		<profile>
@@ -235,10 +244,10 @@
 			</dependency>
 
 			<!-- Start jaxb-xjc dependencies -->
-                        <dependency>
-                                <groupId>org.glassfish.jaxb</groupId>
+			<dependency>
+				<groupId>org.glassfish.jaxb</groupId>
 				<artifactId>xsom</artifactId>
-			 	<version>${jaxb.version}</version>
+				<version>${jaxb.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.glassfish.jaxb</groupId>
@@ -282,23 +291,33 @@
 				<version>${jaxb.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin-core</artifactId>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb-maven-plugin-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb23-maven-plugin</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb23-plugin</artifactId>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb3-maven-plugin-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin-testing</artifactId>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb3-maven-plugin</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb4-maven-plugin</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb-maven-plugin-testing</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<!-- Maven plugin and api classes -->
@@ -314,17 +333,17 @@
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-project</artifactId>
-				<version>${maven.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-model</artifactId>
 				<version>${maven.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-core</artifactId>
+				<version>${maven.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.maven</groupId>
+				<artifactId>maven-compat</artifactId>
 				<version>${maven.version}</version>
 			</dependency>
 			<dependency>
@@ -363,18 +382,18 @@
 			<dependency>
 				<groupId>org.codehaus.plexus</groupId>
 				<artifactId>plexus-interpolation</artifactId>
-				<version>1.9</version>
+				<version>1.26</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.sonatype.plexus</groupId>
+				<groupId>org.codehaus.plexus</groupId>
 				<artifactId>plexus-build-api</artifactId>
-				<version>0.0.7</version>
+				<version>1.0.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.codehaus.plexus</groupId>
 				<artifactId>plexus-utils</artifactId>
-				<version>1.5.15</version>
+				<version>3.0.24</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId>

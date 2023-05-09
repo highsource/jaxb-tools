@@ -41,9 +41,6 @@
 	</developers>
 	<modules>
 		<module>plugin-core</module>
-		<module>plugin-2.0</module>
-		<module>plugin-2.1</module>
-		<!-- module>plugin-2.2</module -->
 		<module>plugin-2.3</module>
 		<module>plugin</module>
 		<module>testing</module>
@@ -51,9 +48,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.version>2.0.9</maven.version>
-		<jaxb20.version>2.0.5</jaxb20.version>
-		<jaxb21.version>2.1.13</jaxb21.version>
-		<jaxb22.version>2.2.11</jaxb22.version>
 		<jaxb23.version>2.3.7</jaxb23.version>
 		<jaxb-api.version>2.3.3</jaxb-api.version>
 		<jaxb.version>${jaxb23.version}</jaxb.version>
@@ -64,8 +58,8 @@
 		<activation.version>1.2.2</activation.version>
 		<jaxb2-basics.version>0.12.0</jaxb2-basics.version>
 		<maven.plugin.testing.version>2.1</maven.plugin.testing.version>
-		<maven.plugin.plugin.version>3.5</maven.plugin.plugin.version>
-                <maven-nexus-staging-maven-plugin.version>1.6.8</maven-nexus-staging-maven-plugin.version>
+		<maven.plugin.plugin.version>3.7.1</maven.plugin.plugin.version>
+		<maven-nexus-staging-maven-plugin.version>1.6.8</maven-nexus-staging-maven-plugin.version>
 		<slf4j.version>1.7.25</slf4j.version>
 	</properties>
 	<profiles>
@@ -276,11 +270,11 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-                        <dependency>
-                        	<groupId>com.sun.activation</groupId>
-	                        <artifactId>jakarta.activation</artifactId>
+			<dependency>
+				<groupId>com.sun.activation</groupId>
+				<artifactId>jakarta.activation</artifactId>
 				<version>${activation.version}</version>
-	                </dependency>
+			</dependency>
 			<!-- End of jaxb-xjc dependencies -->
 			<dependency>
 				<groupId>com.sun.xml.bind</groupId>
@@ -297,23 +291,6 @@
 				<artifactId>maven-jaxb2-plugin</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb20-plugin</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb21-plugin</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-                        <!--
-			<dependency>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb22-plugin</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-                        -->
 			<dependency>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb23-plugin</artifactId>

@@ -1,12 +1,6 @@
-# JAXB2 Maven Plugin #
+# JAXB Maven Plugin #
 
 Welcome to the `org.jvnet.jaxb2.maven2:maven-jaxb2-plugin`, the most advanced and feature-full Maven plugin for XML Schema compilation.
-
-This Maven plugin wraps and enhances the [JAXB](https://jaxb.java.net/) [Schema Compiler (XJC)](http://docs.oracle.com/javase/6/docs/technotes/tools/share/xjc.html) and allows
-compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Maven builds.
-
-> If you are interested in the Mojohaus JAXB2 Maven Plugin (`org.codehaus.mojo:jaxb2-maven-plugin`),
-> please follow [this link](https://github.com/mojohaus/jaxb2-maven-plugin) to the corresponding website.
 
 ## Quick start ##
 
@@ -22,7 +16,7 @@ compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Mav
 			<plugin>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin</artifactId>
-				<version>0.14.0</version>
+				<version>0.15.3</version>
 				<executions>
 					<execution>
 						<goals>
@@ -42,22 +36,16 @@ compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Mav
 
 If you need a specific JAXB version, you can explicitly use one of the following variants:
 
-* `org.jvnet.jaxb2.maven2:maven-jaxb20-plugin` - JAXB 2.0.
-* `org.jvnet.jaxb2.maven2:maven-jaxb21-plugin` - JAXB 2.1.
-* `org.jvnet.jaxb2.maven2:maven-jaxb22-plugin` - JAXB 2.2.
 * `org.jvnet.jaxb2.maven2:maven-jaxb23-plugin` - JAXB 2.3.
 * `org.jvnet.jaxb2.maven2:maven-jaxb2-plugin` - "most actual version", at the moment same as `org.jvnet.jaxb2.maven2:maven-jaxb23-plugin`.
 
 ### Java versions
 
-Supported Java versions are `1.7`, `1.8`, `9` (only `maven-jaxb2-plugin` and `maven-jaxb23-plugin`).
-
-Java version `1.6` is no longer supported (since version `0.14.0`).
+Supported Java versions are `1.8`, and higher.
 
 ## [Documentation](https://github.com/highsource/maven-jaxb2-plugin/wiki) ##
 
 Please refer to the [wiki](https://github.com/highsource/maven-jaxb2-plugin/wiki) for the full documentation.
-
 
 * [User Guide](https://github.com/highsource/maven-jaxb2-plugin/wiki/User-Guide)
 * Maven Documentation  (Work in progress)
@@ -79,3 +67,11 @@ This project is also *not* developed by or affiliated with Oracle or Sun. Even i
 **This plugin is in no way _official_ JAXB2 Maven plugin by Sun or Oracle.**
 
 This is a completely indepentent development. [I](https://github.com/highsource) am *not* an Oracle employee.
+
+## Related ##
+
+This Maven plugin wraps and enhances the [JAXB](https://jaxb.java.net/) [Schema Compiler (XJC)](http://docs.oracle.com/javase/6/docs/technotes/tools/share/xjc.html) and allows
+compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Maven builds.
+
+> If you are interested in the Mojohaus JAXB2 Maven Plugin (`org.codehaus.mojo:jaxb2-maven-plugin`),
+> please follow [this link](https://github.com/mojohaus/jaxb2-maven-plugin) to the corresponding website.

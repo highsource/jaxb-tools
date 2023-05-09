@@ -9,26 +9,24 @@ Welcome to the `org.jvnet.jaxb2.maven2:maven-jaxb2-plugin`, the most advanced an
 
 ```xml
 <project ...>
-	...
-	<build>
-		<plugins>
-			...
-			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
-				<version>0.15.3</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			...
-		</plugins>
-	</build>
-	...
+  ...
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jvnet.jaxb2.maven2</groupId>
+        <artifactId>maven-jaxb2-plugin</artifactId>
+        <version>0.15.3</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+	</executions>
+      </plugin>
+    </plugins>
+  </build>
+  ...
 </project>
 ```
 
@@ -41,7 +39,7 @@ If you need a specific JAXB version, you can explicitly use one of the following
 
 ### Java versions
 
-Supported Java versions are `1.8`, and higher.
+Supported Java versions are `8`, and higher.
 
 ## [Documentation](https://github.com/highsource/maven-jaxb2-plugin/wiki) ##
 
@@ -56,7 +54,7 @@ Please refer to the [wiki](https://github.com/highsource/maven-jaxb2-plugin/wiki
 * [Sample Projects](https://github.com/highsource/maven-jaxb2-plugin/wiki/Sample-Projects)
 * [Support](https://github.com/highsource/maven-jaxb2-plugin/wiki/Support)
 * [License](https://github.com/highsource/maven-jaxb2-plugin/blob/master/LICENSE)
-
+* [JAXB Eclipse Project](https://github.com/eclipse-ee4j/jaxb-ri)
 
 ## Disclaimer ##
 

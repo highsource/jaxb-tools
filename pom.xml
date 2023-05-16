@@ -166,10 +166,11 @@
 	</profiles>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jaxb.version>2.3.0</jaxb.version>
-		<jaxb-api.version>2.3.0</jaxb-api.version>
-		<activation.version>1.2.0</activation.version>
-		<maven-jaxb2-plugin.version>0.14.0</maven-jaxb2-plugin.version>
+		<jaxb.version>2.3.7</jaxb.version>
+		<jaxb-core.version>2.3.0.1</jaxb-core.version>
+		<jaxb-api.version>2.3.3</jaxb-api.version>
+		<activation.version>1.2.2</activation.version>
+		<maven-jaxb2-plugin.version>0.15.3</maven-jaxb2-plugin.version>
 		<annox.version>1.0.2</annox.version>
 		<jaxb2-basics.version>0.12.0</jaxb2-basics.version>
 	</properties>
@@ -230,7 +231,7 @@
 			<!-- Maven JAXB2 Plugin -->
 			<dependency>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
+				<artifactId>maven-jaxb23-plugin</artifactId>
 				<version>${maven-jaxb2-plugin.version}</version>
 			</dependency>
 			<dependency>
@@ -246,14 +247,14 @@
 			</dependency>
 			<!-- JAXB -->
 			<dependency>
-				<groupId>javax.xml.bind</groupId>
-				<artifactId>jaxb-api</artifactId>
+				<groupId>jakarta.xml.bind</groupId>
+				<artifactId>jakarta.xml.bind-api</artifactId>
 				<version>${jaxb-api.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.glassfish.jaxb</groupId>
 				<artifactId>jaxb-core</artifactId>
-				<version>${jaxb.version}</version>
+				<version>${jaxb-core.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.glassfish.jaxb</groupId>
@@ -267,7 +268,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.sun.activation</groupId>
-				<artifactId>javax.activation</artifactId>
+				<artifactId>jakarta.activation</artifactId>
 				<version>${activation.version}</version>
 			</dependency>
 			<!-- JUnit -->

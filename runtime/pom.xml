@@ -10,8 +10,8 @@
 	</parent>
 	<dependencies>
 		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -26,7 +26,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.sun.activation</groupId>
-			<artifactId>javax.activation</artifactId>
+			<artifactId>jakarta.activation</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -56,17 +56,17 @@
 						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
 					</archive> 
 				</configuration>
-			</plugin>  
-			<plugin>   
+			</plugin>
+			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
 				<executions>
 					<execution>
 						<id>bundle-manifest</id>
 						<phase>process-classes</phase>
-						<goals>    
+						<goals>
 							<goal>manifest</goal>
-						</goals>   
+						</goals>
 					</execution>
 				</executions>
 			</plugin>

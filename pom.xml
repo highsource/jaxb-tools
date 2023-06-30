@@ -170,10 +170,10 @@
 	</profiles>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jaxb.version>2.3.6</jaxb.version>
-		<jaxb-api.version>2.3.1</jaxb-api.version>
+		<jaxb.version>2.3.7</jaxb.version>
+		<jaxb-api.version>2.3.3</jaxb-api.version>
 		<jaxb-core.version>2.3.0.1</jaxb-core.version>
-		<activation.version>1.2.0</activation.version>
+		<activation.version>1.2.2</activation.version>
 		<maven-jaxb2-plugin.version>0.15.1</maven-jaxb2-plugin.version>
         <maven-nexus-staging-maven-plugin.version>1.6.8</maven-nexus-staging-maven-plugin.version>
 		<cxf-codegen-plugin.version>3.3.13</cxf-codegen-plugin.version>
@@ -244,9 +244,10 @@
 				<version>${maven-jaxb2-plugin.version}</version>
 			</dependency>
 			<!-- JAXB -->
+			<!-- Start of jaxb-runtime dependencies -->
 			<dependency>
-				<groupId>javax.xml.bind</groupId>
-				<artifactId>jaxb-api</artifactId>
+				<groupId>jakarta.xml.bind</groupId>
+				<artifactId>jakarta.xml.bind-api</artifactId>
 				<version>${jaxb-api.version}</version>
 			</dependency>
 			<dependency>
@@ -266,7 +267,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.sun.activation</groupId>
-				<artifactId>javax.activation</artifactId>
+				<artifactId>jakarta.activation</artifactId>
 				<version>${activation.version}</version>
 			</dependency>
 			<!-- JUnit -->

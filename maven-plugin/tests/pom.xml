@@ -6,17 +6,8 @@
 	<parent>
 		<groupId>org.jvnet.jaxb</groupId>
 		<artifactId>jaxb-maven-plugin-project</artifactId>
-		<version>2.0.1-SNAPSHOT</version>
+		<version>2.0.3-SNAPSHOT</version>
 	</parent>
-        <dependencies>
-            <dependency>
-                <groupId>org.jvnet.jaxb</groupId>
-                <artifactId>jaxb-maven-plugin</artifactId>
-                <version>${project.version}</version>
-                <type>maven-plugin</type>
-                <scope>provided</scope>
-            </dependency>
-        </dependencies>
 	<modules>
 		<module>catalog</module>
 		<module>catalog-xml</module>
@@ -46,53 +37,4 @@
 		<module>gh-issue-58</module>
 		<module>java-9</module>
 	</modules>
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.jvnet.jaxb</groupId>
-					<artifactId>jaxb-maven-plugin</artifactId>
-					<version>${project.version}</version>
-					<executions>
-						<execution>
-							<id>generate</id>
-							<goals>
-								<goal>generate</goal>
-							</goals>
-							<phase>generate-sources</phase>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.jvnet.jaxb</groupId>
-					<artifactId>jaxb-maven-plugin</artifactId>
-					<version>${project.version}</version>
-					<executions>
-						<execution>
-							<id>generate</id>
-							<goals>
-								<goal>generate</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>

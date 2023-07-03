@@ -5,15 +5,15 @@
 	<parent>
 		<groupId>org.jvnet.jaxb2_commons</groupId>
 		<artifactId>jaxb2-basics-tests</artifactId>
-		<version>0.11.2-SNAPSHOT</version>
+		<version>${project.version}</version>
 	</parent>
 	<artifactId>jaxb2-basics-test-po</artifactId>
 	<packaging>jar</packaging>
 	<name>JAXB2 Basics - Test [po]</name>
 	<dependencies>
 		<dependency>
-			<groupId>org.jvnet.jaxb2.maven2</groupId>
-			<artifactId>maven-jaxb2-plugin-testing</artifactId>
+			<groupId>org.jvnet.jaxb</groupId>
+			<artifactId>jaxb-maven-plugin-testing</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -25,8 +25,8 @@
 		<defaultGoal>test</defaultGoal>
 		<plugins>
 			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb-maven-plugin</artifactId>
 				<configuration>
 					<extension>true</extension>
 					<args>
@@ -38,7 +38,7 @@
 							<groupId>org.jvnet.jaxb2_commons</groupId>
 							<artifactId>jaxb2-basics</artifactId>
 						</plugin>
-                                       </plugins>
+					</plugins>
 				</configuration>
 			</plugin>
 		</plugins>

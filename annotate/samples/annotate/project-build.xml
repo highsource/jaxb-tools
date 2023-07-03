@@ -33,12 +33,18 @@
 	<property name="artifactId" value="jaxb2-annotate-plugin-sample-annotate-ant"/>
 	<path id="compile.path">
 		<fileset dir="${basedir}/lib">
+			<include name="istack-commons-*.jar"/>
 			<include name="jakarta.xml.bind-api-*.jar"/>
 			<include name="hibernate-search-*.jar"/>
+			<include name="relaxng-datatype-*.jar"/>
+			<include name="rngom-*.jar"/>
+			<include name="txw2-*.jar"/>
+			<include name="xsom-*.jar"/>
 		</fileset>
 	</path>
 	<path id="test-compile.path">
 		<fileset dir="${basedir}/lib">
+			<include name="istack-commons-*.jar"/>
 			<include name="jakarta.activation-*.jar"/>
 			<include name="jakarta.xml.bind-api-*.jar"/>
 			<include name="jaxb-runtime-*.jar"/>
@@ -46,15 +52,21 @@
 			<include name="stax-api-*.jar"/>
 			<include name="jsr173_api-*.jar"/>
 
-			<include name="commons-logging-*.jar"/>
+			<include name="slf4j-*.jar"/>
+			<include name="jcl-over-slf4j-*.jar"/>
 			<include name="codemodel-*.jar"/>
 			<include name="hibernate-search-*.jar"/>
 			<include name="junit-*.jar"/>
+			<include name="relaxng-datatype-*.jar"/>
+			<include name="rngom-*.jar"/>
+			<include name="txw2-*.jar"/>
+			<include name="xsom-*.jar"/>
 
 		</fileset>
 	</path>
 	<path id="test.path">
 		<fileset dir="${basedir}/lib">
+			<include name="istack-commons-*.jar"/>
 			<include name="jakarta.activation-*.jar"/>
 			<include name="jakarta.xml.bind-api-*.jar"/>
 			<include name="jaxb-runtime-*.jar"/>
@@ -62,10 +74,15 @@
 			<include name="stax-api-*.jar"/>
 			<include name="jsr173_api-*.jar"/>
 
-			<include name="commons-logging-*.jar"/>
+			<include name="slf4j-*.jar"/>
+			<include name="jcl-over-slf4j-*.jar"/>
 			<include name="codemodel-*.jar"/>
 			<include name="junit-*.jar"/>
 			<include name="hibernate-search-*.jar"/>
+			<include name="relaxng-datatype-*.jar"/>
+			<include name="rngom-*.jar"/>
+			<include name="txw2-*.jar"/>
+			<include name="xsom-*.jar"/>
 		</fileset>
 	</path>
 	<target name="clean">
@@ -78,6 +95,8 @@
 			<!-- XJC2 Task classpath -->
 			<classpath>
 				<fileset dir="${basedir}/lib">
+					<include name="codemodel-*.jar"/>
+					<include name="istack-commons-*.jar"/>
 					<include name="jakarta.activation-*.jar"/>
 					<include name="jakarta.xml.bind-api-*.jar"/>
 					<include name="jaxb-runtime-*.jar"/>
@@ -88,7 +107,10 @@
 					<include name="jaxb2-basics-jaxb-xjc-*.jar"/>
 					<include name="jaxb-xjc-*.jar"/>
 					<include name="jaxb2-basics-ant-*.jar"/>
-					<include name="codemodel-*.jar"/>
+					<include name="relaxng-datatype-*.jar"/>
+					<include name="rngom-*.jar"/>
+					<include name="txw2-*.jar"/>
+					<include name="xsom-*.jar"/>
 				</fileset>
 			</classpath>
 		</taskdef>
@@ -113,9 +135,9 @@
 					<include name="hibernate-search-*.jar"/>
 					<include name="javaparser-*.jar"/>
 					<include name="commons-beanutils-*.jar"/>
-					<include name="commons-logging-*.jar"/>
+					<include name="slf4j-*.jar"/>
+					<include name="jcl-over-slf4j-*.jar"/>
 					<include name="commons-lang3-*.jar"/>
-					<include name="codemodel-*.jar"/>
 				</fileset>
 			</classpath>
 		</xjc>

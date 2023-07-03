@@ -32,15 +32,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jvnet.jaxb2_commons</groupId>
 	<artifactId>jaxb2-annotate-plugin-tests</artifactId>
 	<packaging>pom</packaging>
 	<name>JAXB2 Annotate Plugin - Tests</name>
 	<parent>
 		<groupId>org.jvnet.jaxb2_commons</groupId>
 		<artifactId>jaxb2-annotate-plugin-project</artifactId>
-		<version>1.1.1-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
+		<version>2.0.3-SNAPSHOT</version>
 	</parent>
 	<modules>
 		<module>annotations</module>
@@ -66,37 +64,5 @@
 	</dependencies>
 	<build>
 		<defaultGoal>test</defaultGoal>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.jvnet.jaxb2.maven2</groupId>
-					<artifactId>maven-jaxb2-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>generate</id>
-							<goals>
-								<goal>generate</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
-		</plugins>
 	</build>
 </project>

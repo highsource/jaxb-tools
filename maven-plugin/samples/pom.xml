@@ -1,23 +1,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jvnet.jaxb</groupId>
 	<artifactId>jaxb-maven-plugin-samples</artifactId>
 	<packaging>pom</packaging>
 	<name>Maven JAXB Plugin Samples</name>
 	<parent>
 		<groupId>org.jvnet.jaxb</groupId>
 		<artifactId>jaxb-maven-plugin-project</artifactId>
-		<version>2.0.1-SNAPSHOT</version>
+		<version>2.0.3-SNAPSHOT</version>
 	</parent>
-        <dependencies>
-            <dependency>
-                <groupId>org.jvnet.jaxb</groupId>
-                <artifactId>jaxb-maven-plugin</artifactId>
-                <version>${project.version}</version>
-                <type>maven-plugin</type>
-                <scope>provided</scope>
-            </dependency>
-        </dependencies>
+	<dependencies>
+			<dependency>
+					<groupId>org.jvnet.jaxb</groupId>
+					<artifactId>jaxb-maven-plugin</artifactId>
+					<version>${project.version}</version>
+					<type>maven-plugin</type>
+					<scope>provided</scope>
+			</dependency>
+	</dependencies>
 	<modules>
 		<module>catalog</module>
 		<module>dtd</module>
@@ -40,7 +39,7 @@
 						<!--phase>package</phase-->
 						<phase>none</phase>
 						<goals>
-							 <goal>attached</goal>
+							 <goal>single</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -53,10 +52,10 @@
 						<!--phase>pre-integration-test</phase-->
 						<phase>none</phase>
 						<configuration>
-							<tasks>
+							<target>
 								<mkdir dir="target/test-maven-repository" />
 								<unzip src="target/${project.artifactId}-${project.version}-maven-src.zip" dest="${basedir}/target/test-maven-assembly" />
-							</tasks>
+							</target>
 						</configuration>
 						<goals>
 							<goal>run</goal>
@@ -81,20 +80,6 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>

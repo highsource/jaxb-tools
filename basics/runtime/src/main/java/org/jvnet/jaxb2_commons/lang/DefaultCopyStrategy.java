@@ -242,7 +242,7 @@ public class DefaultCopyStrategy implements CopyStrategy2, CopyStrategy {
 									+ "with a public method."));
 		}
 
-		final boolean wasAccessible = method.isAccessible();
+		boolean wasAccessible = method.isAccessible();
 		try {
 			if (!wasAccessible) {
 				try {
@@ -253,6 +253,9 @@ public class DefaultCopyStrategy implements CopyStrategy2, CopyStrategy {
 
 			return method.invoke(object, (Object[]) null);
 		} catch (Exception ex) {
+			if ("java.lang.reflect.InaccessibleObjectException".equals(ex.getClass().getName())) {
+				return copyInternalJdk11(locator, object);
+			}
 			throw new UnsupportedOperationException(
 					"Could not clone the object ["
 							+ object
@@ -266,6 +269,75 @@ public class DefaultCopyStrategy implements CopyStrategy2, CopyStrategy {
 				}
 			}
 		}
+	}
+
+	protected Object copyInternalJdk11(ObjectLocator locator, Cloneable object) {
+		Class<?> clazz = object.getClass();
+		Class<?> parentClazz = clazz.getSuperclass();
+		Method method = null;
+
+		while (parentClazz != null && hasCloneableInterface(parentClazz)) {
+			clazz = parentClazz;
+			parentClazz = clazz.getSuperclass();
+		}
+
+		try {
+			method = clazz.getMethod("clone", (Class[]) null);
+		} catch (NoSuchMethodException nsmex) {
+			method = null;
+		}
+
+		if (method == null || !Modifier.isPublic(method.getModifiers())) {
+
+			throw new UnsupportedOperationException(
+					"Could not clone object [" + object + "].",
+					new CloneNotSupportedException(
+							"Object class ["
+									+ object.getClass()
+									+ "] implements java.lang.Cloneable interface, "
+									+ "with final determined class ["
+									+ clazz
+									+ "] but does not provide a public no-arg clone() method. "
+									+ "By convention, classes that implement java.lang.Cloneable "
+									+ "should override java.lang.Object.clone() method (which is protected) "
+									+ "with a public method."));
+		}
+
+		boolean wasAccessible = method.isAccessible();
+		try {
+			if (!wasAccessible) {
+				try {
+					method.setAccessible(true);
+				} catch (SecurityException ignore) {
+				}
+			}
+
+			return method.invoke(object, (Object[]) null);
+		} catch (Exception ex) {
+			throw new UnsupportedOperationException(
+					"Could not clone (jdk11) the object ["
+							+ object
+							+ "] as invocation of the clone() method has thrown an exception.",
+					ex);
+		} finally {
+			if (!wasAccessible) {
+				try {
+					method.setAccessible(false);
+				} catch (SecurityException ignore) {
+				}
+			}
+		}
+	}
+
+	private static boolean hasCloneableInterface(Class<?> clazz) {
+		if (clazz != null) {
+			for (Class<?> iface : clazz.getInterfaces()) {
+				if (iface.isAssignableFrom(Cloneable.class)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override

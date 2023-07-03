@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<xs:schema
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:test="urn:test"
+	targetNamespace="urn:test"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	jaxb:version="2.1">
+
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:globalBindings generateMixedExtensions="true" generateIsSetMethod="true"/>
+
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.jvnet.jaxb2_commons.tests.JAXB_1058" />
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+
+	<xs:complexType name="AbstractMetaDataType" abstract="true" mixed="true">
+		<xs:attribute name="id" type="xs:ID" use="optional"/>
+	</xs:complexType>
+
+	<xs:complexType name="GenericMetaDataType" mixed="true">
+		<xs:complexContent mixed="true">
+			<xs:extension base="test:AbstractMetaDataType">
+				<xs:sequence>
+					<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

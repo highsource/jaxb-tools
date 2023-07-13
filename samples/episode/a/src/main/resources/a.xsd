@@ -21,11 +21,12 @@
 	</xsd:complexType>
 
 	<xsd:simpleType name="A2EnumType">
-		<xsd:annotation>
-			<xsd:appinfo>
-				<jaxb:typesafeEnumClass/>
-			</xsd:appinfo>
-		</xsd:annotation>
+		<!-- This shouldn't really be necessary should it? -->
+		<!--<xsd:annotation>-->
+			<!--<xsd:appinfo>-->
+				<!--<jaxb:typesafeEnumClass/>-->
+			<!--</xsd:appinfo>-->
+		<!--</xsd:annotation>-->
 		<xsd:restriction base="xsd:string">
 			<xsd:enumeration value="ABC" />
 			<xsd:enumeration value="DEF" />
@@ -33,5 +34,54 @@
 		</xsd:restriction>
 	</xsd:simpleType>
 
+	<xsd:simpleType name="A3EnumType">
+		<!-- if base type is an xsd:string then including this annotation would fail the import -->
+		<!--<xsd:annotation>-->
+			<!--<xsd:appinfo>-->
+				<!--<jaxb:typesafeEnumClass/>-->
+			<!--</xsd:appinfo>-->
+		<!--</xsd:annotation>-->
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="0" >
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jaxb:typesafeEnumMember name="START"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="1">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jaxb:typesafeEnumMember name="FINISH"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="A4EnumType">
+		<!-- if base type is an xsd:int we don't actually bind the clas correctly unless we include the typesafeEnumClass -->
+		<xsd:annotation>
+			<xsd:appinfo>
+				<jaxb:typesafeEnumClass/>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:int">
+			<xsd:enumeration value="0" >
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jaxb:typesafeEnumMember name="START"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="1">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jaxb:typesafeEnumMember name="FINISH"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
 
 </xsd:schema>

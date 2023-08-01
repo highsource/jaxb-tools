@@ -1,24 +1,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jvnet.jaxb</groupId>
-	<artifactId>jaxb-maven-plugin-project</artifactId>
+	<artifactId>jaxb-tools-project</artifactId>
 	<version>2.0.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Maven JAXB Plugin Project</name>
-	<description>Maven plugin for JAXB XJC compiler to generate Java sources from XML Schemas.</description>
-	<url>https://github.com/highsource/jaxb-maven-plugin</url>
+	<name>JAXB Tools :: Project</name>
+	<description>JAXB tools work with generate Java sources and XML Schemas.</description>
+	<url>https://github.com/highsource/jaxb-tools</url>
 	<licenses>
 		<license>
 			<name>BSD-Style License</name>
-			<url>https://github.com/highsource/maven-jaxb2-plugin/blob/master/LICENSE</url>
+			<url>https://github.com/highsource/jaxb-tools/blob/master/LICENSE</url>
 			<distribution>repo</distribution>
-			<comments>Maven JAXB Plugin license is the 3-clause BSD license which is compatible with GPL. Maven JAXB2 Plugin license does not require you to include any acknowledgments for Maven JAXB2 Plugin in advertising materials for your software.</comments>
+			<comments>JAXB Tools license is the 3-clause BSD license which is compatible with GPL. JAXB Tools license does not require you to include any acknowledgments for JAXB Tools in advertising materials for your software.</comments>
 		</license>
 	</licenses>
 	<inceptionYear>2006</inceptionYear>
   <scm>
-    <connection>scm:git:https://github.com/highsource/maven-jaxb2-plugin.git</connection>
-    <url>https://github.com/highsource/maven-jaxb2-plugin</url>
+    <connection>scm:git:https://github.com/highsource/jaxb-tools.git</connection>
+    <url>https://github.com/highsource/jaxb-tools</url>
     <tag>${project.version}</tag>
 	</scm>
 	<developers>
@@ -40,9 +40,7 @@
     </developer>
 	</developers>
 	<modules>
-		<module>plugin-core</module>
-		<module>plugin</module>
-		<module>testing</module>
+                <module>maven-plugin</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -62,42 +60,6 @@
 		<slf4j.version>1.7.25</slf4j.version>
 	</properties>
 	<profiles>
-		<profile>
-			<id>samples</id>
-			<activation>
-				<property>
-					<name>samples</name>
-				</property>
-			</activation>
-			<modules>
-				<module>samples</module>
-				<module>dist</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>tests</id>
-			<activation>
-				<property>
-					<name>tests</name>
-				</property>
-			</activation>
-			<modules>
-				<module>tests</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>all</id>
-			<activation>
-				<property>
-					<name>all</name>
-				</property>
-			</activation>
-			<modules>
-				<module>dist</module>
-				<module>samples</module>
-				<module>tests</module>
-			</modules>
-		</profile>
 		<profile>
 			<id>sonatype-oss-release</id>
 			<build>

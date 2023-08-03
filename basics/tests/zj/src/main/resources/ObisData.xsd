@@ -1,0 +1,688 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Campiglia (OCE PRINT LOGIC TECHNOLOGIES) -->
+<xs:schema xmlns="http://api.sei.obis.oce.com/data" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:data="http://api.sei.obis.oce.com/data" targetNamespace="http://api.sei.obis.oce.com/data"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!--Constant-->
+	<xs:simpleType name="Unit">
+		<xs:annotation>
+			<xs:documentation>Ex: The width of an A0 roll or the size of a letter cut sheet</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SI" />
+			<xs:enumeration value="US" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MediaSeries">
+		<xs:annotation>
+			<xs:documentation>Ex: The ISO A media series</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="IsoA" />
+			<xs:enumeration value="IsoB" />
+			<xs:enumeration value="Ansi" />
+			<xs:enumeration value="Arch" />
+			<xs:enumeration value="Arch1" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DescriptionLevel">
+		<xs:annotation>
+			<xs:documentation>Ex: The detailed description of all the resources that have changed since the last query.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="All" />
+			<xs:enumeration value="Changes" />
+			<xs:enumeration value="None" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DataType">
+		<xs:annotation>
+			<xs:documentation>Ex: A metric data type</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Numeric" />
+			<xs:enumeration value="Metric" />
+			<xs:enumeration value="Coefficient" />
+			<xs:enumeration value="Constant" />
+			<xs:enumeration value="Resource" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!--Print resources - System Catalogue-->
+	<xs:complexType name="ResourceCatalogue">
+		<xs:annotation>
+			<xs:documentation>The list of the servers, queues, printer, emulations, inks, and all the resources installed on the customer site is defined in the system catalogue.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="serverCatalogue" type="ServerCatalogue" />
+			<xs:element name="queueCatalogue" type="QueueCatalogue" />
+			<xs:element name="printerCatalogue" type="PrinterCatalogue" />
+			<xs:element name="emulationCatalogue" type="EmulationCatalogue" />
+			<xs:element name="inkCatalogue" type="InkCatalogue" />
+			<xs:element name="mediaCatalogue" type="MediaCatalogue" />
+			<xs:element name="stampCatalogue" type="StampCatalogue" />
+			<xs:element name="penCatalogue" type="PenCatalogue" />
+			<xs:element name="colorCatalogue" type="ColorCatalogue" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServerCatalogue">
+		<xs:annotation>
+			<xs:documentation>The server catalogue lists all the servers installed on the customer site. In the current version, the server catalogue will list only one server.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="serverInfoList" type="ServerInfoList" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServerInfoList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="serverInfo" type="ServerInfo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QueueCatalogue">
+		<xs:annotation>
+			<xs:documentation>The queue catalogue lists all the queues installed on the customer site. Job submissions are made through these queues.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="queueInfoList" type="QueueInfoList" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QueueInfoList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="queueInfo" type="QueueInfo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrinterCatalogue">
+		<xs:annotation>
+			<xs:documentation>The print catalogue lists all the printers installed on the customer site.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="printerInfoList" type="PrinterInfoList" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrinterInfoList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="printerInfo" type="PrinterInfo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EmulationCatalogue">
+		<xs:sequence>
+			<xs:element name="emulationInfoList" type="EmulationInfoList" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EmulationInfoList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="emulationInfo" type="EmulationInfo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InkCatalogue">
+		<xs:annotation>
+			<xs:documentation>The ink catalogue lists all the ink cartridges, toners, etc... installed on the customer site.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="inkInfoList" type="InkInfoList" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InkInfoList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="inkInfo" type="InkInfo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MediaCatalogue">
+		<xs:annotation>
+			<xs:documentation>The media catalogue lists all the media installed on the customer site. A media can be installed, and not physically loaded on the printer. When a job submission is made with a non-loaded media, a media request will be issued at print time.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="mediaFamilyInfoList" type="MediaFamilyInfoList" />
+			<xs:element name="mediaTypeInfoList" type="MediaTypeInfoList" />
+			<xs:element name="rollInfoList" type="RollInfoList" />
+			<xs:element name="sheetInfoList" type="SheetInfoList" />
+			<xs:element name="rollSizeInfoList" type="RollSizeInfoList" />
+			<xs:element name="sheetSizeInfoList" type="SheetSizeInfoList" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MediaFamilyInfoList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="mediaFamilyInfo" type="MediaFamilyInfo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MediaTypeInfoList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="mediaTypeInfo" type="MediaTypeInfo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RollInfoList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="rollInfo" type="MediaInfo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SheetInfoList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="sheetInfo" type="MediaInfo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RollSizeInfoList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="rollSizeInfo" type="RollSizeInfo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SheetSizeInfoList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="sheetSizeInfo" type="SheetSizeInfo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StampCatalogue">
+		<xs:annotation>
+			<xs:documentation>The stamp catalogue lists all the stamps installed on the customer site.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="stampInfoList" type="StampInfoList" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StampInfoList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="stampInfo" type="StampInfo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PenCatalogue">
+		<xs:annotation>
+			<xs:documentation>The pen catalogue lists all the pens and set of pens installed on the customer site.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="penSetInfoList" type="PenSetInfoList" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PenSetInfoList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="penSetInfo" type="PenSetInfo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ColorCatalogue">
+		<xs:annotation>
+			<xs:documentation>The color catalogue lists all the color profiles installed on the customer site.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="colorProfileInfoList" type="ColorProfileInfoList" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ColorProfileInfoList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="colorProfileInfo" type="ColorProfileInfo" />
+		</xs:sequence>
+	</xs:complexType>
+	<!--Print resources - Resource type-->
+	<xs:complexType name="ResourceIdList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="resourceId" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResourceInfo">
+		<xs:annotation>
+			<xs:documentation>A resource can be a media, a media type, a media size, a stamp, etc...</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id" type="xs:string" />
+			<xs:element name="shortDescription" type="xs:string" />
+			<xs:element name="longDescription" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServerInfo">
+		<xs:annotation>
+			<xs:documentation>The server offers submission queues and print capabilities to submit jobs to these queues.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ResourceInfo">
+				<xs:sequence>
+					<xs:element name="serverFirmware" type="xs:string" />
+					<xs:element name="serverModel" type="xs:string" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="QueueInfo">
+		<xs:annotation>
+			<xs:documentation>A queue is used as an entry point in a server for submitting jobs. A queue generally addresses one printer. But it can also address several printers, in order to balance the print load.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ResourceInfo">
+				<xs:sequence />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PrinterInfo">
+		<xs:annotation>
+			<xs:documentation>A printer is a physical device with the ability to print jobs. In OBIS, the printers are not addressed directly; jobs are submitted to a queue.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ResourceInfo">
+				<xs:sequence>
+					<xs:element name="location" type="xs:string" />
+					<xs:element name="printerModel" type="xs:string" />
+					<xs:element name="controllerFirmware" type="xs:string" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EmulationInfo">
+		<xs:annotation>
+			<xs:documentation>An emulation is the complete or partial support of a page description language.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ResourceInfo">
+				<xs:sequence>
+					<xs:element name="emulationVersion" type="xs:string" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="InkInfo">
+		<xs:annotation>
+			<xs:documentation>Inks are used to print documents.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ResourceInfo">
+				<xs:sequence>
+					<xs:element name="color" type="xs:string" />
+					<xs:element name="type" type="xs:string" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MediaTypeInfo">
+		<xs:complexContent>
+			<xs:extension base="ResourceInfo">
+				<xs:sequence>
+					<xs:element name="material" type="xs:string" />
+					<xs:element name="weight" type="xs:int" />
+					<xs:element name="thickness" type="xs:int" />
+					<xs:element name="color" type="xs:string" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MediaFamilyInfo">
+		<xs:annotation>
+			<xs:documentation>A media family is a list of media types that are considered equivalent. For instance, if a standard paper is considered equivalent to a plain paper, then they both belong to the same media family.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ResourceInfo">
+				<xs:sequence>
+					<xs:element name="mediaTypeIdList" type="ResourceIdList" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RollSizeInfo">
+		<xs:complexContent>
+			<xs:extension base="ResourceInfo">
+				<xs:sequence>
+					<xs:element name="width" type="xs:int" />
+					<xs:element name="series" type="MediaSeries" />
+					<xs:element name="portraitSizeIdList" type="ResourceIdList" />
+					<xs:element name="landscapeSizeIdList" type="ResourceIdList" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SheetSizeInfo">
+		<xs:complexContent>
+			<xs:extension base="ResourceInfo">
+				<xs:sequence>
+					<xs:element name="shortEdge" type="xs:int" />
+					<xs:element name="longEdge" type="xs:int" />
+					<xs:element name="series" type="MediaSeries" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MediaInfo">
+		<xs:annotation>
+			<xs:documentation>A media is either a roll or a sheet. If the identifier of the media size references a roll size, then the media is a roll. If the identifier of the media size references a sheet size, then the media is a sheet.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ResourceInfo">
+				<xs:sequence>
+					<xs:element name="mediaTypeId" type="xs:string" />
+					<xs:element name="mediaSizeId" type="xs:string" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="StampInfo">
+		<xs:complexContent>
+			<xs:extension base="ResourceInfo">
+				<xs:sequence />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PenSetInfo">
+		<xs:annotation>
+			<xs:documentation>A pen set is a collection of pens used in some data formats to trace lines, polygons, circles, filled areas, etc...</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ResourceInfo">
+				<xs:sequence />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ColorProfileInfo">
+		<xs:annotation>
+			<xs:documentation>A color profile is a resource that specifies the parameters of a color space.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ResourceInfo">
+				<xs:sequence />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!--Print capabilities-->
+	<xs:complexType name="ServerCapabilities">
+		<xs:annotation>
+			<xs:documentation>The print capabilities of the server contain all the information needed by a publisher application to compose and submit jobs to any queue of the server.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="serverId" type="xs:string" />
+			<xs:element name="queueIdList" type="ResourceIdList" />
+			<xs:element name="defaultQueueId" type="xs:string" />
+			<xs:element name="printCapabilityList" type="PrintCapabilityList" />
+			<xs:element name="printDefaultList" type="PrintSettingList" />
+			<xs:element name="hardwareConstraintList" type="HardwareConstraintList" />
+			<xs:element name="queueList" type="QueueCapabilitiesList" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrintSettingList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="printSetting" type="PrintSetting" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HardwareConstraintList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="hardwareConstraint" type="HardwareConstraint" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QueueCapabilitiesList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="queueCapabilities" type="QueueCapabilities" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QueueCapabilities">
+		<xs:annotation>
+			<xs:documentation>The print capability of a queue can be returned independently of the server capabilities. In that case, all the capabilities of the queue are returned, and not only those that are different than the server capabilities.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="queueId" type="xs:string" />
+			<xs:element name="printerIdList" type="ResourceIdList" />
+			<xs:element name="printCapabilityList" type="PrintCapabilityList" />
+			<xs:element name="printDefaultList" type="PrintSettingList" />
+			<xs:element name="hardwareConstraintList" type="HardwareConstraintList" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrintCapability">
+		<xs:annotation>
+			<xs:documentation>A print capability represents a print resource or a print instruction that can be specified in a job ticket. Each capability has a range of available values.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="settingId" type="xs:string" />
+			<xs:element name="settingType" type="DataType" />
+            <xs:element name="valueList" type="ValueList" />
+        </xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ValueList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="value" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrintCapabilityList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="capability" type="PrintCapability" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrintSetting">
+		<xs:annotation>
+			<xs:documentation>A print setting is a print resource or a print instruction that can be set in a job ticket in order to specify how to print a job.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="settingId" type="xs:string" />
+			<xs:element name="settingValue" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HardwareConstraint">
+		<xs:annotation>
+			<xs:documentation>A hardware constraint represents a limitation on a physical printer device. They are strongly device dependant.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="constraintId" type="xs:string" />
+			<xs:element name="constraintType" type="DataType" />
+			<xs:element name="constraintValue" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<!--Statuses and lifecycles - Server status-->
+	<xs:complexType name="ServerStatus">
+		<xs:sequence>
+			<xs:element name="serverState" type="ServerState" />
+			<xs:element name="serverStateReasonList" type="ServerStateReasonList" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ServerState">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:complexType name="ServerStateReasonList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="serverStateReason" type="ServerStateReason" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ServerStateReason">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<!--Statuses and lifecycles - Queue status-->
+	<xs:complexType name="QueueStatus">
+		<xs:sequence>
+			<xs:element name="queueId" type="xs:string" />
+			<xs:element name="queueState" type="QueueState" />
+			<xs:element name="queueStateReasonList" type="QueueStateReasonList" />
+			<xs:element name="jobCount" type="xs:int" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="QueueState">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Ready" />
+			<xs:enumeration value="Pending" />
+			<xs:enumeration value="Stoped" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="QueueStateReasonList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="queueStateReason" type="QueueStateReason" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="QueueStateReason">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<!--Statuses and lifecycles - Printer status-->
+	<xs:complexType name="PrinterStatus">
+		<xs:sequence>
+			<xs:element name="printerId" type="xs:string" />
+			<xs:element name="printerState" type="PrinterState" />
+			<xs:element name="printerStateReason" type="PrinterStateReason" />
+			<xs:element name="inkStatusList" type="InkStatusList" />
+			<xs:element name="feederStatusList" type="FeederStatusList" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InkStatusList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="inkStatus" type="InkStatus" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FeederStatusList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="feederStatus" type="FeederStatus" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PrinterState">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Ready" />
+			<xs:enumeration value="Warning" />
+			<xs:enumeration value="Error" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PrinterStateReason">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<!--Statuses and lifecycles - Ink status-->
+	<xs:complexType name="InkStatus">
+		<xs:sequence>
+			<xs:element name="inkId" type="xs:string" />
+			<xs:element name="inkLevel" type="xs:int" />
+		</xs:sequence>
+	</xs:complexType>
+	<!--Statuses and lifecycles - Feeder status-->
+	<xs:complexType name="FeederStatus">
+		<xs:sequence>
+			<xs:element name="feederType" type="FeederType" />
+			<xs:element name="feederState" type="FeederState" />
+			<xs:element name="loadedMediaId" type="xs:string" />
+			<xs:element name="loadedOrientation" type="LoadedOrientation" />
+			<xs:element name="loadedMediaLevel" type="xs:int" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="FeederType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Tray" />
+			<xs:enumeration value="Roll" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FeederState">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Loaded" />
+			<xs:enumeration value="Empty" />
+			<xs:enumeration value="Opened" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LoadedOrientation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ShortEdgeFirst" />
+			<xs:enumeration value="LongEdgeFirst" />
+			<xs:enumeration value="NotApplicable" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!--Job submission-->
+	<xs:complexType name="JobTicket">
+		<xs:annotation>
+			<xs:documentation>The job ticket expresses how a set of documents (a job) shall be printed.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ownerName" type="xs:string" />
+			<xs:element name="jobName" type="xs:string" />
+			<xs:element name="jobNotes" type="xs:string" />
+			<xs:element name="documentList" type="DocumentDescriptionList" />
+			<xs:element name="jobSettingList" type="PrintSettingList" />
+			<xs:element name="accountingSettingList" type="PrintSettingList" />
+			<xs:element name="documentTicketList" type="DocumentTicketList" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentDescriptionList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="documentDescription" type="DocumentDescription" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentDescription">
+		<xs:sequence>
+			<xs:element name="documentName" type="xs:string" />
+			<xs:element name="documentUri" type="xs:string" />
+			<xs:element name="documentNotes" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentTicketList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="documentTicket" type="DocumentTicket" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentTicket">
+		<xs:annotation>
+			<xs:documentation>The document ticket expresses how a document shall be printed.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="documentIndex" type="xs:int" />
+			<xs:element name="documentSettingList" type="PrintSettingList" />
+			<xs:element name="pageTicketList" type="PageTicketList" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PageTicketList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="pageTicket" type="PageTicket" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PageTicket">
+		<xs:annotation>
+			<xs:documentation>The page ticket expresses how one or more pages of a document shall be printed.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="fromPageIndex" type="xs:int" />
+			<xs:element name="toPageIndex" type="xs:int" />
+			<xs:element name="pageSettingList" type="PrintSettingList" />
+		</xs:sequence>
+	</xs:complexType>
+	<!--Job tracking-->
+	<xs:complexType name="JobStatus">
+		<xs:sequence>
+			<xs:element name="jobId" type="xs:string" />
+			<xs:element name="jobState" type="JobState" />
+			<xs:element name="jobStateReason" type="JobStateReason" />
+			<xs:element name="jobStateNoteList" type="JobStateNoteList" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="JobState">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Active" />
+			<xs:enumeration value="Pending" />
+			<xs:enumeration value="Concluded" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobStateReason">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Receiving" />
+			<xs:enumeration value="Processing" />
+			<xs:enumeration value="Transferring" />
+			<xs:enumeration value="Printing" />
+			<xs:enumeration value="Cancelling" />
+			<xs:enumeration value="Queued" />
+			<xs:enumeration value="OnHoldUponUserRequest" />
+			<xs:enumeration value="OnHoldUponDeviceRequest" />
+			<xs:enumeration value="OnHoldUponQueueRequest" />
+			<xs:enumeration value="Printed" />
+			<xs:enumeration value="Stored" />
+			<xs:enumeration value="Forwarded" />
+			<xs:enumeration value="Canceled" />
+			<xs:enumeration value="Aborted" />
+			<xs:enumeration value="Lost" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="JobStateNoteList">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="jobStateNote" type="JobStateNote" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="JobStateNote">
+		<xs:sequence>
+			<xs:element name="noteKey" type="xs:string" />
+			<xs:element name="noteValue" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- The following elements is added in order to generate Java objects 
+	using the JAXB library -->
+	<xs:element name="ObisMediaCatalogue">
+	<xs:complexType >
+		<xs:annotation>
+			<xs:documentation>The media catalogue lists all the media installed on the customer site. A media can be installed, and not physically loaded on the printer. When a job submission is made with a non-loaded media, a media request will be issued at print time.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="mediaFamilyInfoList" type="MediaFamilyInfoList" />
+			<xs:element name="mediaTypeInfoList" type="MediaTypeInfoList" />
+			<xs:element name="rollInfoList" type="RollInfoList" />
+			<xs:element name="sheetInfoList" type="SheetInfoList" />
+			<xs:element name="rollSizeInfoList" type="RollSizeInfoList" />
+			<xs:element name="sheetSizeInfoList" type="SheetSizeInfoList" />
+		</xs:sequence>
+	</xs:complexType>
+	</xs:element>
+	
+</xs:schema>

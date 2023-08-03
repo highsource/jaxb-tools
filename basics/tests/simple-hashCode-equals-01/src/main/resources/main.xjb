@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings
+	version="2.1"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+
+	xmlns:hashCode="http://jaxb2-commons.dev.java.net/basic/hashCode"
+	xmlns:equals="http://jaxb2-commons.dev.java.net/basic/hashCode"
+
+	jaxb:extensionBindingPrefixes="xjc">
+
+	<jaxb:bindings schemaLocation="main.xsd" node="/xs:schema">
+		<jaxb:globalBindings
+			optionalProperty="primitive"
+			generateIsSetMethod="true">
+		</jaxb:globalBindings>
+		<jaxb:schemaBindings>
+			<jaxb:package name="org.jvnet.jaxb2_commons.tests.simple_hashcode_equals_01.main"/>
+		</jaxb:schemaBindings>
+		<!--jaxb:bindings node="...">
+			choiceContentProperty="true"
+
+		</jaxb:bindings-->
+	</jaxb:bindings>
+</jaxb:bindings>

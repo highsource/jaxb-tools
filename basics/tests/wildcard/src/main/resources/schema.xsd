@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:wildcard="http://jaxb2-commons.dev.java.net/basic/wildcard"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	jaxb:version="2.1"
+	jaxb:extensionBindingPrefixes="wildcard">
+
+	<xs:complexType name="JIIB-49-A">
+		<xs:sequence>
+			<xs:any namespace="##any" processContents="strict" minOccurs="0"
+				maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="JIIB-49-B" mixed="true">
+		<xs:annotation>
+			<xs:appinfo>
+				<wildcard:skip/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:any namespace="##any" processContents="strict" minOccurs="0"
+				maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType> 
+
+	<xs:complexType name="JIIB-49-C" mixed="true">
+		<xs:sequence>
+			<xs:element name="any">
+				<xs:annotation>
+					<xs:appinfo>
+						<wildcard:skip/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType> 
+
+
+</xs:schema>

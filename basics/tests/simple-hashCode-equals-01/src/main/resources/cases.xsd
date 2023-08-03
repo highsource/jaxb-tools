@@ -1,0 +1,335 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" elementFormDefault="qualified"
+	attributeFormDefault="unqualified" targetNamespace="urn:t" xmlns:tns="urn:t"
+	jaxb:version="2.1">
+
+	<xs:annotation>
+		<xs:appinfo>
+			<!--jaxb:globalBindings optionalProperty="primitive"
+				generateIsSetMethod="true">
+			</jaxb:globalBindings-->
+			<jaxb:schemaBindings>
+				<jaxb:package
+					name="org.jvnet.jaxb2_commons.tests.simple_hashcode_equals_01.cases" />
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+
+	<xs:element name="base" type="tns:base" />
+	<xs:complexType name="base">
+		<xs:sequence>
+			<xs:element name="a" type="xs:string" minOccurs="0" />
+			<xs:element name="b" type="xs:long" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="extension" type="tns:extension"
+		substitutionGroup="tns:base" />
+	<xs:complexType name="extension">
+		<xs:complexContent>
+			<xs:extension base="tns:base">
+				<xs:sequence>
+					<xs:element name="c" type="xs:dateTime" minOccurs="0" />
+					<xs:element name="d" type="xs:base64Binary" minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="primitives">
+		<xs:sequence>
+			<xs:element name="boolean" type="xs:boolean">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="boolean" />
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="byte" type="xs:byte">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="byte" />
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<!-- See JAXB-1061 -->
+			<!--  xs:element name="char">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="char" />
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element-->
+			<xs:element name="double" type="xs:double">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="double" />
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="float" type="xs:float">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="float" />
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="long" type="xs:long">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="long" />
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="int" type="xs:int">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="int" />
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="short" type="xs:short">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="short" />
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="unboxedPrimitives">
+		<xs:complexType>
+			<xs:attribute name="unboxedBoolean" type="xs:boolean" use="optional" />
+			<xs:attribute name="unboxedByte" type="xs:byte" use="optional" />
+			<!--xs:attribute name="unboxedChar" type="xs:char" use="optional" /-->
+			<xs:attribute name="unboxedDouble" type="xs:double" use="optional" />
+			<xs:attribute name="unboxedFloat" type="xs:float" use="optional" />
+			<xs:attribute name="unboxedLong" type="xs:long" use="optional" />
+			<xs:attribute name="unboxedInt" type="xs:int" use="optional" />
+			<xs:attribute name="unboxedShort" type="xs:short" use="optional" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="arbitraryObject">
+		<xs:sequence>
+			<xs:element name="object" />
+			<xs:element name="objects" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="arrays">
+		<xs:sequence>
+			<xs:element name="booleans" type="xs:boolean">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="boolean[]" />
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bytes" type="xs:byte">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="byte[]" />
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="chars" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="char[]" />
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="doubles" type="xs:double">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="double[]" />
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="floats" type="xs:float">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="float[]" />
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="longs" type="xs:long">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="long[]" />
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ints" type="xs:int">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="int[]" />
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="shorts" type="xs:short">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="short[]" />
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="objects" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property>
+							<jaxb:baseType name="java.lang.Object[]" />
+						</jaxb:property>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="binary" type="xs:base64Binary" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="lists">
+		<xs:sequence>
+			<xs:element name="boolean" type="xs:boolean" maxOccurs="unbounded" />
+			<xs:element name="byte" type="xs:byte" maxOccurs="unbounded" />
+			<xs:element name="char" type="xs:string" maxOccurs="unbounded" />
+			<xs:element name="double" type="xs:double" maxOccurs="unbounded" />
+			<xs:element name="float" type="xs:float" maxOccurs="unbounded" />
+			<xs:element name="long" type="xs:long" maxOccurs="unbounded" />
+			<xs:element name="int" type="xs:int" maxOccurs="unbounded" />
+			<xs:element name="short" type="xs:short" maxOccurs="unbounded" />
+			<xs:element name="binaries" type="xs:base64Binary"
+				maxOccurs="unbounded" />
+			<xs:element ref="tns:base" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="jaxbelement">
+		<xs:sequence>
+			<xs:choice>
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property name="AOrB" />
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:element name="a" type="xs:string" />
+				<xs:element name="b" type="xs:string" />
+			</xs:choice>
+			<xs:choice>
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property name="COrBase" />
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:element name="c" type="xs:base64Binary" minOccurs="0" />
+				<xs:element ref="tns:base" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="jaxbelements">
+		<xs:sequence>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="a" type="xs:string" />
+				<xs:element name="b" type="xs:string" />
+			</xs:choice>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="e" type="xs:string" />
+				<xs:element ref="tns:base" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="singleHeterogeneousJaxbelement">
+		<xs:sequence>
+			<xs:element ref="tns:base" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="collectionHeterogeneousJaxbelement">
+		<xs:sequence>
+			<xs:element ref="tns:base" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="serializable">
+		<xs:sequence>
+			<xs:choice>
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property name="AOrB" />
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:element name="a" type="xs:int" />
+				<xs:element name="b" type="xs:string" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="serializables">
+		<xs:sequence>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="a" type="xs:int" />
+				<xs:element name="b" type="xs:string" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="objectWithStringAndJaxbelement"
+		mixed="true">
+		<xs:sequence>
+			<xs:element name="a" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="objectWithStringAndJaxbelements"
+		mixed="true">
+		<xs:sequence>
+			<xs:element name="a" type="xs:string" />
+			<xs:element name="b" type="xs:positiveInteger" />
+			<xs:element name="c" type="xs:date" />
+			<xs:element name="d" type="xs:base64Binary" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+</xs:schema>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" attributeFormDefault="unqualified"
+	xmlns="urn:test" targetNamespace="urn:test"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+	xmlns:simplify="http://jaxb2-commons.dev.java.net/basic/simplify"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.1"
+	jaxb:extensionBindingPrefixes="simplify">
+
+	<xs:complexType name="gh1" mixed="true">
+		<xs:sequence>
+			<xs:element name="a" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<simplify:as-element-property />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="b" type="xs:int" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="gh2">
+		<xs:sequence>
+			<xs:element name="a" type="xs:string" />
+			<xs:choice>
+				<xs:element name="b" type="xs:dateTime" />
+				<xs:element name="c" type="xs:duration" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="simplifyReferencesPropertyAsElementProperty"
+		type="simplifyReferencesPropertyAsElementPropertyType" />
+
+	<xs:complexType name="simplifyReferencesPropertyAsElementPropertyType">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="base" type="baseType">
+				<xs:annotation>
+					<xs:appinfo>
+						<simplify:as-element-property />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="baseElement" />
+			<!-- Issue #7 -->
+			<!-- xs:element ref="baseElementRef"/ -->
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:element name="simplifyReferencesPropertyAsReferenceProperty"
+		type="simplifyReferencesPropertyAsReferencePropertyType" />
+
+	<xs:complexType name="simplifyReferencesPropertyAsReferencePropertyType">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="base" type="baseType">
+				<xs:annotation>
+					<xs:appinfo>
+						<simplify:as-reference-property />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="baseElement" />
+			<!-- Issue #7 -->
+			<!-- xs:element ref="baseElementRef"/-->
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:element name="simplifyElementsPropertyAsElementProperty"
+		type="simplifyElementsPropertyAsElementPropertyType" />
+
+	<xs:complexType name="simplifyElementsPropertyAsElementPropertyType">
+		<xs:choice maxOccurs="unbounded">
+			<xs:annotation>
+				<xs:appinfo>
+					<simplify:as-element-property />
+				</xs:appinfo>
+			</xs:annotation>
+			<xs:element name="int" type="xs:int" />
+			<xs:element name="string" type="xs:string" />
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:complexType name="baseType" />
+
+	<xs:element name="baseElement" type="baseType">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class name="BaseElement" />
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:element name="baseElementRef" type="baseType">
+		<xs:annotation>
+			<xs:appinfo>
+				<jaxb:class
+					ref="org.jvnet.jaxb2_commons.plugin.simplify.tests01.BaseElementRef" />
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:complexType name="gh18">
+		<xs:sequence>
+			<xs:element name="a" type="xs:string" />
+			<xs:choice>
+				<xs:element name="child" type="xs:dateTime" maxOccurs="unbounded" />
+				<xs:element name="foot" type="xs:duration" maxOccurs="unbounded" />
+				<xs:element name="foo" type="xs:int" maxOccurs="unbounded" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

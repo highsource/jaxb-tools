@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jvnet.jaxb2.maven2.AbstractXJC2Mojo;
-import org.jvnet.jaxb2.maven2.test.RunXJC2Mojo;
+import org.jvnet.jaxb.maven.AbstractXJC2Mojo;
+import org.jvnet.jaxb.maven.test.RunXJC2Mojo;
 
 public class RunCopyablePlugin extends RunXJC2Mojo {
 

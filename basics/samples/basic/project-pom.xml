@@ -21,12 +21,12 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
+			<groupId>org.jvnet.jaxb</groupId>
 			<artifactId>jaxb2-basics-runtime</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
+			<groupId>org.jvnet.jaxb</groupId>
 			<artifactId>jaxb2-basics-testing</artifactId>
 			<version>${project.version}</version>
 			<scope>test</scope>
@@ -42,9 +42,9 @@
 		<defaultGoal>test</defaultGoal>
 		<plugins>
 			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
-				<version>${maven-jaxb2-plugin.version}</version>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb-maven-plugin</artifactId>
+				<version>${project.version}</version>
 				<executions>
 					<execution>
 						<goals>
@@ -63,7 +63,7 @@
 					</args>
 					<plugins>
 						<plugin>
-							<groupId>org.jvnet.jaxb2_commons</groupId>
+							<groupId>org.jvnet.jaxb</groupId>
 							<artifactId>jaxb2-basics</artifactId>
 							<version>${project.version}</version>
 						</plugin>

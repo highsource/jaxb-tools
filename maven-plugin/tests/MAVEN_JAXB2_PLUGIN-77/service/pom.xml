@@ -26,14 +26,17 @@
 				<groupId>org.jvnet.jaxb</groupId>
 				<artifactId>jaxb-maven-plugin</artifactId>
 				<configuration>
-					<episode>true</episode>
-        				<useDependenciesAsEpisodes>true</useDependenciesAsEpisodes>
 					<schemaDirectory>src/main/resources/META-INF/project/schemas</schemaDirectory>
 					<generatePackage>com.company.project.service.types</generatePackage>
 					<catalog>src/main/jaxb/catalog.cat</catalog>
 					<catalogResolver>org.jvnet.jaxb.maven.resolver.tools.ClasspathCatalogResolver</catalogResolver>
 					<extension>true</extension>
-					<strict>false</strict>
+					<plugins>
+						<plugin>
+							<groupId>org.jvnet.jaxb</groupId>
+							<artifactId>jaxb-maven-plugin-tests-MAVEN_JAXB2_PLUGIN-77-common-types</artifactId>
+						</plugin>
+					</plugins>
 				</configuration>
 				<executions>
 					<execution>

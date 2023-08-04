@@ -12,10 +12,10 @@ public class FieldAccessorTest {
 
 	@Test
 	public void testGetAndSet() throws URISyntaxException {
-		final URI uri = new URI("urn:test");
+		final URIInternalTest uri = new URIInternalTest("urn:test");
 
 		final Accessor<String> schemeAccessor = new FieldAccessor<String>(
-				URI.class, "scheme", String.class);
+				URIInternalTest.class, "scheme", String.class);
 
 		Assert.assertEquals("urn", schemeAccessor.get(uri));
 		schemeAccessor.set(uri, "nru");

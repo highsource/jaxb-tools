@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>jaxb-maven-plugin-tests</artifactId>
 	<packaging>pom</packaging>
-	<name>Maven JAXB Plugin Tests</name>
+	<name>JAXB Tools :: Maven Plugin :: Tests</name>
 	<parent>
 		<groupId>org.jvnet.jaxb</groupId>
 		<artifactId>jaxb-maven-plugin-project</artifactId>
@@ -10,6 +10,12 @@
                 <relativePath>../pom.xml</relativePath>
 	</parent>
         <dependencies>
+            <dependency>
+                <groupId>org.jvnet.jaxb</groupId>
+                <artifactId>jaxb2-basics</artifactId>
+                <version>${project.version}</version>
+                <scope>provided</scope>
+            </dependency>
             <dependency>
                 <groupId>org.jvnet.jaxb</groupId>
                 <artifactId>jaxb-maven-plugin</artifactId>
@@ -50,20 +56,6 @@
 	<build>
 		<pluginManagement>
 			<plugins>
-				<plugin>
-					<groupId>org.jvnet.jaxb</groupId>
-					<artifactId>jaxb-maven-plugin</artifactId>
-					<version>${project.version}</version>
-					<executions>
-						<execution>
-							<id>generate</id>
-							<goals>
-								<goal>generate</goal>
-							</goals>
-							<phase>generate-sources</phase>
-						</execution>
-					</executions>
-				</plugin>
 				<plugin>
 					<groupId>org.jvnet.jaxb</groupId>
 					<artifactId>jaxb-maven-plugin</artifactId>

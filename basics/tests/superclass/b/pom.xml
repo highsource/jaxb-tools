@@ -3,27 +3,27 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.jvnet.jaxb2_commons</groupId>
+		<groupId>org.jvnet.jaxb</groupId>
 		<artifactId>jaxb2-basics-test-superclass</artifactId>
 		<version>2.0.4-SNAPSHOT</version>
 	</parent>
 	<artifactId>jaxb2-basics-test-superclass-b</artifactId>
 	<packaging>jar</packaging>
-	<name>JAXB2 Basics - Test [superclass-b]</name>
+	<name>JAXB Tools :: JAXB Basics :: Test [superclass-b]</name>
 	<dependencies>
 		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
+			<groupId>org.jvnet.jaxb</groupId>
 			<artifactId>jaxb2-basics-test-superclass-a</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
+			<groupId>org.jvnet.jaxb</groupId>
 			<artifactId>jaxb2-basics</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.jaxb2.maven2</groupId>
-			<artifactId>maven-jaxb2-plugin-testing</artifactId>
+			<groupId>org.jvnet.jaxb</groupId>
+			<artifactId>jaxb-maven-plugin-testing</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -31,8 +31,8 @@
 		<defaultGoal>test</defaultGoal>
 		<plugins>
 			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb-maven-plugin</artifactId>
 				<configuration>
 					<extension>true</extension>
 					<args>
@@ -44,17 +44,17 @@
 					</args>
 					<plugins>
 						<plugin>
-							<groupId>org.jvnet.jaxb2_commons</groupId>
+							<groupId>org.jvnet.jaxb</groupId>
                                                 	<artifactId>jaxb2-basics</artifactId>
 						</plugin>
 						<plugin>
-							<groupId>org.jvnet.jaxb2_commons</groupId>
+							<groupId>org.jvnet.jaxb</groupId>
 							<artifactId>jaxb2-basics-test-superclass-a</artifactId>
 						</plugin>
 					</plugins>
 					<!--episodes>
 						<episode>
-							<groupId>org.jvnet.jaxb2_commons</groupId>
+							<groupId>org.jvnet.jaxb</groupId>
 							<artifactId>jaxb2-basics-test-superclass-a</artifactId>
 						</episode>
 					</episodes-->

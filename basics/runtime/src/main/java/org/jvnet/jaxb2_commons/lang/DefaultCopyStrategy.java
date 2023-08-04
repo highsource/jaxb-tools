@@ -220,10 +220,24 @@ public class DefaultCopyStrategy implements CopyStrategy2, CopyStrategy {
 	}
 
 	protected Object copyInternal(ObjectLocator locator, Cloneable object) {
+		return copyInternal(locator, object, false);
+	}
+
+	protected Object copyInternal(ObjectLocator locator, Cloneable object, boolean checkCloneable) {
+		Class<?> clazz = object.getClass();
 		Method method = null;
 
+		if (checkCloneable) {
+			Class<?> parentClazz = clazz.getSuperclass();
+
+			while (parentClazz != null && hasCloneableInterface(parentClazz)) {
+				clazz = parentClazz;
+				parentClazz = clazz.getSuperclass();
+			}
+		}
+
 		try {
-			method = object.getClass().getMethod("clone", (Class[]) null);
+			method = clazz.getMethod("clone", (Class[]) null);
 		} catch (NoSuchMethodException nsmex) {
 			method = null;
 		}
@@ -236,6 +250,7 @@ public class DefaultCopyStrategy implements CopyStrategy2, CopyStrategy {
 							"Object class ["
 									+ object.getClass()
 									+ "] implements java.lang.Cloneable interface, "
+									+ (checkCloneable ? ("with final determined class [" + clazz + "]") : "")
 									+ "but does not provide a public no-arg clone() method. "
 									+ "By convention, classes that implement java.lang.Cloneable "
 									+ "should override java.lang.Object.clone() method (which is protected) "
@@ -253,6 +268,9 @@ public class DefaultCopyStrategy implements CopyStrategy2, CopyStrategy {
 
 			return method.invoke(object, (Object[]) null);
 		} catch (Exception ex) {
+			if (!checkCloneable && "java.lang.reflect.InaccessibleObjectException".equals(ex.getClass().getName())) {
+				return copyInternal(locator, object, true);
+			}
 			throw new UnsupportedOperationException(
 					"Could not clone the object ["
 							+ object
@@ -266,6 +284,17 @@ public class DefaultCopyStrategy implements CopyStrategy2, CopyStrategy {
 				}
 			}
 		}
+	}
+
+	private static boolean hasCloneableInterface(Class<?> clazz) {
+		if (clazz != null) {
+			for (Class<?> iface : clazz.getInterfaces()) {
+				if (iface.isAssignableFrom(Cloneable.class)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override

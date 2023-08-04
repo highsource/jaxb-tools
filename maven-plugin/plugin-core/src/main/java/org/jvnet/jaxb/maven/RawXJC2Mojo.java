@@ -791,13 +791,14 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		getLog().info("dependsURIs (resolved):" + getDependsURIs());
 	}
 
-	private void collectBindingUrisFromDependencies(List<URI> bindingUris) throws MojoExecutionException {
+	void collectBindingUrisFromDependencies(List<URI> bindingUris) throws MojoExecutionException {
 		@SuppressWarnings("unchecked")
 		final Collection<Artifact> projectArtifacts = getProject().getArtifacts();
 		final List<Artifact> compileScopeArtifacts = new ArrayList<Artifact>(projectArtifacts.size());
-		final ArtifactFilter filter = new ScopeArtifactFilter(DefaultArtifact.SCOPE_COMPILE);
+		final ArtifactFilter scopeFilter = new ScopeArtifactFilter(DefaultArtifact.SCOPE_COMPILE);
+		final ArtifactFilter typeFilter = new TypeArtifactFilter("pom");
 		for (Artifact artifact : projectArtifacts) {
-			if (filter.include(artifact)) {
+			if (scopeFilter.include(artifact) && !typeFilter.include(artifact)) {
 				compileScopeArtifacts.add(artifact);
 			}
 		}

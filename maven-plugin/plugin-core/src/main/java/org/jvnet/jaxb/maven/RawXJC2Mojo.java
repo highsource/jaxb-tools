@@ -258,6 +258,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			// bindingFile), murlex);
 			// }
 		}
+
 		if (getBindings() != null) {
 			for (ResourceEntry resourceEntry : getBindings()) {
 				bindingUris.addAll(createResourceEntryUris(resourceEntry, getBindingDirectory().getAbsolutePath(),
@@ -460,7 +461,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 						+ "This configuration setting is deprecated and not recommended "
 						+ "as it causes problems with incremental builds in IDEs.\n"
 						+ "Please refer to the following link for more information:\n"
-						+ "https://github.com/highsource/maven-jaxb2-plugin/wiki/Do-Not-Use-forceRegenerate\n"
+						+ "https://github.com/highsource/jaxb-tools/wiki/Do-Not-Use-forceRegenerate\n"
 						+ "Consider removing this setting from your plugin configuration.\n");
 				getLog().info("The [forceRegenerate] switch is turned on, XJC will be executed.");
 			} else {
@@ -592,7 +593,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			getLog().warn("The plugin is configured to use catalogs and strict mode at the same time.\n"
 					+ "Using catalogs to resolve schema URIs in strict mode is known to be problematic and may fail.\n"
 					+ "Please refer to the following link for more information:\n"
-					+ "https://github.com/highsource/maven-jaxb2-plugin/wiki/Catalogs-in-Strict-Mode\n"
+					+ "https://github.com/highsource/jaxb-tools/wiki/Catalogs-in-Strict-Mode\n"
 					+ "Consider setting <strict>false</strict> in your plugin configuration.\n");
 		}
 	}
@@ -1198,8 +1199,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		final List<InputSource> inputSources = new ArrayList<InputSource>(uris.size());
 		for (final URI uri : uris) {
 			InputSource inputSource = IOUtils.getInputSource(uri);
-			final InputSource resolvedInputSource = getEntityResolver().resolveEntity(inputSource.getPublicId(),
-					inputSource.getSystemId());
+			final InputSource resolvedInputSource = getEntityResolver().resolveEntity(inputSource.getPublicId(), inputSource.getSystemId());
 			if (resolvedInputSource != null) {
 				inputSource = resolvedInputSource;
 			}

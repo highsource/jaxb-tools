@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # JAXB Maven Plugin #
 
 Welcome to the `org.jvnet.jaxb:jaxb-maven-plugin`, the most advanced and feature-full Maven plugin for XML Schema compilation.
@@ -77,7 +76,7 @@ compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Mav
 
 > If you are interested in the Mojohaus JAXB2 Maven Plugin (`org.codehaus.mojo:jaxb2-maven-plugin`),
 > please follow [this link](https://github.com/mojohaus/jaxb2-maven-plugin) to the corresponding website.
-=======
+
 # JAXB2 Basics
 
 JAXB2 Basics is an [open source](https://github.com/highsource/jaxb2-basics/blob/master/LICENSE) project
@@ -115,4 +114,3 @@ JAXB2 Basics can only be used with Java 1.8 and above.
 ## Credits ##
 
 * Many thanks to **James Annesley** for his ideas and help with the [SimpleEquals Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-SimpleEquals-Plugin) and the [SimpleHashCode Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-SimpleHashCode-Plugin).
->>>>>>> jaxb_basics/master

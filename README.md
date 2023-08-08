@@ -44,19 +44,20 @@ If you need an older JAXB version, you can use one of the following variants, wh
 
 Supported Java versions are `8`, and higher.
 
-## [Documentation](https://github.com/highsource/maven-jaxb2-plugin/wiki) ##
+## [Documentation](https://github.com/highsource/jaxb-tools/wiki) ##
 
-Please refer to the [wiki](https://github.com/highsource/maven-jaxb2-plugin/wiki) for the full documentation.
+Please refer to the [wiki](https://github.com/highsource/jaxb-tools/wiki) for the full documentation.
 
-* [User Guide](https://github.com/highsource/maven-jaxb2-plugin/wiki/User-Guide)
+* [Jakarta Slack](https://jakarta.ee/connect/) Join the #jaxb channel on Jakarta EE Slack
+* [User Guide](https://github.com/highsource/jaxb-tools/wiki/User-Guide)
 * Maven Documentation  (Work in progress)
-* [Configuration Cheat Sheet](https://github.com/highsource/maven-jaxb2-plugin/wiki/Configuration-Cheat-Sheet)
-* [Common Pitfalls and Problems](https://github.com/highsource/maven-jaxb2-plugin/wiki/Common-Pitfalls-and-Problems) (Work in progress)
-* [Best Practices](https://github.com/highsource/maven-jaxb2-plugin/wiki/Best-Practices) (Work in progress)
-* [FAQ](https://github.com/highsource/maven-jaxb2-plugin/wiki/FAQ)
-* [Sample Projects](https://github.com/highsource/maven-jaxb2-plugin/wiki/Sample-Projects)
-* [Support](https://github.com/highsource/maven-jaxb2-plugin/wiki/Support)
-* [License](https://github.com/highsource/maven-jaxb2-plugin/blob/master/LICENSE)
+* [Configuration Cheat Sheet](https://github.com/highsource/jaxb-tools/wiki/Configuration-Cheat-Sheet)
+* [Common Pitfalls and Problems](https://github.com/highsource/jaxb-tools/wiki/Common-Pitfalls-and-Problems) (Work in progress)
+* [Best Practices](https://github.com/highsource/jaxb-tools/wiki/Best-Practices) (Work in progress)
+* [FAQ](https://github.com/highsource/jaxb-tools/wiki/FAQ)
+* [Sample Projects](https://github.com/highsource/jaxb-tools/wiki/Sample-Projects)
+* [Support](https://github.com/highsource/jaxb-tools/wiki/Support)
+* [License](https://github.com/highsource/jaxb-tools/blob/master/LICENSE)
 * [JAXB Eclipse Project](https://github.com/eclipse-ee4j/jaxb-ri)
 
 ## Disclaimer ##

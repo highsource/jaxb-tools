@@ -37,10 +37,10 @@ import com.sun.tools.xjc.outline.Outline;
 /**
  * Automatically generates the toString(), hashCode() and equals() methods 
  * using Jakarta's commons-lang.
- * <p>
+ * 
  * Supports the optional ToStringStyle command line parameter to specify 
  * the style for use within the toString method.
- * <p>
+ * 
  * <pre>
  * Example 1:
  *  
@@ -63,10 +63,10 @@ import com.sun.tools.xjc.outline.Outline;
  *     org.apache.commons.lang3.builder.ToStringStyle, and contains a public no-arg constructor.
  *     
  * </pre>
- * <p>
+ * 
  * The default ToStringStyle adopted by this plugin is MULTI_LINE_STYLE.
  *     
- * @see org.apache.commons.lang.builder.ToStringStyle 
+ * @see org.apache.commons.lang3.builder.ToStringStyle 
  * @author Hanson Char
  */
 public class XjcCommonsLangPlugin extends Plugin

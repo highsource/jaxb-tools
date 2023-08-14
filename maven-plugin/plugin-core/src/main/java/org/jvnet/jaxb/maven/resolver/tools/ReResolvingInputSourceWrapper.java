@@ -13,12 +13,18 @@ public class ReResolvingInputSourceWrapper extends InputSource {
 	private final EntityResolver entityResolver;
 	private final InputSource inputSource;
 
+	private final String resolvedPublicId;
+	private final String resolvedSystemId;
+
 	public ReResolvingInputSourceWrapper(EntityResolver entityResolver,
-			InputSource inputSource, String publicId, String systemId) {
+			InputSource inputSource, String publicId, String systemId,
+			 String resolvedPublicId, String resolvedSystemId) {
 		this.entityResolver = entityResolver;
 		this.inputSource = inputSource;
 		this.setPublicId(publicId);
 		this.setSystemId(systemId);
+		this.resolvedPublicId = resolvedPublicId;
+		this.resolvedSystemId = resolvedSystemId;
 	}
 
 	@Override
@@ -27,19 +33,31 @@ public class ReResolvingInputSourceWrapper extends InputSource {
 		if (originalReader == null) {
 			return null;
 		} else {
-			try {
-				InputSource resolvedEntity = this.entityResolver.resolveEntity(
-						getPublicId(), getSystemId());
-				if (resolvedEntity != null) {
-					return resolvedEntity.getCharacterStream();
-				} else {
-					return originalReader;
-				}
-			} catch (IOException ioex) {
-				return originalReader;
-			} catch (SAXException saxex) {
+			Reader resolvedEntityReader = getResolvedEntity();
+			if (resolvedEntityReader != null) {
+				return resolvedEntityReader;
+			} else {
 				return originalReader;
 			}
+		}
+	}
+
+	private Reader getResolvedEntity() {
+		try {
+			InputSource resolvedEntity = this.entityResolver.resolveEntity(
+					getPublicId(), getSystemId());
+			if (resolvedEntity == null) {
+				resolvedEntity = this.entityResolver.resolveEntity(resolvedPublicId, resolvedSystemId);
+			}
+			if (resolvedEntity == null) {
+				return null;
+			} else {
+				return resolvedEntity.getCharacterStream();
+			}
+		} catch (IOException ioex) {
+			return null;
+		} catch (SAXException saxex) {
+			return null;
 		}
 	}
 

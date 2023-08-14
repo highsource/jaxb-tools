@@ -48,15 +48,10 @@ public class MavenCatalogResolver extends
 	@Override
 	public String getResolvedEntity(String publicId, String systemId) {
 		getLog().debug(
-				MessageFormat.format(
-						"Resolving publicId [{0}], systemId [{1}].", publicId,
-						systemId));
-		final String superResolvedEntity = super.getResolvedEntity(publicId,
-				systemId);
+				MessageFormat.format("Resolving publicId [{0}], systemId [{1}].", publicId, systemId));
+		final String superResolvedEntity = super.getResolvedEntity(publicId, systemId);
 		getLog().debug(
-				MessageFormat
-						.format("Parent resolver has resolved publicId [{0}], systemId [{1}] to [{2}].",
-								publicId, systemId, superResolvedEntity));
+				MessageFormat.format("Parent resolver has resolved publicId [{0}], systemId [{1}] to [{2}].", publicId, systemId, superResolvedEntity));
 		if (superResolvedEntity != null) {
 			systemId = superResolvedEntity;
 		}
@@ -69,13 +64,10 @@ public class MavenCatalogResolver extends
 			final URI uri = new URI(systemId);
 			if (URI_SCHEME_MAVEN.equals(uri.getScheme())) {
 				getLog().debug(
-						MessageFormat
-								.format("Resolving systemId [{1}] as Maven dependency resource.",
-										publicId, systemId));
+						MessageFormat.format("Resolving systemId [{1}] as Maven dependency resource.", publicId, systemId));
 				final String schemeSpecificPart = uri.getSchemeSpecificPart();
 				try {
-					final DependencyResource dependencyResource = DependencyResource
-							.valueOf(schemeSpecificPart);
+					final DependencyResource dependencyResource = DependencyResource.valueOf(schemeSpecificPart);
 					try {
 						final URL url = dependencyResourceResolver
 								.resolveDependencyResource(dependencyResource);

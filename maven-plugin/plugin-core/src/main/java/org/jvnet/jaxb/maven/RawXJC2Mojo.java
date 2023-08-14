@@ -64,6 +64,7 @@ import org.codehaus.plexus.util.IOUtil;
 import org.jvnet.jaxb.maven.net.CompositeURILastModifiedResolver;
 import org.jvnet.jaxb.maven.net.FileURILastModifiedResolver;
 import org.jvnet.jaxb.maven.net.URILastModifiedResolver;
+import org.jvnet.jaxb.maven.resolver.tools.LoggingCatalogResolver;
 import org.jvnet.jaxb.maven.resolver.tools.MavenCatalogResolver;
 import org.jvnet.jaxb.maven.resolver.tools.ReResolvingEntityResolverWrapper;
 import org.jvnet.jaxb.maven.util.ArtifactUtils;
@@ -879,7 +880,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	}
 
 	protected EntityResolver createEntityResolver(CatalogResolver catalogResolver) {
-		final EntityResolver entityResolver = new ReResolvingEntityResolverWrapper(catalogResolver);
+		final EntityResolver entityResolver = new ReResolvingEntityResolverWrapper(catalogResolver, getLog());
 		return entityResolver;
 	}
 
@@ -919,6 +920,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 				@SuppressWarnings("unchecked")
 				final Class<? extends CatalogResolver> catalogResolverClass = (Class<? extends CatalogResolver>) draftCatalogResolverClass;
 				final CatalogResolver catalogResolverInstance = catalogResolverClass.newInstance();
+				if (catalogResolverInstance instanceof LoggingCatalogResolver) {
+					((LoggingCatalogResolver) catalogResolverInstance).setLog(getLog());
+				}
 				return catalogResolverInstance;
 			}
 		} catch (ClassNotFoundException cnfex) {

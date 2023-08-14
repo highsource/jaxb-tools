@@ -54,8 +54,8 @@ import com.sun.tools.xjc.outline.Outline;
  * <strong>Enhancement on 11 June 2006:</strong><br>
  * Provide fluent setter api for Lists, with support of variable arguments.
  * 
- * This enhancement was suggested by Kenny MacLeod <kennym@kizoom.com>,
- * and endorsed by Kohsuke Kawaguchi <Kohsuke.Kawaguchi@sun.com>.
+ * This enhancement was suggested by <a href="mailto:kennym@kizoom.com">Kenny MacLeod</a>,
+ * and endorsed by <a href="mailto:Kohsuke.Kawaguchi@sun.com">Kohsuke Kawaguchi</a>
  * Here is quoted from the original request:
  * <p> 
  * By default, XJC represents Lists by generating a getter method, but no setter.  
@@ -83,7 +83,7 @@ import com.sun.tools.xjc.outline.Outline;
  * <strong>Enhancement on 11 Oct 2008:</strong><br>
  * Provide fluent setter api for Lists, with support of Collection argument in addition to varargs arguments.
  * 
- * This enhancement was suggested by Alex Wei <ozgwei@dev.java.net> with patch submitted.  See
+ * This enhancement was suggested by <a href="mailto:ozgwei@dev.java.net">Alex Wei</a> with patch submitted.  See
  * <a href="https://jaxb2-commons.dev.java.net/issues/show_bug.cgi?id=12">Jira Issue 12</a> for more details.
  *<p> 
  * @author Hanson Char

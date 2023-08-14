@@ -55,7 +55,7 @@ import com.sun.xml.xsom.XSTerm;
  * Created: Mon Apr 24 22:04:25 2006
  *
  * @author <a href="mailto:hari@dcis.net">Hari Selvarajan</a>
- * @author <a href="mailto:Juergen.Lukasczyk at web.de">J�rgen Lukasczyk</a>
+ * @author <a href="mailto:Juergen.Lukasczyk@web.de">J�rgen Lukasczyk</a>
  * @version 1.1
  */
 public class DefaultValuePlugin

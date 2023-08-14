@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>jaxb-maven-plugin-tests-194</artifactId>
+	<parent>
+		<groupId>org.jvnet.jaxb</groupId>
+		<artifactId>jaxb-maven-plugin-tests</artifactId>
+		<version>2.0.4-SNAPSHOT</version>
+	</parent>
+	<packaging>jar</packaging>
+	<name>JAXB Tools :: Maven Plugin :: Test [JAXB-TOOLS 194]</name>
+	<description>
+		This project tests pom artifacts filtering that may cause scanDependenciesForBindings fails on dependency of type pom.
+	</description>
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.12.0</version>
+			<type>pom</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jvnet.jaxb</groupId>
+			<artifactId>jaxb-maven-plugin-testing</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<scanDependenciesForBindings>true</scanDependenciesForBindings>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

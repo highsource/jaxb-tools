@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.jvnet.jaxb</groupId>
+    <artifactId>jaxb-bom-parent</artifactId>
+    <version>2.0.4-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  <artifactId>jaxb-bom</artifactId>
+  <packaging>pom</packaging>
+  <name>JAXB Tools :: JAXB BOM</name>
+  <description>JAXB BOM file to align jaxb api and runtime dependencies.</description>
+  <dependencyManagement>
+    <!-- Start of jaxb-runtime dependencies -->
+    <dependencies>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>${jaxb.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+      <version>${jaxb-api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>txw2</artifactId>
+      <version>${jaxb.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.istack</groupId>
+      <artifactId>istack-commons-runtime</artifactId>
+      <version>${istack.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jvnet.staxex</groupId>
+      <artifactId>stax-ex</artifactId>
+      <version>${stax-ex.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.xml.fastinfoset</groupId>
+      <artifactId>FastInfoset</artifactId>
+      <version>${fastinfoset.version}</version>
+    </dependency>
+    <!-- End of jaxb-runtime dependencies -->
+    </dependencies>
+  </dependencyManagement>
+</project>

@@ -1,4 +1,4 @@
-# Contributing to JAXB Maven Plugin #
+# Contributing to JAXB Tools #
 
 ## Pull Requests preferences ##
 
@@ -9,7 +9,8 @@ Organizing pull requests allows us to more readily backport changes and support 
 * PR per-dependency change
 * PR per-plugin changes
 * PR per-Java JDK source/target changes
-* PR per-feature change 
+* PR per-feature change
+* PRs must be signed by GitHub verified GPG or SSH key
 
 ## Code Style
 

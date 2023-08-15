@@ -11,6 +11,7 @@ Organizing pull requests allows us to more readily backport changes and support 
 * PR per-Java JDK source/target changes
 * PR per-feature change
 * PRs must be signed by GitHub verified GPG or SSH key
+* PRs must be reviewed and approved by a jaxb-tools Committer
 
 ## Code Style
 

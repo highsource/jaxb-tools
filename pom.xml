@@ -38,17 +38,28 @@
         <role>maintainer</role>
       </roles>
     </developer>
+    <developer>
+      <id>laurentschoelens</id>
+      <name>Laurent Schoelens</name>
+      <roles>
+        <role>maintainer</role>
+      </roles>
+    </developer>
 	</developers>
+	<prerequisites>
+		<maven>3.1</maven>
+	</prerequisites>
 	<modules>
                 <module>jaxb-bom-parent</module>
                 <module>jaxb-annotate-parent</module>
                 <module>jaxb-annox-parent</module>
-                <module>maven-plugin</module>
                 <module>basics</module>
+                <module>maven-plugin</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.version>2.0.9</maven.version>
+
                 <!-- Dependencies versions -->
 		<activation.version>1.2.2</activation.version>
                 <ant.version>1.10.12</ant.version>
@@ -58,11 +69,18 @@
 		<jaxb23.version>2.3.7</jaxb23.version>
 		<jaxb-api.version>2.3.3</jaxb-api.version>
 		<jaxb.version>${jaxb23.version}</jaxb.version>
+		<jaxb-core.version>2.3.0.1</jaxb-core.version>
+
+		<commons-beanutils.version>1.9.4</commons-beanutils.version>
+		<commons-io.version>2.11.0</commons-io.version>
+		<commons-lang3.version>3.12.0</commons-lang3.version>
+		<joda-time.version>2.5</joda-time.version>
                 <junit4.version>4.13.2</junit4.version>
 		<slf4j.version>1.7.36</slf4j.version>
 		<stax-ex.version>1.8.3</stax-ex.version>
 		<plexus-build-api.version>1.2.0</plexus-build-api.version>
 		<plexus-utils.version>3.5.1</plexus-utils.version>
+
                 <!-- Maven plugin versions -->
 		<maven.plugin.testing.version>2.1</maven.plugin.testing.version>
 		<maven.plugin.plugin.version>3.7.1</maven.plugin.plugin.version>
@@ -84,6 +102,8 @@
                 <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
                 <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
                 <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
+
+                <cxf-codegen-plugin.version>3.3.13</cxf-codegen-plugin.version>
 	</properties>
 	<profiles>
 		<profile>
@@ -181,6 +201,11 @@
 				<artifactId>jaxb-runtime</artifactId>
 				<version>${jaxb.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.glassfish.jaxb</groupId>
+				<artifactId>jaxb-core</artifactId>
+				<version>${jaxb-core.version}</version>
+			</dependency>
 			<!-- Start of jaxb-runtime dependencies -->
 			<dependency>
 				<groupId>jakarta.xml.bind</groupId>
@@ -262,21 +287,6 @@
 				<artifactId>jaxb-extra-osgi</artifactId>
 				<version>${jaxb.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>org.jvnet.jaxb</groupId>
-				<artifactId>jaxb-maven-plugin-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jvnet.jaxb</groupId>
-				<artifactId>jaxb-maven-plugin</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jvnet.jaxb</groupId>
-				<artifactId>jaxb-maven-plugin-testing</artifactId>
-				<version>${project.version}</version>
-			</dependency>
 			<!-- Maven plugin and api classes -->
 			<dependency>
 				<groupId>org.apache.maven</groupId>
@@ -320,11 +330,6 @@
 				<version>${maven.plugin.plugin.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>${junit4.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>org.apache.maven.plugin-testing</groupId>
 				<artifactId>maven-plugin-testing-tools</artifactId>
 				<version>${maven.plugin.testing.version}</version>
@@ -352,10 +357,39 @@
 				<artifactId>plexus-utils</artifactId>
 				<version>${plexus-utils.version}</version>
 			</dependency>
+
+			<!-- Commons -->
+			<dependency>
+				<groupId>commons-beanutils</groupId>
+				<artifactId>commons-beanutils</artifactId>
+				<version>${commons-beanutils.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
-				<version>3.12.0</version>
+				<version>${commons-lang3.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit4.version}</version>
+			</dependency>
+			<!-- Joda-Time -->
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>${joda-time.version}</version>
 			</dependency>
 			<!-- SLF4J -->
 			<dependency>
@@ -373,10 +407,111 @@
                                 <artifactId>slf4j-simple</artifactId>
                                 <version>${slf4j.version}</version>
                         </dependency>
+
+			<!-- Spring -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring</artifactId>
+				<version>2.0.7</version>
+			</dependency>
+
+			<!-- Hibernate -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-search</artifactId>
+				<version>4.1.1.Final</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.transaction</groupId>
+				<artifactId>jta</artifactId>
+				<version>1.1</version>
+			</dependency>
+			<!-- XMLUnit -->
+			<dependency>
+				<groupId>xmlunit</groupId>
+				<artifactId>xmlunit</artifactId>
+				<version>1.5</version>
+			</dependency>
+
+			<!-- Ant -->
+			<dependency>
+				<groupId>org.apache.ant</groupId>
+				<artifactId>ant</artifactId>
+				<version>${ant.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.ant</groupId>
+				<artifactId>ant-launcher</artifactId>
+				<version>${ant.version}</version>
+			</dependency>
+
+			<!-- Java Parser -->
+			<dependency>
+				<groupId>com.google.code.javaparser</groupId>
+				<artifactId>javaparser</artifactId>
+				<version>1.0.11</version>
+			</dependency>
+
+			<!-- JAXB Maven Plugin -->
+			<dependency>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb-maven-plugin-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb-maven-plugin</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb-maven-plugin-testing</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 			<!-- JAXB2 Basics -->
 			<dependency>
 				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb2-basics</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb2-basics-plugins</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jvnet.jaxb</groupId>
 				<artifactId>jaxb2-basics-runtime</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb2-basics-tools</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb2-basics-testing</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb2-basics-ant</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- JAXB Annox -->
+			<dependency>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb-annox</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- JAXB Annotate -->
+			<dependency>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb-basics-annotate</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
@@ -430,8 +565,8 @@
                                                 <dependency>
                                                         <groupId>junit</groupId>
                                                         <artifactId>junit</artifactId>
-                                                        <version>3.8.1</version>
-                                                        <scope>runtime</scope>
+                                                        <version>${junit4.version}</version>
+                                                        <scope>compile</scope>
                                                 </dependency>
                                                 <dependency>
                                                         <groupId>org.apache.ant</groupId>
@@ -449,10 +584,10 @@
                                         <artifactId>maven-assembly-plugin</artifactId>
                                         <version>${maven-assembly-plugin.version}</version>
                                 </plugin>
-                                <plugin>        
+                                <plugin>
                                         <artifactId>maven-clean-plugin</artifactId>
                                         <version>${maven-clean-plugin.version}</version>
-                                </plugin> 
+                                </plugin>
 				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>${maven-compiler-plugin.version}</version>
@@ -493,10 +628,10 @@
                                         <artifactId>maven-release-plugin</artifactId>
                                         <version>${maven-release-plugin.version}</version>
                                 </plugin>
-                                <plugin>                        
+                                <plugin>
                                         <artifactId>maven-resources-plugin</artifactId>
                                         <version>${maven-resources-plugin.version}</version>
-                                </plugin> 
+                                </plugin>
                                 <plugin>
                                         <artifactId>maven-shade-plugin</artifactId>
                                         <version>${maven-shade-plugin.version}</version>

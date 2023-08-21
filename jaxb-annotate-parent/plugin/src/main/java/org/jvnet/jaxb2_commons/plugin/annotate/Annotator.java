@@ -30,9 +30,9 @@ package org.jvnet.jaxb2_commons.plugin.annotate;
 
 import java.util.Collection;
 
-import org.jvnet.annox.model.XAnnotation;
-import org.jvnet.annox.model.XAnnotationFieldVisitor;
-import org.jvnet.annox.model.annotation.field.XAnnotationField;
+import org.jvnet.jaxb.annox.model.XAnnotation;
+import org.jvnet.jaxb.annox.model.XAnnotationFieldVisitor;
+import org.jvnet.jaxb.annox.model.annotation.field.XAnnotationField;
 
 import com.sun.codemodel.JAnnotatable;
 import com.sun.codemodel.JAnnotationUse;

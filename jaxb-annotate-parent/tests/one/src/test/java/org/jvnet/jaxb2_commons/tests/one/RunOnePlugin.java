@@ -31,8 +31,8 @@ package org.jvnet.jaxb2_commons.tests.one;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jvnet.jaxb2.maven2.AbstractXJC2Mojo;
-import org.jvnet.jaxb2.maven2.test.RunXJC2Mojo;
+import org.jvnet.jaxb.maven.AbstractXJC2Mojo;
+import org.jvnet.jaxb.maven.test.RunXJC2Mojo;
 
 public class RunOnePlugin extends RunXJC2Mojo {
 	

@@ -6,7 +6,6 @@
                 <version>2.0.5-SNAPSHOT</version>
                 <relativePath>../pom.xml</relativePath>
         </parent>
-	<groupId>org.jvnet.jaxb</groupId>
 	<artifactId>jaxb-annox</artifactId>
 	<packaging>jar</packaging>
 	<name>JAXB Tools :: JAXB Annox</name>
@@ -18,7 +17,6 @@
 		<dependency>
                         <groupId>org.glassfish.jaxb</groupId>
                         <artifactId>jaxb-runtime</artifactId>
-                        <version>${jaxb.version}</version>
                         <scope>provided</scope>
                 </dependency>
 		<dependency>
@@ -28,23 +26,19 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
- 			<version>2.4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.javaparser</groupId>
 			<artifactId>javaparser</artifactId>
-                        <version>1.0.11</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-search</artifactId>
-                        <version>3.0.0.GA</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>jta</artifactId>
-                        <version>1.1</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -54,7 +48,6 @@
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
 				<extensions>true</extensions>
-				<version>2.2.0</version>
 				<executions>
 					<execution>
 						<id>bundle-manifest</id>
@@ -70,20 +63,20 @@
 							<instructions>
 								<Bundle-Version>${annox.osgi.version}</Bundle-Version>
 								<Import-Package>
-									org.apache.commons.lang3;version="3.2.1",
-									org.apache.commons.lang3.builder;version="3.2.1"
+									org.apache.commons.lang3;version="3.12.0",
+									org.apache.commons.lang3.builder;version="3.12.0"
 								</Import-Package>
 								<Export-Package>
-									org.jvnet.annox,
-									org.jvnet.annox.annotation,
-									org.jvnet.annox.io,
-									org.jvnet.annox.model,
-									org.jvnet.annox.parser,
-									org.jvnet.annox.reader,
-									org.jvnet.annox.reader.resourced,
-									org.jvnet.annox.reflect,
-									org.jvnet.annox.util,
-									org.jvnet.annox.xml.bind
+									org.jvnet.jaxb.annox,
+									org.jvnet.jaxb.annox.annotation,
+									org.jvnet.jaxb.annox.io,
+									org.jvnet.jaxb.annox.model,
+									org.jvnet.jaxb.annox.parser,
+									org.jvnet.jaxb.annox.reader,
+									org.jvnet.jaxb.annox.reader.resourced,
+									org.jvnet.jaxb.annox.reflect,
+									org.jvnet.jaxb.annox.util,
+									org.jvnet.jaxb.annox.xml.bind
 								</Export-Package>
 								<Bundle-RequiredExecutionEnvironment>J2SE-1.5</Bundle-RequiredExecutionEnvironment>
 							</instructions>
@@ -94,7 +87,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.5</version>
 				<configuration>
 					<archive>
 						<manifestFile>META-INF/MANIFEST.MF</manifestFile>

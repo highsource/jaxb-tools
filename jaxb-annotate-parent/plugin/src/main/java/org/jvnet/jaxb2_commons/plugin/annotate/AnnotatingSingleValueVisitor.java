@@ -28,24 +28,24 @@
  */
 package org.jvnet.jaxb2_commons.plugin.annotate;
 
-import org.jvnet.annox.model.XAnnotation;
-import org.jvnet.annox.model.annotation.field.XAnnotationField;
-import org.jvnet.annox.model.annotation.value.XAnnotationValueVisitor;
-import org.jvnet.annox.model.annotation.value.XArrayClassAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XBooleanAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XByteAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XCharAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XClassAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XClassByNameAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XDoubleAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XEnumAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XEnumByNameAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XFloatAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XIntAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XLongAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XShortAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XStringAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XXAnnotationAnnotationValue;
+import org.jvnet.jaxb.annox.model.XAnnotation;
+import org.jvnet.jaxb.annox.model.annotation.field.XAnnotationField;
+import org.jvnet.jaxb.annox.model.annotation.value.XAnnotationValueVisitor;
+import org.jvnet.jaxb.annox.model.annotation.value.XArrayClassAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XBooleanAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XByteAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XCharAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XClassAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XClassByNameAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XDoubleAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XEnumAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XEnumByNameAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XFloatAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XIntAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XLongAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XShortAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XStringAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XXAnnotationAnnotationValue;
 import org.jvnet.jaxb2_commons.util.CodeModelUtils;
 
 import com.sun.codemodel.JAnnotationUse;

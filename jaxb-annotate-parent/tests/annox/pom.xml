@@ -33,18 +33,18 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.jvnet.jaxb2_commons</groupId>
-		<artifactId>jaxb2-annotate-plugin-tests</artifactId>
-		<version>1.1.1-SNAPSHOT</version>
+		<groupId>org.jvnet.jaxb</groupId>
+		<artifactId>jaxb-annotate-plugin-tests</artifactId>
+		<version>2.0.5-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>jaxb2-annotate-plugin-test-annox</artifactId>
+	<artifactId>jaxb-annotate-plugin-test-annox</artifactId>
 	<packaging>jar</packaging>
-	<name>JAXB2 Annotate Plugin - Test [annox]</name>
+	<name>JAXB Tools :: Annotate :: Test [annox]</name>
 	<dependencies>
 		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-annotate-plugin-test-annotations</artifactId>
+			<groupId>org.jvnet.jaxb</groupId>
+			<artifactId>jaxb-annotate-plugin-test-annotations</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
@@ -52,8 +52,8 @@
 		<defaultGoal>test</defaultGoal>
 		<plugins>
 			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb-maven-plugin</artifactId>
 				<configuration>
 					<extension>true</extension>
 					<args>
@@ -61,12 +61,12 @@
 					</args>
 					<plugins>
 						<plugin>
-							<groupId>org.jvnet.jaxb2_commons</groupId>
-							<artifactId>jaxb2-basics-annotate</artifactId>
+							<groupId>org.jvnet.jaxb</groupId>
+							<artifactId>jaxb-basics-annotate</artifactId>
 						</plugin>
 						<plugin>
-							<groupId>org.jvnet.jaxb2_commons</groupId>
-							<artifactId>jaxb2-annotate-plugin-test-annotations</artifactId>
+							<groupId>org.jvnet.jaxb</groupId>
+							<artifactId>jaxb-annotate-plugin-test-annotations</artifactId>
 						</plugin>
 					</plugins>
 				</configuration>

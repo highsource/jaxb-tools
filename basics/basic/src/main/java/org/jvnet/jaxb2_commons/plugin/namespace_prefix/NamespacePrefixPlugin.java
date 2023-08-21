@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlSchema;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -204,12 +205,11 @@ public class NamespacePrefixPlugin extends Plugin {
         ns.param("prefix", prefix);
     }
 
-    @SuppressWarnings("unchecked")
     private static JAnnotationUse getOrAddXmlSchemaAnnotation(JPackage p, JClass xmlSchemaClass) {
 
         JAnnotationUse xmlAnn = null;
 
-        final List<JAnnotationUse> annotations = getAnnotations(p);
+        final Collection<JAnnotationUse> annotations = getAnnotations(p);
         if (annotations != null) {
             for (JAnnotationUse annotation : annotations) {
                 final JClass clazz = getAnnotationJClass(annotation);
@@ -257,50 +257,18 @@ public class NamespacePrefixPlugin extends Plugin {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    private static List<JAnnotationUse> getAnnotations(JPackage p) {
-        // TODO bump jaxb-xjc dependency to version >= 2.2.2 and use the annotations() method instead.
-        try {
-            final Field annotationsField = JPackage.class.getDeclaredField("annotations");
-            annotationsField.setAccessible(true);
-            return (List<JAnnotationUse>) annotationsField.get(p);
-        }
-        catch (IllegalAccessException e) {
-            throw new RuntimeException("Unable to access 'annotation' field for package [" + p.name() + "] : " + e.getMessage(), e);
-        }
-        catch (NoSuchFieldException e) {
-            throw new RuntimeException("Unable to find 'annotation' field for package [" + p.name() + "] : " + e.getMessage(), e);
-        }
+    private static Collection<JAnnotationUse> getAnnotations(JPackage p) {
+        return p.annotations();
     }
 
     private static JClass getAnnotationJClass(JAnnotationUse annotation) {
-        try {
-            final Field clazzField = JAnnotationUse.class.getDeclaredField("clazz");
-            clazzField.setAccessible(true);
-            return (JClass) clazzField.get(annotation);
-        }
-        catch (IllegalAccessException e) {
-            throw new RuntimeException("Unable to access 'clazz' field for class [JAnnotationUse] : " + e.getMessage(), e);
-        }
-        catch (NoSuchFieldException e) {
-            throw new RuntimeException("Unable to find 'annotation' field for class [JAnnotationUse] : " + e.getMessage(), e);
-        }
+        return annotation.getAnnotationClass();
     }
 
-    @SuppressWarnings("unchecked")
     private static Map<String, JAnnotationValue> getAnnotationMemberValues(JAnnotationUse annotation) {
-        try {
-            final Field clazzField = JAnnotationUse.class.getDeclaredField("memberValues");
-            clazzField.setAccessible(true);
-            return (Map<String, JAnnotationValue>) clazzField.get(annotation);
-        }
-        catch (IllegalAccessException e) {
-            throw new RuntimeException("Unable to access 'memberValues' field for class [JAnnotationUse] : " + e.getMessage(), e);
-        }
-        catch (NoSuchFieldException e) {
-            throw new RuntimeException("Unable to find 'memberValues' field for class [JAnnotationUse] : " + e.getMessage(), e);
-        }
+        return annotation.getAnnotationMembers();
     }
+
 
     private static String getStringAnnotationValue(JAnnotationValue val) {
         try {

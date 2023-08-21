@@ -12,18 +12,20 @@
         <dependencies>
             <dependency>
                 <groupId>org.jvnet.jaxb</groupId>
-                <artifactId>jaxb2-basics</artifactId>
-                <version>${project.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.jvnet.jaxb</groupId>
                 <artifactId>jaxb-maven-plugin</artifactId>
                 <version>${project.version}</version>
                 <type>maven-plugin</type>
                 <scope>provided</scope>
             </dependency>
+            <dependency>
+                <groupId>org.jvnet.jaxb</groupId>
+                <artifactId>jaxb2-basics</artifactId>
+                <scope>provided</scope>
+            </dependency>
         </dependencies>
+  <properties>
+    <maven.deploy.skip>true</maven.deploy.skip>
+  </properties>
 	<modules>
 		<module>catalog</module>
 		<module>catalog-xml</module>
@@ -56,31 +58,7 @@
 		<module>jt-194</module>
 	</modules>
 	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.jvnet.jaxb</groupId>
-					<artifactId>jaxb-maven-plugin</artifactId>
-					<version>${project.version}</version>
-					<executions>
-						<execution>
-							<id>generate</id>
-							<goals>
-								<goal>generate</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>

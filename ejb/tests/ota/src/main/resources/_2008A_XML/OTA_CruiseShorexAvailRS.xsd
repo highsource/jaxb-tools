@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.004" id="OTA2008A">
+	<xs:include schemaLocation="OTA_CruiseCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA 
+specification are made available according to the terms defined by the OTA 
+License Agreement at 
+http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_CruiseShorexAvailRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The shorex availability response message contains shore excursion packages that are available for the given sailing/ports.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType">
+						<xs:annotation>
+							<xs:documentation xml:lang="en"> Standard way to indicate successful processing of an OTA message. Returning an empty element of this type indicates success.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en"> Standard way to indicate successful processing of an OTA message, but one in which warnings (business errors) are generated.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="GuestCounts" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies guest quantity and guest types.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Specify guest numbers and types.</xs:documentation>
+							</xs:annotation>
+							<xs:sequence>
+								<xs:element name="GuestCount" maxOccurs="9">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Categorization of all guests in the request.  The sum of the Quantity attribute will provide you with the total number of guests.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:attributeGroup ref="TravelerCountGroup"/>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="SailingInfo" type="SailingCategoryInfoType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Contains information for the selected sailing. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ShorexPackages" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Contains the list of shore excursion packages.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="ShorexPackage" maxOccurs="99">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Specifies the type of package options to query for, that the cruise might offer with the sailing.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="CruisePackageType">
+												<xs:sequence>
+													<xs:element name="PriceInfo" maxOccurs="10">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">Provides price information associated with a shore excursion.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:complexContent>
+																<xs:extension base="PriceInfoType">
+																	<xs:attribute name="Status" type="OTA_CodeType">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">Specifies the booking status. Refer to OTA_Code list Status (STS)</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																</xs:extension>
+															</xs:complexContent>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="Description" type="StringLength1to64" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Short text description of the package.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="SelectionAllowedIndicator" type="xs:boolean" use="optional" default="true">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">When true, this dining option may be selected. When false, the dining option may not be selected.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en"> A collection of errors that occurred during the processing of a message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The standard attributes that appear on the root element for all OTA payloads. </xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+			<xs:attributeGroup ref="ResponseGroup"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

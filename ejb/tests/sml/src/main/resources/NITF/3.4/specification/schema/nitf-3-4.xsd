@@ -1,0 +1,1742 @@
+<?xml version="1.0"?>
+<!--
+IPTC - International Press Telecommunications Council
+Royal Albert House, Windsor, Berkshire SL4 1BE, England
+www.iptc.org
+
+See bottom of this file to view Non-Exclusive License
+Agreement for International Press Telecommunications
+Council, which applies to this specification (including
+this file and all of its companion documents).
+
+	Modifications since NITF 3.3:
+		Allowed for zero-or-more abstract elements, rather than zero-or-one.
+		Allow abstract to have "common-attributes", rather than "global-attributes"
+		(adds class, style, and xml:lang attributes)
+		
+		SCHEMA ONLY: Made enriched-text entity include ANY... which allows
+		users to use namespaced elements within elements such as p
+-->
+<schema
+	targetNamespace="http://iptc.org/std/NITF/2006-10-18/"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:nitf="http://iptc.org/std/NITF/2006-10-18/"
+	version="3.4"
+	>
+	<annotation>
+		<appinfo>NITF Core</appinfo>
+		<documentation>The core schema for the News Industry Text Format.</documentation>
+	</annotation>
+	<include schemaLocation="./nitf-3-4-ruby-include.xsd"/>
+	<attributeGroup name="globalNITFAttributes">
+		<attribute name="id" type="ID" use="optional">
+			<annotation>
+				<documentation>An XML-specific identifier for the element.</documentation>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+	<attributeGroup name="commonNITFAttributes">
+		<attribute name="id" type="ID" use="optional">
+			<annotation>
+				<documentation>An XML-specific identifier for the element.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="class" type="string" use="optional">
+			<annotation>
+				<documentation>An open placeholder for categorization.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="style" type="string" use="optional">
+			<annotation>
+				<documentation>An open placeholder for reference by an external stylesheet.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="xml_lang" use="optional">
+			<annotation>
+				<documentation>Language value governed by RFC3066. Example: en-US.</documentation>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+	<attributeGroup name="cellAlign">
+		<attribute name="align" use="optional">
+			<annotation>
+				<documentation>Alignment of text in the cell or column group.</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="left"/>
+					<enumeration value="center"/>
+					<enumeration value="right"/>
+					<enumeration value="justify"/>
+					<enumeration value="char"/>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="char" type="string" use="optional">
+			<annotation>
+				<documentation>HTML formatting attribute.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="charoff" type="string" use="optional">
+			<annotation>
+				<documentation>HTML formatting attribute.</documentation>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+	<attributeGroup name="cellVAlign">
+		<attribute name="valign" use="optional">
+			<annotation>
+				<documentation>Vertical alignment of text in the cell or column group.</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="top"/>
+					<enumeration value="middle"/>
+					<enumeration value="bottom"/>
+					<enumeration value="baseline"/>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</attributeGroup>
+	<group name="enrichedText">
+		<choice>
+			<element ref="nitf:chron"/>
+			<element ref="nitf:classifier"/>
+			<element ref="nitf:copyrite"/>
+			<element ref="nitf:event"/>
+			<element ref="nitf:function"/>
+			<element ref="nitf:location"/>
+			<element ref="nitf:money"/>
+			<element ref="nitf:num"/>
+			<element ref="nitf:object.title"/>
+			<element ref="nitf:org"/>
+			<element ref="nitf:person"/>
+			<element ref="nitf:postaddr"/>
+			<element ref="nitf:virtloc"/>
+			<element ref="nitf:a"/>
+			<element ref="nitf:br"/>
+			<element ref="nitf:em"/>
+			<element ref="nitf:lang"/>
+			<element ref="nitf:pronounce"/>
+			<element ref="nitf:q"/>
+			<any namespace="##other"/>
+		</choice>
+	</group>
+	<group name="blockContent">
+		<choice>
+			<element ref="nitf:p"/>
+			<element ref="nitf:hl2"/>
+			<element ref="nitf:table"/>
+			<element ref="nitf:nitf-table"/>
+			<element ref="nitf:media"/>
+			<element ref="nitf:ol"/>
+			<element ref="nitf:ul"/>
+			<element ref="nitf:dl"/>
+			<element ref="nitf:bq"/>
+			<element ref="nitf:fn"/>
+			<element ref="nitf:note"/>
+			<element ref="nitf:pre"/>
+			<element ref="nitf:hr"/>
+		</choice>
+	</group>
+	<element name="nitf">
+		<complexType>
+			<sequence>
+				<element ref="nitf:head" minOccurs="0"/>
+				<element ref="nitf:body"/>
+			</sequence>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="uno" type="string" use="optional"/>
+			<attribute name="version" type="string" fixed="-//IPTC//DTD NITF 3.4//EN"/>
+			<attribute name="change.date" type="string" fixed="October 18, 2006"/>
+			<attribute name="change.time" type="string" fixed="19:30"/>
+			<attribute name="baselang" type="string" use="optional"/>
+			<attribute name="class" type="NMTOKENS" use="optional"/>
+		</complexType>
+	</element>
+	<element name="head">
+		<complexType>
+			<sequence>
+				<element ref="nitf:title" minOccurs="0"/>
+				<element ref="nitf:meta" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="nitf:tobject" minOccurs="0"/>
+				<element ref="nitf:iim" minOccurs="0"/>
+				<element ref="nitf:docdata" minOccurs="0"/>
+				<element ref="nitf:pubdata" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="nitf:revision-history" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="title">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="type" use="optional">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="main"/>
+						<enumeration value="subtitle"/>
+						<enumeration value="parttitle"/>
+						<enumeration value="alternate"/>
+						<enumeration value="abbrev"/>
+						<enumeration value="other"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="meta">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="http-equiv" type="NMTOKEN" use="optional"/>
+			<attribute name="name" type="NMTOKEN" use="optional"/>
+			<attribute name="content" type="string" use="required"/>
+		</complexType>
+	</element>
+	<element name="tobject">
+		<complexType>
+			<sequence>
+				<element ref="nitf:tobject.property" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="nitf:tobject.subject" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="tobject.type" type="string" use="optional" default="news"/>
+		</complexType>
+	</element>
+	<element name="tobject.property">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="tobject.property.type" type="string" use="optional" default="current"/>
+		</complexType>
+	</element>
+	<element name="tobject.subject">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="tobject.subject.ipr" type="string" use="optional" default="IPTC"/>
+			<attribute name="tobject.subject.refnum" type="NMTOKEN" use="required"/>
+			<attribute name="tobject.subject.code" type="string" use="optional"/>
+			<attribute name="tobject.subject.type" type="string" use="optional"/>
+			<attribute name="tobject.subject.matter" type="string" use="optional"/>
+			<attribute name="tobject.subject.detail" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="iim">
+		<complexType>
+			<sequence>
+				<element ref="nitf:ds" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="ver" type="NMTOKEN" use="optional"/>
+		</complexType>
+	</element>
+	<element name="ds">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="num" type="NMTOKEN" use="required"/>
+			<attribute name="value" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="docdata">
+		<complexType>
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:correction"/>
+				<element ref="nitf:evloc"/>
+				<element ref="nitf:doc-id"/>
+				<element ref="nitf:del-list"/>
+				<element ref="nitf:urgency"/>
+				<element ref="nitf:fixture"/>
+				<element ref="nitf:date.issue"/>
+				<element ref="nitf:date.release"/>
+				<element ref="nitf:date.expire"/>
+				<element ref="nitf:doc-scope"/>
+				<element ref="nitf:series"/>
+				<element ref="nitf:ed-msg"/>
+				<element ref="nitf:du-key"/>
+				<element ref="nitf:doc.copyright"/>
+				<element ref="nitf:doc.rights"/>
+				<element ref="nitf:key-list"/>
+				<element ref="nitf:identified-content"/>
+			</choice>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="management-status" type="string" use="optional"/>
+			<attribute name="management-doc-idref" type="string" use="optional"/>
+			<attribute name="management-idref-status" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="correction">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="info" type="string" use="optional"/>
+			<attribute name="id-string" type="string" use="optional"/>
+			<attribute name="regsrc" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="evloc">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="iso-cc" type="string" use="optional"/>
+			<attribute name="state-prov" type="string" use="optional"/>
+			<attribute name="county-dist" type="string" use="optional"/>
+			<attribute name="city" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="doc-id">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="regsrc" type="string" use="optional"/>
+			<attribute name="id-string" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="del-list">
+		<complexType>
+			<sequence minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:from-src"/>
+			</sequence>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="from-src">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="src-name" type="string" use="optional"/>
+			<attribute name="level-number" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="urgency">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="ed-urg" type="NMTOKEN" use="optional"/>
+		</complexType>
+	</element>
+	<element name="fixture">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="fix-id" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="date.issue">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="norm" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="date.release">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="norm" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="date.expire">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="norm" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="doc-scope">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="scope" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="series">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="series.name" type="string" use="optional"/>
+			<attribute name="series.part" type="NMTOKEN" use="optional" default="0"/>
+			<attribute name="series.totalpart" type="NMTOKEN" use="optional" default="0"/>
+		</complexType>
+	</element>
+	<element name="ed-msg">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="msg-type" type="string" use="optional"/>
+			<attribute name="info" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="du-key">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="generation" type="NMTOKEN" use="optional"/>
+			<attribute name="part" type="NMTOKEN" use="optional"/>
+			<attribute name="version" type="NMTOKEN" use="optional"/>
+			<attribute name="key" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="doc.copyright">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="year" type="NMTOKEN" use="optional"/>
+			<attribute name="holder" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="doc.rights">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="owner" type="string" use="optional"/>
+			<attribute name="startdate" type="string" use="optional"/>
+			<attribute name="enddate" type="string" use="optional"/>
+			<attribute name="agent" type="string" use="optional"/>
+			<attribute name="geography" type="string" use="optional"/>
+			<attribute name="location-code" type="string" use="optional"/>
+			<attribute name="code-source" type="string" use="optional"/>
+			<attribute name="type" type="string" use="optional"/>
+			<attribute name="limitations" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="key-list">
+		<complexType>
+			<sequence minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:keyword"/>
+			</sequence>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="keyword">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="key" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="identified-content">
+		<complexType>
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:person"/>
+				<element ref="nitf:org"/>
+				<element ref="nitf:location"/>
+				<element ref="nitf:event"/>
+				<element ref="nitf:function"/>
+				<element ref="nitf:object.title"/>
+				<element ref="nitf:virtloc"/>
+				<element ref="nitf:classifier"/>
+			</choice>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="pubdata">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="type" use="optional">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="print"/>
+						<enumeration value="audio"/>
+						<enumeration value="video"/>
+						<enumeration value="web"/>
+						<enumeration value="appliance"/>
+						<enumeration value="other"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="item-length" type="string" use="optional"/>
+			<attribute name="unit-of-measure" type="string" use="optional"/>
+			<attribute name="date.publication" type="string" use="optional"/>
+			<attribute name="name" type="string" use="optional"/>
+			<attribute name="issn" type="string" use="optional"/>
+			<attribute name="volume" type="string" use="optional"/>
+			<attribute name="number" type="string" use="optional"/>
+			<attribute name="issue" type="string" use="optional"/>
+			<attribute name="edition.name" type="string" use="optional"/>
+			<attribute name="edition.area" type="string" use="optional"/>
+			<attribute name="position.section" type="string" use="optional"/>
+			<attribute name="position.sequence" type="string" use="optional"/>
+			<attribute name="ex-ref" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="revision-history">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="name" type="string" use="optional"/>
+			<attribute name="function" use="optional">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="writer-author"/>
+						<enumeration value="editor"/>
+						<enumeration value="producer"/>
+						<enumeration value="archivist"/>
+						<enumeration value="videographer"/>
+						<enumeration value="graphic-artist"/>
+						<enumeration value="photographer"/>
+						<enumeration value="statistician"/>
+						<enumeration value="other"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="norm" type="string" use="optional"/>
+			<attribute name="comment" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="body">
+		<complexType>
+			<sequence>
+				<element ref="nitf:body.head" minOccurs="0"/>
+				<element ref="nitf:body.content" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="nitf:body.end" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="body.head">
+		<complexType>
+			<sequence>
+				<element ref="nitf:hedline" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="nitf:note" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="nitf:rights" minOccurs="0"/>
+				<element ref="nitf:byline" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="nitf:distributor" minOccurs="0"/>
+				<element ref="nitf:dateline" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="nitf:abstract" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="nitf:series" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="hedline">
+		<complexType>
+			<sequence>
+				<element ref="nitf:hl1"/>
+				<element ref="nitf:hl2" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="hl1">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<group ref="nitf:enrichedText"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="hl2">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:chron"/>
+				<element ref="nitf:classifier"/>
+				<element ref="nitf:copyrite"/>
+				<element ref="nitf:event"/>
+				<element ref="nitf:function"/>
+				<element ref="nitf:location"/>
+				<element ref="nitf:money"/>
+				<element ref="nitf:num"/>
+				<element ref="nitf:object.title"/>
+				<element ref="nitf:org"/>
+				<element ref="nitf:person"/>
+				<element ref="nitf:postaddr"/>
+				<element ref="nitf:virtloc"/>
+				<element ref="nitf:a"/>
+				<element ref="nitf:br"/>
+				<element ref="nitf:em"/>
+				<element ref="nitf:lang"/>
+				<element ref="nitf:pronounce"/>
+				<element ref="nitf:q"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="note">
+		<complexType>
+			<sequence maxOccurs="unbounded">
+				<element ref="nitf:body.content"/>
+			</sequence>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="noteclass" use="optional">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="cpyrt"/>
+						<enumeration value="end"/>
+						<enumeration value="hd"/>
+						<enumeration value="editorsnote"/>
+						<enumeration value="trademk"/>
+						<enumeration value="undef"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="type" use="optional" default="std">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="std"/>
+						<enumeration value="pa"/>
+						<enumeration value="npa"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="rights">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:rights.owner"/>
+				<element ref="nitf:rights.startdate"/>
+				<element ref="nitf:rights.enddate"/>
+				<element ref="nitf:rights.agent"/>
+				<element ref="nitf:rights.geography"/>
+				<element ref="nitf:rights.type"/>
+				<element ref="nitf:rights.limitations"/>
+			</choice>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="rights.owner">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="contact" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="rights.startdate">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="norm" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="rights.enddate">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="norm" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="rights.agent">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="contact" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="rights.geography">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="location-code" type="string" use="optional"/>
+			<attribute name="code-source" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="rights.type">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="rights.limitations">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="byline">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:person"/>
+				<element ref="nitf:byttl"/>
+				<element ref="nitf:location"/>
+				<element ref="nitf:virtloc"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="byttl">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:org"/>
+			</choice>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="distributor">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:org"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="dateline">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:location"/>
+				<element ref="nitf:story.date"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="story.date">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="norm" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="abstract">
+		<complexType>
+			<choice maxOccurs="unbounded">
+				<group ref="nitf:blockContent"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="copyrite">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:copyrite.year"/>
+				<element ref="nitf:copyrite.holder"/>
+			</choice>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="copyrite.year">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="copyrite.holder">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="body.content">
+		<complexType>
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:block"/>
+				<group ref="nitf:blockContent"/>
+			</choice>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="block">
+		<complexType>
+			<sequence>
+				<sequence minOccurs="0">
+					<element ref="nitf:tobject" minOccurs="0"/>
+					<element ref="nitf:key-list" minOccurs="0"/>
+					<element ref="nitf:classifier" minOccurs="0" maxOccurs="unbounded"/>
+					<element ref="nitf:byline" minOccurs="0"/>
+					<element ref="nitf:dateline" minOccurs="0"/>
+					<element ref="nitf:copyrite" minOccurs="0"/>
+					<element ref="nitf:abstract" minOccurs="0" maxOccurs="unbounded"/>
+				</sequence>
+				<choice minOccurs="0" maxOccurs="unbounded">
+					<group ref="nitf:blockContent"/>
+				</choice>
+				<sequence minOccurs="0">
+					<element ref="nitf:datasource" minOccurs="0"/>
+				</sequence>
+			</sequence>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="p">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:chron"/>
+				<element ref="nitf:classifier"/>
+				<element ref="nitf:copyrite"/>
+				<element ref="nitf:event"/>
+				<element ref="nitf:function"/>
+				<element ref="nitf:location"/>
+				<element ref="nitf:money"/>
+				<element ref="nitf:num"/>
+				<element ref="nitf:object.title"/>
+				<element ref="nitf:org"/>
+				<element ref="nitf:person"/>
+				<element ref="nitf:postaddr"/>
+				<element ref="nitf:virtloc"/>
+				<element ref="nitf:a"/>
+				<element ref="nitf:br"/>
+				<element ref="nitf:em"/>
+				<element ref="nitf:lang"/>
+				<element ref="nitf:pronounce"/>
+				<element ref="nitf:q"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="lede" type="string" use="optional"/>
+			<attribute name="summary" type="string" use="optional"/>
+			<attribute name="optional-text" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="table">
+		<complexType>
+			<sequence>
+				<element ref="nitf:caption" minOccurs="0"/>
+				<choice>
+					<element ref="nitf:col" minOccurs="0"/>
+					<element ref="nitf:colgroup" minOccurs="0"/>
+				</choice>
+				<element ref="nitf:thead" minOccurs="0"/>
+				<element ref="nitf:tfoot" minOccurs="0"/>
+				<choice>
+					<element ref="nitf:tbody"/>
+					<element ref="nitf:tr" minOccurs="0" maxOccurs="unbounded"/>
+				</choice>
+			</sequence>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="tabletype" type="ENTITY" use="optional"/>
+			<attribute name="align" use="optional">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="left"/>
+						<enumeration value="center"/>
+						<enumeration value="right"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="width" type="string" use="optional"/>
+			<attribute name="cols" type="NMTOKEN" use="optional"/>
+			<attribute name="border" type="string" use="optional"/>
+			<attribute name="frame" use="optional">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="void"/>
+						<enumeration value="above"/>
+						<enumeration value="below"/>
+						<enumeration value="hsides"/>
+						<enumeration value="lhs"/>
+						<enumeration value="rhs"/>
+						<enumeration value="vsides"/>
+						<enumeration value="box"/>
+						<enumeration value="border"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="rules" use="optional">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="none"/>
+						<enumeration value="basic"/>
+						<enumeration value="rows"/>
+						<enumeration value="cols"/>
+						<enumeration value="all"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="cellspacing" type="string" use="optional"/>
+			<attribute name="cellpadding" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="media">
+		<complexType>
+			<sequence>
+				<element ref="nitf:media-metadata" minOccurs="0" maxOccurs="unbounded"/>
+				<sequence maxOccurs="unbounded">
+					<element ref="nitf:media-reference"/>
+					<element ref="nitf:media-object" minOccurs="0"/>
+				</sequence>
+				<element ref="nitf:media-caption" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="nitf:media-producer" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="media-type" type="string" use="required"/>
+		</complexType>
+	</element>
+	<element name="media-reference">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="source" type="string" use="optional"/>
+			<attribute name="name" type="string" use="optional"/>
+			<attribute name="mime-type" type="string" use="optional"/>
+			<attribute name="coding" type="string" use="optional"/>
+			<attribute name="time" type="string" use="optional"/>
+			<attribute name="time-unit-of-measure" type="string" use="optional"/>
+			<attribute name="outcue" type="string" use="optional"/>
+			<attribute name="source-credit" type="string" use="optional"/>
+			<attribute name="copyright" type="string" use="optional"/>
+			<attribute name="alternate-text" type="string" use="optional"/>
+			<attribute name="height" type="NMTOKEN" use="optional"/>
+			<attribute name="width" type="NMTOKEN" use="optional"/>
+			<attribute name="units" use="optional">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="pixels"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="imagemap" type="string" use="optional"/>
+			<attribute name="noflow" use="optional">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="noflow"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="data-location" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="media-metadata">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="name" type="string" use="required"/>
+			<attribute name="value" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="media-object">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="encoding" type="string" use="required"/>
+		</complexType>
+	</element>
+	<element name="media-caption">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<group ref="nitf:enrichedText"/>
+				<group ref="nitf:blockContent"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="media-producer">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<group ref="nitf:enrichedText"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="ol">
+		<annotation>
+			<documentation>An ordered list. Holds list items.</documentation>
+		</annotation>
+		<complexType>
+			<sequence maxOccurs="unbounded">
+				<element ref="nitf:li"/>
+			</sequence>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="seqnum" type="NMTOKEN" use="optional">
+				<annotation>
+					<documentation>Sequence number within an ordered list.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="ul">
+		<complexType>
+			<sequence maxOccurs="unbounded">
+				<element ref="nitf:li"/>
+			</sequence>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="li">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<group ref="nitf:enrichedText"/>
+				<group ref="nitf:blockContent"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="dl">
+		<complexType>
+			<choice maxOccurs="unbounded">
+				<element ref="nitf:dt"/>
+				<element ref="nitf:dd"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="dt">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<group ref="nitf:enrichedText"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="dd">
+		<complexType>
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<group ref="nitf:enrichedText"/>
+				<group ref="nitf:blockContent"/>
+				<element ref="nitf:block"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="bq">
+		<complexType>
+			<sequence minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:block" maxOccurs="unbounded"/>
+				<element ref="nitf:credit" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="nowrap" use="optional">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="nowrap"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="quote-source" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="credit">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<group ref="nitf:enrichedText"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="fn">
+		<complexType>
+			<sequence maxOccurs="unbounded">
+				<element ref="nitf:body.content"/>
+			</sequence>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="pre">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="hr">
+		<complexType>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="datasource">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="caption">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<group ref="nitf:enrichedText"/>
+				<group ref="nitf:blockContent"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="align" use="optional">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="top"/>
+						<enumeration value="bottom"/>
+						<enumeration value="left"/>
+						<enumeration value="right"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="col">
+		<complexType>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="span" type="NMTOKEN" use="optional" default="1"/>
+			<attribute name="width" type="string" use="optional"/>
+			<attributeGroup ref="nitf:cellAlign"/>
+			<attributeGroup ref="nitf:cellVAlign"/>
+		</complexType>
+	</element>
+	<element name="colgroup">
+		<complexType>
+			<sequence>
+				<element ref="nitf:col" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attributeGroup ref="nitf:cellAlign"/>
+			<attributeGroup ref="nitf:cellVAlign"/>
+		</complexType>
+	</element>
+	<element name="thead">
+		<complexType>
+			<sequence>
+				<element ref="nitf:tr" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attributeGroup ref="nitf:cellAlign"/>
+			<attributeGroup ref="nitf:cellVAlign"/>
+		</complexType>
+	</element>
+	<element name="tbody">
+		<complexType>
+			<sequence>
+				<element ref="nitf:tr" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attributeGroup ref="nitf:cellAlign"/>
+			<attributeGroup ref="nitf:cellVAlign"/>
+		</complexType>
+	</element>
+	<element name="tfoot">
+		<complexType>
+			<sequence>
+				<element ref="nitf:tr" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attributeGroup ref="nitf:cellAlign"/>
+			<attributeGroup ref="nitf:cellVAlign"/>
+		</complexType>
+	</element>
+	<element name="tr">
+		<complexType>
+			<choice maxOccurs="unbounded">
+				<element ref="nitf:th"/>
+				<element ref="nitf:td"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attributeGroup ref="nitf:cellAlign"/>
+			<attributeGroup ref="nitf:cellVAlign"/>
+		</complexType>
+	</element>
+	<element name="th">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<group ref="nitf:enrichedText"/>
+				<group ref="nitf:blockContent"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="axis" type="string" use="optional"/>
+			<attribute name="axes" type="string" use="optional"/>
+			<attribute name="nowrap" use="optional">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="nowrap"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="rowspan" type="NMTOKEN" use="optional"/>
+			<attribute name="colspan" type="NMTOKEN" use="optional"/>
+			<attributeGroup ref="nitf:cellAlign"/>
+			<attributeGroup ref="nitf:cellVAlign"/>
+		</complexType>
+	</element>
+	<element name="td">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<group ref="nitf:enrichedText"/>
+				<group ref="nitf:blockContent"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="axis" type="string" use="optional"/>
+			<attribute name="axes" type="string" use="optional"/>
+			<attribute name="nowrap" use="optional">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="nowrap"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="rowspan" type="NMTOKEN" use="optional"/>
+			<attribute name="colspan" type="NMTOKEN" use="optional"/>
+			<attributeGroup ref="nitf:cellAlign"/>
+			<attributeGroup ref="nitf:cellVAlign"/>
+		</complexType>
+	</element>
+	<element name="chron">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="norm" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="event">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:alt-code"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="start-date" type="string" use="optional"/>
+			<attribute name="end-date" type="string" use="optional"/>
+			<attribute name="idsrc" type="string" use="optional"/>
+			<attribute name="value" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="function">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:alt-code"/>
+			</choice>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="idsrc" type="string" use="optional"/>
+			<attribute name="value" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="location">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:sublocation"/>
+				<element ref="nitf:city"/>
+				<element ref="nitf:state"/>
+				<element ref="nitf:region"/>
+				<element ref="nitf:country"/>
+				<element ref="nitf:alt-code"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="location-code" type="string" use="optional"/>
+			<attribute name="code-source" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="sublocation">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:alt-code"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="location-code" type="string" use="optional"/>
+			<attribute name="code-source" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="city">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:alt-code"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="city-code" type="string" use="optional"/>
+			<attribute name="code-source" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="state">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:alt-code"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="state-code" type="string" use="optional"/>
+			<attribute name="code-source" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="region">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:alt-code"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="region-code" type="string" use="optional"/>
+			<attribute name="code-source" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="country">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:alt-code"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="iso-cc" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="money">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="unit" type="string" use="optional"/>
+			<attribute name="date" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="num">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:frac"/>
+				<element ref="nitf:sub"/>
+				<element ref="nitf:sup"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="units" type="string" use="optional"/>
+			<attribute name="decimal-ch" type="string" use="optional"/>
+			<attribute name="thousands-ch" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="frac">
+		<complexType>
+			<sequence>
+				<element ref="nitf:numer"/>
+				<element ref="nitf:frac-sep" minOccurs="0"/>
+				<element ref="nitf:denom"/>
+			</sequence>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="numer">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="frac-sep">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="denom">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="sub">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="sup">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="object.title">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:alt-code"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="idsrc" type="string" use="optional"/>
+			<attribute name="value" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="org">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:alt-code"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="idsrc" type="string" use="optional"/>
+			<attribute name="value" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="alt-code">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="idsrc" type="string" use="required"/>
+			<attribute name="value" type="string" use="required"/>
+		</complexType>
+	</element>
+	<element name="person">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:name.given"/>
+				<element ref="nitf:name.family"/>
+				<element ref="nitf:function"/>
+				<element ref="nitf:alt-code"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="idsrc" type="string" use="optional"/>
+			<attribute name="value" type="string" use="optional"/>
+			<attribute name="gender" use="optional">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="male"/>
+						<enumeration value="female"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="name.given">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="name.family">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="postaddr">
+		<complexType>
+			<sequence>
+				<element ref="nitf:addressee"/>
+				<element ref="nitf:delivery.point" minOccurs="0"/>
+				<choice minOccurs="0" maxOccurs="unbounded">
+					<element ref="nitf:postcode"/>
+					<element ref="nitf:delivery.office"/>
+					<element ref="nitf:region"/>
+					<element ref="nitf:country"/>
+				</choice>
+			</sequence>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="virtloc">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:alt-code"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="idsrc" type="string" use="optional"/>
+			<attribute name="value" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="a">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<group ref="nitf:enrichedText"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="href" type="string" use="optional"/>
+			<attribute name="name" type="string" use="optional"/>
+			<attribute name="rel" type="NMTOKEN" use="optional"/>
+			<attribute name="rev" type="NMTOKEN" use="optional"/>
+			<attribute name="title" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="br">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="em">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<group ref="nitf:enrichedText"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="lang">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<group ref="nitf:enrichedText"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="idsrc" type="string" use="optional"/>
+			<attribute name="value" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="pronounce">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<group ref="nitf:enrichedText"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="guide" type="string" use="optional"/>
+			<attribute name="phonetic" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="q">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<group ref="nitf:enrichedText"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="quote-source" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="addressee">
+		<complexType>
+			<sequence>
+				<element ref="nitf:person"/>
+				<element ref="nitf:function" minOccurs="0"/>
+				<element ref="nitf:care.of" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="care.of">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="delivery.point">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:br"/>
+			</choice>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="point-code" type="string" use="optional"/>
+			<attribute name="code-source" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="postcode">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="code-source" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="delivery.office">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:br"/>
+			</choice>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="office-code" type="string" use="optional"/>
+			<attribute name="code-source" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="body.end">
+		<complexType>
+			<sequence>
+				<element ref="nitf:tagline" minOccurs="0"/>
+				<element ref="nitf:bibliography" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="tagline">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<group ref="nitf:enrichedText"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="type" use="optional" default="std">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="std"/>
+						<enumeration value="pa"/>
+						<enumeration value="npa"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="bibliography">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="classifier">
+		<complexType mixed="true">
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="nitf:alt-code"/>
+			</choice>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="type" type="string" use="optional"/>
+			<attribute name="idsrc" type="string" use="optional"/>
+			<attribute name="value" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="nitf-table">
+		<complexType>
+			<sequence>
+				<element ref="nitf:nitf-table-metadata"/>
+				<choice>
+					<element ref="nitf:table"/>
+					<element ref="nitf:custom-table"/>
+					<element ref="nitf:table-reference"/>
+				</choice>
+			</sequence>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="custom-table">
+		<complexType mixed="true">
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="table-reference">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="idref" type="string" use="required"/>
+		</complexType>
+	</element>
+	<element name="nitf-table-metadata">
+		<complexType>
+			<sequence>
+				<element ref="nitf:nitf-table-summary" minOccurs="0"/>
+				<choice maxOccurs="unbounded">
+					<element ref="nitf:nitf-colgroup"/>
+					<element ref="nitf:nitf-col"/>
+				</choice>
+			</sequence>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+			<attribute name="subclass" type="string" use="optional"/>
+			<attribute name="idsrc" type="string" use="optional"/>
+			<attribute name="value" type="string" use="optional"/>
+			<attribute name="status" use="optional">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="pre"/>
+						<enumeration value="snap-shot"/>
+						<enumeration value="interim"/>
+						<enumeration value="final"/>
+						<enumeration value="official"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="column-count" type="string" use="optional"/>
+			<attribute name="row-count" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="nitf-table-summary">
+		<complexType>
+			<sequence>
+				<element ref="nitf:p" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="nitf:commonNITFAttributes"/>
+		</complexType>
+	</element>
+	<element name="nitf-colgroup">
+		<complexType>
+			<sequence maxOccurs="unbounded">
+				<element ref="nitf:nitf-col"/>
+			</sequence>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="idsrc" type="string" use="optional"/>
+			<attribute name="value" type="string" use="optional"/>
+			<attribute name="occurrences" type="string" use="optional"/>
+		</complexType>
+	</element>
+	<element name="nitf-col">
+		<complexType>
+			<attributeGroup ref="nitf:globalNITFAttributes"/>
+			<attribute name="idsrc" type="string" use="optional"/>
+			<attribute name="value" type="string" use="optional"/>
+			<attribute name="occurrences" type="string" use="optional"/>
+			<attribute name="data-type" use="optional">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="text"/>
+						<enumeration value="number"/>
+						<enumeration value="graphic"/>
+						<enumeration value="other"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="data-format" type="string" use="optional"/>
+		</complexType>
+	</element>
+</schema>
+<!--
+IPTC - International Press Telecommunications Council
+Royal Albert House, Windsor, Berkshire SL4 1BE, England
+www.iptc.org
+
+Non-Exclusive License Agreement for International Press
+Telecommunications Council Specifications and Related Documentation
+
+IMPORTANT: International Press Telecommunications Council (IPTC)
+standard specifications for news (the Specifications) and supporting
+software, documentation, technical reports, web sites and other
+material related to the Specifications (the Materials) including the
+document accompanying this license (the Document), whether in a paper
+or electronic format, are made available to you subject to the terms
+stated below. By obtaining, using and/or copying the Specifications or
+Materials, you (the licensee) agree that you have read, understood,
+and will comply with the following terms and conditions.
+
+1. The Specifications and Materials are licensed for use only on the
+condition that you agree to be bound by the terms of this license.
+Subject to this and other licensing requirements contained herein, you
+may, on a non-exclusive basis, use the Specifications and Materials.
+
+2. The IPTC openly provides the Specifications and Materials for
+voluntary use by individuals, partnerships, companies, corporations,
+organizations and any other entity for use at the entity's own risk.
+This disclaimer, license and release is intended to apply to the IPTC,
+its officers, directors, agents, representatives, members,
+contributors, affiliates, contractors, or co-venturers acting jointly
+or severally.
+
+3. The Document and translations thereof may be copied and furnished
+to others, and derivative works that comment on or otherwise explain
+it or assist in its implementation may be prepared, copied, published
+and distributed, in whole or in part, without restriction of any kind,
+provided that the copyright and license notices and references to the
+IPTC appearing in the Document and the terms of this Specifications
+License Agreement are included on all such copies and derivative
+works. Further, upon the receipt of written permission from the IPTC,
+the Document may be modified for the purpose of developing
+applications that use IPTC Specifications or as required to translate
+the Document into languages other than English.
+
+4. Any use, duplication, distribution, or exploitation of the Document
+and Specifications and Materials in any manner is at your own risk.
+
+5. NO WARRANTY, EXPRESSED OR IMPLIED, IS MADE REGARDING THE ACCURACY,
+ADEQUACY, COMPLETENESS, LEGALITY, RELIABILITY OR USEFULNESS OF ANY
+INFORMATION CONTAINED IN THE DOCUMENT OR IN ANY SPECIFICATION OR OTHER
+PRODUCT OR SERVICE PRODUCED OR SPONSORED BY THE IPTC. THE DOCUMENT AND
+THE INFORMATION CONTAINED HEREIN AND INCLUDED IN ANY SPECIFICATION OR
+OTHER PRODUCT OR SERVICE OF THE IPTC IS PROVIDED ON AN "AS IS" BASIS.
+THE IPTC DISCLAIMS ALL WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING, BUT NOT LIMITED TO, ANY ACTUAL OR ASSERTED WARRANTY OF NON-
+INFRINGEMENT OF PROPRIETARY RIGHTS, MERCHANTABILITY, OR FITNESS FOR A
+PARTICULAR PURPOSE. NEITHER THE IPTC NOR ITS CONTRIBUTORS SHALL BE
+HELD LIABLE FOR ANY IMPROPER OR INCORRECT USE OF INFORMATION. NEITHER
+THE IPTC NOR ITS CONTRIBUTORS ASSUME ANY RESPONSIBILITY FOR ANYONE'S
+USE OF INFORMATION PROVIDED BY THE IPTC. IN NO EVENT SHALL THE IPTC OR
+ITS CONTRIBUTORS BE LIABLE TO ANYONE FOR DAMAGES OF ANY KIND,
+INCLUDING BUT NOT LIMITED TO, COMPENSATORY DAMAGES, LOST PROFITS, LOST
+DATA OR ANY FORM OF SPECIAL, INCIDENTAL, INDIRECT, CONSEQUENTIAL OR
+PUNITIVE DAMAGES OF ANY KIND WHETHER BASED ON BREACH OF CONTRACT OR
+WARRANTY, TORT, PRODUCT LIABILITY OR OTHERWISE.
+
+6. The IPTC takes no position regarding the validity or scope of any
+Intellectual Property or other rights that might be claimed to pertain
+to the implementation or use of the technology described in the
+Document or the extent to which any license under such rights might or
+might not be available. The IPTC does not represent that it has made
+any effort to identify any such rights. Copies of claims of rights
+made available for publication, assurances of licenses to be made
+available, or the result of an attempt made to obtain a general
+license or permission for the use of such proprietary rights by
+implementers or users of the Specifications and Materials, can be
+obtained from the Managing Director of the IPTC.
+
+7. By using the Specifications and Materials including the Document in
+any manner or for any purpose, you release the IPTC from all
+liabilities, claims, causes of action, allegations, losses, injuries,
+damages, or detriments of any nature arising from or relating to the
+use of the Specifications, Materials or any portion thereof. You
+further agree not to file a lawsuit, make a claim, or take any other
+formal or informal legal action against the IPTC, resulting from your
+acquisition, use, duplication, distribution, or exploitation of the
+Specifications, Materials or any portion thereof. Finally, you hereby
+agree that the IPTC is not liable for any direct, indirect, special or
+consequential damages arising from or relating to your acquisition,
+use, duplication, distribution, or exploitation of the Specifications,
+Materials or any portion thereof.
+
+8. Specifications and Materials may be downloaded or copied provided
+that ALL copies retain the ownership, copyright and license notices.
+
+9. Materials may not be edited, modified, or presented in a context
+that creates a misleading or false impression or statement as to the
+positions, actions, or statements of the IPTC.
+
+10. The name and trademarks of the IPTC may not be used in
+advertising, publicity, or in relation to products or services and
+their names without the specific, written prior permission of the
+IPTC. Any permitted use of the trademarks of the IPTC, whether
+registered or not, shall be accompanied by an appropriate mark and
+attribution, as agreed with the IPTC.
+
+11. Specifications may be extended by both members and non-members to
+provide additional functionality (Extended Specifications) provided
+that there is a clear recognition of the IPTC IP and its ownership in
+the Extended Specifications and the related documentation and provided
+that the extensions are clearly identified and provided that a
+perpetual license is granted by the creator of the Extended
+Specifications for other members and non-members to use the Extended
+Specifications and to continue extensions of the Extended
+Specifications. The IPTC does not waive any of its rights in the
+Specifications and Materials in this context. The Extended
+Specifications may be considered the intellectual property of their
+creator. The IPTC expressly disclaims any responsibility for damage
+caused by an extension to the Specifications.
+
+12. Specifications and Materials may be included in derivative work of
+both members and non-members provided that there is a clear
+recognition of the IPTC IP and its ownership in the derivative work
+and its related documentation. The IPTC does not waive any of its
+rights in the Specifications and Materials in this context. Derivative
+work in its entirety may be considered the intellectual property of
+the creator of the work .The IPTC expressly disclaims any
+responsibility for damage caused when its IP is used in a derivative
+context.
+
+13. This Specifications License Agreement is perpetual subject to your
+conformance to the terms of this Agreement. The IPTC may terminate
+this Specifications License Agreement immediately upon your breach of
+this Agreement and, upon such termination you will cease all use,
+duplication, distribution, and/or exploitation in any manner of the
+Specifications and Materials.
+
+14. This Specifications License Agreement reflects the entire
+agreement of the parties regarding the subject matter hereof and
+supersedes all prior agreements or representations regarding such
+matters, whether written or oral. To the extent any portion or
+provision of this Specifications License Agreement is found to be
+illegal or unenforceable, then the remaining provisions of this
+Specifications License Agreement will remain in full force and effect
+and the illegal or unenforceable provision will be construed to give
+it such effect as it may properly have that is consistent with the
+intentions of the parties.
+
+15. This Specifications License Agreement may only be modified in
+writing signed by an authorized representative of the IPTC.
+
+16. This Specifications License Agreement is governed by the law of
+United Kingdom, as such law is applied to contracts made and fully
+performed in the United Kingdom. Any disputes arising from or relating
+to this Specifications License Agreement will be resolved in the
+courts of the United Kingdom. You consent to the jurisdiction of such
+courts over you and covenant not to assert before such courts any
+objection to proceeding in such forums.
+
+IF YOU DO NOT AGREE TO THESE TERMS YOU MUST CEASE ALL USE OF THE
+SPECIFICATIONS AND MATERIALS NOW. IF YOU HAVE ANY QUESTIONS ABOUT
+THESE TERMS, PLEASE CONTACT THE MANAGING DIRECTOR OF THE INTERNATIONAL
+PRESS TELECOMMUNICATION COUNCIL. AS OF THE DATE OF THIS REVISION OF
+THIS SPECIFICATIONS LICENSE AGREEMENT YOU MAY CONTACT THE IPTC at
+http://www.iptc.org.
+
+License agreement version of: 30 January 2006
+-->

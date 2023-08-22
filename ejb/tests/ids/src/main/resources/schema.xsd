@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+	elementFormDefault="unqualified"
+	attributeFormDefault="unqualified"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	jaxb:extensionBindingPrefixes="hj orm">
+
+	<xsd:complexType name="Child">
+		<xsd:attribute name="childData" type="xsd:string"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="Parent">
+		<xsd:sequence>
+			<xsd:element name="children" type="Child" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+		<xsd:attribute name="pk1" type="xsd:string">
+			<xsd:annotation><xsd:appinfo><hj:id /></xsd:appinfo></xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="pk2" type="xsd:string">
+			<xsd:annotation><xsd:appinfo><hj:id /></xsd:appinfo></xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="parentData" type="xsd:string"/>
+	</xsd:complexType>
+
+	<xsd:element name="parent" type="Parent"/>
+
+	<xsd:element name="issueHJIII49Element" type="IssueHJIII49Type"/>
+
+	<xsd:complexType name="IssueHJIII49Type">
+		<xsd:sequence>
+			<xsd:element name="GUID" type="xsd:normalizedString">
+				<xsd:annotation><xsd:appinfo><hj:id /></xsd:appinfo></xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VERSION" type="xsd:int">
+				<xsd:annotation><xsd:appinfo><hj:id /></xsd:appinfo></xsd:annotation>
+			</xsd:element>
+			<xsd:element name="child" type="IssueHJIII49ChildType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="IssueHJIII49ChildType">
+		<xsd:sequence>
+			<xsd:element name="x" type="xsd:string"/>
+			<xsd:element name="y" type="xsd:string"/>
+			<xsd:element name="z" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+
+</xsd:schema>

@@ -1,0 +1,104 @@
+334a387,388
+>       <xsd:element name="element-collection" type="orm:element-collection" 
+>                    minOccurs="0" maxOccurs="unbounded"/>
+> <!-- **************************************************** -->
+> 
+533a699,710
+>       <xsd:element name="many-to-one" type="orm:many-to-one"
+>                    minOccurs="0" maxOccurs="unbounded"/>
+>       <xsd:element name="one-to-many" type="orm:one-to-many"
+>                    minOccurs="0" maxOccurs="unbounded"/>
+>       <xsd:element name="one-to-one" type="orm:one-to-one"
+>                    minOccurs="0" maxOccurs="unbounded"/>
+>       <xsd:element name="many-to-many" type="orm:many-to-many" 
+>                    minOccurs="0" maxOccurs="unbounded"/>
+>       <xsd:element name="element-collection" type="orm:element-collection" 
+>                    minOccurs="0" maxOccurs="unbounded"/>
+>       <xsd:element name="embedded" type="orm:embedded"
+>                    minOccurs="0" maxOccurs="unbounded"/>
+552a730,732
+>       <xsd:element name="association-override" 
+>                    type="orm:association-override"
+>                    minOccurs="0" maxOccurs="unbounded"/>
+918c1123
+<       <xsd:element name="map-key" type="orm:map-key" 
+---
+>         <xsd:element name="order-column" type="orm:order-column"
+920c1125,1127
+<       <xsd:element name="join-table" type="orm:join-table" 
+---
+>       </xsd:choice>
+>       <xsd:choice>
+>         <xsd:element name="map-key" type="orm:map-key"
+922c1129,1154
+<       <xsd:element name="cascade" type="orm:cascade-type" 
+---
+>         <xsd:sequence>
+>           <xsd:element name="map-key-class" type="orm:map-key-class"
+>                    minOccurs="0"/>
+>           <xsd:choice>
+>             <xsd:element name="map-key-temporal"
+>                          type="orm:temporal"
+>                          minOccurs="0"/>
+>             <xsd:element name="map-key-enumerated"
+>                          type="orm:enumerated"
+>                          minOccurs="0"/>
+>             <xsd:element name="map-key-attribute-override"
+>                          type="orm:attribute-override"
+>                          minOccurs="0" maxOccurs="unbounded"/>
+>           </xsd:choice>
+>           <xsd:choice>
+>             <xsd:element name="map-key-column" type="orm:map-key-column"
+>                    minOccurs="0"/>
+>             <xsd:element name="map-key-join-column"
+>                    type="orm:map-key-join-column"
+>                    minOccurs="0" maxOccurs="unbounded"/>
+>           </xsd:choice>
+>         </xsd:sequence>
+>       </xsd:choice>
+>       <xsd:element name="join-table" type="orm:join-table"
+>                    minOccurs="0"/>
+>       <xsd:element name="cascade" type="orm:cascade-type"
+962a1194,1196
+>     <xsd:attribute name="maps-id" type="xsd:string"/>
+>     <xsd:attribute name="id" type="xsd:boolean"/>
+1092c1412
+<       <xsd:element name="map-key" type="orm:map-key" 
+---
+>         <xsd:element name="order-column" type="orm:order-column"
+1094,1095c1414,1442
+<       <xsd:choice>       
+<         <xsd:element name="join-table" type="orm:join-table" 
+---
+>       </xsd:choice>
+>       <xsd:choice>
+>         <xsd:element name="map-key" type="orm:map-key"
+>                    minOccurs="0"/>
+>         <xsd:sequence>
+>           <xsd:element name="map-key-class" type="orm:map-key-class"
+>                    minOccurs="0"/>
+>           <xsd:choice>
+>             <xsd:element name="map-key-temporal"
+>                          type="orm:temporal"
+>                          minOccurs="0"/>
+>             <xsd:element name="map-key-enumerated"
+>                          type="orm:enumerated"
+>                          minOccurs="0"/>
+>             <xsd:element name="map-key-attribute-override"
+>                          type="orm:attribute-override"
+>                          minOccurs="0" maxOccurs="unbounded"/>
+>           </xsd:choice>
+>           <xsd:choice>
+>             <xsd:element name="map-key-column" type="orm:map-key-column"
+>                    minOccurs="0"/>
+>             <xsd:element name="map-key-join-column"
+>                    type="orm:map-key-join-column"
+>                    minOccurs="0" maxOccurs="unbounded"/>
+>           </xsd:choice>
+>         </xsd:sequence>
+>       </xsd:choice>
+>       <xsd:choice>
+>         <xsd:element name="join-table" type="orm:join-table"
+1145a1495,1497
+>     <xsd:attribute name="maps-id" type="xsd:string"/>
+>     <xsd:attribute name="id" type="xsd:boolean"/>

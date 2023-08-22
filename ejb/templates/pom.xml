@@ -1,0 +1,158 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>hyperjaxb3-ejb-templates</artifactId>
+	<packaging>pom</packaging>
+	<name>Hyperjaxb3 EJB Templates</name>
+	<parent>
+		<groupId>org.jvnet.hyperjaxb3</groupId>
+		<artifactId>hyperjaxb3-ejb</artifactId>
+		<version>0.6.3-SNAPSHOT</version>
+	</parent>
+	<modules>
+		<module>basic</module>
+	</modules>
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<inherited>true</inherited>
+				<executions>
+					<execution>
+						<id>maven-assembly</id>
+						<!--phase>package</phase-->
+						<phase>none</phase>
+						<goals>
+							 <goal>attached</goal>
+						</goals>
+						<configuration>
+							<descriptors>
+								<descriptor>../src/main/assembly/maven-src.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+					<execution>
+						<id>ant-assembly</id>
+						<!--phase>package</phase-->
+						<phase>none</phase>
+						<goals>
+							 <goal>attached</goal>
+						</goals>
+						<configuration>
+							<descriptors>
+								<descriptor>../src/main/assembly/ant-src.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
+
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<inherited>true</inherited>
+				<executions>
+					<execution>
+						<id>maven-unpack</id>
+						<!--phase>pre-integration-test</phase-->
+						<phase>none</phase>
+						<configuration>
+							<tasks>
+								<mkdir dir="target/test-maven-repository" />
+								<unzip src="target/${project.artifactId}-${project.version}-maven-src.zip" dest="${basedir}/target/test-maven-assembly" />
+								<copy todir="${basedir}/target/test-maven-assembly/${project.artifactId}-${project.version}/src/main/java">
+									<fileset dir="src/it/java">
+										<include name="**/*.*"/>
+									</fileset>
+								</copy>
+								<copy todir="${basedir}/target/test-maven-assembly/${project.artifactId}-${project.version}/src/main/resources">
+									<fileset dir="src/it/resources">
+										<include name="**/*.*"/>
+									</fileset>
+								</copy>
+								<copy todir="${basedir}/target/test-maven-assembly/${project.artifactId}-${project.version}/src/test/samples">
+									<fileset dir="src/it/samples">
+										<include name="**/*.*"/>
+									</fileset>
+								</copy>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>ant-unpack</id>
+						<!--phase>pre-integration-test</phase-->
+						<phase>none</phase>
+						<configuration>
+							<tasks>
+								<unzip src="${basedir}/target/${project.artifactId}-${project.version}-ant-src.zip" dest="${basedir}/target/test-ant-assembly"/>
+								<copy todir="${basedir}/target/test-ant-assembly/${project.artifactId}-${project.version}/src/main/java">
+									<fileset dir="src/it/java">
+										<include name="**/*.*"/>
+									</fileset>
+								</copy>
+								<copy todir="${basedir}/target/test-ant-assembly/${project.artifactId}-${project.version}/src/main/resources">
+									<fileset dir="src/it/resources">
+										<include name="**/*.*"/>
+									</fileset>
+								</copy>
+								<copy todir="${basedir}/target/test-ant-assembly/${project.artifactId}-${project.version}/src/test/samples">
+									<fileset dir="src/it/samples">
+										<include name="**/*.*"/>
+									</fileset>
+								</copy>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>ant-integration-test</id>
+						<!--phase>integration-test</phase-->
+						<phase>none</phase>
+						<configuration>
+							<tasks>
+								<ant dir="${basedir}/target/test-ant-assembly/${project.artifactId}-${project.version}" target="package"/>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-invoker-plugin</artifactId>
+				<inherited>true</inherited>
+				<executions>
+					<execution>
+						<id>maven-integration-test</id>
+						<!--phase>integration-test</phase-->
+						<phase>none</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<debug>true</debug>
+							<projectsDirectory>${basedir}/target/test-maven-assembly</projectsDirectory>
+							<!--localRepositoryPath>${basedir}/target/test-maven-repository</localRepositoryPath-->
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

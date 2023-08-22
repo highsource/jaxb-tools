@@ -1,0 +1,899 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+
+ *****************************************************************************************************************
+ User     Date       Mod            Description
+ =================================================================================================================
+ DC     20070208     CR296          Updated to OAGI 9.0, leverage use of OAGi 9.1 verbs instead of STAR Verbs.
+ MV     20070321     CR366          Added Show Verb
+ DC     20070514     CR352          Added NounCountNumeric to SenderType for GM request
+ DC     20070529     MT277          Propose Verb as required by Nav International.
+ DC     20070706     MT299          Deprecated versionID.   Use revisionID to identify the particular BOD version
+                                    based on the repository.   All BODs in the STAR 5 repository are required to
+                                    be forwards compatible, meaning that a STAR 5.0 BOD can validate against a
+                                    STAR 5.1 schema.
+ MV     20070822     MT401          BUG FIX: Added bulleted points to ReferenceID from original MS Word Guidelines.
+ DC     20071213     MT510          Updated documentation of versionID so that it says to use releaseID to determine
+                                    the version.
+ -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:oacl="http://www.openapplications.org/oagis/9/codelists"
+            xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0"
+            xmlns="http://www.starstandard.org/STAR/5"
+            xmlns:scl="http://www.starstandard.org/STAR/5/codelists"
+            xmlns:udt="http://www.openapplications.org/oagis/9/unqualifieddatatypes/1.1"
+            xmlns:qdt="http://www.openapplications.org/oagis/9/qualifieddatatypes/1.1"
+            xmlns:oagis="http://www.openapplications.org/oagis/9"
+            xmlns:star="http://www.starstandard.org/STAR/5"
+            targetNamespace="http://www.starstandard.org/STAR/5"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    
+ <!--   <xsd:include schemaLocation="../Common/Fields.xsd" /> -->
+    <xsd:include schemaLocation="../Common/DeprecatedComponents.xsd" />
+    <xsd:import namespace="http://www.starstandard.org/STAR/5/codelists" schemaLocation="../Common/CodeLists.xsd" />
+    <xsd:import namespace="http://www.openapplications.org/oagis/9/qualifieddatatypes/1.1" schemaLocation="../OAGIS/CoreComponents/QualifiedDataTypes.xsd" />
+    <xsd:import namespace="http://www.openapplications.org/oagis/9/codelists" schemaLocation="../OAGIS/Common/CodeLists.xsd" />
+    <xsd:import namespace="http://www.openapplications.org/oagis/9/unqualifieddatatypes/1.1" schemaLocation="../OAGIS/CoreComponents/UnqualifiedDataTypes.xsd" />
+    <xsd:import namespace="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" schemaLocation="../Common/QualifiedDataTypes.xsd" />
+    <xsd:import namespace="http://www.openapplications.org/oagis/9" schemaLocation="../OAGIS/Common/Components.xsd"/>
+    
+    <xsd:element name="Propose" type="ProposeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                The Propose verb is used when suggesting an action be taken.  There may be an optional
+                Confirm sent back.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    
+    <xsd:complexType name="ProposeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                The Propose verb is used when suggesting an action be taken.  There may be an optional
+                Confirm sent back.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="oagis:ActionVerbType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+    
+    <xsd:element name="Show" type="ShowType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0"> The Show verb is
+                used when sending the information about a specific instance of a business document
+                or entity. The Show verb may be used to respond to a Get request or it can be used
+                in a publish scenario, where it pushes information to other applications based on a
+                business event.Although BODs based on this verb do not commonly cause updates to
+                occur, there may be times when the component receiving the Show decides to use the
+                information it receives to update. This is entirely the decision of the receiving
+                software component and is not forbidden.The behavior of the Show verb is quite
+                straight forward with one exception. The Show response to any Get request needs to
+                read the request carefully to ensure the response is returning the requested Data
+                Types.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="ShowType">
+        <xsd:complexContent>
+            <xsd:extension base="ResponseVerbType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="Acknowledge" type="AcknowledgeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">The Acknowledge verb is used to acknowledge the application receipt of a Process request. This function conveys the result of the original request. An example of this is Acknowledge PO, where a Process PO has been issued and the corresponding business application acknowledges the receipt of the PO and responds with an acceptance or a counter offer.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="AcknowledgeType">
+        <xsd:complexContent>
+            <xsd:extension base="ResponseVerbType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+    
+    <xsd:element name="Cancel" type="oagis:CancelType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">The Cancel verb is used when the sender of the BOD is not the owner of the data, but is sending a request for the document to be canceled.An example is the Cancel PO where the business implications must be calculated and a simple data processing term such as delete can not fully convey the business meaning and required processing associated with the meaning.</xsd:documentation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Change" type="oagis:ChangeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">The Change verb is used when the sender of the BOD is not the owner of the data, but is sending a request for the document to be changed.An example of this is Change REQUISITN, where the original document needs to be changed based on a specific business event.</xsd:documentation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    
+    <xsd:element name="Confirm" type="ConfirmType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">The Confirm verb is used to respond to a request to confirm the receipt of information by the receiving system. The request for confirmation is set by the sending application in the ApplicationArea\Sender\Confirmation field of the original BOD. The Confirm conveys the result of the original request i.e. whether or not the message was understood and was successfully processed. An example of this is Confirm BOD.</xsd:documentation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="ConfirmType">
+        <xsd:annotation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="ResponseVerbType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+    
+    <xsd:element name="Get" type="oagis:GetType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">The Get verb is to communicate to a business software component a request for an existing piece of information to be returned. The Get may be paired with most of the nouns defined in the OAGIS specification.The response to this request is the Show verb. The behavior of a BOD with a Get verb is quite predictable across most of the nouns it may be paired with.The Get is designed to retrieve a single piece of information by using that information's primary retrieval field, or key field. The Get verb is not used to request several documents at once. The GetList verb is designed to achieve that purpose and will be covered in more detail later.Selection Criteria:There are two types of selection capabilities for most BOD's that use the Get verb.1) The first selection capability is called Field-Based Selection. Within a Get-based Business Object Document, the first Data Type that occurs in a specific BOD structure is commonly used to provide the Field-Based Selection criteria. This is always defined within the specific BOD and is commonly the required fields for that specific Data type.The Field-Based Selection enables the requester to provide a value or values (in the case of multiple required Field Identifiers), in the required fields. Then the responding component uses those values to find and return the requested information to the originating business software component.2) The second type of selection capability for Get-based BODs is called Data Type Selection. Data Type selection enables the requester to identify which Data Types within the noun are requested to be returned in the response. The use of this capability is described for each corresponding Data Type for all BODs that use the Get verb. The Data Types are identified for retrieval within the Get instance of a BOD by including the name of the Data Type in the meta data but without any Field Identifiers or Segments identified within the Data Type. This will signify to the responding application that all of the data that corresponds to that Data Type is to be included in the response.If the Data Type is not requested, the Data Type identifier is not included in the Get request and this will signify to the responding component that the Data Type is not to be returned.</xsd:documentation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Load" type="oagis:LoadType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">This verb is used to initiate the adding of a document or data entity to another business application. Generally this verb is used when maintenance to the document will then pass to the receiving application permanently. An example of this is Load Payable or Load Receivable, where once the request is processed, the sending application has no direct control over the document or entity again.</xsd:documentation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Post" type="oagis:PostType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">The Post verb is used to describe specific processing in a more fine grained manner beyond add, change or delete processing. An example is Post JOURNAL, where information is posted to a general ledger set of financial records. The business use of the word is used instead of the data processing term for the sake of clarity.</xsd:documentation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Process" type="oagis:ProcessType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">The Process verb is used to request processing of the associated noun by the receiving application or business to party. In a typical external exchange scenario a Process BOD is considered to be a legally binding message. For example, if a customer sends a ProcessPurchaseOrder BOD to a supplier and the supplier acknowledges with a positive AcknowledgePurchaseOrder, then the customer is obligated to fulfill the agreement, unless of course other BODs are allowed to cancel or change the original order.</xsd:documentation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Respond" type="RespondType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">The Respond verb is used to communicate relative to another document. It may be used to communicate agreement, questions, answers to a question, or disagreement with the related document. An example is the RequestForQuote and Quote document pair. An RequestForQuote is issued to a set of business partners. If one of the partners needs clarification on an item, a RespondRequestForQuote is sent to the originating partner.</xsd:documentation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    
+    <xsd:complexType name="RespondType">
+        <xsd:annotation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="ResponseVerbType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+      
+    <xsd:element name="Sync" type="oagis:SyncType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">The Sync verb is used when the owner of the data is passing or publishing that information or change in information to other software components. This is to be used when the receiver of the SyncBOD does not own the data. This verb is commonly used when mass changes are necessary or when a publish and subscribe mechanism is used in the integration architecture.The purposes of this verb include application integrity and ease of data entry for the business user by enabling a single point of input.</xsd:documentation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Update" type="oagis:UpdateType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">The Update verb is used to describe specific processing in a more fine-grained manner beyond add, change or delete processing. An example is the update of inspection information from one business application to another. The event is not adding a document, or changing fields per se, it is communicating the occurrence of an event as well as the corresponding data that accompanies the event.</xsd:documentation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="GetList" type="oagis:GetListType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">In an effort to simpilify the usage of the verbs the GetList verb is being depricated as of OAGIS 9.0, the GetList will still be provided for the next three releases at which time it is scheduled to be removed from OAGIS. As such for all new development we recommend that you use the Get verb which may serve the same function of the GetList verb has in the past. The purpose of the GetList verb is to enable a business software component to request summary information for one or more occurrences of a specific noun from another business software component. The GetList may be paired with most of the nouns in the OAGIS specification.The response to this request is a BOD using the List verb. The GetList is designed to retrieve multiple occurrences of data such as all of the sales orders or all of the purchase orders within a requested range. It does not require an exact match of the key fields in order to retrieve information. It may use a range selection criteria with a "from" and "to" selection capability. This behavior is quite different from the Get verb, which is designed to retrieve a specific noun using a specific key field.The GetList verb also enables the retrieval of information across several documents by using selection fields. An example of this could be requesting all sales order lines for a specific item. This type of functionality is limited to the capabilities of the responding application and needs to be determined during the implementation project. More details on this capability will be described below. GetList attributes: o maxitems attribute is a number that indicates the number of maximum items to be returned. o rssave attribute is a Boolean flag that indicates whether the result set should be saved on the sending system if maxitems is exceeded. o rsstart attribute is a number of the starting record for the next section of the result set. If it is omitted, it is to be assumed the first of the maxitems. o rsref attribute is a string that represents the implementation-specific result set identifier for subsequent requests. Selection Criteria: There are two types of selection capabilities enabled by the BODs that use the GetList verb. 1) Field-Based Selection Allows the requesting system to ask for information that matches the data provided. It also allows the requestor to indicate the information that to be returned by specifying the ReturnCriteria indicated on the GetList Verb. 2) Range Selection Allows the requesting system to provide a range of values for known data. This is accomplished by providing two occurances of the Noun. The first occurance indicates the "From" the second occurance indicates the "To" occurance. Again the requestor can indicate the information that to be returned by specifying the ReturnCriteria indicated on the GetList Verb.</xsd:documentation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="List" type="oagis:ListType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">In an effort to simpilify the usage of the verbs the List verb is being depricated as of OAGIS 9.0, the List will still be provided for the next three releases at which time it is scheduled to be removed from OAGIS. As such for all new development we recommend that you use the Show verb which may serve the same function of the List verb has in the past. The purpose of the List verb is to enable a business software component to respond to a GetList request or to proactively send a listing of summary information containing many instances of occurrences of data for a noun to one or more other business software components.The results of a List may then be used as is, or they may be used to select a specific instance of a document or entity in order to issue a detail Get request.Although BODs based on this verb do not commonly cause updates to occur, there may be times when the component receiving the List decides to use the information it receives to update. This is entirely the decision of the receiving software component and is not forbidden.The behavior of the List verb is quite straight forward with a few exceptions. The List response to any GetList request needs to read the request carefully to ensure the response is returning the requested Data Types. The List needs to ensure the response to the GetList does not exceed the maxItems value.The List needs to find the specific Field Identifiers that are used for the Field-Based Selection or Range-Based Selection and process them accordingly. The attributes associated with the List BODs are as follows: o rsstart attribute is a number that idicates the starting record for the section of the resulting set returned in the list message. This value should always match the rsstart value in the originating GetList BOD. o rscount attribute is a number that indicates the number of records returned in the message. The subsequent request for additional records should have a rsstart value of rscount + 1. o rstotal attribute is a number that indicates the total number of records in the result set. o rscomplete attribute is a Boolean that indicates that the list provided exhaust the possible values. o rsref attribute is a string that represents the implementation-specific result set identifier for subsequent requests.</xsd:documentation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Create" type="oagis:ActionVerbType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">In an effort to simpilify the usage of the verbs the Create verb is being depricated as of OAGIS 9.0, the Create will still be provided for the next three releases at which time it is scheduled to be removed from OAGIS. As such for all new development we recommend that you use the Process verb which may serve the same function of the Create verb has in the past. The Create verb is used to describe specific processing in a more fine grained manner beyond add, change or delete processing. This is generally used when the processing is initiating the building of a document, rather than moving a document from one system to another. Examples of this include Create PRODORDER and Create BOM. In these cases, the documents have not been constructed and need to be. This differs from the Add PO or Add REQUISITN processing as those requests refer to a document that has already been established and the document is being communicated to another business application.</xsd:documentation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Receive" type="oagis:ActionVerbType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">In an effort to simpilify the usage of the verbs the Receive verb is being depricated as of OAGIS 9.0, the Receive will still be provided for the next three releases at which time it is scheduled to be removed from OAGIS. As such for all new development we recommend that you use the Process verb which may serve the same function of the Receive verb has in the past. The Receive verb is used to describe specific processing in a more fine grained manner beyond add, change or delete processing. An example is ReceivePurchaseOrder, where a Purchase Order that has been issued and processed has shipments received against it. The use of the data processing term, change, is not specific enough in the business context.</xsd:documentation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Add" type="oagis:ActionVerbType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">In an effort to simpilify the usage of the verbs the Add verb is being depricated as of OAGIS 9.0, the Add will still be provided for the next three releases at which time it is scheduled to be removed from OAGIS. As such for all new development we recommend that you use the Process verb which may serve the same function of the Add verb has in the past. The Add verb is used to initiate the adding of a document or data entity to another business application. Add is used when the sender of the BOD is not the owner of the data, but is sending a request for the document to be created on by the system that is the owner of the data.</xsd:documentation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Issue" type="oagis:ActionVerbType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">In an effort to simpilify the usage of the verbs the Issue verb is being depricated as of OAGIS 9.0, the Issue will still be provided for the next three releases at which time it is scheduled to be removed from OAGIS. As such for all new development we recommend that you use the Process verb which may serve the same function of the Issue verb has in the past. This verb is used to describe specific processing in a more fine grained manner beyond add, change or delete processing. An example is the issue of material from inventory. The business use of the word is used instead of the data processing term for the sake of clarity.</xsd:documentation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Allocate" type="oagis:ActionVerbType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">In an effort to simpilify the usage of the verbs the Allocate verb is being depricated as of OAGIS 9.0, the Allocate will still be provided for the next three releases at which time it is scheduled to be removed from OAGIS. As such for all new development we recommend that you use the Process verb which may serve the same function of the Allocate verb has in the past. The Allocate verb is used to describe specific processing in a more fine grained manner beyond add, change or delete processing. An example of this is the allocating of costs from one business application or entity to another. The business oriented word is used instead of the data processing term for the sake of clarity.</xsd:documentation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ApplicationArea" type="ApplicationAreaType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9">Provides the information that an application may need to know in order to communicate in an integration of two or more business applications. The ApplicationArea is used at the applications layer of communication. While the integration frameworks web services and middleware provide the communication layer that OAGIS operates on top of.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="OriginalApplicationArea" type="ApplicationAreaType">
+        <xsd:annotation>
+            <xsd:documentation>A copy of the ApplicationArea for the original BOD that was processed. Present either as additional reference information, or for use in identifying the BOD in situations where a BODReference is not known.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="ApplicationAreaType">
+        <xsd:sequence>
+            <xsd:element ref="Sender">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">This identifies characteristics and control identifiers that relate to the application that created the Business Object Document.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="CreationDateTime">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">This is used as the creation moment of this Business Object Document.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="oagis:Signature" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">If the BOD is to be signed the signature element is included, otherwise it is not. Signature supports any digital signature that maybe used by an implementation of OAGIS. The qualifyingAgency identifies the agency that provided the format for the signature.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="BODID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">The BODId provides a place to carry a Globally Unique Identifier (GUID) that will make each Business Object Document instance uniquely identifiable. This is a critical success factor to enable software developers to use the Globally Unique Identifier (GUID) to build services or capabilities:</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="Destination">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">This identifies characteristics and control identifiers that relate to the application that receives the Business Object Document.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="Sender" type="SenderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/">This identifies characteristics and control identifiers that relate to the application that created the Business Object Document.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="SenderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/">This identifies characteristics and control identifiers that relate to the application that created the Business Object Document.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="SenderBaseType">
+                <xsd:sequence>
+                    <xsd:element ref="CreatorNameCode">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">DCS Software Creator Code</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="SenderNameCode">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">Additional information about the sending platform (i.e., Short Manufacturer or DSP code).</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="URI" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">Physical address of the sender</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="DealerNumberID" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">Dealer Code of source of information</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="StoreNumber" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">Dealer code store number (DMS assigned)</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="AreaNumber" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">Dealer code area number (DMS vendor assigned)</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="DealerCountryCode" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">Source Dealer country location</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="LanguageCode" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">This code is used to define the language of the data used in this transaction</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="DeliverPendingMailIndicator" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">Indicates if the user requests to receive pending mail that has been stored and has yet not been delivered yet. By selecting 0, the user will only receive the response for the current transaction the user is performing.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="Password" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">Token for application specific authentication. Used to authenticate dealership/users through application specific security</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="SystemVersion" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">The sender's software version number.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="PartyID" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">The Party Id field uniquely identifies the Sender of the message. This element can be used for parties within the Automotive Community as well as external parties. Party Id is not intended as a replacement for the Dealer Number. Suggested formats for OEMs or other large institutions include: DUNs Number, ShortMfgCode + DUNs, or ShortMfgCode. The suggested format for Dealers is: ShortMfgCode+Dealer Number.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="LocationID" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">The Location Id field uniquely identifies the location of the Sender of a message. This Id may be aligned with a physical address or data centers. This field provides an additional level of granularity beyond the usage of the Party Id for additional routing and deliver of data.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="ServiceID" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">The Service Id field identifies the particular service from which a message is being sent, e.g., an inventory service.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="NounCountNumeric" minOccurs="0" maxOccurs="1"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="SenderBase" type="SenderBaseType">
+        <xsd:annotation>
+            <xsd:documentation>Identifies the sender of the given BOD instance</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="SenderBaseType">
+        <xsd:annotation>
+            <xsd:documentation>Identifies the sender of the given BOD instance</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="LogicalID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">This is the logical location of the server and application from which the Business Object Document originated.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="ComponentID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">DCS software code name.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="TaskID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">This describes the business event that initiated the need for the Business Object Document to be created.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="ReferenceID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">Enables the sending application to indicate the instance identifier of the event or task that caused the BOD to be created.&#194;&#160; This is used to correlate a response BOD to an originating BOD.  *The Sender of the originating application will populate the Reference Id with business level information. *Reference ID does not have to be a GUID. It must be a locally unique application value for the transaction type, for example a database sequence number. *The receiving application puts the value in Reference ID of the incoming message in the Reference ID of any acknowledgement messages. *The Reference Id will not be required to tie two collaborations together such as Parts Order and Parts Shipment.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="ConfirmationCode" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation></xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="AuthorizationID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">dentifies the authorization level of the user or application that is sending the Business Object Document Message. Used as User ID.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="BusinessObjectDocumentType">
+        <xsd:annotation>
+            <xsd:documentation>Is the schema based inheritance for all BODs. The logical model would also include the DataArea.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="ApplicationArea">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.openapplications.org/oagis/9">Provides the information that an application may need to know in order to communicate in an integration of two or more business applications. The ApplicationArea is used at the applications layer of communication. While the integration frameworks web services and middleware provide the communication layer that OAGIS operates on top of.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="releaseID" type="udt:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation source="http://www.openapplications.org/oagis/9.0">STAR Release this BOD Instances belongs.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="versionID" type="udt:string" use="optional">
+            <xsd:annotation>
+                <xsd:documentation source="http://www.starstandard.org">Deprecated.  Recommended to use releaseID to identify the repository and noun.  This field may be removed in the next major version of the STAR repository.</xsd:documentation>                
+                <xsd:documentation source="http://www.openapplications.org/oagis/9">Indicates the version of the given BOD defintion.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="systemEnvironmentCode" type="oacl:SystemEnvironmentCodeContentType" use="optional" default="Production">
+            <xsd:annotation>
+                <xsd:documentation source="http://www.openapplications.org/oagis/9">Indicates whether this BOD is being sent in a "Test" or a "Production" mode. If the BOD is being sent in a test mode, it's information should not affect the business operation. However, if the BOD is sent in "Production" mode it is assumed that all test has been complete and the contents of the BOD are to affect the operation of the receiving business application(s).</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="languageCode" type="scl:LanguageEnumeratedType" use="optional" default="en-US">
+            <xsd:annotation>
+                <xsd:documentation source="http://www.openapplications.org/oagis/9">Indicates the language that the contents of the BOD is in unless otherwise stated.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+    <xsd:complexType name="MessageType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplication.org" />
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="ID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.openapplication.org" />
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="ReasonCode" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Code indicating reason for message.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="Expression" type="ExpressionType">
+        <xsd:annotation>
+            <xsd:documentation>Expression identifies the content that is to be returned, given query success. In essence, the expression here has the effect of filtering the part(s) of the found element(s) that are to be returned. ReturnCriteria plays no role in the query itself. That is handled as a match against the request BOD's noun exemplar. ReturnCriteria allows the sender of the BOD to indicate which information (down to the field level) is requested to be returned, given that the query has been successful in matching the exemplar to existing nouns. That is, in a GetListPurchaseOrder, if one or more PurchaseOrders with a TotalPrice = $1M were found, ReturnCriteria tells the BOD recipient which parts of the PurchaseOrder should be populated with content when the response (ShowPurchaseOrder) is formulated. The expressionLanguage indicates the expression language being used. In order for the ReturnCriteria expression to be evaluable by the BOD recipient, the recipient must be capable of processing and interpreting the specified expression language. XPath is the default, due to its ubiquity among XML processing technologies.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="ExpressionType">
+        <xsd:annotation>
+            <xsd:documentation>Expression identifies the content that is to be returned, given query success. In essence, the expression here has the effect of filtering the part(s) of the found element(s) that are to be returned. ReturnCriteria plays no role in the query itself. That is handled as a match against the request BOD's noun exemplar. ReturnCriteria allows the sender of the BOD to indicate which information (down to the field level) is requested to be returned, given that the query has been successful in matching the exemplar to existing nouns. That is, in a GetListPurchaseOrder, if one or more PurchaseOrders with a TotalPrice = $1M were found, ReturnCriteria tells the BOD recipient which parts of the PurchaseOrder should be populated with content when the response (ShowPurchaseOrder) is formulated. The expressionLanguage indicates the expression language being used. In order for the ReturnCriteria expression to be evaluable by the BOD recipient, the recipient must be capable of processing and interpreting the specified expression language. XPath is the default, due to its ubiquity among XML processing technologies.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="qdt:TokenType">
+                <xsd:attribute name="expressionLanguage" type="xsd:token" use="optional" />
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:element name="BODID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9">The BODId provides a place to carry a Globally Unique Identifier (GUID) that will make each Business Object Document instance uniquely identifiable. This is a critical success factor to enable software developers to use the Globally Unique Identifier (GUID) to build the following services or capabilities: 1. Legally binding transactions, 2. Transaction logging, 3. Exception handling, 4. Re-sending, 5. Reporting, 6. Confirmations, 7. Security.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="LogicalID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9">Provides the logical location of the server and applications from which the Business Object Document originated. It can be used to establish a logical to physical mapping, however its use is optional. Each system or combination of systems should maintain an external central reference table containing the logical names or logical addresses of the application systems in the integration configuration. This enables the logical names to be mapped to the physical network addresses of the resources needed on the network. Note: The technical implementation of this Domain Naming Service is not dictated by this specification. This logical to physical mapping may be done at execution time by the application itself or by a middleware transport mechanism, depending on the integration architecture used. This provides for a simple but effective directory access capability while maintaining application independence from the physical location of those resources on the network</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ComponentID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9">Provides a finer level of control than Logical Identifier and represents the business application that issued the Business Object Document. Its use is optional. The Open Applications Group has not constructed the list of valid Component names. A suggestion for naming is to use the application component names used in the scenario diagrams in section two of OAGIS. Example Components may be Inventory, or Payroll.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="TaskID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9">Describes the business event that initiated the need for the Business Object Document to be created. Its use is optional. Although the Task may differ depending on the specific implementation, it is important to enable drill back capability. Example Tasks may be Receipt or Adjustment.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ReferenceID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9">Enables the sending application to indicate the instance identifier of the event or task that caused the BOD to be created. This allows drill back from the BOD message into the sending application. The may be required in environments where an audit trail must be maintained for all transactions.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Destination" type="DestinationType">
+        <xsd:annotation>
+            <xsd:documentation>Destination</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="DestinationType">
+        <xsd:annotation>
+            <xsd:documentation>Destination</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="DestinationNameCode" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">Code for destination of file (i.e.Short Manufacturer or DSP code)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="DestinationURI" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">Physical address of the destination</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="DestinationSoftwareCode" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">Additional information about the destination application</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="DestinationSoftware" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">For which software destination file is intended (may not be known).</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="DealerNumberID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">Target Dealer Code receiving information</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="StoreNumber" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">Dealer code store number (DMS assigned)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="AreaNumber" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">Dealer code area number (DMS vendor assigned)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="DealerTargetCountry" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">Target Dealer country location</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="PartyReceiverID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">The Party Receiver Id field uniquely identifies the Receiver of the message. This element can be used for parties within the Automotive Community as well as external parties. Party Id is not intended as a replacement for the Dealer Number. Suggested formats for OEMs or other large institutions include: DUNs Number, ShortMfgCode + DUNs, or ShortMfgCode. The suggested format for Dealers is: ShortMfgCode+Dealer Number.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="LocationReceiverID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">The Location Receiver Id field uniquely identifies the location of the Receiver of a message. This Id may be aligned with a physical address or data centers. This field provides an additional level of granularity beyond the usage of the Party Id for additional routing and deliver of data.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="ServiceMessageID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">The Service Message Id field identifies the particular service to which a message is being sent, e.g., an inventory service.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+<!-- =============================================================================================== -->
+<!-- STAR 5.0 ConfirmBOD Revisions -->
+<!-- =============================================================================================== -->
+    <xsd:complexType name="SuccessMessageType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandards.org">Success message.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:choice>
+                <xsd:sequence>
+                    <xsd:element ref="ApplicationReasonCode">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/">A software application specific reason code. Used for indicating numeric or text encoded error, success, and warning messages.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="Description" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/" />
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="MessageReasonCode">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/">Code indicating reason for message.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+                <xsd:sequence>
+                    <xsd:element ref="Description" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/" />
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="MessageReasonCode" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/">Code indicating reason for message.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WarningProcessMessageType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandards.org">Warning message.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:choice>
+                <xsd:sequence>
+                    <xsd:element ref="ApplicationReasonCode">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/">A software application specific reason code. Used for indicating numeric or text encoded error, success, and warning messages.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="Description" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/" />
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="MessageReasonCode">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/">Code indicating reason for message.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+                <xsd:sequence>
+                    <xsd:element ref="Description" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/" />
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="MessageReasonCode" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/">Code indicating reason for message.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ErrorProcessMessageType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandards.org">Error message.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:choice>
+                <xsd:sequence>
+                    <xsd:element ref="ApplicationReasonCode">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/">A software application specific reason code. Used for indicating numeric or text encoded error, success, and warning messages.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="Description" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/" />
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="MessageReasonCode">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/">Code indicating reason for message.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+                <xsd:sequence>
+                    <xsd:element ref="Description" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/" />
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="MessageReasonCode" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/">Code indicating reason for message.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:choice>
+            <xsd:element ref="ErrorTypeString" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Defines the type of error that occurred.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="ReferenceName" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">The name of the field/tag that references/idenitifies the key data elements the senders request/response bod.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="ReferenceValue" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">The value associated with a field.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="BODFailureMessageType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandards.org">The processing has failed. Provides a list of error and warning messages that explain the failure.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="ErrorProcessMessage" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">Error message encountered during processing.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="WarningProcessMessage" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">Non-fatal warning message encountered during processing.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="NounFailureMessage" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">Indicates that the processing of this noun has failed, and provides error and warning messages that arose during the processing of the noun.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="NounSuccessMessage" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">The processing was a success. Possible, non-fatal warning messages may appear here.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PartialBODFailureMessageType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandards.org">The processing of at least one noun in the BOD has failed. Error and warning messages may explain the failure. Specific outcomes of processing each noun are reported in each of the NounOutcome elements.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="ErrorMessage" type="ErrorProcessMessageType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">Error message encountered during processing.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="WarningMessage" type="WarningProcessMessageType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">Non-fatal warning message encountered during processing.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:choice>
+                <xsd:sequence>
+                    <xsd:element ref="NounFailureMessage" minOccurs="1" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandards.org">The processing has failed. Provides a list of error and warning messages that explain the failure.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="NounSuccessMessage" minOccurs="1" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandards.org">The processing was a success. Possible, non-fatal warning messages may appear here.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="BODSuccessMessageType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandards.org">The processing was a success. Possible, non-fatal warning messages may appear here.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="WarningMessage" type="WarningProcessMessageType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">Non-fatal warning message encountered during processing.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="SuccessMessage" type="SuccessMessageType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">Message indicating a success.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="NounSuccessMessageType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandards.org">The processing was a success. Possible, non-fatal warning messages may appear here.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="WarningMessage" type="WarningProcessMessageType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">Non-fatal warning message encountered during processing.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="SuccessMessage" type="SuccessMessageType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">Message indicating a success.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="DocumentID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Is the identifier for the document.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="DocumentDateTime" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Is the date and time the document was last created. This is not the date and time that the BOD message instance was created.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="NounFailureMessageType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">The processing has failed. Provides a list of error and warning messages that explain the failure.</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="ErrorProcessMessage" type="ErrorProcessMessageType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">Error message encountered during processing.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="WarningProcessMessage" type="WarningProcessMessageType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">Non-fatal warning message encountered during processing.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="DocumentID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Is the identifier for the document.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="DocumentDateTime" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Is the date and time the document was last created. This is not the date and time that the BOD message instance was created.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="SuccessMessageType" type="SuccessMessageType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandards.org">Success message.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="WarningProcessMessage" type="WarningProcessMessageType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandards.org">Warning message.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ErrorProcessMessage" type="ErrorProcessMessageType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandards.org">Error message.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="BODFailureMessage" type="BODFailureMessageType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandards.org">The processing has failed. Provides a list of error and warning messages that explain the failure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartialBODFailureMessage" type="PartialBODFailureMessageType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandards.org">The processing of at least one noun in the BOD has failed. Error and warning messages may explain the failure. Specific outcomes of processing each noun are reported in each of the NounOutcome elements.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="BODSuccessMessage" type="BODSuccessMessageType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandards.org">The processing was a success. Possible, non-fatal warning messages may appear here.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="NounSuccessMessage" type="NounSuccessMessageType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandards.org">The processing was a success. Possible, non-fatal warning messages may appear here.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="NounFailureMessage" type="NounFailureMessageType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandards.org">The processing was a success. Possible, non-fatal warning messages may appear here.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    
+    <xsd:complexType name="ResponseVerbType" abstract="true">
+        <xsd:complexContent>
+            <xsd:extension base="oagis:VerbType">
+                <xsd:sequence>
+                    <xsd:element ref="OriginalApplicationArea" minOccurs="0"/>
+                    <xsd:element ref="oagis:ResponseCriteria" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation> ResponseCriteria identifies the content that is
+                                returned, given a Get query success or the response from the
+                                Process. In essence, the expression here has the effect of filtering
+                                the part(s) of the found element(s) that are to be returned.
+                                ReturnCriteria plays no role in the query itself or the process.
+                                That is handled as a match against the request BOD's noun exemplar.
+                                ReturnCriteria allows the sender of the BOD to indicate which
+                                information (down to the field level) is requested to be returned,
+                                given that the query has been successful in matching the exemplar to
+                                existing nouns. That is, in a GetListPurchaseOrder, if one or more
+                                PurchaseOrders with a TotalPrice = $1M were found, ReturnCriteria
+                                tells the BOD recipient which parts of the PurchaseOrder should be
+                                populated with content when the response (ShowPurchaseOrder) is
+                                formulated. The expressionLanguage indicates the expression language
+                                being used. In order for the ReturnCriteria expression to be
+                                evaluable by the BOD recipient, the recipient must be capable of
+                                processing and interpreting the specified expression language. XPath
+                                is the default, due to its ubiquity among XML processing
+                                technologies. </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="Notify" type="oagis:NotifyType">
+        <xsd:annotation>
+            <xsd:documentation
+                source="http://www.openapplications.org/oagis/9.0">
+                Notify is used to inform the receiving party that an
+                event has occurred or document has been created. For
+                example, a supplier may have a proposed order that is
+                sent to a trading partner. The noun will contain the
+                data that has been proposed. An optional ConfirmBOD can
+                be sent as a response.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    
+</xsd:schema>

@@ -1,0 +1,20 @@
+<jaxb:bindings version="1.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="xjc hj orm"
+	xmlns:test="urn:test">
+	
+	<jaxb:bindings schemaLocation="customer.xsd" node="/xsd:schema">
+		<hj:ignored-package name="com.example.customerservice.service"/>
+		<hj:persistence>
+			<hj:default-one-to-many fetch="EAGER"/>
+		</hj:persistence>
+		<jaxb:bindings node="xsd:complexType[@name='customer']/xsd:sequence/xsd:element[@name='customerId']">
+			<hj:id>
+				<orm:generated-value strategy="AUTO"/>
+			</hj:id>
+		</jaxb:bindings>
+	</jaxb:bindings>
+</jaxb:bindings>

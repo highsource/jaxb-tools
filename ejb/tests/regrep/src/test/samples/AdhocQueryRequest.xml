@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AdhocQueryRequest xmlns="urn:oasis:names:tc:ebxml-regrep:xsd:query:4.0" xmlns:lcm="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:4.0" xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:4.0" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:4.0">
+	<query:ResponseOption returnComposedObjects="true" returnType="LeafClassWithRepositoryItem"/>
+	<rim:AdhocQuery id="tempId">
+    <rim:QueryExpression queryLanguage="urn:oasis:names:tc:ebxml-regrep:QueryLanguage:SQL-92">
+<!--SELECT * from RegistryObject obj, ClassificationNode typeNode WHERE ((obj.objectType = typeNode.id) AND ((typeNode.path = '/urn:oasis:names:tc:ebxml-regrep:classificationScheme:ObjectType/RegistryObject/Organization') OR (typeNode.path LIKE '/urn:oasis:names:tc:ebxml-regrep:classificationScheme:ObjectType/RegistryObject/Organization/%')))-->
+
+SELECT ae.* FROM AuditableEvent ae, AffectedObject ao, RegistryObject ro WHERE ro.lid='urn:freebxml:registry:predefinedusers:farrukh' AND ro.id = ao.id AND ao.eventId = ae.id ORDER BY ae.timeStamp_ ASC
+    </rim:QueryExpression>
+	</rim:AdhocQuery>
+</AdhocQueryRequest>

@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2007 UGS Corp. All Rights Reserved.
+This software and related documentation are proprietary to UGS Corp.
+-->
+<xsd:schema targetNamespace="http://www.plmxml.org/Schemas/PLMXMLRouteListSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:plm="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:routelist="http://www.plmxml.org/Schemas/PLMXMLRouteListSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xsd:import namespace="http://www.plmxml.org/Schemas/PLMXMLSchema" schemaLocation="PLMXMLSchema.xsd"/>
+  <xsd:annotation>
+    <xsd:documentation>
+            This schema defines a namespace
+            "http://www.plmxml.org/Schemas/PLMXMLRoutelistSchema" (mapped
+            to "routelist" in this document). 
+
+            Tutorial for schema creation:
+            http://www.w3schools.com/schema/schema_intro.asp
+
+            For other references see the Routing Application View schema,
+            apv.xsd
+
+            There are two types of fields for the routelist:
+            1) UGNX defined fields (smart fields in the Routing
+               documentation
+            2) User defined fields
+
+            Smart fields are updated by the system.  User defined fields
+            are not updated by the system.
+
+            Both Non Harness Components and Harness components
+            reference Electrical Component.  This allows a
+            component in one harness to be a device in another
+            harness as their xml:ID is unique within the XML Route
+            List.
+
+            Validation of XML schema and routelist instance file,
+            use Xerces-J2 validation:
+            http://tools.decisionsoft.com/schemaValidate.html
+    </xsd:documentation>
+    <xsd:appinfo source="http://www.plmxml.org/Schemas/PLMXMLRouteListSchema">
+      <plm:SchemaInfo name="PLMXMLRouteListSchema.xsd" date="2007-01-17" version="6.0" status="release"/>
+    </xsd:appinfo>
+  </xsd:annotation>
+  <xsd:complexType name="RouteListElementBase" abstract="true">
+    <xsd:complexContent>
+      <xsd:extension base="plm:DescriptionBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RouteListElement" type="routelist:RouteListElementBase"/>
+  <xsd:complexType name="IdentifiedRouteListElementBase">
+    <xsd:complexContent>
+      <xsd:extension base="routelist:RouteListElementBase">
+        <xsd:sequence>
+          <xsd:element ref="plm:UserData" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="uniqueId" type="xsd:normalizedString" use="required">
+          <xsd:annotation>
+            <xsd:documentation>Unique identifier of the RouteList object.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="ElectricalComponentDefinitionType">
+    <xsd:annotation>
+      <xsd:documentation> Contains properties of electrical component</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="routelist:IdentifiedRouteListElementBase">
+        <xsd:attribute name="productId" type="xsd:normalizedString" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Physical product id or part name to which this logical component is assigned (or to be assigned).</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ElectricalComponentDefinition" type="routelist:ElectricalComponentDefinitionType" substitutionGroup="routelist:RouteListElement"/>
+  <xsd:complexType name="ElectricalComponentUsageType">
+    <xsd:annotation>
+      <xsd:documentation> Contains properties of electrical component</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="routelist:IdentifiedRouteListElementBase">
+        <xsd:attribute name="componentRef" type="plm:anyURIType" use="required">
+          <xsd:annotation>
+            <xsd:documentation>Refers to the electrical component for this usage.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="instanceName" type="xsd:normalizedString" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Physical part instance name or component name to which this logical component is assigned (or to be assigned)</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="assigned" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>This is an export only attribute.
+Auto:  Automatically assigned to a physical component.
+Manual: Manually assigned to a physical component.
+Not Assigned: Not assigned to any physical component.</xsd:documentation>
+          </xsd:annotation>
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:NMTOKEN">
+              <xsd:enumeration value="auto"/>
+              <xsd:enumeration value="manual"/>
+              <xsd:enumeration value="notAssigned"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:attribute>
+        <xsd:attribute name="isRouted" type="xsd:boolean" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>This is an export only attribute.
+True: Wire/Cable/SpaceReservations are routed to this component.
+False: Wire/Cable/SpaceReservations are not routed to this component.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ElectricalComponentUsage" type="routelist:ElectricalComponentUsageType" substitutionGroup="routelist:RouteListElement"/>
+  <xsd:simpleType name="CrossSectionType">
+    <xsd:annotation>
+      <xsd:documentation> Contains cross sectional types. (Circula, flat)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="circular"/>
+      <xsd:enumeration value="flat"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="WireType">
+    <xsd:annotation>
+      <xsd:documentation>Contains physical Wire Properties</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="routelist:RouteListElementBase">
+        <xsd:sequence>
+          <xsd:element ref="plm:UserData" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="gauge" type="xsd:positiveInteger" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Wire gauge</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="outerDiameter" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Outer diameter of the wire.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="productId" type="xsd:normalizedString" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Product ID or Part number of the wire</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="colour" type="plm:RGBType" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Colour of the Wire in RGB representation.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="colourName" type="xsd:normalizedString" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Name of the cable colour, if the colour can't be represented in RGB type.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="type" type="xsd:normalizedString" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Type of the wire. Type and Gauge are used to select a wire from the wire part tables.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="linearDensity" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Mass per unit length of the wire. Used to calculate the weight of the harness.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="materialName" type="xsd:normalizedString" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Name of the wire material.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="materialType" type="xsd:normalizedString" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Type of the wire material.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="minLengthAllowed" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Minimum length of the wire that should be used in a connection. Useful for design rule validation.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="maxLengthAllowed" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Maximum length of the wire that can be used in a connection. Useful for design rule validation.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="minBendRadius" type="xsd:double" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Wire" type="routelist:WireType" substitutionGroup="routelist:RouteListElement"/>
+  <xsd:complexType name="CableType">
+    <xsd:annotation>
+      <xsd:documentation>Contains physical Cable Properties</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="routelist:RouteListElementBase">
+        <xsd:sequence>
+          <xsd:element ref="plm:UserData" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="crossSectionType" type="routelist:CrossSectionType" default="circular">
+          <xsd:annotation>
+            <xsd:documentation>Cable cross-section type (Circular, flat). If no cross section type is specified then the type is set to Circular.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="outerDiameter" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Outer diameter of the cable. It is ignored if the cross-section type is flat.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="height" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Height of the cable. It is ignored if the cross-section type is circular.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="width" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Width of the cable. It is ignored if the cross-section type is circular.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="productId" type="xsd:normalizedString" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Product Id or Part Number of the cable.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="colour" type="plm:RGBType" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Colour of the cable in RGB representation.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="colourName" type="xsd:normalizedString" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Name of the cable colour, if the colour can't be represented in RGB type.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="coverThickness" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>If outer diameter or Height and Width are not specified, then the cover thickness will be used to calculate the outer dimensions of the cable.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="spacing" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Used to calculate the width of the cable, if the width is not spcified. Assumes uniform sapcing between wires.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="wireRefs" type="plm:uriReferenceListType" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>References to the first level children wires contained in this cable.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="cableRefs" type="plm:uriReferenceListType" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>References to the first level cable children contained in this cable.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="shielding" type="xsd:boolean" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>True: Cable is of type shielding
+False: Cable is not a shielding</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="linearDensity" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Mass per unit length of the cable. Used to calculate the weight of the harness.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="materialName" type="xsd:normalizedString" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Name of the cable material.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="materialType" type="xsd:normalizedString" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Type of the cable material.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Cable" type="routelist:CableType" substitutionGroup="routelist:RouteListElement"/>
+  <xsd:complexType name="SpaceReservationType">
+    <xsd:annotation>
+      <xsd:documentation> Contains space-reservation properties</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="routelist:RouteListElementBase">
+        <xsd:attribute name="crossSectionType" type="routelist:CrossSectionType" default="circular">
+          <xsd:annotation>
+            <xsd:documentation>Cable cross-section type (Circular, flat). If no cross section type is specified then the type is set to Circular.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="outerDiameter" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Outer diameter of the space-reservation. If is ignored if the cross-section type is flat.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="height" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Height of the space-reservation. It is ignored if the cross-section type is circular.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="width" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Width of the space-reservation. It is ignored if the cross-section type is circular</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="multiplier" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>A factor used as a multiplier on the actual length to calculate the cut-length.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="offset" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>A value used to calculate the cut-length by adding it to the actual length after the multiplier is applied.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SpaceReservation" type="routelist:SpaceReservationType" substitutionGroup="routelist:RouteListElement"/>
+  <xsd:complexType name="HarnessType">
+    <xsd:annotation>
+      <xsd:documentation> Contains Harness properties. (Fabrication etc.)    </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="routelist:RouteListElementBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Harness" type="routelist:HarnessType" substitutionGroup="routelist:RouteListElement"/>
+  <xsd:complexType name="NonHarnessComponentType">
+    <xsd:annotation>
+      <xsd:documentation> Electrical components but not part of harnesses (Ex: Device)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="routelist:ElectricalComponentUsageType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="NonHarnessComponent" type="routelist:NonHarnessComponentType" substitutionGroup="routelist:RouteListElement"/>
+  <xsd:complexType name="HarnessComponentType">
+    <xsd:annotation>
+      <xsd:documentation> Harness electrical components (Connector, splice etc.)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="routelist:ElectricalComponentUsageType">
+        <xsd:attribute name="type" default="connector">
+          <xsd:annotation>
+            <xsd:documentation>Type of the Harness Component (Connector/Splice). If no type is specified then the type is set Connector.</xsd:documentation>
+          </xsd:annotation>
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:NMTOKEN">
+              <xsd:enumeration value="connector"/>
+              <xsd:enumeration value="splice"/>
+              <xsd:enumeration value="other"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:attribute>
+        <xsd:attribute name="nonHarnessComponentRef" type="plm:anyURIType" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Refers to the device to which connector or splice is attached.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="HarnessComponent" type="routelist:HarnessComponentType" substitutionGroup="routelist:RouteListElement"/>
+  <xsd:complexType name="ConductorOccurrenceType">
+    <xsd:annotation>
+      <xsd:documentation> Contains properties of conductor (Wire/Cable/SpaceReservation) i.e assigned to a connection</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="routelist:IdentifiedRouteListElementBase">
+        <xsd:attribute name="conductorRef" type="plm:anyURIType" use="required">
+          <xsd:annotation>
+            <xsd:documentation>Reference to Wire, Cable, or Space Reservation element. The resolution is based on the Type.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="wireClass" use="optional">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:NMTOKEN">
+              <xsd:enumeration value="regular"/>
+              <xsd:enumeration value="stowed"/>
+              <xsd:enumeration value="twisted"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:attribute>
+        <xsd:attribute name="wireSignal" type="xsd:normalizedString" use="optional"/>
+        <xsd:attribute name="wireSeparationCode" type="xsd:normalizedString" use="optional"/>
+        <xsd:attribute name="location" type="xsd:integer" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Location of the assigned conductor.
+        (1. Ordering of the wire in a flat cable
+        2. Ordering of the cable in a stacked flat cables.)</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="length" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Length of the connection. This is export only field from UG-NX.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="cutLength" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>
+                            Cut length calculated based on the offset and
+                            multiplier defined by the assigned conductor (Wire,
+                            Cable, Space reservation).  This is export only.
+                        </xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="routed" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>This is export only field
+        Auto - Routed automatically
+        Manual - Routed Manually
+        Not Routed</xsd:documentation>
+          </xsd:annotation>
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:NMTOKEN">
+              <xsd:enumeration value="auto"/>
+              <xsd:enumeration value="manual"/>
+              <xsd:enumeration value="notRouted"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:attribute>
+        <xsd:attribute name="harnessRef" type="plm:anyURIType" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Reference to the Harness to which the wire/cable/space-reservation occurance belongs.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ConductorOccurrence" type="routelist:ConductorOccurrenceType" substitutionGroup="routelist:RouteListElement"/>
+  <xsd:complexType name="IntermediateComponentType">
+    <xsd:annotation>
+      <xsd:documentation> Intermediate splice and pin information for connections</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="routelist:ElectricalComponentUsageType">
+        <xsd:attribute name="pin" type="xsd:normalizedString" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Pin through which the wire/cable/space-reservation passes.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="IntermediateComponent" type="routelist:IntermediateComponentType" substitutionGroup="routelist:RouteListElement"/>
+  <xsd:complexType name="ConnectionType">
+    <xsd:annotation>
+      <xsd:documentation>Connection usage Properties</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="routelist:RouteListElementBase">
+        <xsd:sequence>
+          <xsd:element ref="plm:UserData" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element ref="routelist:IntermediateComponent" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element ref="routelist:ConductorOccurrence" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="fromComponentRef" type="plm:anyURIType" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Refers to the component at one end of the connection.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="fromPin" type="xsd:normalizedString" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Name of the terminal or pin on the From Component where connection starts/ends.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="toComponentRef" type="plm:anyURIType" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Refers to the component at the other end of the connection</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="toPin" type="xsd:normalizedString" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Name of the terminal or pin on the To Component where connection starts/ends.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="offset" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>A value used to calculate the cut-length by adding it to the actual length after the multiplier is applied.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="multiplier" type="xsd:double" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>A factor used as a multiplier on the actual length to calculate the cut-length</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Connection" type="routelist:ConnectionType" substitutionGroup="routelist:RouteListElement"/>
+  <xsd:complexType name="DisplayFilterType">
+    <xsd:annotation>
+      <xsd:documentation>Display filters</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="routelist:RouteListElementBase">
+        <xsd:attribute name="filterName" type="xsd:normalizedString" use="required">
+          <xsd:annotation>
+            <xsd:documentation>Filter Name, displayed to the user</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="filterClause" type="xsd:normalizedString" use="required">
+          <xsd:annotation>
+            <xsd:documentation>Conditional, for example $ROUTED="A" for auto routed/auto assigned items</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DisplayFilter" type="routelist:DisplayFilterType" substitutionGroup="routelist:RouteListElement"/>
+  <xsd:complexType name="FormatFieldType">
+    <xsd:annotation>
+      <xsd:documentation>Display format fields.  Each display format has associated fields.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="routelist:RouteListElementBase">
+        <xsd:attribute name="formatFieldName" type="xsd:normalizedString" use="required">
+          <xsd:annotation>
+            <xsd:documentation>Field name in the imported route list</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="formatColumnName" type="xsd:normalizedString" use="required">
+          <xsd:annotation>
+            <xsd:documentation>Column heading displayed in the route list dialog, corresponding to formatFieldName</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="formatColumnOrder" type="xsd:integer" use="required">
+          <xsd:annotation>
+            <xsd:documentation>Column number, left to right.  Must be unique.  A formatColumnOrder of 1 is the leftmost column.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="formatColumnWidth" type="xsd:integer" use="required">
+          <xsd:annotation>
+            <xsd:documentation>Column width in characters</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="formatSortOrder" type="xsd:integer" use="required">
+          <xsd:annotation>
+            <xsd:documentation>Sort Order for that column, 1 is highest priority, 0 is don't care</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FormatField" type="routelist:FormatFieldType" substitutionGroup="routelist:RouteListElement"/>
+  <xsd:complexType name="DisplayFormatType">
+    <xsd:annotation>
+      <xsd:documentation>Display formats</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="routelist:RouteListElementBase">
+        <xsd:sequence>
+          <xsd:element name="FormatName" type="xsd:normalizedString" minOccurs="1" maxOccurs="1"/>
+          <xsd:element name="FormatType" type="xsd:normalizedString" minOccurs="1" maxOccurs="1"/>
+          <xsd:element name="FormatField" type="routelist:FormatFieldType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DisplayFormat" type="routelist:DisplayFormatType" substitutionGroup="routelist:RouteListElement"/>
+  <xsd:complexType name="RouteListType">
+    <xsd:annotation>
+      <xsd:documentation> Contains Wires, Cables, Components and Connection details</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:DocumentBase">
+        <xsd:sequence>
+          <xsd:element ref="plm:Unit" minOccurs="0" maxOccurs="1"/>
+          <xsd:element ref="routelist:RouteListElement" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RouteList" type="routelist:RouteListType"/>
+</xsd:schema>

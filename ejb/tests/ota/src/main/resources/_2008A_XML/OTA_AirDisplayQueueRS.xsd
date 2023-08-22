@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="3.000" id="OTA2008A">
+	<xs:include schemaLocation="OTA_AirCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_AirDisplayQueueRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Returns booking files on queue and reason for queuing</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType">
+						<xs:annotation>
+							<xs:documentation xml:lang="en"> Standard way to indicate successful processing of an OTA message. Returning an empty element of this type indicates success.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en"> Standard way to indicate successful processing of an OTA message, but one in which warnings are generated.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="DisplayQueue" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Request booking files from queue. Not sent if queue empty.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:choice>
+								<xs:element name="QueueItems">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Container for air queue item elements.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="QueueItem" maxOccurs="unbounded">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Condensed information about the queued booking file.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="Reason" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Identifies the reason and method for queuing.</xs:documentation>
+															</xs:annotation>
+															<xs:complexType>
+																<xs:simpleContent>
+																	<xs:extension base="StringLength1to255">
+																		<xs:attribute name="Number" type="Numeric1to9999" use="optional">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">Number corresponding to reason text.</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																		<xs:attribute name="QueuingMethod" type="StringLength1to64" use="optional">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">Specifies the method (e.g., manual, automatic, time initiated) of queuing.</xs:documentation>
+																			</xs:annotation>
+																		</xs:attribute>
+																	</xs:extension>
+																</xs:simpleContent>
+															</xs:complexType>
+														</xs:element>
+														<xs:element name="BookingReferenceID" type="UniqueID_Type">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">This is the identifier stored on the booking system, also referred to as a PNR locator, confirmation number or reservation number.</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+													</xs:sequence>
+													<xs:attributeGroup ref="QueueGroup"/>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+										<xs:attribute name="PseudoCityCode" type="StringLength1to16" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">An ATA/IATA airport/city code, office code, pseudo city code, etc. of the queue to be returned. If this is omitted, the pseudo city code contained in the point of sale information should be used.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="SystemCode" type="StringLength1to8" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Identifies the airline and/or system where the queue resides. If this is omitted, the airline and/or system code (AirlineVendorID) contained in the point of sale information should be used.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="QueueNumber" type="AlphaNumericStringLength1to8" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">An identifier specifying the requested queue on which the booking file resides in the system.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="AirReservations">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Container for air reservation elements.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AirReservation" maxOccurs="unbounded">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Specifies the full booking file data.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:complexContent>
+														<xs:extension base="AirReservationType">
+															<xs:sequence>
+																<xs:element name="Reason" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">Identifies the reason and method for queuing.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:simpleContent>
+																			<xs:extension base="StringLength1to255">
+																				<xs:attribute name="Number" type="Numeric1to9999">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">Number corresponding to reason text.</xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																				<xs:attribute name="QueuingMethod" type="StringLength1to64">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">Specifies the method (e.g., manual, automatic, time initiated) of queuing.</xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																			</xs:extension>
+																		</xs:simpleContent>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:extension>
+													</xs:complexContent>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:choice>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en"> A collection of errors that occurred during the processing of a message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

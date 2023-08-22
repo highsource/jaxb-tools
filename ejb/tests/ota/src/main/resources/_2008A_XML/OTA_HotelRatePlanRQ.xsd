@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.000" id="OTA2008A">
+	<xs:include schemaLocation="OTA_HotelRatePlan.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_HotelRatePlanRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Provides the ability to request rate plan details for hotel properties by specific criteria that may include dates, date ranges, and rates.  </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Point of sale object. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="RatePlans">
+					<xs:annotation>
+						<xs:documentation>Collection of rate plans.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="RatePlan" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Provides the criteria to identify the rate plan to be returned.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="DateRange" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">A date or range of dates for the rate plan.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attributeGroup ref="DateTimeSpanGroup"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="DestinationSystemsCode" type="DestinationSystemCodesType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">A collection of destination system codes. These are systems for which this rate plan is targeted.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="RatePlanCandidates" type="RatePlanCandidatesType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Collection of requested rate plans</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Offers" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Collection of requested offers.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Offer" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Requested offer.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:attribute name="OfferCode" type="StringLength1to16" use="optional">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">A string value used to request a particular offer.</xs:documentation>
+																</xs:annotation>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="SendData" type="xs:boolean" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">When true, send all offer data.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="HotelRef" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Indicates the detail of hotel reference information.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attributeGroup ref="HotelReferenceGroup"/>
+												<xs:attribute name="SegmentCategoryCode" type="OTA_CodeType" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Used to search for hotels within a particular market segment.  Refer to OTA Code Segment Category Code Type (SEG).
+							</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="PropertyClassCode" type="OTA_CodeType" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Refer to OTA Code list OTA Code List Property Class Type (PCT).</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="ArchitecturalStyleCode" type="OTA_CodeType" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Refer to OTA Code List Architectural Style Code (ARC).</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="SupplierIntegrationLevel" type="xs:nonNegativeInteger" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">The level of integration of a property to provide automated transaction information. The lower the number, the higher the integration (e.g., a 1 means the supplier has the highest level of integration automation).</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+										<xs:element ref="TPA_Extensions" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attribute name="SummaryOnly" type="xs:boolean" use="optional"/>
+			<xs:attribute name="SortOrder" use="optional" default="A">
+				<xs:simpleType>
+					<xs:restriction base="AlphaLength1">
+						<xs:enumeration value="A"/>
+						<xs:enumeration value="D"/>
+						<xs:enumeration value="N"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="RequestedCurrency" type="AlphaLength3" use="optional"/>
+			<xs:attributeGroup ref="MaxResponsesGroup"/>
+			<xs:attribute name="SearchCacheLevel" use="optional">
+				<xs:simpleType>
+					<xs:restriction base="xs:NMTOKEN">
+						<xs:enumeration value="Live"/>
+						<xs:enumeration value="VeryRecent"/>
+						<xs:enumeration value="LessRecent"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="MaximumWaitTime" type="xs:decimal" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The value of this attribute will be a decimal field identifying the maximum number of seconds the responding application has to respond to the request.  For example, suppose a client requests 10 OTA 'RatePlanRequestSegment' items but can only wait up to 4.0 seconds max.  If only 6 segments were collected within the time-frame, the client would only receive those 6 segments within one response message. </xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="MoreDataEchoToken" type="StringLength1to128" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The response to the previous request returns this attribute if there was more data than could be returned in the response.  Including the attribute in this request indicates where to begin the next block of data.	</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="InfoSource" type="InfoSourceType" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Used to specify the source of the data being exchanged as determined by trading partners. </xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

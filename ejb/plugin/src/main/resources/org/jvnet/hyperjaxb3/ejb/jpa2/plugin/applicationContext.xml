@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<import
+		resource="classpath*:org/jvnet/hyperjaxb3/ejb/plugin/applicationContext.xml" />
+
+	<bean name="embeddableAttributesMapping"
+		class="org.jvnet.hyperjaxb3.ejb.jpa2.strategy.mapping.EmbeddableAttributesMapping" />
+
+	<bean name="marshalMappings"
+		class="org.jvnet.hyperjaxb3.ejb.jpa2.strategy.mapping.MarshalMappings">
+		<property name="mapping" ref="mapping" />
+		<property name="ignoring" ref="ignoring" />
+	</bean>
+
+	<bean name="persistenceFactory"
+		class="org.jvnet.hyperjaxb3.ejb.jpa2.strategy.processor.PersistenceFactory">
+	</bean>
+
+	<bean name="persistenceMarshaller"
+		class="org.jvnet.hyperjaxb3.ejb.jpa2.strategy.processor.PersistenceMarshaller">
+	</bean>
+
+	<bean name="createXAnnotations"
+		class="org.jvnet.hyperjaxb3.ejb.jpa2.strategy.annotate.CreateXAnnotations">
+	</bean>
+
+
+	<bean name="wrapCollectionBuiltinAttribute"
+		class="org.jvnet.hyperjaxb3.ejb.jpa2.strategy.model.base.WrapCollectionBuiltinNonReference">
+		<property name="fallback">
+			<bean class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionAttribute" />
+		</property>
+	</bean>
+
+	<bean name="wrapCollectionEnumAttribute"
+		class="org.jvnet.hyperjaxb3.ejb.jpa2.strategy.model.base.WrapCollectionEnumNonReference">
+	</bean>
+
+	<bean name="wrapCollectionBuiltinElement"
+		class="org.jvnet.hyperjaxb3.ejb.jpa2.strategy.model.base.WrapCollectionBuiltinNonReference">
+		<property name="fallback">
+			<bean class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionElement" />
+		</property>
+	</bean>
+
+	<bean name="wrapCollectionEnumElement"
+		class="org.jvnet.hyperjaxb3.ejb.jpa2.strategy.model.base.WrapCollectionEnumNonReference">
+	</bean>
+
+	<bean name="wrapCollectionBuiltinValue"
+		class="org.jvnet.hyperjaxb3.ejb.jpa2.strategy.model.base.WrapCollectionBuiltinNonReference">
+		<property name="fallback">
+			<bean class="org.jvnet.hyperjaxb3.ejb.strategy.model.base.WrapCollectionValue" />
+		</property>
+	</bean>
+
+	<bean name="wrapCollectionEnumValue"
+		class="org.jvnet.hyperjaxb3.ejb.jpa2.strategy.model.base.WrapCollectionEnumNonReference">
+	</bean>
+
+</beans>

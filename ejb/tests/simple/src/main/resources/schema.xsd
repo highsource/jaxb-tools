@@ -1,0 +1,99 @@
+<xsd:schema
+  targetNamespace="urn:tests"
+  xmlns:test="urn:tests"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+
+  jaxb:version="1.0"
+  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+
+  elementFormDefault="qualified"
+  attributeFormDefault="unqualified">
+
+  <xsd:element name="root" type="test:RootType"/>
+
+  <xsd:complexType name="RootType">
+    <xsd:sequence>
+      <xsd:element name="element1" type="test:ElementType" maxOccurs="unbounded"/>
+      <xsd:element name="element2" type="test:ElementType" minOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ElementType">
+    <xsd:sequence>
+      <xsd:element name="count" type="xsd:int"/>
+      <xsd:element name="name" type="xsd:string" minOccurs="1"/>
+      <xsd:element name="value" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="ignored" type="xsd:string" minOccurs="0">
+       <xsd:annotation>
+          <xsd:appinfo>
+            <jaxb:property>
+              <jaxb:javadoc>
+                @hyperjaxb.ignore
+              </jaxb:javadoc>
+            </jaxb:property>
+          </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="entry" type="test:EntryType" minOccurs="0"/>
+      <xsd:element ref="test:TextElement" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="EntryType">
+    <xsd:annotation>
+      <xsd:appinfo>
+        <jaxb:class>
+          <jaxb:javadoc>
+            @hyperjaxb.hibernate.cache usage="read-write"
+          </jaxb:javadoc>
+        </jaxb:class>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="key" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="value" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo>
+            <jaxb:property>
+              <jaxb:javadoc>
+                @hyperjaxb.hibernate.property length="12"
+              </jaxb:javadoc>
+            </jaxb:property>
+          </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="element" type="test:ElementType" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:string">
+      <xsd:annotation>
+        <xsd:appinfo>
+          <jaxb:property>
+            <jaxb:javadoc>
+              @hyperjaxb.hibernate.id unsaved-value="null" generator-class="uuid.hex"
+            </jaxb:javadoc>
+          </jaxb:property>
+        </xsd:appinfo>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="TextType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+        <xsd:attribute name="languageLocaleID" type="xsd:normalizedString" use="optional"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="UTextType">
+    <xsd:simpleContent>
+      <xsd:restriction base="test:TextType">
+        <xsd:attribute name="languageID" type="xsd:language" use="optional"/>
+      </xsd:restriction>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:element name="TextElement" type="test:UTextType"/>
+
+</xsd:schema>

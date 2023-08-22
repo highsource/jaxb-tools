@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Header: /cvs/hyperjaxb3/ejb/tests/rim/src/test/samples/SubmitObjectsRequest_Config_1.xml,v 1.1 2007/12/15 17:33:46 lexi Exp $ -->
+<!-- Must be loaded after SubmitObjectsRequest_objectTypesSchemes -->
+<rim:RegistryObject xsi:type="rim:AdhocQueryType" 
+                    lid="urn:oasis:names:tc:ebxml-regrep:query:GetClassificationSchemesById" 
+                    id="urn:oasis:names:tc:ebxml-regrep:query:GetClassificationSchemesById"
+                    xmlns="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:4.0" 
+                    xmlns:lcm="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:4.0" 
+                    xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:4.0" 
+                    xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" 
+                    xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:4.0" 
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                    xmlns:xlink="http://www.w3.org/1999/xlink" 
+                    xsi:schemaLocation="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0  http://www.wellfleetsoftware.com/private/rim.xsd">
+    
+    <rim:Name>
+        <rim:LocalizedString charset="UTF-8" value="label.GetClassificationSchemesById"/>
+    </rim:Name>
+    <rim:Description>
+        <rim:LocalizedString charset="UTF-8" value="label.GetClassificationSchemesById.desc"/>
+    </rim:Description>
+    <rim:QueryExpression queryLanguage="urn:oasis:names:tc:ebxml-regrep:QueryLanguage:EJBQL">
+        SELECT Object(c) FROM org.freebxml.omar.jaxb.bindings.rim._4_0.ClassificationSchemeType AS c WHERE c.id LIKE :id
+    </rim:QueryExpression>
+</rim:RegistryObject>                

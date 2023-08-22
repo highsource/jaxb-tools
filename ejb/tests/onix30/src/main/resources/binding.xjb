@@ -1,0 +1,28 @@
+<jaxb:bindings version="1.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/hibernate/customizations"
+	jaxb:extensionBindingPrefixes="xjc">
+	
+	<jaxb:bindings schemaLocation="ONIX_BookProduct_3.0_reference.xsd" node="/xs:schema">
+		<jaxb:globalBindings fixedAttributeAsConstantProperty="false"
+			typesafeEnumBase="xs:string" typesafeEnumMemberName="generateName"
+			generateIsSetMethod="true">
+			<jaxb:serializable/>
+		</jaxb:globalBindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="ONIX_XHTML_Subset.xsd" node="/xs:schema">
+		<!--jaxb:bindings node="xs:complexType[@name='Flow']">
+			<xjc:dom/>
+		</jaxb:bindings-->
+
+		<!--jaxb:bindings node="xs:complexType[@name='Flow']/xs:choice/xs:element[@ref='block']">
+			<xjc:dom/>
+		</jaxb:bindings>
+		<jaxb:bindings node="xs:complexType[@name='Flow']/xs:choice/xs:element[@ref='inline']">
+			<xjc:dom/>
+		</jaxb:bindings-->
+	</jaxb:bindings>
+
+</jaxb:bindings>

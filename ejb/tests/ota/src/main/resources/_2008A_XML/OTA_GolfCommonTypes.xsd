@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.009" id="OTA2003A2008A">
+	<xs:include schemaLocation="OTA_CommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:attributeGroup name="CriteriaGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Criteria is a repeating set of features that are desired in the search for a golf course.  The Name and Value pair define the criteria for the search.  If the requestor demands that the result be filtered on a particular criterion, then the Required boolean is set to "Yes".  If the Required boolean is not set to "Yes", then the response can include courses that do not meet those exact criteria.  Examples would be:
+				 Name="Architect", Value="Robert Trent Jones", Required="Yes".
+				 Name="Location", Value="Myrtle Beach", Required="Yes".
+				 Name="Caddies", Value="Yes", Required="No".
+				 Name="Length", Value="6600 Yds", Required="Yes", Operation=">".
+				 The Name, Value, and Required attributes are required, but the Operation is optional.
+				</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Name" type="StringLength1to32" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">A code representing the specific criterion on which the search is to filter.  </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Value" type="StringLength1to16" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The value of the criterion.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Required" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">A flag establishing if this criterion must be met in a successful candidate.  If "Yes", then all responses must meet the specified criterion. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Operation" type="StringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Where a test against a criterion value is not an equality, this represents the operation to be used as the filter.  Examples would be GT (Greater Than), LT (Less Than), etc.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="TraitGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Trait is a repeating set of features that are describe the  golf course. A Trait consists of a Name and Value pair  Examples would be:
+				 Name="Architect", Value="Robert Trent Jones".
+				 Name="Location", Value="Myrtle Beach".
+				 Name="Caddies", Value="Yes".
+				 Name="Length", Value="6600 Yds"
+				 Where the request (OTA_CourseSearchRQ) has the attribute value of DetailResponse="No", all the requested criteria should be returned as Traits with their associated value.  If the criteria is not designated as Required="Yes", that criteria need not be met, but the value associated with that trait should be returned.  Where the DetailResponse="Yes" then all traits of the golf course should be returned with their associated value.
+				</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Name" type="StringLength1to64" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The code representing a specific trait.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Value" type="StringLength1to64" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The value associated with that trait.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:complexType name="GolfCourseResType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A specific reservation for a tee time for an individual or a number of golfers</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Rounds">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Round" type="RoundType" maxOccurs="99"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ResID" type="UniqueID_Type" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="Status" type="StringLength1to32" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The status of this reservation transaction</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="StatusMessage" type="StringLength1to32" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">A description or message associated with the status.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="RequestorResID" type="StringLength1to8" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The unique Identifier used by the party booking the reservation.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ResponderResConfID" type="StringLength1to8" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The unique identifier assigned by the supplier.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="GolfCourseTeeTimeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The GolfCourseTeeTime attributes include the range of dates and times for which the round (or rounds) are being requested, as well as information relating to the number of golfers, the number of holes requested, and the number of times.  It also includes the maximum price permitted in the response.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Memberships" type="MembershipsType" minOccurs="0"/>
+			<xs:element name="Fees" type="FeesType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="DateTimeSpanGroup"/>
+		<xs:attribute name="NumberOfGolfers" type="xs:positiveInteger" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The number of golfers covered by this request. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="NumberOfHoles" type="xs:positiveInteger" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The number of holes that the golfers wish to play within one round.  If this differs by day, separate messages must be sent.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="NumberOfTimes" type="xs:positiveInteger" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The number of Tee Times covered by this request.  For example, if a foursome wants to play two separate rounds within one day, the number of tee times would be 2.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="MaxPrice" type="Money" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The highest price acceptable for the requested rounds.  Where a number of courses are represented by a system, only those rounds that are at or below the highest price should be returned.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="CurrencyAmountGroup"/>
+	</xs:complexType>
+	<xs:complexType name="GolfCourseType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Specific information about the golf course(s) for which the response is being made.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Address" type="AddressType" minOccurs="0"/>
+			<xs:element name="Phone" minOccurs="0">
+				<xs:complexType>
+					<xs:attributeGroup ref="TelephoneGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Traits" type="TraitsType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="ID_Group"/>
+		<xs:attribute name="Name" type="StringLength1to64" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The name of the golf course.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="GolferType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Information about the individual golfer for which the reservation is being requested.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Memberships" type="MembershipsType" minOccurs="0"/>
+			<xs:element name="PaymentForm" type="PaymentFormType" minOccurs="0"/>
+			<xs:element name="PersonName" type="PersonNameType"/>
+			<xs:element name="Address" type="AddressType" minOccurs="0"/>
+			<xs:element name="Telephone" minOccurs="0">
+				<xs:complexType>
+					<xs:attributeGroup ref="TelephoneGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Email" type="EmailType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="GenderGroup"/>
+		<xs:attributeGroup ref="BirthDateGroup"/>
+	</xs:complexType>
+	<xs:complexType name="MembershipsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Memberships are associated with one or more of the golfers for whom the specific request for availability is being made.  Some memberships may permit booking rules that do not apply to other golfers.  For example, a reciprocal membership may allow booking farther in advance that the standard golfer is permitted. NOTE:  a definition of Memberships will be reflected in the OTA_Profile schema.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Membership" maxOccurs="99">
+				<xs:complexType>
+					<xs:attributeGroup ref="CustomerLoyaltyGroup"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RoundType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A single round of golf that may include one or more golfers.  If there is more than one round, each round will be represented separately.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Charges" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Charge" type="FeeType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Cancel" type="CancelRuleType" minOccurs="0"/>
+			<xs:element name="Golfers" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Golfer" type="GolferType" maxOccurs="99"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RateQualifiers" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RateQualifier" type="RateQualifierType" maxOccurs="99"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="RoundID" type="xs:positiveInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">A unique identifier applied to this round.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="PlayDateTime" type="DateOrDateTimeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The date for which the round is reserved.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="NumberOfGolfers" type="xs:positiveInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The number of golfers represented in this round.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="PackageID" type="StringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">An identification of a package of which this round is a part.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="StartingTee" type="StringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The tee on which the round will start.  This could be a hole number, or a course designation where there are multiple courses.  </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="NumberOfCarts" type="xs:positiveInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The number of carts included within the reservation.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="CurrencyAmountGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The Total Amount for this round.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+	</xs:complexType>
+	<xs:complexType name="TraitsType">
+		<xs:sequence>
+			<xs:element name="Trait" maxOccurs="99">
+				<xs:complexType>
+					<xs:attributeGroup ref="TraitGroup"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

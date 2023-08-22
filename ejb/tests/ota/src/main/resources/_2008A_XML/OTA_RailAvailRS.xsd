@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.010" id="OTA2008A">
+	<xs:include schemaLocation="OTA_RailCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_RailAvailRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+The Availability Response message contains Train Availability for a station pair on a specific date. A set of OriginDestinationOptions is returned, each of which contains one or more (connecting) trains that serve the city pair. The ResponseType attribute in the Request message specifies whether the response is restricted to Schedules or Fares or full Availability.  If the ResponseType is 'Fares', the response will comprise a list of all fares from the Origin to the Destination.  If  the ResponseType is 'Schedules', the response will comprise a list of all train departures from the Origin to the Destination.  If the ResponseType is 'Availability', the response will comprise a list of available train departures from the Origin to the Destination and,  where the responding system has this facility, valid fares available on those departures. 	</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType"/>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0"/>
+					<xs:element name="OriginDestinationOptions" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Provides full details about availability between certain locations, including times, services, etc.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="OriginDestinationOption" maxOccurs="999">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Holds the collection of train options for this origin-destination pair. </xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="OriginLocation" type="LocationType">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Travel Origin Location - for example, air uses the IATA 3 letter code.</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="DestinationLocation" type="LocationType">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Travel Destination Location - for example, air uses the IATA 3 letter code.</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="Journeys">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">A collection of individual routes serving this origina and destination.  Different routes may result in different connecting cities.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="Journey" maxOccurs="99">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Describes one specific route, detailing the origin and destination locations and a collection of journey segments that together create the full journey between these two locations. </xs:documentation>
+															</xs:annotation>
+															<xs:complexType>
+																<xs:complexContent>
+																	<xs:extension base="JourneyType">
+																		<xs:sequence>
+																			<xs:element name="FareRPHs" minOccurs="0">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="en">Reference Place Holders to associate specific fares to this specific route.  When offered by the sender of this message, this collection of RPHs provides a cross reference between fares and route</xs:documentation>
+																				</xs:annotation>
+																				<xs:complexType>
+																					<xs:sequence>
+																						<xs:element name="FareRPH" type="RPH_Type" maxOccurs="unbounded">
+																							<xs:annotation>
+																								<xs:documentation xml:lang="en">One specific cross reference to fare offered on this route.</xs:documentation>
+																							</xs:annotation>
+																						</xs:element>
+																					</xs:sequence>
+																				</xs:complexType>
+																			</xs:element>
+																			<xs:element name="JourneySegments">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="en">A collection of segments that together provide the journey from origin to destination.</xs:documentation>
+																				</xs:annotation>
+																				<xs:complexType>
+																					<xs:sequence>
+																						<xs:element name="JourneySegment" type="JourneySegmentType" maxOccurs="9">
+																							<xs:annotation>
+																								<xs:documentation xml:lang="en">Full details on one specific train segment, including the origin and destination locations for this segment, equipment used, services offered, etc.							</xs:documentation>
+																							</xs:annotation>
+																						</xs:element>
+																					</xs:sequence>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:extension>
+																</xs:complexContent>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Fares" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Provides full details on the fares that are offered, along with the routes that are valid for each specific fare.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Fare" type="RailFareType" maxOccurs="99">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Information on one specific rail fare, including the route in which that fare is valid, the passenger counts, and details about the fare such as the classification, railcard discounts, etc.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType"/>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attributeGroup ref="TransactionType"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="RailFareType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Provides the information that fully describes a specific fare and its conditions of use.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Journey" type="JourneyType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on the route on which this fare is offered.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PassengerCounts">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The numbers of passengers by type, as supplied in the request</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PassengerCount" maxOccurs="5">
+							<xs:complexType>
+								<xs:attributeGroup ref="TravelerCountGroup"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="TicketCount" type="Numeric1to999">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The physical number of tickets that will need to be purchased for a multi-passenger fare (i.e. if the 'MultiPassengerPrice' element is present). If the fare is not a multi-passenger fare (i.e. the 'MultiPassengerPrice' element is not present) then this value will be set to the sum of Adult and Child passenger counts.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="FarePrices">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A collection of price details.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="FareRuleType" maxOccurs="99"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="MultiPassengerPrice">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Encapsulates the elements that define the price of the fare where the fare allows a number of adults or children to travel for a stated price. The presence of this element indicates that the fare is a multi-passenger fare.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="TotalFare"/>
+						</xs:sequence>
+						<xs:attributeGroup ref="CurrencyAmountGroup"/>
+						<xs:attribute name="TooFewPassengers" type="xs:boolean" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Indicates whether the composition of the passengers meets the maximum and minimum requirements of a multi-passenger ticket.  For example, if only 2 adults are travelling on a ticket that requires at least one child to also be travelling. When true, there are too few passengers for the number of tickets returned in 'TicketCount'. When false, the minimum and maximum requirements to the Ticket have been satisfied for the number of tickets returned in 'TicketCount'.  This parameter has a default value of false and will only be present if the value is set to true.
+</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="NoFareReason" type="NoFareReasonType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Encapsulates the reason code and text that provide details of why the price of a fare could not be calculated</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="PassengerLimits">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the minimum and maximum number of passengers for which this fare is eligible.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="MinPassengers" type="NumericStringLength4">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The minimum number of passengers for this ticket.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MaxPassengers" type="NumericStringLength4">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The maximum number of passengers for this ticket.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MinAdults" type="NumericStringLength4">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The minimum number of adults for this ticket.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MaxAdults" type="NumericStringLength4">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The maximum number of adults for this ticket.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MinChildren" type="NumericStringLength4">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The minimum number of children for this ticket.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MaxChildren" type="NumericStringLength4">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The maximum number of children for this ticket.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="FareClassification">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Describes the conditions of use related to a fare.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="FareClass" type="CabinType" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The class of the ticket: '1'= First class; '2'= Standard class; '9'= Other.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="FareGroup" type="AlphaLength1" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">A 1-character code indicating the fare group. 'F'= First; 'S'= Standard; 'P'= Promotional; 'E'= Euro
+</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="SingleOrReturn" type="AlphaLength1" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">A 1-character code indicating whether the ticket is a single or return.  'S'= Single; 'R'= Return; </xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ValidityCode" type="Numeric1to99" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">FACETS ticket validity reference.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ReservationRequired" type="Numeric1to4" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Indicates if a reservation is required for this fare, and if so the direction of travel for which it is necessary.   '1'= for the outward travel direction; '2'= for the return travel direction; '3'= for the both travel directions.  If reservations are not required for the fare, this element will not be present.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="RestrictionCode" type="Numeric1to99" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The restriction code of the Fare.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="PackageMarker" type="Numeric1to4" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Indicate if this fare is a package and if so the type of package. '1'= Fare package; '2'= Fare and Supplement package; '3'= Supplement Package.  If the fare is not a package, this attribute will not be present.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="DefaultCAPRI_Code" type="AlphaLength3">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The 3 character CAPRI code of the fare</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="PublicationSequence" type="Numeric0to999">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">A 3 digit value indicating the order in which this ticket is published in the National Fares Manual.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Railcard" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Encapsulates details of the railcard used in calculating the fare. If no railcard was used to calculate the fare, then this element will not be presen</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="MultipleRailcardsReqd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Indicates whether multiple railcards are required to purchase the tickets for this fare at this price.  TRUE= Multiple railcards are required; FALSE= Multiple railcards are not required.  This parameter has a default value of FALSE and will only be present if the value is set to TRUE.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="RailcardCodeSupplied" type="AlphaLength3" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The 3-character railcard code supplied in the enquiry criteria</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="RailcardCodeUsed" type="AlphaLength3" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The 3-character railcard code used when calculating the fare. This may differ from the code in the 'RailcardCodeSupplied' attribute, in that it may be the master railcard code of that railcard.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Bulletins" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of references to bulletins that describe usage of this fare.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="BulletinID" minOccurs="0" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The unique ID of a bulletin that is associated with the fare.  A bulletin is a vendor-specific information describing usage of this fare.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="StringLength0to128">
+										<xs:attribute name="BulletinCode" type="NumericStringLength1to16" use="required"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="RPH" type="RPH_Type"/>
+		<xs:attribute name="FareReference" type="NumericStringLength1to5" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">A unique 5 digit reference for this fare within the fares returned.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="TicketTypeCode" type="AlphaLength3" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The 3 character ticket type code of the fare. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="AdvancePurchase" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Indicates whether this is an Advance Purchase fare. 'TRUE'= Advance Purchase fare;  'FALSE'= Not an Advance Purchase fare. This parameter has a default value of 'FALSE'and will only be present if the value is set to 'TRUE’.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="TOC_Specific" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Indicates whether this is a TOC specific fare.  'TRUE'= TOC Specific fare; 'FALSE’= Not a TOC Specific fare. This parameter has a default value of 'FALSE'and will only be present if the value is set to 'TRUE’.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="AlternativeFare" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Indicates whether the fare is from or to a location that differs from the non-fares group location used in the input criteria. 'TRUE’= The fare is from/to a different location; 'FALSE'= The fare is from/to the same location. This parameter has a default value of 'FALSE'and will only be present if the value is set to 'TRUE’.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CrossCityFareCode" type="StringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The use of this attribute indicates a cross city fare. When used, its value will be a city code.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Class" type="CabinType" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="JourneySegmentType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Any valid journey leg type.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="TrainSegment">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Full details on one specific train segment, including the origin and destination locations for this segment, equipment used, services offered, etc.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="TrainSegmentType">
+							<xs:sequence>
+								<xs:element name="TrainOrigin" type="LocationType" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Represents the start location of this train service. </xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="TrainDestination" type="LocationType" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Represents the final destination location of this train service. </xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="ClassCodes">
+									<xs:annotation>
+										<xs:documentation xml:lang="en"> Collection of codes identifying the class of service or accommodations.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="ClassCode" maxOccurs="9">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">A specific code representing the availability of one specific class of service.  Such class of service may represent First class, reserved seats, sleeper accommodations, etc.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:attributeGroup ref="CodeListGroup"/>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="VendorMessages" type="VendorMessagesType" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">A collection of special comments on the segment. </xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+							<xs:attribute name="OnTimeRate" type="Percentage" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en"> Specifies the Dept. of Transport on time rate of the  train.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="NonTrainSegment">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Origin" type="LocationType">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Represents an origin location code. </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Destination" type="LocationType">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Represents a destination location code. </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="LegRef" type="RPH_Type" use="required"/>
+					<xs:attribute name="TransportationCode" type="OTA_CodeType" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies the method of getting from the origni to the destination of this segment (e.g. walk, bus). Refer to OTA Code List Transportation Code (TRP).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="TransitTime" type="xs:time">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The time required to traverse this leg.  </xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ChangeTime" type="xs:time">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The time to change to and from this leg.  When this leg is the first or the last leg of a journey, the time will be half that of the same leg in the middle of another journey. </xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="JourneyType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Describes a route</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OriginLocation" type="LocationType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Travel Origin Location - for example, air uses the IATA 3 letter code.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DestinationLocation" type="LocationType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Travel Destination Location - for example, air uses the IATA 3 letter code.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="RouteCode" type="NumericStringLength1to5">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The 5 digit route code for the fare. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="RouteDescription" type="StringLength1to16">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The route description for the fare. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="NoFareReasonType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Encapsulates the reason code and text that provide details of why the price of a fare could not be calculated.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StringLength1to255">
+				<xs:attribute name="Code" type="NumericStringLength4" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PassengerPriceType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A price per passenger type.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AlternateCurrencyPrice" minOccurs="0">
+				<xs:complexType>
+					<xs:attributeGroup ref="CurrencyAmountGroup"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="CurrencyAmountGroup"/>
+		<xs:attributeGroup ref="TravelerCountGroup"/>
+	</xs:complexType>
+	<xs:complexType name="PriceRuleType">
+		<xs:simpleContent>
+			<xs:extension base="StringLength1to128">
+				<xs:attribute name="Type" type="StringLength1to32" use="required"/>
+				<xs:attribute name="Value" type="StringLength1to8" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Where applicable, a qualifying value for the price rule, e.g. 2 for minimum occupancy or Adult. </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="FareRuleType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A price and rule combination.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="PassengerPriceType">
+					<xs:sequence>
+						<xs:element ref="PriceRule" maxOccurs="9"/>
+						<xs:element ref="TotalFare"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PriceRule" type="PriceRuleType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">A rule governing the application of a price.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TotalFare">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Encapsulates the total price for all adults and all children, or all tickets (in the case of a multi-passenger ticket). If the total fare cannot be calculated, the reason is given.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AlternateCurrencyTotal" minOccurs="0">
+					<xs:complexType>
+						<xs:attributeGroup ref="CurrencyAmountGroup"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="CurrencyAmountGroup"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

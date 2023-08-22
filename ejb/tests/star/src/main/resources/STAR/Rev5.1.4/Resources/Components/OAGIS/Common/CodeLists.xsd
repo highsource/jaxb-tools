@@ -1,0 +1,1095 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   
+   ** OAGIS® Revision:    9.2   **
+   ** Date:               01 February 2008 **
+   ** Copyright 1997-2008, All Rights Reserved **
+   
+   This is an OAGIS® BOD XML Schema (XSD) Definition.
+   
+   License information for this file is provided in the file **OAGi License Agreement.txt** that is provided with this download package.
+   
+   For support, more information, or to report implementation bugs, please contact the Open Applications Group at oagis@openapplications.org.
+   
+   XML Schema 
+   
+   Name: /OAGIS/9_2/Resources/Components/Common/CodeLists.xsd
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns="http://www.openapplications.org/oagis/9/codelists"
+   xmlns:clm5639="http://www.openapplications.org/oagis/9/languagecode/5639:1988"
+   xmlns:clm54217="http://www.openapplications.org/oagis/9/currencycode/54217:2001"
+   xmlns:clmIANAMIMEMediaTypes="http://www.openapplications.org/oagis/9/IANAMIMEMediaTypes:2003"
+   xmlns:clm66411="http://www.openapplications.org/oagis/9/unitcode/66411:2001"
+   targetNamespace="http://www.openapplications.org/oagis/9/codelists"
+   elementFormDefault="qualified" attributeFormDefault="unqualified">
+   <xsd:import namespace="http://www.openapplications.org/oagis/9/currencycode/54217:2001"
+      schemaLocation="../CoreComponents/CodeList_CurrencyCode_ISO_7_04.xsd" />
+   <xsd:import namespace="http://www.openapplications.org/oagis/9/languagecode/5639:1988"
+      schemaLocation="../CoreComponents/CodeList_LanguageCode_ISO_7_04.xsd" />
+   <xsd:import namespace="http://www.openapplications.org/oagis/9/IANAMIMEMediaTypes:2003"
+      schemaLocation="../CoreComponents/CodeList_MIMEMediaTypeCode_IANA_7_04.xsd" />
+   <xsd:import namespace="http://www.openapplications.org/oagis/9/unitcode/66411:2001"
+      schemaLocation="../CoreComponents/CodeList_UnitCode_UNECE_7_04.xsd" />
+   <xsd:simpleType name="ActionCodeEnumerationType">
+      <xsd:annotation>
+         <xsd:documentation>The action values that OAGi defines for OAGIS.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Add" />
+         <xsd:enumeration value="Change" />
+         <xsd:enumeration value="Delete" />
+         <xsd:enumeration value="Replace" />
+         <xsd:enumeration value="Accepted" />
+         <xsd:enumeration value="Modified" />
+         <xsd:enumeration value="Rejected" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="ActionCodeContentType">
+      <xsd:annotation>
+         <xsd:documentation>
+            Allows the user to use any of the codes that OAGi defines or add additional values.
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:union memberTypes="ActionCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="AgencyRoleCodeEnumerationType">
+      <xsd:annotation>
+         <xsd:documentation>
+            The roles in which an organization may participate in a transaction..
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Customer" />
+         <xsd:enumeration value="Supplier" />
+         <xsd:enumeration value="Manufacturer" />
+         <xsd:enumeration value="Broker" />
+         <xsd:enumeration value="Carrier" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="AgencyRoleContentType">
+      <xsd:annotation>
+         <xsd:documentation>
+            Allows the user to use any of the codes that OAGi defines or add additional values.
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:union memberTypes="AgencyRoleCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="CategoryCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString" />
+   </xsd:simpleType>
+   <xsd:simpleType name="CategoryCodeContentType">
+      <xsd:union memberTypes="CategoryCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="ChargeBearerCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="OUR">
+            <xsd:annotation>
+               <xsd:documentation>
+                  All transaction charges are to be borne by the debtor.
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="BEN">
+            <xsd:annotation>
+               <xsd:documentation>
+                  All transaction charges are to be borne by the creditor.
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="SHA">
+            <xsd:annotation>
+               <xsd:documentation>
+                  Transaction charges on the Sender's side are to be borne by the ordering customer.
+                  Transaction charges on the Receiver's side are to be borne by the beneficiary
+                  customer.
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="ChargeBearerCodeContentType">
+      <xsd:union memberTypes="xsd:normalizedString ChargeBearerCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="ChargeCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString" />
+   </xsd:simpleType>
+   <xsd:simpleType name="ChargeCodeContentType">
+      <xsd:union memberTypes="ChargeCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="ClassificationCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString" />
+   </xsd:simpleType>
+   <xsd:simpleType name="ClassificationCodeContentType">
+      <xsd:union memberTypes="ClassificationCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="ChequeDeliveryMethodCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="MLDB">
+            <xsd:annotation>
+               <xsd:documentation>Mail to Debitor</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="MLCD">
+            <xsd:annotation>
+               <xsd:documentation>Mail to Creditor</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="MLFA">
+            <xsd:annotation>
+               <xsd:documentation>Mail to Final agent</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="CRDB">
+            <xsd:annotation>
+               <xsd:documentation>Courier to debtor</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="CRCD">
+            <xsd:annotation>
+               <xsd:documentation>Courier to creditor</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="CRFA">
+            <xsd:annotation>
+               <xsd:documentation>Courier to final agent</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="PUDB">
+            <xsd:annotation>
+               <xsd:documentation>Pickup by debtor</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="PUCD">
+            <xsd:annotation>
+               <xsd:documentation>Pickup by creditor</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="PUFA">
+            <xsd:annotation>
+               <xsd:documentation>Pickup by final agent</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="RGDB">
+            <xsd:annotation>
+               <xsd:documentation>Registered mail to debtor</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="RGCD">
+            <xsd:annotation>
+               <xsd:documentation>Registered mail to creditor</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="RGFA">
+            <xsd:annotation>
+               <xsd:documentation>Registered mail to final agent</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="ChequeDeliveryMethodCodeContentType">
+      <xsd:union memberTypes="xsd:normalizedString ChequeDeliveryMethodCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="ChequeInstructionCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="CCHQ" />
+         <xsd:enumeration value="CCCH" />
+         <xsd:enumeration value="BCHQ" />
+         <xsd:enumeration value="DFFT" />
+         <xsd:enumeration value="ELDR" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="ChequeInstructionCodeContentType">
+      <xsd:union memberTypes="xsd:normalizedString ChequeInstructionCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="ContactLocationCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Home" />
+         <xsd:enumeration value="Work" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="ContactLocationCodeContentType">
+      <xsd:union memberTypes="ContactLocationCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="ControlAssertionEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Completeness" />
+         <xsd:enumeration value="Existence or Occurance" />
+         <xsd:enumeration value="Presentation and Disclosure" />
+         <xsd:enumeration value="Rights and Obligations" />
+         <xsd:enumeration value="Valuation or Measurement" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="ControlAssertionContentType">
+      <xsd:union memberTypes="xsd:normalizedString ControlAssertionEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="ControlCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Trigger" />
+         <xsd:enumeration value="Workflow" />
+         <xsd:enumeration value="Measurement" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="ControlCodeContentType">
+      <xsd:union memberTypes="xsd:normalizedString CountryCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="ControlComponentEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Risk Assessment" />
+         <xsd:enumeration value="Monitoring" />
+         <xsd:enumeration value="Control Environment" />
+         <xsd:enumeration value="Control Activities" />
+         <xsd:enumeration value="Information and Communication" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="ControlComponentContentType">
+      <xsd:union memberTypes="xsd:normalizedString ControlComponentEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="CountryCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString" />
+   </xsd:simpleType>
+   <xsd:simpleType name="CountryCodeContentType">
+      <xsd:union memberTypes="CountryCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="CountrySubdivisionCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString" />
+   </xsd:simpleType>
+   <xsd:simpleType name="CountrySubdivisionCodeContentType">
+      <xsd:union memberTypes="CountrySubdivisionCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="CreditTransferCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="CASH">
+            <xsd:annotation>
+               <xsd:documentation>Cash management transfer.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="CORT">
+            <xsd:annotation>
+               <xsd:documentation>Payment made in settlement of a trade</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="DIVI">
+            <xsd:annotation>
+               <xsd:documentation>Dividend.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="GOVT">
+            <xsd:annotation>
+               <xsd:documentation>Government payment.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="HEDG">
+            <xsd:annotation>
+               <xsd:documentation>Hedging</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="INTC">
+            <xsd:annotation>
+               <xsd:documentation>Intra-company payment</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="INTE">
+            <xsd:annotation>
+               <xsd:documentation>Interest</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="LOAN">
+            <xsd:annotation>
+               <xsd:documentation>Loan. Transfer of loan to borrower.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="PENS">
+            <xsd:annotation>
+               <xsd:documentation>Pension payment</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="SALA">
+            <xsd:annotation>
+               <xsd:documentation>Salary payment</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="SECU">
+            <xsd:annotation>
+               <xsd:documentation>Securities.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="SSBE">
+            <xsd:annotation>
+               <xsd:documentation>
+                  Social security benefit. Payment made by government to support individuals.
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="SUPP">
+            <xsd:annotation>
+               <xsd:documentation>Supplier payment</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="TAXS">
+            <xsd:annotation>
+               <xsd:documentation>Tax payment</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="TRAD">
+            <xsd:annotation>
+               <xsd:documentation>Trade.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="TREA">
+            <xsd:annotation>
+               <xsd:documentation>Treasury payment</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="VATX">
+            <xsd:annotation>
+               <xsd:documentation>Value added Tax payment</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="CreditTransferCodeContentType">
+      <xsd:union memberTypes="CreditTransferCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="CurrencyCodeContentType">
+      <xsd:union memberTypes="clm54217:CurrencyCodeContentType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="DayOfWeekCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Sunday" />
+         <xsd:enumeration value="Monday" />
+         <xsd:enumeration value="Tuesday" />
+         <xsd:enumeration value="Wednesday" />
+         <xsd:enumeration value="Thursday" />
+         <xsd:enumeration value="Friday" />
+         <xsd:enumeration value="Saturday" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="DayOfWeekCodeContentType">
+      <xsd:union memberTypes="DayOfWeekCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="DebitCreditCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Debit" />
+         <xsd:enumeration value="Credit" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="DebitCreditCodeContentType">
+      <xsd:union memberTypes="DebitCreditCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="DeliveryPointCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString" />
+   </xsd:simpleType>
+   <xsd:simpleType name="DeliveryPointCodeContentType">
+      <xsd:union memberTypes="DeliveryPointCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="EMailFormatCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="HTML" />
+         <xsd:enumeration value="Rich Text" />
+         <xsd:enumeration value="Plain Text" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="EMailFormatCodeContentType">
+      <xsd:annotation>
+         <xsd:documentation>
+            Identifies the perferred format in which to send eMail.
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:union memberTypes="EMailFormatCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="EngineeringActivityCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="amendment">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  An activity to add information to product data
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="analysis">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  An activity to determine the behavior of an element under certain physical
+                  circumstances
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="cancellation">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  An activity to delete an element from the bill of material or to cancel he whole
+                  bill of material
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="deliveryChange">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  An actity to change the delivery schedule of an element
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="designChange">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  An activity to change the design of an item or an assembly; this might include
+                  changes to the geometry or to the properties of the object
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="design">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  An activity concerning the development of a design of an item
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="mockUpCreation">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  An activity to create an experimental model or replica of an item
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="protoypeBuilding">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  An activity to manufacture a preliminary version of an item
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="rectification">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  An activity to correct the data, documentation or structure associated wih an item
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="restructuring">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  An activity to create an new structure or position within a bill of material
+                  without changin the data associated with the items in the bill of material
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="sparePartCreation">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  An activity to design a spare part or to classify an item as a spare part
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="stopNotice">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  An activity to stop the manufacturing process of an item
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="testing">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  An activity to test an item
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="EngineeringActivityCodeContentType">
+      <xsd:union memberTypes="EngineeringActivityCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="EngineeringWorkOrderCodeEnumerationType">
+      <xsd:annotation>
+         <xsd:documentation>Identifies the type of Engineering Work Order.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="designDeviationPermit">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  An authorization for a deviation from the approved design data
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="designRelease">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  An auhorization for the design of a product or of an item or o create a bill of
+                  material
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="managementResolution">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  An authorization by a committee, such as the board of directos, to design or
+                  change an item
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="manufacturingRelease">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  An authorization for the manufacturing process of a product or of an item
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="productionDeviationPermit">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  An authorization for a deviation from the approved manufacturing process
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="EngineeringWorkOrderCodeContentType">
+      <xsd:union memberTypes="EngineeringWorkOrderCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="EngineeringWorkRequestCodeEnumerationType">
+      <xsd:annotation>
+         <xsd:documentation>Identifies the type of Engineering Work Request.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="ChangeOfStandard">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  A request to translate a change to a standard into action
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="CostReduction">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  A request aimed at reducing the engineering and manufacturing costs of an item
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="CustomerRejection">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  A request resulting from a rejection by a customer
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="CustomerRequest">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  A request for an activity that is necessary to solve the request of a customer
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="DurabilityImprovement">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  A request aimed at extending the life time of an item
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="GovernmentRegulation">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.openapplications.org/oagis/9">
+                  A request resulting from legal requirements
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="ProcurementAlignment" />
+         <xsd:enumeration value="ProductionAlignment" />
+         <xsd:enumeration value="ProductionRelief" />
+         <xsd:enumeration value="ProductionRequirement" />
+         <xsd:enumeration value="QualityImprovement" />
+         <xsd:enumeration value="SecuriyReason" />
+         <xsd:enumeration value="Standardization" />
+         <xsd:enumeration value="SupplierRequest" />
+         <xsd:enumeration value="TechnicalImprovement" />
+         <xsd:enumeration value="ToolImprovement" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="EngineeringWorkRequestCodeContentType">
+      <xsd:union memberTypes="EngineeringWorkRequestCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="EngineeringWorkRequestStatusCodeEnumerationType">
+      <xsd:annotation>
+         <xsd:documentation>Identifies the status of Engineering Work Request.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="inWork" />
+         <xsd:enumeration value="issued" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="EngineeringWorkRequestStatusCodeContentType">
+      <xsd:union memberTypes="EngineeringWorkRequestCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="FinalAgentInstructionCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="CHQB">
+            <xsd:annotation>
+               <xsd:documentation>
+                  Pay creditor only by cheque. The creditor's account number must not be specified.
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="HOLD">
+            <xsd:annotation>
+               <xsd:documentation>
+                  Hold cash for creditor. Creditor will call; pay upon identification.
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="PHOB">
+            <xsd:annotation>
+               <xsd:documentation>
+                  Please advise/contact beneficiary/claimant by phone.
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="TELB">
+            <xsd:annotation>
+               <xsd:documentation>
+                  Please advise/contact beneficiary/claimant by the most efficient means of
+                  telecommunication.
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="FinalAgentInstructionCodeContentType">
+      <xsd:union memberTypes="xsd:normalizedString FinalAgentInstructionCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="FreightTermCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString" />
+   </xsd:simpleType>
+   <xsd:simpleType name="FreightTermCodeContentType">
+      <xsd:union memberTypes="FreightTermCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="GenderCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Male" />
+         <xsd:enumeration value="Female" />
+         <xsd:enumeration value="Unknown" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="GenderCodeContentType">
+      <xsd:union memberTypes="GenderCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="IncotermsCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString" />
+   </xsd:simpleType>
+   <xsd:simpleType name="IncotermsCodeContentType">
+      <xsd:union memberTypes="IncotermsCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="LanguageCodeContentType">
+      <xsd:union memberTypes="xsd:normalizedString clm5639:LanguageCodeContentType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="LicenseTypeCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Import" />
+         <xsd:enumeration value="Export" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="LicenseTypeCodeContentType">
+      <xsd:union memberTypes="LicenseTypeCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="MaritalStatusCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Divorced" />
+         <xsd:enumeration value="Married" />
+         <xsd:enumeration value="NeverMarried" />
+         <xsd:enumeration value="Separated" />
+         <xsd:enumeration value="SignificantOther" />
+         <xsd:enumeration value="Widowed" />
+         <xsd:enumeration value="Unknown" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="MaritalStatusCodeContentType">
+      <xsd:union memberTypes="MaritalStatusCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="MatchCodeEnumerationType">
+      <xsd:annotation>
+         <xsd:documentation>
+            Standard List of Invoice Matching Types. 2 stands for two way matching (Invoice, PO). 3
+            stands for three way matching (Invoice, PO, Receipt). 4 stands for four way matching
+            (Invoice, PO, Receipt, Invoice)
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="2" />
+         <xsd:enumeration value="3" />
+         <xsd:enumeration value="4" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="MatchCodeContentType">
+      <xsd:union memberTypes="MatchCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="MatchDocumentEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Invoice" />
+         <xsd:enumeration value="Purchase Order" />
+         <xsd:enumeration value="Receipt" />
+         <xsd:enumeration value="Inspection" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="MatchDocumentContentType">
+      <xsd:union memberTypes="MatchDocumentEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="MIMECodeContentType">
+      <xsd:union memberTypes="clmIANAMIMEMediaTypes:BinaryObjectMimeCodeContentType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="PartyCategoryCodeEnumerationType">
+      <xsd:annotation>
+         <xsd:documentation>This list of Party Categories.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Organization" />
+         <xsd:enumeration value="Individual" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="PartyCategoryCodeContentType">
+      <xsd:union memberTypes="PartyCategoryCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="PartyRoleCodeEnumerationType">
+      <xsd:annotation>
+         <xsd:documentation>This list is the agreed to Party Roles.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:normalizedString" />
+   </xsd:simpleType>
+   <xsd:simpleType name="PartyRoleCodeContentType">
+      <xsd:union memberTypes="PartyRoleCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="PaymentBasisCodeEnumerationType">
+      <xsd:annotation>
+         <xsd:documentation>
+            This list is the agreed to sub set of Payment Term Basis Codes from X12 Element 333.
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="InvoiceDate" />
+         <xsd:enumeration value="ShippingDate" />
+         <xsd:enumeration value="DeliveryDate" />
+         <xsd:enumeration value="PurchaseOrderDate" />
+         <xsd:enumeration value="ReceiptOfGoodsDate" />
+         <xsd:enumeration value="AcceptanceOfGoodsDate" />
+         <xsd:enumeration value="AcceptanceOfOrderDate" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="PaymentBasisCodeContentType">
+      <xsd:union memberTypes="PaymentBasisCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="PaymentPurposeCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="ADVA" />
+         <xsd:enumeration value="AGRT" />
+         <xsd:enumeration value="ALMY" />
+         <xsd:enumeration value="BECH" />
+         <xsd:enumeration value="BENE" />
+         <xsd:enumeration value="BONU" />
+         <xsd:enumeration value="CASH" />
+         <xsd:enumeration value="CBFF" />
+         <xsd:enumeration value="CHAR" />
+         <xsd:enumeration value="CMDT" />
+         <xsd:enumeration value="COLL" />
+         <xsd:enumeration value="COMC" />
+         <xsd:enumeration value="COMM" />
+         <xsd:enumeration value="CONS" />
+         <xsd:enumeration value="COST" />
+         <xsd:enumeration value="CPYR" />
+         <xsd:enumeration value="DBTC" />
+         <xsd:enumeration value="DIVI" />
+         <xsd:enumeration value="FREX" />
+         <xsd:enumeration value="GDDS" />
+         <xsd:enumeration value="GOVT" />
+         <xsd:enumeration value="HEDG" />
+         <xsd:enumeration value="IHRP" />
+         <xsd:enumeration value="INSU" />
+         <xsd:enumeration value="INTC" />
+         <xsd:enumeration value="INTE" />
+         <xsd:enumeration value="LICF" />
+         <xsd:enumeration value="LOAN" />
+         <xsd:enumeration value="LOAR" />
+         <xsd:enumeration value="NETT" />
+         <xsd:enumeration value="PAYR" />
+         <xsd:enumeration value="PENS" />
+         <xsd:enumeration value="REFU" />
+         <xsd:enumeration value="RENT" />
+         <xsd:enumeration value="ROYA" />
+         <xsd:enumeration value="SALA" />
+         <xsd:enumeration value="SCVE" />
+         <xsd:enumeration value="SECU" />
+         <xsd:enumeration value="SSBE" />
+         <xsd:enumeration value="SUBS" />
+         <xsd:enumeration value="TAXS" />
+         <xsd:enumeration value="TREA" />
+         <xsd:enumeration value="VATX" />
+         <xsd:enumeration value="VENP" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="PaymentPurposeCodeContentType">
+      <xsd:union memberTypes="xsd:normalizedString PaymentPurposeCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="PaymentMethodCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Cash" />
+         <xsd:enumeration value="Cheque" />
+         <xsd:enumeration value="CreditCard" />
+         <xsd:enumeration value="DebitCard" />
+         <xsd:enumeration value="ElectronicFundsTransfer" />
+         <xsd:enumeration value="ProcurementCard" />
+         <xsd:enumeration value="BankDraft" />
+         <xsd:enumeration value="PurchaseOrder" />
+         <xsd:enumeration value="CreditTransfer" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="PaymentMethodCodeContentType">
+      <xsd:union memberTypes="PaymentMethodCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="PaymentSchemeCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="ACH">
+            <xsd:annotation>
+               <xsd:documentation>
+                  Payment has to be executed through an Automated Clearing House
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="RTGS">
+            <xsd:annotation>
+               <xsd:documentation>
+                  Payment has to be executed through Real time gross settlement system.
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="Fednet">
+            <xsd:annotation>
+               <xsd:documentation>Payment has to be executed through FedNet</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="CHIPS">
+            <xsd:annotation>
+               <xsd:documentation>Payment has to be executed through CHIPS.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="PaymentSchemeCodeContentType">
+      <xsd:union memberTypes="xsd:normalizedString PaymentSchemeCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="PaymentTermCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Net20" />
+         <xsd:enumeration value="Net30" />
+         <xsd:enumeration value="Net45" />
+         <xsd:enumeration value="Net60" />
+         <xsd:enumeration value="10Percent30" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="PaymentTermCodeContentType">
+      <xsd:union memberTypes="PaymentTermCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="ProcessCategoryEnumerationType">
+      <xsd:annotation>
+         <xsd:documentation>
+            Processes may be categorized as Routine, Non-Routine or Estimating.
+         </xsd:documentation>
+         <xsd:documentation>
+            An example of a Routine Process is recording costs of goods sold.
+         </xsd:documentation>
+         <xsd:documentation>
+            An example of a Non-Routine Process is recording Inventory Adjustments.
+         </xsd:documentation>
+         <xsd:documentation>
+            An example of an Estimating Process is determining Inventory Obsolsence.
+         </xsd:documentation>
+         <xsd:documentation>
+            Estimating Processes give wide lattitude to move the profit figure and attract a high
+            degree of scrutiny.
+         </xsd:documentation>
+         <xsd:documentation>
+            Non Routine Processes tend to have fewer controls in place and are exposed to more
+            risks.
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Routine" />
+         <xsd:enumeration value="Non-Routine" />
+         <xsd:enumeration value="Estimating" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="ProcessCategoryContentType">
+      <xsd:union memberTypes="xsd:normalizedString ProcessCategoryEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="ReasonCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString" />
+   </xsd:simpleType>
+   <xsd:simpleType name="ReasonCodeContentType">
+      <xsd:union memberTypes="ReasonCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="RecurrencePatternCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Daily" />
+         <xsd:enumeration value="Weekly" />
+         <xsd:enumeration value="Monthly" />
+         <xsd:enumeration value="Yearly" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="RecurrencePatternCodeContentType">
+      <xsd:union memberTypes="RecurrencePatternCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="RemitLocationMethodCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="FAX">
+            <xsd:annotation>
+               <xsd:documentation>
+                  Remittance advice information needs to be faxed.
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="EDI">
+            <xsd:annotation>
+               <xsd:documentation>
+                  Remittance advice information needs to be sent through Electronic Data
+                  Interchange.
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="URI">
+            <xsd:annotation>
+               <xsd:documentation>
+                  Remittance advice information needs to be sent to a Uniform Resource Identifier
+                  (URI). URI is a compact string of characters that uniquely identify an abstract or
+                  physical resource. URI's are the super-set of identifiers, such as URLs, email
+                  addresses, ftp sites, etc, and as such, provide the syntax for all of the
+                  identification schemes.
+               </xsd:documentation>
+            </xsd:annotation>
+         </xsd:enumeration>
+         <xsd:enumeration value="EML" />
+         <xsd:enumeration value="PST" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="RemitLocationMethodCodeContentType">
+      <xsd:union memberTypes="xsd:normalizedString RemitLocationMethodCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="ResourceTypeCodeEnumerationType">
+      <xsd:annotation>
+         <xsd:documentation>The action values that OAGi defines for OAGIS.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:normalizedString" />
+   </xsd:simpleType>
+   <xsd:simpleType name="ResourceTypeCodeContentType">
+      <xsd:annotation>
+         <xsd:documentation>
+            Allows the user to use any of the codes that OAGi defines or add additional values.
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:union memberTypes="ResourceTypeCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="ResponseActionCodeEnumerationType">
+      <xsd:annotation>
+         <xsd:documentation>The action values that OAGi defines for OAGIS.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Accepted" />
+         <xsd:enumeration value="Modified" />
+         <xsd:enumeration value="Rejected" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="ResponseActionCodeContentType">
+      <xsd:annotation>
+         <xsd:documentation>
+            Allows the user to use any of the codes that OAGi defines or add additional values.
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:union memberTypes="ResponseActionCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="ResponseCodeEnumerationType">
+      <xsd:annotation>
+         <xsd:documentation>The acknowledge values that OAGi defines for OAGIS.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Always" />
+         <xsd:enumeration value="OnError" />
+         <xsd:enumeration value="Never" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="ResponseCodeContentType">
+      <xsd:annotation>
+         <xsd:documentation>
+            Allows the user to use any of the codes that OAGi defines or add additional values.
+         </xsd:documentation>
+      </xsd:annotation>
+      <xsd:union memberTypes="ResponseCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="RiskTypeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Compliance with applicable laws and regulations" />
+         <xsd:enumeration value="Effectiveness and efficiency of operations" />
+         <xsd:enumeration value="Reliability of Financial Statements" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="RiskCodeContentType">
+      <xsd:union memberTypes="xsd:normalizedString RiskTypeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="SalesActivityCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="LiteratureRequest" />
+         <xsd:enumeration value="NewLead" />
+         <xsd:enumeration value="DeadContent" />
+         <xsd:enumeration value="TrafficReport" />
+         <xsd:enumeration value="Sold" />
+         <xsd:enumeration value="EMail" />
+         <xsd:enumeration value="Letter" />
+         <xsd:enumeration value="Fax" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="SalesActivityCodeContentType">
+      <xsd:union memberTypes="SalesActivityCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="SalesTaskCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Meeting" />
+         <xsd:enumeration value="ConferenceCall" />
+         <xsd:enumeration value="FollowUp" />
+         <xsd:enumeration value="EMail" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="SalesTaskCodeContentType">
+      <xsd:annotation>
+         <xsd:documentation>List of SalesTasks.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:union memberTypes="xsd:normalizedString SalesTaskCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="StateCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString" />
+   </xsd:simpleType>
+   <xsd:simpleType name="StateCodeContentType">
+      <xsd:union memberTypes="StateCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="SystemEnvironmentCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Production" />
+         <xsd:enumeration value="Test" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="SystemEnvironmentCodeContentType">
+      <xsd:union memberTypes="SystemEnvironmentCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="TaxCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString" />
+   </xsd:simpleType>
+   <xsd:simpleType name="TaxCodeContentType">
+      <xsd:union memberTypes="TaxCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="TransferCodeEnumerationType">
+      <xsd:restriction base="xsd:normalizedString">
+         <xsd:enumeration value="Complete" />
+         <xsd:enumeration value="Return" />
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="TransferCodeContentType">
+      <xsd:union memberTypes="TransferCodeEnumerationType" />
+   </xsd:simpleType>
+   <xsd:simpleType name="UnitCodeContentType">
+      <xsd:union memberTypes="clm66411:UnitCodeContentType" />
+   </xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+== Copyright (c) 2002-2007. All rights reserved. 
+== Financial Products Markup Language is subject to the FpML public license. 
+== A copy of this license is available at http://www.fpml.org/license/license.html
+-->
+<!--View is pretrade-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns="http://www.fpml.org/FpML-5-0/pretrade" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.fpml.org/FpML-5-0/pretrade" ecore:documentRoot="FpML" ecore:nsPrefix="pre" ecore:package="org.fpml.pretrade" version="$Revision: 2350 $" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xsd:include schemaLocation="fpml-msg-5-0.xsd" />
+  <xsd:complexType name="AcceptQuote">
+    <xsd:complexContent>
+      <xsd:extension base="ResponseMessage">
+        <xsd:sequence>
+          <xsd:element name="trade" type="Trade" maxOccurs="unbounded" />
+          <xsd:element name="party" type="Party" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+<!--<xsd:complexType name="QuotableFxLeg">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">A type that represents a single exchange of one currency for another that may be quoted on. The definition allows currency amounts to be absent and does not include an exchange rate. </xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexContent>
+                        <xsd:extension base="QuotableProduct">
+                                <xsd:sequence>
+                                        <xsd:element name="exchangedCurrency" type="QuotablePayment" minOccurs="0"/>
+                                        <xsd:element name="exchangeRate" type="QuotableFxRate"/>
+                                        <xsd:element name="nonDeliverableForward" type="FxCashSettlement" minOccurs="0">
+                                                <xsd:annotation>
+                                                        <xsd:documentation xml:lang="en">Used to describe a particular type of FX forward transaction that is settled in a single currency. </xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="QuotableFxRate">
+                <xsd:sequence>
+                        <xsd:element name="quotedCurrencyPair" type="QuotedCurrencyPair"/>
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="QuotablePayment">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">A type for defining payments </xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:group ref="PayerReceiver.model" minOccurs="0"/>
+                        <xsd:element name="paymentAmount" type="Money" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation xml:lang="en">The currency amount of the payment. </xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="paymentDate" type="AdjustableDate" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation xml:lang="en">The payment date. This date is subject to adjustment in accordance with any applicable business day convention. </xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="QuotableProduct" abstract="true">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">The abstract base class for all product definitions for pre-trade quotation</xsd:documentation>
+                </xsd:annotation>
+                <xsd:group ref="Product.model"/>
+        </xsd:complexType>-->
+  <xsd:complexType name="QuoteAcceptanceConfirmed">
+    <xsd:complexContent>
+      <xsd:extension base="ResponseMessage">
+        <xsd:sequence>
+          <xsd:element name="trade" type="Trade" maxOccurs="unbounded" />
+          <xsd:element name="party" type="Party" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="QuoteAlreadyExpired">
+    <xsd:complexContent>
+      <xsd:extension base="ResponseMessage" />
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="QuoteUpdated">
+    <xsd:complexContent>
+      <xsd:extension base="ResponseMessage">
+        <xsd:sequence>
+          <xsd:element ref="product" maxOccurs="unbounded" />
+          <xsd:element name="party" type="Party" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="RequestQuote">
+    <xsd:complexContent>
+      <xsd:extension base="RequestMessage">
+        <xsd:sequence>
+          <xsd:element ref="product" maxOccurs="unbounded" />
+          <xsd:element name="party" type="Party" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="RequestQuoteResponse">
+    <xsd:complexContent>
+      <xsd:extension base="ResponseMessage">
+        <xsd:sequence>
+          <xsd:element ref="product" maxOccurs="unbounded" />
+          <xsd:element name="party" type="Party" maxOccurs="unbounded" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+<!--    <xsd:element name="quotableFxSingleLeg" type="QuotableFxLeg" substitutionGroup="quotableProduct"/>
+        <xsd:element name="quotableProduct" type="QuotableProduct" abstract="true"/>-->
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">Pre-trade messages.</xsd:documentation>
+  </xsd:annotation>
+  <xsd:element name="acceptQuote" type="AcceptQuote" />
+  <xsd:element name="quoteAcceptanceConfirmed" type="QuoteAcceptanceConfirmed" />
+  <xsd:element name="quoteAlreadyExpired" type="QuoteAlreadyExpired" />
+  <xsd:element name="quoteUpdated" type="QuoteUpdated" />
+  <xsd:element name="requestQuote" type="RequestQuote" />
+  <xsd:element name="requestQuoteResponse" type="RequestQuoteResponse" />
+</xsd:schema>
+

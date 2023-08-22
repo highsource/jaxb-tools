@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema  targetNamespace="http://java.sun.com/xml/ns/jdo/jdoquery"
+           xmlns="http://java.sun.com/xml/ns/jdo/jdoquery"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           version="1.0">
+    <xs:element name="jdoquery">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:choice maxOccurs="unbounded">
+                    <xs:element ref="package"/>
+                    <xs:element ref="query"/>
+                </xs:choice>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="package">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:choice maxOccurs="unbounded">
+                    <xs:element ref="interface"/>
+                    <xs:element ref="class"/>
+                </xs:choice>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.package"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.package">
+        <xs:attribute name="name" default=""/>
+    </xs:attributeGroup>
+    <xs:element name="interface">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:element maxOccurs="unbounded" ref="query"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.interface"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.interface">
+        <xs:attribute name="name" use="required"/>
+    </xs:attributeGroup>
+    <xs:element name="class">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+                <xs:element maxOccurs="unbounded" ref="query"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.class"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.class">
+        <xs:attribute name="name" use="required"/>
+    </xs:attributeGroup>
+    <xs:element name="query">
+        <xs:complexType mixed="true">
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extension"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.query"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.query">
+        <xs:attribute name="name" use="required"/>
+        <xs:attribute name="language"/>
+        <xs:attribute name="unique">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="unmodifiable" default="false">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="true"/>
+                    <xs:enumeration value="false"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="result-class"/>
+    </xs:attributeGroup>
+    <xs:element name="extension">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="any">
+                    <xs:attributeGroup ref="attlist.extension"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.extension">
+        <xs:attribute name="vendor-name" use="required"/>
+        <xs:attribute name="key"/>
+        <xs:attribute name="value"/>
+    </xs:attributeGroup>
+    <xs:complexType name="any" mixed="true">
+        <xs:sequence>
+            <xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

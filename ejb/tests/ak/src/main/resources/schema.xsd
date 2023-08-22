@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" 
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj" jaxb:version="2.1">
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.jvnet.hyperjaxb3.tests.ak"/>
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:element name="Parent" type="tblParent"/>
+	<xsd:complexType name="tblParent">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<!-- ** hj:class>
+					<hj:table name="tbl_parent" />
+				</hj:class-->
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="parent_prop_1" type="xsd:string"/>
+			<xsd:element name="parent_prop_2" type="xsd:string"/>
+			<xsd:element name="Child" type="tblChild" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<!-- ** hj:complexCollectionProperty>
+							<hj:key>
+								<hj:column name="parent_id"/>
+							</hj:key>
+						</hj:complexCollectionProperty-->
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:long">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<hj:id>
+						<!--hj:generated-value strategy="AUTO"/-->
+					</hj:id>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="tblChild">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<!-- ** hj:class>
+					<hj:table name="tbl_child" />
+				</hj:class-->
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="child_prop_1" type="xsd:string"/>
+			<xsd:element name="child_prop_2" type="xsd:string"/>
+			<xsd:element name="Grandchild" type="tblGrandchild" 
+				maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<!-- ** hj:complexCollectionProperty>
+							<hj:key>
+								<hj:column name="parent_id"/>
+							</hj:key>
+						</hj:complexCollectionProperty-->
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="tblGrandchild">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<!-- ** hj:class>
+					<hj:table name="tbl_grandchild" />
+				</hj:class-->
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="grandchild_prop_1" type="xsd:string"/>
+			<xsd:element name="grandchild_prop_2" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,118 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>hyperjaxb3-ejb-schemas-customizations</artifactId>
+	<packaging>jar</packaging>
+	<name>Hyperjaxb3 EJB Schemas Customizations</name>
+	<parent>
+		<groupId>org.jvnet.hyperjaxb3</groupId>
+		<artifactId>hyperjaxb3-ejb-schemas</artifactId>
+		<version>0.6.3-SNAPSHOT</version>
+	</parent>
+	<dependencies>
+		<dependency>
+			<groupId>org.jvnet.jaxb2_commons</groupId>
+			<artifactId>jaxb2-basics-runtime</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jvnet.jaxb2_commons</groupId>
+			<artifactId>jaxb2-basics-tools</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-xjc</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jvnet.hyperjaxb3</groupId>
+			<artifactId>hyperjaxb3-ejb-schemas-persistence</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<reporting>
+	</reporting>
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<plugins>
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<extension>true</extension>
+							<schemaIncludes>
+								<value>customizations.xsd</value>
+							</schemaIncludes>
+							<catalog>src/main/resources/catalog.cat</catalog>
+							<args>
+								<arg>-Xequals</arg>
+								<arg>-XhashCode</arg>
+								<arg>-Xinheritance</arg>
+								<arg>-Xcopyable</arg>
+								<arg>-Xmergeable</arg>
+							</args>
+							<plugins>
+								<plugin>
+									<groupId>org.jvnet.jaxb2_commons</groupId>
+									<artifactId>jaxb2-basics</artifactId>
+								</plugin>
+							</plugins>
+							<episodes>
+								<episode>
+									<groupId>org.jvnet.hyperjaxb3</groupId>
+									<artifactId>hyperjaxb3-ejb-schemas-persistence</artifactId>
+								</episode>
+							</episodes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+
+        <executions>
+  
+          <execution>
+            <id>site</id>
+            <phase>site</phase>
+            <configuration>
+              <tasks>
+                <echo>Running the XSDDoc task</echo>
+                <taskdef name="xsddoc" classname="net.sf.xframe.xsddoc.Task" />
+                <mkdir dir="${basedir}/target/site/xsddoc" />
+                <xsddoc file="${basedir}/src/main/resources/customizations.xsd"
+			out="${basedir}/target/site/xsddoc"
+			doctitle="Hyperjaxb3 Customization schema"
+			verbose="false" />
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>xsddoc</groupId>
+            <artifactId>maven-xsddoc-plugin</artifactId>
+            <version>1.0</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+		</plugins>
+	</build>
+</project>

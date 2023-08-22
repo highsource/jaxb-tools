@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	
+** OAGIS® Revision: 9.1  **
+** Date: 11 May 2007 **
+** Copyright 1997-2007, All Rights Reserved **
+	
+	This is an OAGIS® BOD XML Schema (XSD) Definition.
+	
+	License information for this file is provided in the file **OAGi License Agreement.txt** that is provided with this download package.
+	
+	For support, more information, or to report implementation bugs, please contact the Open Applications Group at xml@openapplications.org.
+	
+	XML Schema 
+	
+	Name: \OAGIS\Release\Resources\Nouns\BOD.xsd
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://www.openapplications.org/oagis/9"
+	xmlns:star="http://www.starstandard.org/STAR/5"
+	targetNamespace="http://www.openapplications.org/oagis/9"
+	elementFormDefault="qualified">
+
+	<xsd:include schemaLocation="../Common/Components.xsd" />
+	<xsd:import namespace="http://www.starstandard.org/STAR/5" schemaLocation="../../Common/Meta.xsd"/>
+	
+	<xsd:element name="BOD" type="BODType">
+		<xsd:annotation>
+			<xsd:documentation
+				source="http://www.openapplications.org/oagis/9">
+				The outcome of processing a specific BOD. Describes
+				overall/summary outcome, plus the outcome of processing
+				each noun of the BOD. Includes noun-specific error
+				and/or warning messaages encountered during processing.
+				May include summary and/or roll-up messages at the BOD
+				level.
+			</xsd:documentation>
+		</xsd:annotation>
+
+	</xsd:element>
+
+	<xsd:complexType name="BODType">
+		<xsd:annotation>
+			<xsd:documentation>
+				The outcome of processing a specific BOD. Describes
+				overall/summary outcome, plus the outcome of processing
+				each noun of the BOD. Includes noun-specific error
+				and/or warning messaages encountered during processing.
+				May include summary and/or roll-up messages at the BOD
+				level.
+			</xsd:documentation>
+		</xsd:annotation>
+
+		<xsd:sequence>
+			<xsd:annotation>
+				
+                                <xsd:documentation source="http://www.openapplications.org/oagis/9">OriginalApplicationArea is deprecated from the BOD of the ConfirmBOD, the OriginalApplicationArea should be used off of the Confirm Verb.</xsd:documentation>
+			
+			</xsd:annotation>
+
+			<xsd:element ref="star:OriginalApplicationArea" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation
+						source="http://www.openapplications.org/oagis/9">
+						A copy of the ApplicationArea for the original
+						BOD that was processed. Present either as
+						additional reference information, or for use in
+						identifying the BOD in situations where a
+						BODReference is not known.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+
+			<xsd:group ref="FreeFormTextGroup" />
+			<xsd:element ref="BODFailureMessage" minOccurs="0" />
+			<xsd:element ref="BODSuccessMessage" minOccurs="0" />
+			<xsd:element ref="PartialBODFailureMessage" minOccurs="0" />
+			<!-- <xsd:element ref="UserArea" minOccurs="0" /> -->
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>

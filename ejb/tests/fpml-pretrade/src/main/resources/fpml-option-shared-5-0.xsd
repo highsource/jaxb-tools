@@ -1,0 +1,732 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+== Copyright (c) 2002-2007. All rights reserved. 
+== Financial Products Markup Language is subject to the FpML public license. 
+== A copy of this license is available at http://www.fpml.org/license/license.html
+-->
+<!--View is pretrade-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns="http://www.fpml.org/FpML-5-0/pretrade" targetNamespace="http://www.fpml.org/FpML-5-0/pretrade" ecore:documentRoot="FpML" ecore:nsPrefix="pre" ecore:package="org.fpml.pretrade" version="$Revision: 2590 $" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xsd:include schemaLocation="fpml-asset-5-0.xsd" />
+  <xsd:complexType name="Asian">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">As per ISDA 2002 Definitions</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="averagingInOut" type="AveragingInOutEnum" />
+      <xsd:element name="strikeFactor" type="xsd:decimal" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The factor of strike.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="averagingPeriodIn" type="AveragingPeriod" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The averaging in period.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="averagingPeriodOut" type="AveragingPeriod" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The averaging out period.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="AveragingPeriod">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">Period over which an average value is taken</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="schedule" type="AveragingSchedule" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A Equity Derivative schedule.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="averagingDateTimes" type="DateTimeList" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Averaging DateTimes</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="marketDisruption" type="MarketDisruption" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The market disruption event as defined by ISDA 2002 Definitions</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="AveragingSchedule">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">Method of generating a series of dates.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="startDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The averaging period start date.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="endDate" type="xsd:date" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The averaging period end date.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="frequency" type="xsd:positiveInteger" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The schedule frequency.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="frequencyType" type="FrequencyType" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The schedule frequency type.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="weekNumber" type="xsd:positiveInteger" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The schedule week number.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="dayOfWeek" type="WeeklyRollConventionEnum" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Day of the Week.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Barrier">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">As per ISDA 2002 Definitions.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="barrierCap" type="TriggerEvent" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A trigger level approached from beneath.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="barrierFloor" type="TriggerEvent" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A trigger level approached from above.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CalendarSpread">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining a calendar spread feature</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="expirationDateTwo" type="AdjustableOrRelativeDate" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ClassifiedPayment">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A Classified Simple Payment.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="SimplePayment">
+        <xsd:sequence>
+          <xsd:element name="paymentType" type="PaymentType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">Classification of this Payment.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="Composite">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">Specifies the conditions to be applied for converting into a reference currency when the actual currency rate is not determined upfront.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="determinationMethod" type="DeterminationMethod" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Specifies the method according to which an amount or a date is determined.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="relativeDate" type="RelativeDateOffset" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A date specified as some offset to another date (the anchor date).</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="fxSpotRateSource" type="FxSpotRateSource" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Specifies the methodology (reference source and, optionally, fixing time) to be used for determining a currency conversion rate.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CreditEventNotice">
+    <xsd:sequence>
+      <xsd:element name="notifyingParty" type="NotifyingParty">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Pointer style references to a party identifier defined elsewhere in the document. The notifying party is the party that notifies the other party when a credit event has occurred by means of a credit event notice. If more than one party is referenced as being the notifying party then either party may notify the other of a credit event occurring. ISDA 2003 Term: Notifying Party</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="businessCenter" type="BusinessCenter" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Inclusion of this business center element implies that Greenwich Mean Time in Section 3.3 of the 2003 ISDA Credit Derivatives Definitions is replaced by the local time of the city indicated by the businessCenter element value.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="publiclyAvailableInformation" type="PubliclyAvailableInformation" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A specified condition to settlement. Publicly available information means information that reasonably confirms any of the facts relevant to determining that a credit event or potential repudiation/moratorium, as applicable, has occurred. The ISDA defined list (2003) is the market standard and is considered comprehensive, and a minimum of two differing public sources must have published the relevant information, to declare a Credit Event. ISDA 2003 Term: Notice of Publicly Available Information Applicable</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CreditEvents">
+    <xsd:sequence>
+      <xsd:element name="bankruptcy" type="Empty" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A credit event. The reference entity has been dissolved or has become insolvent. It also covers events that may be a precursor to insolvency such as instigation of bankruptcy or insolvency proceedings. Sovereign trades are not subject to Bankruptcy as "technically" a Sovereign cannot become bankrupt. ISDA 2003 Term: Bankruptcy</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="failureToPay" type="FailureToPay" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A credit event. This credit event triggers, after the expiration of any applicable grace period, if the reference entity fails to make due payments in an aggregrate amount of not less than the payment requirement on one or more obligations (e.g. a missed coupon payment). ISDA 2003 Term: Failure to Pay</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="failureToPayPrincipal" type="Empty" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A credit event. Corresponds to the failure by the Reference Entity to pay an expected principal amount or the payment of an actual principal amount that is less than the expected principal amount. ISDA 2003 Term: Failure to Pay Principal.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="failureToPayInterest" type="Empty" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A credit event. Corresponds to the failure by the Reference Entity to pay an expected interest amount or the payment of an actual interest amount that is less than the expected interest amount. ISDA 2003 Term: Failure to Pay Interest.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="obligationDefault" type="Empty" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A credit event. One or more of the obligations have become capable of being declared due and payable before they would otherwise have been due and payable as a result of, or on the basis of, the occurrence of a default, event of default or other similar condition or event other than failure to pay. ISDA 2003 Term: Obligation Default</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="obligationAcceleration" type="Empty" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A credit event. One or more of the obligations have been declared due and payable before they would otherwise have been due and payable as a result of, or on the basis of, the occurrence of a default, event of default or other similar condition or event other than failure to pay (preferred by the market over Obligation Default, because more definitive and encompasses the definition of Obligation Default - this is more favorable to the Seller). Subject to the default requirement amount. ISDA 2003 Term: Obligation Acceleration</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="repudiationMoratorium" type="Empty" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A credit event. The reference entity, or a governmental authority, either refuses to recognise or challenges the validity of one or more obligations of the reference entity, or imposes a moratorium thereby postponing payments on one or more of the obligations of the reference entity. Subject to the default requirement amount. ISDA 2003 Term: Repudiation/Moratorium</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="restructuring" type="Restructuring" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A credit event. A restructuring is an event that materially impacts the reference entity's obligations, such as an interest rate reduction, principal reduction, deferral of interest or principal, change in priority ranking, or change in currency or composition of payment. ISDA 2003 Term: Restructuring</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="distressedRatingsDowngrade" type="Empty" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A credit event. Results from the fact that the rating of the reference obligation is downgraded to a distressed rating level. From a usage standpoint, this credit event is typically not applicable in case of RMBS trades.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="maturityExtension" type="Empty" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A credit event. Results from the fact that the underlier fails to make principal payments as expected.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="writedown" type="Empty" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A credit event. Results from the fact that the underlier writes down its outstanding principal amount.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="defaultRequirement" type="Money" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">In relation to certain credit events, serves as a threshold for Obligation Acceleration, Obligation Default, Repudiation/Moratorium and Restructuring. Market standard is USD 10,000,000 (JPY 1,000,000,000 for all Japanese Yen trades). This is applied on an aggregate or total basis across all Obligations of the Reference Entity. Used to prevent technical/operational errors from triggering credit events. ISDA 2003 Term: Default Requirement</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="creditEventNotice" type="CreditEventNotice" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A specified condition to settlement. An irrevocable written or verbal notice that describes a credit event that has occurred. The notice is sent from the notifying party (either the buyer or the seller) to the counterparty. It provides information relevant to determining that a credit event has occurred. This is typically accompanied by Publicly Available Information. ISDA 2003 Term: Credit Event Notice</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:ID" use="optional" />
+  </xsd:complexType>
+  <xsd:complexType name="CreditEventsReference">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">Reference to credit events.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="Reference">
+        <xsd:attribute name="href" type="xsd:IDREF" use="required" ecore:reference="CreditEvents" />
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="FailureToPay">
+    <xsd:sequence>
+      <xsd:element name="gracePeriodExtension" type="GracePeriodExtension" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">If this element is specified, indicates whether or not a grace period extension is applicable. ISDA 2003 Term: Grace Period Extension Applicable</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="paymentRequirement" type="Money" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Specifies a threshold for the failure to pay credit event. Market standard is USD 1,000,000 (JPY 100,000,000 for Japanese Yen trades) or its equivalent in the relevant obligation currency. This is applied on an aggregate basis across all Obligations of the Reference Entity. Intended to prevent technical/operational errors from triggering credit events. ISDA 2003 Term: Payment Requirement</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="FeaturePayment">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">Payment made following trigger occurence.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:group ref="PayerReceiver.model" />
+      <xsd:choice minOccurs="0">
+        <xsd:element name="levelPercentage" type="xsd:decimal">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">The trigger level percentage.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="amount" type="NonNegativeDecimal">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">The monetary quantity in currency units.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:choice>
+      <xsd:element name="time" type="TimeTypeEnum" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The feature payment time.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="currency" type="Currency" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The currency in which an amount is denominated.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="featurePaymentDate" type="AdjustableOrRelativeDate" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The feature payment date.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="FrequencyType">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">Frequency Type</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:token">
+        <xsd:attribute name="frequencyTypeScheme" type="xsd:anyURI" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="FxFeature">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining Fx Features.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="referenceCurrency" type="IdentifiedCurrency">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Specifies the reference currency of the trade.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:choice>
+        <xsd:element name="composite" type="Composite">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">If “Composite” is specified as the Settlement Type in the relevant Transaction Supplement, an amount in the Settlement Currency, determined by the Calculation Agent as being equal to the number of Options exercised or deemed exercised, multiplied by: (Settlement Price – Strike Price) / (Strike Price – Settlement Price) x Multiplier provided that if the above is equal to a negative amount the Option Cash Settlement Amount shall be deemed to be zero.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="quanto" type="Quanto">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">If “Quanto” is specified as the Settlement Type in the relevant Transaction Supplement, an amount, as determined by the Calculation Agent in accordance with the Section 8.2 of the Equity Definitions</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="crossCurrency" type="Composite">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">If “Cross-Currency” is specified as the Settlement Type in the relevant Transaction Supplement, an amount in the Settlement Currency, determined by the Calculation Agent as being equal to the number of Options exercised or deemed exercised, multiplied by: (Settlement Price – Strike Price) / (Strike Price – Settlement Price) x Multiplier x one unit of the Reference Currency converted into an amount in the Settlement Currency using the rate of exchange of the Settlement Currency as quoted on the Reference Price Source on the Valuation Date, provided that if the above is equal to a negative amount the Option Cash Settlement Amount shall be deemed to be zero</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="GracePeriodExtension">
+    <xsd:sequence>
+      <xsd:element name="gracePeriod" type="Offset" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The number of calendar or business days after any due date that the reference entity has to fulfil its obligations before a failure to pay credit event is deemed to have occurred. ISDA 2003 Term: Grace Period</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Knock">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">Knock In means option to exercise comes into existence. Knock Out means option to exercise goes out of existence</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="knockIn" type="TriggerEvent" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The knock in.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="knockOut" type="TriggerEvent" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The knock out.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="MarketDisruption">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">Defines the handling of an averaging date market disruption for an equity derivative transaction.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:normalizedString">
+        <xsd:attribute name="marketDisruptionScheme" type="xsd:anyURI" default="http://www.fpml.org/coding-scheme/market-disruption-1-0" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="NotifyingParty">
+    <xsd:sequence>
+      <xsd:element name="buyerPartyReference" type="PartyReference" />
+      <xsd:element name="sellerPartyReference" type="PartyReference" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="OptionBase" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining the common features of options</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="Product">
+        <xsd:sequence>
+          <xsd:group ref="BuyerSeller.model" />
+          <xsd:element name="optionType" type="OptionTypeEnum">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The type of option transaction. From a usage standpoint, put/call is the default option type, while payer/receiver indicator is used for options index credit default swaps, consistently with the industry practice. Straddle is used for the case of straddle strategy, that combine a call and a put with the same strike.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="OptionBaseExtended" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">Base type for options starting with the 4-3 release, until we refactor the schema as part of the 5-0 release series</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="OptionBase">
+        <xsd:sequence>
+          <xsd:element name="premium" type="Premium" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The option premium payable by the buyer to the seller</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element ref="exercise" />
+          <xsd:element name="exerciseProcedure" type="ExerciseProcedure" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">A set of parameters defining procedures associated with the exercise.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="feature" type="OptionFeature" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">An Option feature such as quanto, asian, barrier, knock</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:choice minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">A choice between an explicit representation of the notional amount, or a reference to a notional amount defined elsewhere in this document</xsd:documentation>
+            </xsd:annotation>
+            <xsd:element name="notionalReference" type="NotionalAmountReference" />
+            <xsd:element name="notionalAmount" type="Money" />
+          </xsd:choice>
+          <xsd:group ref="OptionDenomination.model" minOccurs="0" />
+          <xsd:group ref="OptionSettlement.model" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="OptionFeature">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining option features.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:group ref="OptionBaseFeature.model" />
+      <xsd:group ref="OptionFeature.model" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="OptionNumericStrike">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining the strike price for an option as a numeric value without currency.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:element name="strikePrice" type="xsd:decimal">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">The price or level at which the option has been struck.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="strikePercentage" type="xsd:decimal">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">The price or level expressed as a percentage of the forward starting spot price.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="OptionStrike">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining the strike price for an equity option. The strike price is either: (i) in respect of an index option transaction, the level of the relevant index specified or otherwise determined in the transaction; or (ii) in respect of a share option transaction, the price per share specified or otherwise determined in the transaction. This can be expressed either as a percentage of notional amount or as an absolute value.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="OptionNumericStrike">
+        <xsd:sequence>
+          <xsd:element name="currency" type="Currency" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The currency in which an amount is denominated.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PassThrough">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">Type which contains pass through payments.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="passThroughItem" type="PassThroughItem" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">One to many pass through payment items.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PassThroughItem">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">Type to represent a single pass through payment.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:group ref="PayerReceiver.model" />
+      <xsd:element name="underlyerReference" type="AssetReference">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Reference to the underlyer whose payments are being passed through.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="passThroughPercentage" type="xsd:decimal">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Percentage of payments from the underlyer which are passed through.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Premium">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining a premium.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="SimplePayment">
+        <xsd:sequence>
+          <xsd:group ref="Premium.model" minOccurs="0" />
+          <xsd:group ref="PaymentDiscounting.model" minOccurs="0" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PubliclyAvailableInformation">
+    <xsd:sequence>
+      <xsd:element name="standardPublicSources" type="Empty" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">If this element is specified, indicates that ISDA defined Standard Public Sources are applicable.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="publicSource" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A public information source, e.g. a particular newspaper or electronic news service, that may publish relevant information used in the determination of whether or not a credit event has occurred. ISDA 2003 Term: Public Source</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="specifiedNumber" type="xsd:positiveInteger" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The minimum number of the specified public information sources that must publish information that reasonably confirms that a credit event has occurred. The market convention is two. ISDA 2003 Term: Specified Number</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Quanto">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">Determines the currency rate that the seller of the equity amounts will apply at each valuation date for converting the respective amounts into a currency that is different from the currency denomination of the underlyer.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="fxRate" type="FxRate" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Specifies a currency conversion rate.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="fxSpotRateSource" type="FxSpotRateSource" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Specifies the methodology (reference source and, optionally, fixing time) to be used for determining a currency conversion rate.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Restructuring">
+    <xsd:sequence>
+      <xsd:element name="restructuringType" type="RestructuringType" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Specifies the type of restructuring that is applicable.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="multipleHolderObligation" type="Empty" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">In relation to a restructuring credit event, unless multiple holder obligation is not specified restructurings are limited to multiple holder obligations. A multiple holder obligation means an obligation that is held by more than three holders that are not affiliates of each other and where at least two thirds of the holders must agree to the event that constitutes the restructuring credit event. ISDA 2003 Term: Multiple Holder Obligation</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="multipleCreditEventNotices" type="Empty" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Presence of this element indicates that Section 3.9 of the 2003 Credit Derivatives Definitions shall apply. Absence of this element indicates that Section 3.9 shall not apply. NOTE: Not allowed under ISDA Credit 1999.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="RestructuringType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:normalizedString">
+        <xsd:attribute name="restructuringScheme" type="xsd:anyURI" default="http://www.fpml.org/coding-scheme/restructuring-1-0" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="StrategyFeature">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for definining equity option simple strategy features</xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
+      <xsd:element name="strikeSpread" type="StrikeSpread" />
+      <xsd:element name="calendarSpread" type="CalendarSpread" />
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:complexType name="StrikeSpread">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining a strike spread feature</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="upperStrike" type="OptionStrike" />
+      <xsd:element name="upperStrikeNumberOfOptions" type="xsd:decimal" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Trigger">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">Trigger point at which feature is effective</xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
+      <xsd:element name="level" type="xsd:decimal">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The trigger level.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="levelPercentage" type="xsd:decimal">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The trigger level percentage.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:choice>
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Choice between either an explicit representation of Credit Events, or Credit Events defined elsewhere in the document.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:element name="creditEvents" type="CreditEvents" />
+        <xsd:element name="creditEventsReference" type="CreditEventsReference" />
+      </xsd:choice>
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:complexType name="TriggerEvent">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">Observation point for trigger</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="schedule" type="AveragingSchedule" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A Equity Derivative schedule.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="triggerDates" type="DateList" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The trigger Dates</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="trigger" type="Trigger">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The trigger level.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="featurePayment" type="FeaturePayment" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The feature payment.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:group name="OptionBaseFeature.model">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A model group containing Option Base Feature Elements</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="fxFeature" type="FxFeature" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A quanto or composite FX feature.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="strategyFeature" type="StrategyFeature" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A simple strategy feature</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="OptionFeature.model">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A model group containing Option Base Feature Elements</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="asian" type="Asian" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">An option where and average price is taken on valuation.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="barrier" type="Barrier" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">An option with a barrier feature.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="knock" type="Knock" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A knock feature.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="passThrough" type="PassThrough" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Pass through payments from the underlyer, such as dividends.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="OptionDenomination.model">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A model group containing the option denomination components.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="optionEntitlement" type="PositiveDecimal">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The number of units of underlyer per option comprised in the option transaction.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="entitlementCurrency" type="Currency" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">TODO</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="numberOfOptions" type="PositiveDecimal" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The number of options comprised in the option transaction.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="OptionSettlement.model">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A group which has Option Settlement elements</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="settlementType" type="SettlementTypeEnum" minOccurs="0"></xsd:element>
+      <xsd:element name="settlementDate" type="AdjustableOrRelativeDate" minOccurs="0" />
+      <xsd:group ref="SettlementAmountOrCurrency.model" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:group>
+</xsd:schema>
+

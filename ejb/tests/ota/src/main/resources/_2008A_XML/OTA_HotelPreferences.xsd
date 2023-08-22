@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="2.002" id="OTA2003A2008A">
+	<xs:include schemaLocation="OTA_CommonPrefs.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="BedTypePrefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Indicates preferences for the size and features of hotel bed types.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StringLength1to128">
+				<xs:attributeGroup ref="PreferLevelGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Indicates the level of preference for the bed type requested.</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+				<xs:attribute name="BedType" type="OTA_CodeType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Indicates the hotel bed type requested. Refer to OTA Code List Bed Type (BED).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="BusinessSrvcPrefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Indicates preferences for type of business services in a hotel.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StringLength1to128">
+				<xs:attributeGroup ref="PreferLevelGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the customer's level of preference for the hotel business service identified.</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+				<xs:attribute name="BusinessSrvcType" type="OTA_CodeType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the types of business services offered by the hotel. Refer to OTA Code ListBusiness Srvc Type (BUS).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="FoodSrvcPrefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Indicates preferences for type of food service facilities in a hotel.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StringLength1to128">
+				<xs:attributeGroup ref="PreferLevelGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the customer's level of preference for the hotel food service identified.
+							</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+				<xs:attribute name="FoodSrvcType" type="OTA_CodeType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the types of food services offered by the hotel. Refer to OTA Code List Main Cuisine Code (CUI).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="HotelPrefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">These are the hotel preference elements used on an instance of a profile.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="LoyaltyPref" type="LoyaltyPrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="PaymentFormPref" type="PaymentFormPrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="HotelChainPref" type="CompanyNamePrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="PropertyNamePref" type="PropertyNamePrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="PropertyLocationPref" type="PropertyLocationPrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="PropertyTypePref" type="PropertyTypePrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="PropertyClassPref" type="PropertyClassPrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="PropertyAmenityPref" type="PropertyAmenityPrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="RoomAmenityPref" type="RoomAmenityPrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="RoomLocationPref" type="RoomLocationPrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="BedTypePref" type="BedTypePrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="FoodSrvcPref" type="FoodSrvcPrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="MediaEntertainPref" type="MediaEntertainPrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="PetInfoPref" type="PetInfoPrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="MealPref" type="MealPrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="RecreationSrvcPref" type="RecreationSrvcPrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="BusinessSrvcPref" type="BusinessSrvcPrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="PersonalSrvcPref" type="PersonalSrvcPrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="SecurityFeaturePref" type="SecurityFeaturePrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="PhysChallFeaturePref" type="PhysChallFeaturePrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="SpecRequestPref" type="SpecRequestPrefType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="PreferLevelGroup"/>
+		<xs:attributeGroup ref="PrivacyGroup"/>
+		<xs:attributeGroup ref="SmokingIndicatorGroup"/>
+		<xs:attribute name="RatePlanCode" type="StringLength1to128">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Code identifying preferred hotel rate plan for this travel situation</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="HotelGuestType" type="OTA_CodeType">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Category of hotel guest. Refer to OTA Code List Hotel Guest Type (GUE).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="PersonalSrvcPrefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Indicates preferences for type of personal services in a hotel.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StringLength1to128">
+				<xs:attributeGroup ref="PreferLevelGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the customer's level of preference for the hotel personal service identified.</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PhysChallFeaturePrefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Indicates preferences for type of features required to meet the needs of persons with physical challenges, disabilities, etc.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StringLength1to128">
+				<xs:attributeGroup ref="PreferLevelGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the customer's level of preference for the hotel physically challenged feature identified.
+							</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+				<xs:attribute name="PhysChallFeatureType" type="OTA_CodeType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the types of features the hotel offers to service physically challenged guests. Refer to OTA Code List Physically Challenged Feature Code (PHY).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PropertyAmenityPrefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Indicates preferences for hotel property amenities.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StringLength1to128">
+				<xs:attributeGroup ref="PreferLevelGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the customer's level of preference for the hotel property amenity identified.</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+				<xs:attribute name="PropertyAmenityType" type="OTA_CodeType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the amenities offered by the hotel. Refer to OTA Code List Hotel Amenity Code (HAC).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PropertyClassPrefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Indicates preferences for class of hotel property.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StringLength1to128">
+				<xs:attributeGroup ref="PreferLevelGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the customer's level of preference for the hotel property class identified.</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+				<xs:attribute name="PropertyClassType" type="OTA_CodeType" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifes the classification of the property. Refer to OTA Code List Brand Category Code (BCC).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PropertyLocationPrefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Indicates preferences for hotel property locations.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StringLength1to128">
+				<xs:attributeGroup ref="PreferLevelGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Indicates the level of preference for the property location identified.</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+				<xs:attribute name="PropertyLocationType" type="OTA_CodeType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the propery location type. Refer to OTA Code List Location Category Codes (LOC).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PropertyNamePrefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Name of preferred hotel property associated with this collection.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StringLength0to128">
+				<xs:attributeGroup ref="PreferLevelGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the customer's level of preference for the hotel property identified.</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+				<xs:attribute name="HotelCode" type="StringLength1to16" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The code that uniquely identifies a single hotel property. The hotel code is decided between vendors.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PropertyTypePrefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Indicates preference for hotel property types.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StringLength1to128">
+				<xs:attributeGroup ref="PreferLevelGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the customer's level of preference for the hotel type identified.</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+				<xs:attribute name="PropertyType" type="StringLength1to128"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="RecreationSrvcPrefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Indicates preferences for type of recreation services in a hotel.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StringLength1to128">
+				<xs:attributeGroup ref="PreferLevelGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the customer's level of preference for the hotel recreational service identified.
+							</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+				<xs:attribute name="RecreationSrvcType" type="OTA_CodeType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the recreational services offered by the hotel. Refer to OTA Code List Recreation Srvc Type (RST).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="RoomAmenityPrefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Indicates preferences for hotel room amenities.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StringLength0to128">
+				<xs:attributeGroup ref="PreferLevelGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the customer's level of preference for the hotel room amenity identified.</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+				<xs:attribute name="RoomAmenity" type="OTA_CodeType" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifes the types of room amenities offered by the property. Refer to OTA Code List Room Amenity Type (RMA).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="ExistsCode" type="OTA_CodeType" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">This attribute is used to explicitly define whether an amenity or service is offered. Refer to OTA Code list Option Type Code (OTC). This is used in conjunction with RoomAmenity.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attributeGroup ref="QuantityGroup"/>
+				<xs:attribute name="QualityLevel" type="StringLength1to16" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Used to designate the quality level of the RoomAmenity e.g., premium, deluxe, standard, economy.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="RoomLocationPrefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Indicates preferences for hotel room locations.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StringLength1to128">
+				<xs:attributeGroup ref="PreferLevelGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the customer's level of preference for the hotel room location identified.</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+				<xs:attribute name="RoomLocationType" type="OTA_CodeType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the location of the room within the property. Refer to OTA Code List Room Location Type (RLT).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="SecurityFeaturePrefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Indicates preferences for type of security features in a hotel.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="OTA_CodeType">
+				<xs:attributeGroup ref="PreferLevelGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the customer's level of preference for the hotel security feature identified. Refer to OTA Code List Security Feature Code (SEC).</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>

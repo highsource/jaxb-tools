@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2007 UGS Corp. All Rights Reserved.
+This software and related documentation are proprietary to UGS Corp.
+-->
+<xsd:schema targetNamespace="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:plm="http://www.plmxml.org/Schemas/PLMXMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" xml:lang="en">
+  <xsd:include schemaLocation="PLMXMLSchema.xsd"/>
+  <xsd:annotation>
+    <xsd:documentation>
+    
+                PLM XML UGS Schema - Monikers, etc.
+                        
+    </xsd:documentation>
+    <xsd:appinfo source="http://www.plmxml.org/Schemas/PLMXMLUGSSchema">
+      <plm:SchemaInfo name="PLMXMLUGSSchema.xsd" date="2007-01-17" version="6.0" status="release"/>
+    </xsd:appinfo>
+  </xsd:annotation>
+  <!-- -->
+  <xsd:complexType name="GUIDType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:DescriptionBase">
+        <xsd:attribute name="value" type="xsd:string" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="GUIDTableType">
+    <xsd:annotation>
+      <xsd:documentation>
+	  Datatype for defining a table of GUIDs for later
+	  use by the entity reference elements. These values 
+	  are the GUIDs used on the target body or entity and
+	  provide a mechanism to 'shorthand' the moniker information
+	  without having to repeat lengthy GUID strings. 
+	  </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:DescriptionBase">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="GUID" type="plm:GUIDType"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!--*** Datatypes for defining a reference to a modeling entity via data contained with the moniker attributes.-->
+  <!-- -->
+  <xsd:complexType name="MonikerDataRefType">
+    <xsd:annotation>
+      <xsd:documentation>
+	  This datatype describes a single item of moniker data (ie. a
+	  moniker entity id and GUID index). The GUIDRef attribute 
+	  contains the id of the GUID in the GUIDTable and the  
+	  EntityId attribute is the value of the entity id held within
+	  the moniker attribute on the target body. 
+	  </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="guidRef" type="xsd:IDREF" use="required"/>
+    <xsd:attribute name="entityId" type="xsd:integer" use="required"/>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="MonikerGUIDRefType">
+    <xsd:annotation>
+      <xsd:documentation>
+	  This datatype just contains the id of the GUID which describes
+	  all the entities of interest. The GUIDRef attribute contains
+	  the id of the GUID in the GUIDTable. 
+	  By specifying just a GUID for a moniker means the reference
+	  is specifiying all the entities that are associated with that
+	  GUID.
+	  </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="guidRef" type="xsd:IDREF" use="required">
+      <xsd:annotation>
+        <xsd:documentation>
+	    The GUIDRef attribute contains the id of the GUID in the GUIDTable. 
+	    </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="MonikerPathType">
+    <xsd:annotation>
+      <xsd:documentation>
+	  This datatype just contains a string which represents the 
+	  moniker path of the entity/entities. This equivalent to the 
+	  string used within the context of the SE public API.
+	  This functionality should eventually be used by all EDS PLM 
+	  applications.
+	  </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="path" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="MonikerRefType">
+    <xsd:annotation>
+      <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=MonikerRefSet</xsd:appinfo>
+      <xsd:documentation>
+	  A datatype which describes a reference to a single entity 
+	  or set of entities. The element of this datatype consists
+	  of :
+		  - Moniker -(at least one) Element describing a single set of
+				  moniker attribute values. Note that there may be
+				  an entity that has multiple moniker attributes
+				  (hence the 'unbounded' facet in the schema).\
+		  OR
+		  - MonikerGUID -(only one) Element containing the GUID of all the
+				  entities of interest.
+		  OR
+		  - MonikerPath -(only one) Element containing the moniker path of
+				  all the entities of interest.
+	  </xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
+      <xsd:choice>
+        <xsd:element name="Moniker" type="plm:MonikerDataRefType" maxOccurs="unbounded"/>
+      </xsd:choice>
+      <xsd:choice>
+        <xsd:element name="MonikerGUID" type="plm:MonikerGUIDRefType"/>
+      </xsd:choice>
+      <xsd:choice>
+        <xsd:element name="MonikerPath" type="plm:MonikerPathType"/>
+      </xsd:choice>
+    </xsd:choice>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:simpleType name="RefEntityType">
+    <xsd:annotation>
+      <xsd:documentation>
+	  This type describes what type of entity (or entities)
+	  are being refenced by the PLMXML reference.
+	  </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="body"/>
+      <xsd:enumeration value="face"/>
+      <xsd:enumeration value="edge"/>
+      <xsd:enumeration value="vertex"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="EntityMonikerRefType">
+    <xsd:annotation>
+      <xsd:documentation>
+	  The main datatype for defining a moniker based entity reference. The
+	  type consists of :
+		  - GUIDTable -(optional) in which to place a the GUIDs that may be 
+					  referenced by the moniker references themselves.
+					  The GUIDs referenced by the individual entries could be
+					  in a 'global' document table - not every reference needs 
+					  to define its own GUID table. 
+		  - Target    -(mandatory) The element which contains the moniker data of
+					  the target entity or entities. 
+		  - Adjacent  -(optional) The elements which contain moniker references to 
+					  entities adjacent to the target entity. These references
+					  will assist with the unique identification of target entities
+					  when there is ambiguous (ie. duplicate) moniker data.
+					  (not implemeneted in first release or prototype).
+
+	  Attribute:
+		  - type   -(mandatory) Type of the reference - body, face, edge or vertex. 
+	  </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:EntityRefBase">
+        <xsd:sequence>
+          <xsd:element name="GUIDTable" type="plm:GUIDTableType" minOccurs="0"/>
+          <xsd:element name="Target" type="plm:MonikerRefType"/>
+          <xsd:element name="Adjacent" type="plm:MonikerRefType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="type" type="plm:RefEntityType" default="face"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="MonikerRef" type="plm:EntityMonikerRefType" substitutionGroup="plm:EntityRef"/>
+  <!-- -->
+  <xsd:complexType name="MonikerContextPropertyType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttributeBase">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="GUID" type="plm:GUIDType"/>
+        </xsd:choice>
+        <xsd:attribute name="contextRef" type="xsd:anyURI" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="MonikerContext" type="plm:MonikerContextPropertyType" substitutionGroup="plm:Attribute"/>
+  <!--*** UGS -->
+  <!-- -->
+  <xsd:complexType name="RepresentationDataType">
+    <xsd:annotation>
+      <xsd:documentation>
+	  PLMXML attributes for UG specific representation.
+	  </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttributeBase">
+        <xsd:attribute name="format" type="plm:RepresentationFormatType" use="required"/>
+        <xsd:attribute name="partNumber" type="plm:StringFieldType" use="optional"/>
+        <xsd:attribute name="revision" type="plm:StringFieldType" use="optional"/>
+        <xsd:attribute name="units" type="plm:StringFieldType" use="optional"/>
+        <xsd:attribute name="type" type="plm:StringFieldType" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RepresentationData" type="plm:RepresentationDataType" substitutionGroup="plm:Attribute"/>
+  <!-- -->
+  <xsd:simpleType name="MassConstraintsUnitType">
+    <xsd:annotation>
+      <xsd:documentation>
+	  PLMXML attributes for UG specific constraint data.
+	  </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="milligrams"/>
+      <xsd:enumeration value="grams"/>
+      <xsd:enumeration value="kilograms"/>
+      <xsd:enumeration value="pounds"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="MassConstraintsType">
+    <xsd:attribute name="units" type="plm:MassConstraintsUnitType" default="kilograms"/>
+    <xsd:attribute name="minimum" type="plm:RealFieldType" use="optional"/>
+    <xsd:attribute name="maximum" type="plm:RealFieldType" use="optional"/>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="PartConstraintsType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttributeBase">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element name="Mass" type="plm:MassConstraintsType"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PartConstraints" type="plm:PartConstraintsType" substitutionGroup="plm:Attribute"/>
+  <!-- -->
+  <xsd:simpleType name="PartUnitsType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="millimetres"/>
+      <xsd:enumeration value="inches"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="UGRepType">
+    <xsd:annotation>
+      <xsd:documentation>
+	  UG Representation component of the PLMXML Schema
+	  </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:InternalRepBase">
+        <xsd:choice>
+          <xsd:element name="Representation" type="plm:RepresentationType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:choice>
+        <xsd:attribute name="format" type="plm:RepresentationFormatType" default="UGPrt"/>
+        <xsd:attribute name="partNumber" type="xsd:string" use="optional"/>
+        <xsd:attribute name="revision" type="xsd:string" use="optional"/>
+        <xsd:attribute name="units" type="plm:PartUnitsType" default="millimetres"/>
+        <xsd:attribute name="type" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="UGRep" type="plm:UGRepType" substitutionGroup="plm:InternalRep"/>
+  <!-- -->
+</xsd:schema>

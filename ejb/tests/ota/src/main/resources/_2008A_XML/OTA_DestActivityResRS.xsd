@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="2.003" id="OTA2008A">
+	<xs:include schemaLocation="OTA_DestinationActivity.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_DestActivityResRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This could be used to respond to a OTA_DestActivityResRQ.xsd or the OTA_ReadRQ.xsd. The response to a booking request is either Yes or No based upon the availability. The Destination Activity reservation system responds back attaching a confirmation number or additional information such as the reservation ID, etc. when the response is affirmative.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:annotation>
+				<xs:documentation xml:lang="en">A response per item in the reservation request</xs:documentation>
+			</xs:annotation>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType"/>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0"/>
+					<xs:element name="ReservationReferences">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">A set of unique references returned to identify this reservation, allocated by the called system</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:annotation>
+									<xs:documentation xml:lang="en">A unique references allocated by the called system</xs:documentation>
+								</xs:annotation>
+								<xs:element name="ReservationReference" type="UniqueID_Type" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="ReservationResponseItems" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">A set of responses to a reservation request, one per item</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:annotation>
+									<xs:documentation xml:lang="en">A per-item response to a reservation request.</xs:documentation>
+								</xs:annotation>
+								<xs:element name="Item" type="DestActivityResResponseItemType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DestActivityReservation" type="DestActivityReservationType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Details of a destination activity reservation, generally only returned in response to a OTA_ReadRQ.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType"/>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attribute name="ResResponseType" type="TransactionStatusType"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

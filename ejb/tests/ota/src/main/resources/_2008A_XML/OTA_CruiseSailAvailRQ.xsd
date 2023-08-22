@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="2.003" id="OTA2008A">
+	<xs:include schemaLocation="OTA_CruiseCommonTypes.xsd"/>
+	
+	
+	
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_CruiseSailAvailRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The Sailing Availability Request message requests Sailing Availability for a geographical region on a specific date for a specific number and passengers. Optional request information can include:
+- Cruise lines 
+- Ship codes
+The request can be narrowed to request availability for a specific cruise line or specific ship.
+</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Point of sale object.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Guest" type="GuestType" minOccurs="0" maxOccurs="9">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specifies guest names and/or their transportation.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="GuestCounts" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specifies guest quantity and guest types.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specify guest numbers and types.</xs:documentation>
+						</xs:annotation>
+						<xs:sequence>
+							<xs:element name="GuestCount" maxOccurs="9">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Categorization of all guests in the request.  The sum of the Quantity attribute will provide you with the total number of guests.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attributeGroup ref="TravelerCountGroup"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="GroupIndicator" type="xs:boolean" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">When true, these counts are for a group. </xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SailingDateRange">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specifies sailing availability start and end dates as well as cruise duration.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="DateTimeSpanType">
+								<xs:attributeGroup ref="DurationGroup"/>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="CruiseLinePrefs" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Collection of cruise line preferences.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="CruiseLinePref" maxOccurs="99">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies sailing preferences such as cruise line and ship code.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="InclusivePackageOption" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Used to request package options that the cruise might offer with the sailing. It is quite common to request, at this stage, packages that are included in the cruise sailing offering (inclusive packages).</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attributeGroup ref="CruisePackageGroup"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="SearchQualifiers" type="SailingSearchQualifierType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Used to further qualify the sailing availability search.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attributeGroup ref="ShipReferenceGroup"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="RegionPref" minOccurs="0" maxOccurs="5">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specifies geographical region to include in the response. </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attributeGroup ref="RegionGroup"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="TPA_Extensions" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The standard attributes that appear on the root element for all OTA payloads. </xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+			<xs:attributeGroup ref="ResponseGroup">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Provides the echo token to be used to retrieve additional records.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,1085 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Copyright 2005 UGS Corp.  All Rights Reserved.
+This software and related documentation are proprietary to UGS Corp.
+-->
+<xsd:schema targetNamespace="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:plm="http://www.plmxml.org/Schemas/PLMXMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xsd:include schemaLocation="PLMXMLSchema.xsd"/>
+  <xsd:annotation>
+    <xsd:documentation source="http://www.plmxml.org/Schemas/PLMXMLSchema/History">
+      <plm:SchemaChange author="davidj" date="2005-05-11" version="6.0.1.26">
+        <plm:Description>
+        Add GroupByTypeRuleEntry element.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='GroupByTypeRuleEntryType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-10-24" version="6.0.1.26">
+        <plm:Description>
+        Add plm:refType attribute to various attributes.
+        </plm:Description>
+      </plm:SchemaChange>
+    </xsd:documentation>
+    <xsd:documentation>
+    
+    PLM XML PDM Schema extension
+                        
+    </xsd:documentation>
+    <xsd:appinfo source="http://www.plmxml.org/Schemas/PLMXMLPDMSchema">
+      <plm:SchemaInfo name="PLMXMLPDMSchema.xsd" date="2005-10-24" version="6.0" status="release"/>
+    </xsd:appinfo>
+  </xsd:annotation>
+  <!-- -->
+  <!-- ********************** Decision ********************************* -->
+  <!-- -->
+  <xsd:simpleType name="DecisionType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="noDecision"/>
+      <xsd:enumeration value="approve"/>
+      <xsd:enumeration value="reject"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ********************** Signoff ********************************** -->
+  <!-- -->
+  <xsd:complexType name="SignoffType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:DescriptionBase">
+        <xsd:attribute name="organisationMemberRef" type="plm:anyURIType" plm:refType="plm:OrganisationMember"/>
+        <xsd:attribute name="resourcePoolRef" type="plm:anyURIType" plm:refType="plm:ResourcePool"/>
+        <xsd:attribute name="decision" type="plm:DecisionType"/>
+        <xsd:attribute name="decisionDate" type="xsd:dateTime" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!-- **************************** Task ******************************** -->
+  <!-- -->
+  <xsd:simpleType name="TaskStateType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="unassigned"/>
+      <xsd:enumeration value="pending"/>
+      <xsd:enumeration value="started"/>
+      <xsd:enumeration value="completed"/>
+      <xsd:enumeration value="skipped"/>
+      <xsd:enumeration value="aborted"/>
+      <xsd:enumeration value="suspended"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="TaskType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="Signoff" type="plm:SignoffType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="ReleaseStatus" type="plm:ReleaseStatusType" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="state" type="plm:TaskStateType"/>
+        <xsd:attribute name="subTaskRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:Task"/>
+        <xsd:attribute name="targetRefs" use="optional">
+          <xsd:simpleType>
+            <xsd:restriction base="plm:uriReferenceListType">
+              <xsd:minLength value="1"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:attribute>
+        <xsd:attribute name="referenceRefs" use="optional">
+          <xsd:simpleType>
+            <xsd:restriction base="plm:uriReferenceListType">
+              <xsd:minLength value="1"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!-- ********************** WorkflowProcess ****************************** -->
+  <!-- -->
+  <xsd:complexType name="WorkflowProcessType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="Task" type="plm:TaskType" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="templateName" type="xsd:string"/>
+        <xsd:attribute name="ownerRef" type="plm:anyURIType" plm:refType="plm:Owner"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="WorkflowProcess" type="plm:WorkflowProcessType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ********************** Change ************************************ -->
+  <!-- -->
+  <xsd:complexType name="RelatedItemType">
+    <xsd:attribute name="itemRef" type="plm:anyURIType"/>
+    <xsd:attribute name="type" type="xsd:string"/>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="ChangeType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element represents an Engineering Change. Each Change has a number of
+      related objects, with relation type such as Affected, Problem, or Reference. 
+      
+      Attributes:
+      
+      type:
+      changeId:              change id
+      changeRevisionId:      revision string, e.g. "B"
+      ownerRef:
+      
+      Sub-elements:
+      
+      RelatedItem:           related elements
+      ReleaseStatus:         
+      ChangeRecord:          records of adds, deletions and other changes
+      ChangeRecordGroup:
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="RelatedItem" type="plm:RelatedItemType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="ReleaseStatus" type="plm:ReleaseStatusType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="ChangeRecord" type="plm:ChangeRecordType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="ChangeRecordGroup" type="plm:ChangeRecordGroupType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="type" type="xsd:string"/>
+        <xsd:attribute name="changeId" type="xsd:string"/>
+        <xsd:attribute name="changeRevisionId" type="xsd:string"/>
+        <xsd:attribute name="ownerRef" type="plm:anyURIType"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Change" type="plm:ChangeType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ********************** WorkflowTemplateClassificationEnum ************************ -->
+  <!-- -->
+  <xsd:simpleType name="WorkflowTemplateClassificationEnum">
+    <xsd:annotation>
+      <xsd:documentation>
+      Workflow template classification's enumeration values. There are two kinds of templates:
+      process template and task template. 
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="process"/>
+      <xsd:enumeration value="task"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ********************** WorkflowTemplateStageEnum ************************ -->
+  <!-- -->
+  <xsd:simpleType name="WorkflowTemplateStageEnum">
+    <xsd:annotation>
+      <xsd:documentation>
+      Workflow template's stage enumeration values. A template could be in a stage as being 
+      available for use, or being under construction, or being obsoleted.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="obsolete"/>
+      <xsd:enumeration value="developing"/>
+      <xsd:enumeration value="available"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ********************** WorkflowTemplate ****************************** -->
+  <!-- -->
+  <xsd:complexType name="WorkflowTemplateType">
+    <xsd:annotation>
+      <xsd:documentation>
+      The WorkflowTemplateType represents the type for the workflow templates.  
+      Typically workflow template is used to initialize workflow processes. A workflow 
+      template have actions associated with it to represent a list of workflow actions that
+      will be triggered during a workflow process. The actions objects are WorkflowAction 
+      objects. A workflow template also might have a parent task template, one or more 
+      dependency task templates, and one or more child task templates associated with it. 
+      These are also WorkflowTemplate objects.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="TaskDescription" type="plm:UserListDataType"/>
+          <xsd:element name="DependencyTaskActions" type="xsd:string" plm:deprecated="true"/>
+          <xsd:element name="DependencyTaskTemplates" type="xsd:string" plm:deprecated="true"/>
+        </xsd:sequence>
+        <xsd:attribute name="actions" type="plm:uriReferenceListType" plm:refType="plm:WorkflowAction">
+          <xsd:annotation>
+            <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">validate=skipName</xsd:appinfo>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="parentTaskTemplateRef" type="plm:anyURIType" plm:refType="plm:WorkflowTemplate"/>
+        <xsd:attribute name="dependencyTaskTemplateRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:WorkflowTemplate"/>
+        <xsd:attribute name="iconKey" type="xsd:string"/>
+        <xsd:attribute name="signoffQuorum" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="stage" type="plm:WorkflowTemplateStageEnum" default="available"/>
+        <xsd:attribute name="templateClassification" type="plm:WorkflowTemplateClassificationEnum" default="task"/>
+        <xsd:attribute name="location" type="xsd:string" use="required"/>
+        <xsd:attribute name="objectType" type="xsd:string" use="required"/>
+        <xsd:attribute name="showInProcessStage" type="xsd:boolean" use="required"/>
+        <xsd:attribute name="subTemplateRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:WorkflowTemplate"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="WorkflowTemplate" type="plm:WorkflowTemplateType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ********************** WorkflowAction ****************************** -->
+  <!-- -->
+  <xsd:complexType name="WorkflowActionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Each WorkflowAction object has one or more action handlers and business rules associated
+      with it. The action handlers are represented by a list WorkflowHandlers, while the business
+      rules are represented WorkflowBusinessRules. The WorkflowAction object also has a back pointer
+      to its parent task template.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="actionHandlerRefs" type="plm:uriReferenceListType" plm:refType="plm:WorkflowHandler"/>
+        <xsd:attribute name="ruleRefs" type="plm:uriReferenceListType" plm:refType="plm:WorkflowBusinessRule"/>
+        <xsd:attribute name="actionType" type="xsd:string" use="required"/>
+        <xsd:attribute name="parentRef" type="plm:anyURIType" use="required" plm:refType="plm:WorkflowTemplate"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="WorkflowAction" type="plm:WorkflowActionType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ********************** WorkflowHandler ****************************** -->
+  <!-- -->
+  <xsd:complexType name="WorkflowHandlerType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A WorkflowHandler is a small program or function. Handlers are used to 
+      extend and customize workflow tasks. A WorkflowHandler object has one or more 
+      arguments associated with it.  It also has a back pointer to its parent workflow
+      action object.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="Arguments" type="plm:UserDataType" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="parentRef" type="plm:anyURIType" plm:refType="plm:WorkflowAction"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="WorkflowHandler" type="plm:WorkflowHandlerType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ********************** WorkflowBusinessRuleHandler ****************************** -->
+  <!-- -->
+  <xsd:complexType name="WorkflowBusinessRuleHandlerType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:WorkflowHandlerType">
+        <xsd:attribute name="override" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="negated" type="xsd:boolean" default="false"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="WorkflowBusinessRuleHandler" type="plm:WorkflowBusinessRuleHandlerType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ********************** WorkflowBusinessRule ****************************** -->
+  <!-- -->
+  <xsd:complexType name="WorkflowBusinessRuleType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A WorkflowBusinessRule represents some conditions that must be met to perform a workflow
+      action. It consists of one or more WorkflowBusinessRuleHandlers, and a rule quorum 
+      specifying the number of rule handlers that must return go for the workflow action to 
+      complete. It also has a back pointer to its parent workflow action object.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="ruleHandlerRefs" type="plm:uriReferenceListType" plm:refType="plm:WorkflowBusinessRuleHandler"/>
+        <xsd:attribute name="ruleQuorum" type="xsd:integer" use="required"/>
+        <xsd:attribute name="parentRef" type="plm:anyURIType" plm:refType="plm:WorkflowAction"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="WorkflowBusinessRule" type="plm:WorkflowBusinessRuleType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ********************** WorkflowSignoffProfile ****************************** -->
+  <!-- -->
+  <xsd:complexType name="WorkflowSignoffProfileType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A WorkflowSignoffProfile is used in a workflow review task template to define which a 
+      user will comply with to assign review responsibilities to other Users. A signoff profile
+      consists of a group and a role for a user, while the group object should be of type 
+      plm:OrganisationType, and the role object should be of type plm:RoleType. The signoff profile
+      object also has a back pointer to its related task template.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="roleRef" type="plm:anyURIType" plm:refType="plm:Role"/>
+        <xsd:attribute name="groupRef" type="plm:anyURIType" plm:refType="plm:Owner"/>
+        <xsd:attribute name="allowSubgroups" type="xsd:boolean" use="required"/>
+        <xsd:attribute name="numberOfSignoffs" type="xsd:integer" use="required"/>
+        <xsd:attribute name="signoffQuorum" type="xsd:integer" use="required"/>
+        <xsd:attribute name="templateRef" type="plm:anyURIType" plm:refType="plm:WorkflowTemplate"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="WorkflowSignoffProfile" type="plm:WorkflowSignoffProfileType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ********************** WorkflowProfileRelation ****************************** -->
+  <!-- -->
+  <xsd:complexType name="WorkflowProfileRelationType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A base type for defining relations between workflow task template and signoff profile elements. 
+      ownerRef is a reference to an owning object, such as a task template or a task. profileRefs is 
+      a reference to one or many signoff profiles that this owner object is associated to.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="ownerRef" type="plm:anyURIType" use="required"/>
+        <xsd:attribute name="profileRefs" type="plm:uriReferenceListType" use="required" plm:refType="plm:WorkflowSignoffProfile"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="WorkflowProfileRelation" type="plm:WorkflowProfileRelationType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ********************** RuleEntry ************************* -->
+  <!-- -->
+  <xsd:complexType name="RuleEntryBase" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation>
+      Base type for Revision Rule Entries.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:DescriptionBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RuleEntry" type="plm:RuleEntryBase"/>
+  <!-- -->
+  <!-- ********************** DateRuleEntry ************************* -->
+  <!-- -->
+  <xsd:complexType name="DateRuleEntryType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Specifies a date to be used by other Rule Entries.
+      
+      Attributes:
+      
+      refDate:      the dateTime
+      isToday:      if 'true', the dateTime is today (at 00.00 hours).
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:RuleEntryBase">
+        <xsd:attribute name="refDate" type="xsd:dateTime"/>
+        <xsd:attribute name="isToday" type="xsd:boolean"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DateRuleEntry" type="plm:DateRuleEntryType" substitutionGroup="plm:RuleEntry"/>
+  <!-- -->
+  <!-- ********************** StatusRuleEntry ************************* -->
+  <!-- -->
+  <xsd:simpleType name="StatusConfigType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="effectiveDate"/>
+      <xsd:enumeration value="releasedDate"/>
+      <xsd:enumeration value="serialNumber"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="StatusRuleEntryType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A RevisionRule Entry for selecting a Revision by its Release Status. 
+    
+      Attributes:
+    
+      status:    This specifies the required release status of the Revision. It
+                 corresponds to the 'name' attribute of the corresponding
+                 ReleaseStatus element. If 'status' has the value "any", then any
+                 status is acceptable.
+               
+      type:      specifies whether the rule is to use the release date, the
+                 effectivity dates, or the serial number range, in the ReleaseStatus,
+                 when choosing an element. May use the date or serial number from
+                 a DateRuleEntry or a SerialNumberRuleEntry.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:RuleEntryBase">
+        <xsd:attribute name="status" type="xsd:string" use="optional"/>
+        <xsd:attribute name="type" type="plm:StatusConfigType"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="StatusRuleEntry" type="plm:StatusRuleEntryType" substitutionGroup="plm:RuleEntry"/>
+  <!-- -->
+  <!-- ********************** LatestWorkingRuleEntry ************************* -->
+  <!-- -->
+  <xsd:complexType name="LatestWorkingRuleEntryType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Latest Working Rule - select the most recent element with status Working
+      (i.e. no ReleaseStatus).
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:RuleEntryBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="LatestWorkingRuleEntry" type="plm:LatestWorkingRuleEntryType" substitutionGroup="plm:RuleEntry"/>
+  <!-- -->
+  <!-- ********************** WorkingRuleEntry ************************* -->
+  <!-- -->
+  <xsd:complexType name="WorkingRuleEntryType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Working Rule Entry - i.e. no Release Status, selecting by user or group.
+      
+      Attributes:
+      
+      userRef:         reference to User
+      groupRef:        
+      
+      isCurrentUser:   if 'true', then select by the current user
+      isCurrentGroup:  if 'true', then select by the current group.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:RuleEntryBase">
+        <xsd:attribute name="userRef" type="plm:anyURIType" plm:refType="plm:Owner"/>
+        <xsd:attribute name="groupRef" type="plm:anyURIType" plm:refType="plm:Owner"/>
+        <xsd:attribute name="isCurrentUser" type="xsd:boolean"/>
+        <xsd:attribute name="isCurrentGroup" type="xsd:boolean"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="WorkingRuleEntry" type="plm:WorkingRuleEntryType" substitutionGroup="plm:RuleEntry"/>
+  <!-- -->
+  <!-- ********************** LatestRuleEntry ************************* -->
+  <!-- -->
+  <xsd:simpleType name="RevisionConfigType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="creationDate"/>
+      <xsd:enumeration value="alphaNumericRevID"/>
+      <xsd:enumeration value="numericRevID"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="LatestRuleEntryType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Latest Rule Entry - i.e. most recent by creation date, numeric productId, 
+      or alphanumeric productId.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:RuleEntryBase">
+        <xsd:attribute name="configType" type="plm:RevisionConfigType"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="LatestRuleEntry" type="plm:LatestRuleEntryType" substitutionGroup="plm:RuleEntry"/>
+  <!-- -->
+  <!-- ********************** OverrideRuleEntry ************************* -->
+  <!-- -->
+  <xsd:complexType name="OverrideRuleEntryType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:RuleEntryBase">
+        <xsd:attribute name="overrideFolderRef" type="plm:anyURIType" plm:refType="plm:Folder"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="OverrideRuleEntry" type="plm:OverrideRuleEntryType" substitutionGroup="plm:RuleEntry"/>
+  <!-- -->
+  <!-- ********************** PreciseRuleEntry ************************* -->
+  <!-- -->
+  <xsd:complexType name="PreciseRuleEntryType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:RuleEntryBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PreciseRuleEntry" type="plm:PreciseRuleEntryType" substitutionGroup="plm:RuleEntry"/>
+  <!-- -->
+  <!-- ********************** SerialNumberRuleEntry ************************* -->
+  <!-- -->
+  <xsd:complexType name="SerialNumberRuleEntryType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Specifies a Serial Number to be used by other Rule Entries.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:RuleEntryBase">
+        <xsd:attribute name="serialNumber" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SerialNumberRuleEntry" type="plm:SerialNumberRuleEntryType" substitutionGroup="plm:RuleEntry"/>
+  <!-- -->
+  <!-- ********************** ContextRuleEntry ******************** -->
+  <!-- -->
+  <xsd:complexType name="ContextRuleEntryType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:RuleEntryBase">
+        <xsd:attribute name="contextRef" type="plm:anyURIType"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ContextRuleEntry" type="plm:ContextRuleEntryType" substitutionGroup="plm:RuleEntry"/>
+  <!-- -->
+  <!-- ********************** GroupRuleEntry ************************* -->
+  <!-- -->
+  <xsd:complexType name="GroupRuleEntryType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This RuleEntry contains subordinate RuleEntries, which are of equal precedence.
+      They are all processed; if there is at least one match, then the revision with the
+      most recent creation date is configured.
+      
+      SubElements:
+      
+      RuleEntry:        Each sub-element is a subordinate RuleEntry. 
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:RuleEntryBase">
+        <xsd:sequence>
+          <xsd:element ref="plm:RuleEntry" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="GroupRuleEntry" type="plm:GroupRuleEntryType" substitutionGroup="plm:RuleEntry"/>
+  <!-- -->
+  <!-- ********************** GroupByTypeRuleEntry ************************* -->
+  <!-- -->
+  <xsd:complexType name="GroupByTypeRuleEntryType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This RuleEntry contains subordinate RuleEntries, and only applies to Structures
+      with 'subType' attribute corresponding to one of a specified set of allowed types.
+      The RuleEntry sub-elements are processed sequentially.
+      
+      SubElements:
+      
+      AllowedType:      Each sub-element specifies an allowed 'subType'
+      RuleEntry:        Each sub-element is a subordinate RuleEntry. Note that these
+                        subordinate RuleEntries cannot be of type GroupByTypeRuleEntry.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:RuleEntryBase">
+        <xsd:sequence>
+          <xsd:element name="AllowedType" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element ref="plm:RuleEntry" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="GroupByTypeRuleEntry" type="plm:GroupByTypeRuleEntryType" substitutionGroup="plm:RuleEntry"/>
+  <!-- -->
+  <!-- ********************** RevisionRule ************************* -->
+  <!-- -->
+  <xsd:complexType name="RevisionRuleType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A Revision Rule is a rule specifying which Revisions of Structures should be
+      configured.
+      
+      Sub-elements:
+      
+      RuleEntry:    the clauses (entries) in the Rule. They are applied sequentially.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ConfigRuleBase">
+        <xsd:sequence>
+          <xsd:element ref="plm:RuleEntry" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="RevisionRule" type="plm:RevisionRuleType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ********************** Form ************************* -->
+  <!-- -->
+  <xsd:complexType name="FormType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A Form is a way of associating additional freeform attributes with an element,
+      effectively defining a subclass of element. (The subclass can be specified by
+      means of the "subType" attribute on the element).
+      
+      The attributes are attached to the Form by using UserData. The Form is attached 
+      to the element by means of an AssociatedForm element.
+   
+      Attributes:
+      
+      mainClass:          
+      subClass:          
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ManagedBase">
+        <xsd:attribute name="mainClass" type="xsd:string" use="optional"/>
+        <xsd:attribute name="subClass" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Form" type="plm:FormType" substitutionGroup="plm:Managed"/>
+  <!-- -->
+  <!-- ********************** Folder ************************* -->
+  <!-- -->
+  <xsd:complexType name="FolderType">
+    <xsd:annotation>
+      <xsd:documentation>
+        A Folder is a general-purpose collection of other elements.
+      
+        Attributes:
+      
+        subType:        Inherited from ManagedBase. A string representing the sub-type of the Folder. The
+                        string, "viewSet", is reserved for a set of Model Views in NX.
+        folderContentRefs: The contents of the Folder. When the subType attribute is set to "viewSet",
+                        folderContentsRefs references a list of ProductViews with their usage attributes
+                        set to "modelView". The first reference in the list references the Base View.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ManagedBase">
+        <xsd:attribute name="folderContentRefs" type="plm:uriReferenceListType"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Folder" type="plm:FolderType" substitutionGroup="plm:Managed"/>
+  <!-- -->
+  <!-- ************************* AssociatedFolder ************************ -->
+  <!-- -->
+  <xsd:complexType name="AssociatedFolderType">
+    <xsd:annotation>
+      <xsd:documentation>
+      plm:Attribute used to associate a Folder with a PLM XML element.
+      
+      Attributes:
+      
+      folderRef     reference to the Folder
+      role          role/purpose of Folder.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttributeBase">
+        <xsd:attribute name="folderRef" type="plm:anyURIType" use="required" plm:refType="plm:Folder"/>
+        <xsd:attribute name="role" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AssociatedFolder" type="plm:AssociatedFolderType" substitutionGroup="plm:Attribute"/>
+  <!-- -->
+  <!-- ************************* AssociatedForm ********************************** -->
+  <!-- -->
+  <xsd:complexType name="AssociatedFormType">
+    <xsd:annotation>
+      <xsd:documentation>
+      plm:Attribute used to associate a Form with a PLM XML element.
+      
+      Attributes:
+      
+      formRef      reference to the Form
+      role         role/purpose of Form.    
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttributeBase">
+        <xsd:attribute name="formRef" type="plm:anyURIType" use="required" plm:refType="plm:Form"/>
+        <xsd:attribute name="role" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AssociatedForm" type="plm:AssociatedFormType" substitutionGroup="plm:Attribute"/>
+  <!-- -->
+  <!-- ********************** IdContext ************************* -->
+  <!-- -->
+  <xsd:complexType name="IdContextType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ManagedBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="IdContext" type="plm:IdContextType" substitutionGroup="plm:Managed"/>
+  <!-- -->
+  <!-- ********************** Identifier ************************* -->
+  <!-- -->
+  <xsd:complexType name="IdentifierType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This defines an alternative id for an element, in some context.
+      
+      Attributes:
+      
+      identifierId:         the alternative id.
+      idContext:            a context string
+      supplementalContext:  a list of context elements, such as Organisations
+      alternativeIdOf:      a list of elements that this is an id of
+      isDispDefault:        true if this is the id to display by default when
+                            displaying the identified element.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ManagedBase">
+        <xsd:attribute name="identifierId" type="xsd:string" use="required"/>
+        <xsd:attribute name="idContext" type="xsd:string" use="optional"/>
+        <xsd:attribute name="supplementalContext" type="plm:uriReferenceListType" use="optional">
+          <xsd:annotation>
+            <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">validate=skipName</xsd:appinfo>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="alternateIdOf" type="plm:uriReferenceListType">
+          <xsd:annotation>
+            <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">validate=skipName</xsd:appinfo>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="isDispDefault" type="xsd:boolean"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Identifier" type="plm:IdentifierType" substitutionGroup="plm:Managed"/>
+  <!-- -->
+  <!-- ********************** Project ************************* -->
+  <!-- -->
+  <xsd:complexType name="ProjectType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ManagedBase">
+        <xsd:attribute name="projectId" type="xsd:string" use="required"/>
+        <xsd:attribute name="team" type="plm:uriReferenceListType" plm:refType="plm:Owner">
+          <xsd:annotation>
+            <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">validate=skipName</xsd:appinfo>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Project" type="plm:ProjectType" substitutionGroup="plm:Managed"/>
+  <!--  -->
+  <!-- ************************* Vault ********************* -->
+  <!-- -->
+  <xsd:simpleType name="MachineTypesType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="unix"/>
+      <xsd:enumeration value="vms"/>
+      <xsd:enumeration value="wnt"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="VaultType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="nodeName" type="xsd:string"/>
+        <xsd:attribute name="machineType" type="plm:MachineTypesType"/>
+        <xsd:attribute name="path" type="xsd:string"/>
+        <xsd:attribute name="shadowNodeName" type="xsd:string" use="optional"/>
+        <xsd:attribute name="shadowMachineType" type="plm:MachineTypesType" use="optional"/>
+        <xsd:attribute name="shadowPath" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Vault" type="plm:VaultType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ************************* ClosureRule ******************************* -->
+  <!-- -->
+  <xsd:complexType name="ClosureRuleClauseType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:simpleType name="ClosureRuleScopeType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="TCENG" plm:deprecated="true"/>
+      <xsd:enumeration value="PLMXML"/>
+      <xsd:enumeration value="application"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="ClosureRuleType">
+    <xsd:annotation>
+      <xsd:documentation>
+      ClosureRule is used to define what type of associated data gets exported. It consists
+      of a sequence of clauses, each one defining a primary class, a secondary class,
+      a relation, and an action. It is used to drive a traversal process.
+      
+      Attributes:
+      
+      scope:       PLMXML or application
+      
+      Sub-Elements:
+      
+      Clause:      Closure rule clause in string form, e.g.
+                   "CLASS.*:CLASS.*:ATTRIBUTE.*:TRAVERSE_AND_PROCESS"
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ConfigRuleBase">
+        <xsd:sequence>
+          <xsd:element name="Clause" type="plm:ClosureRuleClauseType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="scope" type="plm:ClosureRuleScopeType"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ClosureRule" type="plm:ClosureRuleType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ************************* ConfigurationRule *********************** -->
+  <!-- -->
+  <xsd:complexType name="ConfigurationRuleType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element defines a configuration rule by referencing closure rule, 
+      variant rule and revision rule.
+      
+      Attributes:
+      
+      closureRuleRef:    reference to a ClosureRule
+      variantRuleRef:    reference to a VariantRule
+      revisionRuleRef:   reference to a RevisionRule
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="closureRuleRef" type="plm:anyURIType" plm:refType="plm:ClosureRule"/>
+        <xsd:attribute name="variantRuleRef" type="plm:anyURIType" plm:refType="plm:VariantRule"/>
+        <xsd:attribute name="revisionRuleRef" type="plm:anyURIType" plm:refType="plm:RevisionRule"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ConfigurationRule" type="plm:ConfigurationRuleType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ************************* StructureContext ******************** -->
+  <!-- -->
+  <xsd:complexType name="StructureContextType">
+    <xsd:annotation>
+      <xsd:documentation>
+      StructureContext is used to group together all the objects that the user 
+      would like to treat as a project for analysis.
+      
+      Attributes:
+      
+      configurationRuleRef: configurationRule for this element.
+      
+      structureRefs:             
+      structureRevisionRefs:           
+      occurrenceRefs:             
+      managedRefs:            
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ManagedBase">
+        <xsd:attribute name="configurationRuleRef" type="plm:anyURIType" plm:refType="plm:ConfigurationRule"/>
+        <xsd:attribute name="structureRefs" type="plm:uriReferenceListType" plm:refType="plm:Structure"/>
+        <xsd:attribute name="structureRevisionRefs" type="plm:uriReferenceListType" plm:refType="plm:StructureRevision"/>
+        <xsd:attribute name="managedRefs" type="plm:uriReferenceListType" plm:refType="plm:Managed"/>
+        <xsd:attribute name="occurrenceRefs" type="plm:uriReferenceListType" plm:refType="plm:Occurrence"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="StructureContext" type="plm:StructureContextType" substitutionGroup="plm:Managed"/>
+  <!-- -->
+  <!-- ************************* CollaborationContext *************************** -->
+  <!-- -->
+  <xsd:complexType name="CollaborationContextType">
+    <xsd:annotation>
+      <xsd:documentation>
+      CollaborationContext is used to group together several StructureContext elements,
+      and a default configuration rule.
+        
+      Attributes:
+    
+      currentContextRef:    The current StructureContext.
+      configurationRuleRef: configuration rule for this element.
+      structureContextRefs: References to StructureContextRefs.
+      managedRefs:          references to attachments.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ManagedBase">
+        <xsd:attribute name="currentContextRef" type="plm:anyURIType" plm:refType="plm:StructureContext"/>
+        <xsd:attribute name="configurationRuleRef" type="plm:anyURIType" plm:refType="plm:ConfigurationRule"/>
+        <xsd:attribute name="structureContextRefs" type="plm:uriReferenceListType" plm:refType="plm:StructureContext"/>
+        <xsd:attribute name="managedRefs" type="plm:uriReferenceListType" plm:refType="plm:Managed"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CollaborationContext" type="plm:CollaborationContextType" substitutionGroup="plm:Managed"/>
+  <!-- -->
+  <!-- ******************************* ValidationResults ****************** -->
+  <!-- -->
+  <xsd:complexType name="ValidationCheckerType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element gives the result of a Validation Check performed on an object.
+        
+      Attributes:
+      
+      name:             name of the check
+      result:           true if check passed, false if failed
+      status:           an integer return code from the check
+      comments:         a comment string
+      adHoc:            true if the validation is ad-hoc.
+      reportRef:        URI of the validation report file.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="name" type="xsd:string" use="optional"/>
+    <xsd:attribute name="result" type="xsd:boolean" use="optional"/>
+    <xsd:attribute name="status" type="xsd:integer" use="optional"/>
+    <xsd:attribute name="comments" type="xsd:string" use="optional"/>
+    <xsd:attribute name="adHoc" type="xsd:boolean" use="optional"/>
+    <xsd:attribute name="reportRef" type="plm:anyURIType" use="optional"/>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="ValidationResultsType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element, derived from plm:Attribute, is used to give the results of applying
+      a validation check to its parent element.
+        
+      Attributes:
+      
+      application:      the validating application
+      
+      Sub-elements:
+      
+      Checker:          the name and result of each check performed
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttributeBase">
+        <xsd:sequence>
+          <xsd:element name="Checker" type="plm:ValidationCheckerType" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="application" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ValidationResults" type="plm:ValidationResultsType" substitutionGroup="plm:Attribute"/>
+  <!-- -->
+  <!-- ********************** ChangeRecord **************************** -->
+  <!-- -->
+  <xsd:complexType name="ChangeRecordType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element describes a change in terms of one or two Instances.
+        
+      Attributes:
+      
+      originalRef:      the original Instance, if any.
+      modifiedRef:      the modified Instance, if any.
+      
+      select:           If both Instances are present, the 'select' attribute can be used to 
+                        specify what attribute or sub-element of the Instance has changed, by
+                        using an XPATH syntax (for example, "@quantity", or "Transform").
+
+      derived:          true if the ChangeRecord exists as a result of an addition of a
+                        higher-level structure.
+      
+      parentRef:        The parent StructureRevisionView of the 'Modified' Instance,
+                        unless 'derived' is true, in which case it is the 
+                        higher-level StructureRevisionView from which this ChangeRecord
+                        is derived.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="originalRef" type="plm:anyURIType" use="optional" plm:refType="plm:Instance"/>
+        <xsd:attribute name="modifiedRef" type="plm:anyURIType" use="optional" plm:refType="plm:Instance"/>
+        <xsd:attribute name="select" type="xsd:string" use="optional"/>
+        <xsd:attribute name="derived" type="xsd:boolean" use="optional"/>
+        <xsd:attribute name="parentRef" type="plm:anyURIType" use="optional" plm:refType="plm:StructureRevisionView"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ChangeRecord" type="plm:ChangeRecordType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ********************** ChangeRecordGroup ********************************* -->
+  <!-- -->
+  <xsd:complexType name="ChangeRecordGroupType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element defines a group of ChangeRecords which together define a logical or
+      functional replacement.
+        
+      Attributes:
+      
+      transfer:           true if the ChangeRecordGroup is the result of transferring the same 
+                          component from one assembly to another.
+      modifiedRootRef:    The StructureRevisionView which is at the root of the Modified
+                          assembly.
+      memberRefs:         The ChangeRecord elements in the group.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="transfer" type="xsd:boolean" use="optional"/>
+        <xsd:attribute name="modifiedRootRef" type="plm:anyURIType" use="optional" plm:refType="plm:StructureRevisionView"/>
+        <xsd:attribute name="memberRefs" type="plm:uriReferenceListType" use="optional" plm:refType="plm:ChangeRecord"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ChangeRecordGroup" type="plm:ChangeRecordGroupType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ************************* IncrementalChange ********************** -->
+  <!-- -->
+  <xsd:complexType name="IncrementalChangeType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:DescriptionBase">
+        <xsd:attribute name="associationRefs" type="plm:uriReferenceListType"/>
+        <xsd:attribute name="datasetRefs" type="plm:uriReferenceListType"/>
+        <xsd:attribute name="formRefs" type="plm:uriReferenceListType"/>
+        <xsd:attribute name="folderRefs" type="plm:uriReferenceListType"/>
+        <xsd:attribute name="instanceRefs" type="plm:uriReferenceListType"/>
+        <xsd:attribute name="activityRefs" type="plm:uriReferenceListType"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!-- ************************* ChangeOrder *********************** -->
+  <!-- -->
+  <xsd:complexType name="ChangeOrderType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:StructureBase">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="IncrementalChangeAdd" type="plm:IncrementalChangeType" minOccurs="0"/>
+          <xsd:element name="IncrementalChangeDelete" type="plm:IncrementalChangeType" minOccurs="0"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ChangeOrder" type="plm:ChangeOrderType" substitutionGroup="plm:Structure"/>
+  <!-- -->
+</xsd:schema>

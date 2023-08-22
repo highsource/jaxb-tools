@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.008" id="OTA2008A">
+	<xs:include schemaLocation="OTA_HotelCommonTypes.xsd"/>
+	
+	
+	
+	
+	
+	
+	
+	
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_HotelGetMsgRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Sends a request to another system to permit a system that normally receives notifications to ask for a re-transmission of a message. The business model assumes that the requesting system either receives messages that are numbered sequentially, and may ask for a message to be re-sent.  In the event that the receiving system receives a message that is not in contiguous numerical sequence, this message set can be used to retrieve missing messages, or to ask for a retransmission of data that for some reason was not cleanly received.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="UniqueID" type="UniqueID_Type" minOccurs="0"/>
+				<xs:element name="Messages" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Message" type="MessageType" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

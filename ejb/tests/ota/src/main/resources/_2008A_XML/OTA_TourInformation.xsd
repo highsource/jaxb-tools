@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.000" id="OTA2008A2008A">
+	<xs:include schemaLocation="OTA_HotelContentDescription.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="TourInformationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The TourDescriptiveContent element contains the descriptive information about a tour.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TourName">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The full name of the tour and/or other identifiers.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="ShortName" type="StringLength1to64" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Abbreviated tour name.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="ID" type="StringLength1to255" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Unique identifier of a tour.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="MultimediaDescriptions" type="MultimediaDescriptionsType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Descriptive and/or multi-media information about the tour.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Destination" minOccurs="0" maxOccurs="9">
+				<xs:annotation>
+					<xs:documentation>Identifies the location of the tour.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="LocationGeneralType">
+							<xs:sequence>
+								<xs:element name="Region" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Region of the tour e.g. the Sahara.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:attributeGroup ref="RegionGroup">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Region information for the tour.</xs:documentation>
+											</xs:annotation>
+										</xs:attributeGroup>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Position" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Describes the geocoded location of the tour.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:attributeGroup ref="PositionGroup"/>
+										<xs:attribute name="Placemark" type="StringLength1to255" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">A free-form definition of the destination's position.  Could be used as an online mapping service locator.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Category" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation>Provides information on a specific aspect of a tour. </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="CategoryItem" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Identifies an item for the specified category.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="Name" type="StringLength1to64" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Provides the name of the category item.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Code" type="StringLength1to8" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">A code for an item within a category.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="Type" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies the type of information in the CategoryItem.</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:NMTOKEN">
+								<xs:enumeration value="Activity">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Identifies the category as an activity.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="Theme">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Identifies the category theme.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="Ability">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Identifies the category ability level.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="Exertion">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Identifies the category exertion level.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="Comfort">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Identifies the category comfort level.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Keywords" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A collection of keywords relevant to search for tours.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Keyword" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation>Keyword relevant to search for tours.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="StringLength1to255">
+										<xs:attribute name="Type" type="StringLength1to32" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Describes the category of keywords being presented.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Charge" type="FeeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Contains guideline price information about the tour.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Duration" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Provides the duration for the tour.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="Description" type="StringLength1to64" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Textual description of the tour duration (e.g., one day and four hours).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Duration" type="xs:duration" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The duration of the tour in ISO8601 format (e.g., P1DT04H).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Departures" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A collection of departure dates and times.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="DepartureSchedule" minOccurs="0" maxOccurs="366">
+							<xs:annotation>
+								<xs:documentation>Departure dates and times.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="OperationSchedulePlusChargeType">
+										<xs:attribute name="PeriodTitle" type="StringLength1to64" use="optional">
+											<xs:annotation>
+												<xs:documentation>Describes the duration period, e.g. 5 days, 4 nights.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="InfoType" type="StringLength1to32" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Alllows the provider to indiocate whether the schedule is general or specific.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="HasAvailabilityInd" type="xs:boolean" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">When true, the tour has availability.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="Availability" type="Numeric1to999" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Indicates the number of inventory items (e.g. seats) available.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PolicyInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Policy information pertaining to the tour.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="CustomerPolicy" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Basic customer policy information pertaining to the tour.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="MinimumCustomers" type="xs:nonNegativeInteger" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The minimum number of customers on the tour.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="MaximumCustomers" type="xs:nonNegativeInteger" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The maximum number of customers on the tour.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="MinimumAge" type="xs:nonNegativeInteger" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The minimum permitted age for customers on the tour.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="MaximumAge" type="xs:nonNegativeInteger" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The maximum permitted age for customers on the tour.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="BookingPolicy" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Booking policy information pertaining to the tour.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attributeGroup ref="InvBlockCutoffGroup">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The date (AbsoluteCutoff) or period before departure (OffsetDuration) after which no bookings are permitted.  The OffsetCalculationMode attribute is not required for Tours.</xs:documentation>
+									</xs:annotation>
+								</xs:attributeGroup>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SupplierInfo" type="ContactInfoType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Provides details of the tour supplier.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Language" minOccurs="0" maxOccurs="9">
+				<xs:annotation>
+					<xs:documentation>Languages spoken by the tour staff.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="Language" type="xs:language" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Language spoken on the tour.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="URLs" type="URLsType" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of URL elements.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="LanguageCode" type="xs:language" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Identification of the language used for the tour descriptive information.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="TimeZone" type="StringLength1to64" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The local time zone in which the tour departs. This could include additional information regarding time zones (e.g., Daylight Saving Time observed), the difference between the local time and GMT. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="DateTimeSpanGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Used to define the lifespan of the tour content. Used to provide the first and last dates for the tour. </xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+		<xs:attributeGroup ref="DateTimeStampGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines the dates and authorship of the creation and latest update of the descriptive data. </xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,154 @@
+<xsd:schema
+  targetNamespace="urn:test"
+  xmlns:test="urn:test"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+
+  jaxb:version="2.1"
+  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+  xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+  xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+  elementFormDefault="qualified"
+  attributeFormDefault="unqualified"
+  jaxb:extensionBindingPrefixes="hj orm">
+
+  <xsd:annotation>
+    <xsd:appinfo>
+      <jaxb:globalBindings typesafeEnumBase="xsd:string"/>
+    </xsd:appinfo>
+  </xsd:annotation> 
+
+	<xsd:annotation>
+		<xsd:appinfo>
+			<hj:persistence>
+				<hj:default-single-property type="test:issue143BType">
+					<hj:basic>
+						<orm:column scale="2" precision="1"/>
+						<hj:enumerated-value/>
+					</hj:basic>
+				</hj:default-single-property>
+			</hj:persistence>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+
+  <xsd:element name="root" type="test:RootType"/>
+
+	<xsd:complexType name="RootType">
+		<xsd:sequence>
+			<xsd:element name="sex" type="test:SexType"/>
+			<xsd:element name="sexes" type="test:SexType" maxOccurs="unbounded"/>
+			<xsd:element name="proportion" type="test:ProportionsType">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<hj:basic><orm:enumerated>ORDINAL</orm:enumerated></hj:basic>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:simpleType name="SexType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Male"/>
+			<xsd:enumeration value="Female"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ProportionsType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<jaxb:typesafeEnumClass/>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="1:1">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jaxb:typesafeEnumMember name="ONE_ONE"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:enumeration>
+
+			<xsd:enumeration value="2:2">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jaxb:typesafeEnumMember name="TWO_TWO"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:enumeration>
+
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:element name="issue143" type="test:issue143Type"/>
+
+	<xsd:complexType name="issue143Type">
+		<xsd:sequence>
+			<xsd:element name="issue143A" type="test:issue143AType" minOccurs="0"/>
+			<xsd:element name="issue143B" type="test:issue143BType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="issue143CType">
+		<xsd:simpleContent>
+			<xsd:extension base="test:issue143BType">
+				<xsd:attribute name="issue143B" type="test:issue143BType" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+
+	<xsd:simpleType name="issue143AType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<jaxb:typesafeEnumClass/>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="1/2">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jaxb:typesafeEnumMember name="ONE_HALF"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:enumeration>
+
+			<xsd:enumeration value="1/3">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jaxb:typesafeEnumMember name="ONE_THIRD"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:enumeration>
+
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="issue143BType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<jaxb:typesafeEnumClass/>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:double">
+			<xsd:enumeration value="0.5">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jaxb:typesafeEnumMember name="ONE_HALF"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:enumeration>
+
+			<xsd:enumeration value="0.25">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jaxb:typesafeEnumMember name="ONE_FOURTH"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:enumeration>
+
+		</xsd:restriction>
+	</xsd:simpleType>
+
+
+</xsd:schema>

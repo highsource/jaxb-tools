@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   User    Mod     Date            Description
+   ====================================================================                                            
+   MV     CR139    20061017       Added: BoatLengthCode, BoatDraftCode, BoatCategoryCode, BoatClassCode, BoatHullMaterialCode, BoatKeelCode, BoatHullDesignCode
+   MV     CR139    20061020       Added: PressureMeasureType, ElectricityMeasureType, ForceMeasureType, BoatEngineLocationCodeType
+   DC     CR277    20061115       Added: DeliveryTypeCode
+   MV     CR273    20061115       Added: FuelTypeCodeType
+   MV     CR139    20061120       Added: SalesStatusType
+   DC              20061121       Added: LanuageCodeType
+   DC     CR286    20061212       Added: CrossShipmentRestrictionCodeType
+   DC     CR288    20061215       Added: ComputerStorageMeasureType
+   DC     CR310    20070118       Bugfix: Removed unitCode from FuelConsumption, add volumeUnitCode and timeUnitCode.
+   DC     CR312    20070121       Added: AgencyRole for enumerations.
+   DC     CR322    20070212       Added: DisplacementMeasureType 
+   MV     CR325    20070216       Added: ContactMethodTypeCode
+   DC     CR326    20070228       Added: VehicleUseCodeType
+   MV     CR376    20070419       Added: ShipmentCarrierCompanyCodeType, ShipmentCarrierTransportMethodTypeCodeType
+   MV     CR376    20070425       Added: ShipmentCarrierServiceLevel, ShipmentCarrierDelivery, ShipmentCarrierCollectionMethod
+   MV     CR376    20070430       Added: OrderTypeCodeType
+   MV     CR354    20070501       Added: RequestedAmountTypeCodeType
+   MV     CR384    20070510       Added: ItemIDCategoryTypeCodeType  
+   MV     MT245    20070604       Added: DealerServiceTypeCode, HoursTypeCode, DayOfWeekCode
+   MV     MT411    20070830       Added: LocationTypeCodeType, LocationIDTypeCodeType, DeliveryProcessStateCodeType
+                                         EventTypeCode
+   MV     MT402    20070906       Added: FleetAccountCodeType
+   DC     MT452    20071017       Added: SubtotalTypeCodeType  
+   DC     MT441    20071018       Added: DealerProductsTypeCodeType
+   DC     MT584    20080210       Added: LeaseEndOptionVehicleDecisionCodeType
+                                         LeaseEndOptionFinanceDecisionCodeType
+   DC     MT605    20080220       Added: RepairStatusCodeType
+   DC     MT681    20080408       BugFix: Correct unitCode to be optional.
+                                         
+    
+ -->
+<!--
+** STAR POC - 5.0
+** Date: October 24, 2005
+** Based on the OAGIS 9.0 methodology.
+     
+    Name: \STAR\5.0\Resources\Components\Common\QualifiedDataTypes.xsd
+--> 
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:qdt="http://www.openapplications.org/oagis/9/qualifieddatatypes/1.1"
+            xmlns:udt="http://www.openapplications.org/oagis/9/unqualifieddatatypes/1.1"
+            xmlns:ccts="urn:un:unece:uncefact:documentation:1.1"
+            xmlns:oacl="http://www.openapplications.org/oagis/9/codelists"
+            xmlns="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0"
+            targetNamespace="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0"
+            xmlns:scl="http://www.starstandard.org/STAR/5/codelists"
+            xmlns:xfUOMcl="http://www.xfront.com/UnitsOfMeasure"
+            xmlns:nmmacl="http://www.nmma.org/CodeLists"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:import namespace="http://www.openapplications.org/oagis/9/qualifieddatatypes/1.1" schemaLocation="../OAGIS/CoreComponents/QualifiedDataTypes.xsd" />
+    <xsd:import namespace="http://www.openapplications.org/oagis/9/unqualifieddatatypes/1.1" schemaLocation="../OAGIS/CoreComponents/UnqualifiedDataTypes.xsd" />
+    <xsd:import namespace="http://www.openapplications.org/oagis/9/codelists" schemaLocation="../OAGIS/Common/CodeLists.xsd" />
+    <xsd:import namespace="http://www.starstandard.org/STAR/5/codelists" schemaLocation="../Common/CodeLists.xsd" />
+    <xsd:import namespace="http://www.xfront.com/UnitsOfMeasure" schemaLocation="../Common/CodeList_UnitsOfMeasureCode_XFront.xsd" />
+    <xsd:import namespace="http://www.nmma.org/CodeLists" schemaLocation="../Common/CodeLists_NMMA.xsd" />
+    
+    <xsd:simpleType name="DistanceType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">Distance in either miles or kilometers</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="qdt:StringType" />
+    </xsd:simpleType>
+    <xsd:simpleType name="VINType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">Vehicle Identifcation Number</xsd:documentation>
+            <xsd:documentation>Deprecated: Use VehicleID</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="qdt:StringType" />
+    </xsd:simpleType>
+    <xsd:simpleType name="NormalizedStringType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstaards.org" xml:lang="en">Derived from oagis NormalizeStringType</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="qdt:NormalizedStringType" />
+    </xsd:simpleType>
+    <xsd:complexType name="PeriodMeasureType">
+        <xsd:annotation>
+            <xsd:documentation>Used to indicate a length of time in months, years, or weeks.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:decimal">
+                <xsd:attribute name="unitCode" type="xfUOMcl:TimeUnitsContentType" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">Indicates the duration of time in months, weeks, years, etc.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="WeightMeasureType">
+        <xsd:annotation>
+            <xsd:documentation>Used to indicate a weight.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:decimal">
+                <xsd:attribute name="unitCode" type="xfUOMcl:WeightUnitsContentType" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">Use to indicate how much something weighs.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="LengthMeasureType">
+        <xsd:annotation>
+            <xsd:documentation>Used to indicate a length.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:decimal">
+                <xsd:attribute name="unitCode" type="xfUOMcl:LengthUnitsContentType" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">Use to indicate the length or distance.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="VolumeMeasureType">
+        <xsd:annotation>
+            <xsd:documentation>Used to indicate a volume.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:decimal">
+                <xsd:attribute name="unitCode" type="xfUOMcl:VolumeUnitsContentType" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">Used to indciate volume.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="AreaMeasureType">
+        <xsd:annotation>
+            <xsd:documentation>Used to indicate an area.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:decimal">
+                <xsd:attribute name="unitCode" type="xfUOMcl:AreaUnitsContentType" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">Used to indciate area.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="SpeedMeasureType">
+        <xsd:annotation>
+            <xsd:documentation>Used to indicate a speed.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:decimal">
+                <xsd:attribute name="unitCode" type="xfUOMcl:SpeedUnitsContentType" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">Used to indciate a speed type.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="TemperatureMeasureType">
+        <xsd:annotation>
+            <xsd:documentation>Used to indicate a speed.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:decimal">
+                <xsd:attribute name="unitCode" type="xfUOMcl:TemperatureUnitsContentType" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">Used to indciate a temperature type.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="FuelConsumptionMeasureType">
+        <xsd:annotation>
+            <xsd:documentation>Used to indicates fuel consumption speed.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:decimal">
+                <xsd:attribute name="volumeUnitCode" type="xfUOMcl:VolumeUnitsContentType" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">Used to indicate the volume of consumption.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="timeUnitCode" type="xfUOMcl:TimeUnitsContentType" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">Used to indicate the duration or speed of consumption.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="PowerMeasureType">
+        <xsd:annotation>
+            <xsd:documentation>Used to indicate power rating.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:decimal">
+                <xsd:attribute name="unitCode" type="xfUOMcl:PowerUnitsContentType" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">Used to indciate a type of power.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="TimeMeasureType">
+        <xsd:annotation>
+            <xsd:documentation>Used to indicate the amount of time in hours, minutues, seconds, etc.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:decimal">
+                <xsd:attribute name="unitCode" type="xfUOMcl:TimeUnitsContentType" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">Used to indciate a the time measurement.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:simpleType name="BoatLengthCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">Indicates the type of boat length being measured.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="nmmacl:BoatLengthContentType" />
+    </xsd:simpleType>
+    <xsd:simpleType name="BoatDraftCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">Indicates the type of draft being measured.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="nmmacl:BoatDraftContentType" />
+    </xsd:simpleType>
+    <xsd:simpleType name="BoatCategoryCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">Indicates the category in which a boat is defined. Note this is not the same as the BoatClass which identifies the intended usage of a boat. There may be multiple BoatClasses defined in one BoatCategory.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="nmmacl:BoatCategoryContentType" />
+    </xsd:simpleType>
+    <xsd:simpleType name="BoatClassCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">Indicates the definition of the boat, i.e. the intended usage.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="nmmacl:BoatClassContentType" />
+    </xsd:simpleType>
+    <xsd:simpleType name="BoatHullDesignCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">Indicates the type of hull design on the boat.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="nmmacl:BoatHullDesignContentType" />
+    </xsd:simpleType>
+    <xsd:simpleType name="BoatHullMaterialCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">Indicates the primary material out of which the hull is made.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="nmmacl:BoatHullMaterialContentType" />
+    </xsd:simpleType>
+    <xsd:simpleType name="BoatKeelCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">Indicates the type of keel on the boat.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="nmmacl:BoatKeelContentType" />
+    </xsd:simpleType>
+    <xsd:complexType name="ElectricityMeasureType">
+        <xsd:annotation>
+            <xsd:documentation>Used to indicate pressure measurements.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:decimal">
+                <xsd:attribute name="unitCode" type="xfUOMcl:ElectricityUnitsContentType" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">Used to indicate electricity measurements.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="ForceMeasureType">
+        <xsd:annotation>
+            <xsd:documentation>Used to indicate force measurements.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:decimal">
+                <xsd:attribute name="unitCode" type="xfUOMcl:ForceUnitsContentType" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">Used to indicate force measurements.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:simpleType name="BoatEngineLocationCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">Defines the location on the boat that the engine can be mounted.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="nmmacl:BoatEngineLocationContentType" />
+    </xsd:simpleType>
+    <xsd:complexType name="PressureMeasureType">
+        <xsd:annotation>
+            <xsd:documentation>Used to indicate pressure measurements.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:decimal">
+                <xsd:attribute name="unitCode" type="xfUOMcl:PressureUnitsContentType" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">Used to indicate pressure measurements.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:simpleType name="DeliveryTypeCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">Indicates the type of boat length being measured.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:DeliveryTypeContentType" />
+    </xsd:simpleType>
+    <xsd:simpleType name="PartActivityTransactionCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">Indicates the type of boat length being measured.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:PartActivityTransactionContentType" />
+    </xsd:simpleType>
+    <xsd:simpleType name="FuelTypeCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">Type of vehicle fuel</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:FuelTypeContentType" />
+    </xsd:simpleType>
+    <xsd:simpleType name="SalesStatusType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">The status of the sale of the item.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:SalesStatusContentType" />
+    </xsd:simpleType>
+    <xsd:simpleType name="LanguageCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">The ISO Language Code used to represent a spoken or written language.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:LanguageContentType" />
+    </xsd:simpleType>
+    <xsd:simpleType name="CrossShipmentRestrictionCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">The restrictions to be applied to an OEM when shipping to a Dealer if cross shipment is allowed.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:CrossShipmentRestrictionContentType" />
+    </xsd:simpleType>
+    <xsd:complexType name="ComputerStorageMeasureType">
+        <xsd:annotation>
+            <xsd:documentation>Used to indicate the amount of computer storage needed.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:decimal">
+                <xsd:attribute name="unitCode" type="xfUOMcl:ComputerStorageUnitsContentType" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">Used to indicate computer storage measurements.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:simpleType name="AssigningOrganizationPartyIdType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">Organization that Assigns the ID</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:AssigningOrganizationPartyIdContentType" />
+    </xsd:simpleType>
+    <xsd:simpleType name="AgencyRoleCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">Indicates the type of keel on the boat.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:AgencyRoleCodeContentType" />
+    </xsd:simpleType>
+    <xsd:simpleType name="CountryCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org" xml:lang="en">The ISO Country Code.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:CountryContentType" />
+    </xsd:simpleType>
+    <xsd:complexType name="DisplacementMeasureType">
+        <xsd:annotation>
+            <xsd:documentation>Used to indicate the amount of computer storage needed.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:decimal">
+                <xsd:attribute name="unitCode" type="xfUOMcl:DisplacementUnitsContentType" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation source="http://www.starstandard.org/STAR/5">Used to indicate displace in either Volume or Weight</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:simpleType name="ContactMethodTypeCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">Indicates the preferred method of contact.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:ContactMethodTypeContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="VehicleUseCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">Indicates the preferred method of contact.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:VehicleUseContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="ShipmentCarrierCompanyCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">Preferred carrier of deliver of part.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:ShipmentCarrierCompanyContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="ShipmentCarrierTransportMethodTypeCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">Defines the method by which a shipment carrier transports an item (i.e., air, ground, etc.)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:ShipmentCarrierTransportMethodTypeContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="ShipmentCarrierServiceLevelCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">Indicates the priority of service to be provided by the Shipment Carrier</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:ShipmentCarrierServiceLevelContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="ShipmentCarrierDeliveryCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org"> </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:ShipmentCarrierDeliveryContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="ShipmentCarrierCollectionMethodCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org"> </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:ShipmentCarrierCollectionMethodContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="OrderTypeCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">Part Order Type entered or selected at dealership. Stock-STK, Vehicle Off Road-VOR, Daily-DPO, Emergency-EMG, Supplemental-SUP, Promotional-PRO, Solicited-SOL, Vehicle Off Road Parts Inquiry-VPI, Weekly-WKL, Interim-INT, Export-EXP, Dropship Stock-DSS, Dropship Vehicle Off Road-DVR, Lock and Key-LAK, Will Call-WCL, Return Request w/ Reference-RRR, Return Request w/o Reference-RWR, Credit Request w/ Reference-CRR, Credit Request w/o Reference-CWR, Debit Request w/ Reference-DRR, Debit Request w/o Reference-DWR, Rush-RUS, Urgent-URG, Other-OTH, N/A-N/A, Hold-HLD, Dating-DTG.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:OrderTypeContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="RequestedAmountTypeCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">Enumerated field that indicates the type of amount requested by the Dealer for a Warranty Submission Claim.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:RequestedAmountTypeContentType"/>
+    </xsd:simpleType> 
+    <xsd:simpleType name="ItemIDCategoryTypeCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">Indicates the category that a part number is associated with.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:ItemIDCategoryTypeContentType"/>
+    </xsd:simpleType> 
+    <xsd:simpleType name="DealerServiceTypeCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">Indicates the type of services performed by the Dealer.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:DealerServiceTypeContentType"/>
+    </xsd:simpleType>  
+    <xsd:simpleType name="HoursTypeCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">Indicates a type of hours such as Sales hours, Service hours, etc.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:HoursTypeContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="DayOfWeekCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">The DaysOfWeek component is used to identify availability based on days of the week.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:DayOfWeekContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="LocationTypeCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">Type of location.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:LocationTypeContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="LocationIDTypeCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">Code representing the type of location.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:LocationIDTypeContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="DeliveryProcessStateCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">Enumerated list of delivery states indicating what is going on with the vehicle.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:DeliveryProcessStateContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="EventTypeCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">Enumerated  list of unusual event types.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:EventTypeContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="FleetAccountCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">Describes the contents of the FleetAccountString.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:FleetAccountContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="SubtotalTypeCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">Describes the contents of the SubtotalAmount.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:SubtotalTypeCodeContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="DealerProductsTypeCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">Descibes the various dealer product types a dealer can sell.  These are not related to other charges or programs and rates.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:DealerProductsTypeCodeContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="LeaseEndOptionVehicleDecisionCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">
+                Enables the customers decision at the end of an option to keep
+                the vehicle or not. It records whether the client has decided
+                to refinance, return, or retain the vehicle or whether they
+                have not made up their mind etc.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:LeaseEndOptionVehicleDecisionContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="LeaseEndOptionFinanceDecisionCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">
+                Enables the customers decision at the end of an option to be
+                recorded along with other associated information. It records
+                whether the client has decided to finance their next vehicle
+                or whether they have not made up their mind etc.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:LeaseEndOptionFinanceDecisionContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="RepairStatusCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">
+                Allows the dealer to indicate to customer whether the problem
+                has been inspected only or fixed as well.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="scl:RepairStatusCodeContentType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="QuantityContentType">
+        <xsd:union memberTypes="scl:UOMEnumeratedType xfUOMcl:LengthUnitsContentType xfUOMcl:WeightUnitsContentType xfUOMcl:VolumeUnitsContentType" />
+    </xsd:simpleType>
+    <xsd:complexType name="QuantityType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This is used to indicate general quantity information.  It is combination of several code lists.  Including
+                The STAR Codelist UOMEnumeratedtype.  The XFront code lists, LengthUnitsContentType, WeightUnitsContentType, and VolumeUnitsContentType
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:decimal">
+                <xsd:attribute name="unitCode" type="QuantityContentType" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                            This is used to indicate general quantity information.  It is combination of several code lists.  Including
+                            The STAR Codelist UOMEnumeratedtype.  The XFront code lists, LengthUnitsContentType, WeightUnitsContentType, and VolumeUnitsContentType
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    
+</xsd:schema>

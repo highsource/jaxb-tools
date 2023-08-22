@@ -1,0 +1,48 @@
+<xsd:schema targetNamespace="urn:org.jvnet.hyperjaxb3.xsom.tests" 
+  xmlns:test="urn:org.jvnet.hyperjaxb3.xsom.tests" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  elementFormDefault="qualified" 
+  attributeFormDefault="unqualified" 
+  version="1.0">
+  
+	<xsd:simpleType name="minLength">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="maxLength">
+		<xsd:restriction base="test:minLength">
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="length">
+		<xsd:restriction base="test:maxLength">
+			<xsd:length value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="digits">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:maxExclusive value="1000"/>
+			<xsd:totalDigits value="5"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="totalDigits">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:maxExclusive value="1000"/>
+			<xsd:totalDigits value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="fractionDigits">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:maxExclusive value="1000"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+</xsd:schema>

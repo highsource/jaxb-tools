@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.004" id="OTA2008A">
+	<xs:include schemaLocation="OTA_CruiseCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at 
+http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_CruiseSpecialServiceAvailRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The special service availability response message contains information about which special service packages are available for the given sailing.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType">
+						<xs:annotation>
+							<xs:documentation xml:lang="en"> Standard way to indicate successful processing of an OTA message. Returning an empty element of this type indicates success.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en"> Standard way to indicate successful processing of an OTA message, but one in which warnings (business errors) are generated.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SailingInfo" type="SailingCategoryInfoType">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Contains information related to the selected sailing. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SpecialServices" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Contains the list of special services  available for the sailing, which meet the supplied query criteria.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="SpecialService" maxOccurs="150">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Contains the specific special service information.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="SpecialServiceType">
+												<xs:sequence>
+													<xs:element name="PriceInfo" minOccurs="0" maxOccurs="5">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">Information regarding pricing for special services when there is an associated cost.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:complexContent>
+																<xs:extension base="PriceInfoType"/>
+															</xs:complexContent>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="Description" type="StringLength1to64" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Specifies the description of a special service.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="Status" type="OTA_CodeType" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Specifies the booking status. Refer to OTA_Code list Status (STS)</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="ServiceDateRequiredInd" type="xs:boolean" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">If true, a date (or date/time) needs to be provided to indicate when the special service should be delivered.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="NbrOfYearsRequiredInd" type="xs:boolean" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">If true, the number of years pertaining to the event needs to be provided (e.g., the number of anniversary years, the age for a birthday).</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="MinGuestsRequired" type="xs:positiveInteger" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">The minimum number of guests required for this type of service.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="UserRemarkRequiredInd" type="xs:boolean" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">If true, a remark is required by the user when selecting a special service.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en"> A collection of errors that occurred during the processing of a message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The standard attributes that appear on the root element for all OTA payloads. </xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

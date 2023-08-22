@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- User   MOD      Date              Description  
+    =========================================================================
+    
+    MV     CRx     20061031          Commented out "DocumentID"
+    DC     CR299   20070212          PartsProductItem
+    DC     CR332   20070221          Added LineNumberString to Line                                      
+-->
+
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns="http://www.starstandard.org/STAR/5" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="PartsReturn" type="PartsReturnType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Parts Return
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartsReturnHeader" type="PartsReturnHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Parts Return Header
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartsReturnLine" type="PartsReturnLineType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Parts Return Line
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="PartsReturnType">
+        <xsd:sequence>
+            <xsd:element ref="PartsReturnHeader" />
+            <xsd:element ref="PartsReturnLine" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PartsReturnHeaderType">
+        <xsd:annotation  xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+                <xsd:sequence>
+                <!--    <xsd:element ref="DocumentID" minOccurs="0" /> -->
+                    <xsd:element ref="ReturnAuthorizationNumberString" minOccurs="0" />
+                    <xsd:element ref="ReturnPartDealerComments" minOccurs="0" />
+                    <xsd:element ref="ReturnTypeString" minOccurs="0" />
+                    <xsd:element ref="ReturnAuthorizationShipDate" minOccurs="0" />
+                    <xsd:element ref="DeclarationStatement" minOccurs="0" />
+                    <xsd:element ref="DealerShipmentNumberString" minOccurs="0" />
+                    <xsd:element ref="ShippingPDC" minOccurs="0" />
+                    <xsd:element ref="TotalHoldScrapValueAmount" minOccurs="0" />
+                    <xsd:element ref="TotalPartPiecesNumeric" minOccurs="0" />
+                    <xsd:element ref="TotalPartLinesNumeric" minOccurs="0" />
+                    <xsd:element name="Status" type="AcknowledgementStatusType" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                                Deprecated: Use AcknowledgementStatus
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="NormalBuybackLimitAmount" minOccurs="0" />
+                    <xsd:element ref="SupplementalBuybackLimitAmount" minOccurs="0" />
+                    <xsd:element ref="ScrapAtDealershipIndicator" minOccurs="0"/>
+                    <xsd:element ref="CoreReturnIndicator" minOccurs="0"/>
+                    <xsd:element ref="WillCallIndicator" minOccurs="0"/>
+                    <xsd:element ref="AcknowledgementStatus" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="PartsReturnLineType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="PartsProductItem" minOccurs="0" />
+            <xsd:element ref="PartClassCode" minOccurs="0" />
+            <xsd:element ref="PartManufacturer" minOccurs="0" />
+            <xsd:element ref="Pricing" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="ItemQuantity" minOccurs="0" />
+            <xsd:element ref="BinLocation" minOccurs="0" />
+            <xsd:element ref="UnitPackQuantity" minOccurs="0" />
+            <xsd:element ref="OriginalManufacturerShipmentNumberString" minOccurs="0" />
+            <xsd:element ref="ReturnReasonCode" minOccurs="0" />
+            <xsd:element ref="OriginalOrderNumberString" minOccurs="0" />
+            <xsd:element ref="OriginalOrderLineItemNumberString" minOccurs="0" />
+            <xsd:element ref="LineItemComments" minOccurs="0" />
+            <xsd:element ref="ShipWarehouseNumeric" minOccurs="0" />
+            <xsd:element ref="OriginalShipDate" minOccurs="0" />
+            <xsd:element ref="OriginalOrderType" minOccurs="0" />
+            <xsd:element ref="InventoryRemovalDate" minOccurs="0" />
+            <xsd:element ref="EmpID" minOccurs="0" />
+            <xsd:element ref="PartToBeReturnedIndicator" minOccurs="0" />
+            <xsd:element ref="ScheduleID" minOccurs="0" />
+            <xsd:element ref="CoreIdNumberString" minOccurs="0" />
+            <xsd:element ref="CoreGroupString" minOccurs="0" />
+            <xsd:element ref="HoldValueAmount" minOccurs="0" />
+            <xsd:element ref="ScrapValueAmount" minOccurs="0" />
+            <xsd:element name="Status" type="AcknowledgementStatusType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                        Deprecated: Use AcknowledgementStatus
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="BoxTrackingNumberString" minOccurs="0"/>
+            <xsd:element ref="LineNumberString" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="AcknowledgementStatus" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

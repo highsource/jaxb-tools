@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- <!DOCTYPE sports-content SYSTEM "../specification/dtd/sportsml-core.dtd"> -->
+<sports-content
+	xmlns="http://iptc.org/std/SportsML/2006-10-18/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://iptc.org/std/SportsML/2006-10-18/ ../specification/schema/sportsml-loose.xsd"
+	>
+	<sports-metadata	stats-coverage="standard"	date-coverage-type="season-full"	date-coverage-value="2001"	doc-id="20011007:TT:0321:0"
+							publisher="TT"	date-time="20011007T112345"	language="en"	slug="tennis-daviscup"
+							fixture-key="score-report-tournament"	fixture-name="Scores for entire tournament">
+		<sports-title>Tennis - Davis Cup</sports-title>
+		<advisory>All game results except the final.</advisory>
+		<sports-content-codes>
+			<sports-content-code code-type="sport" code-key="15065000" code-name="tennis"/>
+			<sports-content-code code-type="special-event" code-key="xtz123" code-name="Davis Cup"/>
+		</sports-content-codes>
+	</sports-metadata>
+	<tournament>
+		<tournament-metadata tournament-name="Davis Cup 2001"/>
+		<tournament-division>
+			<tournament-division-metadata division-name="First division"/>
+			<tournament-round round-name="Final" start-date-time="20011130" end-date-time="20011202">
+				<sports-event>
+					<event-metadata event-status="pre-event"/>
+					<team id="DC1_F"><team-metadata><name full="Australia"/><home-location country="Australia"/></team-metadata><team-stats score="" event-outcome="undecided"/></team>
+					<team id="DC10_F"><team-metadata><name full="France"/><home-location country="France"/></team-metadata><team-stats score="" event-outcome="undecided"/></team>
+				</sports-event>
+			</tournament-round>
+			<tournament-round round-name="Semifinal" start-date-time="20010921" end-date-time="20010923">
+				<sports-event>
+					<event-metadata event-status="post-event" site-style="outdoor" site-surface="hard-court"/>
+					<team id="DC1_S"><team-metadata><name full="Australia"/><home-location country="Australia"/></team-metadata><team-stats score="4" event-outcome="win"/></team>
+					<team id="DC5_S"><team-metadata><name full="Sweden"/><home-location country="Sweden"/></team-metadata><team-stats score="1" event-outcome="loss"/></team>
+					<sports-event><!-- This event is reported with the sub-score construction -->
+						<event-metadata event-status="post-event" event-name="single" event-number="1"/>
+						<player>
+							<player-metadata team-idref="DC1_S">
+								<name first="Patrick" last="Rafter"/>
+								<home-location city="Sydney" country="Australia"/>
+							</player-metadata>
+							<player-stats score="2" event-outcome="loss">
+								<sub-score period-value="set-1" score="6"/>
+								<sub-score period-value="set-2" score="7"/>
+								<sub-score period-value="set-3" score="3"/>
+								<sub-score period-value="set-4" score="2"/>
+								<sub-score period-value="set-5" score="3"/>
+							</player-stats>
+						</player>
+						<player>
+							<player-metadata team-idref="DC5_S">
+								<name first="Thomas" last="Johansson"/>
+								<home-location city="Monte-Carlo" country="Monaco"/>
+							</player-metadata>
+							<player-stats score="3" event-outcome="win">
+								<sub-score period-value="set-1" score="3"/>
+								<sub-score period-value="set-2" score="6"/>
+								<sub-score period-value="set-3" score="6"/>
+								<sub-score period-value="set-4" score="6"/>
+								<sub-score period-value="set-5" score="6"/>
+							</player-stats>
+						</player>
+						<highlight>
+						This result is done differently to show the possibility to produce different output from the same data.
+						</highlight>
+					</sports-event>
+					<sports-event><!-- This event is reported with tennis specific elements -->
+						<event-metadata event-status="post-event" event-name="single" event-number ="2"/>
+						<player>
+							<player-metadata team-idref="DC1_S">
+								<name first="Lleyton" last="Hewitt"/>
+								<home-location city="Perth" country="Australia"/>
+							</player-metadata>
+							<player-stats score="3" event-outcome="win">
+								<player-stats-tennis>
+									<stats-tennis-set set-number="1" score="4" />
+									<stats-tennis-set set-number="2" score="6" />
+									<stats-tennis-set set-number="3" score="7" />
+									<stats-tennis-set set-number="4" score="7" />
+								</player-stats-tennis>
+							</player-stats>
+						</player>
+						<player>
+							<player-metadata team-idref="DC5_S">
+								<name first="Jonas" last="Björkman"/>
+								<home-location city="Borås" country="Sweden"/>
+							</player-metadata>
+							<player-stats score="1" event-outcome="loss">
+								<player-stats-tennis>
+									<stats-tennis-set set-number="1" score="6" />
+									<stats-tennis-set set-number="2" score="4" />
+									<stats-tennis-set set-number="3" score="6" />
+									<stats-tennis-set set-number="4" score="6" />
+								</player-stats-tennis>
+							</player-stats>
+						</player>
+					</sports-event>
+					<sports-event>
+						<event-metadata event-status="post-event" event-name="double" event-number ="3"/>
+						<team>
+							<team-metadata team-idref="DC1_S"><name full="Australia"/><home-location /></team-metadata>
+							<team-stats score="3" event-outcome="win">
+								<team-stats-tennis><!--Woodbridge/Arthurs-->
+									<stats-tennis-set set-number="1" score="6" />
+									<stats-tennis-set set-number="2" score="7" />
+									<stats-tennis-set set-number="3" score="7" />
+									<stats-tennis-set set-number="4" score="7" />
+								</team-stats-tennis>
+							</team-stats>
+							<player>
+								<player-metadata>
+									<name first="Tim" last="Woodbridge"/>
+									<home-location city="London" country="England"/>
+								</player-metadata>
+							</player>
+							<player>
+								<player-metadata>
+									<name first="Mitchell" last="Arthurs"/>
+									<home-location city="Melbourne" country="Australie"/>
+								</player-metadata>
+							</player>
+						</team>
+						<team>
+							<team-metadata team-idref="DC5_S"><name full="Sweden"/><home-location /></team-metadata>
+							<team-stats score="1" event-outcome="loss">
+								<team-stats-tennis><!--Björkman/Larsson-->
+									<stats-tennis-set set-number="1" score="7" />
+									<stats-tennis-set set-number="2" score="6" />
+									<stats-tennis-set set-number="3" score="6" />
+									<stats-tennis-set set-number="4" score="6" />
+								</team-stats-tennis>
+							</team-stats>
+							<player>
+								<player-metadata>
+									<name first="Jonas" last="Björkman"/>
+									<home-location city="Borås" country="Sweden"/>
+								</player-metadata>
+							</player>
+							<player>
+								<player-metadata>
+									<name first="Stefan" last="Larsson"/>
+									<home-location city="Norrköping" country="Sweden"/>
+								</player-metadata>
+							</player>
+						</team>
+					</sports-event>
+					<sports-event>
+						<event-metadata event-status="post-event" event-name="single" event-number ="4"/>
+						<player>
+							<player-metadata team-idref="DC1_S">
+								<name first="Hewitt" last="Lleyton"/><home-location />
+							</player-metadata>
+							<player-stats score="3" event-outcome="win">
+								<player-stats-tennis>
+									<stats-tennis-set set-number="1" score="7" />
+									<stats-tennis-set set-number="2" score="5" />
+									<stats-tennis-set set-number="3" score="6" />
+									<stats-tennis-set set-number="4" score="6" />
+								</player-stats-tennis>
+							</player-stats>
+						</player>
+						<player>
+							<player-metadata team-idref="DC5_S">
+								<name first="Thomas" last="Johansson"/><home-location />
+							</player-metadata>
+							<player-stats score="1" event-outcome="loss">
+								<player-stats-tennis>
+									<stats-tennis-set set-number="1" score="6" />
+									<stats-tennis-set set-number="2" score="7" />
+									<stats-tennis-set set-number="3" score="2" />
+									<stats-tennis-set set-number="4" score="1" />
+								</player-stats-tennis>
+							</player-stats>
+						</player>
+					</sports-event>
+					<sports-event>
+						<event-metadata event-status="post-event" event-name="single" event-number ="5"/>
+						<player>
+							<player-metadata team-idref="DC1_S">
+								<name first="Patrick" last="Rafter"/><home-location />
+							</player-metadata>
+							<player-stats score="2" event-outcome="win">
+								<player-stats-tennis>
+									<stats-tennis-set set-number="1" score="6" />
+									<stats-tennis-set set-number="2" score="6" />
+								</player-stats-tennis>
+							</player-stats>
+						</player>
+						<player>
+							<player-metadata team-idref="DC5_S">
+								<name first="Jonas" last="Björkman"/><home-location />
+							</player-metadata>
+							<player-stats score="0" event-outcome="loss">
+								<player-stats-tennis>
+									<stats-tennis-set set-number="1" score="3" />
+									<stats-tennis-set set-number="2" score="2" />
+								</player-stats-tennis>
+							</player-stats>
+						</player>
+					</sports-event>
+				</sports-event>
+				<sports-event>
+					<event-metadata event-status="post-event" site-style="indoor" site-surface="supreme"/>
+					<team id="DC10_S"><team-metadata><name full="France"/><home-location /></team-metadata><team-stats score="3" event-outcome="win"/></team>
+					<team id="DC15_S"><team-metadata><name full="Netherlands"/><home-location /></team-metadata><team-stats score="2" event-outcome="loss"/></team>
+					<sports-event>
+						<event-metadata event-status="post-event" event-name="single" event-number ="1"/>
+						<player>
+							<player-metadata team-idref="DC10_S">
+								<name first="Amaud" last="Clement"/><home-location />
+							</player-metadata>
+							<player-stats score="2" event-outcome="win">
+								<player-stats-tennis>
+									<stats-tennis-set set-number="1" score="3" />
+									<stats-tennis-set set-number="2" score="6" />
+									<stats-tennis-set set-number="3" score="6" />
+								</player-stats-tennis>
+							</player-stats>
+						</player>
+						<player>
+							<player-metadata team-idref="DC15_S">
+								<name first="Raemon" last="Sluiter"/><home-location />
+							</player-metadata>
+							<player-stats score="1" event-outcome="loss">
+								<player-stats-tennis>
+									<stats-tennis-set set-number="1" score="6" />
+									<stats-tennis-set set-number="2" score="2" />
+									<stats-tennis-set set-number="3" score="2" />
+								</player-stats-tennis>
+							</player-stats>
+						</player>
+					</sports-event>
+					<sports-event>
+						<event-metadata event-status="post-event" event-name="single" event-number ="2"/>
+						<player>
+							<player-metadata team-idref="DC10_S">
+								<name first="Nicolas" last="Escude"/><home-location />
+							</player-metadata>
+							<player-stats score="3" event-outcome="win">
+								<player-stats-tennis>
+									<stats-tennis-set set-number="1" score="6" />
+									<stats-tennis-set set-number="2" score="7" />
+									<stats-tennis-set set-number="3" score="4" />
+									<stats-tennis-set set-number="4" score="7" />
+									<stats-tennis-set set-number="5" score="8" />
+								</player-stats-tennis>
+							</player-stats>
+						</player>
+						<player>
+							<player-metadata team-idref="DC15_S">
+								<name first="Sjeng" last="Schalken"/><home-location />
+							</player-metadata>
+							<player-stats score="2" event-outcome="loss">
+								<player-stats-tennis>
+									<stats-tennis-set set-number="1" score="7" />
+									<stats-tennis-set set-number="2" score="6" />
+									<stats-tennis-set set-number="3" score="6" />
+									<stats-tennis-set set-number="4" score="6" />
+									<stats-tennis-set set-number="5" score="6" />
+								</player-stats-tennis>
+							</player-stats>
+						</player>
+					</sports-event>
+					<sports-event>
+						<event-metadata event-status="post-event" event-name="double" event-number ="3"/>
+						<team>
+							<team-metadata team-idref="DC10_S"><name full="France"/><home-location /></team-metadata>
+							<team-stats score="3" event-outcome="win">
+								<team-stats-tennis>
+									<stats-tennis-set set-number="1" score="7" />
+									<stats-tennis-set set-number="2" score="6" />
+									<stats-tennis-set set-number="3" score="7" />
+								</team-stats-tennis>
+							</team-stats>
+						</team>
+						<team>
+							<team-metadata team-idref="DC15_S"><name full="Netherlands"/><home-location /></team-metadata>
+							<team-stats score="0" event-outcome="loss">
+								<team-stats-tennis>
+									<stats-tennis-set set-number="1" score="5" />
+									<stats-tennis-set set-number="2" score="1" />
+									<stats-tennis-set set-number="3" score="5" />
+								</team-stats-tennis>
+							</team-stats>
+						</team>
+					</sports-event>
+					<sports-event>
+						<event-metadata event-status="post-event" event-name="single" event-number ="4"/>
+						<player>
+							<player-metadata team-idref="DC10_S">
+								<name first="Amaud" last="Clement"/><home-location />
+							</player-metadata>
+							<player-stats score="0" event-outcome="loss">
+								<player-stats-tennis>
+									<stats-tennis-set set-number="1" score="6" />
+									<stats-tennis-set set-number="2" score="6" />
+								</player-stats-tennis>
+							</player-stats>
+						</player>
+						<player>
+							<player-metadata team-idref="DC15_S">
+								<name first="Sjeng" last="Schalken"/><home-location />
+							</player-metadata>
+							<player-stats score="2" event-outcome="win">
+								<player-stats-tennis>
+									<stats-tennis-set set-number="1" score="7" />
+									<stats-tennis-set set-number="2" score="7" />
+								</player-stats-tennis>
+							</player-stats>
+						</player>
+					</sports-event>
+					<sports-event>
+						<event-metadata event-status="post-event" event-name="single" event-number ="5"/>
+						<player>
+							<player-metadata team-idref="DC10_S">
+								<name first="Fabrice" last="Santoro"/><home-location />
+							</player-metadata>
+							<player-stats score="0" event-outcome="loss">
+								<player-stats-tennis>
+									<stats-tennis-set set-number="1" score="4" />
+									<stats-tennis-set set-number="2" score="4" />
+								</player-stats-tennis>
+							</player-stats>
+						</player>
+						<player>
+							<player-metadata team-idref="DC15_S">
+								<name first="Jan" last="Siemerink"/><home-location />
+							</player-metadata>
+							<player-stats score="2" event-outcome="win">
+								<player-stats-tennis>
+									<stats-tennis-set set-number="1" score="6" />
+									<stats-tennis-set set-number="2" score="6" />
+								</player-stats-tennis>
+							</player-stats>
+						</player>
+					</sports-event>
+				</sports-event>
+			</tournament-round>
+			<tournament-round round-name="Round 2" start-date-time="20010406" end-date-time="20010408">
+				<sports-event>
+					<event-metadata event-status="post-event" site-style="outdoor" site-surface="clay"/>
+					<team id="DC1_2"><team-metadata><name full="Australia"/><home-location /></team-metadata><team-stats score="3" event-outcome="win"/></team>
+					<team id="DC3_2"><team-metadata><name full="Brazil"/><home-location /></team-metadata><team-stats score="1" event-outcome="loss"/></team>
+				</sports-event>
+				<sports-event>
+					<event-metadata event-status="post-event" site-style="indoor" site-surface="hard-court"/>
+					<team id="DC5_2"><team-metadata><name full="Sweden"/><home-location /></team-metadata><team-stats score="4" event-outcome="win"/></team>
+					<team id="DC7_2"><team-metadata><name full="Russia"/><home-location /></team-metadata><team-stats score="1" event-outcome="loss"/></team>
+				</sports-event>
+				<sports-event>
+					<event-metadata event-status="post-event" site-style="indoor" site-surface="carpet"/>
+					<team id="DC10_2"><team-metadata><name full="France"/><home-location /></team-metadata><team-stats score="3" event-outcome="win"/></team>
+					<team id="DC11_2"><team-metadata><name full="Switzerland"/><home-location /></team-metadata><team-stats score="2" event-outcome="loss"/></team>
+				</sports-event>
+				<sports-event>
+					<event-metadata event-status="post-event" site-style="indoor" site-surface="carpet"/>
+					<team id="DC14_2"><team-metadata><name full="Germany"/><home-location /></team-metadata><team-stats score="1" event-outcome="loss"/></team>
+					<team id="DC15_2"><team-metadata><name full="Netherlands"/><home-location /></team-metadata><team-stats score="4" event-outcome="win"/></team>
+				</sports-event>
+			</tournament-round>
+			<tournament-round round-name="Round 1" start-date-time="20010209" end-date-time="20010211">
+				<sports-event>
+					<event-metadata event-status="post-event" site-style="outdoor" site-surface="grass"/>
+					<team id="DC1_1"><team-metadata><name full="Australia"/><home-location /></team-metadata><team-stats score="4" event-outcome="win"/></team>
+					<team id="DC2_1"><team-metadata><name full="Ecuador"/><home-location /></team-metadata><team-stats score="1" event-outcome="loss"/></team>
+				</sports-event>
+				<sports-event>
+					<event-metadata event-status="post-event" site-style="outdoor" site-surface="clay"/>
+					<team id="DC3_1"><team-metadata><name full="Brazil"/><home-location /></team-metadata><team-stats score="4" event-outcome="win"/></team>
+					<team id="DC4_1"><team-metadata><name full="Morocco"/><home-location /></team-metadata><team-stats score="1" event-outcome="loss"/></team>
+				</sports-event>
+				<sports-event>
+					<event-metadata event-status="post-event" site-style="indoor" site-surface="taraflex"/>
+					<team id="DC5_1"><team-metadata><name full="Sweden"/><home-location /></team-metadata><team-stats score="3" event-outcome="win"/></team>
+					<team id="DC6_1"><team-metadata><name full="Czech republic"/><home-location /></team-metadata><team-stats score="2" event-outcome="loss"/></team>
+				</sports-event>
+				<sports-event>
+					<event-metadata event-status="post-event" site-style="indoor" site-surface="hard-court"/>
+					<team id="DC7_1"><team-metadata><name full="Russia"/><home-location /></team-metadata><team-stats score="3" event-outcome="win"/></team>
+					<team id="DC8_1"><team-metadata><name full="Slovak republic"/><home-location /></team-metadata><team-stats score="2" event-outcome="loss"/></team>
+				</sports-event>
+				<sports-event>
+					<event-metadata event-status="post-event" site-style="indoor" site-surface="red-clay"/>
+					<team id="DC9_1"><team-metadata><name full="Belgium"/><home-location /></team-metadata><team-stats score="0" event-outcome="loss"/></team>
+					<team id="DC10_1"><team-metadata><name full="France"/><home-location /></team-metadata><team-stats score="5" event-outcome="win"/></team>
+				</sports-event>
+				<sports-event>
+					<event-metadata event-status="post-event" site-style="indoor" site-surface="hard-court"/>
+					<team id="DC11_1"><team-metadata><name full="Switzerland"/><home-location /></team-metadata><team-stats score="3" event-outcome="win"/></team>
+					<team id="DC12_1"><team-metadata><name full="USA"/><home-location /></team-metadata><team-stats score="2" event-outcome="loss"/></team>
+				</sports-event>
+				<sports-event>
+					<event-metadata event-status="post-event" site-style="indoor" site-surface="carpet"/>
+					<team id="DC13_1"><team-metadata><name full="Romania"/><home-location /></team-metadata><team-stats score="2" event-outcome="loss"/></team>
+					<team id="DC14_1"><team-metadata><name full="Germany"/><home-location /></team-metadata><team-stats score="3" event-outcome="win"/></team>
+				</sports-event>
+				<sports-event>
+					<event-metadata event-status="post-event" site-style="indoor" site-surface="supreme"/>
+					<team id="DC15_1"><team-metadata><name full="Netherlands"/><home-location /></team-metadata><team-stats score="4" event-outcome="win"/></team>
+					<team id="DC16_1"><team-metadata><name full="Spain"/><home-location /></team-metadata><team-stats score="1" event-outcome="loss"/></team>
+				</sports-event>
+			</tournament-round>
+		</tournament-division>
+	</tournament>
+</sports-content>

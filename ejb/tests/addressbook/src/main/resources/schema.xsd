@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:pp="http://www.pps.com/schema" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://www.pps.com/schema" elementFormDefault="qualified" 
+
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" 
+	jaxb:extensionBindingPrefixes="hj"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+
+	attributeFormDefault="unqualified" jaxb:version="1.0">
+
+	<xs:element name="Users">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root 
+				element</xs:documentation>
+			<xs:appinfo>
+				<!-- ** hj:class>
+					<hj:table name="users_element"/>
+				</hj:class-->
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="User" type="pp:User" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="User">
+		<xs:annotation>
+			<xs:appinfo>
+				<!-- ** hj:class>
+					<hj:table name="users"/>
+				</hj:class-->
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Address" type="pp:Address" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:appinfo>
+						<!-- ** hj:complexCollectionProperty>
+							<hj:table name="address"/>
+						</hj:complexCollectionProperty-->
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<!--<xs:element name="Phone" type="pp:phone" maxOccurs="unbounded"/>-->
+			<xs:element name="question_id" type="pp:key">
+				<xs:annotation>
+					<xs:appinfo>
+						<!-- ** hj:simpleSingleProperty>
+							<hj:column name="question_identifier"/>
+						</hj:simpleSingleProperty-->
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="payout_limit" type="xs:float">
+				<xs:annotation>
+					<xs:appinfo>
+						<!-- ** hj:simpleSingleProperty>
+							<hj:column name="payout"/>
+						</hj:simpleSingleProperty-->
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="customer_id" type="pp:key">
+				<xs:annotation>
+					<xs:appinfo>
+						<!-- ** hj:simpleSingleProperty>
+							<hj:column name="customer_identifier"/>
+						</hj:simpleSingleProperty-->
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="role_id" type="pp:key">
+				<xs:annotation>
+					<xs:appinfo>
+						<!-- ** hj:simpleSingleProperty>
+							<hj:column name="role_identifier"/>
+						</hj:simpleSingleProperty-->
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="user_name" type="pp:ascii_string"/>
+			<xs:element name="password" type="pp:ascii_string"/>
+			<!--
+                      <xs:element name="last_logon" type="xs:dateTime">
+                              <xs:annotation>
+                                      <xs:appinfo>
+						<!- - ** hj:simpleSingleProperty>
+							<hj:column name="last_logon"/>
+						</hj:simpleSingleProperty- ->
+                                      </xs:appinfo>
+                        </xs:annotation>
+                      </xs:element-->
+			<xs:element name="email" type="pp:email"/>
+			<xs:element name="status" type="pp:user_status"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<!-- ** hj:id unsaved-value="null">
+						<hj:column name="user_identifier"/>
+						<hj:generator generatorClass="uuid"/>
+					</hj:id-->
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="Address">
+		<xs:annotation>
+			<xs:appinfo>
+				<!-- ** hj:class>
+					<hj:table name="address"/>
+				</hj:class-->
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="address1" type="xs:string"/>
+			<xs:element name="address2" type="xs:string" minOccurs="0"/>
+			<xs:element name="city" type="xs:string"/>
+			<xs:element name="state" type="pp:state"/>
+			<xs:element name="zip" type="pp:zip"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:appinfo>
+					<!-- ** hj:id unsaved-value="null">
+						<hj:column name="address_identifier"/>
+						<hj:generator generatorClass="uuid"/>
+					</hj:id-->
+				</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+		<!--<xs:attribute name="type" type="pp:address_type"
+use="required"/>-->
+	</xs:complexType>
+	<xs:simpleType name="key">
+		<xs:restriction base="xs:long"/>
+	</xs:simpleType>
+	<xs:simpleType name="ascii_string">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-zA-z]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="user_status">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ACTIVE"/>
+			<xs:enumeration value="DELETED"/>
+			<xs:enumeration value="DISABLED"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="phone_type">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="address_type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BUSINESS"/>
+			<xs:enumeration value="HOME"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="state">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CT"/>
+			<xs:enumeration value="MA"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="zip">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="email">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:complexType name="phone">
+		<xs:annotation>
+			<xs:documentation>A complete phone number</xs:documentation>
+			<xs:appinfo>
+				<!-- ** hj:class>
+					<hj:table name="phone"/>
+				</hj:class-->
+			</xs:appinfo>
+		</xs:annotation>
+
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="type" type="pp:phone_type" use="required"/>
+				<xs:attribute name="id" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:appinfo>
+							<!-- ** hj:id unsaved-value="null">
+								<hj:column name="phone_identifier"/>
+								<hj:generator generatorClass="uuid"/>
+							</hj:id -->
+						</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="param">
+		<xs:annotation>
+			<xs:documentation>A Param</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="type" type="pp:param_type" use="required"/>
+				<xs:attribute name="name" type="pp:ascii_string" 
+					use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="document_type">
+		<xs:annotation>
+			<xs:appinfo>
+			  <hj:ignored/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="params">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="param" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="name"/>
+								<xs:attribute name="type"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:any namespace="##any"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="param_type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="COOKIE"/>
+			<xs:enumeration value="QUERY_STRING"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="document" type="pp:document_type"/>
+</xs:schema>

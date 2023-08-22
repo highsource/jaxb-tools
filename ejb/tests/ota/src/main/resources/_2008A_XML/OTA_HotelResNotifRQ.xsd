@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="4.000" id="OTA2008A">
+	<xs:include schemaLocation="OTA_HotelReservation.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_HotelResNotifRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Hotel Reservation Notif Request supports the functionality of updating other systems with reservation data. The message assumes a push model, with the originating system pushing the data to another system.  The originating system would usually be a booking source, such as a Global Distribution System (GDS), a Central Reservation System (CRS) or some other agent of the hotel.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The point-of-sale data, contained in the element, communicates the information that allows the receiving system to identify the trading partner that is sending the request or the response message.  </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="HotelReservations" type="HotelReservationsType" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attribute name="ResStatus" type="TransactionActionType" use="optional"/>
+			<xs:attribute name="HoldDuration" type="xs:duration" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The time until a hold is released.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,452 @@
+﻿<?xml version="1.0"?>
+<!--
+IPTC - International Press Telecommunications Council
+Royal Albert House, Windsor, Berkshire SL4 1BE, England
+www.iptc.org
+
+See sportsml.xsd to view Non-Exclusive License Agreement for 
+International Press Telecommunications Council, which
+applies to this specification.
+-->
+<schema
+	targetNamespace="http://iptc.org/std/SportsML/2006-10-18/"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:sportsml="http://iptc.org/std/SportsML/2006-10-18/"
+	version="1.8"
+	>
+	<annotation>
+		<appinfo>SportsML</appinfo>
+		<documentation>SportsML is a global XML standard for the interchange of sports data. Designed to be as easy to understand and implement as possible, SportsML allows for the exchange of sports scores, schedules, standings, and statistics for a wide variety of competitions. Its extensibility allows for the easy accommodation of many sports from around the globe. It cooperates with current IPTC standards NewsML and NITF to enable publishers to package sports statistics alongside edited coverage of sports.</documentation>
+	</annotation>
+	
+	<!-- Core Schema -->
+	<include schemaLocation="sportsml-core.xsd"/>
+
+	<!-- Plug-In Schemas for Specific Sports -->
+	<include schemaLocation="sportsml-specific-american-football.xsd"/>
+	<include schemaLocation="sportsml-specific-baseball.xsd"/>
+	<include schemaLocation="sportsml-specific-basketball.xsd"/>
+	<include schemaLocation="sportsml-specific-golf.xsd"/>
+	<include schemaLocation="sportsml-specific-ice-hockey.xsd"/>
+	<include schemaLocation="sportsml-specific-soccer.xsd"/>
+	<include schemaLocation="sportsml-specific-tennis.xsd"/>
+	<include schemaLocation="sportsml-specific-motor-racing.xsd"/>
+	<include schemaLocation="sportsml-specific-curling.xsd"/>
+
+	<!-- Team Key Resource Files -->
+	<include schemaLocation="resource-files/team-keys-l.nhl.com.xsd"/>
+
+	<!-- Controlled-Vocabulary Resource Files -->
+	<include schemaLocation="resource-files/sportsml-vocabulary-core.xsd"/>
+	<include schemaLocation="resource-files/sportsml-vocabulary-specific-american-football.xsd"/>
+	<include schemaLocation="resource-files/sportsml-vocabulary-specific-baseball.xsd"/>
+	<include schemaLocation="resource-files/sportsml-vocabulary-specific-basketball.xsd"/>
+	<include schemaLocation="resource-files/sportsml-vocabulary-specific-golf.xsd"/>
+	<include schemaLocation="resource-files/sportsml-vocabulary-specific-ice-hockey.xsd"/>
+	<include schemaLocation="resource-files/sportsml-vocabulary-specific-soccer.xsd"/>
+	<include schemaLocation="resource-files/sportsml-vocabulary-specific-tennis.xsd"/>
+	<include schemaLocation="resource-files/sportsml-vocabulary-specific-motor-racing.xsd"/>
+	<include schemaLocation="resource-files/sportsml-vocabulary-specific-curling.xsd"/>
+	
+	<!-- Extensions for Specific Sports -->
+	<element name="placeholder-element">
+		<annotation>
+			<documentation>Not a true SportsML element | Just an empty placeholder to be used if Specific extension has no children.</documentation>
+		</annotation>
+	</element>
+
+
+	<group name="eventMetadataSpecific">
+		<choice>
+			<element ref="sportsml:event-metadata-american-football"/>
+			<element ref="sportsml:event-metadata-baseball"/>
+			<element ref="sportsml:event-metadata-basketball"/>
+			<element ref="sportsml:event-metadata-golf"/>
+			<element ref="sportsml:event-metadata-ice-hockey"/>
+			<element ref="sportsml:event-metadata-soccer"/>
+			<element ref="sportsml:event-metadata-tennis"/>
+			<element ref="sportsml:event-metadata-motor-racing"/>
+			<element ref="sportsml:event-metadata-curling"/>
+		</choice>
+	</group>
+	<group name="eventStatsSpecific">
+		<choice>
+			<element ref="sportsml:event-stats-motor-racing"/>
+		</choice>
+	</group>
+	<group name="eventActionsSpecific">
+		<choice>
+			<element ref="sportsml:event-actions-american-football"/>
+			<element ref="sportsml:event-actions-baseball"/>
+			<element ref="sportsml:event-actions-basketball"/>
+			<element ref="sportsml:event-actions-golf"/>
+			<element ref="sportsml:event-actions-ice-hockey"/>
+			<element ref="sportsml:event-actions-soccer"/>
+			<element ref="sportsml:event-actions-tennis"/>
+			<element ref="sportsml:event-actions-motor-racing"/>
+			<element ref="sportsml:event-actions-curling"/>
+		</choice>
+	</group>
+	<group name="teamMetadataSpecific">
+		<choice>
+			<element ref="sportsml:team-metadata-american-football"/>
+			<element ref="sportsml:team-metadata-baseball"/>
+			<element ref="sportsml:team-metadata-basketball"/>
+			<element ref="sportsml:team-metadata-golf"/>
+			<element ref="sportsml:team-metadata-ice-hockey"/>
+			<element ref="sportsml:team-metadata-soccer"/>
+			<element ref="sportsml:team-metadata-tennis"/>
+			<element ref="sportsml:team-metadata-motor-racing"/>
+		</choice>
+	</group>
+	<group name="teamStatsSpecific">
+		<choice>
+			<element ref="sportsml:team-stats-american-football"/>
+			<element ref="sportsml:team-stats-baseball"/>
+			<element ref="sportsml:team-stats-basketball"/>
+			<element ref="sportsml:team-stats-golf"/>
+			<element ref="sportsml:team-stats-ice-hockey"/>
+			<element ref="sportsml:team-stats-soccer"/>
+			<element ref="sportsml:team-stats-tennis"/>
+			<element ref="sportsml:team-stats-motor-racing"/>
+			<element ref="sportsml:team-stats-curling"/>
+		</choice>
+	</group>
+	<group name="playerMetadataSpecific">
+		<choice>
+			<element ref="sportsml:player-metadata-american-football"/>
+			<element ref="sportsml:player-metadata-baseball"/>
+			<element ref="sportsml:player-metadata-basketball"/>
+			<element ref="sportsml:player-metadata-golf"/>
+			<element ref="sportsml:player-metadata-ice-hockey"/>
+			<element ref="sportsml:player-metadata-soccer"/>
+			<element ref="sportsml:player-metadata-tennis"/>
+			<element ref="sportsml:player-metadata-motor-racing"/>
+			<element ref="sportsml:player-metadata-curling"/>
+		</choice>
+	</group>
+	<group name="playerStatsSpecific">
+		<choice>
+			<element ref="sportsml:player-stats-american-football"/>
+			<element ref="sportsml:player-stats-baseball"/>
+			<element ref="sportsml:player-stats-basketball"/>
+			<element ref="sportsml:player-stats-golf"/>
+			<element ref="sportsml:player-stats-ice-hockey"/>
+			<element ref="sportsml:player-stats-soccer"/>
+			<element ref="sportsml:player-stats-tennis"/>
+			<element ref="sportsml:player-stats-motor-racing"/>
+			<element ref="sportsml:player-stats-curling"/>
+		</choice>
+	</group>
+	<group name="associateMetadataSpecific">
+		<choice>
+			<element ref="sportsml:associate-metadata-motor-racing"/>
+		</choice>
+	</group>
+	<group name="associateStatsSpecific">
+		<choice>
+			<element ref="sportsml:placeholder-element"/>
+		</choice>
+	</group>
+	<group name="officialMetadataSpecific">
+		<choice>
+			<element ref="sportsml:placeholder-element"/>
+		</choice>
+	</group>
+	<group name="officialStatsSpecific">
+		<choice>
+			<element ref="sportsml:placeholder-element"/>
+		</choice>
+	</group>
+	<group name="groupMetadataSpecific">
+		<choice>
+			<element ref="sportsml:placeholder-element"/>
+		</choice>
+	</group>
+	<group name="groupStatsSpecific">
+		<choice>
+			<element ref="sportsml:placeholder-element"/>
+		</choice>
+	</group>
+	<group name="tournamentMetadataSpecific">
+		<choice>
+			<element ref="sportsml:tournament-metadata-golf"/>
+			<element ref="sportsml:tournament-metadata-tennis"/>
+		</choice>
+	</group>
+	<group name="tournamentDivisionMetadataSpecific">
+		<choice>
+			<element ref="sportsml:tournament-division-metadata-golf"/>
+		</choice>
+	</group>
+	<group name="tournamentStageMetadataSpecific">
+		<choice>
+			<element ref="sportsml:placeholder-element"/>
+		</choice>
+	</group>
+
+
+	<!-- Common vocabulary definitions -->
+
+	<simpleType name="teamKey.Common">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="position.Common">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="dateTime.Common">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="duration.Common">
+		<restriction base="string"/>
+	</simpleType>
+
+
+
+
+	<!-- Vocabulary definitions for core schema -->
+
+	<simpleType name="statsCoverage.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="teamCoverage.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="dateCoverageType.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="durationScope.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="competitionScope.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="alignmentScope.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="recordMakingScope.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="codeType.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="eventStyle.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="eventStatus.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="postponementStatus.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="status.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="health.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="phaseType.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="gender.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="participantCount.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="professionalStatus.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="specialGroup.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="specialNeeds.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="siteStyle.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="siteSurface.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="scoreUnits.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="resultEffect.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="awardType.Core">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="statusChangeType.Core">
+		<restriction base="string"/>
+	</simpleType>
+
+
+	<!-- Vocabulary definitions for american-football schema -->
+
+	<simpleType name="scoreAttemptResult.AmericanFootball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="driveResult.AmericanFootball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="scoreType.AmericanFootball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="penaltySide.AmericanFootball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="penaltyLevel.AmericanFootball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="timeoutType.AmericanFootball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="role.AmericanFootball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="result.AmericanFootball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="kickType.AmericanFootball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="penaltyType.AmericanFootball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="position.AmericanFootball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="caller.AmericanFootball">
+		<restriction base="string"/>
+	</simpleType>
+
+
+	<!-- Vocabulary definitions for baseball schema -->
+
+	<simpleType name="pitchType.Baseball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="strikeType.Baseball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="ballLocation.Baseball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="playType.Baseball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="walkType.Baseball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="hitType.Baseball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="hitByPitchType.Baseball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="outType.Baseball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="position.Baseball">
+		<restriction base="string"/>
+	</simpleType>
+
+
+	<!-- Vocabulary definitions for basketball schema -->
+
+	<simpleType name="scoreAttemptType.Basketball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="scoreAttemptResult.Basketball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="penaltySide.Basketball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="penaltyLevel.Basketball">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="position.Basketball">
+		<restriction base="string"/>
+	</simpleType>
+
+
+	<!-- Vocabulary definitions for golf schema -->
+
+	<simpleType name="holeType.Golf">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="shotType.Golf">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="landing.Golf">
+		<restriction base="string"/>
+	</simpleType>
+
+
+	<!-- Vocabulary definitions for ice-hockey schema -->
+
+	<simpleType name="scoreAttemptType.IceHockey">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="scoreAttemptResult.IceHockey">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="penaltyLevel.IceHockey">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="penaltyName.IceHockey">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="position.IceHockey">
+		<restriction base="string"/>
+	</simpleType>
+
+
+	<!-- Vocabulary definitions for soccer schema -->
+
+	<simpleType name="scoreAttemptType.Soccer">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="scoreAttemptMethod.Soccer">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="scoreAttemptResult.Soccer">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="penaltyType.Soccer">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="penaltyLevel.Soccer">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="foulResult.Soccer">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="foulName.Soccer">
+		<restriction base="string"/>
+	</simpleType>
+	<simpleType name="position.Soccer">
+		<restriction base="string"/>
+	</simpleType>
+
+
+	<!-- Vocabulary definitions for tennis schema -->
+
+	<simpleType name="winType.Tennis">
+		<restriction base="string"/>
+	</simpleType>
+
+	<!-- Vocabulary definitions for motor-racing schema -->
+
+	<simpleType name="flagType.MotorRacing">
+		<restriction base="string"/>
+	</simpleType>
+
+	<!-- Vocabulary definitions for curling schema -->
+	<simpleType name="throwOrder.Curling">
+		<restriction base="string"/>
+	</simpleType>
+</schema>

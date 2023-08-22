@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- User   MOD      Date              Description  
+    =========================================================================
+    
+    MV      MT245    20070605          Initial Draft
+                                   
+-->
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns="http://www.starstandard.org/STAR/5" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>    
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="DealerLocator" type="DealerLocatorType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                DealerLocator
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DealerLocatorHeader" type="DealerLocatorHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                DealerLocator
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DealerLocatorDetail" type="DealerLocatorDetailType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                DealerLocator
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="DealerLocatorType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 1.0 - Draft</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="DealerLocatorHeader" />
+            <xsd:element ref="DealerLocatorDetail" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DealerLocatorHeaderType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">DealerLocator Header information</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+                <xsd:sequence>
+                    <xsd:element ref="NumberOfDealersToBeReturnedNumeric" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="GenericSearchCriteria" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element ref="LocationSearchCriteria" minOccurs="0" maxOccurs="1"/>                                        
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="DealerLocatorDetailType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">DealerLocator Detail information</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="LineID" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="DealerParty" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="ProximityMeasureGroup" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="DealerServiceTypeCode" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="DealerCertificationGroup" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="ProductsCarried" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="DealerLogoURI" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="DealerLocationImageURI" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="HoursOfOperation" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="DealerNote" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

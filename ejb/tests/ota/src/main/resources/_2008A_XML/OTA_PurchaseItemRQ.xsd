@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.003" id="OTA2008A">
+	<xs:include schemaLocation="OTA_HotelCommonTypes.xsd"/>
+	<xs:element name="OTA_PurchaseItemRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Used to electronically purchase various types of items.  </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="UniqueID" type="UniqueID_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">An identifier used to uniquely reference an object in a system.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="POS" type="POS_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Used to identify the source (system and/or person) taking the order.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Orders" type="OrdersType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A collection of orders.  This element also contains attributes that house high level information pertaining to the orders within this message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="RecipientInfos" type="RecipientInfosType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A collection of recipient infos.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PurchaserInfo" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Contact and loyalty information for the purchaser of the order(s).</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="ContactPersonType">
+								<xs:sequence>
+									<xs:element name="CustLoyalty" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Customer loyalty information for the purchaser.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attributeGroup ref="CustomerLoyaltyGroup"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PaymentInformation" type="PaymentDetailType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Payment information for the purchaser of the order.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Comments" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A collection of comments.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Comment" type="ParagraphType" maxOccurs="99">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Comments associated with the orders.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="TPA_Extensions" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The OTA_PayloadStdAttributes defines the standard attributes that appear on the root element for all OTA payloads.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

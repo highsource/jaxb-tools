@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings
+	version="2.1"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:annox="http://annox.dev.java.net"
+	jaxb:extensionBindingPrefixes="hj orm annox">
+
+	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+		<jaxb:schemaBindings>
+			<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.pocustomized"/>
+		</jaxb:schemaBindings>
+		<hj:persistence>
+			<hj:default-generated-id name="MySuperId" transient="true">
+				<orm:column name="MY_SUPER_ID"/>
+			</hj:default-generated-id>
+			<hj:default-one-to-many>
+				<orm:join-table/>
+			</hj:default-one-to-many>
+		</hj:persistence>
+		<jaxb:bindings node="xs:complexType[@name='one']/xs:sequence/xs:element[@name='many-to-many-join-table']">
+			<annox:annotate>
+				<annox:annotate annox:class="org.hibernate.annotations.Cascade" value="DELETE_ORPHAN"/>
+			</annox:annotate>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="xs:element[@name='ten']/xs:complexType">
+			<hj:basic name="content">
+				<orm:column length="1024"/>
+			</hj:basic>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+
+</jaxb:bindings>

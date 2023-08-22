@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jvnet.hyperjaxb3.jdo.test.tests">
+        <class name="A" identity-type="application" table="A">
+            <field name="id" primary-key="true">
+                <column name="AID"/>
+            </field>
+            <field name="b" persistence-modifier="persistent">
+                <column name="BID"/>
+            </field>
+            <field name="d">
+                <column name="D"/>
+            </field>
+        </class>
+        <class name="B" table="B">
+            <field name="id" primary-key="true">
+                <column name="BID"/>
+            </field>
+            <field name="c">
+                <column name="C"/>
+            </field>
+        </class>
+    </package>
+</jdo>

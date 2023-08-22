@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   User     Mod     Date      Description
+   ===========================================================================
+   DC             20061031    Removed SubscriptionServiceDocumentID
+   MV       CR297 20070220    Replaced: SubscriptionServiceVehicle with SubscriptionServiceVehicleLineItem   
+   
+ -->
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns="http://www.starstandard.org/STAR/5" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="SubscriptionService" type="SubscriptionServiceType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The SubscriptionService noun contains information about a particular service that an individual is subscribing for their vehicle.  This noun may also be used to update subscription service information for a particular vehicle.           
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SubscriptionServiceHeader" type="SubscriptionServiceHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The SubscriptionServiceHeader component represents summary information about the Subscription Subscription.           
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>    
+    <xsd:element name="SubscriptionServiceDetail" type="SubscriptionServiceDetailType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The SubscriptionServiceDetail component represents the vehicle(s) for which the service is being provided as well as other detail information.           
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>    
+    <xsd:complexType name="SubscriptionServiceType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version X.X, STAR approved xx/xx/xxxx; effective date 07/04/xxxx</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 5.0 - Draft</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 4.0, STAR approved 04/20/2005; effective date 07/04/2005</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 3.0, STAR approved 05/07/2004; effective date 07/04/2004</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.0 STAR approved 04/09/2003; OAGI approved 3/15/2003; effective date 07/04/2003</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 1.0 STAR approved 01/10/2003; OAGI reviewed 1/06/2003; effective date 01/01/2003</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="SubscriptionServiceHeader"/>
+            <xsd:element ref="SubscriptionServiceDetail"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="SubscriptionServiceHeaderType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The SubscriptionServiceHeader component represents summary information about the Subscription Subscription.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+                <xsd:sequence>
+                    <!--<xsd:element ref="SubscriptionServiceDocumentID" minOccurs="0" /> -->
+                    <xsd:element ref="SubscriptionServiceGroup" />                    
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="SubscriptionServiceDetailType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The SubscriptionServiceDetail component represents the vehicle(s) for which the service is being provided as well as other detail information.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="SubscriptionServiceVehicleLineItem" minOccurs="0" maxOccurs="1" />                    
+            <xsd:element ref="OwnerOperatorParty" minOccurs="0" />  
+            <xsd:element name="Status" type="MinimumAcknowledgementStatusType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                        Deprecated: Use AcknowledgementStatus
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="AcknowledgementStatus" minOccurs="0"/>
+         </xsd:sequence>  
+    </xsd:complexType>
+    <xsd:element name="SubscriptionServiceVehicleLineItem" type="SubscriptionServiceVehicleLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Detail information regarding a vehicle for a particular subscription service.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element> 
+    <xsd:complexType name="SubscriptionServiceVehicleLineItemType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The SubscriptionServiceDetail component represents the vehicle(s) for which the service is being provided as well as other detail information.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="Vehicle" minOccurs="0" maxOccurs="1"/>             
+            <xsd:element ref="FleetAccount" minOccurs="0" maxOccurs="1"/>                    
+            <xsd:element ref="VehicleClassCode" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="VehicleOwnershipTypeCode" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>  
+    </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.003" id="OTA2008A">
+	<xs:include schemaLocation="OTA_DestinationActivity.xsd"/>
+	
+	
+	
+	
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_DestActivityCapabilitiesRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This is used to respond to a CapabilitiesRQ, where the target system responds describing its available level of functionality.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="MultipleItemsInd" type="xs:boolean" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">When 'true, indicates that this system can accept multiple items in a request.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="CustSubAllocationInd" type="xs:boolean" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">When true, indicates that this system can support customer suballocation (not all customers on all items).</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="FullCustDetailsInd" type="xs:boolean" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">When true, indicates that names (and all other details) are required for *all* customers.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

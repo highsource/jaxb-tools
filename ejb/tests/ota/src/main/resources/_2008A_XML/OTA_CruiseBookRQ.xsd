@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="2.004" id="OTA2008A">
+	<xs:include schemaLocation="OTA_CruiseCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA 
+specification are made available according to the terms defined by the OTA 
+License Agreement at 
+http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_CruiseBookRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+The book request message requests booking creation on the cruise line system for a given sailing with a specific mode of transportation/ gateway city pair and currency and for a selected fare/category pair and a cabin number. It also integrates this booking into a GDS's PNR based on the cruise line reply. 
+Optional request information can include:
+- Guest city
+- Inclusive package
+</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Point of sale 
+object.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="AgentInfo" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specifies the information of the an agent who is creating or modifying the booking</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attributeGroup ref="AgentInfoGroup"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="DeletedGuest" minOccurs="0" maxOccurs="9">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specifies the information of the deleted guest from the current booking. Normally used in Modification mode.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="DeletedGuestReference" type="Numeric1to99" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The guest's reference number in the booking being modified.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SailingInfo" type="SailingCategoryInfoType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specifies the selected category to book.Contains information related to the selected sailing. Typically the selected sailing is one of the sailings returned in the previous sailing availability response. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ReservationInfo" type="CruiseGuestInfoType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specifies information about the booking.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The standard attributes that appear on the root element for all OTA payloads. </xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+			<xs:attribute name="TransactionActionCode" type="TransactionActionType" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

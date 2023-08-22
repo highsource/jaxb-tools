@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.009" id="OTA2008A">
+	<xs:include schemaLocation="OTA_VehicleCommonTypes.xsd"/>
+	
+	
+	
+	
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_VehLocSearchRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Vehicle Location Search request will allow car rental customers to request car rental provider(s) to return location(s) available.  The search will be based on longitude/latitude of the location.  Requests can be based on providing one or many of the following: longitude/latitude, address, telephone number, reference point, the actual code of the location, hotel, and/or radius.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Point of Sale Identification.  Identification number of the vendor that has made the location search request and agency number assigned by IATA, ARC, ERSP or TID.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="VehLocSearchCriterion" type="ItemSearchCriterionType" maxOccurs="5">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A collection of search parameters to be used in the search.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Vendor" type="CompanyNameType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Information on the vendor to be used as part of the search.  If this information is provided then only locations belonging to this vendor should be made available in the response.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="TPA_Extensions" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attributeGroup ref="MaxResponsesGroup"/>
+			<xs:attributeGroup ref="ReqRespVersion"/>
+			<xs:attribute name="JustAddressPhone" type="xs:boolean" use="optional" default="false">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This attribute can be used to indicate how much information should be returned about a location matching the search criteria.  If set to true, only the location address and phone numbers will be provided.  If set to false, or omitted, all information about the location of the facility will be provided.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

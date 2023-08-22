@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+** OAGIS® Revision: 9.0 **
+** Date: 08 April 2005 **
+** Copyright 1998-2005, All Rights Reserved **
+
+This is an OAGIS® BOD XML Schema (XSD) Definition.
+
+License information for this file is provided in the file **2005 OAGi License Agreement.txt** that is provided with this download package.
+
+For support, more information, or to report implementation bugs, please contact the Open Applications Group at xml@openapplications.org.
+    
+     XML Schema 
+     
+    Name: \OAGIS\9.0\Resources\Nouns\PriceList.xsd
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.openapplications.org/oagis/9" targetNamespace="http://www.openapplications.org/oagis/9" elementFormDefault="qualified" attributeFormDefault="unqualified">
+        <xsd:include schemaLocation="../Operational/OrderManagementComponents.xsd"/>
+        <xsd:element name="PriceList" type="PriceListType">
+                <xsd:annotation>
+                        <xsd:documentation source="http://www.openapplications.org/oagis/9">Defines a list of items with their base price, price breaks, discounts and qualifiers. For each item, price breaks can be defined, above which certain discounts or overriding prices might apply. Price breaks can be defined in volume or in dollar amount. Price list qualifiers specify for which catalog, customer and/or effective dates this price list applies.</xsd:documentation>
+                </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="PriceListHeader" type="PriceListHeaderType">
+                <xsd:annotation>
+                        <xsd:documentation>Provides the common information for the PriceList</xsd:documentation>
+                </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="PriceListLine" type="PriceListLineType">
+                <xsd:annotation>
+                        <xsd:documentation>Identifies the pricing for an individual Catalog Item</xsd:documentation>
+                </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="PriceListQualifier" type="PriceListQualifierType">
+                <xsd:annotation>
+                        <xsd:documentation source="http://www.openapplications.org/oagis/9">This qualifies the intended audience or group of users of a Price List  Qualifications for a given price list include, (but are not limited to):
+· Suppliers, Customers or Manufacturers
+· Specific Customer Site
+· Suppliers, Customers or Manufacturers
+· Catalogs</xsd:documentation>
+                </xsd:annotation>
+        </xsd:element>
+        <xsd:complexType name="PriceListType">
+                <xsd:sequence>
+                        <xsd:element ref="PriceListHeader" minOccurs="0"/>
+                        <xsd:element ref="PriceListLine" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="PriceListHeaderType">
+                <xsd:annotation>
+                        <xsd:documentation source="http://www.openapplications.org/oagis/9">The Price list may be issued by either a company within your Enterprise, a division or by any entity that is  represented by the SupplierParty.
+
+The SupplierParty in the context of the Catalog is the Party the supplies the Catalog and also the PriceList. The PublisherPary is provided for the case in which the SupplierParty uses a third Party to publish the Catalog and PriceList.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexContent>
+                        <xsd:extension base="HeaderType">
+                                <xsd:sequence>
+                                        <xsd:element ref="CurrencyCode" minOccurs="0">
+                                                <xsd:annotation>
+                                                        <xsd:documentation source="http://www.openapplications.org/oagis/9">Is the default currency of the PriceList.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element ref="EffectiveTimePeriod" minOccurs="0">
+                                                <xsd:annotation>
+                                                        <xsd:documentation source="http://www.openapplications.org/oagis/9">Indicates the effective period of the PriceList.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element ref="PublisherParty" minOccurs="0"/>
+                                        <xsd:element ref="CustomerParty" minOccurs="0" maxOccurs="unbounded"/>
+                                        <xsd:element ref="PriceBreak" minOccurs="0"/>
+                                        <xsd:element ref="PriceListQualifier" minOccurs="0" maxOccurs="unbounded"/>
+                                        <!-- <xsd:element ref="UserArea" minOccurs="0"/> -->
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="PriceListLineType">
+                <xsd:complexContent>
+                        <xsd:extension base="LineType">
+                                <xsd:sequence>
+                                        <xsd:choice minOccurs="0">
+                                                <xsd:sequence>
+                                                        <xsd:element ref="Item" minOccurs="0">
+                                                                <xsd:annotation>
+                                                                        <xsd:documentation>Identifies the specific Item from the Catalog.</xsd:documentation>
+                                                                </xsd:annotation>
+                                                        </xsd:element>
+                                                </xsd:sequence>
+                                                <xsd:sequence>
+                                                        <xsd:element ref="CommodityClassification" minOccurs="0">
+                                                                <xsd:annotation>
+                                                                        <xsd:documentation>Is the commodity code in the Catalog.</xsd:documentation>
+                                                                </xsd:annotation>
+                                                        </xsd:element>
+                                                </xsd:sequence>
+                                        </xsd:choice>
+                                        <xsd:element ref="UnitPrice" minOccurs="0">
+                                                <xsd:annotation>
+                                                        <xsd:documentation source="http://www.openapplications.org/oagis/9">Indicates the amount per quantity.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element ref="PriceBreak" minOccurs="0" maxOccurs="unbounded"/>
+                                       <!-- <xsd:element ref="UserArea" minOccurs="0"/> -->
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="PriceListQualifierType">
+                <xsd:sequence>
+                        <xsd:element ref="CatalogReference" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                        <xsd:documentation source="http://www.openapplications.org/oagis/9">Reference to the Catalog in which the PriceList applies.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element ref="CustomerParty" minOccurs="0" maxOccurs="unbounded"/>
+                        <xsd:group ref="FreeFormTextGroup"/>
+                       <!-- <xsd:element ref="UserArea" minOccurs="0"/> -->
+                </xsd:sequence>
+        </xsd:complexType>
+</xsd:schema>

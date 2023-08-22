@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.009" id="OTA2008A">
+	<xs:include schemaLocation="OTA_VehicleCommonTypes.xsd"/>
+	
+	
+	
+	
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_VehCancelRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The root tag of OTA_VehicleCancelRQ contains standard payload attributes found in all OTA payload documents. The attribute
+ReqRespVersion is a positive integer value that indicates the version number requested for the response message.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Point of Sale Identification.  Identification number of the vendor that has made the vehicle availability request and agency number assigned by IATA, ARC, ESRP or TID.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="VehCancelRQCore" type="CancelInfoRQType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the common, or core, information associated with the request for cancellation of a rental vehicle reservation.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="VehCancelRQInfo" type="VehicleCancelRQAdditionalInfoType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the supplemental information associated with the request for the cancellation of a rental vehicle reservation.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attributeGroup ref="ReqRespVersion"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="VehicleCancelRQAdditionalInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleCancelRQAdditionalInfoType complex type defines the information that is used as part of a request to cancel a vehicle reservation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustLoyalty" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A frequent renter number associated with the reservation.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="CustomerLoyaltyGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Telephone" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A telephone number associated with the reservation.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="TelephoneGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Vendor" type="CompanyNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The vendor with whom the reservation has been made.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RentalInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Summary information about the reservation, including locations, dates, etc.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PickUpLocation" type="LocationType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">A code to identify the pick up location, along with an optional code context.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="ReturnLocation" type="LocationType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">A code to identify the return location, along with an optional code context.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="PickUpDateTime" type="xs:dateTime" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The PickUpDateTime attribute provides information on the pickup date and time.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ReturnDateTime" type="xs:dateTime" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The ReturnDateTime attribute provides information on the return date and time.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

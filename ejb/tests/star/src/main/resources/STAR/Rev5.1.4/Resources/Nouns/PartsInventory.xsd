@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns="http://www.starstandard.org/STAR/5" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="PartsInventory" type="PartsInventoryType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                For PartsInventory represented in the DataArea of the Parts Inventory BOD, there must be at least one occurrence of the PartsInventory component.                
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    
+    <xsd:element name="PartsInventoryHeader" type="PartsInventoryHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                For each PartsInventory represented in the DataArea of the PartsInventory BOD, there must be once occurrence of the Header Component.  The Header component represents summary information that applies to the entire Parts Inventory transaction.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartsInventoryLine" type="PartsInventoryLineType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                The Line component represents the detail information related to the Parts inventory transaction.  At least one Line is required for each Header
+            </xsd:documentation>
+        </xsd:annotation>        
+    </xsd:element>
+    <xsd:complexType name="PartsInventoryType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.0 - Draft</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 1.0, STAR approved 04/20/2005; OAGI approved 03/03/2005; effective date 07/04/2005</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="PartsInventoryHeader" />
+            <xsd:element ref="PartsInventoryLine" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PartsInventoryHeaderType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+                <xsd:sequence>
+                    <xsd:element ref="PartTypeCode" minOccurs="0" />
+                    <xsd:element ref="FileSequenceNumberString" minOccurs="0" />
+                    <xsd:element ref="InventoryTypeCode" minOccurs="0" />
+                    <xsd:element ref="LastSentInventoryBODID" minOccurs="0" />
+                    <xsd:element name="Status" type="MinimumAcknowledgementStatusType" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                                Deprecated: Use AcknowledgmentStatus.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="AcknowledgementStatus" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                                Deprecated: Use AcknowledgmentStatus.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="PartsInventoryLineType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="ItemID" />
+            <xsd:element ref="QuantityOnHand" minOccurs="0" />
+            <xsd:element ref="QuantitySold" minOccurs="0" />
+            <xsd:element ref="QuantityOfLostSale" minOccurs="0" />
+            <xsd:element ref="PartClassCode" minOccurs="0" />
+            <xsd:element ref="QuantityOnOrder" minOccurs="0" />
+            <xsd:element ref="QuantityReOrderPoint" minOccurs="0" />
+            <xsd:element ref="QuantityTwelveMonthSales" minOccurs="0" />
+            <xsd:element ref="BinLocation" minOccurs="0" />
+            <xsd:element ref="QuantityTwelveMonthLostSales" minOccurs="0" />
+            <xsd:element ref="BackOrderQuantity" minOccurs="0" />
+            <xsd:element ref="QuantityOfReturn" minOccurs="0" />
+            <xsd:element ref="QuantityReserved" minOccurs="0" />
+            <xsd:element ref="UnitPriceAmount" minOccurs="0" />
+            <xsd:element ref="QuantityDealerPartStocking" minOccurs="0" />
+            <xsd:element ref="MonthsNoSaleNumeric" minOccurs="0" />
+            <xsd:element ref="QuantityAvailable" minOccurs="0" />
+            <xsd:element ref="ReplenishmentCode" minOccurs="0" />
+            <xsd:element ref="LastSoldDate" minOccurs="0" />
+            <xsd:element ref="QuantityUserMin" minOccurs="0" />
+            <xsd:element ref="QuantityUserMax" minOccurs="0" />
+            <xsd:element ref="PartSourceCode" minOccurs="0" />
+            <xsd:element ref="StockingStatusCode" minOccurs="0" />
+            <xsd:element ref="SystemSetupDate" minOccurs="0" />
+            <xsd:element ref="QuantityBestStockingLevel" minOccurs="0" />
+            <xsd:element ref="AverageWeeklyUsageQuantity" minOccurs="0" />
+            <xsd:element name="Status" type="MinimumAcknowledgementStatusType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

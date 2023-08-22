@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.010" id="OTA2008A">
+	<xs:include schemaLocation="OTA_InsuranceCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_InsuranceQuoteRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Container for insurance plan quote results</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Indicator for successful request processing</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0"/>
+					<xs:element name="PlanForQuoteRS" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Contains a quote response for a single insurance plan.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="QuoteDetail">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Contains the information about the plan, such as the name of the insurance company and restrictions, specific to the quote.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="ProviderCompany" type="CompanyNameType">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Identifies the company providing the insurance product quoted in this response message.</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="QuoteDetailURL" type="URL_Type" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Specifies the location of a file containing specific details regarding this quote. </xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="PlanRestrictions" type="PlanRestrictionType" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Container for any restrictions to coverage of the quoted plan.</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="BookingDetailURL" type="URL_Type" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Specifies the location of a file containing booking details</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+										<xs:attributeGroup ref="EffectiveExpireOptionalDateGroup"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="InsCoverageDetail" type="InsCoverageDetailType" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Allows vendor to echo back  information about the traveler(s)' requirements for insurance coverage.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="PlanCost" type="PlanCostType">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Contains information about the total price of the insurance plan.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="Contact" type="ContactPersonType" minOccurs="0" maxOccurs="9">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Defines contact information for an individual or company (for example, the provider's callcenter number or claims hotline).</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+							<xs:attributeGroup ref="PlanID_Group"/>
+							<xs:attribute name="RPH" type="RPH_Type" use="optional"/>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType"/>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This element defines standard attributes that appear on the root element for all OTA payloads.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

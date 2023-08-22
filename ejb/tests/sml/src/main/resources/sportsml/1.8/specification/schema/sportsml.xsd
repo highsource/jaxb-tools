@@ -1,0 +1,586 @@
+<?xml version="1.0"?>
+<!--
+IPTC - International Press Telecommunications Council
+Royal Albert House, Windsor, Berkshire SL4 1BE, England
+www.iptc.org
+
+See bottom of this file to view Non-Exclusive License
+Agreement for International Press Telecommunications
+Council, which applies to this specification (including
+this file and all of its companion documents).
+-->
+<schema
+	targetNamespace="http://iptc.org/std/SportsML/2006-10-18/"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:sportsml="http://iptc.org/std/SportsML/2006-10-18/"
+	version="1.8"
+	>
+	<annotation>
+		<appinfo>SportsML</appinfo>
+		<documentation>SportsML is a global XML standard for the interchange of sports data. Designed to be as easy to understand and implement as possible, SportsML allows for the exchange of sports scores, schedules, standings, and statistics for a wide variety of competitions. Its extensibility allows for the easy accommodation of many sports from around the globe. It cooperates with current IPTC standards NewsML and NITF to enable publishers to package sports statistics alongside edited coverage of sports.</documentation>
+	</annotation>
+
+	<!-- Core Schema -->
+	<include schemaLocation="sportsml-core.xsd"/>
+
+	<!-- Plug-In Schemas for Specific Sports -->
+	<include schemaLocation="sportsml-specific-american-football.xsd"/>
+	<include schemaLocation="sportsml-specific-baseball.xsd"/>
+	<include schemaLocation="sportsml-specific-basketball.xsd"/>
+	<include schemaLocation="sportsml-specific-golf.xsd"/>
+	<include schemaLocation="sportsml-specific-ice-hockey.xsd"/>
+	<include schemaLocation="sportsml-specific-soccer.xsd"/>
+	<include schemaLocation="sportsml-specific-tennis.xsd"/>
+	<include schemaLocation="sportsml-specific-motor-racing.xsd"/>
+	<include schemaLocation="sportsml-specific-curling.xsd"/>
+
+	<!-- Team Key Resource Files -->
+	<include schemaLocation="resource-files/team-keys-l.nhl.com.xsd"/>
+
+	<!-- Controlled-Vocabulary Resource Files -->
+	<include schemaLocation="resource-files/sportsml-vocabulary-core.xsd"/>
+	<include schemaLocation="resource-files/sportsml-vocabulary-specific-american-football.xsd"/>
+	<include schemaLocation="resource-files/sportsml-vocabulary-specific-baseball.xsd"/>
+	<include schemaLocation="resource-files/sportsml-vocabulary-specific-basketball.xsd"/>
+	<include schemaLocation="resource-files/sportsml-vocabulary-specific-golf.xsd"/>
+	<include schemaLocation="resource-files/sportsml-vocabulary-specific-ice-hockey.xsd"/>
+	<include schemaLocation="resource-files/sportsml-vocabulary-specific-soccer.xsd"/>
+	<include schemaLocation="resource-files/sportsml-vocabulary-specific-tennis.xsd"/>
+	<include schemaLocation="resource-files/sportsml-vocabulary-specific-motor-racing.xsd"/>
+	<include schemaLocation="resource-files/sportsml-vocabulary-specific-curling.xsd"/>
+
+	<!-- Extensions for Specific Sports -->
+	<element name="placeholder-element">
+		<annotation>
+			<documentation>Not a true SportsML element | Just an empty placeholder to be used if Specific extension has no children.</documentation>
+		</annotation>
+	</element>
+	<group name="eventMetadataSpecific">
+		<choice>
+			<element ref="sportsml:event-metadata-american-football"/>
+			<element ref="sportsml:event-metadata-baseball"/>
+			<element ref="sportsml:event-metadata-basketball"/>
+			<element ref="sportsml:event-metadata-golf"/>
+			<element ref="sportsml:event-metadata-ice-hockey"/>
+			<element ref="sportsml:event-metadata-soccer"/>
+			<element ref="sportsml:event-metadata-tennis"/>
+			<element ref="sportsml:event-metadata-motor-racing"/>
+			<element ref="sportsml:event-metadata-curling"/>
+		</choice>
+	</group>
+	<group name="eventStatsSpecific">
+		<choice>
+			<element ref="sportsml:event-stats-motor-racing"/>
+		</choice>
+	</group>
+	<group name="eventActionsSpecific">
+		<choice>
+			<element ref="sportsml:event-actions-american-football"/>
+			<element ref="sportsml:event-actions-baseball"/>
+			<element ref="sportsml:event-actions-basketball"/>
+			<element ref="sportsml:event-actions-golf"/>
+			<element ref="sportsml:event-actions-ice-hockey"/>
+			<element ref="sportsml:event-actions-soccer"/>
+			<element ref="sportsml:event-actions-tennis"/>
+			<element ref="sportsml:event-actions-motor-racing"/>
+			<element ref="sportsml:event-actions-curling"/>
+		</choice>
+	</group>
+	<group name="teamMetadataSpecific">
+		<choice>
+			<element ref="sportsml:team-metadata-american-football"/>
+			<element ref="sportsml:team-metadata-baseball"/>
+			<element ref="sportsml:team-metadata-basketball"/>
+			<element ref="sportsml:team-metadata-golf"/>
+			<element ref="sportsml:team-metadata-ice-hockey"/>
+			<element ref="sportsml:team-metadata-soccer"/>
+			<element ref="sportsml:team-metadata-tennis"/>
+			<element ref="sportsml:team-metadata-motor-racing"/>
+		</choice>
+	</group>
+	<group name="teamStatsSpecific">
+		<choice>
+			<element ref="sportsml:team-stats-american-football"/>
+			<element ref="sportsml:team-stats-baseball"/>
+			<element ref="sportsml:team-stats-basketball"/>
+			<element ref="sportsml:team-stats-golf"/>
+			<element ref="sportsml:team-stats-ice-hockey"/>
+			<element ref="sportsml:team-stats-soccer"/>
+			<element ref="sportsml:team-stats-tennis"/>
+			<element ref="sportsml:team-stats-motor-racing"/>
+			<element ref="sportsml:team-stats-curling"/>
+		</choice>
+	</group>
+	<group name="playerMetadataSpecific">
+		<choice>
+			<element ref="sportsml:player-metadata-american-football"/>
+			<element ref="sportsml:player-metadata-baseball"/>
+			<element ref="sportsml:player-metadata-basketball"/>
+			<element ref="sportsml:player-metadata-golf"/>
+			<element ref="sportsml:player-metadata-ice-hockey"/>
+			<element ref="sportsml:player-metadata-soccer"/>
+			<element ref="sportsml:player-metadata-tennis"/>
+			<element ref="sportsml:player-metadata-motor-racing"/>
+			<element ref="sportsml:player-metadata-curling"/>
+		</choice>
+	</group>
+	<group name="playerStatsSpecific">
+		<choice>
+			<element ref="sportsml:player-stats-american-football"/>
+			<element ref="sportsml:player-stats-baseball"/>
+			<element ref="sportsml:player-stats-basketball"/>
+			<element ref="sportsml:player-stats-golf"/>
+			<element ref="sportsml:player-stats-ice-hockey"/>
+			<element ref="sportsml:player-stats-soccer"/>
+			<element ref="sportsml:player-stats-tennis"/>
+			<element ref="sportsml:player-stats-motor-racing"/>
+			<element ref="sportsml:player-stats-curling"/>
+		</choice>
+	</group>
+	<group name="associateMetadataSpecific">
+		<choice>
+			<element ref="sportsml:associate-metadata-motor-racing"/>
+		</choice>
+	</group>
+	<group name="associateStatsSpecific">
+		<choice>
+			<element ref="sportsml:placeholder-element"/>
+		</choice>
+	</group>
+	<group name="officialMetadataSpecific">
+		<choice>
+			<element ref="sportsml:placeholder-element"/>
+		</choice>
+	</group>
+	<group name="officialStatsSpecific">
+		<choice>
+			<element ref="sportsml:placeholder-element"/>
+		</choice>
+	</group>
+	<group name="groupMetadataSpecific">
+		<choice>
+			<element ref="sportsml:placeholder-element"/>
+		</choice>
+	</group>
+	<group name="groupStatsSpecific">
+		<choice>
+			<element ref="sportsml:placeholder-element"/>
+		</choice>
+	</group>
+	<group name="tournamentMetadataSpecific">
+		<choice>
+			<element ref="sportsml:tournament-metadata-golf"/>
+			<element ref="sportsml:tournament-metadata-tennis"/>
+		</choice>
+	</group>
+	<group name="tournamentDivisionMetadataSpecific">
+		<choice>
+			<element ref="sportsml:tournament-division-metadata-golf"/>
+		</choice>
+	</group>
+	<group name="tournamentStageMetadataSpecific">
+		<choice>
+			<element ref="sportsml:placeholder-element"/>
+		</choice>
+	</group>
+	<!-- Common vocabulary definitions -->
+	<simpleType name="teamKey.Common">
+		<union memberTypes="sportsml:teamKeyType.l.nhl.com"/>
+	</simpleType>
+	<simpleType name="position.Common">
+		<union memberTypes="sportsml:position.AmericanFootball.Vocabulary sportsml:position.Baseball.Vocabulary sportsml:position.Basketball.Vocabulary sportsml:position.IceHockey.Vocabulary sportsml:position.Soccer.Vocabulary sportsml:position.Curling.Vocabulary"/>
+	</simpleType>
+	<simpleType name="dateTime.Common">
+		<restriction base="dateTime"/>
+	</simpleType>
+	<simpleType name="duration.Common">
+		<restriction base="duration"/>
+	</simpleType>
+	<!-- Vocabulary definitions for core schema -->
+	<simpleType name="statsCoverage.Core">
+		<union memberTypes="sportsml:statsCoverage.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="teamCoverage.Core">
+		<union memberTypes="sportsml:teamCoverage.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="dateCoverageType.Core">
+		<union memberTypes="sportsml:dateCoverageType.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="durationScope.Core">
+		<union memberTypes="sportsml:durationScope.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="competitionScope.Core">
+		<union memberTypes="sportsml:competitionScope.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="alignmentScope.Core">
+		<union memberTypes="sportsml:alignmentScope.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="recordMakingScope.Core">
+		<union memberTypes="sportsml:recordMakingScope.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="codeType.Core">
+		<union memberTypes="sportsml:codeType.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="eventStyle.Core">
+		<union memberTypes="sportsml:eventStyle.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="eventStatus.Core">
+		<union memberTypes="sportsml:eventStatus.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="postponementStatus.Core">
+		<union memberTypes="sportsml:postponementStatus.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="status.Core">
+		<union memberTypes="sportsml:status.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="health.Core">
+		<union memberTypes="sportsml:health.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="phaseType.Core">
+		<union memberTypes="sportsml:phaseType.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="gender.Core">
+		<union memberTypes="sportsml:gender.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="participantCount.Core">
+		<union memberTypes="sportsml:participantCount.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="professionalStatus.Core">
+		<union memberTypes="sportsml:professionalStatus.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="specialGroup.Core">
+		<union memberTypes="sportsml:specialGroup.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="specialNeeds.Core">
+		<union memberTypes="sportsml:specialNeeds.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="siteStyle.Core">
+		<union memberTypes="sportsml:siteStyle.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="siteSurface.Core">
+		<union memberTypes="sportsml:siteSurface.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="scoreUnits.Core">
+		<union memberTypes="sportsml:scoreUnits.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="resultEffect.Core">
+		<union memberTypes="sportsml:resultEffect.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="awardType.Core">
+		<union memberTypes="sportsml:awardType.Core.Vocabulary"/>
+	</simpleType>
+	<simpleType name="statusChangeType.Core">
+		<union memberTypes="sportsml:statusChangeType.Core.Vocabulary"/>
+	</simpleType>
+	<!-- Vocabulary definitions for american-football schema -->
+	<simpleType name="scoreAttemptResult.AmericanFootball">
+		<union memberTypes="sportsml:scoreAttemptResult.AmericanFootball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="driveResult.AmericanFootball">
+		<union memberTypes="sportsml:driveResult.AmericanFootball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="scoreType.AmericanFootball">
+		<union memberTypes="sportsml:scoreType.AmericanFootball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="penaltySide.AmericanFootball">
+		<union memberTypes="sportsml:penaltySide.AmericanFootball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="penaltyLevel.AmericanFootball">
+		<union memberTypes="sportsml:penaltyLevel.AmericanFootball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="timeoutType.AmericanFootball">
+		<union memberTypes="sportsml:timeoutType.AmericanFootball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="role.AmericanFootball">
+		<union memberTypes="sportsml:role.AmericanFootball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="result.AmericanFootball">
+		<union memberTypes="sportsml:result.AmericanFootball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="kickType.AmericanFootball">
+		<union memberTypes="sportsml:kickType.AmericanFootball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="penaltyType.AmericanFootball">
+		<union memberTypes="sportsml:penaltyType.AmericanFootball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="position.AmericanFootball">
+		<union memberTypes="sportsml:position.AmericanFootball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="caller.AmericanFootball">
+		<union memberTypes="sportsml:caller.AmericanFootball.Vocabulary"/>
+	</simpleType>
+	<!-- Vocabulary definitions for baseball schema -->
+	<simpleType name="pitchType.Baseball">
+		<union memberTypes="sportsml:pitchType.Baseball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="strikeType.Baseball">
+		<union memberTypes="sportsml:strikeType.Baseball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="ballLocation.Baseball">
+		<union memberTypes="sportsml:ballLocation.Baseball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="playType.Baseball">
+		<union memberTypes="sportsml:playType.Baseball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="walkType.Baseball">
+		<union memberTypes="sportsml:walkType.Baseball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="hitType.Baseball">
+		<union memberTypes="sportsml:hitType.Baseball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="hitByPitchType.Baseball">
+		<union memberTypes="sportsml:hitByPitchType.Baseball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="outType.Baseball">
+		<union memberTypes="sportsml:outType.Baseball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="position.Baseball">
+		<union memberTypes="sportsml:position.Baseball.Vocabulary"/>
+	</simpleType>
+	<!-- Vocabulary definitions for basketball schema -->
+	<simpleType name="scoreAttemptType.Basketball">
+		<union memberTypes="sportsml:scoreAttemptType.Basketball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="scoreAttemptResult.Basketball">
+		<union memberTypes="sportsml:scoreAttemptResult.Basketball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="penaltySide.Basketball">
+		<union memberTypes="sportsml:penaltySide.Basketball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="penaltyLevel.Basketball">
+		<union memberTypes="sportsml:penaltyLevel.Basketball.Vocabulary"/>
+	</simpleType>
+	<simpleType name="position.Basketball">
+		<union memberTypes="sportsml:position.Basketball.Vocabulary"/>
+	</simpleType>
+	<!-- Vocabulary definitions for golf schema -->
+	<simpleType name="holeType.Golf">
+		<union memberTypes="sportsml:holeType.Golf.Vocabulary"/>
+	</simpleType>
+	<simpleType name="shotType.Golf">
+		<union memberTypes="sportsml:shotType.Golf.Vocabulary"/>
+	</simpleType>
+	<simpleType name="landing.Golf">
+		<union memberTypes="sportsml:landing.Golf.Vocabulary"/>
+	</simpleType>
+	<!-- Vocabulary definitions for ice-hockey schema -->
+	<simpleType name="scoreAttemptType.IceHockey">
+		<union memberTypes="sportsml:scoreAttemptType.IceHockey.Vocabulary"/>
+	</simpleType>
+	<simpleType name="scoreAttemptResult.IceHockey">
+		<union memberTypes="sportsml:scoreAttemptResult.IceHockey.Vocabulary"/>
+	</simpleType>
+	<simpleType name="penaltyLevel.IceHockey">
+		<union memberTypes="sportsml:penaltyLevel.IceHockey.Vocabulary"/>
+	</simpleType>
+	<simpleType name="penaltyName.IceHockey">
+		<union memberTypes="sportsml:penaltyName.IceHockey.Vocabulary"/>
+	</simpleType>
+	<simpleType name="position.IceHockey">
+		<union memberTypes="sportsml:position.IceHockey.Vocabulary"/>
+	</simpleType>
+	<!-- Vocabulary definitions for soccer schema -->
+	<simpleType name="scoreAttemptType.Soccer">
+		<union memberTypes="sportsml:scoreAttemptType.Soccer.Vocabulary"/>
+	</simpleType>
+	<simpleType name="scoreAttemptMethod.Soccer">
+		<union memberTypes="sportsml:scoreAttemptMethod.Soccer.Vocabulary"/>
+	</simpleType>
+	<simpleType name="scoreAttemptResult.Soccer">
+		<union memberTypes="sportsml:scoreAttemptResult.Soccer.Vocabulary"/>
+	</simpleType>
+	<simpleType name="penaltyType.Soccer">
+		<union memberTypes="sportsml:penaltyType.Soccer.Vocabulary"/>
+	</simpleType>
+	<simpleType name="penaltyLevel.Soccer">
+		<union memberTypes="sportsml:penaltyLevel.Soccer.Vocabulary"/>
+	</simpleType>
+	<simpleType name="foulResult.Soccer">
+		<union memberTypes="sportsml:foulResult.Soccer.Vocabulary"/>
+	</simpleType>
+	<simpleType name="foulName.Soccer">
+		<union memberTypes="sportsml:foulName.Soccer.Vocabulary"/>
+	</simpleType>
+	<simpleType name="position.Soccer">
+		<union memberTypes="sportsml:position.Soccer.Vocabulary"/>
+	</simpleType>
+	<!-- Vocabulary definitions for tennis schema -->
+	<simpleType name="winType.Tennis">
+		<union memberTypes="sportsml:winType.Tennis.Vocabulary"/>
+	</simpleType>
+	<!-- Vocabulary definitions for motor-racing schema -->
+	<simpleType name="flagType.MotorRacing">
+		<union memberTypes="sportsml:flagType.MotorRacing.Vocabulary"/>
+	</simpleType>
+	<!-- Vocabulary definitions for curling schema -->
+	<simpleType name="throwOrder.Curling">
+		<union memberTypes="sportsml:throwOrder.Curling.Vocabulary"/>
+	</simpleType>
+</schema>
+<!--
+IPTC - International Press Telecommunications Council
+Royal Albert House, Windsor, Berkshire SL4 1BE, England
+www.iptc.org
+
+Non-Exclusive License Agreement for International Press
+Telecommunications Council Specifications and Related Documentation
+
+IMPORTANT: International Press Telecommunications Council (IPTC)
+standard specifications for news (the Specifications) and supporting
+software, documentation, technical reports, web sites and other
+material related to the Specifications (the Materials) including the
+document accompanying this license (the Document), whether in a paper
+or electronic format, are made available to you subject to the terms
+stated below. By obtaining, using and/or copying the Specifications or
+Materials, you (the licensee) agree that you have read, understood,
+and will comply with the following terms and conditions.
+
+1. The Specifications and Materials are licensed for use only on the
+condition that you agree to be bound by the terms of this license.
+Subject to this and other licensing requirements contained herein, you
+may, on a non-exclusive basis, use the Specifications and Materials.
+
+2. The IPTC openly provides the Specifications and Materials for
+voluntary use by individuals, partnerships, companies, corporations,
+organizations and any other entity for use at the entity's own risk.
+This disclaimer, license and release is intended to apply to the IPTC,
+its officers, directors, agents, representatives, members,
+contributors, affiliates, contractors, or co-venturers acting jointly
+or severally.
+
+3. The Document and translations thereof may be copied and furnished
+to others, and derivative works that comment on or otherwise explain
+it or assist in its implementation may be prepared, copied, published
+and distributed, in whole or in part, without restriction of any kind,
+provided that the copyright and license notices and references to the
+IPTC appearing in the Document and the terms of this Specifications
+License Agreement are included on all such copies and derivative
+works. Further, upon the receipt of written permission from the IPTC,
+the Document may be modified for the purpose of developing
+applications that use IPTC Specifications or as required to translate
+the Document into languages other than English.
+
+4. Any use, duplication, distribution, or exploitation of the Document
+and Specifications and Materials in any manner is at your own risk.
+
+5. NO WARRANTY, EXPRESSED OR IMPLIED, IS MADE REGARDING THE ACCURACY,
+ADEQUACY, COMPLETENESS, LEGALITY, RELIABILITY OR USEFULNESS OF ANY
+INFORMATION CONTAINED IN THE DOCUMENT OR IN ANY SPECIFICATION OR OTHER
+PRODUCT OR SERVICE PRODUCED OR SPONSORED BY THE IPTC. THE DOCUMENT AND
+THE INFORMATION CONTAINED HEREIN AND INCLUDED IN ANY SPECIFICATION OR
+OTHER PRODUCT OR SERVICE OF THE IPTC IS PROVIDED ON AN "AS IS" BASIS.
+THE IPTC DISCLAIMS ALL WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING, BUT NOT LIMITED TO, ANY ACTUAL OR ASSERTED WARRANTY OF NON-
+INFRINGEMENT OF PROPRIETARY RIGHTS, MERCHANTABILITY, OR FITNESS FOR A
+PARTICULAR PURPOSE. NEITHER THE IPTC NOR ITS CONTRIBUTORS SHALL BE
+HELD LIABLE FOR ANY IMPROPER OR INCORRECT USE OF INFORMATION. NEITHER
+THE IPTC NOR ITS CONTRIBUTORS ASSUME ANY RESPONSIBILITY FOR ANYONE'S
+USE OF INFORMATION PROVIDED BY THE IPTC. IN NO EVENT SHALL THE IPTC OR
+ITS CONTRIBUTORS BE LIABLE TO ANYONE FOR DAMAGES OF ANY KIND,
+INCLUDING BUT NOT LIMITED TO, COMPENSATORY DAMAGES, LOST PROFITS, LOST
+DATA OR ANY FORM OF SPECIAL, INCIDENTAL, INDIRECT, CONSEQUENTIAL OR
+PUNITIVE DAMAGES OF ANY KIND WHETHER BASED ON BREACH OF CONTRACT OR
+WARRANTY, TORT, PRODUCT LIABILITY OR OTHERWISE.
+
+6. The IPTC takes no position regarding the validity or scope of any
+Intellectual Property or other rights that might be claimed to pertain
+to the implementation or use of the technology described in the
+Document or the extent to which any license under such rights might or
+might not be available. The IPTC does not represent that it has made
+any effort to identify any such rights. Copies of claims of rights
+made available for publication, assurances of licenses to be made
+available, or the result of an attempt made to obtain a general
+license or permission for the use of such proprietary rights by
+implementers or users of the Specifications and Materials, can be
+obtained from the Managing Director of the IPTC.
+
+7. By using the Specifications and Materials including the Document in
+any manner or for any purpose, you release the IPTC from all
+liabilities, claims, causes of action, allegations, losses, injuries,
+damages, or detriments of any nature arising from or relating to the
+use of the Specifications, Materials or any portion thereof. You
+further agree not to file a lawsuit, make a claim, or take any other
+formal or informal legal action against the IPTC, resulting from your
+acquisition, use, duplication, distribution, or exploitation of the
+Specifications, Materials or any portion thereof. Finally, you hereby
+agree that the IPTC is not liable for any direct, indirect, special or
+consequential damages arising from or relating to your acquisition,
+use, duplication, distribution, or exploitation of the Specifications,
+Materials or any portion thereof.
+
+8. Specifications and Materials may be downloaded or copied provided
+that ALL copies retain the ownership, copyright and license notices.
+
+9. Materials may not be edited, modified, or presented in a context
+that creates a misleading or false impression or statement as to the
+positions, actions, or statements of the IPTC.
+
+10. The name and trademarks of the IPTC may not be used in
+advertising, publicity, or in relation to products or services and
+their names without the specific, written prior permission of the
+IPTC. Any permitted use of the trademarks of the IPTC, whether
+registered or not, shall be accompanied by an appropriate mark and
+attribution, as agreed with the IPTC.
+
+11. Specifications may be extended by both members and non-members to
+provide additional functionality (Extended Specifications) provided
+that there is a clear recognition of the IPTC IP and its ownership in
+the Extended Specifications and the related documentation and provided
+that the extensions are clearly identified and provided that a
+perpetual license is granted by the creator of the Extended
+Specifications for other members and non-members to use the Extended
+Specifications and to continue extensions of the Extended
+Specifications. The IPTC does not waive any of its rights in the
+Specifications and Materials in this context. The Extended
+Specifications may be considered the intellectual property of their
+creator. The IPTC expressly disclaims any responsibility for damage
+caused by an extension to the Specifications.
+
+12. Specifications and Materials may be included in derivative work of
+both members and non-members provided that there is a clear
+recognition of the IPTC IP and its ownership in the derivative work
+and its related documentation. The IPTC does not waive any of its
+rights in the Specifications and Materials in this context. Derivative
+work in its entirety may be considered the intellectual property of
+the creator of the work .The IPTC expressly disclaims any
+responsibility for damage caused when its IP is used in a derivative
+context.
+
+13. This Specifications License Agreement is perpetual subject to your
+conformance to the terms of this Agreement. The IPTC may terminate
+this Specifications License Agreement immediately upon your breach of
+this Agreement and, upon such termination you will cease all use,
+duplication, distribution, and/or exploitation in any manner of the
+Specifications and Materials.
+
+14. This Specifications License Agreement reflects the entire
+agreement of the parties regarding the subject matter hereof and
+supersedes all prior agreements or representations regarding such
+matters, whether written or oral. To the extent any portion or
+provision of this Specifications License Agreement is found to be
+illegal or unenforceable, then the remaining provisions of this
+Specifications License Agreement will remain in full force and effect
+and the illegal or unenforceable provision will be construed to give
+it such effect as it may properly have that is consistent with the
+intentions of the parties.
+
+15. This Specifications License Agreement may only be modified in
+writing signed by an authorized representative of the IPTC.
+
+16. This Specifications License Agreement is governed by the law of
+United Kingdom, as such law is applied to contracts made and fully
+performed in the United Kingdom. Any disputes arising from or relating
+to this Specifications License Agreement will be resolved in the
+courts of the United Kingdom. You consent to the jurisdiction of such
+courts over you and covenant not to assert before such courts any
+objection to proceeding in such forums.
+
+IF YOU DO NOT AGREE TO THESE TERMS YOU MUST CEASE ALL USE OF THE
+SPECIFICATIONS AND MATERIALS NOW. IF YOU HAVE ANY QUESTIONS ABOUT
+THESE TERMS, PLEASE CONTACT THE MANAGING DIRECTOR OF THE INTERNATIONAL
+PRESS TELECOMMUNICATION COUNCIL. AS OF THE DATE OF THIS REVISION OF
+THIS SPECIFICATIONS LICENSE AGREEMENT YOU MAY CONTACT THE IPTC at
+http://www.iptc.org.
+
+License agreement version of: 30 January 2006
+-->

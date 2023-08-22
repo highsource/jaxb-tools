@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.010" id="OTA2008A">
+	<xs:include schemaLocation="OTA_RailCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_RailAvailRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+The Availability Request message requests Train Availability for a station pair on a specific date for a specific number and type of passengers. Optional request information can include:
+- Time / Time Window
+- Connecting cities.
+- Client Preferences.
+The request can be narrowed to request availability for a specific train .  The ResponseType attribute allows the user to specify that the response be restricted to Schedules,  Fares or full Availability.  If the ResponseType is 'Fares', the response will comprise a list of all fares from the Origin to the Destination.  If  the ResponseType is 'Schedules', the response will comprise a list of all train departures from the Origin to the Destination.  If the ResponseType is 'Availability', the response will comprise a list of available train departures from the Origin to the Destination and,  where the responding system has this facility, valid fares available on those departures.
+</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Point of Sale Identification.  Identification number of the vendor that has made the rail availability request and agency number assigned by IATA, ARC, ESRP or TID. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="RailAvailInfo">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specifies the passenger requirements for an Availability search.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="OriginDestinationInformation" type="OriginDestinationInformationType">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Information on the locations between which availability is to be checked.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="PassengerType" minOccurs="0" maxOccurs="5">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Identifies the number of passengers by category.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attributeGroup ref="TravelerCountGroup"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ReturnDateTime" type="TravelDateTimeType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Indicates the date and time search criteria for the return journey.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="RailPrefs" type="RailAvailPrefsType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies the preferences qualifying the availability request.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="FareQualifier" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Indicates the type of fares of interest to the customer, along with any discount number or promotional codes that may affect the fare.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attributeGroup ref="RateQualifierCoreGroup"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="MaxChanges" type="xs:nonNegativeInteger" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en"> Indicates the maximum number of connections (if 0, then direct)</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="TrainNumber" type="StringLength1to8" use="optional"/>
+						<xs:attribute name="Class" type="StringLength1to8" use="optional"/>
+						<xs:attribute name="BulletinRequired" type="xs:boolean" use="optional" default="true"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attributeGroup ref="MaxResponsesGroup">
+				<xs:annotation>
+					<xs:documentation xml:lang="en"> Maximum number of reponses desired in the reponse message.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+			<xs:attribute name="ResponseType" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates whether the response should be restricted to Fares or Schedules or provide Availability including, where applicable, Fares.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Fares"/>
+						<xs:enumeration value="Schedules"/>
+						<xs:enumeration value="Availability"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

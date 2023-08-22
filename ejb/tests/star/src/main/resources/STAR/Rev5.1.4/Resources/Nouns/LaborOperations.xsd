@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns="http://www.starstandard.org/STAR/5" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="LaborOperations" type="LaborOperationsType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                For each LaborOperations represented in the Data Area of the LaborOperations Business Object Document, there must be one occurrence of the LaborOperations Component.                
+            </xsd:documentation>
+        </xsd:annotation>        
+    </xsd:element>
+    <xsd:element name="LaborOperationsHeader" type="LaborOperationsHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                For each LaborOperations represented in the DataArea of the Labor Operations Business Object Document, there must be once occurrence of the Header Component.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="LaborOperationsDetail" type="LaborOperationsDetailType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                For each LaborOperations represented in the DataArea of the Labor Operations Business Object Document, there may be zero or many details.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    
+    <xsd:complexType name="LaborOperationsType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 3.0 - Draft</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.1, STAR approved 04/20/2005; effective date 07/04/2005</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.0, STAR approved 05/07/2004; effective date 07/04/2004</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 1.0, STAR approved 10/4/2002; OAGI approved 10/17/2002; effective date 1/01/2003</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="LaborOperationsHeader" />
+            <xsd:element ref="LaborOperationsDetail" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="LaborOperationsHeaderType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="VehicleID" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="DeliveryTypeCode" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="RequestCode" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="OriginalLanguageCode" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="LaborOperationsHeaderBase"/>
+            <xsd:element ref="LaborOperationCodes" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="VehicleGroup" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="EmployeePerson" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="LaborOperationsDetailType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">
+                Contains the detailed information for each labor operation.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="LaborOperationID" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="LaborOperationPartID" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="MajorGroupID" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="ComponentGroupID" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="ComponentID" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="LaborOperationDescription" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="LaborOperationSummaryDescription" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="RepairOrderOpenedDate" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="WarrantyTypeCode" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="LaborAllowanceMeasure" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="AdditionalAllowanceMeasure" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="LaborActionCode" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="LaborActionDescription" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="LaborOperationComment" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="VehicleIdentificationGroup" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="TechnicianSkillLevel" minOccurs="0" maxOccurs="1"/> 
+            <xsd:element ref="PartsProductItem" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="DamageArea" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="RelatedLaborOperationIdentificationGroup" minOccurs="0" maxOccurs="unbounded"/> 
+            <xsd:element ref="FailureCodes" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="MarketSpecific" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="CategoryCode" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="ImageAttachmentExtended" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

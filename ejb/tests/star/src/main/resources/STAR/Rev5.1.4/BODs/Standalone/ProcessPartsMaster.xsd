@@ -1,0 +1,1218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:qdt="http://www.openapplications.org/oagis/9/qualifieddatatypes/1.1" xmlns:udt="http://www.openapplications.org/oagis/9/unqualifieddatatypes/1.1" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" xmlns:oagis="http://www.openapplications.org/oagis/9" xmlns:star="http://www.starstandard.org/STAR/5" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:import namespace="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" schemaLocation="../../Resources/Components/Common/QualifiedDataTypes.xsd" />
+    <xsd:import namespace="http://www.starstandard.org/STAR/5/codelists" schemaLocation="../../Resources/Components/Common/CodeLists.xsd" />
+    <xsd:import namespace="http://www.openapplications.org/oagis/9/qualifieddatatypes/1.1" schemaLocation="../../Resources/Components/OAGIS/CoreComponents/QualifiedDataTypes.xsd" />
+    <xsd:import namespace="http://www.openapplications.org/oagis/9/unqualifieddatatypes/1.1" schemaLocation="../../Resources/Components/OAGIS/CoreComponents/UnqualifiedDataTypes.xsd" />
+    <xsd:import namespace="http://www.openapplications.org/oagis/9/codelists" schemaLocation="../../Resources/Components/OAGIS/Common/CodeLists.xsd" />
+    <xsd:import namespace="http://www.openapplications.org/oagis/9/currencycode/54217:2001" schemaLocation="../../Resources/Components/OAGIS/CoreComponents/CodeList_CurrencyCode_ISO_7_04.xsd" />
+    <xsd:import namespace="http://www.openapplications.org/oagis/9/languagecode/5639:1988" schemaLocation="../../Resources/Components/OAGIS/CoreComponents/CodeList_LanguageCode_ISO_7_04.xsd" />
+    <xsd:import namespace="http://www.openapplications.org/oagis/9/IANAMIMEMediaTypes:2003" schemaLocation="../../Resources/Components/OAGIS/CoreComponents/CodeList_MIMEMediaTypeCode_IANA_7_04.xsd" />
+    <xsd:import namespace="http://www.openapplications.org/oagis/9/unitcode/66411:2001" schemaLocation="../../Resources/Components/OAGIS/CoreComponents/CodeList_UnitCode_UNECE_7_04.xsd" />
+    <xsd:import namespace="http://www.openapplications.org/oagis/9" schemaLocation="../../Resources/Components/OAGIS/Common/Components.xsd" />
+    <xsd:element name="AgencyRoleCode" type="sqdt:AgencyRoleCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The agency role that defined the Document ID. An example of an agency may be a manufacturer, a retail system provider, etc. This list does not contain specific entity names, only roles. See enumerated list.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="AlternateDocumentIdentification" type="DocumentIdentificationType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">An alternate identification that uniquely identifies this document in addition to the Document ID, e.g., Part Order Number, Parts Purchase Order Number or Parts Invoice Number.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="AlternateItemID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">An alternate identifier for an item or part in addition to the item number or part number. This may be a unique identifier used for a independent after market(non dealer) sales part.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="AlternateItemIDs" type="AlternateItemIDsType">
+        <xsd:annotation>
+            <xsd:documentation>The AlternateItemIDs component is used to provide alternate IDs for an item such as OEM part number, ACDELCO part number, UPC, etc.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ApplicationArea" type="ApplicationAreaType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9">Provides the information that an application may need to know in order to communicate in an integration of two or more business applications. The ApplicationArea is used at the applications layer of communication. While the integration frameworks web services and middleware provide the communication layer that OAGIS operates on top of.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="AreaNumber" type="udt:TextType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="AuthorizationID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="BODID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9">The BODId provides a place to carry a Globally Unique Identifier (GUID) that will make each Business Object Document instance uniquely identifiable. This is a critical success factor to enable software developers to use the Globally Unique Identifier (GUID) to build the following services or capabilities: 1. Legally binding transactions, 2. Transaction logging, 3. Exception handling, 4. Re-sending, 5. Reporting, 6. Confirmations, 7. Security.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Brand" type="udt:TextType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Indicates the brand or carline for which this part has applicability (e.g. Chevorlet Impala).</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ClassCode" type="udt:CodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Identifies class of part (i.e., accessories, replacement, etc.).</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ComponentID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9">Provides a finer level of control than Logical Identifier and represents the business application that issued the Business Object Document. Its use is optional. The Open Applications Group has not constructed the list of valid Component names. A suggestion for naming is to use the application component names used in the scenario diagrams in section two of OAGIS. Example Components may be Inventory, or Payroll.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ConfirmationCode" type="scl:ConfirmationEnumeratedType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Confirmation</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="CoreChargeAmount" type="udt:AmountType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Core Charge, which is a currency value displayed in USD representing purchase price of a part if a core is not sold back to the OEM (e.g. Core price is $100, Core Charge is $110 if part is not returned to GM SPO)</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="CountryCode" type="scl:CountryEnumeratedType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="CreationDateTime" type="udt:DateTimeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="CreatorNameCode" type="udt:TextType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="CustomerSpecialOrderReturnIndicator" type="udt:IndicatorType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Indicates whether Customer Special Order ordered part may be returned to the OEM if the customer decides to cancel the order after it has been received into the dealer's parts inventory.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DealerCountryCode" type="scl:CountryEnumeratedType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DealerNumberID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DealerTargetCountry" type="scl:CountryEnumeratedType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DeliverPendingMailIndicator" type="udt:IndicatorType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Destination" type="DestinationType">
+        <xsd:annotation>
+            <xsd:documentation>Destination</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DestinationNameCode" type="udt:CodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Code for destination of file (i.e.Short Manufacturer or DSP code)</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DestinationSoftware" type="udt:TextType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DestinationSoftwareCode" type="udt:TextType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DestinationURI" type="qdt:URIType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DiameterMeasure" type="sqdt:LengthMeasureType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The width of a circular or cylindrical object.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Dimension" type="DimensionType">
+        <xsd:annotation>
+            <xsd:documentation>The Dimensions component represents the dimensions of an item, area, etc. using various measurements including width, height, length, and diameter.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DimensionDescription" type="udt:TextType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">A free-form text description of the dimension provided.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DimensionTypeCode" type="udt:CodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">A code representing the type of dimension measure provided.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DimensionValueMeasure" type="sqdt:LengthMeasureType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The value of the dimension that has been measured.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DistributionQuantity" type="sqdt:QuantityType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Allows the retailer to determine the quantity that will be shipped if the part is a non-direct ship part.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DocumentDateTime" type="udt:DateTimeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The date and time that the event being documented, for example the Parts Order, occurred.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DocumentID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The DocumentID is the identifier for the document. This identifier is a GUID or other unique identifier set by the creator of the document.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DocumentIdentification" type="DocumentIdentificationType">
+        <xsd:annotation>
+            <xsd:documentation>A group of identifications that uniquely identifies this document</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="DocumentIdentificationGroup" type="DocumentIdentificationGroupType">
+        <xsd:annotation>
+            <xsd:documentation>A group of identifications that uniquely identifies this document</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="FirstModelYear" type="qdt:YearDateType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The first vehicle model year of a vehicle for which a part fits.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="FranchiseCode" type="udt:CodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">A 2-digit numeric code representing a dealer's sales makes.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="FuturePriceIndicator" type="udt:IndicatorType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Indicates whether or not there is a temporary price for a part.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="GoodwrenchServiceMerchandisingPlusEligibleIndicator" type="udt:IndicatorType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Indicates whether a dealer is eligible for advertising coop funds.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="HazardousMaterialDescription" type="udt:TextType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Gives information about type of hazardous material. This information is used for transportation and storage restriction.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="HazmatIndicator" type="udt:IndicatorType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Indicates that governmental regulations consider this part as hazardous material.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="HeightMeasure" type="sqdt:LengthMeasureType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The distance upward from a given level to a fixed point</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ItemAmount" type="udt:AmountType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Part Core Item Amount</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ItemCatalogGroupID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Catalog Group, which is an numerical value with a decimal representing the location of the part in the catalog.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ItemEffectiveDate" type="udt:DateType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The date when a item was released for use.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ItemID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The identifier of an item (e.g, a part number)</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ItemIDCategoryTypeCode" type="sqdt:ItemIDCategoryTypeCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The category a part number is associated with.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ItemIdentification" type="ItemIdentificationType">
+        <xsd:annotation>
+            <xsd:documentation>An identifer for an item.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ItemIdentificationGroup" type="ItemIdentificationGroupType">
+        <xsd:annotation>
+            <xsd:documentation>A group of identifications that uniquely identifies this document</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ItemLineCode" type="udt:CodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">A numeric code which identifies what item, product or part of a vehicle, boat, motorcycle, etc. for which a part is applicable (e.g. exhaust, HVAC, brakes, transmission).'s parts inventory.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ItemQuantity" type="sqdt:QuantityType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Quantity of Part number.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ItemRegionCountry" type="CountryABIEType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Identifies a list of countries where item information applies.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ItemWeightMeasure" type="sqdt:WeightMeasureType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The weight of an item or part.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="LanguageCode" type="sqdt:LanguageCodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="LastModelYear" type="qdt:YearDateType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The last vehicle model year of a vehicle for which a part fits.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="LengthMeasure" type="sqdt:LengthMeasureType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The longest extent of anything as measured from end to end.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="LocationID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Code identifying a physical location</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="LocationReceiverID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="LogicalID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9">Provides the logical location of the server and applications from which the Business Object Document originated. It can be used to establish a logical to physical mapping, however its use is optional. Each system or combination of systems should maintain an external central reference table containing the logical names or logical addresses of the application systems in the integration configuration. This enables the logical names to be mapped to the physical network addresses of the resources needed on the network. Note: The technical implementation of this Domain Naming Service is not dictated by this specification. This logical to physical mapping may be done at execution time by the application itself or by a middleware transport mechanism, depending on the integration architecture used. This provides for a simple but effective directory access capability while maintaining application independence from the physical location of those resources on the network</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ManufacturerPartCode" type="udt:CodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Manufacturer assigned part code.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="MerchandiseQuantity" type="sqdt:QuantityType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">An identifier used by the retailer to understand common unit of sale.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="MinimumBuyQuantity" type="sqdt:QuantityType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Allows the retailer to know the minimum quantity of merchandise that can be ordered.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="MultiPartSupersessionIndicator" type="udt:IndicatorType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Indicator provided when a given part (A) supersedes a Part(C) (old part) and the old part is also superceded by a different part Number(B) eg: A supersedes C and B supersedes C. when information is requested for part A or B, indicator is provided to indicate that C has more than one part number superseding it.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="NonTaxableAmount" type="udt:AmountType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Total non-taxable price.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="NounCountNumeric" type="udt:NumericType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The number of nouns that are included in the BOD.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PackageQuantity" type="sqdt:QuantityType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Allows the retailer to know the quantity contained in the package.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartClassCode" type="udt:CodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Gifts, literature, keys, regular parts Inventory Class code (if any) used in DMS system.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartCoreDetail" type="PartCoreDetailType">
+        <xsd:annotation>
+            <xsd:documentation>Part Cored Detail</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartItemDescription" type="udt:TextType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The description of a Part or Product Item as text.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartManufacturer" type="udt:TextType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Identifes the part manufacturer.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartManufacturerBrand" type="udt:TextType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Part Manufacturer Brand</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartMaster" type="PartMasterType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Part Master</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartMasterCountryCode" type="scl:CountryEnumeratedType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The ISO Country Codelist that the parts master applies.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartMasterEffectiveDate" type="udt:DateType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Date on which the parts/prices in this document become effective.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartMasterHeader" type="PartMasterHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Part Master Header</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartMasterLine" type="PartMasterLineType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Part Master Line</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartMasterPriceTypeString" type="qdt:StringType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The type of pricing being used (i.e. Retail, Dealer, Warranty, etc).</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartMasterPricing" type="PartMasterPricingType">
+        <xsd:annotation>
+            <xsd:documentation>Pricing for the Item in the Parts Master.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartName" type="udt:TextType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The name of a Part or Product Item as text.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartsProductItem" type="PartsProductItemType">
+        <xsd:annotation>
+            <xsd:documentation>The business information common to all parts.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartSupersedingGroup" type="PartSupersedingGroupType">
+        <xsd:annotation>
+            <xsd:documentation>Contains a grouping of part numbers that supersed this superseded part.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartToBeReturnedIndicator" type="udt:IndicatorType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Indicates whether or not the part should be returned or retained.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartTypeCode" type="scl:PartTypeEnumeratedType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Specifies whether the parts are indicated by manufacturer part code or Part Number - H = Manufacturer Part Code, P = Part Number</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartyID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Party identification number used to uniquely identify a party for example Dealer ID, Fleet, etc.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PartyReceiverID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Password" type="udt:TextType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="PricingCode" type="udt:CodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Part core code used for pricing.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Process" type="oagis:ProcessType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9.0">The Process verb is used to request processing of the associated noun by the receiving application or business to party. In a typical external exchange scenario a Process BOD is considered to be a legally binding message. For example, if a customer sends a ProcessPurchaseOrder BOD to a supplier and the supplier acknowledges with a positive AcknowledgePurchaseOrder, then the customer is obligated to fulfill the agreement, unless of course other BODs are allowed to cancel or change the original order.</xsd:documentation>
+            <xsd:documentation>The OAGIS Meta Data documentation has more information in regards to this verbs usage and structure.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ProcessPartsMaster" type="ProcessPartsMasterType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Process Parts Master</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ProcessPartsMasterDataArea" type="ProcessPartsMasterDataAreaType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Process Parts Master Data Area</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="QuantityDiscounts" type="QuantityDiscountsType">
+        <xsd:annotation>
+            <xsd:documentation>Lists the Quantity Discounts available for this part.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ReferenceID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9">Enables the sending application to indicate the instance identifier of the event or task that caused the BOD to be created. This allows drill back from the BOD message into the sending application. The may be required in environments where an audit trail must be maintained for all transactions.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ReturnIndicator" type="ReturnIndicatorType">
+        <xsd:annotation>
+            <xsd:documentation>The ReturnIndicator component identifies information about a Part for return.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ReturnReasonCode" type="udt:TextType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Designates the reason the line item part was returned (i.e., shortage, error, quality problem, cores return, obsolete, etc.).</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SecondaryDealerNumberID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Identifies secondary dealer number if different than primary "Dealer Number"</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SecondaryPassword" type="udt:TextType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Secondary password used to validate access to the dealer information</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="Sender" type="SenderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/">This identifies characteristics and control identifiers that relate to the application that created the Business Object Document.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SenderNameCode" type="udt:CodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Additional information about the sending platform (i.e., Short Manufacturer or DSP code).</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SerialNumberID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">A number, usually one of a series, assigned for identification This is not the Item ID.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SerialNumberIDRequiredIndicator" type="udt:IndicatorType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Indicates whether or not a serial number is required for a particular item.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ServiceID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The Service Id field identifies the particular service to or from which a message is being sent, e.g., an inventory service.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ServiceMessageID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="StoreNumber" type="udt:TextType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="StratificationCode" type="udt:CodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Stratification Code, which is an alphabetic identifier indicating sales velocity of a part.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SupersededPartDetail" type="SupersededPartDetailType">
+        <xsd:annotation>
+            <xsd:documentation>The SupersededPartDetail component identifies the part that is being superseded.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SupersedingItemDescription" type="udt:TextType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Description of superseding item.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SupersedingManufacturerPartCode" type="udt:CodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Manufacturer assigned part code for superseding part.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SupersedingPartDetail" type="SupersedingPartDetailType">
+        <xsd:annotation>
+            <xsd:documentation>Detail information for superseding items.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SupersedingPartGroup" type="SupersedingPartGroupType">
+        <xsd:annotation>
+            <xsd:documentation>A group of superseding parts for a particular item number.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SupersedingPartNumberID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Part number superseding this one.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SupersedingPartNumberUIDID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Part Number key used for look up of superseded parts.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SupersessionDate" type="udt:DateType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Date when the part number has been superseeded.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SupplyChainLocationCode" type="udt:CodeType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">A code representing the location of an item within a supply chain.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SystemVersion" type="qdt:StringType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="TaskID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.openapplications.org/oagis/9">Describes the business event that initiated the need for the Business Object Document to be created. Its use is optional. Although the Task may differ depending on the specific implementation, it is important to enable drill back capability. Example Tasks may be Receipt or Adjustment.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="TaxableAmount" type="udt:AmountType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Total Taxable Price</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="TemporaryPriceIndicator" type="udt:IndicatorType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Indicates whether or not there is a temporary price for a part.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="TopSellerGroup" type="TopSellerType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Top Selling Brands for this Part.</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">This definition came from the PartMasterLine Component</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="TotalAmount" type="udt:AmountType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Total price (cost + markup)</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="UnitPriceAmount" type="udt:AmountType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">UnitPrice</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="UniversalProductCodeNumberID" type="udt:IdentifierType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">UPC Number, which is a numeric value of nn digits representing a part's Universal Product Code.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="URI" type="qdt:URIType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VintagePartIndicator" type="udt:IndicatorType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Indicates whether or not a part is a vintage part.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="WidthMeasure" type="sqdt:LengthMeasureType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The measurement of the extent of something from side to side.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="PartMasterHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+                <xsd:sequence>
+<!--  <xsd:element ref="DocumentID" minOccurs="0" /> -->
+                    <xsd:element ref="PartMasterEffectiveDate" minOccurs="1" />
+                    <xsd:element ref="PartMasterCountryCode" minOccurs="1" />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="HeaderBaseType">
+        <xsd:sequence>
+            <xsd:element ref="DocumentDateTime" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Is the date and time the document was last created. This is not the date and time that the BOD message instance was created.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="SecondaryPassword" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Secondary password used to validate access to the dealer information</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="SecondaryDealerNumberID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Identifies secondary dealer number if different than primary "Dealer Number"</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="DocumentIdentificationGroup" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DocumentIdentificationGroupType">
+        <xsd:annotation>
+            <xsd:documentation>A list of identifications related to a particular document.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="DocumentIdentification" minOccurs="1" maxOccurs="1" />
+            <xsd:element ref="AlternateDocumentIdentification" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DocumentIdentificationType">
+        <xsd:annotation>
+            <xsd:documentation>An identifer for this document</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="DocumentID" minOccurs="1" maxOccurs="1" />
+            <xsd:element ref="AgencyRoleCode" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PartMasterLineType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="PartsProductItem" minOccurs="1" />
+            <xsd:element ref="PartManufacturer" minOccurs="0" />
+            <xsd:element ref="ManufacturerPartCode" minOccurs="0" />
+            <xsd:element ref="PartManufacturerBrand" minOccurs="0" />
+            <xsd:element ref="ItemQuantity" minOccurs="0" />
+            <xsd:element ref="PartMasterPricing" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="PartCoreDetail" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="SupersedingPartGroup" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="TopSellerGroup" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="AlternateItemID" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="Brand" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="FirstModelYear" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="LastModelYear" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="ItemEffectiveDate" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="GoodwrenchServiceMerchandisingPlusEligibleIndicator" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="FranchiseCode" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="FuturePriceIndicator" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="ItemCatalogGroupID" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="CoreChargeAmount" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="VintagePartIndicator" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="StratificationCode" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="UniversalProductCodeNumberID" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="SupplyChainLocationCode" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="ReturnIndicator" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="DistributionQuantity" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="MerchandiseQuantity" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="MinimumBuyQuantity" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="PackageQuantity" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="Dimension" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="ItemRegionCountry" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="TemporaryPriceIndicator" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="ItemLineCode" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="ItemWeightMeasure" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PartsProductItemType">
+        <xsd:annotation>
+            <xsd:documentation>The business information common to all product items.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="ItemID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">Deprecate: Use ItemIdentificationGroup</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="PartName" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="PartItemDescription" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="PartTypeCode" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="PartClassCode" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="PartManufacturer" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="ClassCode" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="HazmatIndicator" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="HazardousMaterialDescription" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="ItemIDCategoryTypeCode" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="AlternateItemIDs" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">Deprecate: Use ItemIdentificationGroup</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="ItemIdentificationGroup" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="SerialNumberID" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="SerialNumberIDRequiredIndicator" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="PackageQuantity" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="AlternateItemIDsType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The AlternateItemIDs component is used to provide alternate IDs for an item such as OEM part number, ACDELCO part number, UPC, etc.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="ItemID" minOccurs="1" maxOccurs="1" />
+            <xsd:element ref="ItemIDCategoryTypeCode" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ItemIdentificationGroupType">
+        <xsd:annotation>
+            <xsd:documentation>A list of identifications for an item. Multiple item identifications can be identified using the ItemIdentificationGroup e.g., Order's ItemID, Fulfiller's ItemID, 3rd Party Fulfiller ItemID, etc.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="ItemIdentification" minOccurs="1" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ItemIdentificationType">
+        <xsd:annotation>
+            <xsd:documentation>An identifer for an item.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="ItemID" minOccurs="1" maxOccurs="1" />
+            <xsd:element ref="AgencyRoleCode" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PartMasterPricingType">
+        <xsd:sequence>
+            <xsd:element ref="PartMasterPriceTypeString">
+                <xsd:annotation>
+                    <xsd:documentation>Type of Pricing.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="QuantityDiscounts" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>Lists the Quantity Discounts available for this part.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="TaxableAmount" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Taxable Amount</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="NonTaxableAmount" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Nontaxable Amount</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="TotalAmount" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Total Amount</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="UnitPriceAmount" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Unit Price</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="QuantityDiscountsType">
+        <xsd:sequence>
+            <xsd:element ref="PricingCode">
+                <xsd:annotation>
+                    <xsd:documentation>The core part code.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PartCoreDetailType">
+        <xsd:sequence>
+            <xsd:element ref="ItemID">
+                <xsd:annotation>
+                    <xsd:documentation>Part Item Id</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="ItemAmount">
+                <xsd:annotation>
+                    <xsd:documentation>Part Item Amount</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="SupersedingPartGroupType">
+        <xsd:sequence>
+            <xsd:element ref="SupersedingPartDetail" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>Detail information for superseding items.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="SupersededPartDetail" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>The SupersededPartDetail component identifies the part that is being superseded.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="SupersedingPartDetailType">
+        <xsd:sequence>
+            <xsd:element ref="SupersedingPartNumberID">
+                <xsd:annotation>
+                    <xsd:documentation>Superseding Item Number</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="SupersedingManufacturerPartCode" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Manufacturer assigned part code for superseding part.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="SupersedingItemDescription" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>Description of superseding item.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="PartSupersedingGroup" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Contains a grouping of part numbers that supersed this superseded part.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="SupersessionDate" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="MultiPartSupersessionIndicator" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PartSupersedingGroupType">
+        <xsd:sequence>
+            <xsd:element ref="SupersedingPartNumberUIDID" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>The superseding part number used for lookup.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="SupersededPartDetailType">
+        <xsd:annotation>
+            <xsd:documentation>The SupersededPartDetail component identifies the part that is being superseded.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="SupersedingPartDetailType">
+                <xsd:sequence></xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="TopSellerType">
+        <xsd:sequence>
+            <xsd:element ref="PartManufacturerBrand" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation>Top Selling Brands for this Part.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ReturnIndicatorType">
+        <xsd:annotation>
+            <xsd:documentation>The ReturnIndicator component identifies information about a Part for return.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="PartToBeReturnedIndicator" minOccurs="1" maxOccurs="1" />
+            <xsd:element ref="ReturnReasonCode" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="CustomerSpecialOrderReturnIndicator" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DimensionType">
+        <xsd:annotation>
+            <xsd:documentation>The Dimensions component represents the dimensions of an item, area, etc. using various measurements including width, height, length, and diameter.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="DimensionValueMeasure" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="DimensionTypeCode" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="DimensionDescription" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="WidthMeasure" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="LengthMeasure" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="HeightMeasure" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="DiameterMeasure" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="CountryABIEType">
+        <xsd:annotation>
+            <xsd:documentation>Identifies a list of countries.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="CountryCode" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ProcessPartsMasterType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Process Parts Master</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="BusinessObjectDocumentType">
+                <xsd:sequence>
+                    <xsd:element ref="ProcessPartsMasterDataArea" />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="BusinessObjectDocumentType">
+        <xsd:annotation>
+            <xsd:documentation>Is the schema based inheritance for all BODs. The logical model would also include the DataArea.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="ApplicationArea">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.openapplications.org/oagis/9">Provides the information that an application may need to know in order to communicate in an integration of two or more business applications. The ApplicationArea is used at the applications layer of communication. While the integration frameworks web services and middleware provide the communication layer that OAGIS operates on top of.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="releaseID" type="udt:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation source="http://www.openapplications.org/oagis/9.0">STAR Release this BOD Instances belongs.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="versionID" type="udt:string" use="optional">
+            <xsd:annotation>
+                <xsd:documentation source="http://www.starstandard.org">Deprecated. Recommended to use releaseID to identify the repository and noun. This field may be removed in the next major version of the STAR repository.</xsd:documentation>
+                <xsd:documentation source="http://www.openapplications.org/oagis/9">Indicates the version of the given BOD defintion.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="systemEnvironmentCode" type="oacl:SystemEnvironmentCodeContentType" use="optional" default="Production">
+            <xsd:annotation>
+                <xsd:documentation source="http://www.openapplications.org/oagis/9">Indicates whether this BOD is being sent in a "Test" or a "Production" mode. If the BOD is being sent in a test mode, it's information should not affect the business operation. However, if the BOD is sent in "Production" mode it is assumed that all test has been complete and the contents of the BOD are to affect the operation of the receiving business application(s).</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="languageCode" type="scl:LanguageEnumeratedType" use="optional" default="en-US">
+            <xsd:annotation>
+                <xsd:documentation source="http://www.openapplications.org/oagis/9">Indicates the language that the contents of the BOD is in unless otherwise stated.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+    <xsd:complexType name="ApplicationAreaType">
+        <xsd:sequence>
+            <xsd:element ref="Sender">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">This identifies characteristics and control identifiers that relate to the application that created the Business Object Document.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="CreationDateTime">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">This is used as the creation moment of this Business Object Document.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="oagis:Signature" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">If the BOD is to be signed the signature element is included, otherwise it is not. Signature supports any digital signature that maybe used by an implementation of OAGIS. The qualifyingAgency identifies the agency that provided the format for the signature.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="BODID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">The BODId provides a place to carry a Globally Unique Identifier (GUID) that will make each Business Object Document instance uniquely identifiable. This is a critical success factor to enable software developers to use the Globally Unique Identifier (GUID) to build services or capabilities:</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="Destination">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">This identifies characteristics and control identifiers that relate to the application that receives the Business Object Document.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="SenderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/">This identifies characteristics and control identifiers that relate to the application that created the Business Object Document.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="SenderBaseType">
+                <xsd:sequence>
+                    <xsd:element ref="CreatorNameCode">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">DCS Software Creator Code</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="SenderNameCode">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">Additional information about the sending platform (i.e., Short Manufacturer or DSP code).</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="URI" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">Physical address of the sender</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="DealerNumberID" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">Dealer Code of source of information</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="StoreNumber" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">Dealer code store number (DMS assigned)</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="AreaNumber" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">Dealer code area number (DMS vendor assigned)</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="DealerCountryCode" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">Source Dealer country location</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="LanguageCode" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">This code is used to define the language of the data used in this transaction</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="DeliverPendingMailIndicator" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">Indicates if the user requests to receive pending mail that has been stored and has yet not been delivered yet. By selecting 0, the user will only receive the response for the current transaction the user is performing.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="Password" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">Token for application specific authentication. Used to authenticate dealership/users through application specific security</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="SystemVersion" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">The sender's software version number.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="PartyID" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">The Party Id field uniquely identifies the Sender of the message. This element can be used for parties within the Automotive Community as well as external parties. Party Id is not intended as a replacement for the Dealer Number. Suggested formats for OEMs or other large institutions include: DUNs Number, ShortMfgCode + DUNs, or ShortMfgCode. The suggested format for Dealers is: ShortMfgCode+Dealer Number.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="LocationID" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">The Location Id field uniquely identifies the location of the Sender of a message. This Id may be aligned with a physical address or data centers. This field provides an additional level of granularity beyond the usage of the Party Id for additional routing and deliver of data.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="ServiceID" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org">The Service Id field identifies the particular service from which a message is being sent, e.g., an inventory service.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="NounCountNumeric" minOccurs="0" maxOccurs="1" />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="SenderBaseType">
+        <xsd:annotation>
+            <xsd:documentation>Identifies the sender of the given BOD instance</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="LogicalID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">This is the logical location of the server and application from which the Business Object Document originated.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="ComponentID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">DCS software code name.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="TaskID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">This describes the business event that initiated the need for the Business Object Document to be created.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="ReferenceID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">Enables the sending application to indicate the instance identifier of the event or task that caused the BOD to be created.&#195;&#130;&#194;&#160; This is used to correlate a response BOD to an originating BOD. *The Sender of the originating application will populate the Reference Id with business level information. *Reference ID does not have to be a GUID. It must be a locally unique application value for the transaction type, for example a database sequence number. *The receiving application puts the value in Reference ID of the incoming message in the Reference ID of any acknowledgement messages. *The Reference Id will not be required to tie two collaborations together such as Parts Order and Parts Shipment.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="ConfirmationCode" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation />
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="AuthorizationID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">dentifies the authorization level of the user or application that is sending the Business Object Document Message. Used as User ID.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="DestinationType">
+        <xsd:annotation>
+            <xsd:documentation>Destination</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="DestinationNameCode" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">Code for destination of file (i.e.Short Manufacturer or DSP code)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="DestinationURI" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">Physical address of the destination</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="DestinationSoftwareCode" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">Additional information about the destination application</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="DestinationSoftware" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">For which software destination file is intended (may not be known).</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="DealerNumberID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">Target Dealer Code receiving information</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="StoreNumber" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">Dealer code store number (DMS assigned)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="AreaNumber" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">Dealer code area number (DMS vendor assigned)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="DealerTargetCountry" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">Target Dealer country location</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="PartyReceiverID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">The Party Receiver Id field uniquely identifies the Receiver of the message. This element can be used for parties within the Automotive Community as well as external parties. Party Id is not intended as a replacement for the Dealer Number. Suggested formats for OEMs or other large institutions include: DUNs Number, ShortMfgCode + DUNs, or ShortMfgCode. The suggested format for Dealers is: ShortMfgCode+Dealer Number.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="LocationReceiverID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">The Location Receiver Id field uniquely identifies the location of the Receiver of a message. This Id may be aligned with a physical address or data centers. This field provides an additional level of granularity beyond the usage of the Party Id for additional routing and deliver of data.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="ServiceMessageID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandards.org">The Service Message Id field identifies the particular service to which a message is being sent, e.g., an inventory service.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ProcessPartsMasterDataAreaType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Process Parts Master Data Area</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="Process" />
+            <xsd:element ref="PartMaster" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PartMasterType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5" />
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="PartMasterHeader" />
+            <xsd:element ref="PartMasterLine" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

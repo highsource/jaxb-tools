@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Header: /cvsroot/ebxmlrr/omar/misc/samples/minDB/SubmitObjectsRequest_Config.xml,v 1.59 2007/06/01 19:29:04 psterk Exp $ -->
+<!-- Must be loaded after SubmitObjectsRequest_objectTypesSchemes -->
+<SubmitObjectsRequest 
+    xmlns="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:4.0" 
+    xmlns:lcm="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:4.0" 
+    xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:4.0" 
+    xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" 
+    xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:4.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    xsi:schemaLocation="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:4.0  ../../xsd/lcm.xsd">
+    <rim:Slot name="urn:oasis:names:tc:ebxml-regrep:rim:RegistryObject:dontVersion">
+        <rim:ValueList>        
+            <rim:ValueListItem xsi:type="rim:StringValueType">
+                <rim:Value>true</rim:Value>
+            </rim:ValueListItem>
+        </rim:ValueList>
+    </rim:Slot>
+    <rim:Slot name="urn:oasis:names:tc:ebxml-regrep:rim:RegistryObject:dontVersionContent">
+        <rim:ValueList>
+            <rim:ValueListItem xsi:type="rim:StringValueType">
+                <rim:Value>true</rim:Value>
+            </rim:ValueListItem>
+        </rim:ValueList>
+    </rim:Slot>
+    
+    <rim:RegistryObjectList>
+        <rim:RegistryObject xsi:type="rim:OrganizationType" lid="urn:freebxml:registry:Organization:freebXMLRegistry" id="urn:freebxml:registry:Organization:freebXMLRegistry" primaryContact="urn:freebxml:registry:predefinedusers:registryoperator">
+            <rim:Name>
+                <rim:LocalizedString charset="UTF-8" value="freebXMLRegistry"/>
+            </rim:Name>
+            <rim:Description>
+                <rim:LocalizedString charset="UTF-8" value="freebXMLRegistry.desc"/>
+            </rim:Description>
+            
+            <rim:ExternalLink 
+                registryObject="urn:freebxml:registry:Organization:freebXMLRegistry"
+                lid="urn:freebxml:registry:ExternalLink:freebXMLRegistry:website" 
+                id="urn:freebxml:registry:ExternalLink:freebXMLRegistry:website"
+                externalURI="http://ebxmlrr.sourceforge.net"
+                >
+            <rim:Description>
+                <rim:LocalizedString charset="UTF-8" value="Main web site"/>
+            </rim:Description>
+            </rim:ExternalLink>
+            <rim:ExternalLink 
+                registryObject="urn:freebxml:registry:Organization:freebXMLRegistry"
+                lid="urn:freebxml:registry:ExternalLink:freebXMLRegistry:news" 
+                id="urn:freebxml:registry:ExternalLink:freebXMLRegistry:news"
+                externalURI="http://sourceforge.net/export/rss2_project.php?group_id=37074"
+                >
+            <rim:Description>
+                <rim:LocalizedString charset="UTF-8" value="News - RSS Feed"/>
+            </rim:Description>
+            </rim:ExternalLink>
+            
+            <rim:PostalAddress city="Burlington" country="USA" postalCode="01867" stateOrProvince="MA" street="Network Dr." streetNumber="1"/>
+            <rim:TelephoneNumber areaCode="781" countryCode="1" number="442-0703" type="OfficePhone"/>
+            <rim:TelephoneNumber areaCode="781" countryCode="1" number="442-0704" type="FAX"/>
+        </rim:RegistryObject>
+        <!--AffiliatedWith assoc to add primary contact as user of organization -->
+        <rim:RegistryObject xsi:type="rim:AssociationType" type="urn:oasis:names:tc:ebxml-regrep:AssociationType:AffiliatedWith" lid="urn:uuid:24cee176-9098-4931-894f-fea5dab1732a" id="urn:uuid:24cee176-9098-4931-894f-fea5dab1732a" sourceObject="urn:freebxml:registry:predefinedusers:registryoperator" targetObject="urn:freebxml:registry:Organization:freebXMLRegistry"/>
+        
+        <!--Not using hard wired id for Federation and Registry as they need to be unique in each Registry instance-->
+        <rim:RegistryObject xsi:type="rim:FederationType" lid="Federation1TemporaryId" id="Federation1TemporaryId" replicationSyncLatency="P1D">
+            <rim:Name>
+                <rim:LocalizedString charset="UTF-8" value="freebXMLRegistryFederation"/>
+            </rim:Name>
+            <rim:Description>
+                <rim:LocalizedString charset="UTF-8" value="freebXMLRegistryFederation.desc"/>
+            </rim:Description>
+        </rim:RegistryObject>    
+        <rim:RegistryObject xsi:type="rim:RegistryType" catalogingLatency="P1D" lid="Registry1TemporaryId" id="Registry1TemporaryId" operator="urn:freebxml:registry:Organization:freebXMLRegistry" replicationSyncLatency="P1D" specificationVersion="3.0" conformanceProfile="registryFull">
+            <rim:Name>
+                <rim:LocalizedString charset="UTF-8" value="freebXMLRegistry"/>
+            </rim:Name>
+            <rim:Description>
+                <rim:LocalizedString charset="UTF-8" value="freebXMLRegistry.desc"/>
+            </rim:Description>
+        </rim:RegistryObject>
+        <!--HasFederationMember assoc between Federation and Registry -->
+        <rim:RegistryObject xsi:type="rim:AssociationType" type="urn:oasis:names:tc:ebxml-regrep:AssociationType:HasFederationMember" lid="HasFederationMemberAssociationTemporaryId" id="HasFederationMemberAssociationTemporaryId" sourceObject="Federation1TemporaryId" targetObject="Registry1TemporaryId"/>    
+
+        <rim:RegistryObject xsi:type="rim:ServiceType" lid="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLCatalogingService" id="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLCatalogingService">
+            <rim:Slot name="providingOrganization">
+                <rim:ValueList>
+                    <rim:ValueListItem xsi:type="rim:StringValueType">
+                        <rim:Value>urn:freebxml:registry:Organization:freebXMLRegistry</rim:Value>
+                    </rim:ValueListItem>
+                </rim:ValueList>
+            </rim:Slot>
+            <rim:Name>
+                <rim:LocalizedString charset="UTF-8" value="CanonicalXMLCatalogingService"/>
+            </rim:Name>
+            <rim:Description>
+                <rim:LocalizedString charset="UTF-8" value="CanonicalXMLCatalogingService.desc"/>
+            </rim:Description>
+            <!-- ContentManagementService classification -->
+            <rim:Classification classificationNode="urn:oasis:names:tc:ebxml-regrep:ContentManagementService:ContentCatalogingService" classifiedObject="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLCatalogingService" lid="urn:uuid:847c002d-2e4b-404c-b4bb-a1e343380e1d" id="urn:uuid:847c002d-2e4b-404c-b4bb-a1e343380e1d">
+                <rim:Name>
+                    <rim:LocalizedString charset="UTF-8" value="ContentCatalogingService"/>
+                </rim:Name>
+                <rim:Description>
+                    <rim:LocalizedString charset="UTF-8" value="ContentCatalogingService.desc"/>
+                </rim:Description>
+            </rim:Classification>
+            <!-- InvocationModel classification -->
+            <rim:Classification classificationNode="urn:oasis:names:tc:ebxml-regrep:InvocationModel:Inline" classifiedObject="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLCatalogingService" lid="urn:uuid:d1606054-c3c1-4a22-a130-8b853acc7b30" id="urn:uuid:d1606054-c3c1-4a22-a130-8b853acc7b30">
+                <rim:Name>
+                    <rim:LocalizedString charset="UTF-8" value="Inline"/>
+                </rim:Name>
+                <rim:Description>
+                    <rim:LocalizedString charset="UTF-8" value="Inline.desc"/>
+                </rim:Description>
+            </rim:Classification>
+            <!-- ErrorHandlingModel classification -->
+            <rim:Classification classificationNode="urn:oasis:names:tc:ebxml-regrep:ErrorHandlingModel:FailOnError" classifiedObject="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLCatalogingService" lid="urn:uuid:2e82543f-ca57-4d4d-89a8-a96957b322dc" id="urn:uuid:2e82543f-ca57-4d4d-89a8-a96957b322dc">
+                <rim:Name>
+                    <rim:LocalizedString charset="UTF-8" value="FailOnError"/>
+                </rim:Name>
+                <rim:Description>
+                    <rim:LocalizedString charset="UTF-8" value="FailOnError.desc"/>
+                </rim:Description>
+            </rim:Classification>
+            <rim:ServiceEndpoint address="" lid="urn:oasis:names:tc:ebxml-regrep:ServiceEndpoint:CanonicalXMLCatalogingServiceEndpoint" id="urn:oasis:names:tc:ebxml-regrep:ServiceEndpoint:CanonicalXMLCatalogingServiceEndpoint">
+                <rim:Name>
+                    <rim:LocalizedString charset="UTF-8" value="DefaultXMLCatalogingServiceEndpoint"/>
+                </rim:Name>
+                <rim:Description>
+                    <rim:LocalizedString charset="UTF-8" value="DefaultXMLCatalogingServiceEndpoint.desc"/>
+                </rim:Description>
+            </rim:ServiceEndpoint>
+        </rim:RegistryObject>
+        <!--OffersService assoc between Registry and Service -->
+        <rim:RegistryObject xsi:type="rim:AssociationType" type="urn:oasis:names:tc:ebxml-regrep:AssociationType:OffersService" lid="urn:uuid:2269ad8d-15ed-449b-bf34-f07ccbe5988f" id="urn:uuid:2269ad8d-15ed-449b-bf34-f07ccbe5988f" sourceObject="urn:freebxml:registry:Organization:freebXMLRegistry" targetObject="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLCatalogingService"/>
+        <!-- Assoc between default XML Cataloging Service and xml ClassificationNode in ObjectTypes scheme -->
+        <rim:RegistryObject xsi:type="rim:AssociationType" type="urn:oasis:names:tc:ebxml-regrep:AssociationType:ContentManagementServiceFor" lid="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLCatalogingService:ContentManagementServiceFor:ObjectType:XML" id="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLCatalogingService:ContentManagementServiceFor:ObjectType:XML" sourceObject="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLCatalogingService" targetObject="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:ExtrinsicObject:XML"/>
+        
+        <!-- Canonical XML Validation Service -->
+        <rim:RegistryObject xsi:type="rim:ServiceType" lid="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLValidationService" id="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLValidationService">
+            <rim:Slot name="providingOrganization">
+                <rim:ValueList>
+                    <rim:ValueListItem xsi:type="rim:StringValueType">
+                        <rim:Value>urn:freebxml:registry:Organization:freebXMLRegistry</rim:Value>
+                    </rim:ValueListItem>
+                </rim:ValueList>
+            </rim:Slot>
+            <rim:Name>
+                <rim:LocalizedString charset="UTF-8" value="CanonicalXMLValidationService"/>
+            </rim:Name>
+            <rim:Description>
+                <rim:LocalizedString charset="UTF-8" value="CanonicalXMLValidationService.desc"/>
+            </rim:Description>
+            <!-- ContentManagementService classification -->
+            <rim:Classification classificationNode="urn:oasis:names:tc:ebxml-regrep:ContentManagementService:ContentValidationService" classifiedObject="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLValidationService" lid="urn:uuid:b49b25e5-3bae-4600-934f-821ca26662f5" id="urn:uuid:b49b25e5-3bae-4600-934f-821ca26662f5">
+                <rim:Name>
+                    <rim:LocalizedString charset="UTF-8" value="ContentValidationService"/>
+                </rim:Name>
+                <rim:Description>
+                    <rim:LocalizedString charset="UTF-8" value="ContentValidationService.desc"/>
+                </rim:Description>
+            </rim:Classification>
+            <!-- InvocationModel classification -->
+            <rim:Classification classificationNode="urn:oasis:names:tc:ebxml-regrep:InvocationModel:Inline" classifiedObject="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLValidationService" lid="urn:uuid:dd037e7f-4cda-4e06-a214-c57667db186b" id="urn:uuid:dd037e7f-4cda-4e06-a214-c57667db186b">
+                <rim:Name>
+                    <rim:LocalizedString charset="UTF-8" value="Inline"/>
+                </rim:Name>
+                <rim:Description>
+                    <rim:LocalizedString charset="UTF-8" value="Inline.desc"/>
+                </rim:Description>
+            </rim:Classification>
+            <!-- ErrorHandlingModel classification -->
+            <rim:Classification classificationNode="urn:oasis:names:tc:ebxml-regrep:ErrorHandlingModel:FailOnError" classifiedObject="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLValidationService" lid="urn:uuid:0ed7628e-a53a-476a-a6c3-d22f27091efb" id="urn:uuid:0ed7628e-a53a-476a-a6c3-d22f27091efb">
+                <rim:Name>
+                    <rim:LocalizedString charset="UTF-8" value="FailOnError"/>
+                </rim:Name>
+                <rim:Description>
+                    <rim:LocalizedString charset="UTF-8" value="FailOnError.desc"/>
+                </rim:Description>
+            </rim:Classification>
+            <rim:ServiceEndpoint address="" lid="urn:oasis:names:tc:ebxml-regrep:ServiceEndpoint:CanonicalXMLValidationServiceEndpoint" id="urn:oasis:names:tc:ebxml-regrep:ServiceEndpoint:CanonicalXMLValidationServiceEndpoint">
+                <rim:Name>
+                    <rim:LocalizedString charset="UTF-8" value="DefaultXMLValidationServiceEndpoint"/>
+                </rim:Name>
+                <rim:Description>
+                    <rim:LocalizedString charset="UTF-8" value="DefaultXMLValidationServiceEndpoint.desc"/>
+                </rim:Description>
+            </rim:ServiceEndpoint>
+        </rim:RegistryObject>
+        <!--OffersService assoc between Registry and Service -->
+        <rim:RegistryObject xsi:type="rim:AssociationType" type="urn:oasis:names:tc:ebxml-regrep:AssociationType:OffersService" lid="urn:freebxml:registry:Organization:freebXMLRegistry:OffersService:CanonicalXMLValidationService" id="urn:freebxml:registry:Organization:freebXMLRegistry:OffersService:CanonicalXMLValidationService" sourceObject="urn:freebxml:registry:Organization:freebXMLRegistry" targetObject="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLValidationService"/>
+        <!-- Assoc between default XML Validation Service and xml ClassificationNode in ObjectTypes scheme -->
+        <rim:RegistryObject xsi:type="rim:AssociationType" type="urn:oasis:names:tc:ebxml-regrep:AssociationType:ContentManagementServiceFor" lid="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLValidationService:ContentManagementServiceFor:ObjectType:XML" id="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLValidationService:ContentManagementServiceFor:ObjectType:XML" sourceObject="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLValidationService" targetObject="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:ExtrinsicObject:XML"/>
+        
+        <rim:RegistryObject xsi:type="rim:ServiceType" lid="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLFilteringService" id="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLFilteringService">
+            <rim:Slot name="providingOrganization">
+                <rim:ValueList>
+                    <rim:ValueListItem xsi:type="rim:StringValueType">
+                        <rim:Value>urn:freebxml:registry:Organization:freebXMLRegistry</rim:Value>
+                    </rim:ValueListItem>
+                </rim:ValueList>
+            </rim:Slot>
+            <rim:Name>
+                <rim:LocalizedString charset="UTF-8" value="CanonicalXMLFilteringService"/>
+            </rim:Name>
+            <rim:Description>
+                <rim:LocalizedString charset="UTF-8" value="CanonicalXMLFilteringService.desc"/>
+            </rim:Description>
+            <!-- ContentManagementService classification -->
+            <rim:Classification classificationNode="urn:oasis:names:tc:ebxml-regrep:ContentManagementService:ContentFilteringService" classifiedObject="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLFilteringService" lid="urn:uuid:5d0c469e-4499-44e8-9c8f-db46b691c093" id="urn:uuid:5d0c469e-4499-44e8-9c8f-db46b691c093">
+                <rim:Name>
+                    <rim:LocalizedString charset="UTF-8" value="ContentFilteringService"/>
+                </rim:Name>
+                <rim:Description>
+                    <rim:LocalizedString charset="UTF-8" value="ContentFilteringService.desc"/>
+                </rim:Description>
+            </rim:Classification>
+            <!-- InvocationModel classification -->
+            <rim:Classification classificationNode="urn:oasis:names:tc:ebxml-regrep:InvocationModel:Inline" classifiedObject="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLFilteringService" lid="urn:uuid:48923123-34b9-4352-b591-ef9d8a162c56" id="urn:uuid:48923123-34b9-4352-b591-ef9d8a162c56">
+                <rim:Name>
+                    <rim:LocalizedString charset="UTF-8" value="Inline"/>
+                </rim:Name>
+                <rim:Description>
+                    <rim:LocalizedString charset="UTF-8" value="Inline.desc"/>
+                </rim:Description>
+            </rim:Classification>
+            <!-- ErrorHandlingModel classification -->
+            <rim:Classification classificationNode="urn:oasis:names:tc:ebxml-regrep:ErrorHandlingModel:FailOnError" classifiedObject="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLFilteringService" lid="urn:uuid:df6b7011-500a-4668-a1db-d0bebd8b4315" id="urn:uuid:df6b7011-500a-4668-a1db-d0bebd8b4315">
+                <rim:Name>
+                    <rim:LocalizedString charset="UTF-8" value="FailOnError"/>
+                </rim:Name>
+                <rim:Description>
+                    <rim:LocalizedString charset="UTF-8" value="FailOnError.desc"/>
+                </rim:Description>
+            </rim:Classification>
+            <rim:ServiceEndpoint address="" lid="urn:oasis:names:tc:ebxml-regrep:ServiceEndpoint:CanonicalXMLFilteringServiceEndpoint" id="urn:oasis:names:tc:ebxml-regrep:ServiceEndpoint:CanonicalXMLFilteringServiceEndpoint">
+                <rim:Name>
+                    <rim:LocalizedString charset="UTF-8" value="DefaultXMLFilteringServiceEndpoint"/>
+                </rim:Name>
+                <rim:Description>
+                    <rim:LocalizedString charset="UTF-8" value="DefaultXMLFilteringServiceEndpoint.desc"/>
+                </rim:Description>
+            </rim:ServiceEndpoint>
+        </rim:RegistryObject>
+        <!--OffersService assoc between Registry and Service -->
+        <rim:RegistryObject xsi:type="rim:AssociationType" type="urn:oasis:names:tc:ebxml-regrep:AssociationType:OffersService" lid="urn:uuid:0f65a64b-8722-44d7-a65d-d2adc0199fd3" id="urn:uuid:0f65a64b-8722-44d7-a65d-d2adc0199fd3" sourceObject="urn:freebxml:registry:Organization:freebXMLRegistry" targetObject="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLFilteringService"/>
+        <!-- Assoc between Canonical XML Filtering Service and xml ClassificationNode in ObjectTypes scheme -->
+        <rim:RegistryObject xsi:type="rim:AssociationType" type="urn:oasis:names:tc:ebxml-regrep:AssociationType:ContentManagementServiceFor" lid="urn:uuid:8813af70-bc2b-49b4-93c0-81d9740a0c9d" id="urn:uuid:8813af70-bc2b-49b4-93c0-81d9740a0c9d" sourceObject="urn:oasis:names:tc:ebxml-regrep:Service:CanonicalXMLFilteringService" targetObject="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:ExtrinsicObject:XML"/>
+        
+        <!-- The default ACP for the Registry -->
+        <rim:RegistryObject xsi:type="rim:ExtrinsicObjectType" lid="urn:oasis:names:tc:ebxml-regrep:acp:defaultACP" id="urn:oasis:names:tc:ebxml-regrep:acp:defaultACP" mimeType="text/xml" objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:ExtrinsicObject:XML:XACML:PolicySet">
+            <!-- Add a Slot with value for each composed policy. This will be automated in future via cataloging of PolicySets -->
+            <rim:Slot name="ComposedPolicies">
+                <rim:ValueList>
+                    <rim:ValueListItem xsi:type="rim:StringValueType">
+                        <rim:Value>urn:oasis:names:tc:ebxml-regrep:3.0:rim:acp:policy:policyid:permit-anyone-to-read</rim:Value>
+                    </rim:ValueListItem>
+                    <rim:ValueListItem xsi:type="rim:StringValueType">
+                        <rim:Value>urn:oasis:names:tc:ebxml-regrep:3.0:rim:acp:policy:policyid:permit-anyone-to-reference</rim:Value>
+                    </rim:ValueListItem>
+                    <rim:ValueListItem xsi:type="rim:StringValueType">
+                        <rim:Value>urn:oasis:names:tc:ebxml-regrep:3.0:rim:acp:policy:policyid:permit-owner-all</rim:Value>
+                    </rim:ValueListItem>
+                    <rim:ValueListItem xsi:type="rim:StringValueType">
+                        <rim:Value>urn:oasis:names:tc:ebxml-regrep:3.0:rim:acp:policy:policyid:permit-registryadministrator-all</rim:Value>
+                    </rim:ValueListItem>
+                </rim:ValueList>
+            </rim:Slot>
+            <rim:Name>
+                <rim:LocalizedString charset="UTF-8" value="defaultACP"/>
+            </rim:Name>
+            <rim:Description>
+                <rim:LocalizedString charset="UTF-8" value="defaultACP.desc"/>
+            </rim:Description>
+            
+            <!--import role implies that registry MUST import the referenced repositoryItem as a native RepositoryItem-->
+            <rim:repositoryItemRef xlink:role="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:ExtrinsicObject:import" xlink:href="./acp/defaultACP.xml"/>
+        </rim:RegistryObject>
+        
+        
+        <!--Root folder with locator '/' -->
+        <rim:RegistryObject xsi:type="rim:RegistryPackageType" lid="urn:oasis:names:tc:ebxml-regrep:RegistryPackage:registry" id="urn:oasis:names:tc:ebxml-regrep:RegistryPackage:registry">
+            <rim:Name>
+                <rim:LocalizedString charset="UTF-8" value="registry"/>
+            </rim:Name>
+            <rim:Description>
+                <rim:LocalizedString charset="UTF-8" value="registry.desc"/>
+            </rim:Description>
+        </rim:RegistryObject>
+        
+        <!-- adminOnlyFolderACP.xml -->
+        <rim:RegistryObject xsi:type="rim:ExtrinsicObjectType" lid="urn:oasis:names:tc:ebxml-regrep:acp:adminOnlyACP" id="urn:oasis:names:tc:ebxml-regrep:acp:adminOnlyACP" objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:ExtrinsicObject:XML:XACML:PolicySet" mimeType="text/xml">
+            <rim:Name>
+                <rim:LocalizedString charset="UTF-8" value="adminOnlyFolderACP.xml"/>
+            </rim:Name>
+            <rim:Description>
+                <rim:LocalizedString charset="UTF-8" value="adminOnlyFolderACP.xml.desc"/>
+            </rim:Description>
+        </rim:RegistryObject>
+        <!-- Assoc between adminOnlyFolderACP and the /registry folder -->
+        <rim:RegistryObject xsi:type="rim:AssociationType" lid="urn:oasis:names:tc:ebxml-regrep:acp:adminOnlyACP:AccessControlPolicyFor:RegistryPackage:registry" id="urn:oasis:names:tc:ebxml-regrep:acp:adminOnlyACP:AccessControlPolicyFor:RegistryPackage:registry" type="urn:oasis:names:tc:ebxml-regrep:AssociationType:AccessControlPolicyFor" sourceObject="urn:oasis:names:tc:ebxml-regrep:acp:adminOnlyACP" targetObject="urn:oasis:names:tc:ebxml-regrep:RegistryPackage:registry"/>
+        <!-- assocType AccessControPolicyFor -->
+        <!--rim:ObjectRef id="urn:oasis:names:tc:ebxml-regrep:AssociationType:AccessControlPolicyFor"/-->
+    
+    
+        <rim:RegistryObject xsi:type="rim:RegistryPackageType" lid="urn:oasis:names:tc:ebxml-regrep:RegistryPackage:userData" id="urn:oasis:names:tc:ebxml-regrep:RegistryPackage:userData">
+            <rim:Name>
+                <rim:LocalizedString charset="UTF-8" value="userData"/>
+            </rim:Name>
+            <rim:Description>
+                <rim:LocalizedString charset="UTF-8" value="userData.desc"/>
+            </rim:Description>
+        </rim:RegistryObject>
+        
+        <!--HasMember assoc to put /userData as member of /registry folder -->
+        <rim:RegistryObject xsi:type="rim:AssociationType" type="urn:oasis:names:tc:ebxml-regrep:AssociationType:HasMember" lid="urn:uuid:d4001de8-7fe1-433d-9ca3-acba17200ece" id="urn:uuid:d4001de8-7fe1-433d-9ca3-acba17200ece" sourceObject="urn:oasis:names:tc:ebxml-regrep:RegistryPackage:registry" targetObject="urn:oasis:names:tc:ebxml-regrep:RegistryPackage:userData">
+            <rim:Description>
+                <rim:LocalizedString charset="UTF-8" value="registryHasMemberuserData.desc"/>
+            </rim:Description>
+        </rim:RegistryObject>
+        
+        <!-- User for RegistryOperator -->
+        <!--rim:ObjectRef id="urn:freebxml:registry:predefinedusers:registryoperator"/-->
+        <!-- xml ObjectType, Defined in SubmitObjectsRequest_objectTypesSchemes -->
+        <!--rim:ObjectRef id="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:ExtrinsicObject:XML"/-->
+    
+        <!--Load the default xslt style sheet used by EmailNotifier-->
+        <rim:RegistryObject xsi:type="rim:ExtrinsicObjectType" lid="urn:freebxml:registry:xslt:notificationToHTML.xsl" id="urn:freebxml:registry:xslt:notificationToHTML.xsl" objectType="urn:oasis:names:tc:ebxml-regrep:ObjectType:RegistryObject:ExtrinsicObject:XML:XSLT" mimeType="text/xml">
+            <rim:Name>
+              <rim:LocalizedString charset="UTF-8" value="notificationToHTML.xsl"/>
+            </rim:Name>
+        </rim:RegistryObject>
+        
+        
+    </rim:RegistryObjectList>
+</SubmitObjectsRequest>

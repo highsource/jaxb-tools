@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.010" id="OTA2003A2008A">
+	<xs:include schemaLocation="OTA_HotelPreferences.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:attributeGroup name="ClassCodeGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The ClassCodeType complex type defines information used to describe a specific class of service along with the quantity of that item that is available or selected.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="ClassCode" type="StringLength1to8" use="required"/>
+		<xs:attribute name="Quantity" type="xs:nonNegativeInteger" use="optional" default="1"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="RailTaxAmountGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The TaxAmountType complex type defines information specific to one tax amount that is applicable to the cost of an item.</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="CurrencyAmountGroup"/>
+		<xs:attribute name="TaxCode" type="StringLength1to16" use="optional"/>
+		<xs:attribute name="Percentage" type="Percentage" use="optional"/>
+		<xs:attribute name="Description" type="StringLength1to64" use="optional"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="RoomAssignmentGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The RoomAssignmentType complex type defines information used to describe a room that has been reserved.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="PassengerRPH" type="RPH_Type" use="required"/>
+		<xs:attribute name="CarNumber" type="xs:positiveInteger" use="optional"/>
+		<xs:attribute name="RoomNumber" type="xs:positiveInteger" use="optional"/>
+		<xs:attribute name="BerthNumber" type="xs:positiveInteger" use="optional"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="SeatAssignmentGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The SeatAssignmentType complex type defines information used to describe a seat that has been reserved.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="PassengerRPH" type="RPH_Type" use="required"/>
+		<xs:attribute name="CarNumber" type="xs:positiveInteger" use="required"/>
+		<xs:attribute name="SeatNumber" type="xs:positiveInteger" use="required"/>
+		<xs:attribute name="Direction" type="SeatDirectionType" use="required"/>
+		<xs:attribute name="Aisle" type="xs:boolean" use="optional"/>
+		<xs:attribute name="Window" type="xs:boolean" use="optional"/>
+		<xs:attribute name="Table" type="xs:boolean" use="optional"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="TransactionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The TransactionType attribute group indicates the requested or response information.
+	</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="ResponseType" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Indicates whether the response should be restricted to Fares or Schedules or provide Availability including, where applicable, 					Fares.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Fares"/>
+					<xs:enumeration value="Schedules"/>
+					<xs:enumeration value="Availability"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:complexType name="BookedTrainSegmentType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The BookedTrainSegmentType complex type defines the information needed to describe a train segment that has been booked as part of a reservation.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="TrainSegmentType">
+				<xs:sequence>
+					<xs:element name="ClassCode">
+						<xs:complexType>
+							<xs:attributeGroup ref="ClassCodeGroup"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Comment" type="FreeTextType" minOccurs="0" maxOccurs="10">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Any special comments on the segment. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Compartments" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Compartment" maxOccurs="99">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Specifies the berths within compartments.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:attributeGroup ref="RoomAssignmentGroup"/>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="SeatAssignments" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="SeatAssignment" maxOccurs="99">
+									<xs:complexType>
+										<xs:attributeGroup ref="SeatAssignmentGroup"/>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="BookStatus" type="StringLength1to8" use="required"/>
+				<xs:attribute name="TicketStatus" type="StringLength1to8" use="optional"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RailAmenityType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The RailAmenityType complex type defines the information used to describe a specific amenity and the associated preference level.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RailAmenity" maxOccurs="9">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Describes a specific amenity along with the preference for that amenity.  Preference may relect inclusion or exclusion.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="CodeListGroup"/>
+					<xs:attributeGroup ref="PreferLevelGroup"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RailAvailPrefsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The RailAvailPrefsType complex type defines the infornation that is used to express the preferences when requesting rail avilability information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OperatorPref" type="CompanyNamePrefType" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Describes any preferences in terms of the company operating the train service. Preference may reflect inclusion or exclusion.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransportModes" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Describes any preferences in terms of the transporation that may be used in the itinerary.  For example, some journies may require that a bus be used to connect between two locations.  Preference may reflect inclusion or exclusion.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="CodeListGroup"/>
+					<xs:attributeGroup ref="PreferLevelGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RailAmenities" type="RailAmenityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies the amenities qualifying the availability request.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RailChargesType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The RailChargesType complex type defines a collection of individual charges associated with the rail journey.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Total" type="TotalType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Contains a total of the base amounts and an estimated total when all taxes and fees are applied</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Charges">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on the charges associated with this reservation.  Such charges may include the cost of the rail ticket, the cost of reserved seating, the cost of sleeper accommodations, etc.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Charge" type="FeeType" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Detailed information on one specific charge.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="CurrencyCodeGroup"/>
+	</xs:complexType>
+	<xs:complexType name="RailReservationListType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The RailReservationListType complex type defines the data needed to provide a list of reservations, where each eservation is referenced using summary data for that reservation..</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RailResSummary" type="RailReservationSummaryType" minOccurs="2" maxOccurs="99">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Summary information of a reservation, to allow a reservation to be identified from several reservations that matched the previous request criteria</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RailReservationSummaryType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The RailReservationSummaryType complexType identifies the summary data that identifies a reservation.  Use of one or more of the elements will help in selecting a specific reservation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ConfirmationID" type="UniqueID_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The ID  element  is used to provide the confirmation number of the reservation whose summary information is provided.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PersonName" type="PersonNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Name of the person associated with the reservation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DepartureDateTime" type="TimeInstantType" minOccurs="0"/>
+			<xs:element name="ArrivalDateTime" type="TimeInstantType" minOccurs="0"/>
+			<xs:element name="OriginLocation" type="LocationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DestinationLocation" type="LocationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RailReservationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The RailReservationType complex type defines the information used to fully describe a rail reservation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BookingID" type="UniqueID_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A confirmation number by which this reservation can be uniquely identified</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Itinerary">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Full details on the itinerary referenced by this reservation.  An itinerary represents all inventory booked and associated with this specific reservation.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="OriginandDestinations">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">A collection of origin to destination journies that are part of the complete itinerary.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="OriginandDestination" maxOccurs="9">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Information on one specific journey from one specific origin to one specific destination.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="OriginLocation" type="LocationType">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Travel Origin Location - for example, air uses the IATA 3 letter code.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="DestinationLocation" type="LocationType">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Travel Destination Location - for example, air uses the IATA 3 letter code.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="TrainSegments">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">A collection of train segements that together provide the journey from origin to destination.</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="TrainSegment" type="BookedTrainSegmentType" maxOccurs="9">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">Full details on one specific train segment, including the origin and destination locations for this segment, equipment used, services offered, etc.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="RailCharges" type="RailChargesType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Information on the individual charges that incurred are a result of this specific itinerary. </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="VendorMessages" type="VendorMessagesType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">A collection of special comments associated with the itinerary.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies either the passenger names or simply the number and type of passengers traveling.  The use of names or counts will be according to the Trading Partner Agreement.</xs:documentation>
+				</xs:annotation>
+				<xs:element name="TravelerNames">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A collection of traveler names that are associated with the reservation.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="TravelerName" type="PersonNameType" maxOccurs="99">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Information on one specific traveler that is associated with the reservation.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="TravelerCount" maxOccurs="5">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Information on one specific traveler type and the quantity of that type of traveler.  </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attributeGroup ref="TravelerCountGroup"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="PaymentRules" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of payment rules associated with this reservation.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PaymentRule" type="MonetaryRuleType" maxOccurs="9">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">A specific payment rule associated with this reservation.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Fulfillment" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on the fullfilment of the ticket, that is, who will be issuing the ticket, or who did issue the ticket.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="DeliveryAddress" type="AddressType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Address to which the ticket is to be delivered.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Name" type="PersonNameType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Name associated with the issuance of the ticket.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="LastHoldDate" type="xs:date"/>
+	</xs:complexType>
+	<xs:complexType name="StationDetailsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Operation and location details of the station.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Details" type="StationType"/>
+			<xs:element name="OperationSchedules" type="OperationSchedulesType" minOccurs="0"/>
+			<xs:element name="Address" type="AddressType" minOccurs="0"/>
+			<xs:element name="Telephone" minOccurs="0" maxOccurs="5">
+				<xs:complexType>
+					<xs:attributeGroup ref="TelephoneGroup"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The StationType complex type defines information used to fully describe a station.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LocationType">
+				<xs:attribute name="Staffed" type="xs:boolean"/>
+				<xs:attribute name="TicketPrinter" type="xs:boolean"/>
+				<xs:attribute name="SST_Machine" type="xs:boolean"/>
+				<xs:attribute name="USTimeZone" type="USTimeZoneType" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="TrainEquipmentType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Equipment code and description.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StringLength0to64">
+				<xs:attribute name="TrainEquipType" type="StringLength1to8" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="TrainSegmentType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The TrainSegmentType complex type defines the construct for holding a train segment availability object.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DepartureStation" type="StationDetailsType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Departure point of train segment.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ArrivalStation" type="StationDetailsType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Arrival point of train segment.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MarketingCompany" type="CompanyNameType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The marketing train company</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OperatingCompany" type="CompanyNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en"> The operating train company, if different</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Equipment" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The type of equipment used for the train journey e.g. Amtrak equipment code, UIC, etc.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="CodeListGroup"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="DepartureDateTime" type="xs:dateTime" use="required"/>
+		<xs:attribute name="ArrivalDateTime" type="xs:dateTime" use="optional"/>
+		<xs:attribute name="TrainNumber" type="StringLength1to8">
+			<xs:annotation>
+				<xs:documentation xml:lang="en"> The train number assigned to this journey.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="StopQuantity" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en"> The number of stops the train makes</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="JourneyDuration" type="xs:duration" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en"> The duration of the train from departure location to destination location.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="SmokingIndicatorGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en"> Specifies if the train is smoking or not.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+		<xs:attribute name="TrainServiceType" type="StringLength1to8"/>
+		<xs:attribute name="CrossBorder" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="SeatAssignable" type="xs:boolean" use="optional"/>
+	</xs:complexType>
+</xs:schema>

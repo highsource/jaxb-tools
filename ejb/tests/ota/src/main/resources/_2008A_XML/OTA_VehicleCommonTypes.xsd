@@ -1,0 +1,3468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="4.003" id="OTA2003A2008A">
+	<xs:include schemaLocation="OTA_CommonPrefs.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="CoverageTextType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The CoverageTextSimpleType simple type identifes the type of free text that is provided as part of coverage (insurance) information.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Supplement">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Identifies what the text relates to, such as supplements, limits, or general description.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Description"/>
+			<xs:enumeration value="Limits"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EquipmentRestrictionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The EquipmentRestrictionSimpleType simple type defines a set of valid values for the restrictions that may be placed upon special equipment included as part of the rental of a vehicle.  Some equipment is restricted to rentals that return to the same place, some equipment is restricted to one-way rentals, and some equipment has no restrictions.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="OneWayOnly"/>
+			<xs:enumeration value="RoundTripOnly"/>
+			<xs:enumeration value="AnyReservation"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LocationDetailRequirementInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The LocationDetailRequirementInfoType simple type defines a set of valid values for the textual information about the requirements when renting from a rental facility.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="OneWayRental">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes the requirements and restrictions concerning one way rentals</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Geographic">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes the requirements and restrictions concerning geographic limitations, for example, the vehicle may only be driven into adjoining states, the vehicle may not be taken in Mexico, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DropOff">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes the requirements and restrictions concerning the dropoff, or return, of the vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="License">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes the requirements and restrictions concerning the renter's drivers license and associated factors, such as driving record, violations, etc. </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Insurance">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes the requirements and restrictions concerning insurance for the vehicle that is being rented. </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Eligibility">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes the requirements and restrictions concerning the eligibility of those who may rent from a specific rental facility.  For example, a rental facility may be at the premises of a corporation, and only those corporate employees may rent from that location.  The facility is not considered a public rental facility.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Miscellaneous">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes miscellaneous requirements and restrictions.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LocationDetailShuttleInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The LocationDetailShuttleInfoType defines a set of valid values for the textual information about the shuttle services when renting from a rental facility.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Transportation">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes the shuttle, such as shared bus, tram, company-specific bus.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Frequency">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes the frequency with which the shuttle service operates.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PickupInfo">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes where the shuttle service picks up those who are renting vehicles, how to get to the shuttle pick up location, etc/</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Distance">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes the distance that the shuttle will travel, from point of pickup to arrival at the rental facility.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ElapsedTime">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes the approximate elapsed time from point of pickup to arrival at the rental facility.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Fee">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes any shuttle fees that may apply.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Miscellaneous">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes miscellaneous information about the shuttle service.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Hours">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates the information pertains to the shuttle hours of operation.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LocationDetailRequirementAgeInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The LocationDetailRequirementAgeInfoType defines a set of valid values for the textual information about the requirements concerning the age of a renter when renting from a rental facility.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="MinimumAge">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes requirements and restrictions concerning the minimum age permitted for the rental of a vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MinimumAgeExceptions">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes the exceptions to the requirements and restrictions concerning the minimum age permitted for the rental of a vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Miscellaneous">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes miscellaneous requirements and restrictions with regard to the age of the renter of a vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LocationDetailRequirementAddlDriverInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The LocationDetailRequirementAddlDriverInfoType defines a set of valid values for the textual information about the requirements concerning additional drivers when renting from a rental facility.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="IncludedAuthorized">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes requirements and restrictions with regard to additional drivers that are automatically authorized as additional drivers of the rented vehicle.  The information may provide details on the type of person or relation to the renter that would result in a person being automatically included as an additional driver.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AdditionalAuthorized">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes requirements and restrictions with regard to others who are not automatically authorized as additional drivers of the rented vehicle.  The information may provide details on what should be done to attain such authorization.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Fees">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes fees that may be due, based on additional drivers of the rented vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Miscellaneous">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes miscellaneous requirements and restrictions with regard to additional drivers of the rented vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LocationDetailVehicleInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The LocationDetailVehicleInfoType defines a set of valid values for the textual information about vehicles available at a rental facility.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="GeneralInformation">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes general information about the vehicles that are typically offered for rental.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Disclaimer">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information provides the disclaimers about the vehicles that are typically offered for rental.  This may be typically that not all vehicles may be available at any one time, for example.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AdvancedBooking">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes any advance booking requiremennts about one or more vehicle types.  Some unusual vehicles may not be available at short notice.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NonSmokingVehicles">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes general information about non-smoking vehicles that may be offered for rental.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SpecialityVehicles">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes special, unusual or high-end vehicles that may be offered for rental.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OffLocationServiceID_Type">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The OffLocationServiceType simple type defines a set of valid values for the services that do not occur at the rental facility.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="CustPickUp">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes an offered service by which the customer may be picked up and taken to the rental facility, to rent a vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VehDelivery">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes an offered service by which the vehicle may be delivered to a location, rather than the customer taking delivery at the rental facility.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CustDropOff">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes an offered service by which the customer may be dropped off at a location after the vehicle rental period has ended.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VehCollection">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes an offered service by which the vehicle may be collected from a location, rather than the customer returning the vehicle to the rental facility.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Exchange">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes an offered service by which the customer will be delivered the exchanged car.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OnLocationServiceID_Type">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The OnLocationServiceType simple type defines a set of valid values for the services that may be offered at the rental facility.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="ComputerDrivingDirections">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes computerized driving directions services, such as availability of maps, turn-by-turn directions, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ExpressReturnService">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes express return servies, such as leaving the vehicle in the return lot without the need to return to the rental counter. </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SpecialNeeds">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes services ofered to those with special needs, such as physically impaired.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FrequentRenter">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes those services offered to members of the company's frequent renter program.  Such services may include covered collection of vehicle, bypassing the rental counter, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Miscellaneous">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that the associated information describes the miscellaneous services that are offered at the rental facility.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VehicleFuelUnitNameType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleFuelUnitNameSimpleType simple type defines a set of valid values for the units in which fuel is measured.  The rental of a vehicle may include a charge to provide fuel for the vehicle, expressed in Gallons or Liters. </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Gallon"/>
+			<xs:enumeration value="Liter"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VehiclePeriodUnitNameType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehiclePeriodUnitNameSimpleType simple type defines a set of valid values for a period of time that may be used as part of the reservation of a vehicle.  Examples of these valid values include day, hour, rental period for expressing the entire duration of the rental, etc.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="RentalPeriod"/>
+			<xs:enumeration value="Year"/>
+			<xs:enumeration value="Month"/>
+			<xs:enumeration value="Week"/>
+			<xs:enumeration value="Day"/>
+			<xs:enumeration value="Hour"/>
+			<xs:enumeration value="Weekend">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The calculation is for each weekend.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Bundle">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The rate is the same regardless of the number of days the vehicle is rented.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Package">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The charge is based on the package.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VehicleTransmissionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleTransmissionSimpleType simple type defines a set of valid values for the transmission type of a vehicle.  The valid values are automatic and manual.  Use of this attribute can help in describing a vehicle.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Automatic"/>
+			<xs:enumeration value="Manual"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VehicleUnitNameType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleUnitNameSimpleType simple type defines a set of valid values for the units on which an item charge may be based when renting a vehicle.  For example, there may be a charge which is based upon the number of days, another charge that is based upon the numbers of miles, a charge that is based upon the number of gallons, etc.  </xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="VehiclePeriodUnitNameType VehicleFuelUnitNameType DistanceUnitNameType"/>
+	</xs:simpleType>
+	<xs:attributeGroup name="CoverageCoreGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The CoverageCoreType complex type defines the required and most often used components that together define a specific Vehicle Coverage.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="CoverageType" type="OTA_CodeType" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Identifies the type of coverage, for example, collision damage waiver.  Refer to OTA Code List Vehicle Coverage Type (VCT).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Code" type="StringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Allows for an industry-specific code that describes this coverage to be specified, for example, CDW may be indicated when the coverage type is Collision Damage Waiver.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="RentalActionGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The RentalActionGroup provides information on why the message is being sent and what status the rental agreement is.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="RentalActionCode" type="TransactionActionType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Identifies the reason for the transaction. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="RentalAgreementStatusCode" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">This is a code that represents the status of the rental agreement. Refer to the enumerated list and annotations for additional information.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="Open">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This is when a rental agreement is active, typically this is when the customer has the vehicle.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Closed">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This is when a rental agreement is no longer active.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Pending">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This is when a rental agreement is not fully open (e.g., on a delivery transaction the agreement is not fully open until the customer takes possession of the vehicle).</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="VehicleClassGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleClassType complex type defines what is referred to as the class of vehicle.  Within a type of vehicle (for example, within the type "Car") there is still a wide range of different vehicles.  A class of vehicle is used to define that specific vehicle within the broader range of the vehicle in that same vehicle type.  Use of vehicle class in conjunction with a vehicle type aids in clarifying a request and aids in describing a specific vehicle.  A vehicle class is currently defined as just the size of the vehicle.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Size" type="OTA_CodeType" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The Size attribute identifies the size of a vehicle. Refer to OTA Code List Size (SIZ).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="VehicleCoveragePrefGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleCoveragePrefType complex type defines a preference for a particular type of insurance coverage for a rental vehicle.  The preference is expressed using the attribute group PreferLevelType.</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="CoverageCoreGroup"/>
+		<xs:attributeGroup ref="PreferLevelGroup"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="VehicleEquipmentCoreGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleEquipmentCoreType complex type identifies the core data that descrbes a piece of special equipment in association with the renting of a vehicle.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="EquipType" type="OTA_CodeType" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+Identifies the specific type of special equipment.  Refer to OTA Code List Equipment Type (EQP).
+		</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Quantity" type="xs:positiveInteger" use="optional"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="VehicleEquipmentPrefGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleEquipmentPrefType complex type identifies the data that is used to provide information on a preferred special equipment when renting a vehicle.</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="VehicleEquipmentCoreGroup"/>
+		<xs:attributeGroup ref="PreferLevelGroup"/>
+		<xs:attribute name="Action" type="ActionType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Identifes an action to take place. Typically used to modify the EquipType and/or Quantity.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="VehicleIdentityGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleIdentityGroup is a set of information used to identify a single vehicle.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="VehicleAssetNumber" type="StringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">This is the number assigned by a rental car company to manage inventory, it is not the Vehicle Identification Number (VIN).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="LicensePlateNumber" type="StringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">This is the license plate number of the vehicle rented.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="StateProvCode" type="StateProvCodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">This identifies the standard code or abbreviation for the state, province, or region of vehicle registration.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CountryCode" type="ISO3166" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">This identifies the standard code or abbreviation for the country of vehicle registration.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="VehicleID_Number" type="StringLength0to32" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">This is the manufacturers' assigned vehicle identification number (VIN).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="VehicleColor" type="StringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">This is the color of the vehicle being rented.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="VehicleLocationServicesGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleLocationServicesType complex type defines the services that are offered by a vehicle rental location.  Such services include shuttle information to transport the customer to the facility.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="ShuttleProvided" type="xs:boolean"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="VehicleMakeModelGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Indicates the make and model of the car with the year. Make and model could be by text or by code.</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="NameOptionalCodeGroup"/>
+		<xs:attribute name="ModelYear" type="xs:gYear" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The model year of the vehicle.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="VehicleRateDistanceGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Provides information on a distance associated with a particular rate (e.g., the distance may be  expressed as Unlimited miles per rental period or 200 miles per day).</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Unlimited" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true there is no mileage/kilometer restriction.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Quantity" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Provides the number of miles/kilometers included, typically used when Unlimited is false.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DistUnitName" type="DistanceUnitNameType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Provides the units in which distance is measured, when applied to the rental of a vehicle (i.e., miles or kilometers).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="VehiclePeriodUnitName" type="VehiclePeriodUnitNameType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Provides the period of time associated with the quantity and distance unit name (e.g. day).		</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="VehicleTaxAmountGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleTaxAmountType complex type defines information specific to one tax amount that is applicable to the cost of an item.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Total" type="Money" use="required"/>
+		<xs:attribute name="CurrencyCode" type="AlphaLength3" use="required"/>
+		<xs:attribute name="TaxCode" type="StringLength1to16" use="optional"/>
+		<xs:attribute name="Percentage" type="Percentage" use="optional"/>
+		<xs:attribute name="Description" type="StringLength1to64" use="optional"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="VehicleTotalChargeGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleTotalChargeType complex type identifies the data that is used to express a total charge, both including and excluding taxes.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="RateTotalAmount" type="Money" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Total rental charges excluding any additional mandatory charges.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="EstimatedTotalAmount" type="Money" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Total rental charges including any additional mandatory charges (e.g., taxes).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="CurrencyCodeGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Provides a currency code and the number of decimal places for these amounts.
+
+</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="VehicleTypeGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleTypeType complex type defines what is referred to as the type of vehicle.  The range of vehicles is divided into types to aid in clarifying a request and to aid in describing a specific vehicle.  A vehicle type is defined to be the combination of the vehicle category (Car, Truck, etc) and the number of doors on that vehicle. </xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="VehicleCategory" type="OTA_CodeType" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The VehicleCategory attribute provides the catgeory of a vehicle.  Refer to OTA Code List Vehicle Category (VEC).	</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DoorCount" type="StringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The number of doors on a vehicle.  This may be an exact number or a range, i.e. 2-4.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="VehLocDetailsGrp">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">VehLocDetail provides extended vicinity information. Such as associated airports or relative location to city center. (e.g. south of city center)</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Code" type="StringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Code used to identify the car rental location.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Name" type="StringLength1to64" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Name used to refer to the car rental location.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CodeContext" type="StringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Used to define which list the location code comes from (e.g. IATA, OAG, internal company code).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ExtendedLocatonCode" type="StringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Used for extended OAG code in conjunction with the OAG code which is sent in Code.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="AssocAirportLocList" type="ListOfStringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Additional airport location codes associated with the primary airport.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:complexType name="CoverageDetailsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The CoverageDetailsType complex type provides information on a specfic aspect of coverage, for example, supplemental coverage, description, etc.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="FormattedTextTextType">
+				<xs:attribute name="CoverageTextType" type="CoverageTextType" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The CoverageTextType identifes the type of free text that is provided as part of coverage (insurance) information.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="CoveragePricedType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The CoveragePricedType complex type defines the information that is required to describe a priced coverage, that is, a coverage and a charge.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Coverage" type="CoverageType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Details about a coverage, such as text or description.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Charge" type="VehicleChargeType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The charges as they relate to a single coverage, such as minimum or maximum amounts, taxes, or information on how the charge was calculated.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Required" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">An indication if this particular coverage is required in the vehicle reservation, or is optional, based upon renter preference.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="CoverageType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The CoverageType complex type describes the data that is needed to fully describe a vehicle coverage, including the core details along with optional descriptions.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Details" type="CoverageDetailsType" minOccurs="0" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Textual information about coverage, such as coverage limit or descriptions.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="CoverageCoreGroup"/>
+	</xs:complexType>
+	<xs:complexType name="CustomerPrimaryAdditionalType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Information on the one primary driver and, optionally, several additional drivers. This may be used to provide a frequent renter number.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Primary">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on the primary driver, possibly including frequent renter number.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="CustomerType">
+							<xs:sequence>
+								<xs:element name="CustomerID" type="UniqueID_Type" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The identification of the customer for whom a booking is being requested. This is different from the customer's loyalty number.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Additional" minOccurs="0" maxOccurs="9">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on additional  driver(s), possibly including frequent renter number.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="CustomerType">
+							<xs:attributeGroup ref="DateTimeSpanGroup">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies the dates for how long the additional driver should be part of the rental contract.</xs:documentation>
+								</xs:annotation>
+							</xs:attributeGroup>
+							<xs:attribute name="CorpDiscountName" type="StringLength1to64" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">This is the name of the organization associated with the corporate discount number.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="CorpDiscountNmbr" type="AlphaNumericStringLength1to14" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">This is the code used to identify if the additional driver is eligible for benefits associated with a specific organization.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="QualificationMethod" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Used as a qualification for an additional driver.</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:NMTOKEN">
+										<xs:enumeration value="RT_AirlineTicket">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Round trip airline ticket</xs:documentation>
+											</xs:annotation>
+										</xs:enumeration>
+										<xs:enumeration value="CreditCard">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">If needed, the credit card details should be passed in PaymentForm/PaymentCard.</xs:documentation>
+											</xs:annotation>
+										</xs:enumeration>
+										<xs:enumeration value="PassportAndReturnTkt">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Passport and return airline ticket</xs:documentation>
+											</xs:annotation>
+										</xs:enumeration>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attributeGroup ref="TravelerCountGroup">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Used to define the specific type of additional person (Adult, YoungDriver, YoungerDriver, or it may be a code that is acceptable to both Trading Partners)</xs:documentation>
+								</xs:annotation>
+							</xs:attributeGroup>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OffLocationServiceCoreType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The OffLocationServiceCoreType complex type defines the core data that is used to describe an off-location service.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Address" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The address for vehicle delivery or collection, or for customer pickup or drop-off.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="AddressType">
+							<xs:attribute name="SiteID" type="StringLength1to16" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">An identifier of a particular location used in place of address details.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="SiteName" type="StringLength1to32" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">This field is to provide a name for the site reference of the off location service.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Type" type="OffLocationServiceID_Type" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="OffLocationServicePricedType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The OffLocationServicePricedType complex type describes the data that is used to describe a priced off-location service, that is, an off-location service and the corresponding charge.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OffLocService" type="OffLocationServiceType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on a specific off-airport service, for example, vehicle delivery, customer pickup.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Charge" type="VehicleChargeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Charge information associated with this specific off-airport service.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OffLocationServiceType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The OffLocationServiceType complex type defines a specific off-location service.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="OffLocationServiceCoreType">
+				<xs:sequence>
+					<xs:element name="PersonName" type="PersonNameType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Name for the contact person for the off location service.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Telephone" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Phone number for the contact person for the off location service.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:attributeGroup ref="TelephoneGroup"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="TrackingID" type="UniqueID_Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Can be used as a tracking number for delivery and collection.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="SpecInstructions" type="StringLength1to128" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Provides special instructions regarding the off location service (e.g., keys with receptionist).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RateRulesType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Collection of rules pertaining to the rental rate and/or vehicle.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AdvanceBooking" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates whether or not advance booking is required for this rate and if so, what the advance booking requirements are.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="DeadlineGroup"/>
+					<xs:attribute name="RequiredInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">If true, advanced booking is required for this rate.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PickupReturnRules" minOccurs="0" maxOccurs="7">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Pickup and return requirements for a specific rate.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="EarliestPickup" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The earliest day and time a vehicle can be picked up to qualify for a specific rate.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="DayOfWeek" type="DayOfWeekType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The earliest day of the week the rental can begin to qualify for the specific rate.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Time" type="TimeOrDateTimeType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The earliest time, in conjunction with the DayOfWeek, the rental can commence to qualify for the specific rate.
+</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="LatestPickup" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The latest day and time a vehicle can be picked up to qualify for a specific rate.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="DayOfWeek" type="DayOfWeekType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The latest day of the week the rental can begin to qualify for the specific rate.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Time" type="TimeOrDateTimeType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The latest time, in conjunction with the DayOfWeek, the rental can commence to qualify for the specific rate.
+</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="LatestReturn" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The latest day and time a vehicle can be returned to qualify for a specific rate.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="DayOfWeek" type="DayOfWeekType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The latest day of the week the rental can terminate to qualify for the specific rate.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Time" type="TimeOrDateTimeType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The latest time, in conjunction with the DayOfWeek, the rental can terminate to qualify for the specific rate.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="EarliestReturn" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>The earliest day and time a vehicle can be returned to qualify for a specific rate.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="DayOfWeek" type="DayOfWeekType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The earliest day of the week the rental can terminate to qualify for the specific rate.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Time" type="TimeOrDateTimeType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The earliest time, in conjunction with the DayOfWeek, the rental can terminate to qualify for the specific rate.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="DayOfWeek" type="DayOfWeekType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The day of the week, this rule refers. If this attribute is used, each following element qualifies for this day.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MinimumKeep" type="xs:duration" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The minimum time (e.g., number of rental days, number of rental hours)  required to qualify for a specific rate.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MaximumKeep" type="xs:duration" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The maximum time (e.g., number of rental days, number of rental hours)  allowed to qualify for a specific rate.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MaximumRental" type="xs:duration" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The maximum number of rental days a vehicle is allowed to be rented.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="OvernightInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true, the vehicle must be kept overnight.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ReturnAllowedInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true, the vehicle may be returned on this day of the week.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RateGuarantee" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Used to indicate how long a specific rate is guaranteed.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Description" type="FormattedTextTextType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">A description of the rate guarantee.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attributeGroup ref="DeadlineGroup"/>
+					<xs:attributeGroup ref="DateTimeSpanGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The effective and discontinue dates for this guarantee.</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PaymentRules" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of payment rules associated with this reservation. This instance of PaymentRules would be used if there were payment rules that were applicable to a specific vehicle type. </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="PaymentRulesType">
+							<xs:sequence>
+								<xs:element name="AcceptablePayments" minOccurs="0" maxOccurs="2">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">A collection of acceptable methods of payment.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AcceptablePayment" maxOccurs="20">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Specifies an acceptable method of payment.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:attribute name="CreditCardCode" type="PaymentCardCodeType" use="optional">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">The acceptable credit card for this payment rule.</xs:documentation>
+														</xs:annotation>
+													</xs:attribute>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+										<xs:attribute name="PaymentTypeCode" type="OTA_CodeType" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Specifies the type of payemt (i.e., guarantee, deposit). Refer to OTA Code List Payment Type (PMT).
+</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="CancelPenaltyInfo" minOccurs="0" maxOccurs="99">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information regarding the cancellation or modification policy for this vehicle type.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Deadline" minOccurs="0" maxOccurs="2">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Time by which a cancellation must be made before penalty fees are incurred or defines a period of time for which a specific fee is applied if a cancellation were to occur.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attributeGroup ref="DeadlineGroup">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Provides ability to give a deadline for the cancel penalty. It repeats to allow for a range (e.g., from 30 to 20 days before arrival).</xs:documentation>
+									</xs:annotation>
+								</xs:attributeGroup>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="PenaltyFee" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The amounts of the penalty fee if cancellation is received after the deadline.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attributeGroup ref="CurrencyAmountGroup"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Description" type="FormattedTextTextType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Provides additional information about the cancel penalty.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="GuaranteeRequiredInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true, a guarantee is required.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ModifyPenaltyInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true, this indicates the penalty information is for a modification rather than a cancellation.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RateDeposit" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information pertaining to the the deposit.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="DeadlineGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The deadline for making a deposit.</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+					<xs:attribute name="DepositRequiredInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true, a deposit is required as a guarantee. </xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attributeGroup ref="DateTimeSpanGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The effective and discontinue date</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="MinimumKeep" type="xs:duration" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The minimum time (e.g., number of rental days, number of rental hours)  required to qualify for a specific rate.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="MaximumKeep" type="xs:duration" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The maximum time (e.g., number of rental days, number of rental hours)  allowed to qualify for a specific rate.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="MaximumRental" type="xs:duration" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The maximum number of rental days a vehicle is allowed to be rented.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VehicleAdditionalDriverRequirementsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The Vehicle Additional Driver Requirements Type is used to define information about additional drivers that are in place with regard to the renting of a vehicle.  These are requirement that typically must be met by the renter before a rental may commence.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AddlDriverInfos" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Collection of descriptions about the different requirements related to additional drivers.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AddlDriverInfo" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Textual description about a specific restriction related to additional drivers.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="FormattedTextType">
+										<xs:attribute name="Type" type="LocationDetailRequirementAddlDriverInfoType" use="required">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Identifies the type of Additional Driver information. </xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:sequence>
+							<xs:element name="Vehicles" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">A collection of vehicles associated with additional driver information.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Vehicle" maxOccurs="99">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">To identify a vehicle type associated with additional driver information.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:complexContent>
+													<xs:extension base="VehicleCoreType">
+														<xs:attribute name="IncludeExclude" type="IncludeExcludeType" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">To specify if this vehicle type is allowed, required, excluded, or included for an additional driver.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+													</xs:extension>
+												</xs:complexContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:sequence>
+					<xs:attributeGroup ref="DateTimeSpanGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The effective and discontinue dates for the additional driver information.</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+					<xs:attributeGroup ref="CurrencyAmountGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The charge for an additional driver.</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+					<xs:attribute name="ChargeType" type="OTA_CodeType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">To specify if the charge is per rental, day, etc.  Refer to OTA Charge Type code list (CHG).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VehicleAgeRequirementsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The Vehicle Location Requirements Type is used to define information on the age requirements that are in place with regard to the renting of a vehicle.  These are requirement that typically must be met by the renter before a rental may commence.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Age" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information associated with the age requirements of renting a vehicle.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AgeSurcharge" minOccurs="0" maxOccurs="5">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Surcharge information that may be applied based upon age of the renter.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="Age" type="OTA_CodeType">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Used to describe the age category of the driver for which an additional surcharge will apply.  Refer to OTA Code List Age Qualifying Code (AQC).
+								</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attributeGroup ref="CurrencyAmountGroup"/>
+								<xs:attribute name="ChargeType" type="OTA_CodeType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Used to specify weekly, daily, or per rental. Refer to OTA Code List Charge Type (CHG).</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="AgeInfos" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Collection of descriptions about the different requirements related to age of driver</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="AgeInfo" maxOccurs="99">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Textual description about a specific restriction related to age of driver</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="FormattedTextType">
+													<xs:attribute name="Type" type="LocationDetailRequirementAgeInfoType" use="required">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">Identifies the type of Age Requirement.</xs:documentation>
+														</xs:annotation>
+													</xs:attribute>
+												</xs:extension>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Vehicles">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">A collection of vehicle information associated to the age requirements.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Vehicle" maxOccurs="99">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Identifies a specific vehicle type.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="VehicleCoreType">
+													<xs:attribute name="IncludeExclude" type="IncludeExcludeType" use="optional">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">To specify if this car type is allowed, required, included, excluded for the associated age.</xs:documentation>
+														</xs:annotation>
+													</xs:attribute>
+												</xs:extension>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="MinimumAge" type="xs:positiveInteger" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Identifies the minimum age of a person allowed to rent a vehicle from this
+ rental facility.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MaximumAge" type="xs:positiveInteger" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Identifies the maximum age of a person allowed to rent a vehicle from this 
+rental facility.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VehicleArrivalDetailsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleArrivalDetailsType complex type defines the information that describes an arriving mode of transportation which is associated with the rental of a vehicle.  This is typically used to identify how the customer will be arriving at the vehicle rental facility.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ArrivalLocation" type="LocationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Arrival point of the associated transportation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MarketingCompany" type="CompanyNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Identification of the company marketing the transportation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OperatingCompany" type="CompanyNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Identification of the company operating the transportation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="TransportationCode" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+Refer to OTA Code List Transportation Code (TRP).
+		</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Number" type="AlphaNumericStringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Often used in conjunction with TransportationCode to provide greater detail regarding the customer's arrival (e.g., an airline flight number).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ArrivalDateTime" type="xs:dateTime" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="VehicleAvailAdditionalInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleAvailAdditionalInfoType complex type identifies the data that describes supplemental information made available as part of describing the availability and rate of one or more vehicles.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PricedCoverages" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of coverages, along with associated price and details.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PricedCoverage" type="CoveragePricedType" maxOccurs="15">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">One specific vehicle coverage along with the corresponding charge.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PaymentRules" type="PaymentRulesType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of payment rules associated with this reservation. This instance of PaymentRules would be used if there were payment rules that were applicable to a specific vehicle type. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="ChargeablePeriod" type="xs:duration"/>
+	</xs:complexType>
+	<xs:complexType name="VehicleAvailCoreType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleAvailCoreType complex type identifies the data that describes common, or core,  information made available as part of describing the availability and rate of one or more vehicles.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Vehicle" type="VehicleType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on one specific vehicle along with detailed information on the charges associated with this vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RentalRate" type="VehicleRentalRateType" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on the rates associated with this vehicle.  Rate information can include the distance and the base rental cost, along with information on the various factors that may infuence this rate.  This element may repeat to allow different distances to be made available for different charges.  For example, $20.00 with 100 miles per day or $30.00 for unlimited mileage.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TotalCharge" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The anticipated total cost of a reservation, the sum of the individual charges, optional charges and associated fees.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="VehicleTotalChargeGroup"/>
+					<xs:attribute name="RateConvertInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true, the rates have been converted to a different currency.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PricedEquips" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of special equipment that is part of this  quote, along with the charges associated with this equipment.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PricedEquip" type="VehicleEquipmentPricedType" maxOccurs="25">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">A specific piece of special equipment, along with the quantity, restrictions and charge.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Fees" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of fees associated with this vehicle quotation.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Fee" type="VehicleChargePurposeType" maxOccurs="99"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Reference" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information by which this availability quote can be later cross-referenced</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="UniqueID_Type">
+							<xs:attribute name="DateTime" type="xs:dateTime" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The date and time at which this availability quote was made available.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Vendor" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en"> The vendor for this vehicle type and its participation level in a system.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="CompanyNameType">
+							<xs:attribute name="ParticipationLevelCode" type="OTA_CodeType" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The participation level of this vendor in a system.  Refer to OTA Code List Participation Level (PLC).</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="VendorLocation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The vendor location information for a specific vehicle.
+</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="LocationType">
+							<xs:attribute name="ExtendedLocationCode" type="StringLength1to8" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies the extended location code (e.g., ATLC10).</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="CounterLocation" type="OTA_CodeType" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The location of the counter.  Refer to OTA Code List Vehicle Where At Facility (VWF).</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="Name" type="StringLength1to64" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The name of the vendor location.
+</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="CounterLocInfo" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies information pertaining to the counter location.</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:NMTOKEN">
+										<xs:enumeration value="WalkToCar">
+											<xs:annotation>
+												<xs:documentation xml:lang="en"> The customer should walk to the car</xs:documentation>
+											</xs:annotation>
+										</xs:enumeration>
+										<xs:enumeration value="ShuttleToCar">
+											<xs:annotation>
+												<xs:documentation xml:lang="en"> There is a shuttle to the car.</xs:documentation>
+											</xs:annotation>
+										</xs:enumeration>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="DropOffLocation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The drop off location information for a specific vehicle.
+</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="LocationType">
+							<xs:attribute name="ExtendedLocationCode" type="StringLength1to8" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies the extended location code (e.g., ATLC10).</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="CounterLocation" type="OTA_CodeType" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The location of the counter.  Refer to OTA Code List Vehicle Where At Facility (VWF).</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="Name" type="StringLength1to64" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The name of the vendor location.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="Status" type="InventoryStatusType" use="required"/>
+		<xs:attribute name="IsAlternateInd" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, this vehicle is an alternate to what was requested.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VehicleAvailVendorInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleAvailVendorInfoType complex type identifies the data that describes supplemental information relevant to a vendor and made available at the time that availability and rates are checked.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="VendorMessages" type="VendorMessagesType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of free-format messages associated with this vendor.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OffLocServices" type="OffLocationServicePricedType" minOccurs="0" maxOccurs="4">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on off-airport location services, for example, vehicle delivery, customer pickup, along with the associated price.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaymentRules" type="PaymentRulesType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of payment rules associated with this reservation. This instance of PaymentRules would be used if there were payment rules that were applicable, regardless of the vehicle. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LocationDetails" type="VehicleLocationDetailsType" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Detailed information about the associated rental facilities, for example, address, phone number, hours of operation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TourInfo" type="VehicleTourInfoType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Details of a tour with which this availability information is associated.  Availability and rate information may vary if associated with a tour.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VehicleChargePurposeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleChargePurposeType complex type defines information on a specific charge associated with the rental of a vehicle along with the purpose of the charge.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="VehicleChargeType">
+				<xs:attribute name="Purpose" type="OTA_CodeType" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">
+				Refer to OTA Code List Vehicle Charge Purpose Type (VCP).
+				</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="RateConvertInd" type="xs:boolean" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">When true, the rate has been converted to a different currency.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VehicleChargeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Identifies specific charges.  </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TaxAmounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of one or more taxes associated with a specific charge.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="TaxAmount" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Detailed information on one specific tax associated with a specific charge</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attributeGroup ref="VehicleTaxAmountGroup"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="MinMax" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on any minimum or maximum amounts, if appropriate.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="MaxCharge" type="Money" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The maximum amount that will be charged.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MinCharge" type="Money" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The minimum amount that will be charged.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MaxChargeDays" type="xs:integer" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Maximum number of days for which a charge will be applied.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Calculation" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on how this charge was calculated, for example, a daily rate multiplied by the number of days, a percentage, etc.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="UnitCharge" type="Money" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This is used in conjunction with UnitName to specify the charge per unit as defined by UnitName (e.g., if UnitCharge="100" and UnitName="day" the result is 100 dollars per day).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="UnitName" type="VehicleUnitNameType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The UnitName attribute provides the unit on which an item charge may be based when renting a vehicle (e.g., there may be a charge which is based upon the number of days, another charge that is based upon the number of miles, a charge that is based upon the number of gallons).  </xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Quantity" type="Numeric1to99" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This is used in conjunction with UnitName to specify the quantity of units as defined by UnitName (e.g., if Quantity="5" and UnitName="day" the result is 5 days).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Percentage" type="Percentage" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Provides the ability to define a particular percentage.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Applicability" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en"> Indicates a time or a place of reference (e.g. before pick-up, drop-off location).</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:NMTOKEN">
+								<xs:enumeration value="FromPickupLocation">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Distances are referenced from the pick-up location.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="FromDropoffLocation">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Distances are referenced from the drop-off location.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="BeforePickup">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Times are referenced from the pick-up time.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="AfterDropoff">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Times are referenced from the drop-off time.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="MaxQuantity" type="Numeric1to999" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This is used in conjunction with UnitName to specify the maximum quantity of units as defined by UnitName.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="CurrencyAmountGroup"/>
+		<xs:attribute name="TaxInclusive" type="xs:boolean" use="optional"/>
+		<xs:attribute name="Description" type="StringLength1to64" use="optional"/>
+		<xs:attribute name="GuaranteedInd" type="xs:boolean" use="optional"/>
+		<xs:attribute name="IncludedInRate" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">An indication if this amount is included in the base vehicle rate, or is an additonal cost.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="IncludedInEstTotalInd" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, indicates the item's charges are included in the estimated total amount (in TotalCharge) and  when false, the item is not included in the estimated total amount. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VehicleCoreType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleCoreType complex type  identifies the core data that is used to describe a vehicle.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="VehType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Type of vehicle, for example, truck, car</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="VehicleTypeGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="VehClass" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Class of vehicle, for example, intermediate, compact</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="VehicleClassGroup"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="AirConditionInd" type="xs:boolean" use="optional"/>
+		<xs:attribute name="TransmissionType" type="VehicleTransmissionType" use="optional"/>
+		<xs:attribute name="FuelType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The kind of fuel the vehicle uses.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="Unspecified">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The type of fuel is not known.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Diesel">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The type of fuel is diesel.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Hybrid">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The type of fuel is hybrid.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Electric">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The type of fuel is electric.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="LPG_CompressedGas">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The type of fuel is LPG/Compressed gas.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Hydrogen">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The type of fuel is hydrogen.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="MultiFuel">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The type of fuel is multi.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Petrol">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The type of fuel is petrol.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Ethanol">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The type of fuel is ethanol.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="DriveType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Used to define the drive type of a vehicle.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="AWD">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Defines all wheel drive.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="4WD">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Defines four wheel drive.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Unspecified">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The drive type of the vehicle is unknown.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VehicleEquipmentPricedType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleEquipmentPricedType complex type identifies the data that describes a priced piece of special equipment in association with the rental of a vehicle.  The data consists of the equipment and the correspondinng charge.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Equipment" type="VehicleEquipmentType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Details about a equipment, such as text or description.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Charge" type="VehicleChargeType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The charges as they relate to a single piece of equipment, such as minimum or maximum amounts, taxes, or information on how the charge was calculated.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Required" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">An indication if this particular equipment is required in the vehicle reservation, or is optional, based upon renter preference.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VehicleEquipmentType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleEquipmentType complex type identifies the data that fully describes a piece of special equipment, including the description and any restrictions that may apply to its rental.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Description" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="VehicleEquipmentCoreGroup"/>
+		<xs:attribute name="Restriction" type="EquipmentRestrictionType"/>
+	</xs:complexType>
+	<xs:complexType name="VehicleLocationAdditionalDetailsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleLocationAdditionalDetailsType complex type defines the supplemental information that describes a vehicle rental facility. Such information may include the  operation schedules and services offered.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="VehRentLocInfos" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Descriptive information allowing the vendor to present informational messages about the rental location. These may include after-hour return of vehicle messages, messages providing directions to the location, or other similar messages.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="VehRentLocInfo" type="VehicleLocationInformationType" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Descriptive information of one specific aspect of the rental location.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ParkLocation" type="VehicleWhereAtFacilityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Descriptive information about where the vehicles are parked.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CounterLocation" type="VehicleWhereAtFacilityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Descriptive information about where the rental counter is located. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OperationSchedules" type="OperationSchedulesType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of operation schedules, used to define the hours of operation for this rental facility.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Shuttle" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on the shuttle services associated with this location.  Some locations use a shuttle bus to transfer the customers from an airport terminal to the rental facility.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ShuttleInfos" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Collection of descriptions about various aspects of the Shuttle Services.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ShuttleInfo" maxOccurs="99">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Textual description about a specific aspect of the Shuttle Services</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="FormattedTextType">
+													<xs:attribute name="Type" type="LocationDetailShuttleInfoType" use="required">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">Identifies the type of Shuttle service information.</xs:documentation>
+														</xs:annotation>
+													</xs:attribute>
+												</xs:extension>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="OperationSchedules" type="OperationSchedulesType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">A collection of operation schedules, used to define the hours of operation for the shuttle services.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="OneWayDropLocations" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">List of locations where one way drops are allowed based on pick-up location.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="OneWayDropLocation" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Location where a one way drop is allowed.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="LocationType">
+										<xs:attribute name="ExtendedLocationCode" type="StringLength1to8" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Used for extended OAG code in conjunction with the OAG code which is sent in Code.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VehicleLocationAdditionalFeesType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The Vehicle Location Additional Fees Type is used to define information on additional fees, taxes and surcharges that are included in the cost of a rental, when renting from this facility.  Different facilities are required to impose different fees and surcharges based upon location and local laws.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Taxes" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on additional taxes that may apply to the rental.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Tax" minOccurs="0" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This element is used to describe one specific tax that may apply.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Info" type="FormattedTextType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Information on this one specific tax, including a description, etc.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="TaxCode" type="StringLength1to16" use="optional"/>
+								<xs:attribute name="Percentage" type="Percentage" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Info" type="FormattedTextType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">General information about the additional taxes that may apply.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attributeGroup ref="DateTimeSpanGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The effective date range for the tax information.</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Fees" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on additional fees that may apply to the rental.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Fee" minOccurs="0" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This element is used to describe one specific fee that may apply.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="VehicleChargeType">
+										<xs:sequence>
+											<xs:element name="Info" type="FormattedTextType" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Information on this one specific feeincluding a description, etc.</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Info" type="FormattedTextType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">General information about the additional fees that may apply.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Surcharges" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on additional surcharges that may apply to the rental.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Surcharge" minOccurs="0" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This element is used to describe one specific surcharge that may apply.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="VehicleChargeType">
+										<xs:sequence>
+											<xs:element name="Info" type="FormattedTextType" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Information on this one specific surcharge, including a description, etc.</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Info" type="FormattedTextType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">General information about the additional surcharges that may apply.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attributeGroup ref="DateTimeSpanGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The efective date range for the surcharge information.</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="MiscellaneousCharges" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on additional miscellaneous charges that may apply to the rental.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="MiscellaneousCharge" minOccurs="0" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This element is used to describe one specific miscellaneous charge that may apply.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="VehicleChargeType">
+										<xs:sequence>
+											<xs:element name="Info" type="FormattedTextType" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Information on this one specific miscellaneous charge, including a description, etc.</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Info" type="FormattedTextType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">General information about the additional miscellaneous charges that may apply.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VehicleLocationDetailsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleLocationDetailsType complex type defines the core information that describes a vehicle rental facility. Such information may include the code of the facility, the name assigned to that facility, the address and telephone number of the facility.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Address" type="AddressInfoType" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information about the physical address of the location</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Telephone" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information about the telephone numbers for this
+location.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="TelephoneInfoGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="AdditionalInfo" type="VehicleLocationAdditionalDetailsType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Supplemental information about the rental facility.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="AtAirport" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The AtAirport attribute identifies if the associated rental location serves an airport.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Code" type="StringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Code used to identify the car rental location.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Name" type="StringLength1to64" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Name used to refer to the car rental location.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CodeContext" type="StringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Used to define which list the location code comes from (e.g. IATA, OAG, internal company code).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ExtendedLocationCode" type="StringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Used for extended OAG code in conjunction with the OAG code which is sent in Code.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="AssocAirportLocList" type="ListOfStringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Additional airport location codes associated with the primary airport.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VehicleLocationInformationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleLocationInformationType complex type provides formatted textual information relating to the vehicle rental location.  The type of information is indicated.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="FormattedTextType">
+				<xs:attribute name="Type" type="OTA_CodeType" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">
+Identifies the type of Vehicle Location information that is provided.  Refer to OTA Code List Vehicle Location Information Type (VLI).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VehicleLocationLiabilitiesType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The Vehicle Location Liabilities Type is used to define information on the financial liabilities assumed by the renter when renting from this facility, along with optional coverage to reduce the financial liabilities. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Coverages" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of coverage, insurance and waiver liability descriptions.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Coverage" minOccurs="0" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This element is used to identify one specific coverage, insuranc or waiver, and to identify any fees that may be associated with it.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="CoverageInfo" type="FormattedTextType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">General information about this specific coverage, insurance or fees.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="CoverageFees" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">A collection of fees associated with this coverage, insurance or waiver.  There may be multiple charges if the charge varies by vehicle type. </xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="CoverageFee" maxOccurs="99">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Provides information on one  specific charge for this coverage, insurance or waiver.</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="Charge" type="VehicleChargeType">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">Provides full information on the specific charge.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="Vehicles" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">A collection of vehicles for which this charge applies. This is to be used when the charge is not the same charge for all vehicle types.</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="Vehicle" maxOccurs="99">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">This element may be used to clarify the vehicle associated with this charge, if the charge varies by vehicle type.</xs:documentation>
+																			</xs:annotation>
+																			<xs:complexType>
+																				<xs:complexContent>
+																					<xs:extension base="VehicleType">
+																						<xs:attribute name="IncludeExclude" type="IncludeExcludeType" use="optional">
+																							<xs:annotation>
+																								<xs:documentation xml:lang="en">To indicate if the coverage is required, allowed, included, or excluded for this vehicle type.</xs:documentation>
+																							</xs:annotation>
+																						</xs:attribute>
+																					</xs:extension>
+																				</xs:complexContent>
+																			</xs:complexType>
+																		</xs:element>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+															<xs:element name="Deductible" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">The deductible/excess amount and liability amount for this coverage of a vehicle(s).</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:attributeGroup ref="CurrencyAmountGroup">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">The deductible/excess amount for this coverage.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attributeGroup>
+																	<xs:attribute name="LiabilityAmount" type="Money" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">The total liability amount for this coverage.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="Type" type="OTA_CodeType" use="required">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Used to describe the specific coverage type or waiver type.  Refer to OTA Code List Vehicle Coverage Type (VCT).								</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="RequiredInd" type="xs:boolean" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">If true, this type of coverage must be purchased.  If false, it is optional.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Info" type="FormattedTextType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">General information about the fiancial liabilities associated with the rental of a vehicle from the associated  rental facility.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VehicleLocationVehiclesType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The Vehicle Location Vehicles Type is used to define information on the vehicles that are offered for rental at this facility.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="VehicleInfos" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Collection of descriptions about various aspects of the vehicles.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="VehicleInfo" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Textual description about one specific aspect of the vehicles, for example,  advanced booking needs, etc</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="FormattedTextType">
+										<xs:attribute name="Type" type="LocationDetailVehicleInfoType" use="required">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Identifies the type of Vehicle information that is provided..  </xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Vehicle" minOccurs="0" maxOccurs="99">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specific information about a vehicle that is offered for rental at this facility.  This element may repeat to identify all vehicles that may be rented from this facility.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="VehicleType">
+							<xs:sequence>
+								<xs:element name="Text" type="FormattedTextType" minOccurs="0" maxOccurs="5">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Free text information for this vehicle type.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+							<xs:attribute name="IsConfirmableInd" type="xs:boolean" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">If true, this car type may be confirmed.  If false, it may not be confirmed.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="DistanceUnit" type="DistanceUnitNameType" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">To specify whether mileage information is miles or kilometers.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="DistancePerFuelUnit" type="Numeric0to99" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">To specify the number of miles/kilometers per gallon/litre of gas.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VehiclePrefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehiclePrefType complex type defines the information that is used when defining a preference of a vehicle.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="VehicleCoreType">
+				<xs:attribute name="TypePref" type="PreferLevelType" use="optional"/>
+				<xs:attribute name="ClassPref" type="PreferLevelType" use="optional"/>
+				<xs:attribute name="AirConditionPref" type="PreferLevelType" use="optional"/>
+				<xs:attribute name="TransmissionPref" type="PreferLevelType" use="optional"/>
+				<xs:attribute name="VendorCarType" type="AlphaNumericStringLength1to8" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">An internal car type assigned by the vendor. This is not the SIPP code.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="VehicleQty" type="xs:nonNegativeInteger" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The total number of cars a customer is eventually interested in reserving. This is not used by suppliers and is in no way intended to imply that multiple cars may be booked in a single reservation. </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attributeGroup ref="CodeGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Code used to identify the vehicle. May be used in place of VehicleCoreType. Typically a SIPP code would be passed here. CodeContext Identifies the source authority for the code (e.g., SIPP).</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VehicleProfileRentalPrefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Vehicle rental preferences can be specified for customers or companies to indicate their preferences for types of vehicles to be rented in specific travel situations. Companies may wish to specify certain class or types of cars that their employees are allowed to rent, or indicate special business needs for trucks for hauling goods, etc. Personal travelers may wish to indicate preferences for types of vehicles such as vans or SUVs for family vacations, or smaller, more sporty models when travelling alone. A customer may prefer to have a convertible or sun roof in a warm destination, but request a ski rack when vacationing in the wintertime.   The VehicleProfileRentalPrefType complex type has elements for specific features on rental cars including vehicle type (major category such as car, truck, SUV) and vehicle class (more precise kind of vehicle), air conditioning, transmission, and special equipment. In addition, the specification captures preferences for vendors and loyalty programs, insurance coverage, forms of payment for rental cars, and other special requirements. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="LoyaltyPref" minOccurs="0" maxOccurs="20">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates a preference for the loyalty program to be used for vehicle rental. The RPH (Reference Place Holder) attribute designates a specific loyalty program from a collection stored in the profile. </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="RPH_PrefGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="VendorPref" type="CompanyNamePrefType" minOccurs="0" maxOccurs="20">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Vendor Preferences indicates a preference for a specific car rental agency when used in a travel collection. The VendorPref element uses the Company Name entity to identify the preferred company by name and by vendor code. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaymentFormPref" minOccurs="0" maxOccurs="10">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A preference for a payment indicates a specific type of payment, such as a credit card or direct bill, to be assigned to the car rental preference collection. The RPH (Reference Place Holder) attribute designates a specific payment form in a collection stored in the profile. </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="RPH_PrefGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="CoveragePref" minOccurs="0" maxOccurs="30">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A preference for a specific type of vehicle coverage to be used when renting a car in a given travel situation.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="VehicleCoveragePrefGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SpecialReqPref" type="VehicleSpecialReqPrefType" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The special request preference element allows the customer to designate a special request to be associated with the vehicle rental. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VehTypePref" type="VehiclePrefType" minOccurs="0" maxOccurs="10">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The vehicle type preference element allows the customer to designate a major category of vehicle preferred for rental. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SpecialEquipPref" minOccurs="0" maxOccurs="15">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates a preference for special equipment in a rented car.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="VehicleEquipmentPrefGroup"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="PreferLevelGroup"/>
+		<xs:attributeGroup ref="PrivacyGroup"/>
+		<xs:attributeGroup ref="SmokingIndicatorGroup"/>
+		<xs:attribute name="GasPrePay" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The GasPrePay attribute defines a set of valid values for the choice of prepaying for gas at the time of the pick up of the rental vehicle.  This information is useful  in that it allows a customer's preference to be made known to the vendor. It also allows the vendor to provide more detailed and accurate pricing up front.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VehicleRentalCoreType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleRentalCoreType complex type identifies the data that is common, or core, to almost every transaction associated with the rental of a vehicle.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PickUpLocation" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A code to identify the pick up location, along with an optional code context.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="LocationType">
+							<xs:attribute name="ExtendedLocationCode" type="StringLength1to8" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies a unique location code (e.g., ATLC10).</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="CounterLocation" type="OTA_CodeType" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Identifies the location of a car rental site for an airport/city code.  Refer to OTA Code List Vehicle Where At Facility (VWF).</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ReturnLocation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A code to identify the return location, along with an optional code context.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="LocationType">
+							<xs:attribute name="ExtendedLocationCode" type="StringLength1to8" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies the unique location code (e.g. ATL10).</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="CounterLocation" type="OTA_CodeType" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Identifies the location of a car rental site for an airport/city code.  Refer to OTA Code List Vehicle Where At Facility (VWF).</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="PickUpDateTime" type="xs:dateTime" use="optional"/>
+		<xs:attribute name="ReturnDateTime" type="xs:dateTime" use="optional"/>
+		<xs:attribute name="StartChargesDateTime" type="xs:dateTime" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Used when a charge has a delayed start (e.g. if a vehicle is checked-out Sunday night, but actual charges start Monday or planned system down-time allowed a check-out before customer plans to retrieve vehicle or when an additional service is added after a rental has been started and/or will terminate before the rental is completed).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="StopChargesDateTime" type="xs:dateTime" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Used when a charge  has a delayed stop (e.g. actual charges stop Sunday but the vehicle is checked-in Monday morning or if the system was down when customer returned vehicle or when an additional service is added after a rental has been started and/or will terminate before the rental is completed).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OneWayIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, indicates a one-way rental. This may also be discerned using the PickUpLocation and the ReturnLocation.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="MultiIslandRentalDays" type="Numeric1to99" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Indicates the total number of rental days on all islands (e.g., if traveling for 7 days, but using a vehicle on one island for 3 days and on another for 2 days, the multi island rental days is 5).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Quantity" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Provides the distance between the pick up and return locations.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DistUnitName" type="DistanceUnitNameType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Provides the unit of measure to which the quantity refers.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VehicleRentalDetailsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This provides specific information regarding the milage and condition of the vehicle being rented.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FuelLevelDetails" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This provides values based on the amount of fuel present.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="UnitsOfMeasureGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This provides a specifc amount of fuel (e.g. 10 gallons).</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+					<xs:attribute name="FuelLevelValue" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This provides the amount of fuel currently in the vehicle. See enumerations for detailed annotations.</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:NMTOKEN">
+								<xs:enumeration value="8">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">8/8 tank, 100 percent, or full tank.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="7">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">7/8 tank or 87.5 percent.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="6">
+									<xs:annotation>
+										<xs:documentation xml:lang="en"> 6/8  or 3/4 tank or 75 percent.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="5">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">5/8 tank or 67.5 percent.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="4">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">4/8 or 1/2 tank or 50 percent.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="3">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">3/8 tank or 37.5 percent.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="2">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">2/8 or 1/4 tank or 25 percent.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="1">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">1/8 tank or 12.5 percent.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">0/8 tank, 0 percent, or empty.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="OdometerReading" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This provides values for the odometer reading.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:annotation>
+						<xs:documentation xml:lang="en">To provide details of odometer measurements.</xs:documentation>
+					</xs:annotation>
+					<xs:attributeGroup ref="UnitsOfMeasureGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Used for interpreting the Odometer value displayed in the Odometer Reading on the dashboard of the vehicle (10 miles, 100 kilometers).</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ConditionReport" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Used to describe condition of a vehicle (e.g., scratches, broken tail light). It is not intended for insurance purposes.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="FormattedTextTextType">
+							<xs:attribute name="Condition" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Provides an overview of the condition of the vehicle.</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:NMTOKEN">
+										<xs:enumeration value="Damage">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Damage refers to ANY damage, such as a scratched door, even if it was there on Check-out.</xs:documentation>
+											</xs:annotation>
+										</xs:enumeration>
+										<xs:enumeration value="OK">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">OK means that the rental agent looked at the car and it is OK. </xs:documentation>
+											</xs:annotation>
+										</xs:enumeration>
+										<xs:enumeration value="Unknown">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Unknown would be used in the case where no examination of the vehicle was done.</xs:documentation>
+											</xs:annotation>
+										</xs:enumeration>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ParkingLocation" type="StringLength1to8" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">This identifies the physical location of the vehicle being rented (e.g., the parking space or stall number).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VehicleRentalRateType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This describes time, mileage and other charges.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RateDistance" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on the distance that a reserved vehicle may be driven as part of the standard rental charge.  Such distance may be unlimited, or a quantity of miles or kilometers for a certain period of time. This may be repeated for situations such as an 8 day rental that has 500 miles per week and 100 miles per additional day.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="VehicleRateDistanceGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="VehicleCharges" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on the charges associated with this vehicle.  Such charges may include the base rental amount, additional mileage amounts, fuel costs, etc.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="VehicleCharge" type="VehicleChargePurposeType" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Detailed information on one specific charge including an indication of the type of charge.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RateQualifier" type="RateQualifierType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates the type of rates applicable to the customer, along with any discount number or promotional codes that affect the quoted rate.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RateRestrictions" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on restrictions that may be associated with this rate. Additional details on rate restrictions may be found in OTA_VehRateRulesRS.xsd.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="ArriveByFlight" type="xs:boolean" use="optional" default="false">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Indicates if this rate is only available to those customers who are flying to the vehicle rental location.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MinimumDayInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true, there is a minimum day requirement.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MaximumDayInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true, there is a maximum day requirement restriction.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="AdvancedBookingInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true, this rate requires advanced booking.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="RestrictedMileageInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true, the mileage is restricted.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="CorporateRateInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true, this is a negotiated corporate rate.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="GuaranteeReqInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true, a guarantee is required.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MaximumVehiclesAllowed" type="Numeric1to999" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The maximum number of vehicles that can be rented at this rate. </xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="OvernightInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true, an overnight rental is required.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="OneWayPolicy" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies the one way rental policy for the pick-up location.</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:NMTOKEN">
+								<xs:enumeration value="OneWayAllowed">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">One way rental allowed.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="OneWayNotAllowed">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">One way rental not allowed.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="RestrictedOneWay">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">One way rentals allowed with restricted drop-off locations.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="CancellationPenaltyInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true indicates a fee applies if a cancellation is requested.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ModificationPenaltyInd" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true indicates a fee applies if a modification is requested.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RateGuarantee" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Used to indicate how long a specific rate is guaranteed.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Description" type="FormattedTextTextType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">A description of the rate guarantee.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attributeGroup ref="DeadlineGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PickupReturnRule" minOccurs="0" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Pickup and return requirements for a specific rate.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="DayOfWeek" type="DayOfWeekType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The earliest day of the week the rental can begin to qualify for the specific rate.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Time" type="TimeOrDateTimeType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The earliest time, in conjunction with the DayOfWeek, the rental can commence to qualify for the specific rate.
+</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="RuleType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies the applicability of this rule.</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:NMTOKEN">
+								<xs:enumeration value="EarliestPickup">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The earliest day and time a vehicle can be picked up to qualify for a specific rate.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="LatestPickup">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The latest day and time a vehicle can be picked up to qualify for a specific rate.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+								<xs:enumeration value="LatestReturn">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The latest day and time a vehicle can be returned to qualify for a specific rate.</xs:documentation>
+									</xs:annotation>
+								</xs:enumeration>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VehicleRentalTransactionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This contains the information typically used in a rental transaction, such as charges, contract number or pickup date/time.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PickUpReturnDetails" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Actual rental checkout and expected return locations, dates and times.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="VehicleRentalCoreType">
+							<xs:attribute name="ExpectedActualCode" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Used to identify the context of the element and whether the content applies to expected data verses actual data. Actual data will not be known until the time of CheckIn.</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:NMTOKEN">
+										<xs:enumeration value="Expected"/>
+										<xs:enumeration value="Actual"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Vehicle">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Vehicle info including size, class, make/model, vehicle asset number, etc.  This is the actual vehicle being rented.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="VehicleType">
+							<xs:sequence>
+								<xs:element name="VehRentalDetails" type="VehicleRentalDetailsType" minOccurs="0" maxOccurs="2"/>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RentalRate" type="VehicleRentalRateType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This describes time, mileage and other charges for a specific rental agreement.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PricedEquips" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of special equipment that is part of this reservation, along with the charges associated with this equipment.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PricedEquip" maxOccurs="25">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Used to indicate special equipment is returned.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Equipment" maxOccurs="2">
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="VehicleEquipmentType">
+													<xs:attribute name="CheckOutCheckInCode" use="optional">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">Used to identify the context of the element and whether the content applies to data at the time of CheckOut or CheckIn.</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:NMTOKEN">
+																<xs:enumeration value="CheckOut"/>
+																<xs:enumeration value="CheckIn"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:attribute>
+												</xs:extension>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Charge" type="VehicleChargeType" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Fees" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of fees associated with this rental.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Fee" type="VehicleChargePurposeType" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">A fee associated with this rental (e.g., airport concession fee, vehicle license fee, facility usage fee). This is not intended for information regarding rates, priced equipment or coverages.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="TotalCharge" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The anticipated total cost of a rental, the sum of the individual charges, optional charges, and associated fees.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="VehicleTotalChargeGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ConfID" type="UniqueID_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A confirmation number.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ContractID" type="UniqueID_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A contract number.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VehicleReservationRQAdditionalInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleReservationRQAdditionalInfoType complex type identifies the supplemental information that may be included when requesting the reservation of avehicle.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SpecialReqPref" type="VehicleSpecialReqPrefType" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates the preference associated with special needs or requirements of the customer, described using free text</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CoveragePrefs" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates the preferences for one or more types of coverage (insurance).</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="CoveragePref" maxOccurs="30">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Specific preference for a type of coverage.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attributeGroup ref="VehicleCoveragePrefGroup"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="OffLocService" type="OffLocationServiceType" minOccurs="0" maxOccurs="4">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on requested off-airport location services, for example, vehicle delivery, customer pickup.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ArrivalDetails" type="VehicleArrivalDetailsType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Details of the arrival transportation, if applicable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RentalPaymentPref" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates preferences for the form of payment that will be used, if the request results in a reservation. This element may repeat for different rental payment preferences. </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="PaymentDetailType">
+							<xs:attribute name="Type" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Used to specify whether the payment information is for guaranteeing the rental or is the actual form of payment.</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:NMTOKEN">
+										<xs:enumeration value="guarantee">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Specifies the payment information is for guaranteeing the reservation.</xs:documentation>
+											</xs:annotation>
+										</xs:enumeration>
+										<xs:enumeration value="payment">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Specifies the payment information is for payment of the reservation.</xs:documentation>
+											</xs:annotation>
+										</xs:enumeration>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Reference" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information identifying an earlier availability quote.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="UniqueID_Type">
+							<xs:attribute name="DateTime" type="xs:dateTime">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The date and time at which this availability quote was made available.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="Amount" type="Money" use="optional"/>
+							<xs:attributeGroup ref="CurrencyCodeGroup"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="TourInfo" type="VehicleTourInfoType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Details of a tour with which this reservation information is associated.  Availability and rate information may vary if associated with a tour.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WrittenConfInst" type="WrittenConfInstType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Used to provide instructions regarding cusotmer preferences for receiving confirmation information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="LuggageQty" type="xs:positiveInteger" use="optional"/>
+		<xs:attribute name="PassengerQty" type="xs:positiveInteger" use="optional"/>
+		<xs:attributeGroup ref="SmokingIndicatorGroup"/>
+		<xs:attribute name="GasPrePay" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The GasPrePay attribute defines a set of valid values for the choice of prepaying for gas at the time of the pick up of the rental vehicle.  This information is useful  in that it allows a customer's preference to be made known to the vendor. It also allows the vendor to provide more detailed and accurate pricing up front.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VehicleReservationRQCoreType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleReservationRQCoreType complex type identifies the core, or common, information that is typically included when requesting the reservation of avehicle.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UniqueID" type="UniqueID_Type" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A unique identifier by which to reference the reservation. This is typically referred to as a reservation number.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VehRentalCore" type="VehicleRentalCoreType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information that is common,  or core, to all requests and responses associated with the reservation of a vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Customer" type="CustomerPrimaryAdditionalType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on the one primary driver and, optionally, several additional drivers. This may be used to provide a frequent renter number.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VendorPref" type="CompanyNamePrefType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates the preferred Vendor Company for car rental. If a company name is supplied, the rates will be supplied for the specific Vendor Company. The company name is unique amongst the vendors.  The name of the company is provided in this element.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VehPref" type="VehiclePrefType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates any preferences for  the vehicle, such as type, class, transmission, air conditioning.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DriverType" minOccurs="0" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates the number of people of each age category associated with this request.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="TravelerCountGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RateQualifier" type="RateQualifierType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates the type of rates to be booked, along with any discount number or promotional codes that may affect the rate.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Fees" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of fees associated with this vehicle reservation.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Fee" type="VehicleChargePurposeType" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">One specific fee associated with this vehicle reservation.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="VehicleCharges" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on the charges associated with this vehicle.  Such charges may include the base rental amount, additional mileage amounts, fuel costs, etc.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="VehicleCharge" type="VehicleChargePurposeType" maxOccurs="99"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SpecialEquipPrefs" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates the preferences for one or more specific items of additional equipment, such as ski racks, child seats, etc.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="SpecialEquipPref" maxOccurs="15">
+							<xs:complexType>
+								<xs:attributeGroup ref="VehicleEquipmentPrefGroup"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Charge" type="VehicleChargeType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Used when the customer was previously quoted a rate for the equipment in an availability search response. </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RateDistance" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on the distance that a reserved vehicle may be driven as part of the standard rental charge.  Such distance may be unlimited, or a quantity of miles or kilometers for a certain period of time. This may be repeated for situations such as an 8 day rental that has 500 miles per week and 100 miles per additional day.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="VehicleRateDistanceGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="TotalCharge" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Total cost for this reservation as returned from an availability search.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="VehicleTotalChargeGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Queue" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information to specify the queue on which the reservation should be placed.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="QueueGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Information to identify a queue.</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="Status" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Used to specify the status of the reservation with either one of the enumerations in InventoryStatusType or an UpperCaseAlphaLength1to2 code such as an IATA status code. </xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:union memberTypes="InventoryStatusType UpperCaseAlphaLength1to2"/>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VehicleReservationSummaryType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleReservationSummaryType complextype identifies the summary data that identifies a reservation.  Use of one or more of the elements will help in identifying a specific reservation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ConfID" type="UniqueID_Type">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A confirmation number by which this reservation can be uniquely identified</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PickUpLocation" type="LocationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A code to identify the pick up location, along with an optional code context.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReturnLocation" type="LocationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A code to identify the return location, along with an optional code context.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PersonName" type="PersonNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Name of the person associated with the reservation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Vehicle" type="VehicleType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information about a vehicle that has been reserved, such as the class and type.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="PickUpDateTime" type="xs:dateTime" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The PickUpDateTime attribute provides information on the pickup date and time.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ReturnDateTime" type="xs:dateTime" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The ReturnDateTime attribute provides information on the return date and time.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VehicleReservationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleReservationType complex type identifies the data that describes a vehicle reservation.  This data includes information on the customer(s) associated with the rental and details on the vehicle that is being rented.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Customer" type="CustomerPrimaryAdditionalType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on the one primary driver and, optionally, several additional drivers. This may be used to provide a frequent renter number.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VehSegmentCore">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Common, or core, information associated with a  reservation period and a reserved vehicle.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="VehicleSegmentCoreType">
+							<xs:attribute name="OptionChangeAllowedIndicator" type="xs:boolean" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">When true, indicates that the options that may have changed since the availability response do not affect the rate.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="VehSegmentInfo" type="VehicleSegmentAdditionalInfoType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Supplemental information associated with a  reservation period and a reserved vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="DateTimeStampGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Used to specify the date a reservation was created and last modified.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+	</xs:complexType>
+	<xs:complexType name="VehicleSegmentAdditionalInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleSegmentAdditionalInfoType complex type identifies the data that descibes the supplemental information assocated with a vehicle segment.  Such information may be associated with the reservation of a vehicle, but is not normally included.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PaymentRules" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of payment rules associated with this reservation.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PaymentRule" type="MonetaryRuleType" maxOccurs="9">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">One specific payment rule associated with this reservation.  For example, a date by which a deposit must be received.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RentalPaymentAmount" type="PaymentDetailType" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Used for payment information, may be prepayment, actual, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PricedCoverages" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of vehicle coverages associated with this reservation.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PricedCoverage" type="CoveragePricedType" maxOccurs="15">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">One specific coverage associated with this reservation.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PricedOffLocService" type="OffLocationServicePricedType" minOccurs="0" maxOccurs="4">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on an off-location service associated with this reservation, along with the associated charge.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VendorMessages" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of free-format messages associated with this reservation.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="VendorMessage" type="FormattedTextType" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">A specific vendor message associated with this reservation.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="LocationDetails" type="VehicleLocationDetailsType" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Detailed information about the associated rental facilities, for example, address, phone number, hours of operation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TourInfo" type="VehicleTourInfoType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Details of a tour associated with which this reservation information is associated. Rate information may vary if associated with a tour.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="WrittenConfInd" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, a written confirmation may be requested.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VehicleSegmentCoreType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleSegmentCoreType complex type identifies the core, or common, data that descibes the information assocated with a vehicle segment.  Such information is typically provided in a reservation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ConfID" type="UniqueID_Type" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A confirmation number by which this reservation can be uniquely identified</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Vendor" type="CompanyNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Identifies the vendor associated with this information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VehRentalCore" type="VehicleRentalCoreType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information that is common,  or core, to all requests and responses associated with the reservation of a vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Vehicle" type="VehicleType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on one specific vehicle along with detailed information on the charges associated with this vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RentalRate" type="VehicleRentalRateType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on the rates associated with this vehicle.  Rate information can include the distance and the base rental cost, along with information on the various factors that may infuence this rate.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PricedEquips" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of special equipment that is part of this reservation, along with the charges associated with this equipment.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PricedEquip" type="VehicleEquipmentPricedType" maxOccurs="25">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">A specific piece of special equipment, along with the quantity, restrictions and charge.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Fees" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of fees associated with this vehicle reservation.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Fee" type="VehicleChargePurposeType" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">One specific fee associated with the vehicle reservation.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="TotalCharge" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The total cost of this reservation, the sum of the individual charges, optional charges and associated fees.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="VehicleTotalChargeGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="TPA_Extensions" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="IndexNumber" type="Numeric1to999" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">A unique number (e.g., segment number or index number) used to further identify a booked item within a list of booked items in a multi-segment PNR. Typically not used in messages to car suppliers.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VehicleSpecialReqPrefType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleSpecialReqPrefType complex type defines a preference for a particular special request.  The preference is expressed using the attribute group PreferLevelType.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StringLength1to255">
+				<xs:attributeGroup ref="PreferLevelGroup"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="VehicleTourInfoType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleTourInfoType provides information about a tour that includes a vehicle rental. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TourOperator" type="CompanyNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This identifies the tour operator.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="TourNumber" type="StringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">This is the identifying code assigned by the tour operating company to the tour that includes the vehicle rental.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VehicleType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleType complex type identifie sthe data that fully describes a vehicle. This includes the core information along with supplemental information such as make and model, and a link to a picture.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="VehicleCoreType">
+				<xs:sequence>
+					<xs:element name="VehMakeModel" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The make and model of the vehicle (e.g.,  Ford Focus). The Code attribute may be used for the SIPP code.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:attributeGroup ref="VehicleMakeModelGroup"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="PictureURL" type="xs:anyURI" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">URL that identifies the location of a picture to describe this vehicle.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="VehIdentity" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The specific identifiers of the vehicle (e.g., Motor Vehicle Asset Number).</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:attributeGroup ref="VehicleIdentityGroup"/>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="PassengerQuantity" type="StringLength1to8" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Number of passengers that can be accommodated by this vehicle.  This may be an exact number or may be a range, i.e., 4-5, 5-6.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="BaggageQuantity" type="xs:integer" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Number of bags/suitcases that can be accommodated by this vehicle.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="VendorCarType" type="AlphaNumericStringLength1to8" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">An internal car type assigned by the vendor. This is not the SIPP code.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attributeGroup ref="CodeGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Code used to identify the vehicle. May be used in place of VehicleCoreType. Typically a SIPP code would be passed here. Identifies the source authority for the code (e.g., SIPP).</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+				<xs:attributeGroup ref="UnitsOfMeasureGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The volume (i.e., unit of measure and quantity) of the boot/trunk.</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+				<xs:attributeGroup ref="DateTimeSpanGroup">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The effective date range for the vehicle information.</xs:documentation>
+					</xs:annotation>
+				</xs:attributeGroup>
+				<xs:attribute name="OdometerUnitOfMeasure" type="DistanceUnitNameType" use="optional">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Provides the units in which distance is measured, when applied to a vehicle (i.e., miles or kilometers)</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VehicleVendorAvailabilityType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleVendorAvailabilityType complex type identifies the data that describes the availability of one or more vehicles for a specific vendor, along with supplemental information about the vendor and the facilities of that vendor.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Vendor" type="CompanyNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Information on the vendor associated with this availability of vehicles</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VehAvails">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of vehicles along with their availability and associated rate information.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="VehAvail" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Availability and rate information for one specific vehicle.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="VehAvailCore" type="VehicleAvailCoreType"/>
+									<xs:element name="VehAvailInfo" type="VehicleAvailAdditionalInfoType" minOccurs="0"/>
+									<xs:element name="AdvanceBooking" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Specifies the advance booking requirements.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attributeGroup ref="DeadlineGroup"/>
+											<xs:attribute name="RulesApplyInd" type="xs:boolean" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">When true, rules apply to the advance booking requirement.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="RateCategory" type="OTA_CodeType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The rate category for all the vehicles available. Refer to OTA Code List Rate Category (RTC).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="RatePeriod" type="RatePeriodSimpleType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en"> The rate period for all the vehicles available.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Info" type="VehicleAvailVendorInfoType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Supplemental information associated with the vendor and the availability of the vehicles.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VehicleWhereAtFacilityType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The VehicleWhereAtFacilityType complex type defines the information needed to describe the location of the associated item at a rental facility.  Example of the items that may make use of this type include Rental Counter, Vehicle Parking Locations, etc.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StringLength0to255">
+				<xs:attribute name="Location" type="OTA_CodeType" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The Location attribute identifies the location of an item at an airport.  Refer to OTA Code List Vehicle Where At Facility (VWF) (e.g., shuttle on airport).</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>

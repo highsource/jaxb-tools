@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="3.005" id="OTA2008A">
+	<xs:include schemaLocation="OTA_AirCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_AirSeatMapRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The SeatMap Response message contains the seat map details for the request options given for the requested flight segments. This may include multiple seatmaps in case of different seat maps returned for different passengers in the same flight segment.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType"/>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0"/>
+					<xs:element name="SeatMapResponses" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Seat map response element containing the results of the request</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="SeatMapResponse" maxOccurs="99">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">One SeatMapResponse element is returned for each of the flight segment requested in the input request.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="FlightSegmentInfo">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The flight segment for which the seat map is sent.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:complexContent>
+														<xs:extension base="FlightSegmentType">
+															<xs:sequence>
+																<xs:element name="Warnings" type="WarningsType" minOccurs="0"/>
+															</xs:sequence>
+														</xs:extension>
+													</xs:complexContent>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="SeatMapDetails" type="SeatMapDetailsType" maxOccurs="99">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">This identifies the seat map details for the flight segment in the corresponding 'FlightSegmentInfo' element. If the responding system has different seat maps for different passengers for the same flight segment then this element will reccur accordingly. The availability of seats can differ based upon various conditions, such as a passenger's status within a loyalty program or by the amount paid or class of service booked for the ticket. For example, if one passenger has a certain status in the Frequent Flyer program of the airline, certain desirable seats may be available for selection.  A passenger without such status may not be able to select those seats.  Thus the availability of seats can differ by passenger. </xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="BookingReferenceID" type="UniqueID_Type" minOccurs="0" maxOccurs="5">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">This is used for PNR record locator. If there are more than one PNR numbers because of muliple airlines in the itinerary then this element could be repeated.</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+										<xs:attribute name="SeatUpgradeApplied" type="xs:boolean" default="false">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">This indicates if the respone  has the Seat Map upgrade applied</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="AirTravelers" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Collection of AirTravelers.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AirTraveler" maxOccurs="99">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">This specifies the quantity and types of passengers.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="PersonName" type="PersonNameType" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Individuals complete name information</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+														<xs:element name="CustLoyalty" minOccurs="0" maxOccurs="5">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Frequent Flier information of the passenger</xs:documentation>
+															</xs:annotation>
+															<xs:complexType>
+																<xs:attributeGroup ref="CustomerLoyaltyGroup"/>
+															</xs:complexType>
+														</xs:element>
+														<xs:element name="PassengerTypeQuantity" type="PassengerTypeQuantityType" minOccurs="0"/>
+														<xs:element name="TravelerRefNumber" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Direct reference of traveler assigned by requesting system.  Used as a cross reference between data segments.This value will be mapped to the RPH value in TravelRefNumber of the SeatMapRequest element	</xs:documentation>
+															</xs:annotation>
+															<xs:complexType>
+																<xs:attributeGroup ref="TravelerRefNumberGroup"/>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+													<xs:attributeGroup ref="GenderGroup"/>
+													<xs:attributeGroup ref="PrivacyGroup"/>
+													<xs:attribute name="BirthDate" type="xs:date"/>
+													<xs:attribute name="CurrencyCode" type="AlphaLength3"/>
+													<xs:attribute name="PassengerTypeCode" type="AlphaLength3" use="required"/>
+													<xs:attribute name="AccompaniedByInfant" type="xs:boolean" use="optional">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">Indicates if an infant accompanying a traveler is with or without a seat.</xs:documentation>
+														</xs:annotation>
+													</xs:attribute>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType"/>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="2.007" id="OTA2008A">
+	<xs:include schemaLocation="OTA_HotelCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_HotelStatsRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This message is returned by the sytem that received an OTA_HotelStatsRQ message. If sucessful, it includes one or more of the pre-defined reports requested.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType"/>
+					<xs:element name="Warnings" type="WarningType" minOccurs="0"/>
+					<xs:element name="POS" type="POS_Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Used to specify information on the organization providing the statistical data.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Statistics" type="StatisticsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Collection of Statistic elements, one for each report being returned.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MessageID" type="UniqueID_Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Uniquely identifies this message.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType"/>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

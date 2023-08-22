@@ -1,0 +1,829 @@
+<?xml version="1.0"?>
+<!--
+IPTC - International Press Telecommunications Council
+Royal Albert House, Windsor, Berkshire SL4 1BE, England
+www.iptc.org
+
+See sportsml.xsd to view Non-Exclusive License Agreement for 
+International Press Telecommunications Council, which
+applies to this specification.
+-->
+<schema
+	targetNamespace="http://iptc.org/std/SportsML/2006-10-18/"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:sportsml="http://iptc.org/std/SportsML/2006-10-18/"
+	version="1.8"
+	>
+	<attributeGroup name="eventStateBasketball">
+		<attribute name="period-value" type="string" use="optional">
+			<annotation>
+				<documentation>An integer. 1,2,3,4 for the main quarters. 5,6,7,etc. for overtime periods.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="period-time-elapsed" type="string" use="optional">
+			<annotation>
+				<documentation>The time elapsed in the quarter or overtime period.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="period-time-remaining" type="string" use="optional">
+			<annotation>
+				<documentation>The time remaining in the quarter or overtime period.</documentation>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+	<element name="event-metadata-basketball">
+		<annotation>
+			<documentation>Metadata about the event itself. | Includes what state the game is in.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateBasketball"/>
+		</complexType>
+	</element>
+	<element name="team-metadata-basketball">
+		<annotation>
+			<documentation>Metadata about the team. | Specific to the sport of basketball.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="team-stats-basketball">
+		<annotation>
+			<documentation>Specific statistics for basketball. | Includes offensive, rebounding, and defensive stats.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-basketball-offensive" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-basketball-rebounding" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-basketball-defensive" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="timeouts-left" type="string" use="optional">
+				<annotation>
+					<documentation>Number of timeouts a team has left during the current event.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="largest-lead" type="string" use="optional">
+				<annotation>
+					<documentation>Largest number of points this team has led the opposition. Could be a negative number.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fouls-total" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="average-minutes-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="turnover-margin" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-basketball-offensive">
+		<annotation>
+			<documentation>Statistics for a team or player while they had possession of the ball. | Includes scoring and assisting stats.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="field-goals-made" type="string" use="optional">
+				<annotation>
+					<documentation>Shots made that were worth two points each.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="field-goals-attempted" type="string" use="optional">
+				<annotation>
+					<documentation>Two-point shots that were attempted.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="field-goals-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Field goals made versus attempted.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="field-goals-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of field goals made per game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="field-goals-attempted-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of field goals attempted per game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="field-goals-percentage-adjusted" type="string" use="optional">
+				<annotation>
+					<documentation>A formula measuring shooting efficiency: [(points-scored-total - free-throws-made)/field-goals-attempted]/2.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="three-pointers-made" type="string" use="optional">
+				<annotation>
+					<documentation>Shots made that were worth three points each.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="three-pointers-attempted" type="string" use="optional">
+				<annotation>
+					<documentation>Three-point shots that were attempted.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="three-pointers-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Three-pointers made versus attempted.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="three-pointers-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of three-pointers made per game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="three-pointers-attempted-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of three-pointers attempted per game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="free-throws-made" type="string" use="optional">
+				<annotation>
+					<documentation>Shots made that were worth one point each.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="free-throws-attempted" type="string" use="optional">
+				<annotation>
+					<documentation>One-point shots that were attempted.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="free-throws-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Free throws made versus attempted.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="free-throws-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of free throws made per game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="free-throws-attempted-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of free throws attempted per game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points-scored-total" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of points scored, over the time span indicated in date coverage attributes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points-scored-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of points scored in games played during the time span indicated in date coverage attributes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points-scored-per-game-highest" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points-scored-per-shot" type="string" use="optional">
+				<annotation>
+					<documentation>Calculated by dividing points-scored-total by field-goals-attempted.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="assists-total" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of assists during the time span indicated in date coverage attributes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="assists-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of assists per games played during the time span indicated in date coverage attributes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="turnovers-total" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of turnovers during the time span indicated in date coverage attributes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="turnovers-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of turnovers per game the time span indicated in date coverage attributes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="team-turnovers-total" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of team turnovers during the time span indicated in date coverage attributes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="team-turnovers-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of team turnovers per game the time span indicated in date coverage attributes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points-scored-off-turnovers" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of points scored off turnovers the time span indicated in date coverage attributes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points-scored-in-paint" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of points scored from within the painted area surrounding the basket during the time span indicated in date coverage attributes..</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points-scored-on-second-chance" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of points scored after fielding an offensive rebound during the time span indicated in date coverage attributes..</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points-scored-on-fast-break" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of points scored off a fast break during the time span indicated in date coverage attributes..</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-basketball-rebounding">
+		<annotation>
+			<documentation>Statistics for a team or player revolving around rebounds. | Includes rebounds credited to particular players, and credited to the entire team.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="rebounds-total" type="string" use="optional">
+				<annotation>
+					<documentation>The sum of all rebounds that were credited to particular players.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rebounds-total-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rebounds-defensive" type="string" use="optional">
+				<annotation>
+					<documentation>The sum of all defensive rebounds credited to particular players.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rebounds-defensive-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rebounds-offensive" type="string" use="optional">
+				<annotation>
+					<documentation>The sum of all offensive rebounds credited to particular player.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rebounds-offensive-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="team-rebounds-total" type="string" use="optional">
+				<annotation>
+					<documentation>The number of rebounds that did not credited to individual players, but were instead credited to the team as a whole.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="team-rebounds-total-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="team-rebounds-defensive" type="string" use="optional">
+				<annotation>
+					<documentation>The sum of all defensive rebounds credited to the team as a whole.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="team-rebounds-defensive-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="team-rebounds-offensive" type="string" use="optional">
+				<annotation>
+					<documentation>The sum of all offensive rebounds credited to the team as a whol.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="team-rebounds-offensive-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rebounds-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>The average number of personal rebounds per event.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="team-rebounds-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>The average number of team rebounds per event.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rebounds-offensive-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rebounds-defensive-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-basketball-defensive">
+		<annotation>
+			<documentation>Statistics for a team or player while the other team was in possession of the ball. | Includes information on steals and blocks.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="steals-total" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of steals.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="steals-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of steals per game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="blocks-total" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of blocks.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="blocks-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of blocks per game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points-scored-against-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points-scored-against-per-game-highest" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="field-goals-against-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="field-goals-against-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="team-turnovers-total" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="player-metadata-basketball">
+		<annotation>
+			<documentation>Metadata about the player. | Specific to the sport of basketball.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="player-stats-basketball">
+		<annotation>
+			<documentation>Specific statistics for basketball players. | Includes offensive, rebounding, and defensive stats.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-basketball-offensive" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-basketball-rebounding" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-basketball-defensive" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="minutes-played" type="string" use="optional">
+				<annotation>
+					<documentation>Number of minutes this player has spent playing during a particular game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="games-played" type="string" use="optional">
+				<annotation>
+					<documentation>Number of games played during the time span indicated in date coverage attributes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="games-started" type="string" use="optional">
+				<annotation>
+					<documentation>Number of games that started with this player on the court, during the time span indicated in date coverage attributes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="average-minutes-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of minutes per game played by this player during the time span indicated in date coverage attributes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="personal-fouls-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="event-actions-basketball">
+		<annotation>
+			<documentation>A container for specific basketball actions. | Generally ordered chronologically.</documentation>
+		</annotation>
+		<complexType>
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="sportsml:action-basketball-substitution"/>
+				<element ref="sportsml:action-basketball-score-attempt"/>
+				<element ref="sportsml:action-basketball-score"/>
+				<element ref="sportsml:action-basketball-penalty"/>
+				<element ref="sportsml:action-basketball-timeout"/>
+				<element ref="sportsml:action-basketball-jump-ball"/>
+				<element ref="sportsml:action-basketball-turnover"/>
+				<element ref="sportsml:action-basketball-other"/>
+			</choice>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="action-basketball-substitution">
+		<annotation>
+			<documentation>Used when one player comes in for another. | Simultaneous multiple replacements can be handled by using several of these elements, and leaving either the replacing or the original players blank.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateBasketball"/>
+			<attribute name="person-type" use="optional">
+				<annotation>
+					<documentation>Whether a player, a coach, or a referree.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="player"/>
+						<enumeration value="auxilliary"/>
+						<enumeration value="official"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="person-original-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the player who left the court.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="person-original-position" type="sportsml:position.Basketball" use="optional">
+				<annotation>
+					<documentation>The position of the player who left the court.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="person-replacing-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the player who now went on the court.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="person-replacing-position" type="sportsml:position.Basketball" use="optional">
+				<annotation>
+					<documentation>The position of the player who went on the court.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="substitution-reason" type="string" use="optional">
+				<annotation>
+					<documentation>The reason why a substitution was made.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A textual comment.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-basketball-score-attempt">
+		<annotation>
+			<documentation>Used to record shots that are NOT made. | If the shot was made, use the action-basketball-score.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:action-basketball-assisting-player" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:action-basketball-rebounder" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:action-basketball-blocking-player" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateBasketball"/>
+			<attribute name="player-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the player who attempted the shot.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-attempt-type" type="sportsml:scoreAttemptType.Basketball" use="optional">
+				<annotation>
+					<documentation>What type of shot it was.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-attempt-result" type="sportsml:scoreAttemptResult.Basketball" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shot-location" type="string" use="optional">
+				<annotation>
+					<documentation>A string indicating where on the court the shot was taken from. Could be an approximate region, or a more complex value adhering to some elaborate coordinate system.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A textual comment.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-basketball-assisting-player">
+		<annotation>
+			<documentation>Player who assisted with a score. | Generally, a player who passed the ball to the player who scored.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="player-idref" type="IDREF" use="required">
+				<annotation>
+					<documentation>A pointer to a player who assisted in the score.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-basketball-rebounder">
+		<annotation>
+			<documentation>Player or team who got credited with a rebound. | May be more than one player.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="rebounder-idref" type="IDREF" use="required">
+				<annotation>
+					<documentation>A pointer to a player or team who was credited with the rebound.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rebounder-type" use="required">
+				<annotation>
+					<documentation>Whether it was an individual or a team rebound.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="team"/>
+						<enumeration value="player"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="rebounder-side" use="required">
+				<annotation>
+					<documentation>Whether the team/player who got the rebound was playing offense or defense.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="offense"/>
+						<enumeration value="defense"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-basketball-blocking-player">
+		<annotation>
+			<documentation>Player who was credited with blocking a shot. | Stops the shot ball from going in the basket.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="player-idref" type="IDREF" use="required">
+				<annotation>
+					<documentation>A pointer to a player who achieved the block.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-basketball-score">
+		<annotation>
+			<documentation>Used to record shots that were successful. | Can include update of what the new score is between teams.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:action-basketball-assisting-player" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateBasketball"/>
+			<attribute name="player-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the player who made the shot.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-attempt-type" type="sportsml:scoreAttemptType.Basketball" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points" type="string" use="optional">
+				<annotation>
+					<documentation>How many points are given for the goal. Generally: 1, 2, or 3.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-team" type="string" use="optional">
+				<annotation>
+					<documentation>The resulting new total score of the team that scored.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-team-opposing" type="string" use="optional">
+				<annotation>
+					<documentation>The current total score of the team was scored upon.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shot-location" type="string" use="optional">
+				<annotation>
+					<documentation>A string indicating where on the court the shot was taken from. Could be an approximate region, or a more complex value adhering to some elaborate coordinate system.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A textual comment.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-basketball-penalty">
+		<annotation>
+			<documentation>Used when a foul is made. | Records who made the foul and who called the foul.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateBasketball"/>
+			<attribute name="recipient-type" use="required">
+				<annotation>
+					<documentation>Whether the receiver of the penalty was the team, the player, a coach, a ref, etc.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="team"/>
+						<enumeration value="player"/>
+						<enumeration value="auxilliary"/>
+						<enumeration value="official"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="recipient-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the receiver of the penalty.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="caller-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the official who called the penalty.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-count" type="string" use="optional">
+				<annotation>
+					<documentation>How many penalties the recipient has received in this sports-event, including this one.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-side" type="sportsml:penaltySide.Basketball" use="optional">
+				<annotation>
+					<documentation>Whether it was an offensive or defensive penalty.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-level" type="sportsml:penaltyLevel.Basketball" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A textual comment.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-basketball-timeout">
+		<annotation>
+			<documentation>Used to record the calling of a timeout. | Also records who called for the timeout.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateBasketball"/>
+			<attribute name="timeout-duration" type="string" use="optional">
+				<annotation>
+					<documentation>The duration of the timeout.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="timeouts-left" type="string" use="optional">
+				<annotation>
+					<documentation>The number of timeouts remaining once this timeout is finished.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="caller" use="optional">
+				<annotation>
+					<documentation>Who called the timeout.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="team"/>
+						<enumeration value="official"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="caller-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>If caller is team, say, a pointer to the team element.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A textual comment.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-basketball-jump-ball">
+		<annotation>
+			<documentation>A jump ball. | For use when the referree throws a ball up for two opposing players to try to tip towards their team.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateBasketball"/>
+			<attribute name="player-1-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>Identifier for one of the jump-ball participants.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="player-2-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>Identifier for the other jump-ball participant.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="winning-player-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>Identifier for the participant whose team recovered the ball after the jump.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment about the action.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-basketball-turnover">
+		<annotation>
+			<documentation>When one team loses the ball, and the other team recovers. | Can be a steal, or just a lost ball.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateBasketball"/>
+			<attribute name="losing-player-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>Identifier for the participant who lost posession of the ball.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="recovering-player-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>Identifier for the participant who gained posession of the ball, if any.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="turnover-type" type="string" use="optional">
+				<annotation>
+					<documentation>Controlled vocabulary such as steal or lost-ball.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment about the action.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-basketball-other">
+		<annotation>
+			<documentation>A custom action. | For use when none of the pre-build actions apply.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateBasketball"/>
+			<attribute name="action-source" type="string" use="optional">
+				<annotation>
+					<documentation>The name of the controlled-vocabulary for the action-type attribute.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="action-type" type="string" use="optional">
+				<annotation>
+					<documentation>A selection from a controlled-vocabulary list maintained by the publisher.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment about the action.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+</schema>

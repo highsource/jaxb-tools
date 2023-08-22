@@ -1,0 +1,120 @@
+<xsd:schema
+	targetNamespace="http://hyperjaxb3.jvnet.org/ejb/tests/tp" xmlns:tp="http://hyperjaxb3.jvnet.org/ejb/tests/tp" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	jaxb:version="2.1" 
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified"
+
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+
+	jaxb:extensionBindingPrefixes="hj orm xjc"
+
+	>
+
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:globalBindings>
+				<jaxb:javaType
+					name="java.util.Calendar"
+					xmlType="xsd:date"
+					parseMethod="javax.xml.bind.DatatypeConverter.parseDate"
+					printMethod="javax.xml.bind.DatatypeConverter.printDate" />
+			</jaxb:globalBindings>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.tp"/>
+			</jaxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+	<xsd:annotation>
+		<xsd:appinfo>
+			<hj:persistence>
+				<hj:default-single-property type="xsd:string">
+					<hj:basic>
+						<orm:column length="1000"/>
+					</hj:basic>
+				</hj:default-single-property>
+				<hj:default-single-property type="tp:string4000">
+					<hj:basic>
+						<orm:column length="4000"/>
+					</hj:basic>
+				</hj:default-single-property>
+				<hj:default-single-property type="tp:string2000">
+					<hj:basic>
+						<orm:column length="2000"/>
+					</hj:basic>
+				</hj:default-single-property>
+				<hj:default-collection-property type="tp:string2000">
+					<hj:element-collection>
+						<orm:column length="2000"/>
+					</hj:element-collection>
+				</hj:default-collection-property>
+				<hj:default-single-property type="tp:string8a">
+					<hj:basic>
+						<orm:column length="16"/>
+					</hj:basic>
+				</hj:default-single-property>
+				<hj:default-single-property type="tp:string8b">
+					<hj:basic>
+						<orm:column column-definition="TEXT"/>
+					</hj:basic>
+				</hj:default-single-property>
+				<hj:default-single-property type="tp:string8c">
+					<hj:basic merge="false">
+						<orm:column column-definition="TEXT"/>
+					</hj:basic>
+				</hj:default-single-property>
+			</hj:persistence>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+
+	<xsd:simpleType name="string4000">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="string2000">
+		<xsd:restriction base="tp:string4000"/>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="string8a">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="8"/>	
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="string8b">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="8"/>	
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="string8c">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="8"/>	
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:element name="issueHJIII11Element" type="tp:issueHJIII11Type"/>
+
+	<xsd:complexType name="issueHJIII11Type">
+		<xsd:sequence>
+			<xsd:element name="dateTime"	type="xsd:dateTime"	minOccurs="0"/>
+			<xsd:element name="date"	type="xsd:date"	minOccurs="0"/>
+			<xsd:element name="float"	type="xsd:float"	minOccurs="0"/>
+			<xsd:element name="double"	type="xsd:double"	minOccurs="0"/>
+			<xsd:element name="string4000"	type="tp:string4000"	minOccurs="0"/>
+			<xsd:element name="string2000"	type="tp:string2000"	minOccurs="0"/>
+			<xsd:element name="string2000C"	type="tp:string2000"	minOccurs="0"	maxOccurs="unbounded"/>
+			<xsd:element name="string1000"	type="xsd:string"	minOccurs="0"/>
+			<xsd:element name="string8a"	type="tp:string8a"	minOccurs="0"/>
+			<xsd:element name="string8b"	type="tp:string8b"	minOccurs="0"/>
+			<xsd:element name="string8c"	type="tp:string8c"	minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>

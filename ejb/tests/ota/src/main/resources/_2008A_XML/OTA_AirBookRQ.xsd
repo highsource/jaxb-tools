@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="7.000" id="OTA2008A">
+	<xs:include schemaLocation="OTA_AirCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_AirBookRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The Book Request message requests the system to book a specific itinerary for one or more identified passengers. The message contains optional pricing information, allowing the booking class availability and pricing to be rechecked as part of the booking process.	Optional request information can include:- Seat and Meal Requests- SSR, OSI, and Remarks.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">This identifes the party making the booking request. Trading partners are open to define their own UniqueID.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="AirItinerary" type="AirItineraryType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A collection of all flight segments requested for booking.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PriceInfo" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Pricing information for the air itinerary to be booked e.g. this data could come from the OTA_AirPriceRS data.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="BookingPriceInfoType">
+								<xs:sequence>
+									<xs:element name="PricingPref" minOccurs="0" maxOccurs="10">
+										<xs:annotation>
+											<xs:documentation>Identifies a pricing preference for this booking.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attributeGroup ref="PricingInfoGroup">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Use to specify a type of pricing information and whether it should be applied or not applied to the pricing.</xs:documentation>
+												</xs:annotation>
+											</xs:attributeGroup>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="ParticipationLevel" type="OTA_CodeType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">To specify the level of participation by a vendor in another system. Refer to OTA Code List 'Participation Level Code' (PLC)</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="TravelerInfo" type="TravelerInfoType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">All traveler information relevant to a booking request.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Fulfillment" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">All payment information relevant to a booking request.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="PaymentDetails" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Container for Payment Detail.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="PaymentDetail" type="PaymentDetailType" maxOccurs="99">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Form of payment details for the requested booking. It is possible to use multiple forms of payment for one transaction, therefore this element may be used more than once.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="DeliveryAddress" type="AddressType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Ticket delivery information for the booking request.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Name" type="PersonNameType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Purchaser name details</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Receipt" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en"> Specifies the requested distribution method for the ticket receipt.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="DistribType" type="OTA_CodeType">
+										<xs:annotation>
+											<xs:documentation xml:lang="en"> Refer to OTA Code List Distribution Type (DTB).
+									</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PaymentText" minOccurs="0" maxOccurs="5">
+								<xs:annotation>
+									<xs:documentation>Used to provide textual information concerning fulfillment.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="FormattedTextTextType">
+											<xs:attribute name="Name" type="StringLength1to16" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Used to specify the type of information.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Ticketing" minOccurs="0" maxOccurs="99">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Information used to specify the ticketing arrangement.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="TicketingInfoType">
+								<xs:sequence>
+									<xs:element name="TicketingVendor" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>The vendor that issues or services the ticket.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attributeGroup ref="CompanyID_AttributesGroup">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The code of the vendor that issues or services the ticket.</xs:documentation>
+												</xs:annotation>
+											</xs:attributeGroup>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="PricingSystem" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>The system that priced the itinerary for this ticket.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attributeGroup ref="CompanyID_AttributesGroup">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The code of the system that priced the itinerary for the ticket.</xs:documentation>
+												</xs:annotation>
+											</xs:attributeGroup>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Queue" minOccurs="0" maxOccurs="10">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Specifies information necessary to place this booking on a particular host system queue.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attributeGroup ref="QueueGroup">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Information to identify a queue.</xs:documentation>
+							</xs:annotation>
+						</xs:attributeGroup>
+						<xs:attribute name="DateTime" type="DateOrDateTimeType" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Date/time when the time initiated queuing should take place.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="Text" type="StringLength1to64" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Text describing why the queuing takes place.
+</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="BookingReferenceID" type="UniqueID_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">This is used for PNR record locator.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="TPA_Extensions" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attribute name="ResStatus" type="TransactionActionType" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Specifies an action to be taken following the booking.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="PriceInd" type="xs:boolean" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">When true, pricing and booking of flights is requested.  When false, only booking of flights is requested.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

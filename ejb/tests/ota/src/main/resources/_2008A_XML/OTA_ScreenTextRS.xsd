@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.005" id="OTA2008A">
+	<xs:include schemaLocation="OTA_CommonTypes.xsd"/>
+	
+	<xs:element name="OTA_ScreenTextRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The free text response to a screen text request.  The responder may return a screen of information in a block of unformatted data or return a screen of information in a line by line response. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:sequence>
+						<xs:element name="Success" type="SuccessType">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Standard way to indicate successful processing of an OTA message. Returning an empty element of this type indicates success.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Warnings" type="WarningsType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Standard way to indicate successful processing of an OTA message, but one in which warnings are generated.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:element name="Errors" type="ErrorsType">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">A collection of errors that occurred during the processing of a message.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+				<xs:element name="TextScreens" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The container for the screens of text that will be returned.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="TextScreen" maxOccurs="999">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">One screen of text data.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="TextData" type="xs:string" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">A screen of text data or one line of text data.														</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="ScreenSequenceNum" type="Numeric0to999" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">A number assigned to this screen to identify its sequential order.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="ScreenLineInd" type="xs:boolean" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">If true, one line of text screen data is being sent per TextData element.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ScreenRowsNum" type="NumericStringLength1to5" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The number of rows for the screen..</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ScreenColumnsNum" type="NumericStringLength1to5" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The number of columns for the screen.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attributeGroup ref="QuantityGroup">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The number of screens that are being returned.</xs:documentation>
+							</xs:annotation>
+						</xs:attributeGroup>
+						<xs:attribute name="MergeScreenIndicator" type="xs:boolean" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">If true, the screens returned have been merged into a continuous string in one TextScreen element.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="MoreIndicator" type="xs:boolean" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">If true, there are more screens to be returned.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attribute name="MessageFunction" type="StringLength0to64" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">To specify the message function that is being responded to.							</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

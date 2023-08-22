@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+== Copyright (c) 2002-2007. All rights reserved. 
+== Financial Products Markup Language is subject to the FpML public license. 
+== A copy of this license is available at http://www.fpml.org/license/license.html
+-->
+<!--View is pretrade-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns="http://www.fpml.org/FpML-5-0/pretrade" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:fpml-annotation="http://www.fpml.org/annotation" targetNamespace="http://www.fpml.org/FpML-5-0/pretrade" ecore:documentRoot="FpML" ecore:nsPrefix="pre" ecore:package="org.fpml.pretrade" version="$Revision: 2350 $" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd" />
+  <xsd:include schemaLocation="fpml-doc-5-0.xsd" />
+  <xsd:complexType name="AdditionalData">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">Provides extra information not represented in the model that may be useful in processing the message i.e. diagnosing the reason for failure. In case the extra information is in XML format, a CDATA section must be placed around the source message to prevent its interpretation as XML content.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="additionalDataScheme" type="xsd:anyURI" use="optional" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="ConversationId">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">The unique identifier (name) for the conversation (session), this message is within. A conversation identifier is usually assigned by the initiator of a conversation. Conversations may only be initiated and terminated. Joining conversations has the effect of initiating new conversations. Conversations cannot be split; this instead has the effect of parallel activities on the same conversation or the initiation of a new conversation. Each message belongs to only one conversation. Conversation scopes are defined in the business process definition.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:normalizedString">
+        <xsd:attribute name="conversationIdScheme" type="xsd:anyURI" use="required" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="Message" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type defining the basic structure of all FpML messages which is refined by its derived types.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="Document" />
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="MessageAddress">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">The data type used for identifying a message address. It includes a partyIdScheme for keeping the type backward compatible with the PartyId complex type. In the next major version, partyIdScheme attribute will be replaced by a messageAddressScheme attribute.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:normalizedString">
+        <xsd:attribute name="partyIdScheme" type="xsd:anyURI" default="http://www.fpml.org/ext/iso9362" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="MessageHeader" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type defining the content model for a generic message header that is refined by its derived classes.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="conversationId" type="ConversationId" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The unique identifier (name) for the conversation (session), this message is within. A conversation identifier is usually assigned by the initiator of a conversation. Conversations may only be initiated and terminated. Joining conversations has the effect of initiating new conversations. Conversations cannot be split; this instead has the effect of parallel activities on the same conversation or the initiation of a new conversation. Each message belongs to only one conversation. Conversation scopes are defined in the business process definition.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="messageId" type="MessageId">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A unique identifier (within its coding scheme) assigned to the message by its creating party.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="MessageId">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">The data type use for message identifiers.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:normalizedString">
+        <xsd:attribute name="messageIdScheme" type="xsd:anyURI" use="required" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="MessageRejected">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type defining the content for a standard message sent when a recipient cannot interpret or process an earlier message.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="NotificationMessage">
+        <xsd:sequence>
+          <xsd:group ref="Exception.model" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="NotificationMessage" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type defining the basic content for a message sent to inform another system that some 'business event' has occured. Notifications are not expected to be replied to.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="Message">
+        <xsd:sequence>
+          <xsd:element name="header" type="NotificationMessageHeader" />
+          <xsd:group ref="Validation.model" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="NotificationMessageHeader">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type that refines the generic message header to match the requirements of a NotificationMessage.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="MessageHeader">
+        <xsd:sequence>
+          <xsd:element name="inReplyTo" type="MessageId" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">A copy of the unique message identifier (within it own coding scheme) to which this message is responding.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:group ref="MessageHeader.model" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PartyMessageInformation">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type defining additional information that may be recorded against a message.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="partyReference" type="PartyReference">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Identifies that party that has ownership of this information.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ProblemLocation">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">Provides a lexical location (i.e. a line number and character for bad XML) or an XPath location (i.e. place to identify the bad location for valid XML).</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:normalizedString">
+        <xsd:attribute name="locationType" type="xsd:token">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">The value of the locationType attribute defines which type of location has been given. It may take the values 'lexical' or 'xpath'.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="Reason">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type defining a content model for describing the nature and possible location of a error within a previous message.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="reasonCode" type="ReasonCode">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A machine interpretable error code.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="location" type="ProblemLocation" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A value indicating the location of the problem within the subject message.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="description" type="xsd:string" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Plain English text describing the associated error condition</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="validationRuleId" type="Validation" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A reference identifying a rule within a validation scheme</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="additionalData" type="AdditionalData" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Any string of additional data that may help the message processor, for example in a rejection message this might contain a code value or the text of any one of the messages (within a CDATA section).</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ReasonCode">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">Defines a list of machine interpretable error codes.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:normalizedString">
+        <xsd:attribute name="reasonCodeScheme" type="xsd:anyURI" default="http://www.fpml.org/coding-scheme/reason-code-1-0" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="RequestMessage" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type defining the basic content of a message that requests the receiver to perform some business operation determined by the message type and its content.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="Message">
+        <xsd:sequence>
+          <xsd:element name="header" type="RequestMessageHeader" />
+          <xsd:group ref="Validation.model" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="RequestMessageHeader">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type refining the generic message header content to make it specific to request messages.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="MessageHeader">
+        <xsd:sequence>
+          <xsd:group ref="MessageHeader.model" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="RequestTradeStatus">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type defining the content model for a message allowing one party to query the status of one or many trades previously sent to another party.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="RequestMessage">
+        <xsd:sequence>
+          <xsd:element name="tradeIdentifier" type="TradeIdentifier" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">An instance of a unique trade identifier.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="party" type="Party" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">A legal entity or a subdivision of a legal entity.</xsd:documentation>
+              <xsd:documentation xml:lang="en">Parties can perform multiple roles in a trade lifecycle. For example, the principal parties obligated to make payments from time to time during the term of the trade, but may include other parties involved in, or incidental to, the trade, such as parties acting in the role of novation transferor/transferee, broker, calculation agent, etc. In FpML roles are defined in multiple places within a document.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="ResponseMessage" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type refining the generic message content model to make it specific to response messages.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="Message">
+        <xsd:sequence>
+          <xsd:element name="header" type="ResponseMessageHeader" />
+          <xsd:group ref="Validation.model" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="ResponseMessageHeader">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type refining the generic message header to make it specific to response messages.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="MessageHeader">
+        <xsd:sequence>
+          <xsd:element name="inReplyTo" type="MessageId">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">A copy of the unique message identifier (within it own coding scheme) to which this message is responding.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:group ref="MessageHeader.model" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="TradeNotFound">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type defining the content model of a response message generated when an operation as requested on a trade unknown to the service.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="ResponseMessage">
+        <xsd:sequence>
+          <xsd:choice>
+            <xsd:element name="tradeIdentifier" type="TradeIdentifier">
+              <xsd:annotation>
+                <xsd:documentation xml:lang="en">An instance of a unique trade identifier.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:group ref="TradeOrTradeReference.model" />
+          </xsd:choice>
+          <xsd:element name="party" type="Party">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">A legal entity or a subdivision of a legal entity.</xsd:documentation>
+              <xsd:documentation xml:lang="en">Parties can perform multiple roles in a trade lifecycle. For example, the principal parties obligated to make payments from time to time during the term of the trade, but may include other parties involved in, or incidental to, the trade, such as parties acting in the role of novation transferor/transferee, broker, calculation agent, etc. In FpML roles are defined in multiple places within a document.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="TradeStatus">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type defining the content model for a message normally generated in response to a RequestTradeStatus request.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="ResponseMessage">
+        <xsd:sequence>
+          <xsd:element name="tradeStatusItem" type="TradeStatusItem" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">A collection of data values describing the state of the given trade.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="party" type="Party" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">A legal entity or a subdivision of a legal entity.</xsd:documentation>
+              <xsd:documentation xml:lang="en">Parties can perform multiple roles in a trade lifecycle. For example, the principal parties obligated to make payments from time to time during the term of the trade, but may include other parties involved in, or incidental to, the trade, such as parties acting in the role of novation transferor/transferee, broker, calculation agent, etc. In FpML roles are defined in multiple places within a document.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="TradeStatusItem">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type used in trade status enquiry messages which relates a trade identifier to its current status value.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="tradeIdentifier" type="TradeIdentifier">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">An instance of a unique trade identifier.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="tradeStatusValue" type="TradeStatusValue">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The trade status value.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TradeStatusValue">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">The type used to hold TradeStatusScheme values.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:normalizedString">
+        <xsd:attribute name="tradeStatusScheme" type="xsd:anyURI" />
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:group name="Exception.model">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A model group which has exception elements.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="reason" type="Reason" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">An instance of the Reason type used to record the nature of any errors associated with a message.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="additionalData" type="AdditionalData" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Any string of additional data that may help the message processor, for example in a rejection message this might contain a code value or the text of the original request (within a CDATA section).</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:group name="MessageHeader.model">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">Defines the structure that contains routing and identification information, which allows processing and transfer of the message. It contains only messaging information that is applicable to all messages. If the information is not message related or is not applicable to all messages then it is not defined in the message header.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="sentBy" type="MessageAddress">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The unique identifier (within its coding scheme) for the originator of a message instance.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="sendTo" type="MessageAddress" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A unique identifier (within its coding scheme) indicating an intended recipent of a message.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="copyTo" type="MessageAddress" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">A unique identifier (within the specified coding scheme) giving the details of some party to whom a copy of this message will be sent for reference.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="creationTimestamp" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The date and time (on the source system) when this message instance was created.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="expiryTimestamp" type="xsd:dateTime" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The date and time (on the source system) when this message instance will be considered expired.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="partyMessageInformation" type="PartyMessageInformation" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Additional message information that may be provided by each involved party.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:group>
+  <xsd:complexType name="TradeErrorResponse" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">An abstract trade error response message containing a singe trade or trade reference.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="ResponseMessage">
+        <xsd:sequence>
+          <xsd:group ref="TradeOrTradeReference.model" />
+          <xsd:element name="party" type="Party" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">A legal entity or a subdivision of a legal entity.</xsd:documentation>
+              <xsd:documentation xml:lang="en">Parties can perform multiple roles in a trade lifecycle. For example, the principal parties obligated to make payments from time to time during the term of the trade, but may include other parties involved in, or incidental to, the trade, such as parties acting in the role of novation transferor/transferee, broker, calculation agent, etc. In FpML roles are defined in multiple places within a document.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="TradeAlreadyCancelled">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">An error response message indicating that a trade has already been cancelled.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="TradeErrorResponse" />
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="TradeAlreadySubmitted">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type defining the content model for a message sent by a confirmation provider when it believes that one party has repeated a request to confirm a trade.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="ResponseMessage">
+        <xsd:sequence>
+          <xsd:element name="tradeIdentifier" type="TradeIdentifier">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">An instance of a unique trade identifier.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="party" type="Party">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">A legal entity or a subdivision of a legal entity.</xsd:documentation>
+              <xsd:documentation xml:lang="en">Parties can perform multiple roles in a trade lifecycle. For example, the principal parties obligated to make payments from time to time during the term of the trade, but may include other parties involved in, or incidental to, the trade, such as parties acting in the role of novation transferor/transferee, broker, calculation agent, etc. In FpML roles are defined in multiple places within a document.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="TradeAlreadyTerminated">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">An error response message indicating that a trade has already been terminated.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="TradeErrorResponse" />
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">Message rejected, status messages.</xsd:documentation>
+  </xsd:annotation>
+  <xsd:element name="messageRejected" type="MessageRejected" />
+  <xsd:element name="requestTradeStatus" type="RequestTradeStatus" />
+  <xsd:element name="tradeNotFound" type="TradeNotFound" />
+  <xsd:element name="tradeStatus" type="TradeStatus" />
+  <xsd:element name="tradeAlreadyCancelled" type="TradeAlreadyCancelled" />
+  <xsd:element name="tradeAlreadySubmitted" type="TradeAlreadySubmitted" />
+  <xsd:element name="tradeAlreadyTerminated" type="TradeAlreadyTerminated" />
+</xsd:schema>
+

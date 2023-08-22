@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema targetNamespace="urn:my" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:my="urn:my" elementFormDefault="qualified">
+	<xsd:element name="Service">
+		<xsd:complexType>
+			<xsd:choice>
+                                <xsd:element name="test" type="xsd:string" maxOccurs="unbounded" />
+				<xsd:element name="ServiceDiscovery" type="my:ServiceDiscovery" maxOccurs="unbounded" />
+			</xsd:choice>
+		</xsd:complexType>
+	</xsd:element>        
+	<xsd:complexType name="ServiceDiscovery">
+		<xsd:sequence>
+			<xsd:element name="ServiceP"  type="my:ServiceP" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceP">
+		<xsd:sequence>
+			<xsd:element name="Name" type="my:MultilingualType" maxOccurs="unbounded" />
+			<xsd:element name="Description" type="my:MultilingualType" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="Offering" type="my:OfferingListType" minOccurs="0" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OfferingListType">
+		<xsd:choice maxOccurs="unbounded">
+			<xsd:element name="Push" type="my:PushType"/>
+			<xsd:element name="Pull" type="my:PullType"/>
+		</xsd:choice>
+	</xsd:complexType>
+        <xsd:complexType name="PushType">
+                <xsd:complexContent>
+                        <xsd:extension base="my:TypeList">
+                                <xsd:attributeGroup ref="my:MulticastAddressAttributes" />
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="PullType">
+                <xsd:complexContent>
+                        <xsd:extension base="my:TypeList">
+                                <xsd:attribute name="Location" type="my:PullURL" use="required" />
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>  
+	<xsd:complexType name="TypeList">
+		<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="TypeId" type="my:TypeIdentifier"/>
+		</xsd:sequence>
+	</xsd:complexType>
+        <xsd:complexType  name="TypeIdentifier">
+                <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xsd:element name="Segment" type="my:SegmentType"/>
+                </xsd:sequence>
+                <xsd:attribute name="Id" type="my:Hexadecimal8bit" use="required" />
+        </xsd:complexType>
+        <xsd:complexType  name="SegmentType">
+                <xsd:attribute name="ID" type="my:Hexadecimal16bit" use="required" />
+        </xsd:complexType>
+        
+	<xsd:simpleType name="PullURL">
+		<xsd:restriction base="xsd:anyURI">
+			<xsd:pattern value="http://.*/my/.*" />
+		</xsd:restriction>
+	</xsd:simpleType>
+        <xsd:complexType name="MultilingualType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="Language" type="my:ISO639-2" use="required" />
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+        <xsd:simpleType name="ISO639-2">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\c\c\c" />
+		</xsd:restriction>
+	</xsd:simpleType>        
+	<xsd:simpleType name="Hexadecimal16bit">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9a-fA-F]{1,4}" />
+		</xsd:restriction>
+	</xsd:simpleType>
+        <xsd:simpleType name="Hexadecimal8bit">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9a-fA-F]{1,2}" />
+		</xsd:restriction>
+	</xsd:simpleType>
+        <xsd:attributeGroup name="MulticastAddressAttributes">
+		<xsd:attribute name="Source" type="my:IPOrDomainType" use="optional" />
+		<xsd:attribute name="Address" type="my:IPOrDomainType" use="required" />
+		<xsd:attribute name="Port" type="xsd:unsignedShort" use="required" />
+	</xsd:attributeGroup>
+        <xsd:simpleType name="IPOrDomainType">
+		<xsd:union memberTypes="my:IPType my:DomainType  " />
+	</xsd:simpleType>
+        <xsd:simpleType name="IPType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="((([1-9]?[0-9])|(1[0-9][0-9])|(2[0-4][0-9])|(25[0-5]))\.){3}(([1-9]?[0-9])|(1[0-9][0-9])|(2[0-4][0-9])|(25[0-5]))" />
+		</xsd:restriction>
+	</xsd:simpleType>
+        <xsd:simpleType name="DomainType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="((.|\n|\r)*)?(\.(.|\n|\r)*)+" />
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

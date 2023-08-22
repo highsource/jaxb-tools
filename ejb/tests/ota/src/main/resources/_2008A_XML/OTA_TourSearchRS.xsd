@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.000" id="OTA2008A">
+	<xs:include schemaLocation="OTA_TourInformation.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_TourSearchRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Provides tours that meet the criteria in the OTA_TourSearchRQ.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type" minOccurs="0"/>
+				<xs:choice>
+					<xs:sequence>
+						<xs:element name="Success" type="SuccessType">
+							<xs:annotation>
+								<xs:documentation>The presence of the empty Success element explicitly indicates that the OTA versioned message succeeded. </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Warnings" type="WarningsType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Used in conjunction with the Success element to define one or more business errors.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Tours" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>A collection of tours satisfying the criteria supplied in the search request.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Tour" type="TourInformationType" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>A tour satisfying the criteria supplied in the search request.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="MoreDataEchoToken" type="StringLength1to128" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The response returns the attribute if there was additional data.  The text value should be echoed in this request to indicate where to begin the next block of data.		</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:element name="Errors" type="ErrorsType">
+						<xs:annotation>
+							<xs:documentation>Errors is returned if the request was unable to be processed.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This element defines standard attributes that appear on the root element for all OTA payloads.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

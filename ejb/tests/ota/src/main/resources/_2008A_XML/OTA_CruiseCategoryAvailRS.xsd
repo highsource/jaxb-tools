@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="2.004" id="OTA2008A">
+	<xs:include schemaLocation="OTA_CruiseCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA 
+specification are made available according to the terms defined by the OTA 
+License Agreement at 
+http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_CruiseCategoryAvailRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+The Category Availability Response message contains category availability 
+for a given sailing with a specific Mode of Transportation/GatewayCity pair and currency for 1 to multiple fares (depending on the cruise line). For each category the following information may be 
+returned:
+- Berthed category code
+- Priced category code
+- Status code
+- Category indicator
+- Cruise package information
+- Group code
+- Fare code
+- Currency code
+
+This message returns the fare amounts available in the different categories. At this point in the process the customer has selected the fare code and has queried the different category offerings for that fare code.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Standard way to indicate successful 
+processing of an OTA message. Returning an empty element of this type indicates 
+success.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en"> Standard way to indicate successful 
+processing of an OTA message, but one in which warnings are 
+generated.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SailingInfo" type="SailingInfoType">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Requested sailing information. Currency in which the fares are being returned. Specifies the available inclusive package.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="FareOption" minOccurs="0" maxOccurs="5">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Fare and associated categories information.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="CategoryOptions">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Contains the different categories associated to the fare code which is part of the fare option.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="CategoryOption" type="CategoryOptionType" maxOccurs="40">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Contains available category information. Information relates to occupancy, category location on the ship, the proposed price and upgrade if available.</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+							<xs:attributeGroup ref="FareGroup"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Taxes" type="TaxesType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Collection of cruise taxes.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Fee" type="FeeType" minOccurs="0" maxOccurs="3">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies additional charges. (e.g., port charges, port services fee).     </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Information" type="ParagraphType" minOccurs="0" maxOccurs="5">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Advisory information returned by the cruise line.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en"> A collection of errors that occurred during 
+the processing of a message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The standard attributes that appear on the root element for all OTA payloads. </xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+			<xs:attributeGroup ref="ResponseGroup">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Indicates that additional records are available and provides the echo token to be used to retrieve those records.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

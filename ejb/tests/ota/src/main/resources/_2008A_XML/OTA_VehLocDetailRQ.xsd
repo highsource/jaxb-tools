@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.009" id="OTA2008A">
+	<xs:include schemaLocation="OTA_VehicleCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_VehLocDetailRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Vehicle Location Detail request will allow car rental customers to request information about the car rental location.  These are items that will assist the customer in basic information about the location.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Point of Sale Identification.  Identification number of the vendor that has made the location details request and agency number assigned by IATA, ARC, ESRP or TID.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Location">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Identifies the location whose details are being requested.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="LocationType">
+								<xs:attribute name="ExtendedLocationCode" type="StringLength1to8" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Used for extended OAG (Official Airline Guide) code in conjunction with the OAG code which is sent in Code.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="CounterLocation" type="OTA_CodeType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Identifies the location of a car rental site for an airport/city code.  Refer to OTA Code List Vehicle Where At Facility (VWF).</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Vendor" type="CompanyNameType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Information on the vendor associated with this rental location.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ResponseFilter" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">This is used to limit the reponse information to certain criteria. Absence of this element indicates that all vehicle location detail information should be returned. </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="LocationAddressPhoneIndicator" type="xs:boolean" use="optional" default="false">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This attribute may be used when a full response is not required, and the requestor wishes to indicate which sections of the policies are required. If LocationAddressPhoneIndicator is set to true, then information regarding the Location address and telephone number(s) should be included in the response.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="LocationInfoIndicator" type="xs:boolean" use="optional" default="false">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This attribute may be used when a full response is not required, and the requestor wishes to indicate which sections of the policies are required. If LocationInfoIndicator is set to true, then information regarding the Location should be included in the response.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="VehiclesIndicator" type="xs:boolean" use="optional" default="false">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This attribute may be used when a full response is not required, and the requestor wishes to indicate which sections of the policies are required. If VehiclesIndicator is set to true, then information regarding the Vehicles should be included in the response.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="RequirementsIndicator" type="xs:boolean" use="optional" default="false">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This attribute may be used when a full response is not required, and the requestor wishes to indicate which sections of the policies are required. If RequirementsIndicator is set to true, then information regarding the rental requirements should be included in the response.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="AdditionalFeesIndicator" type="xs:boolean" use="optional" default="false">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This attribute may be used when a full response is not required, and the requestor wishes to indicate which sections of the policies are required. If AdditionalFeesIndicator is set to true, then information regarding the additoinal fees should be included in the response.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="LiabilitiesIndicator" type="xs:boolean" use="optional" default="false">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This attribute may be used when a full response is not required, and the requestor wishes to indicate which sections of the policies are required. If LiabilitiesIndicator is set to true, then information regarding the rental liabilites should be included in the response.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ServicesOfferedIndicator" type="xs:boolean" use="optional" default="false">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This attribute may be used when a full response is not required, and the requestor wishes to indicate which sections of the policies are required. If ServicesOfferedIndicator is set to true, then information regarding the services offered should be included in the response.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Date" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The pick-up and return dates for the location information requested.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="PickUpDateTime" type="DateOrDateTimeType" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The date and time a car will be picked up at this location.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ReturnDateTime" type="DateOrDateTimeType" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The date and time a car will be returned at this location.
+</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Keyword" minOccurs="0" maxOccurs="25">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A keyword for which location detail information is requested.
+</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="Code" type="AlphaNumericStringLength1to8" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">A code that specifies the keyword for which information is requested.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="TPA_Extensions" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attributeGroup ref="ReqRespVersion"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

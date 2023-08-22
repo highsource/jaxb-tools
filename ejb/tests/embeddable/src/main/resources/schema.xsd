@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:annox="http://annox.dev.java.net"
+	jaxb:extensionBindingPrefixes="hj orm annox" jaxb:version="2.0">
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:globalBindings>
+				<jaxb:serializable/>
+			</jaxb:globalBindings>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.embeddable"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+	<!-- ... -->
+	<xs:element name="a" type="aType"/>
+	<xs:complexType name="aType">
+		<xs:sequence>
+			<xs:element name="b0" type="bType" minOccurs="0"/>
+			<xs:element name="b1" type="bType" minOccurs="0"/>
+			<xs:element name="e" type="eType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="bType">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:embeddable/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="c" minOccurs="0">
+				<xs:simpleType>
+	 				<xs:restriction base="xs:string">
+						<xs:maxLength value="999"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="d" type="xs:int" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eType">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:embeddable/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="f" type="xs:string" minOccurs="0"/>
+			<xs:element name="g" type="aType" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:ignored/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="employees">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="employee" type="EmployeeType" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="EmployeeType">
+		<xs:sequence>
+			<xs:element name="employeeId" type="xs:string" nillable="false"/>
+			<xs:element name="firstName" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="lastName" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="addressId" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="primaryPhone" nillable="true" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						
+						<hj:embedded>
+							<orm:attribute-override name="phoneNumber">
+								<orm:column name="PRIMARY_PHONE_NO"/>
+							</orm:attribute-override>
+							<orm:attribute-override name="phoneType">
+								<orm:column name="PRIMARY_PHONE_TYPE"/>
+							</orm:attribute-override>
+						</hj:embedded>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:annotation>
+						<xs:appinfo>
+							<hj:embeddable/>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:sequence>
+						<xs:element name="phoneNumber" type="xs:string" nillable="false"/>
+						<xs:element name="phoneType" type="xs:string" nillable="false"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="entityWithEmbeddedId" type="entityWithEmbeddedIdType"/>
+	<xs:complexType name="entityWithEmbeddedIdType">
+		<xs:sequence>
+			<xs:element name="id" type="embeddableIdType">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:embedded-id/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="embeddableIdType">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:embeddable/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="id1" type="xs:long" minOccurs="0"/>
+			<xs:element name="id2" type="xs:long" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="DOC" type="DocumentType"/>
+	<xs:complexType name="DocumentType">
+		<xs:sequence>
+			<xs:element name="ROUTING" minOccurs="0" type="RoutingType">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property name="Routing"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+ 
+	<xs:complexType name="RoutingType">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:embeddable/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SENDER" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property name="Sender"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>	
+		</xs:sequence>
+	</xs:complexType>   
+	
+</xs:schema>

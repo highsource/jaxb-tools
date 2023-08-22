@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 sp1 (http://www.altova.com) by Clint Peterson (Access Development Corp) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:element name="TRANSACTIONS">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="TRANSACTION" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TRANSACTION">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="TRAN_DETAILS"/>
+        <xs:element ref="QUALIFIED_FOR" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="REWARD" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="DISQUALIFIED" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="recordIndicator"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TRAN_DETAILS">
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="GRS_MATCHING_ID"/>
+        <xs:element ref="TRAN_ID"/>
+        <xs:element ref="TRAN_DATE"/>
+        <xs:element ref="TRAN_TIME" minOccurs="0"/>
+        <xs:element ref="CARD_NUMBER"/>
+        <xs:element ref="MEMBER_ID"/>
+        <xs:element ref="TRAN_AMOUNT"/>
+        <xs:element ref="NET_AMOUNT"/>
+        <xs:element ref="REFERENCE_NUMBER" minOccurs="0"/>
+        <xs:element ref="STORE_ID"/>
+        <xs:element ref="TRAN_TYPE"/>
+        <xs:element ref="LOAD_DATE"/>
+        <xs:element ref="CURRENCY_CODE"/>
+        <xs:element ref="AUTHORIZATION_CODE"/>
+        <xs:element ref="BATCH_NUMBER"/>
+        <xs:element ref="DEBIT_INDICATOR"/>
+        <xs:element ref="ENTERED"/>
+        <xs:element ref="TERMINAL_ID"/>
+        <xs:element ref="PROCESS_DATE"/>
+        <xs:element ref="BANK_NAME"/>
+        <xs:element ref="VENDOR_NAME"/>
+        <xs:element ref="QUALIFIED_FOR_FREQUENCY" minOccurs="0"/>
+        <xs:element ref="QUALIFIED_FOR_BONUS" minOccurs="0"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="QUALIFIED_FOR">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="OFFER_ID"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="REWARD">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="PARTIAL_AWARD_FLAG" minOccurs="0"/>
+        <xs:element ref="OFFER_ID"/>
+        <xs:element ref="PRODUCT_ID" minOccurs="0"/>
+        <xs:element ref="MANUAL_TRANSACTION_IND" minOccurs="0"/>
+        <xs:element ref="MERCHANT_AMOUNT"/>
+        <xs:element ref="MEMBER_AMOUNT"/>
+        <xs:element ref="CLUB_AMOUNT"/>
+        <xs:element ref="TRAN_ID" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="type">
+        <xs:simpleType>
+          <xs:annotation>
+            <xs:documentation>Type of offer the transaction qualified for.</xs:documentation>
+            <xs:documentation>Field Owner: GRS</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="OFR"/>
+            <xs:enumeration value="PRO"/>
+            <xs:enumeration value="FRQ"/>
+            <!--Standard Offer-->
+            <!--Club Product Offer-->
+            <!--Frequency Offer-->
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="DISQUALIFIED">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="OFFER_ID"/>
+        <xs:element ref="DISQUALIFIED_CODE"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GRS_MATCHING_ID">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Identity pointing to the merchant record.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="1"/>
+        <xs:maxLength value="20"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="PRODUCT_ID">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Identity Pointing to the product record.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:integer"/>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="TRAN_ID">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Internal GRS ID identifiying the transaction.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:integer"/>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="TRAN_DATE">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Date the transaction occured.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="TRAN_TIME">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Time the transaction occured.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:time"/>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="CARD_NUMBER">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Card used to make the purchase.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="1"/>
+        <xs:maxLength value="40"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="MEMBER_ID">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Member ID that made the transaction.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="1"/>
+        <xs:maxLength value="20"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="TRAN_AMOUNT">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Amount of the transaction.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:decimal"/>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="NET_AMOUNT">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Amount minus taxes and tip that is set in the business rule.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:decimal"/>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="REFERENCE_NUMBER">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Reference number from the transaction supplied by the processor.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="1"/>
+        <xs:maxLength value="23"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="STORE_ID">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Local Store ID where the transaction occured.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="1"/>
+        <xs:maxLength value="20"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="TRAN_TYPE">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Type of transaction.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+        <xs:length value="1"/>
+        <xs:enumeration value="S"/>
+        <xs:enumeration value="F"/>
+        <xs:enumeration value="R"/>
+        <!--Sale-->
+        <!--Forced Sale-->
+        <!--Return-->
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="DISQUALIFIED_CODE">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Code indicating reason for disqualification.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+        <xs:length value="3"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="LOAD_DATE">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Date GRS loaded the transaction into the system.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="CURRENCY_CODE">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Currency code for the transaction supplied by the processor.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="0"/>
+        <xs:maxLength value="3"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="AUTHORIZATION_CODE">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Authorization code number supplied by the processor.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="0"/>
+        <xs:maxLength value="6"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="BATCH_NUMBER">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Batch the transaction occured in supplied by the processor.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="0"/>
+        <xs:maxLength value="12"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="DEBIT_INDICATOR">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Indicates if a transaction was made with a debit card or credit card.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="0"/>
+        <xs:maxLength value="1"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="ENTERED">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Card number entry method.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="C"/>
+        <xs:enumeration value="T"/>
+        <xs:enumeration value="Card Swiped"/>
+        <xs:enumeration value="Hand Entered"/>
+        <!--Swiped-->
+        <!--Hand Entered-->
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="TERMINAL_ID">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Terminal ID sent by the processor.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="0"/>
+        <xs:maxLength value="16"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="PROCESS_DATE">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Date transaction was processed.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:date"/>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="BANK_NAME">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Name of the acquiring bank where the transaction originated.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="1"/>
+        <xs:maxLength value="30"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="VENDOR_NAME">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Name of the credit card processor where the transaction originated.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="1"/>
+        <xs:maxLength value="30"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="PARTIAL_AWARD_FLAG">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Indicates if a partial reward was given.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="T"/>
+        <xs:enumeration value="F"/>
+        <xs:enumeration value="True"/>
+        <xs:enumeration value="Flase"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="OFFER_ID">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Local Offer ID that the transaction qualified for.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+        <xs:minLength value="1"/>
+        <xs:maxLength value="20"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="MANUAL_TRANSACTION_IND">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Indicates if transaction was manually entered by the club.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="T"/>
+        <xs:enumeration value="F"/>
+        <xs:enumeration value="True"/>
+        <xs:enumeration value="Flase"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="MERCHANT_AMOUNT">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Amount the merchant is debited or credited from the transacttion.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:decimal"/>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="MEMBER_AMOUNT">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Amount a member is debited or credited from the transaction.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:decimal"/>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="CLUB_AMOUNT">
+    <xs:simpleType>
+      <xs:annotation>
+        <xs:documentation>Amount the club is debited or credited from the transaction.</xs:documentation>
+        <xs:documentation>Field Owner: GRS</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:decimal"/>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="QUALIFIED_FOR_BONUS">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="T"/>
+        <xs:enumeration value="F"/>
+        <xs:enumeration value="True"/>
+        <xs:enumeration value="Flase"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="QUALIFIED_FOR_FREQUENCY">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="T"/>
+        <xs:enumeration value="F"/>
+        <xs:enumeration value="True"/>
+        <xs:enumeration value="Flase"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:attributeGroup name="recordIndicator">
+    <xs:attribute name="type">
+      <xs:simpleType>
+        <xs:annotation>
+          <xs:documentation>MQT - Merchant qualified transaction, PQT - Merchant and Card qualified transaction, AQT business rule qualified and DQT - Disqualified transaction.</xs:documentation>
+          <xs:documentation>Field Owner: GRS</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="AQT"/>
+          <xs:enumeration value="DQT"/>
+          <xs:enumeration value="MQT"/>
+          <xs:enumeration value="PQT"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="sequence_number">
+      <xs:simpleType>
+        <xs:annotation>
+          <xs:documentation>Unique reference number in the file.  Used for troubleshooting.</xs:documentation>
+          <xs:documentation>Field Owner: Club</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:integer"/>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+</xs:schema>

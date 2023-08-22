@@ -1,0 +1,86 @@
+<jaxb:bindings version="1.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+	jaxb:extensionBindingPrefixes="xjc orm inheritance"
+	xmlns:test="urn:test">
+	
+	<jaxb:bindings schemaLocation="schema.xsd" node="/xsd:schema">
+		<jaxb:globalBindings localScoping="toplevel">
+			<jaxb:serializable/>
+		</jaxb:globalBindings>
+
+		<jaxb:bindings
+			node="xsd:complexType[@name='issue121Type']//xsd:element[@name='simpleCollection']">
+			<hj:ignored/>
+		</jaxb:bindings>
+
+		<jaxb:bindings
+			node="xsd:complexType[@name='issue121Type']//xsd:element[@name='complexCollection']">
+			<hj:ignored/>
+		</jaxb:bindings>
+
+		<jaxb:bindings
+			node="xsd:complexType[@name='issueYYYType']//xsd:element[@name='single']">
+			<hj:many-to-one>
+				<orm:join-column name="SINGLE_ISSUEXXXTYPE_HJID"/>
+			</hj:many-to-one>
+		</jaxb:bindings>
+
+		<jaxb:bindings
+			scd="~test:issueXXXType">
+			<jaxb:class ref="org.jvnet.hyperjaxb3.ejb.tests.issues.MyIssueXXXType"/>
+		</jaxb:bindings>
+
+		<jaxb:bindings
+			node="xsd:complexType[@name='issueHJIII48BType']">
+			<hj:generated-property name="Any">
+				<hj:jaxb-context contextPath="org.jvnet.hyperjaxb3.ejb.tests.po"/>
+			</hj:generated-property>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="xsd:complexType[@name='issueHJIII92Type']">
+			<hj:entity>
+				<orm:table name="ISSUEHJIII92_CUSTOM_TABLE" />
+			</hj:entity>
+			<jaxb:bindings node="xsd:sequence/xsd:element[@name='id1']">
+				<hj:id/>
+			</jaxb:bindings>
+			<jaxb:bindings node="xsd:sequence/xsd:element[@name='id2']">
+				<hj:id/>
+			</jaxb:bindings>
+		</jaxb:bindings>
+	        <jaxb:bindings node="xsd:complexType[@name='issueHJIII94Type']">
+			<hj:mapped-superclass/>
+			<hj:generated-id/>
+			<hj:generated-version/>
+	        </jaxb:bindings>
+	        <jaxb:bindings node="xsd:complexType[@name='issueHJIII94Type']//xsd:element[@ref='test:issueHJIII94A']">
+			<hj:one-to-many>
+				<orm:join-column name="ISSUEHJIII94A"/>
+			</hj:one-to-many>
+	        </jaxb:bindings>
+	        <jaxb:bindings node="xsd:complexType[@name='issueHJIII94SubType']">
+			<hj:entity>
+				<orm:association-override name="issueHJIII94A">
+					<orm:join-column name="ISSUEHJIII94_ISSUEHJIII94A"/>
+				</orm:association-override>
+			</hj:entity>
+	        </jaxb:bindings>        
+
+	        <jaxb:bindings node="xsd:complexType[@name='issueHJIII45SuperType']">
+			<jaxb:class ref="org.jvnet.hyperjaxb3.ejb.tests.issues.pre.IssueHJIII45SuperClass"/>
+	        </jaxb:bindings>        
+
+
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="schema-ignored.xsd" node="/xsd:schema">
+		<jaxb:schemaBindings>
+			<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.issuesignored"/>
+		</jaxb:schemaBindings>
+		<hj:ignored-package name="org.jvnet.hyperjaxb3.ejb.tests.issuesignored"/>
+	</jaxb:bindings>
+</jaxb:bindings>

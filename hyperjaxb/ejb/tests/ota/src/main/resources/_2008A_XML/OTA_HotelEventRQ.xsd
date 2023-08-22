@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.003" id="OTA2008A">
+	<xs:include schemaLocation="OTA_HotelEvent.xsd"/>
+	<xs:element name="OTA_HotelEventRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This message communicates the meeting planners event needs to an event host facility (ies).  This includes needs ranging from meeting room setup, audiovisual, catering, safety and security among other meeting and event requirements.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Events" type="EventType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Collection of events.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The standard attributes that appear on the root element for all OTA payloads. </xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

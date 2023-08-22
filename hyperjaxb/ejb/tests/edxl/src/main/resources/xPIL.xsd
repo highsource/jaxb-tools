@@ -1,0 +1,1619 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:a="urn:oasis:names:tc:ciq:xal:3" xmlns:n="urn:oasis:names:tc:ciq:xnl:3" xmlns="urn:oasis:names:tc:ciq:xpil:3" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xlink="http://www.w3.org/1999/xlink1" xmlns:ct="urn:oasis:names:tc:ciq:ct:3" targetNamespace="urn:oasis:names:tc:ciq:xpil:3" elementFormDefault="qualified" attributeFormDefault="qualified">
+	<xs:annotation>
+		<xs:documentation> 
+		Specification Name: OASIS CIQ TC - extensible Party Information Language (xPIL) 
+		Description: Defines the W3C schema for representing party information (unique identifiers)
+		including 	party name and address
+		(Using XML Schema based standard code list/enumeration mechanism - OPTION 1 AND DEFAULT)
+		Produced by: OASIS Customer Information Quality Technical Committee
+		URL: http://www.oasis-open.org/committees/ciq
+		Version: 3.0  
+		Status: Committee Specification
+		Copyright: 2007-08, OASIS, http://www.oasis-open.org
+		Last Modified: 15 November 2007
+		Last Modified by: Ram Kumar, Chair, OASIS CIQ TC 
+		
+		NOTE: Do not modify this schema as it will break specifications compatibility 
+		</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="http://www.w3.org/1999/xlink1" schemaLocation="xlink-2003-12-31.xsd"/>
+	<xs:import namespace="urn:oasis:names:tc:ciq:ct:3" schemaLocation="CommonTypes.xsd"/>
+	<xs:import namespace="urn:oasis:names:tc:ciq:xnl:3" schemaLocation="xNL.xsd"/>
+	<xs:import namespace="urn:oasis:names:tc:ciq:xal:3" schemaLocation="xAL.xsd"/>
+	<xs:include schemaLocation="xPIL-types.xsd"/>
+	<!--*************** KEY TOP LEVEL ELEMENTS ********************-->
+	<xs:element name="Party" type="PartyType">
+		<xs:annotation>
+			<xs:documentation>A container for defining the unique characteristics of a party, which can be a person or organisation</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PersonDetails">
+		<xs:annotation>
+			<xs:documentation>A container for defining the unique characteristics of a person only</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="PersonDetailsType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OrganisationDetails" type="OrganisationDetailsType">
+		<xs:annotation>
+			<xs:documentation>A container for defining the unique characteristics of an organisation only</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<!--**************** COMPLEX TYPES ********************************-->
+	<xs:complexType name="PartyType">
+		<xs:annotation>
+			<xs:documentation>A container for defining the unique characteristics of a party, which can be a person or organisation</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="FreeTextLines" minOccurs="0"/>
+			<xs:element name="PartyName" type="n:PartyNameType" minOccurs="0"/>
+			<xs:element ref="Addresses" minOccurs="0"/>
+			<xs:element ref="Accounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A container to define the accounts details of the party such as utility account, financil accounts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="ContactNumbers" minOccurs="0"/>
+			<xs:element ref="Documents" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A container for identification document and cards of the party that are unique to the party. e.g. license, identification card, credit card, etc</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="ElectronicAddressIdentifiers" minOccurs="0"/>
+			<xs:element ref="Events" minOccurs="0"/>
+			<xs:element ref="Identifiers" minOccurs="0"/>
+			<xs:element ref="Memberships" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A container for memberships of party with other organisations (e.g. industry groups) or social networks (clubs, association, etc)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Relationships" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Relationships with other parties (persons or organisations, and the nature of relationship). Examples:
+- For person: Contacts, blood relatives, friends, referees, customers, etc
+- for Organisation: Subsidiary, Parent company, Branches, Divisions, Partners, etc</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Revenues" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Container for income / revenue information of the party (salary/organisation revenue)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Stocks" minOccurs="0"/>
+			<xs:element ref="Vehicles" minOccurs="0"/>
+			<xs:element ref="OrganisationInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Container for other organisation specific details that are not covered in this schema that are common to a party</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="PersonInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Container for other person specific details that are not covered in this schema elements that are common to a party</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="BirthInfo" minOccurs="0"/>
+			<xs:element ref="CountriesOfResidence" minOccurs="0"/>
+			<xs:element ref="Favourites" minOccurs="0"/>
+			<xs:element ref="Habits" minOccurs="0"/>
+			<xs:element ref="Hobbies" minOccurs="0"/>
+			<xs:element ref="Languages" minOccurs="0"/>
+			<xs:element ref="Nationalities" minOccurs="0"/>
+			<xs:element ref="Occupations" minOccurs="0"/>
+			<xs:element ref="PhysicalInfo" minOccurs="0"/>
+			<xs:element ref="Preferences" minOccurs="0"/>
+			<xs:element ref="Qualifications" minOccurs="0"/>
+			<xs:element ref="Visas" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="PartyType" type="PartyTypeList">
+			<xs:annotation>
+				<xs:documentation>Type of Party. e.g. Person or an organisation. An organisation could be university, college, club, association, company, etc</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="PartyID" type="ct:String">
+			<xs:annotation>
+				<xs:documentation>A unique identifier for party</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="PartyIDType" type="PartyIDTypeList">
+			<xs:annotation>
+				<xs:documentation>Type of PartyID</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ID" type="ct:String">
+			<xs:annotation>
+				<xs:documentation>A globally unique identifier assigned to party</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Usage" type="PartyUsageList">
+			<xs:annotation>
+				<xs:documentation>Type of use of party date. e.g. exchange, update, create</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Status" type="ct:StatusList">
+			<xs:annotation>
+				<xs:documentation>Status of the entity. e.g. Old, Current, Inactive, Active, etc</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="ct:grValidityDate"/>
+		<xs:attribute name="PartyKey" type="ct:String">
+			<xs:annotation>
+				<xs:documentation>A primary key to reference Party.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="PartyKeyRef" type="ct:String">
+			<xs:annotation>
+				<xs:documentation>A foreign key to reference attribute Key of Party.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute ref="xlink:type"/>
+		<xs:attribute ref="xlink:label"/>
+		<xs:attribute ref="xlink:href"/>
+		<xs:attributeGroup ref="ct:grDataQuality"/>
+		<xs:attributeGroup ref="ct:grLanguageCode"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="PersonDetailsType">
+		<xs:annotation>
+			<xs:documentation>A container for defining the unique characteristics of a person only</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="FreeTextLines" minOccurs="0"/>
+			<xs:element ref="n:PersonName" maxOccurs="unbounded"/>
+			<xs:element ref="Addresses" minOccurs="0"/>
+			<xs:element ref="Accounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A container to define the accounts details of the party such as utility account, financil accounts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="ContactNumbers" minOccurs="0"/>
+			<xs:element ref="Documents" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A container for identification document and cards of the party that are unique to the party. e.g. license, identification card, credit card, etc</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="ElectronicAddressIdentifiers" minOccurs="0"/>
+			<xs:element ref="Events" minOccurs="0"/>
+			<xs:element ref="Identifiers" minOccurs="0"/>
+			<xs:element ref="Memberships" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A container for memberships of party with other organisations (e.g. industry groups) or social networks (clubs, association, etc)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Relationships" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Relationships with other parties (persons or organisations, and the nature of relationship). Examples:
+- For person: Contacts, blood relatives, friends, referees, customers, etc
+- for Organisation: Subsidiary, Parent company, Branches, Divisions, Partners, etc</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Revenues" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Container for income / revenue information of the party (salary/organisation revenue)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Stocks" minOccurs="0"/>
+			<xs:element ref="Vehicles" minOccurs="0"/>
+			<xs:element ref="PersonInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Container for other person specific details that are not covered in this schema elements that are common to a party</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="BirthInfo" minOccurs="0"/>
+			<xs:element ref="CountriesOfResidence" minOccurs="0"/>
+			<xs:element ref="Favourites" minOccurs="0"/>
+			<xs:element ref="Habits" minOccurs="0"/>
+			<xs:element ref="Hobbies" minOccurs="0"/>
+			<xs:element ref="Languages" minOccurs="0"/>
+			<xs:element ref="Nationalities" minOccurs="0"/>
+			<xs:element ref="Occupations" minOccurs="0"/>
+			<xs:element ref="PhysicalInfo" minOccurs="0"/>
+			<xs:element ref="Preferences" minOccurs="0"/>
+			<xs:element ref="Qualifications" minOccurs="0"/>
+			<xs:element ref="Visas" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="Usage" type="PersonDetailsUsageList">
+			<xs:annotation>
+				<xs:documentation>Type of use of this data. e.g. data exchange, contact, update, create</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Status" type="ct:StatusList">
+			<xs:annotation>
+				<xs:documentation>Status of the organisation details</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="ct:grValidityDate"/>
+		<xs:attribute name="PersonDetailsKey" type="ct:String">
+			<xs:annotation>
+				<xs:documentation>A primary key to reference Person Details.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="PersonDetailsKeyRef" type="ct:String">
+			<xs:annotation>
+				<xs:documentation>A foreign key to reference attribute Key of Person Details.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="ct:grDataQuality"/>
+		<xs:attributeGroup ref="ct:grLanguageCode"/>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:complexType name="OrganisationDetailsType">
+		<xs:annotation>
+			<xs:documentation>A container for defining the unique characteristics of an organisation only</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="FreeTextLines" minOccurs="0"/>
+			<xs:element ref="n:OrganisationName" maxOccurs="unbounded"/>
+			<xs:element ref="Addresses" minOccurs="0"/>
+			<xs:element ref="Accounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A container to define the accounts details of the party such as utility account, financil accounts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="ContactNumbers" minOccurs="0"/>
+			<xs:element ref="Documents" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A container for identification document and cards of the party that are unique to the party. e.g. license, identification card, credit card, etc</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="ElectronicAddressIdentifiers" minOccurs="0"/>
+			<xs:element ref="Events" minOccurs="0"/>
+			<xs:element ref="Identifiers" minOccurs="0"/>
+			<xs:element ref="Memberships" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A container for memberships of party with other organisations (e.g. industry groups) or social networks (clubs, association, etc)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Relationships" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Relationships with other parties (persons or organisations, and the nature of relationship). Examples:
+- For person: Contacts, blood relatives, friends, referees, customers, etc
+- for Organisation: Subsidiary, Parent company, Branches, Divisions, Partners, etc</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Revenues" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Container for income / revenue information of the party (salary/organisation revenue)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Stocks" minOccurs="0"/>
+			<xs:element ref="Vehicles" minOccurs="0"/>
+			<xs:element ref="OrganisationInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Container for other person specific details that are not covered in this schema elements that are common to a party</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Usage" type="OrganisationDetailsUsageList">
+			<xs:annotation>
+				<xs:documentation>Type of use of this data. e.g. data exchange, contact, update, create</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Status" type="ct:StatusList">
+			<xs:annotation>
+				<xs:documentation>Status of the organisation details</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="ct:grValidityDate"/>
+		<xs:attribute name="OrganisationDetailsKey" type="ct:String">
+			<xs:annotation>
+				<xs:documentation>A primary key to reference Organisation Details.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OrganisationDetailsKeyRef" type="ct:String">
+			<xs:annotation>
+				<xs:documentation>A foreign key to reference attribute Key of Organisation Details.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute ref="xlink:type"/>
+		<xs:attribute ref="xlink:label"/>
+		<xs:attribute ref="xlink:href"/>
+		<xs:attributeGroup ref="ct:grDataQuality"/>
+		<xs:attributeGroup ref="ct:grLanguageCode"/>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<!--**************** SECOND LEVEL ELEMENTS FOR REUSE - COMMON ELEMENTS VALID AND REUSABLE FOR BOTH PERSON AND ORGANISATION ***************************-->
+	<xs:element name="FreeTextLines">
+		<xs:annotation>
+			<xs:documentation>Free text description of the party as line 1, line 2, line n. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="FreeTextLine" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="ct:String">
+								<xs:attribute name="Type" type="FreeTextLineTypeList">
+									<xs:annotation>
+										<xs:documentation>Type (semantics or category) of free text data </xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attributeGroup ref="ct:grDataQuality"/>
+								<xs:anyAttribute namespace="##other" processContents="lax"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Accounts">
+		<xs:annotation>
+			<xs:documentation>A container to define the accounts details of the party</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Account" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Account details such as bank account, customer account with utilities</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="AccountElement" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Information about the account</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="ct:String">
+											<xs:attribute name="Type" type="AccountElementList">
+												<xs:annotation>
+													<xs:documentation>If present, specifies the type of the information provided as text value of the element.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:anyAttribute namespace="##other" processContents="lax"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Organisation" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Reference to a Party element that describes the organisation where the account is held.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="n:OrganisationNameType"/>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="Type" type="AccountTypeList">
+							<xs:annotation>
+								<xs:documentation>Type of account. e.g. bank, customer, employee, etc</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="OwnershipType" type="AccountOwnershipTypeList">
+							<xs:annotation>
+								<xs:documentation>Joint, Individual, corporate, etc.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="Status" type="ct:StatusList">
+							<xs:annotation>
+								<xs:documentation>Status of the entity. e.g. Old, Current, Inactive, Active, etc</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attributeGroup ref="ct:grValidityDate"/>
+						<xs:attributeGroup ref="ct:grDataQuality"/>
+						<xs:anyAttribute namespace="##other" processContents="lax"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Addresses">
+		<xs:annotation>
+			<xs:documentation>A container for all party addresses</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Address" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="a:AddressType"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ContactNumbers">
+		<xs:annotation>
+			<xs:documentation>A container for all kinds of telecommunication lines of party used for contact purposes. e.g. phone, fax, mobile, pager, etc.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ContactNumber" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Universal telecommunication number structure</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ContactNumberElement" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Full contact number or part of it</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="ct:String">
+											<xs:attribute name="Type" type="ContactNumberElementList">
+												<xs:annotation>
+													<xs:documentation>If present, specifies type of the information provdied as text value of the element.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:anyAttribute namespace="##other" processContents="lax"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="CommunicationMediaType" type="CommunicationMediaTypeList">
+							<xs:annotation>
+								<xs:documentation>Free text explanation of the communication line type. e.g. telephone, land line, mobile, fax, pager, etc</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="Status" type="ct:StatusList">
+							<xs:annotation>
+								<xs:documentation>Status of the entity. e.g. Old, Current, Inactive, Active, etc</xs:documentation>
+								<xs:documentation>Current Status of Contact Number</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="Usage" type="ContactNumberUsageList">
+							<xs:annotation>
+								<xs:documentation>Nature of contact. Example: business, personal, free call, toll free, after hours, etc</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ContactHours" type="ct:String">
+							<xs:annotation>
+								<xs:documentation>Free text expression of contact hours. e.g. 9:00AM-5:00PM</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attributeGroup ref="ct:grValidityDate"/>
+						<xs:attributeGroup ref="ct:grDataQuality"/>
+						<xs:anyAttribute namespace="#other" processContents="lax"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Documents">
+		<xs:annotation>
+			<xs:documentation>A container for identification document and cards of the party that are unique to the party.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Document" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Passports, driver licenses, credit cards, certificates, etc.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="DocumentElement" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Full document desctiption or part of it.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="ct:String">
+											<xs:attribute name="Type" type="DocumentElementList">
+												<xs:annotation>
+													<xs:documentation>If present, specifies the type of the information provided as text value of the element.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:anyAttribute namespace="##other" processContents="lax"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="NameOnDocument" type="n:PartyNameType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Party Name as on the document if different from the main one.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="AddressOnDocument" type="a:AddressType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Address details on the document</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="IssuerName" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Reference to a Party element that describes the issuing organisation</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="n:OrganisationNameType"/>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="Type" type="DocumentTypeList"/>
+						<xs:attribute name="Status" type="ct:StatusList">
+							<xs:annotation>
+								<xs:documentation>Status of the entity. e.g. Old, Current, Inactive, Active, etc</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attributeGroup ref="ct:grValidityDate"/>
+						<xs:attributeGroup ref="ct:grDataQuality"/>
+						<xs:anyAttribute namespace="##other" processContents="lax"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ElectronicAddressIdentifiers">
+		<xs:annotation>
+			<xs:documentation>A container of different types of electronic addresses of party (e.g. email, chat, skype, etc)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ElectronicAddressIdentifier" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="ct:String">
+								<xs:attribute name="Type" type="ElectronicAddressIdentifierTypeList">
+									<xs:annotation>
+										<xs:documentation>Type of electronic address identifier</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Status" type="ct:StatusList">
+									<xs:annotation>
+										<xs:documentation>Status of the entity. e.g. Old, Current, Inactive, Active, etc</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Usage" type="ElectronicAddressIdentifierUsageList">
+									<xs:annotation>
+										<xs:documentation>Usage of electronic address identifier. e.g. business, personal</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Label" type="ct:String">
+									<xs:annotation>
+										<xs:documentation>An electronic address identifier is usually stored (and probably exchanged) in conjunction with a label which is typically displayed and the URL/electronic identifier just links that label.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attributeGroup ref="ct:grDataQuality"/>
+								<xs:anyAttribute namespace="##other" processContents="lax"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Events">
+		<xs:annotation>
+			<xs:documentation>A container for a list of key events and dates of the events of the organisation and person</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Event" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Type of event for a person - e.g. marriage anniversary, death, daughter's birth, spouse birthday, etc. 
+
+Type of event for organisation - date of formation/registration, date of closing down, date of liquidation, data of becoming public limited, etc
+</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="ct:String">
+								<xs:attribute name="Type" type="EventTypeList">
+									<xs:annotation>
+										<xs:documentation>Type of event. e.g. Anniversary. If "Anniversary" is type, then the text for Event could be "20th wedding anniversary"</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attributeGroup ref="ct:grValidityDate"/>
+								<xs:attribute name="Date" type="xs:dateTime">
+									<xs:annotation>
+										<xs:documentation>Record the exact date of the event here. For example, deceased date, company closed date, birthday date of spouse, etc</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attributeGroup ref="ct:grDataQuality"/>
+								<xs:anyAttribute namespace="##other" processContents="lax"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Identifiers">
+		<xs:annotation>
+			<xs:documentation>A container for a list of Identifiers to recognise the party such as customer identifer, social security number, tax number, etc</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Identifier" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Identifier to recognise the party such as customer identifer, social security number, National ID Card, tax number, buiness number, company number, company registration, etc</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="IdentifierElement" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Information about the identifer</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="ct:String">
+											<xs:attribute name="Type" type="PartyIdentifierElementList"/>
+											<xs:anyAttribute namespace="##other" processContents="lax"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="IssuerName" type="n:OrganisationNameType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Reference to a Party element that describes the issuing organisation</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="Type" type="PartyIdentifierTypeList">
+							<xs:annotation>
+								<xs:documentation>Type of identifier. e.g. Tax Number</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="Status" type="ct:StatusList">
+							<xs:annotation>
+								<xs:documentation>Status of the entity. e.g. Old, Current, Inactive, Active, etc</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attributeGroup ref="ct:grValidityDate"/>
+						<xs:attributeGroup ref="ct:grDataQuality"/>
+						<xs:anyAttribute namespace="##other" processContents="lax"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Memberships">
+		<xs:annotation>
+			<xs:documentation>A container for memberships of party with other organisations (e.g. industry groups).</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Membership" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Membership details</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="MembershipElement" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Full description of membership or part of it</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="ct:String">
+											<xs:attribute name="Type" type="MembershipElementList">
+												<xs:annotation>
+													<xs:documentation>If present, specifies the type of the information provided as text value of the element.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:anyAttribute namespace="##other" processContents="lax"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Organisation" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Reference to a Party element that describes the organisation where the memberships is held.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="n:OrganisationNameType"/>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="Type" type="MembershipTypeList">
+							<xs:annotation>
+								<xs:documentation>Type of membership. e.g </xs:documentation>
+								<xs:documentation>Type of membership. e.g IEEE, Rifles Club</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="Status" type="ct:StatusList">
+							<xs:annotation>
+								<xs:documentation>Status of the entity. e.g. Old, Current, Inactive, Active, etc</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attributeGroup ref="ct:grValidityDate"/>
+						<xs:attributeGroup ref="ct:grDataQuality"/>
+						<xs:anyAttribute namespace="##other" processContents="lax"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Relationships">
+		<xs:annotation>
+			<xs:documentation>A container for relationships with other parties (persons or organisations, and the nature of relationship). Can also use this to define an organisation hierarchy (parent and subsidiary organisations or branches/groups of organisations)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Relationship" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Relationship with a party. e.g. Friend, Wife,  referee. organisation, customer. etc</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="n:NameLine" minOccurs="0"/>
+							<xs:element ref="n:PersonName" minOccurs="0"/>
+							<xs:element ref="n:OrganisationName" minOccurs="0"/>
+							<xs:element ref="Addresses" minOccurs="0"/>
+							<xs:element ref="ContactNumbers" minOccurs="0"/>
+							<xs:element ref="ElectronicAddressIdentifiers" minOccurs="0"/>
+						</xs:sequence>
+						<xs:attribute name="Status" type="ct:StatusList">
+							<xs:annotation>
+								<xs:documentation>Status of the entity. e.g. Old, Current, Inactive, Active, etc</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="PartyType" type="PartyTypeList">
+							<xs:annotation>
+								<xs:documentation>Type of party involved in the relationship, i.e. person or organisation</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="RelationshipWithPerson" type="PersonRelationshipTypeList">
+							<xs:annotation>
+								<xs:documentation>If tha party is person, then the type of relationship with the person such as Friend, Mother, wife, contact, referee</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="RelationshipWithOrganisation" type="OrganisationRelationshipTypeList">
+							<xs:annotation>
+								<xs:documentation>If tha party is organisation, then the type of relationship with the organisation such as employer, branch, head office, subsidiary, etc</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="RelationshipValidFrom" type="xs:dateTime"/>
+						<xs:attribute name="RelationshipValidTo" type="xs:dateTime"/>
+						<xs:attributeGroup ref="ct:grDataQuality"/>
+						<xs:anyAttribute namespace="##other" processContents="lax"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Revenues">
+		<xs:annotation>
+			<xs:documentation>Container for income / revenue information of the party</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Revenue" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Revenue/Income details</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:decimal">
+								<xs:attribute name="CurrencyCode" type="RevenueCurrencyCodeList">
+									<xs:annotation>
+										<xs:documentation>A three-letter currency code as per ISO 4217</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Status" type="ct:StatusList">
+									<xs:annotation>
+										<xs:documentation>Status of the entity. e.g. Old, Current, Inactive, Active, etc</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="PeriodFrom" type="xs:dateTime">
+									<xs:annotation>
+										<xs:documentation>Begining of the period. Inclusive.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="PeriodTo" type="xs:dateTime">
+									<xs:annotation>
+										<xs:documentation>End of the period. Inclusive.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Type" type="RevenueTypeList">
+									<xs:annotation>
+										<xs:documentation>Defines the type of amount. Example: Total earning, profit, loss, turnover, etc.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Precision">
+									<xs:annotation>
+										<xs:documentation>Precision range where the value of the element is in the middle of the range. E.g. </xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:decimal">
+											<xs:minInclusive value="0"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:attribute>
+								<xs:attribute name="Source" type="RevenueSourceList">
+									<xs:annotation>
+										<xs:documentation>Where this revenue / income comes from, e.g. business stream, activity, etc.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="CountryName" type="ct:String">
+									<xs:annotation>
+										<xs:documentation>Country from where the revenue is generated</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="AfterTax" type="xs:boolean">
+									<xs:annotation>
+										<xs:documentation>If present and set to true indicates that the income / revenue is after tax. </xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attributeGroup ref="ct:grDataQuality"/>
+								<xs:anyAttribute namespace="##other" processContents="lax"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Stocks">
+		<xs:annotation>
+			<xs:documentation>A container for stocks invested information </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Stock" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>A Stock market listing details. The organisation could be listed on more than one country</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="ListedCode" type="ct:String">
+							<xs:annotation>
+								<xs:documentation>The code name for the organisation as listed in the exchange. E.g. MOT for Motorola Inc</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="MarketName" type="ct:String">
+							<xs:annotation>
+								<xs:documentation>Free text name of the stock exchange or other market. E.g. NYSE or NZX</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="CountryName" type="ct:String">
+							<xs:annotation>
+								<xs:documentation>Name of the country where listed</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="InvestedDate" type="xs:dateTime">
+							<xs:annotation>
+								<xs:documentation>date of investment</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ShareQuantity" type="ct:String">
+							<xs:annotation>
+								<xs:documentation>Quantity of shares.....1 million shares</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ListedDate" type="xs:dateTime">
+							<xs:annotation>
+								<xs:documentation>date of listing </xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attributeGroup ref="ct:grDataQuality"/>
+						<xs:anyAttribute namespace="##other" processContents="lax"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Vehicles">
+		<xs:annotation>
+			<xs:documentation>A container to define all the vehicles of the party</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Vehicle" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Vehicle Details</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="VehicleElement" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Full vehicle description of part of it</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="ct:String">
+											<xs:attribute name="Type" type="VehicleInfoElementList">
+												<xs:annotation>
+													<xs:documentation>If present, specifies the type of the information provided as text value of the element.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:anyAttribute namespace="##other" processContents="lax"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="Type" type="VehicleTypeList">
+							<xs:annotation>
+								<xs:documentation>Type of vehicle. Example: Motorbike, Truck, Car, Bicycle, 4WD, Jeep, etc</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="Status" type="ct:StatusList">
+							<xs:annotation>
+								<xs:documentation>Status of the entity. e.g. Old, Current, Inactive, Active, etc</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attributeGroup ref="ct:grDataQuality"/>
+						<xs:anyAttribute namespace="##other" processContents="lax"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<!--***************** SECOND LEVEL ELEMENTS FOR REUSE - FOR ORGANISATION SPECIFIC DATA ONLY ***********************-->
+	<xs:element name="OrganisationInfo">
+		<xs:annotation>
+			<xs:documentation>Container for organisation specific details that are not covered in this schema that is common to a party</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="Type" type="OrganisationInfoTypeList">
+				<xs:annotation>
+					<xs:documentation>Type of organisation. Free text description, e.g. Company, Trust, Bank, Society, Club, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="CategoryType" type="OrganisationCategoryTypeList">
+				<xs:annotation>
+					<xs:documentation>Type of category the organisation belongs to such as club, association, company, vendor, etc</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Status" type="ct:StatusList">
+				<xs:annotation>
+					<xs:documentation>Status of the entity. e.g. Old, Current, Inactive, Active, etc</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Nature" type="OrganisationInfoNatureList">
+				<xs:annotation>
+					<xs:documentation>Nature of the organisation. e.g. Public limited, Commercial, charity, non-commercial, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="IndustryType" type="IndustryTypeList">
+				<xs:annotation>
+					<xs:documentation>Organisation Industry type such as IT, Manufacturing. </xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="IndustryCode" type="IndustryCodeList">
+				<xs:annotation>
+					<xs:documentation>Industry code or classification</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="IndustryCodeType" type="ct:String">
+				<xs:annotation>
+					<xs:documentation>Type of code used for industry code</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="NumberOfEmployees" type="ct:String">
+				<xs:annotation>
+					<xs:documentation>Free text description of organisation size in terms of number of employees</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="OperatingHourStartTime" type="xs:time">
+				<xs:annotation>
+					<xs:documentation>Operating hour start time of the organisation, e.g. 9:00am</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="OperatingHourEndTime" type="xs:time">
+				<xs:annotation>
+					<xs:documentation>Operating hour end time for the organisation. e.g. 5:00pm</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attributeGroup ref="ct:grDataQuality"/>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<!--****************** SECOND LEVEL ELEMENTS FOR REUSE - FOR PERSON SPECIFIC DATA ONLY *********************************-->
+	<xs:element name="PersonInfo">
+		<xs:annotation>
+			<xs:documentation>Container for person specific details that are not covered in this schema that is common to a party</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="Age" type="ct:String">
+				<xs:annotation>
+					<xs:documentation>Age of the person as integer</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="CategoryType" type="PersonCategoryTypeList">
+				<xs:annotation>
+					<xs:documentation>Type of category the person belongs such as customer, employee, friend, prospect, etc</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="PhysicalStatus" type="PhysicalStatusList">
+				<xs:annotation>
+					<xs:documentation>Status of the person. e.g. living, deceased, retired. To log the date of the status such as death or retired, use "Events" element</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="MaritalStatus" type="MaritalStatusList">
+				<xs:annotation>
+					<xs:documentation>Free text description of the current marital status, e.g. married, separated, divorced, separated, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Ethnicity" type="PersonEthnicityList">
+				<xs:annotation>
+					<xs:documentation>Ethnicity of the person, e.g. Asian, Chinese, African, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Gender" type="GenderList">
+				<xs:annotation>
+					<xs:documentation>Free text gender description.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="Religion" type="ReligionList">
+				<xs:annotation>
+					<xs:documentation>Free text name of the religion</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attributeGroup ref="ct:grDataQuality"/>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="BirthInfo">
+		<xs:annotation>
+			<xs:documentation>A container to define the Date of Birth details of a person</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="BirthInfoElement" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Birth details of the person</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="ct:String">
+								<xs:attribute name="Type" type="BirthInfoElementList">
+									<xs:annotation>
+										<xs:documentation>If present, specifies the type of the information provided as text value of the element.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:anyAttribute namespace="##other" processContents="lax"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="BirthPlaceDetails" type="a:AddressType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Full location details (e.g. address) may be required to get the exact geo-cordinates for astrology purposes</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="BirthDateTime" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Birth data and time to the known precision. Usually, it is only the date that is known. Leave time as 00:00:00 if not known.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="BirthDateTimePrecision" type="xs:duration">
+				<xs:annotation>
+					<xs:documentation>Specify the duration of the uncertainity period as a range where BirthDateTime is in the middle of the range. Uses xsd:duration as the data type. The time interval is in the format: PnYnMnDTnHnMnS
+P: period (required), nY: number of years, nM: number of months, nD: number of days, T: start of a time section (required if hours, minutes or secords to be specified), nH: number of hours, nM: number of minutes, nS: number of seconds
+
+P5Y -> period of 5 years
+P5Y2M10D -> 5 years, 2 months, 10 days, and 15 hours</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attributeGroup ref="ct:grDataQuality"/>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CountriesOfResidence">
+		<xs:annotation>
+			<xs:documentation>A container for all citizenships and residencies (Permanent/temporary) of a person.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Country" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Citizenship and residence information in a free-text form.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="a:CountryType">
+								<xs:attribute name="Type" type="ResidencyTypeList">
+									<xs:annotation>
+										<xs:documentation>Type of residency. e.g. permenant resident, citizen, temporary resident</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Status" type="ct:StatusList">
+									<xs:annotation>
+										<xs:documentation>Status of the entity. e.g. Old, Current, Inactive, Active, etc</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attributeGroup ref="ct:grValidityDate"/>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Favourites">
+		<xs:annotation>
+			<xs:documentation>A container for a list of favourites of a person</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Favourite" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>The favourites of the person</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="ct:String">
+								<xs:attribute name="Type" type="PersonFavouriteTypeList">
+									<xs:annotation>
+										<xs:documentation>Type of favourite. e.g. author, food, book, sport, etc
+
+<Favourite Type="sport">Cricket</Favourite>
+											<Favourite Type="Movie">Back to the Future</Favourite>
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attributeGroup ref="ct:grDataQuality"/>
+								<xs:anyAttribute namespace="##other" processContents="lax"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Habits">
+		<xs:annotation>
+			<xs:documentation>A container for a list of habits of a person</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Habit" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Personal habits. E.g. smoking, drinking, gambling, etc.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="ct:String">
+								<xs:attribute name="Type" type="HabitTypeList">
+									<xs:annotation>
+										<xs:documentation>Category/type of habit. e.g. sports, food, reading, etc. If "Hot Drinks" is type, then text for Habit could be "Strong Black Coffee"</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attributeGroup ref="ct:grDataQuality"/>
+								<xs:anyAttribute namespace="##other" processContents="lax"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Hobbies">
+		<xs:annotation>
+			<xs:documentation>A container for a list of hobbies of a person</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Hobby" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>A hobby of the person. E.g.  craft, sport, recreational activity, etc.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="ct:String">
+								<xs:attribute name="Type" type="HobbyTypeList">
+									<xs:annotation>
+										<xs:documentation>Type/Category of Hobby. e.g. sports, travelling. If "Sport" is a type/category of hobby, then text for "Hobby" could be "Playing cricket"</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attributeGroup ref="ct:grDataQuality"/>
+								<xs:anyAttribute namespace="##other" processContents="lax"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Languages">
+		<xs:annotation>
+			<xs:documentation>A container for a list of languages spoken by a person.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Language" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Name of the language spoken by the person</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="ct:String">
+								<xs:attribute name="Type" type="LanguageTypeList">
+									<xs:annotation>
+										<xs:documentation>Mother tongue, by birth, etc</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Speak" type="LanguageSkillsList">
+									<xs:annotation>
+										<xs:documentation>Indicates ability to speak: yes, no, poor, good, bad, average</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Read" type="LanguageSkillsList">
+									<xs:annotation>
+										<xs:documentation>Indicates ability to read: yes, no, poor, good, bad, average</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Write" type="LanguageSkillsList">
+									<xs:annotation>
+										<xs:documentation>Indicates ability to write: yes, no, poor, good, bad, average</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Understand" type="LanguageSkillsList">
+									<xs:annotation>
+										<xs:documentation>Indicates ability to understand speech: yes, no, poor, good, bad, average</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Preference" type="LanguagePreferenceList">
+									<xs:annotation>
+										<xs:documentation>Indicates preferred language of communication (read and/or write and/or speak)</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attributeGroup ref="ct:grDataQuality"/>
+								<xs:anyAttribute namespace="##other" processContents="lax"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Nationalities">
+		<xs:annotation>
+			<xs:documentation>A container for a list of nationalities of a person</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Country" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Name of the country of nationality. Could be more than one nationality</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="a:CountryType">
+								<xs:attribute name="Type" type="NationalityTypeList">
+									<xs:annotation>
+										<xs:documentation>Type of nationality - By birth, naturalization, citizen</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Status" type="ct:StatusList">
+									<xs:annotation>
+										<xs:documentation>Status of the entity. e.g. Old, Current, Inactive, Active, etc</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attributeGroup ref="ct:grValidityDate"/>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Occupations">
+		<xs:annotation>
+			<xs:documentation>A container for a list of occupations of a person</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Occupation" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Occupation details</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="OccupationElement" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Full description of the occupation or part of it</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="ct:String">
+											<xs:attribute name="Type" type="OccupationElementList">
+												<xs:annotation>
+													<xs:documentation>If present, specifies the type of the information provided as text value of the element.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:anyAttribute namespace="##other" processContents="lax"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Employer" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Reference to a Party element that describes the employer.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="n:OrganisationNameType"/>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="isSelfEmployed" type="xs:boolean">
+							<xs:annotation>
+								<xs:documentation>Is the party self employed? A boolean value expected</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="Status" type="ct:StatusList">
+							<xs:annotation>
+								<xs:documentation>Status of the entity. e.g. Old, Current, Inactive, Active, etc</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attributeGroup ref="ct:grValidityDate"/>
+						<xs:attributeGroup ref="ct:grDataQuality"/>
+						<xs:anyAttribute namespace="##other" processContents="lax"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PhysicalInfo">
+		<xs:annotation>
+			<xs:documentation>A container for physical characteristics of a person</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="FreeTextLine" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Any other physical info not covered by elements here</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="ct:String">
+								<xs:attribute name="Type" type="PhysicalInfoFreeTextTypeList">
+									<xs:annotation>
+										<xs:documentation>Category or type of physical info</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attributeGroup ref="ct:grDataQuality"/>
+								<xs:anyAttribute namespace="##other" processContents="lax"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Feature" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Description of a physical feature such as hair, height, eye color, etc.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="ct:String">
+								<xs:attribute name="Type" type="FeatureTypeList">
+									<xs:annotation>
+										<xs:documentation>If present, specifies the type of the information provided as text value of the element.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="UnitType" type="UnitTypeList">
+									<xs:annotation>
+										<xs:documentation>Defines the unit of measurement. Example: Inches, feet, cm, meters, days, months, years, kgs, pounds, etc.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attributeGroup ref="ct:grDataQuality"/>
+								<xs:anyAttribute namespace="##other" processContents="lax"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="BodyMark" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Description of body marks, such as scars, tatoos, spots, etc.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="ct:String">
+								<xs:attribute name="Part" type="BodyMarkPartList">
+									<xs:annotation>
+										<xs:documentation>Free text name/description of the body part where the mark is located</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Location" type="BodyMarkPartLocationList">
+									<xs:annotation>
+										<xs:documentation>Free text description of where on the body part the mark is located. E.g. left hand side, front, back, etc</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attributeGroup ref="ct:grDataQuality"/>
+								<xs:anyAttribute namespace="##other" processContents="lax"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Disability" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Description of person's disability.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="ct:String">
+								<xs:attribute name="Cause" type="DisabilityCauseList">
+									<xs:annotation>
+										<xs:documentation>Free text description of the cause of the disability, e.g. birth defect, accident, etc.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attributeGroup ref="ct:grDataQuality"/>
+								<xs:anyAttribute namespace="##other" processContents="lax"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Allergy" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Description of the person's allergy. e.g. Allergic to Pencillin, milk products</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="ct:String">
+								<xs:attributeGroup ref="ct:grDataQuality"/>
+								<xs:anyAttribute namespace="##other" processContents="lax"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="HealthCondition" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Condition of health in terms of medical. e.g. Healthy, diabetic, hgh blood pressure, high cholestrol, etc</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="ct:String">
+								<xs:attributeGroup ref="ct:grDataQuality"/>
+								<xs:anyAttribute namespace="##other" processContents="lax"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="BloodGroup" type="BloodGroupList"/>
+			<xs:attributeGroup ref="ct:grDataQuality"/>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Preferences">
+		<xs:annotation>
+			<xs:documentation>A container for a list of preferences of a person (e.g. seat position in flight, restuarants)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Preference" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Preferences of the person. e.g. seat in non smoking area, holiday with family than alone</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="ct:String">
+								<xs:attribute name="Type" type="PreferenceTypeList">
+									<xs:annotation>
+										<xs:documentation>Type of preference. e.g. seating position</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attributeGroup ref="ct:grDataQuality"/>
+								<xs:anyAttribute namespace="##other" processContents="lax"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Qualifications">
+		<xs:annotation>
+			<xs:documentation>A container for a list of  qualifications of a person</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Qualification" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Educational qualification</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="QualificationElement" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Full / partial name or description of person's qualification</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="ct:String">
+											<xs:attribute name="Type" type="QualificationElementList">
+												<xs:annotation>
+													<xs:documentation>If present, specifies the type of the information provided as text value of the element.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:anyAttribute namespace="##other" processContents="lax"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Institution" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Reference to a Party element that describes the institution.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="n:OrganisationNameType"/>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="Status" type="ct:StatusList">
+							<xs:annotation>
+								<xs:documentation>Status of the entity. e.g. Old, Current, Inactive, Active, etc</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attributeGroup ref="ct:grValidityDate"/>
+						<xs:attributeGroup ref="ct:grDataQuality"/>
+						<xs:anyAttribute namespace="##other" processContents="lax"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Visas">
+		<xs:annotation>
+			<xs:documentation>A container to define the VISAs held by a person (e.g. visitor, temporary, permanent resident, work, etc)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Visa" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>All information about Visa details.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="VisaElement" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Visa category number depending upon the type of visa. Example: H-1 for employment visa as in the USA</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="ct:String">
+											<xs:attribute name="Type" type="VisaElementList">
+												<xs:annotation>
+													<xs:documentation>If present, specifies the type of the information provided as text value of the element.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:anyAttribute namespace="##other" processContents="lax"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="Status" type="ct:StatusList">
+							<xs:annotation>
+								<xs:documentation>Status of the entity. e.g. Old, Current, Inactive, Active, etc</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attributeGroup ref="ct:grValidityDate"/>
+						<xs:attribute name="EntryByDate" type="xs:dateTime"/>
+						<xs:attributeGroup ref="ct:grDataQuality"/>
+						<xs:anyAttribute namespace="##other" processContents="lax"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:anyAttribute namespace="##other" processContents="lax"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

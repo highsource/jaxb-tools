@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.000" id="OTA2008A">
+	<xs:include schemaLocation="OTA_PkgCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_TourSearchRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Allows a customer to search for tours matching specified criteria.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The point-of-sale data, contained in the POS element, communicates the information that allows the receiving system to identify the trading partner that is sending the request or the response message. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SearchCriteria">
+					<xs:annotation>
+						<xs:documentation>Collection of items for data from multiple  tours.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SearchDateRange" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The preferred start date and allowable time window for the search. </xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="DateTimeSpanType">
+											<xs:attribute name="MinimumDuration" type="DurationType" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The lowest duration for the search.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="MaximumDuration" type="DurationType" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The highest duration for the search.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attributeGroup ref="DOW_PatternGroup">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Used to indicate one or more start days which the search should include (e.g., search for Saturday departures in June).</xs:documentation>
+												</xs:annotation>
+											</xs:attributeGroup>
+										</xs:extension>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="DestinationPref" minOccurs="0" maxOccurs="9">
+								<xs:annotation>
+									<xs:documentation>Up to 9 destinations to be included in or excluded from the search</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="CountryNameType">
+											<xs:attribute name="StateCodeList" type="ListOfStringLength1to8" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">One or more postal service standard codes or abbreviations for the state or province.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attributeGroup ref="RegionGroup">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Region information for the tour.</xs:documentation>
+												</xs:annotation>
+											</xs:attributeGroup>
+											<xs:attribute name="Placemark" type="StringLength1to255" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">A free-form definition of the destination's position.  Could be used as an online mapping service locator.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attributeGroup ref="PreferLevelGroup">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Used to specify the preference level for this destination.</xs:documentation>
+												</xs:annotation>
+											</xs:attributeGroup>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CategoryPref" minOccurs="0" maxOccurs="5">
+								<xs:annotation>
+									<xs:documentation>Inidicates a preference for a category of tour.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="CategoryItem" maxOccurs="99">
+											<xs:annotation>
+												<xs:documentation>Identifies an individual characteristic of a tour.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="Name" type="StringLength1to64" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Provides the name of the category item.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attributeGroup ref="PreferLevelGroup">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Used to specify the preference level for this category item</xs:documentation>
+													</xs:annotation>
+												</xs:attributeGroup>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="Type" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Specifies the type of information in the CategoryItem.</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:NMTOKEN">
+												<xs:enumeration value="Activities">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Identifies the category as an activity.</xs:documentation>
+													</xs:annotation>
+												</xs:enumeration>
+												<xs:enumeration value="Themes">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Identifies the category theme.</xs:documentation>
+													</xs:annotation>
+												</xs:enumeration>
+												<xs:enumeration value="Ability">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Identifies the category ability level.</xs:documentation>
+													</xs:annotation>
+												</xs:enumeration>
+												<xs:enumeration value="Exertion">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Identifies the category exertion level.</xs:documentation>
+													</xs:annotation>
+												</xs:enumeration>
+												<xs:enumeration value="Comfort">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Identifies the category comfort level.</xs:documentation>
+													</xs:annotation>
+												</xs:enumeration>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="KeywordPref" minOccurs="0" maxOccurs="6">
+								<xs:annotation>
+									<xs:documentation>Allows the inclusion or exclusion of keywords to be matched.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="StringLength1to255">
+											<xs:attribute name="Type" type="StringLength1to32" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Describes the category of keywords being presented.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attributeGroup ref="PreferLevelGroup">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Used to specify the preference level for the tour attribute defined by this keyword.</xs:documentation>
+												</xs:annotation>
+											</xs:attributeGroup>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SupplierPref" type="CompanyNamePrefType" minOccurs="0" maxOccurs="6">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Allows the inclusion or exclusion of a supplier.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="CustomerCounts" minOccurs="0" maxOccurs="6">
+								<xs:annotation>
+									<xs:documentation>Specifies the number of customers and optionally by customer type.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attributeGroup ref="TravelerCountGroup"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PricePref" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Range or limit of budget. </xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="PricingType" type="PricingType" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Indicates the level of the budget - normally either 'per person' or 'per stay' (i.e. total holiday cost).  Use of 'per stay' requires the presence of the 'Customers' element.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="MinPrice" type="Money" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">The lowest price for a price range search.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="MaxPrice" type="Money" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">The highets price for a price range search.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="GuidelinePrice" type="Money" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">A price which the supplier can use as the base for a price search; the range of prices returned is not limited.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attributeGroup ref="CurrencyCodeGroup">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Used to specify the currency code and decimal places.</xs:documentation>
+										</xs:annotation>
+									</xs:attributeGroup>
+								</xs:complexType>
+							</xs:element>
+							<xs:element ref="TPA_Extensions" minOccurs="0"/>
+						</xs:sequence>
+						<xs:attribute name="MoreDataEchoToken" type="StringLength1to128" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The response returns the attribute if there was additional data.  The text value should be echoed in this request to indicate where to begin the next block of data.		</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attributeGroup ref="MaxResponsesGroup">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Used to specify the maximum number of responses to a request.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,3070 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Copyright 2005 UGS Corp.  All Rights Reserved.
+This software and related documentation are proprietary to UGS Corp.
+-->
+<xsd:schema targetNamespace="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:plm="http://www.plmxml.org/Schemas/PLMXMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" xml:lang="en">
+  <xsd:include schemaLocation="PLMXMLSchema.xsd"/>
+  <xsd:annotation>
+    <xsd:documentation source="http://www.plmxml.org/Schemas/PLMXMLSchema/History">
+      <plm:SchemaChange author="davidj" date="2005-05-12" version="6.0.1.26">
+        <plm:Description>
+        Add itemName attribute to Ann3DPartSpecType.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='Ann3DPartSpecType']/attribute[@name='itemName'"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-05-12" version="6.0.1.26">
+        <plm:Description>
+        Add balloonId to Ann3DBalloonType.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='Ann3DBalloonType']/attribute[@name='balloonId']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-05-12" version="6.0.1.26">
+        <plm:Description>
+        Add enumeration values to Ann3DLineWeldSymbol.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/simpleType[@name='Ann3DLineWeldSymbol']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-05-12" version="6.0.1.26">
+        <plm:Description>
+        Add Ann3DLineWeldFinishSymbol enumeration.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/simpleType[@name='Ann3DLineWeldFinishSymbol']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-05-12" version="6.0.1.26">
+        <plm:Description>
+        Add "JIS Z 3021" to Ann3DLineWeldStandardType enumeration.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/simpleType[@name='Ann3DLineWeldStandardType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-05-12" version="6.0.1.26">
+        <plm:Description>
+        Add projected attribute to Ann3DDimensionType
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='Ann3DDimensionType']/attribute[@name='projected']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-05-12" version="6.0.1.26">
+        <plm:Description>
+        Add attributes to Ann3DLineWeldType: arrowSideFinishSymbol, otherSideFinishSymbol, 
+        jisArrowSidePartialPenetrationGrooveWeld, jisOtherSidePartialPenetrationGrooveWeld,
+        jisStaggeredFilletWeld, arrowSideGrooveGap, otherSideGrooveGap, arrowSideGrooveAngle
+        and otherSideGrooveAngle
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='Ann3DLineWeldType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="cherevac" date="2005-06-10" version="6.0.1.26">
+        <plm:Description>
+        Add support for ModelViews.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='Ann3DOccurrenceType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-09-12" version="6.0.1.26">
+        <plm:Description>
+        Add values to Ann3DTextSymbol
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/simpleType[@name='Ann3DTextSymbol']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-09-12" version="6.0.1.26">
+        <plm:Description>
+        Add TextLabel sub-element to Ann3DFCFDatumReferenceType
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='Ann3DFCFDatumReferenceType']/element[@name='TextLabel']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-10-24" version="6.0.1.26">
+        <plm:Description>
+        Add plm:refType to displayRef in Ann3DOccurrence.
+        </plm:Description>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-12-15" version="6.0.1.32">
+        <plm:Description>
+        Add Ann3DCPSOpenCutterType and Ann3DCPSClosedCutterType.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='Ann3DCPSOpenCutterType']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='Ann3DCPSClosedCutterType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2006-03-16" version="6.0.1.039">
+        <plm:Description>
+        Add support for movable DatumTargets.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='Ann3DDatumTargetType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2006-04-20" version="6.0.1.042">
+        <plm:Description>
+        Add AnnotationOutline element.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='Ann3DOutlineType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2006-04-21" version="6.0.1.042">
+        <plm:Description>
+        Add ZeroToleranceDisplay enum, and leading-zero attributes.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/simpleType[@name='Ann3DDimensionZeroToleranceDisplay']"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='Ann3DimensionDisplayType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2006-05-18" version="6.0.1.042">
+        <plm:Description>
+        Add enum values to Ann3DArrow
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/simpleType[@name='Ann3DArrow']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2006-08-21" version="6.0.1.071">
+        <plm:Description>
+        Add UserDefinedSymbolText to Ann3DUserDefinedSymbolType
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='Ann3DUserDefinedSymbolType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2006-11-02" version="6.0.1.xxx">
+        <plm:Description>
+        Deprecate layer attribute in Ann3DDisplayType
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='Ann3DDisplayType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="howardmu" date="2007-03-06" version="6.0.1.117">
+        <plm:Description>
+        Add Ann3DeMarkingDisplayType type and Ann3DeMarkingDisplay element.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='Ann3DeMarkingDisplayType']"/>
+        <plm:Reference locationRef="..//schema/element[@name='Ann3DeMarkingDisplay']"/>
+      </plm:SchemaChange>
+    </xsd:documentation>
+    <xsd:documentation>
+    
+                              PLM XML Annotation Schema
+                        
+    </xsd:documentation>
+    <xsd:appinfo source="http://www.plmxml.org/Schemas/PLMXMLSchema">
+      <plm:SchemaInfo name="PLMXMLAnnotationSchema.xsd" date="2006-05-18" version="6.0" status="release"/>
+    </xsd:appinfo>
+  </xsd:annotation>
+  <!-- -->
+  <!-- ENUMERATIONS -->
+  <!-- -->
+  <xsd:simpleType name="Ann3DSurfaceFinish">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="basic"/>
+      <xsd:enumeration value="MRR"/>
+      <xsd:enumeration value="MRP"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DSurfaceFinishLay">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="parallel"/>
+      <xsd:enumeration value="perpendicular"/>
+      <xsd:enumeration value="angularBoth"/>
+      <xsd:enumeration value="multidirectional"/>
+      <xsd:enumeration value="circular"/>
+      <xsd:enumeration value="radial"/>
+      <xsd:enumeration value="particulate"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DFCF">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="position"/>
+      <xsd:enumeration value="straightness"/>
+      <xsd:enumeration value="flatness"/>
+      <xsd:enumeration value="circularity"/>
+      <xsd:enumeration value="cylindricity"/>
+      <xsd:enumeration value="profileOfALine"/>
+      <xsd:enumeration value="profileOfASurface"/>
+      <xsd:enumeration value="angularity"/>
+      <xsd:enumeration value="perpendicularity"/>
+      <xsd:enumeration value="parallelism"/>
+      <xsd:enumeration value="concentricity"/>
+      <xsd:enumeration value="symmetry"/>
+      <xsd:enumeration value="circularRunout"/>
+      <xsd:enumeration value="totalRunout"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DFCFProfileType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <!-- bilateral here means equal distribution of tolerance -->
+      <xsd:enumeration value="bilateral"/>
+      <xsd:enumeration value="bilateralUnequal"/>
+      <xsd:enumeration value="unilateralOutside"/>
+      <xsd:enumeration value="unilateralInside"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DFCFModifier">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="LMC"/>
+      <xsd:enumeration value="MMC"/>
+      <xsd:enumeration value="RFS"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DFCFZoneShape">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="diameter"/>
+      <xsd:enumeration value="sphericalDiameter"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DDatumTarget">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="point"/>
+      <xsd:enumeration value="line"/>
+      <xsd:enumeration value="circular"/>
+      <xsd:enumeration value="rectangular"/>
+      <xsd:enumeration value="cylindrical"/>
+      <xsd:enumeration value="area"/>
+      <xsd:enumeration value="annular"/>
+      <xsd:enumeration value="arbitrary"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DTextOrientationType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="horizontal"/>
+      <xsd:enumeration value="vertical"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DTextSymbol">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="centreline"/>
+      <xsd:enumeration value="partingline"/>
+      <xsd:enumeration value="depth"/>
+      <xsd:enumeration value="countersink"/>
+      <xsd:enumeration value="conicalTaper"/>
+      <xsd:enumeration value="slope"/>
+      <xsd:enumeration value="counterbore"/>
+      <xsd:enumeration value="square"/>
+      <xsd:enumeration value="phi"/>
+      <xsd:enumeration value="plus-minus">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=PlusMinus</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="degrees"/>
+      <xsd:enumeration value="between"/>
+      <xsd:enumeration value="arcLength"/>
+      <xsd:enumeration value="leftParenthesis"/>
+      <xsd:enumeration value="rightParenthesis"/>
+      <xsd:enumeration value="projectedTolerance"/>
+      <xsd:enumeration value="mmc"/>
+      <xsd:enumeration value="lmc"/>
+      <xsd:enumeration value="freeState"/>
+      <xsd:enumeration value="ohm"/>
+      <xsd:enumeration value="circularRunout"/>
+      <xsd:enumeration value="totalRunout"/>
+      <xsd:enumeration value="profileOfASurface"/>
+      <xsd:enumeration value="profileOfALine"/>
+      <xsd:enumeration value="flatness"/>
+      <xsd:enumeration value="straightness"/>
+      <xsd:enumeration value="symmetry"/>
+      <xsd:enumeration value="perpendicularity"/>
+      <xsd:enumeration value="parallelism"/>
+      <xsd:enumeration value="cylindricity"/>
+      <xsd:enumeration value="concentricity"/>
+      <xsd:enumeration value="circularity"/>
+      <xsd:enumeration value="angularity"/>
+      <xsd:enumeration value="micro"/>
+      <xsd:enumeration value="position"/>
+      <xsd:enumeration value="envelope"/>
+      <xsd:enumeration value="rfs"/>
+      <xsd:enumeration value="tangentPlane"/>
+      <xsd:enumeration value="lessThanOrEqual"/>
+      <xsd:enumeration value="greaterThanOrEqual"/>
+      <xsd:enumeration value="threadPrefix"/>
+      <xsd:enumeration value="triangle"/>
+      <xsd:enumeration value="statistical"/>
+      <xsd:enumeration value="radius"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DDimension">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="linear"/>
+      <xsd:enumeration value="radial"/>
+      <xsd:enumeration value="angular"/>
+      <xsd:enumeration value="curveLength"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DDimensionOrigin">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="first"/>
+      <xsd:enumeration value="second"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DDimensionCausality">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="key"/>
+      <xsd:enumeration value="functional"/>
+      <xsd:enumeration value="associated"/>
+      <xsd:enumeration value="reference"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DDimensionStubDirection">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="left"/>
+      <xsd:enumeration value="right"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DArrow">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="closed"/>
+      <xsd:enumeration value="open"/>
+      <xsd:enumeration value="filled"/>
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="origin"/>
+      <xsd:enumeration value="cross"/>
+      <xsd:enumeration value="dot"/>
+      <xsd:enumeration value="filledDot"/>
+      <xsd:enumeration value="wedge"/>
+      <xsd:enumeration value="plus"/>
+      <xsd:enumeration value="x"/>
+      <xsd:enumeration value="closedSolid"/>
+      <xsd:enumeration value="closedDouble"/>
+      <xsd:enumeration value="closedDoubleSolid"/>
+      <xsd:enumeration value="openDouble"/>
+      <xsd:enumeration value="filledDouble"/>
+      <xsd:enumeration value="integral"/>
+      <xsd:enumeration value="box"/>
+      <xsd:enumeration value="filledBox"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DLineType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="solid"/>
+      <xsd:enumeration value="dashed"/>
+      <xsd:enumeration value="phantom"/>
+      <xsd:enumeration value="centreline"/>
+      <xsd:enumeration value="dotted"/>
+      <xsd:enumeration value="longDashed"/>
+      <xsd:enumeration value="dottedDashed"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DDimensionTolerance">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="equalBilateral"/>
+      <xsd:enumeration value="bilateral"/>
+      <xsd:enumeration value="+limit2">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=UpperLimit2</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="-limit2">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=LowerLimit2</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="+limit1">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=UpperLimit1</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="-limit1">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=LowerLimit1</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DDimensionTextPosition">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="before"/>
+      <xsd:enumeration value="after"/>
+      <xsd:enumeration value="above"/>
+      <xsd:enumeration value="below"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DDimensionArrowPlacement">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="in"/>
+      <xsd:enumeration value="out"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DDimensionStyle">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="radial"/>
+      <xsd:enumeration value="diametral"/>
+      <xsd:enumeration value="sphericalRadial"/>
+      <xsd:enumeration value="controlledRadial"/>
+      <xsd:enumeration value="sphericalDiametral"/>
+      <xsd:enumeration value="ordinate"/>
+      <xsd:enumeration value="linearDiametral"/>
+      <xsd:enumeration value="limits"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DDimensionDual">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="bracket"/>
+      <xsd:enumeration value="positional"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DDimensionDualPlacement">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="before"/>
+      <xsd:enumeration value="after"/>
+      <xsd:enumeration value="above"/>
+      <xsd:enumeration value="below"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DDimStatisticalPlacement">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="before"/>
+      <xsd:enumeration value="after"/>
+      <xsd:enumeration value="above"/>
+      <xsd:enumeration value="below"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DDimDiameterPlacement">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="before"/>
+      <xsd:enumeration value="after"/>
+      <xsd:enumeration value="above"/>
+      <xsd:enumeration value="below"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DDimReferenceDisplay">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="reference"/>
+      <xsd:enumeration value="parenthesis"/>
+      <xsd:enumeration value="matched"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DAngleFormat">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="degrees"/>
+      <xsd:enumeration value="minutes"/>
+      <xsd:enumeration value="seconds"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DFastenerDisplay">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="flatToScreen"/>
+      <xsd:enumeration value="flatToSurface"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DSpotWeld">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="resistance"/>
+      <xsd:enumeration value="projection"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DSpotWeldDisplay">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="flatToScreen"/>
+      <xsd:enumeration value="flatToSurface"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DLineWeldSymbol">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="edgeFlange"/>
+      <xsd:enumeration value="square"/>
+      <xsd:enumeration value="singleV"/>
+      <xsd:enumeration value="singleBevel"/>
+      <xsd:enumeration value="singleVBroadRootFace"/>
+      <xsd:enumeration value="singleBevelBroadRootFace"/>
+      <xsd:enumeration value="singleU"/>
+      <xsd:enumeration value="singleJ"/>
+      <xsd:enumeration value="backing"/>
+      <xsd:enumeration value="fillet"/>
+      <xsd:enumeration value="plug"/>
+      <xsd:enumeration value="seam"/>
+      <xsd:enumeration value="steepFlankedSingleV"/>
+      <xsd:enumeration value="steepFlankedSingleBevel"/>
+      <xsd:enumeration value="edge"/>
+      <xsd:enumeration value="surface"/>
+      <xsd:enumeration value="surfaceJoint"/>
+      <xsd:enumeration value="inclinedJoint"/>
+      <xsd:enumeration value="foldJoint"/>
+      <xsd:enumeration value="spot"/>
+      <xsd:enumeration value="permanentBackingStrip"/>
+      <xsd:enumeration value="removableBackingStrip"/>
+      <xsd:enumeration value="doubleFlange"/>
+      <xsd:enumeration value="singleFlange"/>
+      <xsd:enumeration value="squareGroove"/>
+      <xsd:enumeration value="singleVGroove"/>
+      <xsd:enumeration value="singleBevelGroove"/>
+      <xsd:enumeration value="singleJGroove"/>
+      <xsd:enumeration value="singleUGroove"/>
+      <xsd:enumeration value="flareSingleVGroove"/>
+      <xsd:enumeration value="flareSingleBevelGroove"/>
+      <xsd:enumeration value="jisFillet"/>
+      <xsd:enumeration value="plugAndSlot"/>
+      <xsd:enumeration value="spotProjected"/>
+      <xsd:enumeration value="jisSeam"/>
+      <xsd:enumeration value="bead"/>
+      <xsd:enumeration value="overlay"/>
+      <xsd:enumeration value="jisStaggeredFillet1"/>
+      <xsd:enumeration value="jisStaggeredFillet2"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DLineWeldFinishSymbol">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="none"/>
+      <xsd:enumeration value="chipping"/>
+      <xsd:enumeration value="grinding"/>
+      <xsd:enumeration value="machining"/>
+      <xsd:enumeration value="unspecified"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DLineWeldSupplementalSymbol">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="flush"/>
+      <xsd:enumeration value="convex"/>
+      <xsd:enumeration value="concave"/>
+      <xsd:enumeration value="toesBlended"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DMeasurementPointDisplay">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="flatToScreen"/>
+      <xsd:enumeration value="flatToSurface"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DLocatorSymbol">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="edge"/>
+      <xsd:enumeration value="hole"/>
+      <xsd:enumeration value="surface"/>
+      <xsd:enumeration value="rectangle"/>
+      <xsd:enumeration value="slot"/>
+      <xsd:enumeration value="freeform"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DLocatorEdgeType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="E">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=EUpper</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="e">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=ELower</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="EK"/>
+      <xsd:enumeration value="CO"/>
+      <xsd:enumeration value="CE"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DLocatorHoleType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="H">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=HUpper</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="h">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=HLower</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="HK"/>
+      <xsd:enumeration value="hk"/>
+      <xsd:enumeration value="CH"/>
+      <xsd:enumeration value="ch"/>
+      <xsd:enumeration value="AC"/>
+      <xsd:enumeration value="DL"/>
+      <xsd:enumeration value="BL"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DLocatorSurfaceType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="S">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=SUpper</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="s">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=SLower</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="SK"/>
+      <xsd:enumeration value="sk"/>
+      <xsd:enumeration value="CK"/>
+      <xsd:enumeration value="CO"/>
+      <xsd:enumeration value="J"/>
+      <xsd:enumeration value="CS"/>
+      <xsd:enumeration value="SL"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DLocatorRectSlotFreeformType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="H">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=HUpper</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="h">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=HLower</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="HK"/>
+      <xsd:enumeration value="hk"/>
+      <xsd:enumeration value="CH"/>
+      <xsd:enumeration value="AC"/>
+      <xsd:enumeration value="DL"/>
+      <xsd:enumeration value="BL"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DLocatorSubtype">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="diesMolds"/>
+      <xsd:enumeration value="fixing"/>
+      <xsd:enumeration value="temporaryTransferred"/>
+      <xsd:enumeration value="mechanicallyFastened"/>
+      <xsd:enumeration value="manufacturingAndAssembly"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DLocatorCoordinatePlane">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="X"/>
+      <xsd:enumeration value="Y"/>
+      <xsd:enumeration value="Z"/>
+      <xsd:enumeration value="XY"/>
+      <xsd:enumeration value="XZ"/>
+      <xsd:enumeration value="YZ"/>
+      <xsd:enumeration value="XYZ"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DLocatorChangeLevel">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="hard"/>
+      <xsd:enumeration value="medium"/>
+      <xsd:enumeration value="soft"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DCircleCentreDisplay">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="flatToScreen"/>
+      <xsd:enumeration value="flatToSurface"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DBundleOrDressingNote">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="bundleNote"/>
+      <xsd:enumeration value="dressingNote"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DCrosshatchPattern">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="iron"/>
+      <xsd:enumeration value="steel"/>
+      <xsd:enumeration value="brass"/>
+      <xsd:enumeration value="rubber"/>
+      <xsd:enumeration value="glass"/>
+      <xsd:enumeration value="aluminum"/>
+      <xsd:enumeration value="lead"/>
+      <xsd:enumeration value="solid"/>
+      <xsd:enumeration value="user"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ******************** Ann3DDimensionStandardType ******************** -->
+  <!-- -->
+  <xsd:simpleType name="Ann3DDimensionStandardType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="ASME Y14.5M 1994">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=ASME</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="ASME Y14.41M 2003">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=ASME2003</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="ANSI Y14.5M 1982">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=ANSI</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="ISO"/>
+      <xsd:enumeration value="JIS"/>
+      <xsd:enumeration value="DIN"/>
+      <xsd:enumeration value="BS"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ********************* Ann3DSurfaceFinishStandardType ******************** -->
+  <!-- -->
+  <xsd:simpleType name="Ann3DSurfaceFinishStandardType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="ANSI Y14.36 1993">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=ANSI</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="ASME Y14.36M 1996">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=ASME</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="ISO"/>
+      <xsd:enumeration value="JIS"/>
+      <xsd:enumeration value="DIN"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ********************** Ann3DLineWeldStandardType ********************** -->
+  <!-- -->
+  <xsd:simpleType name="Ann3DLineWeldStandardType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="ISO 2556">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=ISO</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="ANSI/AWS A2.4-98">
+        <xsd:annotation>
+          <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=ANSI</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="JIS Z 3021">
+        <xsd:annotation>
+          <xsd:appinfo source="PLMXMLSchemaGenerator">sdkname=JIS</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ************************* TextLineThickness ************************* -->
+  <!-- -->
+  <xsd:simpleType name="TextLineThicknessType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="thin"/>
+      <xsd:enumeration value="normal"/>
+      <xsd:enumeration value="thick"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- *************************** TextUnderline ************************** -->
+  <!-- -->
+  <xsd:simpleType name="TextUnderlineType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="under"/>
+      <xsd:enumeration value="over"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- ************************* TextJustification ************************** -->
+  <!-- -->
+  <xsd:simpleType name="TextJustificationType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="left"/>
+      <xsd:enumeration value="right"/>
+      <xsd:enumeration value="centre"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- *************************** Ann3DAttachment *************************** -->
+  <!-- -->
+  <xsd:simpleType name="Ann3DAttachment">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="noLeader"/>
+      <xsd:enumeration value="leader"/>
+      <xsd:enumeration value="stacked"/>
+      <xsd:enumeration value="onGeometry"/>
+      <xsd:enumeration value="linearDimension"/>
+      <xsd:enumeration value="radialDimension"/>
+      <xsd:enumeration value="diametralDimension"/>
+      <xsd:enumeration value="angularDimension"/>
+      <xsd:enumeration value="ordinateDimension"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- *************************** Ann3DOutlineEnum *************** -->
+  <!-- -->
+  <xsd:simpleType name="Ann3DOutlineEnum">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="box"/>
+      <xsd:enumeration value="triangle"/>
+      <xsd:enumeration value="circle"/>
+      <xsd:enumeration value="ellipse"/>
+      <xsd:enumeration value="underline"/>
+      <xsd:enumeration value="square"/>
+      <xsd:enumeration value="scoredCircle"/>
+      <xsd:enumeration value="diamond"/>
+      <xsd:enumeration value="flagRight"/>
+      <xsd:enumeration value="flagLeft"/>
+      <xsd:enumeration value="flagBoth"/>
+      <xsd:enumeration value="oblong"/>
+      <xsd:enumeration value="oblongRight"/>
+      <xsd:enumeration value="oblongLeft"/>
+      <xsd:enumeration value="sticking"/>
+      <xsd:enumeration value="set"/>
+      <xsd:enumeration value="fixedSupport"/>
+      <xsd:enumeration value="nota"/>
+      <xsd:enumeration value="symmetricalPart"/>
+      <xsd:enumeration value="symmetricalSet"/>
+      <xsd:enumeration value="scoredRectangle"/>
+      <xsd:enumeration value="parallelogram"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="Ann3DDimensionZeroToleranceDisplay">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="displayZero"/>
+      <xsd:enumeration value="suppressTrailingZero"/>
+      <xsd:enumeration value="blank"/>
+      <xsd:enumeration value="omit"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- *************************** TextGroup *************************** -->
+  <!-- -->
+  <xsd:attributeGroup name="TextGroup">
+    <xsd:annotation>
+      <xsd:documentation>
+      language:        language of the text.
+      font:            text font. The font string is not restricted by this schema. It is up
+                       to applications to communicate font definitions.
+      textHeight:      text height, in metres.
+      textThickness:   thin, normal or thick.
+      textAspect:      text character height/width aspect ratio.
+      textColour:      text colour.
+      bold:            if text is bold.
+      italic:          if text is italic.
+      italicAngle:     slant angle - 
+                       positive means leaning to the right,
+                       negative means leaning to the left.
+      underline:       type of underlining (over or under).
+
+      justification:   justification of text, left, right or centre.
+      spaceFactor:     the space between characters, as a multiple of character width.
+      lineFactor:      the space between lines, as a multiple of character height.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="language" type="xsd:language" use="optional"/>
+    <xsd:attribute name="font" type="xsd:string" use="optional"/>
+    <xsd:attribute name="textHeight" type="xsd:double" use="optional"/>
+    <xsd:attribute name="textThickness" type="plm:TextLineThicknessType" use="optional"/>
+    <xsd:attribute name="textAspect" type="xsd:double" use="optional"/>
+    <xsd:attribute name="textColour" type="plm:RGBAType" use="optional"/>
+    <xsd:attribute name="bold" type="xsd:boolean" default="false"/>
+    <xsd:attribute name="italic" type="xsd:boolean" default="false"/>
+    <xsd:attribute name="italicAngle" type="xsd:double" use="optional"/>
+    <xsd:attribute name="underline" type="plm:TextUnderlineType" use="optional"/>
+    <xsd:attribute name="justification" type="plm:TextJustificationType" use="optional"/>
+    <xsd:attribute name="spaceFactor" type="xsd:double" use="optional"/>
+    <xsd:attribute name="lineFactor" type="xsd:double" use="optional"/>
+  </xsd:attributeGroup>
+  <!-- -->
+  <!-- ********************** Ann3DDisplayType ********************** -->
+  <!-- -->
+  <xsd:complexType name="Ann3DDisplayType">
+    <xsd:annotation>
+      <xsd:documentation>
+      The base type for types describing how to display an
+      Annotation3D element. 
+        
+      Attributes:
+      
+      blanked:         true if this Display is marked as not to
+                       be displayed at the moment. 
+      units:           specifies which units lengths will be displayed
+                       in, If absent, the units in the
+                       referencing ProductRevision or ProductRevisionView 
+                       (if any) will be used. If still absent, 
+                       millimetres will be assumed. Note this does not
+                       affect lengths in the PLMXML file - these are
+                       always in metres.
+      symbolColour:    colour of the lines in the symbol.
+      layer:           layer on which to display (deprecated - use the Layer Property instead)
+      textOrigin:      3D vector describing the location of the top
+                       left corner of the text window, in model 
+                       space, in metres.
+      textDirection:   3D direction of the text, in the display 
+                       plane.
+      textBox:         whether a box is drawn around the symbol.
+      outlineRef:      reference to an AnnotationOutline element which specifies the 
+                       outline of the Annotation.
+
+      attachmentType:  method of display (leader, stacked, as a radial dimension, etc )
+      symbolicDisplayRef: reference to a Representation which can be
+                       considered as a symbolic representation of
+                       the Annotation.
+                       
+      annotation3DRef: the Annotation3D being displayed (deprecated)
+        
+      Elements:    
+          
+      DisplayPlane:    The plane on which the Annotation is
+                       displayed. If no plane is provided then it is
+                       up to the application to choose a plane.
+                       
+      Leader:          Zero or more leader-line specifications
+      
+      Geometry:        Zero or more ConstructionGeometry sub-elements. These
+                       are alternative visual representations of the Annotation. These
+                       can contain Points or Curves. If these are 2D, then they
+                       lie in the DisplayPlane.
+
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="DisplayPlane" type="plm:PlaneType" minOccurs="0"/>
+          <xsd:element name="Leader" type="plm:Ann3DLeaderType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Geometry" type="plm:ConstructionGeometryType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="blanked" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="units" type="plm:PreferredPartUnitsType" use="optional"/>
+        <xsd:attribute name="symbolColour" type="plm:RGBAType" use="optional"/>
+        <xsd:attribute name="layer" type="xsd:integer" use="optional" plm:deprecated="true"/>
+        <xsd:attribute name="textOrigin" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="textDirection" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="textBox" type="xsd:boolean" use="optional"/>
+        <xsd:attribute name="outlineRef" type="plm:anyURIType" use="optional" plm:refType="plm:AnnotationOutline"/>
+        <xsd:attribute name="attachmentType" type="plm:Ann3DAttachment" use="optional"/>
+        <xsd:attribute name="symbolicDisplayRef" type="plm:anyURIType" use="optional" plm:refType="plm:Representation"/>
+        <xsd:attributeGroup ref="plm:TextGroup"/>
+        <xsd:attribute name="annotation3DRef" type="xsd:IDREF" use="optional" plm:refType="plm:Annotation3D" plm:deprecated="true"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Ann3DDisplay" type="plm:Ann3DDisplayType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- *** ANNOTATION 3D BASE TYPE -->
+  <!-- -->
+  <xsd:complexType name="Annotation3DType" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation>
+      Annotation3D: the abstract base type for all 3D Annotations
+
+      Attributes:
+            
+      accountabilityId:     
+      group:                This is an application specific type used as part of a 
+                            classification scheme for the annotations.            
+      usage:                used to indicate a usage other than that expected.
+     
+      uriRefs:              associated URI references
+        
+     Elements:
+
+     Reference:            Deprecated. This is for legacy import only, and 
+                           specifies the entities the Annotation3D refers to.
+                           
+     SafetyClassification: This is an application specific type used to indicate the
+                           importance of an annotation, e.g. minor, major, critical.
+                           
+     ValueToCustomer:      This is an application specific type used to indicate the
+                           value of an annotation to a customer, e.g. "critical to 
+                           quality".
+                           
+     Keyword:              a keyword string (may contain spaces).
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:GDEBase">
+        <xsd:sequence>
+          <xsd:element name="Keyword" type="plm:StringFieldType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="SafetyClassification" type="plm:UserEnumDataType" minOccurs="0"/>
+          <xsd:element name="ValueToCustomer" type="plm:UserEnumDataType" minOccurs="0"/>
+          <xsd:element name="Reference" type="plm:GDEReferenceType" minOccurs="0" maxOccurs="unbounded" plm:deprecated="true"/>
+        </xsd:sequence>
+        <xsd:attribute name="accountabilityId" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="group" type="xsd:string" use="optional"/>
+        <xsd:attribute name="usage" type="xsd:string" use="optional"/>
+        <xsd:attribute name="uriRefs" type="plm:uriReferenceListType" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Annotation3D" type="plm:Annotation3DType" substitutionGroup="plm:GDE"/>
+  <!-- -->
+  <!-- ********************* Ann3DInstance ****************************** -->
+  <!-- -->
+  <xsd:complexType name="Ann3DInstanceType">
+    <xsd:annotation>
+      <xsd:documentation>
+      An Instance of an Annotation3D.
+
+      Attributes:
+      
+      dimensionStandard:      standard to use for dimensions (and
+                              other annotations which use the same
+                              standards enum)
+      surfaceFinishStandard:  standard to use for surface finishes
+      lineWeldStandard:       standard to use for line welds
+          
+      displayRef:             a reference to an element, derived from Ann3DDisplayType,
+                              which specifies how this instance is to be displayed.
+                              
+      These attributes are used to over-ride default values set for
+      a containing Ann3DInstanceGroup.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:GDEInstanceType">
+        <xsd:attribute name="dimensionStandard" type="plm:Ann3DDimensionStandardType" use="optional"/>
+        <xsd:attribute name="surfaceFinishStandard" type="plm:Ann3DSurfaceFinishStandardType" use="optional"/>
+        <xsd:attribute name="lineWeldStandard" type="plm:Ann3DLineWeldStandardType" use="optional"/>
+        <xsd:attribute name="displayRef" type="plm:anyURIType" use="optional" plm:refType="plm:Ann3DDisplay"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Ann3DInstance" type="plm:Ann3DInstanceType" substitutionGroup="plm:GDEInstance"/>
+  <!-- -->
+  <!-- ************************ Ann3DInstanceGroupType ************************* -->
+  <!-- -->
+  <xsd:complexType name="Ann3DInstanceGroupType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Ann3DInstanceGroup.
+
+      This element is used to collect together a number of
+      Ann3DInstance elements to simplify referencing and allow the
+      specification of default values for appropriate standards
+
+      Attributes:
+      
+      dimensionStandard:      standard to use for dimensions (and
+                              other annotations which use the same
+                              standards enum)
+      surfaceFinishStandard:  standard to use for surface finishes
+      lineWeldStandard:       standard to use for line welds
+      
+      displayRef:             a reference to an element, derived from Ann3DDisplayType,
+                              which specifies how the instances in this group are
+                              to be displayed.
+                              
+      The above attributes may be overridden by attributes of the same name on the
+      Ann3DInstance sub-elements.
+
+      Elements:
+      
+      This element inherits 'GDEInstance' sub-elements from its parent type, 
+      GDEInstanceGroupType. These sub-elements should all be of type
+      Ann3DInstanceType.      
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:GDEInstanceGroupType">
+        <xsd:attribute name="dimensionStandard" type="plm:Ann3DDimensionStandardType" use="optional"/>
+        <xsd:attribute name="surfaceFinishStandard" type="plm:Ann3DSurfaceFinishStandardType" use="optional"/>
+        <xsd:attribute name="lineWeldStandard" type="plm:Ann3DLineWeldStandardType" use="optional"/>
+        <xsd:attribute name="displayRef" type="plm:anyURIType" use="optional" plm:refType="plm:Ann3DDisplay"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Ann3DInstanceGroup" type="plm:Ann3DInstanceGroupType" substitutionGroup="plm:GDEInstanceGroup"/>
+  <!-- -->
+  <!-- ********************* Ann3DOccurrence ****************************** -->
+  <!-- -->
+  <xsd:complexType name="Ann3DOccurrenceType">
+    <xsd:annotation>
+      <xsd:documentation>
+      An Occurrence of an Annotation3D.
+
+      Attributes:
+      
+      displayRef:             a reference to an element, derived from Ann3DDisplayType,
+                              which specifies how this occurrence is to be displayed.
+                              
+      These attributes are used to over-ride default values set for Ann3DInstance(Group).
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:OccurrenceType">
+        <xsd:attribute name="displayRef" type="plm:anyURIType" use="optional" plm:refType="plm:Ann3DDisplay"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Ann3DOccurrence" type="plm:Ann3DOccurrenceType" substitutionGroup="plm:Occurrence"/>
+  <!-- -->
+  <!-- *** TEXT TYPES -->
+  <!-- -->
+  <xsd:complexType name="Ann3DOutlineType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Specifies the shape of an Annotation or Text Outline
+
+      Attributes:
+      
+      type:            one of "box", "triangle", "circle", "ellipse", "underline", etc.
+                       Note that "underline" refers to the place where the bottom edge
+                       of a "box" outline would be placed. It is not the same as
+                       underlining the text by means of underline="true".
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="type" type="plm:Ann3DOutlineEnum" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AnnotationOutline" type="plm:Ann3DOutlineType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DTextItemType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element can represent a formatted text string, a string with a type (e.g. 
+      a real number), or a symbol.
+       
+      This is derived from xsd:string, so it has string element content
+      
+      Attributes:
+      
+      symbol:     if this attribute is present, its value specifies the symbol which
+                  this text item represents (e.g. "centreline"). In this case, the
+                  element content is ignored.
+                  
+      format:     if present, this attribute specifies the format (type) of the text,
+                  e.g. "int", "real", "boolean".
+                  
+      outlineRef: reference to an AnnotationOutline element which specifies the outline 
+                  of the Text Item.
+                  
+      The TextGroup attributes override any attributes of the same name in the enclosing
+      Ann3DTextType element.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="symbol" type="plm:Ann3DTextSymbol" use="optional"/>
+        <xsd:attribute name="format" type="plm:UserValueDataType" use="optional"/>
+        <xsd:attribute name="outlineRef" type="plm:anyURIType" use="optional" plm:refType="plm:AnnotationOutline"/>
+        <xsd:attributeGroup ref="plm:TextGroup"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="Ann3DTextType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A Text block, i.e. a sequence of text items. Each item may be 
+      simple text, text with a type (e.g. a real number), or a symbol.
+                
+      Attributes:
+        
+      textOrientation: orientation of the characters with respect to each other.
+      name:            the name of the Text block. This can be used to indicate some
+                       particular significance of the text.
+     
+      outlineRef:      reference to an AnnotationOutline element which specifies the outline 
+                       of the Text block.
+    
+      textGroup attributes:
+                       The TextGroup attributes act as defaults which are overridden 
+                       by attributes of the same name in the text items (and override 
+                       any attributes of the same name in a referencing 
+                       Annotation3DDisplay element).
+
+      Elements:
+        
+      Item:            at least one Ann3DTextItemType sub-element    
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Item" type="plm:Ann3DTextItemType" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="textOrientation" type="plm:Ann3DTextOrientationType" default="horizontal"/>
+    <xsd:attribute name="name" type="xsd:string" use="optional"/>
+    <xsd:attribute name="outlineRef" type="plm:anyURIType" use="optional" plm:refType="plm:AnnotationOutline"/>
+    <xsd:attributeGroup ref="plm:TextGroup"/>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:simpleType name="SurfaceUVType">
+    <xsd:restriction base="plm:DoubleListType">
+      <xsd:length value="2"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="Ann3DLeaderType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Ann3DLeaderType: data describing the position, colour, etc, of a leader line
+
+      Attributes:
+      
+      referenceRef:    references the Reference element which references the entity
+                         being annotated
+      tParm:           t-parameter on the referenced edge or curve, if applicable
+      uvParms:         u,v-parameters on the referenced face or surface, if applicable
+      terminator:      3D position of the end of the leader. This, and the next two
+                       attributes, are not relevant if explicit leader geometry is given as a 
+                       sub-element.
+      stubDirection:   left or right, initial direction of leader 
+      stubLength:      length of first segment of leader (metres)
+      colour:          leader colour
+      lineType:        solid, dashed, dotted, etc
+      thickness:       thin, normal or thick
+      arrowType:       shape of arrowhead
+      arrowColour:     colour of arrowhead
+      arrowLineType:   solid, dashed, dotted etc
+      arrowThickness:  thin, normal or thick
+      arrowAngle:      total angle, in radians, at tip of arrow (0 to pi)
+      arrowLength:     length of the arrow
+      dotDiameter:        diameter of dot, in metres, if applicable
+      arrowPlacement:     in, or out. Refers to arrows inside or outside extension lines
+      arrowOutsideLength: length of segment of leader on outside arrows
+      lineTextGap:        gap (metres) between text and start of leader
+      extensionLineGap:   gap (metres) between extension line and model geometry
+      extensionLineExtension:  length of the portion of the extension line which extends beyond 
+                               the dimension line
+      extensionColour     extension line colour
+      extensionLineType:  solid, etc
+      extensionThickness: think, normal or thick
+        
+      Elements:
+      
+      Curve:              Leader line geometry represented via a
+                          polyline. The schema allows other curve types for expansion.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:IdBase">
+        <xsd:sequence>
+          <xsd:element ref="plm:Curve" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="referenceRef" type="xsd:IDREF" use="optional" plm:refType="plm:GDEReference"/>
+        <xsd:attribute name="tParm" type="xsd:double" use="optional"/>
+        <xsd:attribute name="uvParms" type="plm:SurfaceUVType" use="optional"/>
+        <xsd:attribute name="terminator" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="stubDirection" type="plm:Ann3DDimensionStubDirection" use="optional"/>
+        <xsd:attribute name="stubLength" type="xsd:double" use="optional"/>
+        <xsd:attribute name="colour" type="plm:RGBAType" use="optional"/>
+        <xsd:attribute name="lineType" type="plm:Ann3DLineType" use="optional"/>
+        <xsd:attribute name="thickness" type="plm:TextLineThicknessType" use="optional"/>
+        <xsd:attribute name="arrowType" type="plm:Ann3DArrow" use="optional"/>
+        <xsd:attribute name="arrowColour" type="plm:RGBAType" use="optional"/>
+        <xsd:attribute name="arrowLineType" type="plm:Ann3DLineType" use="optional"/>
+        <xsd:attribute name="arrowThickness" type="plm:TextLineThicknessType" use="optional"/>
+        <xsd:attribute name="arrowAngle" type="xsd:double" use="optional"/>
+        <xsd:attribute name="arrowLength" type="xsd:double" use="optional"/>
+        <xsd:attribute name="dotDiameter" type="xsd:double" use="optional"/>
+        <xsd:attribute name="arrowPlacement" type="plm:Ann3DDimensionArrowPlacement" use="optional"/>
+        <xsd:attribute name="arrowOutsideLength" type="xsd:double" use="optional"/>
+        <xsd:attribute name="lineTextGap" type="xsd:double" use="optional"/>
+        <xsd:attribute name="extensionLineGap" type="xsd:double" use="optional"/>
+        <xsd:attribute name="extensionColour" type="plm:RGBAType" use="optional"/>
+        <xsd:attribute name="extensionLineType" type="plm:Ann3DLineType" use="optional"/>
+        <xsd:attribute name="extensionThickness" type="plm:TextLineThicknessType" use="optional"/>
+        <xsd:attribute name="extensionLineExtension" type="xsd:double" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!--*** DIMENSION -->
+  <!-- -->
+  <xsd:complexType name="Ann3DDimensionTextType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Ann3DDimensionTextType:  text to be added to a Dimension, in a specified position
+
+      Attributes:
+        
+      position:    position of text relative to the Dimension
+
+      Elements:
+
+      Text:        a single Ann3DTextType element
+    </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Text" type="plm:Ann3DTextType" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="position" type="plm:Ann3DDimensionTextPosition" use="optional"/>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="Ann3DStatisticalRefinementType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Ann3DStatisticalRefinementType:  statistical refinement
+      This type will be expanded to contain further information in the future.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:IdBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="Ann3DFreeStateRefinementType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Ann3DFreeStateRefinementType:  Free State refinement
+      This type will be expanded to contain further information in the future.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:IdBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="Ann3DDimensionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Dimension: 3D Dimension Annotation
+
+      Attributes:
+
+      standard:           e.g. "ANSI Y..."
+      type:               linear, radial, angular or curveLength
+      direction:          direction of measurement
+      basic:              whether a 'basic' dimension.
+      reference:          whether a 'reference' dimension.
+      origin:             whether first or second entity is the origin (for directed
+                            Dimensions)
+      value:              value of dimension, in metres or radians
+      upperDelta:         max value minus nominal value, in metres or radians
+      lowerDelta:         nominal value minus min value, in metres or radians
+      causality:          key, functional, associated or reference
+      grade:            
+      deviation:        
+      pitchDiaGrade:    
+      pitchDiaDeviation:
+      fitGrade:         
+      threadClass:  
+      projected:          true if the Dimension is a projected Dimension, rather than
+                          a true value Dimension.        
+
+      Elements:
+
+      Text              - text elements.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:sequence>
+          <xsd:element name="DimensionText" type="plm:Ann3DDimensionTextType" minOccurs="0" maxOccurs="4"/>
+          <xsd:element name="Statistical" type="plm:Ann3DStatisticalRefinementType" minOccurs="0"/>
+          <xsd:element name="FreeState" type="plm:Ann3DFreeStateRefinementType" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="standard" type="plm:Ann3DDimensionStandardType" use="optional"/>
+        <xsd:attribute name="type" type="plm:Ann3DDimension" use="required"/>
+        <xsd:attribute name="direction" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="basic" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="reference" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="origin" type="plm:Ann3DDimensionOrigin" use="optional"/>
+        <xsd:attribute name="causality" type="plm:Ann3DDimensionCausality" use="optional"/>
+        <xsd:attribute name="value" type="xsd:double" use="optional"/>
+        <xsd:attribute name="upperDelta" type="xsd:double" default="0"/>
+        <xsd:attribute name="lowerDelta" type="xsd:double" default="0"/>
+        <xsd:attribute name="grade" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="deviation" type="xsd:string" use="optional"/>
+        <xsd:attribute name="pitchDiaGrade" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="pitchDiaDeviation" type="xsd:string" use="optional"/>
+        <xsd:attribute name="fitGrade" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="threadClass" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="projected" type="xsd:boolean" default="false"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Dimension" type="plm:Ann3DDimensionType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DDimensionDisplayType">
+    <xsd:annotation>
+      <xsd:documentation>
+      DimensionDisplay: 3D Dimension display, derived from Annotation3DDisplay
+
+      Attributes:
+
+        toleranceDisplay:   method of display for tolerance
+        style:              style of display - radial, diametral, sphericalRadial, 
+                            controlledRadial, sphericalDiameter, or ordinate
+        precision:          number of decimal places in the value display
+        angleFormat:        controls the format of angular values
+        tolerancePrecision: number of decimal places shown in the tolerance
+        unitText:           whether to display the unit text (e.g. "inches")
+        dualUnits:          units to use for the dual dimension. NB: if this is present, a
+                            dual dimension is displayed - otherwise not.   
+        dualType:           bracket or positional display of the dual dimension
+        dualPlacement:      Placment of the dual dimension: before, after, above or below the
+                            main dimension
+        dualTolerancePrecision: number of decimal places shown in the dual toleranc
+        dualUnitText:       ditto for the dual dimension
+        diameterPlacement:  before, after, above or below
+        statisticalPlacement: ditto
+        radialPlacement:    ditto
+        linearPlacement:    ditto
+        referenceDisplay:   how to display reference dimensions - reference, parenthesis, or matched
+        zeroToleranceDisplay: controls the display of a zero valued tolerance
+        dimensionLeadingZero: whether to display leading zeroes in the dimension value
+        toleranceLeadingZero: whether to display leading zeroes in the tolerance value
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType">
+        <xsd:attribute name="toleranceDisplay" type="plm:Ann3DDimensionTolerance" use="optional"/>
+        <xsd:attribute name="style" type="plm:Ann3DDimensionStyle" use="optional"/>
+        <xsd:attribute name="unitText" type="xsd:boolean" use="optional"/>
+        <xsd:attribute name="precision" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="angleFormat" type="plm:Ann3DAngleFormat" use="optional"/>
+        <xsd:attribute name="tolerancePrecision" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="dualUnits" type="xsd:string" use="optional"/>
+        <xsd:attribute name="dualType" type="plm:Ann3DDimensionDual" use="optional"/>
+        <xsd:attribute name="dualPlacement" type="plm:Ann3DDimensionDualPlacement" use="optional"/>
+        <xsd:attribute name="dualUnitText" type="xsd:boolean" use="optional"/>
+        <xsd:attribute name="dualPrecision" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="dualTolerancePrecision" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="referenceDisplay" type="plm:Ann3DDimReferenceDisplay" use="optional"/>
+        <xsd:attribute name="statisticalPlacement" type="plm:Ann3DDimStatisticalPlacement" use="optional"/>
+        <xsd:attribute name="diameterPlacement" type="plm:Ann3DDimDiameterPlacement" use="optional"/>
+        <xsd:attribute name="radialPlacement" type="plm:Ann3DDimDiameterPlacement" use="optional"/>
+        <xsd:attribute name="linearPlacement" type="plm:Ann3DDimDiameterPlacement" use="optional"/>
+        <xsd:attribute name="zeroToleranceDisplay" type="plm:Ann3DDimensionZeroToleranceDisplay" use="optional"/>
+        <xsd:attribute name="dimensionLeadingZero" type="xsd:boolean" default="true"/>
+        <xsd:attribute name="toleranceLeadingZero" type="xsd:boolean" default="true"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DimensionDisplay" type="plm:Ann3DDimensionDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!-- *** FASTENER -->
+  <!-- -->
+  <xsd:complexType name="Ann3DFastenerType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Fastener Annotation
+
+      Attributes:
+
+      symbolType:          e.g. capScrew, hole, dowel, or other user-defined type
+      threaded:            whether threaded or not
+      counterbored:        whether counterbored or not
+      diameter[]:          array of diameters
+      depth[]:             array of depths
+      axisDirection[3]:    axis direction of hole etc
+      indexDirection[3]:   index direction - user-defined
+      optDirection[3]:     optional direction - user-defined
+      type:                user-defined type string to define the type of the Fastener
+      fastenerSubType:     optional user-defined string to further clarify the type
+                           of the Fastener
+      position:            position of the Fastener in global space
+        
+      Elements:
+      
+      GeneralText:         general text
+      CoordinatedEntity:   a text string specifying a related entity in some undefined way
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:sequence>
+          <xsd:element name="GeneralText" type="plm:Ann3DTextType" minOccurs="0"/>
+          <xsd:element name="CoordinatedEntity" type="plm:Ann3DTextType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="symbolType" type="xsd:string" use="required"/>
+        <xsd:attribute name="type" type="xsd:string" use="optional"/>
+        <xsd:attribute name="fastenerSubType" type="xsd:string" use="optional"/>
+        <xsd:attribute name="threaded" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="counterbored" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="diameter" type="plm:DoubleListType" use="optional"/>
+        <xsd:attribute name="depth" type="plm:DoubleListType" use="optional"/>
+        <xsd:attribute name="axisDirection" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="indexDirection" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="optDirection" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="position" type="plm:VectorType" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Fastener" type="plm:Ann3DFastenerType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DFastenerDisplayType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType">
+        <xsd:attribute name="precision" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="displayType" type="plm:Ann3DFastenerDisplay" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FastenerDisplay" type="plm:Ann3DFastenerDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!-- *** SURFACE FINISH -->
+  <!-- -->
+  <xsd:complexType name="Ann3DSurfaceFinishType">
+    <xsd:annotation>
+      <xsd:documentation>
+      SurfaceFinish: derived from Annotation3D
+      
+      Attributes:
+      
+      standard:           surface finish standard
+      type:               basic, MRR, or MRP
+      modifier:           whether modifier added to symbol
+      allAround:          whether All Around added to symbol
+      lay:                parallel, perpendicular, etc
+      machiningAllowance: also known as materialRemoval
+      upperDelta:         upper and
+      lowerDelta:         lower tolerance values for the machiningAllowance
+      direction[3]:
+      
+      roughness:
+      maxRoughness:
+      minRoughness:
+      roughnessSpacing:
+      roughnessCutoff:    See the relevant Standard for details of these.
+      wavinessHeight:     Although these are essentially numeric values,
+      wavinessSpacing:    the Standards require them to be strings.
+      roughness2:
+      maxRoughness2:
+      minRoughness2:
+        
+      Elements:
+      
+      ProcessText:        Process Text element
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:sequence>
+          <xsd:element name="ProcessText" type="plm:Ann3DTextType" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="standard" type="plm:Ann3DSurfaceFinishStandardType" use="optional"/>
+        <xsd:attribute name="type" type="plm:Ann3DSurfaceFinish" use="required"/>
+        <xsd:attribute name="modifier" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="allAround" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="lay" type="plm:Ann3DSurfaceFinishLay" use="optional"/>
+        <xsd:attribute name="machiningAllowance" type="xsd:string" use="optional"/>
+        <xsd:attribute name="upperDelta" type="xsd:double" default="0"/>
+        <xsd:attribute name="lowerDelta" type="xsd:double" default="0"/>
+        <xsd:attribute name="roughness" type="xsd:string" use="optional"/>
+        <xsd:attribute name="maxRoughness" type="xsd:string" use="optional"/>
+        <xsd:attribute name="minRoughness" type="xsd:string" use="optional"/>
+        <xsd:attribute name="roughnessSpacing" type="xsd:string" use="optional"/>
+        <xsd:attribute name="roughnessCutoff" type="xsd:string" use="optional"/>
+        <xsd:attribute name="wavinessHeight" type="xsd:string" use="optional"/>
+        <xsd:attribute name="wavinessSpacing" type="xsd:string" use="optional"/>
+        <xsd:attribute name="direction" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="roughness2" type="xsd:string" use="optional"/>
+        <xsd:attribute name="minRoughness2" type="xsd:string" use="optional"/>
+        <xsd:attribute name="maxRoughness2" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SurfaceFinish" type="plm:Ann3DSurfaceFinishType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DSurfaceFinishDisplayType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType">
+        <xsd:attribute name="bottomExtensionLine" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="precision" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="toleranceDisplay" type="plm:Ann3DDimensionTolerance" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SurfaceFinishDisplay" type="plm:Ann3DSurfaceFinishDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!-- *** FEATURE CONTROL FRAME -->
+  <!-- -->
+  <xsd:complexType name="Ann3DFeatureControlFrameType">
+    <xsd:annotation>
+      <xsd:documentation>
+      FeatureControlFrame Annotation
+      
+      Attributes:
+      
+      standard:         as for Dimensions
+      characteristic:   position, straightness, etc
+      direction:        direction of tolerance application
+      allAround:        all around symbol
+      maxBonus:         true if a max bonus tolerance is used
+      maxBonusValue:    max bonus tolerance
+      profileType:      profile type
+      profileValue:     profile tolerance value
+      profileValue2:    profile tolerance value2 
+                        (used when there are two compartments)
+      
+      Elements:
+      
+      Text:            general Text element
+      ToleranceCompartment: one or more of these sub-elements. If there are two or more,
+                            the FCF is composite.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:sequence>
+          <xsd:element name="Text" type="plm:Ann3DTextType" minOccurs="0"/>
+          <xsd:element name="ToleranceCompartment" type="plm:Ann3DFCFToleranceCompartmentType" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="standard" type="plm:Ann3DDimensionStandardType" use="optional"/>
+        <xsd:attribute name="characteristic" type="plm:Ann3DFCF" use="required"/>
+        <xsd:attribute name="direction" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="allAround" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="maxBonus" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="maxBonusValue" type="xsd:double" use="optional"/>
+        <xsd:attribute name="profileType" type="plm:Ann3DFCFProfileType" use="optional"/>
+        <xsd:attribute name="profileValue" type="xsd:double" use="optional"/>
+        <xsd:attribute name="profileValue2" type="xsd:double" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FeatureControlFrame" type="plm:Ann3DFeatureControlFrameType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DFCFToleranceCompartmentType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Ann3DFCFToleranceCompartmentType: derived from IdBase
+    
+      Attributes:
+      
+      value             tolerance value
+      precision         number of decimal places
+      modifier          lmc, mmc, or rfs
+      zoneShape         diametral or spherical
+      projected         flag indicating a projected tolerance
+      projectedValue    value for projection
+      projectionVector  direction of projection
+      tangentPlane      ditto, tangent plane
+      freeState         ditto, free state 
+      
+      Elements:
+      
+      Primary           first DatumGroup 
+      Secondary         2nd DatumGroup
+      Tertiary          3rd DatumGroup
+      Statistical       statistical refinement
+      FreeState         free state refinement
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:IdBase">
+        <xsd:sequence>
+          <xsd:element name="Primary" type="plm:Ann3DFCFDatumGroupType" minOccurs="0"/>
+          <xsd:element name="Secondary" type="plm:Ann3DFCFDatumGroupType" minOccurs="0"/>
+          <xsd:element name="Tertiary" type="plm:Ann3DFCFDatumGroupType" minOccurs="0"/>
+          <xsd:element name="Statistical" type="plm:Ann3DStatisticalRefinementType" minOccurs="0"/>
+          <xsd:element name="FreeState" type="plm:Ann3DFreeStateRefinementType" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="value" type="xsd:string" use="optional"/>
+        <xsd:attribute name="projectedValue" type="xsd:string" use="optional"/>
+        <xsd:attribute name="precision" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="modifier" type="plm:Ann3DFCFModifier" use="optional"/>
+        <xsd:attribute name="zoneShape" type="plm:Ann3DFCFZoneShape" use="optional"/>
+        <xsd:attribute name="projected" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="projectionVector" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="tangentPlane" type="xsd:boolean" default="false"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="Ann3DFCFDatumGroupType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Ann3DFCFDatumGroupType: derived from IdBase
+      
+      Elements:
+      
+      Datum:         one or more DatumReference elements
+    </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:IdBase">
+        <xsd:sequence>
+          <xsd:element name="Datum" type="plm:Ann3DFCFDatumReferenceType" maxOccurs="unbounded"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="Ann3DFCFDatumReferenceType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Ann3DFCFDatumReference: derived from IdBase
+      
+      Attributes:
+      
+      modifier        lmc, mmc, or rfs
+      datumRef        reference to the DatumFeatureSymbol element, if it exists
+      label           the label (e.g. "A") of the DatumFeaureSymbol.
+      
+      Elements:
+      
+      TextLabel       this sub-element allows for the case where the label is 
+                      not simple text, but, for example, contains symbols. The label
+                      attribute and the TextLabel sub-element should not be used together.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:IdBase">
+        <xsd:sequence>
+          <xsd:element name="TextLabel" type="plm:Ann3DTextType" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="label" type="xsd:string" use="optional"/>
+        <xsd:attribute name="modifier" type="plm:Ann3DFCFModifier" use="optional"/>
+        <xsd:attribute name="datumRef" type="xsd:IDREF" use="optional" plm:refType="plm:DatumFeatureSymbol"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="Ann3DFeatureControlFrameDisplayType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType">
+        <xsd:attribute name="maxBonusPrecision" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="angleFormat" type="plm:Ann3DAngleFormat" use="optional"/>
+        <xsd:attribute name="projectedPrecision" type="xsd:integer" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FeatureControlFrameDisplay" type="plm:Ann3DFeatureControlFrameDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!-- *** DATUM FEATURE SYMBOL -->
+  <!-- -->
+  <xsd:complexType name="Ann3DDatumFeatureSymbolType">
+    <xsd:annotation>
+      <xsd:documentation>
+      DatumFeatureSymbol Annotation
+    
+      Attributes:
+      
+      standard:             as for Dimensions
+      label:                e.g. "A"
+      datumTargetRefs:      Datum Targets associated with this DFS
+      individuallyApplied:
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:attribute name="label" type="xsd:string" use="optional"/>
+        <xsd:attribute name="datumTargetRefs" type="xsd:IDREFS" use="optional" plm:refType="plm:DatumTarget"/>
+        <xsd:attribute name="standard" type="plm:Ann3DDimensionStandardType" use="optional"/>
+        <xsd:attribute name="individuallyApplied" type="xsd:boolean" default="false"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DatumFeatureSymbol" type="plm:Ann3DDatumFeatureSymbolType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DDatumFeatureSymbolDisplayType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DatumFeatureSymbolDisplay" type="plm:Ann3DDatumFeatureSymbolDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!--*** DATUM TARGET -->
+  <!-- -->
+  <xsd:complexType name="Ann3DDatumTargetType">
+    <xsd:annotation>
+      <xsd:documentation>
+      DatumTarget Annotation
+      
+      Attributes:
+      
+      standard:        as for Dimensions
+      label:           label of parent Datum, e.g. "A". Note the Datum Target can exist
+                        without a DFS.
+      index:           index of the Datum Target in its DFS, if it exists
+      type:            point, line, circular, rectangular, cylindrical or arbitrary
+      planar:          whether planar or not
+      diameter:        diameter, for circular targets
+      innerDiameter:   inner diameter, for circular targets
+      length:          if rectangular 
+      width:           if rectangular
+      point1:          first point
+      point2:          second point - only for cylindrical and line targets
+      movable:         true if the DatumTarget is movable (shown as a 'bird-beak' symbol)
+      movableTargetStubDirection: the left/right direction of the bird-beak.
+      movableTargetStubLength: the length of the first segment of the leader (in metres)
+      textStubDirection: if the text of the DatumTarget is outside the DatumTargetSymbol,
+                       then this specifies whether the text is to the right or left of
+                       the symbol.
+      textStubLength:  if the text of the DatumTarget is outside the DatumTargetSymbol,
+                       then this specifies the length (in metres) of the stub line 
+                       joining the text to the symbol.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:attribute name="standard" type="plm:Ann3DDimensionStandardType" use="optional"/>
+        <xsd:attribute name="label" type="xsd:string" use="optional"/>
+        <xsd:attribute name="index" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="type" type="plm:Ann3DDatumTarget" use="required"/>
+        <xsd:attribute name="planar" type="xsd:boolean" use="optional"/>
+        <xsd:attribute name="diameter" type="xsd:double" use="optional"/>
+        <xsd:attribute name="innerDiameter" type="xsd:double" use="optional"/>
+        <xsd:attribute name="length" type="xsd:double" use="optional"/>
+        <xsd:attribute name="width" type="xsd:double" use="optional"/>
+        <xsd:attribute name="point1" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="point2" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="movable" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="movableTargetStubDirection" type="plm:Ann3DDimensionStubDirection" use="optional"/>
+        <xsd:attribute name="movableTargetStubLength" type="xsd:double" use="optional"/>
+        <xsd:attribute name="textStubDirection" type="plm:Ann3DDimensionStubDirection" use="optional"/>
+        <xsd:attribute name="textStubLength" type="xsd:double" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DatumTarget" type="plm:Ann3DDatumTargetType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DDatumTargetDisplayType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType">
+        <xsd:attribute name="precision" type="xsd:integer" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DatumTargetDisplay" type="plm:Ann3DDatumTargetDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!-- *** SPOT WELD -->
+  <!-- -->
+  <xsd:complexType name="Ann3DSpotWeldType">
+    <xsd:annotation>
+      <xsd:documentation>
+      SpotWeld Annotation
+      
+      Attributes:
+      
+      diameter:            diameter
+      thickness:           thickness of the weld bead
+      thicknesses:         number of thicknesses of material being welded
+      type:                type of weld, resistance or projection
+      position:            location of the spot weld
+      approachDirection:   direction weld gun approaches weld
+      clampingDirection:   direction in which material is clamped
+      normalDirection:     normal vector at point of weld
+      jointId:             user specified id for joint weld participates in
+      groupId:             user specified id for group weld is in
+      delta:               flag indicating weld is "critical" (more important)
+
+      Elements:
+      
+      ProcessText         process text
+      CoordinatedEntity   a text string specifying a related entity in some undefined way
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:sequence>
+          <xsd:element name="CoordinatedEntity" type="plm:Ann3DTextType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="ProcessText" type="plm:Ann3DTextType" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="jointId" type="xsd:string" use="optional"/>
+        <xsd:attribute name="groupId" type="xsd:string" use="optional"/>
+        <xsd:attribute name="diameter" type="xsd:double" use="optional"/>
+        <xsd:attribute name="thickness" type="xsd:double" use="optional"/>
+        <xsd:attribute name="thicknesses" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="type" type="plm:Ann3DSpotWeld" use="required"/>
+        <xsd:attribute name="position" type="plm:VectorType" use="required"/>
+        <xsd:attribute name="approachDirection" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="clampingDirection" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="normalDirection" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="delta" type="xsd:boolean" default="false"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SpotWeld" type="plm:Ann3DSpotWeldType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DSpotWeldDisplayType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType">
+        <xsd:attribute name="precision" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="displayType" type="plm:Ann3DSpotWeldDisplay" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="SpotWeldDisplay" type="plm:Ann3DSpotWeldDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!-- *** LINE WELD -->
+  <!-- -->
+  <xsd:complexType name="Ann3DLineWeldType">
+    <xsd:annotation>
+      <xsd:documentation>
+      LineWeld Annotation
+
+      Attributes:
+      
+      standard:                     ISO 2556 or ANSI/AWS A2.4-98
+      arrowSideSymbol:              symbol on arrow side of weld
+      otherSideSymbol:              symbol shown on other side of the weld
+      arrowSideMainSize:            main size of the weld on the arrow side
+      otherSideMainSize:            main size of the weld on the other side
+      arrowSideLongitudinalSize:    longitudinal size of the weld on the arrow side
+      otherSideLongitudinalSize:    longitudinal size of the weld on the other side
+      arrowSideStaggeredSize:       staggered size of the weld on the arrow side
+      otherSideStaggeredSize:       staggered size of the weld on the other side
+      arrowSideSupplementalSymbol:  supplemental symbol on arrow side
+      otherSideSupplementalSymbol:  supplemental symbol on other side
+      allAround:                    flag indicating an all around weld
+      delta:                        flag indicating weld is "critical" (more important)
+      fieldWeld:                    indicates weld is applied in the field
+      referenceSign:                reference sign is to be included in symbol
+      arrowSideFinishSymbol:        Indicates the type of process used to apply a finish 
+                                    to the Arrow side of a Weld
+      otherSideFinishSymbol:        ditto, Other side
+      jisArrowSidePartialPenetrationGrooveWeld: Flag indicating the Arrow side of a weld 
+                                    represents a partial penetration groove weld
+      jisOtherSidePartialPenetrationGrooveWeld: ditto, Other side
+      jisStaggeredFilletWeld:       Flag indicating that the JIS fillet weld is to be staggered
+      arrowSideGrooveGap:           Gap applied to the Arrow side of a groove weld
+      otherSideGrooveGap:           ditto, Other side
+      arrowSideGrooveAngle:         Angle applied to the Arrow side of a groove weld
+      otherSideGrooveAngle:         ditto, Other side
+
+
+      Elements:
+      
+      ProcessText:                  process text
+      CoordinatedEntity:            text string specifying a related entity in an undefined way
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:sequence>
+          <xsd:element name="ProcessText" type="plm:Ann3DTextType" minOccurs="0"/>
+          <xsd:element name="CoordinatedEntity" type="plm:Ann3DTextType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="arrowSideMainSize" type="xsd:string" use="optional"/>
+        <xsd:attribute name="otherSideMainSize" type="xsd:string" use="optional"/>
+        <xsd:attribute name="arrowSideLongitudinalSize" type="xsd:string" use="optional"/>
+        <xsd:attribute name="otherSideLongitudinalSize" type="xsd:string" use="optional"/>
+        <xsd:attribute name="arrowSideStaggeredSize" type="xsd:string" use="optional"/>
+        <xsd:attribute name="otherSideStaggeredSize" type="xsd:string" use="optional"/>
+        <xsd:attribute name="standard" type="plm:Ann3DLineWeldStandardType" use="optional"/>
+        <xsd:attribute name="arrowSideSymbol" type="plm:Ann3DLineWeldSymbol" use="optional"/>
+        <xsd:attribute name="otherSideSymbol" type="plm:Ann3DLineWeldSymbol" use="optional"/>
+        <xsd:attribute name="arrowSideSupplementalSymbol" type="plm:Ann3DLineWeldSupplementalSymbol" use="optional"/>
+        <xsd:attribute name="otherSideSupplementalSymbol" type="plm:Ann3DLineWeldSupplementalSymbol" use="optional"/>
+        <xsd:attribute name="allAround" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="delta" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="fieldWeld" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="referenceSign" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="arrowSideFinishSymbol" type="plm:Ann3DLineWeldFinishSymbol" use="optional"/>
+        <xsd:attribute name="otherSideFinishSymbol" type="plm:Ann3DLineWeldFinishSymbol" use="optional"/>
+        <xsd:attribute name="jisArrowSidePartialPenetrationGrooveWeld" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="jisOtherSidePartialPenetrationGrooveWeld" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="jisStaggeredFilletWeld" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="arrowSideGrooveGap" type="xsd:string" use="optional"/>
+        <xsd:attribute name="otherSideGrooveGap" type="xsd:string" use="optional"/>
+        <xsd:attribute name="arrowSideGrooveAngle" type="xsd:string" use="optional"/>
+        <xsd:attribute name="otherSideGrooveAngle" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="LineWeld" type="plm:Ann3DLineWeldType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DLineWeldDisplayType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType">
+        <xsd:attribute name="precision" type="xsd:integer" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="LineWeldDisplay" type="plm:Ann3DLineWeldDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!--                 Base type for Specification annotations             -->
+  <!-- -->
+  <xsd:complexType name="Ann3DSpecBase" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation>
+      Ann3DSpec: base type for Specification annotations
+
+      Attributes:
+
+      identifier:       unique identifier for the specification
+      revision:         revision of the specification
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:attribute name="identifier" type="xsd:string" use="optional"/>
+        <xsd:attribute name="revision" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Ann3DSpec" type="plm:Ann3DSpecBase" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <!--                Material Specification Annotation                      -->
+  <!-- -->
+  <xsd:complexType name="Ann3DMaterialSpecType">
+    <xsd:annotation>
+      <xsd:documentation>
+      MaterialSpec: used to specify the material used in manufacture
+
+      Elements:
+          
+      Nomenclature:     Textual information about the material
+      OpenField:        Additional information
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DSpecBase">
+        <xsd:sequence>
+          <xsd:element name="Nomenclature" type="plm:Ann3DTextType" minOccurs="0"/>
+          <xsd:element name="OpenField" type="plm:Ann3DTextType" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="MaterialSpec" type="plm:Ann3DMaterialSpecType" substitutionGroup="plm:Ann3DSpec"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DMaterialSpecDisplayType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="MaterialSpecDisplay" type="plm:Ann3DMaterialSpecDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!--                 Process Specification Annotation                      -->
+  <!-- -->
+  <xsd:complexType name="Ann3DProcessSpecType">
+    <xsd:annotation>
+      <xsd:documentation>
+      ProcessSpec: used to specify the process used in manufacture
+
+      Elements:
+      
+      Nomenclature:     Textual information about the process
+      OpenField:        Additional information
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DSpecBase">
+        <xsd:sequence>
+          <xsd:element name="Nomenclature" type="plm:Ann3DTextType" minOccurs="0"/>
+          <xsd:element name="OpenField" type="plm:Ann3DTextType" minOccurs="0"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ProcessSpec" type="plm:Ann3DProcessSpecType" substitutionGroup="plm:Ann3DSpec"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DProcessSpecDisplayType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ProcessSpecDisplay" type="plm:Ann3DProcessSpecDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!--                         Part Specification                    -->
+  <!-- -->
+  <xsd:complexType name="Ann3DPartSpecType">
+    <xsd:annotation>
+      <xsd:documentation>
+      PartSpec: derived from Ann3DSpec
+                Part identification based on MIL-STD-100
+
+      Attributes:
+          
+      itemName:              
+      nameModifier:
+      descriptiveModifier: 
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DSpecBase">
+        <xsd:attribute name="itemName" type="xsd:string" use="optional"/>
+        <xsd:attribute name="nameModifier" type="xsd:string" use="optional"/>
+        <xsd:attribute name="descriptiveModifier" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PartSpec" type="plm:Ann3DPartSpecType" substitutionGroup="plm:Ann3DSpec"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DPartSpecDisplayType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PartSpecDisplay" type="plm:Ann3DPartSpecDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!--                      Organisation Annotation                             -->
+  <!-- -->
+  <xsd:complexType name="Ann3DOrganisationType">
+    <xsd:annotation>
+      <xsd:documentation>
+      An Annotation which specifies an associated organisation. The Ann3DInstance which
+      references this Annotation should also reference an Organisation and/or Site 
+      element.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Ann3DOrganisation" type="plm:Ann3DOrganisationType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DOrganisationDisplayType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Ann3DOrganisationDisplay" type="plm:Ann3DOrganisationDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!--                              NOTE                                     -->
+  <!-- -->
+  <xsd:complexType name="Ann3DNoteType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Note Annotation
+
+      Attributes:
+      
+      standard:     standard applicable to the Note
+      identifier:   identifier of the Note
+      category:     category of the Note
+      revision:     revision of the Note
+      
+      Elements:
+      
+      Text:         Zero or more blocks of text.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:sequence>
+          <xsd:element name="Text" type="plm:Ann3DTextType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="standard" type="plm:Ann3DDimensionStandardType" use="optional"/>
+        <xsd:attribute name="identifier" type="xsd:string" use="optional"/>
+        <xsd:attribute name="category" type="xsd:string" use="optional"/>
+        <xsd:attribute name="revision" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Note" type="plm:Ann3DNoteType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DNoteDisplayType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Note display.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="NoteDisplay" type="plm:Ann3DNoteDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!-- *** BALLOON -->
+  <!-- -->
+  <xsd:complexType name="Ann3DBalloonType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Balloon Annotation (derived from Note).
+      
+      Attributes:
+      
+      balloonId:       String giving the letter(s) displayed inside the Balloon circle.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DNoteType">
+        <xsd:attribute name="balloonId" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Balloon" type="plm:Ann3DBalloonType" substitutionGroup="plm:Note"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DBalloonDisplayType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType">
+        <xsd:attribute name="radius" type="xsd:double" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="BalloonDisplay" type="plm:Ann3DBalloonDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!-- *** MEASUREMENT POINT -->
+  <!-- -->
+  <xsd:complexType name="Ann3DMeasurementPointType">
+    <xsd:annotation>
+      <xsd:documentation>
+      MeasurementPoint: derived from Annotation3D
+
+      Attributes:
+      
+      level:                  level of measurement point use in process
+      measurementDirection:   direction CMM approaches measurement point
+      coordinationDirection:  direction for coordinating with another part
+      normalDirection:        normal vector at point of measurement point
+      position:               location of the measurement point
+        
+      Elements:
+        
+      CoordinatedEntity:      text string specifying a related entity in an undefined way
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:sequence>
+          <xsd:element name="CoordinatedEntity" type="plm:Ann3DTextType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="level" type="xsd:string" use="optional"/>
+        <xsd:attribute name="measurementDirection" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="coordinationDirection" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="normalDirection" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="position" type="plm:VectorType" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="MeasurementPoint" type="plm:Ann3DMeasurementPointType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DMeasurementPointDisplayType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType">
+        <xsd:attribute name="displayType" type="plm:Ann3DMeasurementPointDisplay" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="MeasurementPointDisplay" type="plm:Ann3DMeasurementPointDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!-- *** LOCATOR -->
+  <!-- -->
+  <xsd:complexType name="Ann3DLocatorType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Locator Annotation.
+
+      Attributes:
+      
+      symbol:                  Main type of the Locator Symbol. e.g. hole, edge, surface, etc.
+
+                               One of the following is required, depending on the value of symbol
+      mainEdgeType:            If symbol is edge, indicates thge type of the Edge Locator
+      mainHoleType:            If symbol is hole, indicates the type of the Hole Locator
+      mainSurfaceType:         If symbol is surface, indicates the type of the Surface Locator
+      mainRectSlotFreeformType:If symbol is recangular, slot or freeform
+                                  indicates the type of the Rectangular, Slot or Freeform
+                                  Locator
+      subtype:                 Indicates the subtype of the Locator
+      coordinatePlane:         Indicates the coordinate plane for which the Locator limits
+                                  the degrees of freedom of the Part
+      functionalSubscript:     Indicates which functional subscripts are applicable.
+                                  These are (may include more than one):
+                                   O - Dies, molds, checking fixtures for individual parts
+                                   S - Sub-assembly prior to framing
+                                   K - Sub-assembly locators in checking fixtures
+                                   C - Assembly fixtures for framing prior to paint
+                                   F - Trim and final assembly after paint
+      changeLevel:             Indicates how easy it is (for the overall process) to allow 
+                                  change to this Locator.
+      punchDirection[3]:       punch direction - direction in which punch approaches part
+      pinDirection[3]:         pin direction - direction in which part is pinned
+      normalDirection[3]:      normal direction - normal vector at this locator
+      hotSpotPosition:         position of the Hot Spot for the Locator in global space
+       
+      Elements:
+        
+      PartNumber:              a user entered string indicating the part number
+      Note:                    a user entered string, free text
+      CoordinatedEntity:       a text string specifying a related entity in an undefined way
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:sequence>
+          <xsd:element name="PartNumber" type="plm:Ann3DTextType" minOccurs="0"/>
+          <xsd:element name="Note" type="plm:Ann3DTextType" minOccurs="0"/>
+          <xsd:element name="CoordinatedEntity" type="plm:Ann3DTextType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="symbol" type="plm:Ann3DLocatorSymbol" use="required"/>
+        <xsd:attribute name="mainEdgeType" type="plm:Ann3DLocatorEdgeType" use="optional"/>
+        <xsd:attribute name="mainHoleType" type="plm:Ann3DLocatorHoleType" use="optional"/>
+        <xsd:attribute name="mainSurfaceType" type="plm:Ann3DLocatorSurfaceType" use="optional"/>
+        <xsd:attribute name="mainRectSlotFreeformType" type="plm:Ann3DLocatorRectSlotFreeformType" use="optional"/>
+        <xsd:attribute name="subtype" type="plm:Ann3DLocatorSubtype" use="required"/>
+        <xsd:attribute name="coordinatePlane" type="plm:Ann3DLocatorCoordinatePlane" use="required"/>
+        <xsd:attribute name="functionalSubscript" type="xsd:string" use="optional"/>
+        <xsd:attribute name="changeLevel" type="plm:Ann3DLocatorChangeLevel" use="required"/>
+        <xsd:attribute name="punchDirection" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="pinDirection" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="normalDirection" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="hotSpotPosition" type="plm:VectorType" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Locator" type="plm:Ann3DLocatorType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DLocatorDisplayType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Attributes:
+
+      precision:        number of decimal places
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType">
+        <xsd:attribute name="precision" type="xsd:integer" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="LocatorDisplay" type="plm:Ann3DLocatorDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!-- *** User Defined Symbol -->
+  <!-- -->
+  <xsd:complexType name="Ann3DUserDefinedSymbolTextType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Text to be added to a User Defined Symbol in a specified position and orientation
+      
+      Attributes: 
+      
+      origin:      position of start of text, in the display plane
+      direction:   direction of text
+      
+      Elements:
+      
+      Text:           a single Ann3DTextType element (required)
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Text" type="plm:Ann3DTextType"/>
+    </xsd:sequence>
+    <xsd:attribute name="origin" type="plm:VectorType"/>
+    <xsd:attribute name="direction" type="plm:VectorType"/>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="Ann3DUserDefinedSymbolType">
+    <xsd:annotation>
+      <xsd:documentation>
+      UserDefinedSymbol Annotation.
+      
+      Note that the textOrigin and textDirection attributes on Ann3DisplayType
+      do not apply to this Annotation.
+
+      Attributes:
+        
+      lineStyle:         The style applied to the lines in the User Defined Symbol
+      scale:             Scale factor applied to the symbol
+      filename:          name of the file used to define the symbol
+       
+      Elements:
+      
+      Line:              One element for each line in the symbol
+      Arc:               One element for each arc in the symbol
+      Circle:            One element for each circle in the symbol
+      Ellipse:           One element for each ellipse in the symbol
+      Spline:            One element for each spline in the symbol
+      UserDefinedSymbolText: Positioned and oriented Text blocks
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:sequence>
+          <xsd:element name="Line" type="plm:LineType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Arc" type="plm:CircleType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Circle" type="plm:CircleType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Ellipse" type="plm:EllipseType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Spline" type="plm:BSplineCurveType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="UserDefinedSymbolText" type="plm:Ann3DUserDefinedSymbolTextType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="lineStyle" type="plm:Ann3DLineType" default="solid"/>
+        <xsd:attribute name="scale" type="xsd:double" default="1.0"/>
+        <xsd:attribute name="filename" type="plm:anyURIType" use="optional">
+          <xsd:annotation>
+            <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">validate=skipName</xsd:appinfo>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="UserDefinedSymbol" type="plm:Ann3DUserDefinedSymbolType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DUserDefinedSymbolDisplayType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="UserDefinedSymbolDisplay" type="plm:Ann3DUserDefinedSymbolDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!-- *** CIRCLE CENTRE -->
+  <!-- -->
+  <xsd:complexType name="Ann3DCircleCentreType">
+    <xsd:annotation>
+      <xsd:documentation>
+      CircleCentre Annotation.
+
+      Attributes:
+      
+      diameter:            specifies the diameter of the circle if not derived
+                             from the tracked geometry
+      diameterOverride:    indicates whether the diameter of any tracked geometry is
+                             overridden by the value specified in diameter.
+      axisDirection[3]:    axis direction of hole etc.
+      normalDirection[3]:  normal direction
+      position:            position of the Circle Centre in model space
+        
+      Elements:
+      
+      CoordinatedEntity:   a text string specifying a related entity in some unspecified way
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:sequence>
+          <xsd:element name="CoordinatedEntity" type="plm:Ann3DTextType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="diameter" type="xsd:double" use="optional"/>
+        <xsd:attribute name="diameterOverride" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="axisDirection" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="normalDirection" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="position" type="plm:VectorType" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CircleCentre" type="plm:Ann3DCircleCentreType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DCircleCentreDisplayType">
+    <xsd:annotation>
+      <xsd:documentation>
+      CircleCentre Display.
+
+      Attributes:
+      
+      precision:           number of decimal places used in the display
+      displayType:         flatToScreen or flatToSurface
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType">
+        <xsd:attribute name="precision" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="displayType" type="plm:Ann3DCircleCentreDisplay" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CircleCentreDisplay" type="plm:Ann3DCircleCentreDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!-- *** COORDINATE NOTE -->
+  <!-- -->
+  <xsd:complexType name="Ann3DCoordinateNoteType">
+    <xsd:annotation>
+      <xsd:documentation>
+      CoordinateNote Annotation
+
+      Attributes:
+      
+      standard:       standard used in for the Coordinate Note
+      textBox:        Indicates whether or not the note has a box around it
+      
+      includeX:       Indicates whether or not to include the X coordinate of the tracked entity
+      xPrefix:        User specified prefix for X coordinate
+      xSuffix:        User specified suffix for X coordinate
+      
+      includeY:       Indicates whether or not to include the Y coordinate of the tracked entity
+      yPrefix:        User specified prefix for Y coordinate
+      ySuffix:        User specified suffix for Y coordinate
+      
+      includeZ:       Indicates whether or not to include the Z coordinate of the tracked entity
+      zPrefix:        User specified prefix for Z coordinate
+      zSuffix:        User specified suffix for Z coordinate
+      
+      includeI:       Indicates whether or not to include the I component of the tracked entity
+                       Only meaningful if the tracked entity has a normal vector
+      iPrefix:        User specified prefix for I coordinate
+      iSuffix:        User specified suffix for I coordinate
+      
+      includeJ:       Indicates whether or not to include the J component of the tracked entity
+                       Only meaningful if the tracked entity has a normal vector
+      jPrefix:        User specified prefix for J coordinate
+      jSuffix:        User specified suffix for J coordinate
+      
+      includeK:       Indicates whether or not to include the K component of the tracked entity
+                       Only meaningful if the tracked entity has a normal vector
+      kPrefix:        User specified prefix for K coordinate
+      kSuffix:        User specified suffix for K coordinate
+      
+      includeLabel:   Indicates whether or not to include the Label of the tracked entity
+      labelPrefix:    User specified prefix for Label
+      labelSuffix:    User specified suffix for Label
+      
+      includeLevel:   Indicates whether or not to include the Level of the tracked entity
+                       Only meaningful if the tracked entity is a measurement point
+      levelPrefix:    User specified prefix for Level
+      levelSuffix:    User specified suffix for Level
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:attribute name="standard" type="plm:Ann3DDimensionStandardType" use="optional"/>
+        <xsd:attribute name="textBox" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="includeX" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="xPrefix" type="xsd:string"/>
+        <xsd:attribute name="xSuffix" type="xsd:string"/>
+        <xsd:attribute name="includeY" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="yPrefix" type="xsd:string"/>
+        <xsd:attribute name="ySuffix" type="xsd:string"/>
+        <xsd:attribute name="includeZ" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="zPrefix" type="xsd:string"/>
+        <xsd:attribute name="zSuffix" type="xsd:string"/>
+        <xsd:attribute name="includeI" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="iPrefix" type="xsd:string"/>
+        <xsd:attribute name="iSuffix" type="xsd:string"/>
+        <xsd:attribute name="includeJ" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="jPrefix" type="xsd:string"/>
+        <xsd:attribute name="jSuffix" type="xsd:string"/>
+        <xsd:attribute name="includeK" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="kPrefix" type="xsd:string"/>
+        <xsd:attribute name="kSuffix" type="xsd:string"/>
+        <xsd:attribute name="includeLabel" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="labelPrefix" type="xsd:string"/>
+        <xsd:attribute name="labelSuffix" type="xsd:string"/>
+        <xsd:attribute name="includeLevel" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="levelPrefix" type="xsd:string"/>
+        <xsd:attribute name="levelSuffix" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CoordinateNote" type="plm:Ann3DCoordinateNoteType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DCoordinateNoteDisplayType">
+    <xsd:annotation>
+      <xsd:documentation>
+      CoordinateNote Display
+      
+      Attributes:
+      
+      precision:        number of decimal places
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType">
+        <xsd:attribute name="precision" type="xsd:integer" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CoordinateNoteDisplay" type="plm:Ann3DCoordinateNoteDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!-- *** ATTRIBUTE NOTE -->
+  <!-- -->
+  <xsd:complexType name="Ann3DAttributeReferenceType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element gives the name of an Attribute and optionally a URI
+      reference to it. The name is the element content.
+      
+      Attributes:
+      
+      attributeRef:     reference to the attribute.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="plm:StringFieldType">
+        <xsd:attribute name="attributeRef" type="plm:anyURIType" use="optional"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="Ann3DAttributeNoteType">
+    <xsd:annotation>
+      <xsd:documentation>
+      AttributeNote Annotation.
+
+      Attributes:
+      
+      standard:       standard used for the AttributeNote
+      
+      Elements:
+        
+      AttributeName:  Attribute name. The values of the named attributes 
+                      are used to construct the AttributeNote text.
+      AttributeReference: Attribute name and reference. This is similar to
+                      AttributeName above, but allows a URI reference to the
+                      actual attribute. Do not use AttributeName elements and
+                      AttributeReference elements at the same time.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:sequence>
+          <xsd:element name="AttributeName" type="plm:StringFieldType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="AttributeReference" type="plm:Ann3DAttributeReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="standard" type="plm:Ann3DDimensionStandardType" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AttributeNote" type="plm:Ann3DAttributeNoteType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DAttributeNoteDisplayType">
+    <xsd:annotation>
+      <xsd:documentation>
+      AttributeNote Display
+      
+      Attributes:
+
+      includeLabels:  Indicates whether or not the labels for the attributes are 
+                      included in the note text
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType">
+        <xsd:attribute name="includeLabels" type="xsd:boolean" default="false"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AttributeNoteDisplay" type="plm:Ann3DAttributeNoteDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!-- *** BUNDLE/DRESSING NOTE -->
+  <!-- -->
+  <xsd:complexType name="Ann3DBundleDressingNoteType">
+    <xsd:annotation>
+      <xsd:documentation>
+      BundleDressingNote Annotation.
+
+      Attributes:
+      
+      standard:        Standard used in for the Bundle/Dressing Note
+      type:            Indicates whether the Bundle/Dressing Note is for a Bundle or a Dressing
+      locationOnCurve: The location (parameter) along the wirepath where the leader attaches
+                       for leader directed Bundle/Dressing Notes
+      
+      Elements:
+        
+      AttributeName:   A list of bundle or dressing attribute names. The values of the named
+                       attributes are used to construct the BundleDressingNote text.
+      AttributeReference: Attribute name and reference. This is similar to
+                      AttributeName above, but allows a URI reference to the
+                      actual attribute. Do not use AttributeName elements and
+                      AttributeReference elements at the same time.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:sequence>
+          <xsd:element name="AttributeName" type="plm:StringFieldType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="AttributeReference" type="plm:Ann3DAttributeReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="standard" type="plm:Ann3DDimensionStandardType" use="optional"/>
+        <xsd:attribute name="type" type="plm:Ann3DBundleOrDressingNote" use="required"/>
+        <xsd:attribute name="locationOnCurve" type="xsd:double" default="0.0"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="BundleDressingNote" type="plm:Ann3DBundleDressingNoteType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DBundleDressingNoteDisplayType">
+    <xsd:annotation>
+      <xsd:documentation>
+      BundleDressingNoteDisplay.
+      
+      Attributes:
+
+      precision:        number of decimal places
+      includeLabels:    Indicates whether or not the labels for the attributes are
+                        included in the note text
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType">
+        <xsd:attribute name="precision" type="xsd:integer" use="optional"/>
+        <xsd:attribute name="includeLabels" type="xsd:boolean" default="false"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="BundleDressingNoteDisplay" type="plm:Ann3DBundleDressingNoteDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!-- *** Cutting Plane Symbol - Plane Cutter -->
+  <!-- -->
+  <xsd:complexType name="Ann3DCPSPlaneCutterType">
+    <xsd:annotation>
+      <xsd:documentation>
+      PlaneCutter.
+
+      Attributes:
+        
+      materialSide:    Defines whether or not the normal for the cutting plane indicates
+                       the side from which to remove the material. True means the normal
+                       for the plane indicates the side from which to remove material,
+                       false means the opposite of the plane normal is the side from
+                       which to remove material. 
+                       
+      Elements:
+        
+      Plane:           The cutting plane.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:IdBase">
+        <xsd:sequence>
+          <xsd:element name="Plane" type="plm:PlaneType" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+        <xsd:attribute name="materialSide" type="xsd:boolean" default="true"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!-- *** Cutting Plane Symbol - Open Polyline Cutter -->
+  <!-- -->
+  <xsd:complexType name="Ann3DCPSOpenPolylineCutterType" plm:deprecated="true">
+    <xsd:annotation>
+      <xsd:documentation>
+      OpenPolylineCutter.
+      
+      This element is deprecated - use Ann3DCPSOpenCutterType in preference.
+
+      Attributes:
+       
+      materialSide:    Indicates which side of the cut contains material:
+                       First, take the vector cross product of the constraint plane
+                       and the vector formed from the first line segment of the polyline.
+                       materialSide of true indicates this cross product shows the side
+                       from which material is removed. materialSide of false indicates
+                       the opposite side has the material removed. 
+
+      Elements:
+        
+      ConstraintPlane: Equation defining the constraint plane
+      Polyline:        Data for the points selected to define the polyline cutter
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:IdBase">
+        <xsd:sequence>
+          <xsd:element name="ConstraintPlane" type="plm:PlaneType" minOccurs="1" maxOccurs="1"/>
+          <xsd:element name="Polyline" type="plm:PolyLineType"/>
+        </xsd:sequence>
+        <xsd:attribute name="materialSide" type="xsd:boolean" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!-- *** Cutting Plane Symbol - Closed Polyline Cutter -->
+  <!-- -->
+  <xsd:complexType name="Ann3DCPSClosedPolylineCutterType" plm:deprecated="true">
+    <xsd:annotation>
+      <xsd:documentation>
+      ClosedPolylineCutter.
+      
+      This element is deprecated - use Ann3DCPSClosedCutterType in preference.
+
+      Attributes:
+      
+      materialSide:    Indicates which side of the cut contains material -
+                       materialSide of true indicates this is a "Cut" (where the shape
+                       represented by the closed polyline curve is removed from the
+                       original Part) and a value of false indicates this is an
+                       "Intersect" (where only the material from the original Part that
+                       intersects with the volume defined by the cutting plane symbol is
+                       retained). 
+                       
+      aftThroughAll:   Indicates whether or not the extrusion in the Aft direction is
+                         "Through All"
+      aftDistance:     The distance the extrude is performed in the Aft distance
+      foreThroughAll:  Indicates whether or not the extrusion in the Fore direction is
+                         "Through All"
+      foreDistance:    The distance the extrude is performed in the Fore distance
+      
+      Elements:
+        
+      ConstraintPlane: Equation defining the constraint plane
+      Polyline:        Data for the points selected to define the polyline cutter
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:IdBase">
+        <xsd:sequence>
+          <xsd:element name="ConstraintPlane" type="plm:PlaneType" minOccurs="1" maxOccurs="1"/>
+          <xsd:element name="Polyline" type="plm:PolyLineType"/>
+        </xsd:sequence>
+        <xsd:attribute name="materialSide" type="xsd:boolean" use="required"/>
+        <xsd:attribute name="aftThroughAll" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="aftDistance" type="xsd:double" use="optional"/>
+        <xsd:attribute name="foreThroughAll" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="foreDistance" type="xsd:double" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!-- *** Cutting Plane Symbol - Open Cutter -->
+  <!-- -->
+  <xsd:complexType name="Ann3DCPSOpenCutterType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Open Cutter.
+
+      Attributes:
+       
+      materialSide:    Indicates which side of the cut contains material:
+                       First, take the vector cross product of the constraint plane normal
+                       and the tangent at the start of the curve. materialSide of true 
+                       indicates this cross product shows the side from which material is 
+                       removed. materialSide of false indicates the opposite side has 
+                       the material removed.
+                       
+      curveRef:        reference to the curve which defines the cut. This may be a 
+                       CompositeCurve.
+
+      Elements:
+        
+      ConstraintPlane: Plane in which the curve lies.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:IdBase">
+        <xsd:sequence>
+          <xsd:element name="ConstraintPlane" type="plm:PlaneType" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+        <xsd:attribute name="materialSide" type="xsd:boolean" use="required"/>
+        <xsd:attribute name="curveRef" type="plm:anyURIType" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!-- *** Cutting Plane Symbol - Closed Cutter -->
+  <!-- -->
+  <xsd:complexType name="Ann3DCPSClosedCutterType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Closed Cutter.
+
+      Attributes:
+      
+      materialSide:    Indicates which side of the cut contains material -
+                       materialSide of true indicates this is a "Cut" (where the shape
+                       represented by the closed curve is removed from the
+                       original Part) and a value of false indicates this is an
+                       "Intersect" (where only the material from the original Part that
+                       intersects with the volume defined by the cutting plane symbol is
+                       retained). 
+                       
+                       The constraint plane normal defines the "fore" direction; the 
+                       opposite is the "aft" direction:
+                       
+      aftThroughAll:   Indicates whether or not the extrusion in the Aft direction is
+                         "Through All"
+      aftDistance:     The distance the extrude is performed in the Aft distance, in metres.
+      foreThroughAll:  Indicates whether or not the extrusion in the Fore direction is
+                         "Through All"
+      foreDistance:    The distance the extrude is performed in the Fore distance, in metres.
+      
+      curveRef:        reference to the closed curve which defines the cut. This may be a 
+                       CompositeCurve.
+      
+      Elements:
+        
+      ConstraintPlane: Plane in which the curve lies.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:IdBase">
+        <xsd:sequence>
+          <xsd:element name="ConstraintPlane" type="plm:PlaneType" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+        <xsd:attribute name="materialSide" type="xsd:boolean" use="required"/>
+        <xsd:attribute name="aftThroughAll" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="aftDistance" type="xsd:double" use="optional"/>
+        <xsd:attribute name="foreThroughAll" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="foreDistance" type="xsd:double" use="optional"/>
+        <xsd:attribute name="curveRef" type="plm:anyURIType" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!-- *** Cutting Plane Symbol -->
+  <!-- -->
+  <xsd:complexType name="Ann3DCuttingPlaneSymbolType">
+    <xsd:annotation>
+      <xsd:documentation>
+      CuttingPlaneSymbol Annotation.
+
+      Attributes:
+      
+      Elements:
+      
+      CpsLetters:            The name displayed with the Cutting Plane Symbol in the 
+                             graphics region. This is not the system ID for the symbol.
+  
+      Elements:
+
+      One (and only one) of the following:
+      
+      PlaneCutter:           Data for a Plane cutter
+      OpenPolylineCutter:    Data for an open polyline cutter
+      ClosedPolylineCutter:  Data for a closed polyline cutter
+      OpenCutter:            Data for an open polyline cutter
+      ClosedCutter:          Data for a closed polyline cutter
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:sequence>
+          <xsd:element name="CpsLetters" type="plm:Ann3DTextType" minOccurs="1" maxOccurs="1"/>
+          <xsd:choice minOccurs="1" maxOccurs="1">
+            <xsd:element name="PlaneCutter" type="plm:Ann3DCPSPlaneCutterType"/>
+            <xsd:element name="OpenPolylineCutter" type="plm:Ann3DCPSOpenPolylineCutterType" plm:deprecated="true"/>
+            <xsd:element name="ClosedPolylineCutter" type="plm:Ann3DCPSClosedPolylineCutterType" plm:deprecated="true"/>
+            <xsd:element name="OpenCutter" type="plm:Ann3DCPSOpenCutterType"/>
+            <xsd:element name="ClosedCutter" type="plm:Ann3DCPSClosedCutterType"/>
+          </xsd:choice>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CuttingPlaneSymbol" type="plm:Ann3DCuttingPlaneSymbolType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DCuttingPlaneSymbolDisplayType">
+    <xsd:annotation>
+      <xsd:documentation>
+      CuttingPlaneSymbolDisplay
+      
+      Attributes:
+
+      twoArrows:      Indicates whether one or two arrows are used in the cutting
+                      plane symbol
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType">
+        <xsd:attribute name="twoArrows" type="xsd:boolean" default="false"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CuttingPlaneSymbolDisplay" type="plm:Ann3DCuttingPlaneSymbolDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!-- *** CROSSHATCH -->
+  <!-- -->
+  <xsd:complexType name="Ann3DCrosshatchType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Crosshatch Annotation
+
+      Attributes:
+      
+      rotate:     Indicates whether or not the crosshatch pattern is rotated
+      pattern:    The pattern used for the Crosshatch
+      spacing:    The spacing between the lines in the Crosshatch, in metres
+      angle:      The angle (in radians) of the lines in the crosshatch from the 
+                  X direction for the symbol
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Annotation3DType">
+        <xsd:attribute name="rotate" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="pattern" type="plm:Ann3DCrosshatchPattern" default="iron"/>
+        <xsd:attribute name="spacing" type="xsd:double"/>
+        <xsd:attribute name="angle" type="xsd:double"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Crosshatch" type="plm:Ann3DCrosshatchType" substitutionGroup="plm:Annotation3D"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DCrosshatchDisplayType">
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="CrosshatchDisplay" type="plm:Ann3DCrosshatchDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!-- ********************** eMarking *********************** -->
+  <!-- -->
+  <xsd:simpleType name="Ann3DeMarkingEnumType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="governmentSecurityInfo"/>
+      <xsd:enumeration value="exportControl"/>
+      <xsd:enumeration value="productProprietaryInfo"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="Ann3DeMarkingType">
+    <xsd:annotation>
+      <xsd:documentation>
+      eMarking Annotation (derived from Note).
+
+      The eMarking annotation indicates governmental, legal, and proprietary controls
+      over products.
+      
+      Attributes:
+      
+      type:             type of information
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DNoteType">
+        <xsd:attribute name="type" type="plm:Ann3DeMarkingEnumType" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Ann3DeMarking" type="plm:Ann3DeMarkingType" substitutionGroup="plm:Note"/>
+  <!-- -->
+  <xsd:complexType name="Ann3DeMarkingDisplayType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Ann3DeMarkingDisplay
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:Ann3DDisplayType"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Ann3DeMarkingDisplay" type="plm:Ann3DeMarkingDisplayType" substitutionGroup="plm:Ann3DDisplay"/>
+  <!-- -->
+  <!-- Ann3DGroup -->
+  <!-- -->
+  <xsd:complexType name="Ann3DGroupType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Ann3DGroup (derived from GDE).
+      
+      This element represents a collection of 3D Annotations.
+      
+      It instances its Annotations via the gdeInstanceRefs attribute, in other words the
+      Annotations are regarded as sub-structure.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:GDEBase"/>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Ann3DGroup" type="plm:Ann3DGroupType" substitutionGroup="plm:GDE"/>
+  <!-- -->
+  <!-- Annotation3DGroup (deprecated) -->
+  <!-- -->
+  <xsd:complexType name="Annotation3DGroupType" plm:deprecated="true">
+    <xsd:annotation>
+      <xsd:documentation>
+      Annotation3DGroup: This element is deprecated.
+
+      Attributes:
+      
+      dimensionStandard:      standard to use for dimensions (and other annotations which 
+                                use the same standards enum)
+      surfaceFinishStandard:  standard to use for surface finishes
+      lineWeldStandard:       standard to use for line welds
+
+      Elements:
+      
+      any number of Dimensions, Fasteners, etc etc, and corresponding Display elements.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttributeBase">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element ref="plm:Annotation3D"/>
+          <xsd:element ref="plm:Ann3DDisplay"/>
+        </xsd:choice>
+        <xsd:attribute name="dimensionStandard" type="plm:Ann3DDimensionStandardType" use="optional"/>
+        <xsd:attribute name="surfaceFinishStandard" type="plm:Ann3DSurfaceFinishStandardType" use="optional"/>
+        <xsd:attribute name="lineWeldStandard" type="plm:Ann3DLineWeldStandardType" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Annotation3DGroup" type="plm:Annotation3DGroupType" substitutionGroup="plm:Attribute"/>
+  <!-- -->
+</xsd:schema>

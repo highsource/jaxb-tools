@@ -1,0 +1,940 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Copyright 2005 UGS Corp.  All Rights Reserved.
+This software and related documentation are proprietary to UGS Corp.
+-->
+<xsd:schema targetNamespace="http://www.plmxml.org/Schemas/PLMXMLClassificationSchema" xmlns:plm="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:cl="http://www.plmxml.org/Schemas/PLMXMLClassificationSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xsd:import namespace="http://www.plmxml.org/Schemas/PLMXMLSchema" schemaLocation="PLMXMLSchema.xsd"/>
+  <xsd:annotation>
+    <xsd:documentation source="http://www.plmxml.org/Schemas/PLMXMLSchema/History">
+      <plm:SchemaChange author="davidj" date="2005-05-11" version="6.0.1.26">
+        <plm:Description>
+        Change ReferenceSpecificationType from simpleType to complexType
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='ReferenceSpecificationType']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-05-11" version="6.0.1.26">
+        <plm:Description>
+        Remove 'reference' attribute from CommonClassAttrAttributes.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/attributeGroup[@name='CommonClassAttrAttributes']"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-05-11" version="6.0.1.26">
+        <plm:Description>
+        Add 'hideKeys' attribute to KeyLOVType.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='KeyLOVType']/attribute[@name='hideKeys'"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-05-11" version="6.0.1.26">
+        <plm:Description>
+        Change type of 'reference' attribute on DictionaryAttributeType.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='DictionaryAttributeType']/attribute[@name='reference'"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-05-11" version="6.0.1.26">
+        <plm:Description>
+        Add ReferenceSpecification sub-element to DictionaryAttributeType and 
+        AbstractClassAttributeType.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='DictionaryAttributeType']/element[@name='ReferenceSpecification'"/>
+        <plm:Reference locationRef="..//schema/complexType[@name='AbstractClassAttributeType']/element[@name='ReferenceSpecification'"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-05-11" version="6.0.1.26">
+        <plm:Description>
+        Change type of 'classid' attribute on UserClassAttributeType.
+        </plm:Description>
+        <plm:Reference locationRef="..//schema/complexType[@name='UserClassAttributeType']/attribute[@name='classid'"/>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2005-10-24" version="6.0.1.26">
+        <plm:Description>
+        Add plm:refType attribute to various attributes.
+        </plm:Description>
+      </plm:SchemaChange>
+      <plm:SchemaChange author="davidj" date="2007-01-22" version="6.0.1.xxx">
+        <plm:Description>
+          Add GeneralOptionType, and add GeneralOption sub-elements to
+			KeyLOVType, DictionaryAttributeType, AbstractClassType,
+			AdminViewType, and ICOType.
+          Add an AltDefaultValue sub-element to DictionaryAttributeType.
+          Add hasFixedDefaultValue to CommonClassAttrAttributes
+          Add hasLocalDefaultValue to AdminClassAttributeType and
+			AdminViewAttributeType.
+          Add language to ClassAttributeOptionType
+          Add language and optionType to AdminViewAttributeOptions
+          Add AliasName to AbstractClassType
+          Add DefaultValue sub-element to AdminViewAttributeType
+        </plm:Description>
+      </plm:SchemaChange>
+    </xsd:documentation>
+    <xsd:documentation>
+    
+                        PLM XML Classification Schema
+                        
+    </xsd:documentation>
+    <xsd:appinfo source="http://www.plmxml.org/Schemas/PLMXMLClassificationSchema">
+      <plm:SchemaInfo name="PLMXMLClassificationSchema.xsd" date="2005-10-24" version="6.0" status="release"/>
+    </xsd:appinfo>
+  </xsd:annotation>
+  <!--  -->
+  <xsd:simpleType name="AttributeIdType">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:integer"/>
+  </xsd:simpleType>
+  <!--  -->
+  <xsd:simpleType name="ICSIdType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Type used for string based unique id's like class id
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <!--  -->
+  <xsd:complexType name="LanguageStringType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is the base type for all Types which are used for String values which might appear 
+      in different Languages    
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="language" type="xsd:language" use="optional"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!--  -->
+  <xsd:complexType name="ValueType">
+    <xsd:simpleContent>
+      <xsd:restriction base="cl:LanguageStringType"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="NameType">
+    <xsd:simpleContent>
+      <xsd:restriction base="cl:LanguageStringType"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="ShortNameType">
+    <xsd:simpleContent>
+      <xsd:restriction base="cl:LanguageStringType"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="UserDataType">
+    <xsd:simpleContent>
+      <xsd:restriction base="cl:LanguageStringType"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="DescriptionType">
+    <xsd:simpleContent>
+      <xsd:restriction base="cl:LanguageStringType"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="CommentType">
+    <xsd:simpleContent>
+      <xsd:restriction base="cl:LanguageStringType"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="AnnotationType">
+    <xsd:simpleContent>
+      <xsd:restriction base="cl:LanguageStringType"/>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="UnitBaseType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="metric"/>
+      <xsd:enumeration value="english"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!--  -->
+  <xsd:complexType name="GeneralOptionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This type is intended to serve as a flexible extension mechanism to the existing explicit elements and attributes of any main type
+      
+      Attributes:
+      
+      optionType:   allows to define a type for the option like pre or post option
+      name:         the name of the option
+      language:     the language of the value
+      value:        the value of the option
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="optionType" type="xsd:string" use="optional"/>
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+    <xsd:attribute name="language" type="xsd:language" use="optional"/>
+    <xsd:attribute name="value" type="xsd:string" use="optional"/>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="ReferenceSpecificationType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element specifies how the value of an Attribute should be determined - from
+      the classified element, a related element, or another ICO.
+      
+      Attributes:
+      
+      className:      The name of the class of the referenced element.
+      attributeName:  The name of the referenced attribute.
+      
+      referenceType:  A string describing the type of reference. Defined values are
+         classifiedObject - the reference is to an attribute of the classified object.
+         relatedObject    - the reference is to an attribute of an object related to the 
+                               classified object - the relation name is given by the "relationName"
+                               attribute.
+         ICOAttribute     - the reference is to another ICO, by icoId.
+            
+      relationName:   If referenceType is "relatedObject", this gives the name of the relation 
+                      used to relate the classified object to the referenced object. 
+                      
+      useProduct:     If this is "true", and the classifiedObject is a ProductRevision, then the 
+                      corresponding Product will be used instead. If, in addition, the referenceType 
+                      is "relatedObject", then the relation will apply to the Product and the 
+                      referenced element. 
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="className" type="xsd:string" use="optional"/>
+    <xsd:attribute name="attributeName" type="xsd:string" use="required"/>
+    <xsd:attribute name="referenceType" type="xsd:string" use="required"/>
+    <xsd:attribute name="relationName" type="xsd:string" use="optional"/>
+    <xsd:attribute name="useProduct" type="xsd:boolean" default="false"/>
+  </xsd:complexType>
+  <!--  -->
+  <xsd:complexType name="FileType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This extension of the ExternalFileType allows to define which role the document 
+      will have like icon, image, etc.   
+      
+      Attributes:
+      
+      usage:             The attribute specified what the file is used for e.g. Icon, Image or 
+                         PartFamilyTemplate. Which values are possible depends on the context 
+                         where this type is used.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:ExternalFileType">
+        <xsd:attribute name="usage" type="xsd:string" use="required"/>
+        <xsd:attribute name="language" type="xsd:language" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!--  -->
+  <xsd:attributeGroup name="HistoryAttributes">
+    <xsd:attribute name="creationDate" type="xsd:date" use="optional"/>
+    <xsd:attribute name="creationUser" type="xsd:string" use="optional"/>
+    <xsd:attribute name="modifiedDate" type="xsd:date" use="optional"/>
+    <xsd:attribute name="modifiedUser" type="xsd:string" use="optional"/>
+  </xsd:attributeGroup>
+  <!--  -->
+  <xsd:attributeGroup name="CommonClassAttributes">
+    <xsd:attribute name="classId" type="cl:ICSIdType" use="required"/>
+    <xsd:attribute name="isAbstract" type="xsd:boolean" use="optional" default="false"/>
+    <xsd:attribute name="isAssembly" type="xsd:boolean" use="optional" default="false"/>
+    <xsd:attribute name="allowsMultiInst" type="xsd:boolean" use="optional" default="false"/>
+    <xsd:attribute name="instanceCount" type="xsd:unsignedLong" use="optional"/>
+    <xsd:attribute name="childCount" type="xsd:unsignedLong" use="optional"/>
+    <xsd:attribute name="templateRefs" type="xsd:IDREFS" use="optional"/>
+  </xsd:attributeGroup>
+  <!--  -->
+  <xsd:attributeGroup name="CommonClassAttrAttributes">
+    <xsd:annotation>
+      <xsd:documentation>
+      This group collects all attributes common to the attribute definition of 
+      the AdminClassAttributeType  and the UserClassAttributeType
+    
+      attributeId:    the unique id of the attribute with an optional reference to the
+                      DictionaryAttributeType if it exists in the same Document.
+      isMandatory:     indicates that the value for this attribute is mandotory while 
+                      creating instances of a class.
+      isProtected:    indicates that te values of this attribute are protected.
+      isUnique:       indicates that the value of this attribute needs to be unique.
+                      It is possible that multiple attributes of a class are marked
+                      as unique. in this case the value combination of these 
+                      attributes needs to be unique.
+      isLocalValue:   indicates that the values of this attribute are not synched with 
+                      other ICOs classifying the same object (multiple classification)
+      isPropagated:   indicates that the value for this attribute is set through the "propagation"
+                      during saving.
+      arraySize:      if greater than 1 the attribute is interpreted as an array of the specified size
+      isReference:    indicates that this value is actually specified in a referenced location
+      hasFixedDefaultValue: defines that the specified Default value will be enforced in all 
+                      instances of the class
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="attributeId" type="cl:AttributeIdType" use="required"/>
+    <xsd:attribute name="isMandatory" type="xsd:boolean" use="optional" default="false"/>
+    <xsd:attribute name="isProtected" type="xsd:boolean" use="optional" default="false"/>
+    <xsd:attribute name="isUnique" type="xsd:boolean" use="optional" default="false"/>
+    <xsd:attribute name="isLocalValue" type="xsd:boolean" use="optional" default="false"/>
+    <xsd:attribute name="isPropagated" type="xsd:boolean" use="optional" default="false"/>
+    <xsd:attribute name="arraySize" type="xsd:unsignedLong" use="optional" default="1"/>
+    <xsd:attribute name="isExternalArray" type="xsd:boolean" use="optional" default="false"/>
+    <xsd:attribute name="isReference" type="xsd:boolean" use="optional" default="false"/>
+    <xsd:attribute name="hasFixedDefaultValue" type="xsd:boolean" use="optional" default="false"/>
+  </xsd:attributeGroup>
+  <!--  -->
+  <xsd:complexType name="KeyLOVValueType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Elements:
+      
+      Key:               If a Key starts with a '#' it is used as configuration information 
+                         ( e.g '#-' separator )
+      Value:
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Key" type="cl:ICSIdType"/>
+      <xsd:element name="Value" type="cl:ValueType" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:simpleType name="KeyLOVOptionsEnumType">
+    <xsd:restriction base="xsd:NMTOKENS">
+      <xsd:enumeration value="Exclusive"/>
+      <xsd:enumeration value="Optional"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="KeyLOVType">
+    <xsd:annotation>
+      <xsd:documentation>
+      The KeyLOV type defines a list of key - value pairs that are used 
+      to specify the list of possible values for Classification attributes 
+
+      Elements:
+      
+      Name:       an optional display name for the KeyLOV definition.
+      Comment:    a general comment intended for the maintainer of the object
+      GeneralOption: general options.
+      Values:     the key - values pairs
+        
+      Attribute:
+      
+      keyLOVId:   The unique id of the KeyLOV object
+      options:    keyLOV specific options
+      hideKeys:   if true it indicates the application to hide the keys while displaying keyLOV values
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="Name" type="cl:NameType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Comment" type="cl:CommentType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="GeneralOption" type="cl:GeneralOptionType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Values" type="cl:KeyLOVValueType" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="keyLOVId" type="cl:ICSIdType" use="required"/>
+        <xsd:attribute name="options" type="cl:KeyLOVOptionsEnumType" use="optional" default="Exclusive"/>
+        <xsd:attributeGroup ref="cl:HistoryAttributes"/>
+        <xsd:attribute name="hideKeys" type="xsd:boolean" default="false"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="KeyLOV" type="cl:KeyLOVType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <xsd:complexType name="FormatStringType">
+    <xsd:attribute name="scale" type="xsd:positiveInteger" use="required"/>
+    <xsd:attribute name="case" use="optional" default="mixed">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="mixed"/>
+          <xsd:enumeration value="upper"/>
+          <xsd:enumeration value="lower"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+    <xsd:attribute name="align" use="optional" default="left">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="right"/>
+          <xsd:enumeration value="left"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+  <xsd:element name="FormatString" type="cl:FormatStringType"/>
+  <!--  -->
+  <xsd:complexType name="FormatIntegerType">
+    <xsd:attribute name="scale" type="xsd:positiveInteger" use="required"/>
+    <xsd:attribute name="sign" type="xsd:nonNegativeInteger" use="optional" default="0"/>
+  </xsd:complexType>
+  <xsd:element name="FormatInteger" type="cl:FormatIntegerType"/>
+  <!--  -->
+  <xsd:complexType name="FormatFloatType">
+    <xsd:attribute name="scale" type="xsd:positiveInteger" use="required"/>
+    <xsd:attribute name="precision" type="xsd:nonNegativeInteger" use="required"/>
+    <xsd:attribute name="sign" type="xsd:nonNegativeInteger" use="optional" default="0"/>
+  </xsd:complexType>
+  <xsd:element name="FormatFloat" type="cl:FormatFloatType"/>
+  <!--  -->
+  <xsd:simpleType name="FormatDateType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Date format string. Defined values are:
+      
+      CCYYMMDDhhmmss
+      YYMMDDhhmmss
+      DDMMCCYYhhmmss
+      DDMMYYhhmmss
+      CCYYMMDD
+      DD.MM.CCYY hh:mm:ss
+      DD.MM.YY hh:mm:ss
+      DD.MM.CCYY
+      DD.MM.YY
+      MM-DD-CCYY hh:mm:ss
+      MM-DD-YY hh:mm:ss
+      MM-DD-CCYY
+      MM-DD-YY
+      DD-MMM-CCYY hh:mm:ss
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:element name="FormatDate" type="cl:FormatDateType"/>
+  <!--  -->
+  <xsd:complexType name="FormatKeyLOVType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Attributes:
+      
+      keyLOVId:
+      ref2keyLOVRef:      Reference to the keyLOV definition
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="keyLOVId" type="xsd:negativeInteger" use="required"/>
+    <xsd:attribute name="ref2keyLOVRef" type="xsd:IDREF" use="optional" plm:refType="cl:KeyLOV"/>
+  </xsd:complexType>
+  <xsd:element name="FormatKeyLov" type="cl:FormatKeyLOVType"/>
+  <!--  -->
+  <xsd:simpleType name="UnitType">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:element name="Unit" type="cl:UnitType"/>
+  <!--  -->
+  <xsd:complexType name="FormatAdminType">
+    <xsd:sequence>
+      <xsd:choice>
+        <xsd:element ref="cl:FormatString"/>
+        <xsd:element ref="cl:FormatInteger"/>
+        <xsd:element ref="cl:FormatFloat"/>
+        <xsd:element ref="cl:FormatDate"/>
+        <xsd:element ref="cl:FormatKeyLov"/>
+      </xsd:choice>
+      <xsd:element ref="cl:Unit" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="FormatUserType">
+    <xsd:choice>
+      <xsd:element ref="cl:FormatString"/>
+      <xsd:element ref="cl:FormatInteger"/>
+      <xsd:element ref="cl:FormatFloat"/>
+      <xsd:element ref="cl:FormatDate"/>
+      <xsd:element ref="cl:KeyLOV"/>
+    </xsd:choice>
+  </xsd:complexType>
+  <!--  -->
+  <!-- ******************************** DictionaryAttribute ********************************* -->
+  <!--  -->
+  <xsd:complexType name="DictionaryAttributeType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Represents the global attribute definition referenced from the class attribute definition
+      
+      Attributes:
+      
+      attributeId:  The unique id of the attribute
+      reference:          
+      
+      Elements:
+      
+      Name:              Display name of the Attribute
+      ShortName:         Short version of the display name
+      Annotation:        The annotation is used as a reference in a graphical representation
+                         of the class where this attribute is used
+      Format:            Defines the type of values for this attribute if used in metric unit
+                         base classes
+      AltFormat:         Defines the type of values for this attribute if used in english unit
+                         base classes
+      MinValue:          Defines the minimum Value for this attribute. This is only suitable for
+                         attributes of type integer or float
+      MaxValue:          Defines the maximum Value for this attribute. This is only suitable for 
+                         attributes of type integer or float
+      DefaultValue:      The default value for instances of metric unit classes using this attribute. 
+                         This value can be overwritten in the class attribute definition
+      AltDefaultValue:   The default value for instances of english unit classes using this attribute. 
+                         This value can be overwritten in the class attribute definition
+      UserData1:         User specific data
+      UserData2:         User specific data
+      Description:       Provides a display description for this Attribute
+      Comment:           A field to maintain comments intended for maintainer of the definition
+      ReferenceSpecification:  Specifies how the value for this attribute is acquired
+                               if used as reference attribute
+      GeneralOption:     General Options for the attribute definition.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="Name" type="cl:NameType" maxOccurs="unbounded"/>
+          <xsd:element name="ShortName" type="cl:ShortNameType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Annotation" type="cl:AnnotationType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Format" type="cl:FormatAdminType"/>
+          <xsd:element name="AltFormat" type="cl:FormatAdminType" minOccurs="0"/>
+          <xsd:element name="MinValue" type="cl:ValueType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="MaxValue" type="cl:ValueType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="DefaultValue" type="cl:ValueType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="AltDefaultValue" type="cl:ValueType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="UserData1" type="cl:UserDataType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="UserData2" type="cl:UserDataType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Description" type="cl:DescriptionType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Comment" type="cl:CommentType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="ReferenceSpecification" type="cl:ReferenceSpecificationType" minOccurs="0"/>
+          <xsd:element name="GeneralOption" type="cl:GeneralOptionType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="attributeId" type="cl:AttributeIdType" use="required"/>
+        <xsd:attribute name="reference" type="xsd:string" use="optional"/>
+        <xsd:attributeGroup ref="cl:HistoryAttributes"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DictionaryAttribute" type="cl:DictionaryAttributeType" substitutionGroup="plm:AttribOwner"/>
+  <!--  -->
+  <xsd:complexType name="ParentType">
+    <xsd:simpleContent>
+      <xsd:extension base="cl:ICSIdType">
+        <xsd:attribute name="parentRef" type="xsd:IDREF" use="optional" plm:refType="cl:AbstractClass"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!--  -->
+  <xsd:complexType name="ClassAttributeOptionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This type is intended to serve as a flexible extension mechanism to the existing
+      explicit elements and attributes of the class attributes.
+      
+      Attributes:
+          
+      optionType:   allows to define a type for the option like pre or post option
+      name:         the name of the option
+      language:     the language of the value
+      value:        the value of the option
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="optionType" type="xsd:string" use="optional"/>
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+    <xsd:attribute name="language" type="xsd:language" use="optional"/>
+    <xsd:attribute name="value" type="xsd:string" use="optional"/>
+  </xsd:complexType>
+  <!--  -->
+  <xsd:complexType name="AbstractClassAttributeType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Attributes:
+      
+      CommonClassAttrAttributes:
+      
+      Elements:
+      
+      Annotation:         The Annotation is used to identify a attribute within one class and act 
+                          as a reference into a related class image which visualises the attribute. 
+                          If no value is given a default value is taken from the Annotation definition 
+                          in the dictionary attribute definition
+                          
+      MinValue:           Defines  the minimum allowed value for values of this attribute. This 
+                          definition overwrites the definition in the dictionary attribute definition and 
+                          must be greater than or equal to the definition there
+      MaxValue:           Defines  the minimum allowed value for values of this attribute. This 
+                          definition overwrites the definition in the dictionary attribute definition and 
+                          must be less than or equal to the definition there
+                          
+      DefaultValue:       Defines a default value for new instances of this class. This definition 
+                          overwrites the definition in the dictionary attribute definition.
+                          
+      Option:
+      UserData1:          Allows the user to add his own information to the class
+      UserData2:          Allows the user to add his own information to the class
+      ReferenceSpecification:
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Annotation" type="cl:AnnotationType" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="MinValue" type="cl:ValueType" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="MaxValue" type="cl:ValueType" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="DefaultValue" type="cl:ValueType" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="Option" type="cl:ClassAttributeOptionType" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="UserData1" type="cl:UserDataType" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="UserData2" type="cl:UserDataType" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="ReferenceSpecification" type="cl:ReferenceSpecificationType" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attributeGroup ref="cl:CommonClassAttrAttributes"/>
+  </xsd:complexType>
+  <!--  -->
+  <xsd:complexType name="AbstractClassType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Attributes:
+      
+      CommonClassAttributes
+      HistoryAttributes
+      
+      Elements:
+      
+      Name:            Display name for the class
+      AliasName:       One or more alias names for the class
+      ShortName:       Short version of the display name for the class
+      UserData1:       User specific data
+      UserData2:       User specific data
+      Description:     A description of the class which might be displayed to the user
+      Comment:         General comment intended for the maintainer of the class
+      File:            Special supported values for format are Image, Icon and Template
+      GeneralOption:   General Options for the class definition.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="Name" type="cl:NameType" maxOccurs="unbounded"/>
+          <xsd:element name="AliasName" type="cl:NameType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="ShortName" type="cl:ShortNameType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="UserData1" type="cl:UserDataType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="UserData2" type="cl:UserDataType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Description" type="cl:DescriptionType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Comment" type="cl:CommentType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="File" type="cl:FileType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="GeneralOption" type="cl:GeneralOptionType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attributeGroup ref="cl:CommonClassAttributes"/>
+        <xsd:attributeGroup ref="cl:HistoryAttributes"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!--  -->
+  <!-- ******************************* AdminClass ****************************** -->
+  <!--  -->
+  <xsd:complexType name="AdminClassAttributeType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This type holds the attributes of a Classification Class.
+    
+      Attributes:
+    
+      ref2AttributeRef:     Reference to the DictionaryAttribute Element containing
+                            the global definition of the attribute.
+      hasLocalDefaultValue: if true this class attribute overwrite the value from the dictionary.  
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="cl:AbstractClassAttributeType">
+        <xsd:attribute name="ref2AttributeRef" type="xsd:IDREF" use="optional" plm:refType="cl:AbstractClassAttribute cl:DictionaryAttribute"/>
+        <xsd:attribute name="hasLocalDefaultValue" type="xsd:boolean" use="optional" default="true"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="AdminClassType">
+    <xsd:annotation>
+      <xsd:documentation>
+      The class definition is the core element which is ued to build the classification hierarchy 
+      and used to store the instances (ICOs)  
+      
+      Attributes:
+      
+      isGroup:
+      
+      Elements:
+      
+      Parent:             Id of the parent class
+      Attribute:
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="cl:AbstractClassType">
+        <xsd:sequence>
+          <xsd:element name="Parent" type="cl:ParentType"/>
+          <xsd:element name="Attribute" type="cl:AdminClassAttributeType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=AdminAttribute</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="isGroup" type="xsd:boolean" use="optional" default="false"/>
+        <xsd:attribute name="unitBase" type="cl:UnitBaseType" use="optional" default="metric"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AdminClass" type="cl:AdminClassType" substitutionGroup="plm:AttribOwner"/>
+  <!--  -->
+  <!-- **************************** AdminView ************************** -->
+  <!--  -->
+  <xsd:complexType name="AdminViewAttributeOptions">
+    <xsd:annotation>
+      <xsd:documentation>
+      This type is intended to serve as a flexible extension mechanism to the existing
+      explicit elements and attributes of the class attributes.
+      
+      Attributes:
+      
+      optionType:   allows to define a type for the option like pre or post option
+      name:         the name of the option
+      language:     the language of the value
+      value:        the value of the option
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="optionType" type="xsd:string" use="optional"/>
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+    <xsd:attribute name="language" type="xsd:language" use="optional"/>
+    <xsd:attribute name="value" type="xsd:string" use="optional"/>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="AdminViewAttributeType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This type holds the attributes of Classification views.
+          
+      Attributes:
+      
+      attributeId:  unique id of the attribute that needs to exist in the class the view belongs to.
+      isMandatory:  indicates that the value for this attribute is mandotory while
+                    creating instances of a class the view belongs to.
+      isProtected:  indicates that the values of this attribute are protected.
+      hasLocalDefaultValue: if true this attribute overwrites the default value from 
+                    the class attribute      
+
+      Elements:
+      
+      PreOptions:   Options to configure the UI before the actual field for the attribute. 
+                                  E.g. start grouping in a titled frame
+      Options:      Options to configure the UI appearence af the attribute field
+      PostOptions:  Options to configure the UI after the actual field for the attribute.  
+                                  E.g. end grouping in a titled frame
+      DefaultValue: Default value for the attribute.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="PreOptions" type="cl:AdminViewAttributeOptions" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="Options" type="cl:AdminViewAttributeOptions" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="PostOptions" type="cl:AdminViewAttributeOptions" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="DefaultValue" type="cl:ValueType" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="attributeId" type="cl:AttributeIdType" use="required"/>
+    <xsd:attribute name="isMandatory" type="xsd:boolean" use="optional" default="false"/>
+    <xsd:attribute name="isProtected" type="xsd:boolean" use="optional" default="false"/>
+    <xsd:attribute name="hasLocalDefaultValue" type="xsd:boolean" use="optional" default="false"/>
+  </xsd:complexType>
+  <xsd:element name="AdminViewAttribute" type="cl:AdminViewAttributeType"/>
+  <!--  -->
+  <xsd:complexType name="AdminViewType">
+    <xsd:annotation>
+      <xsd:documentation>
+      The view definition is related to a class. It allows configuration of the appearance
+      of a class for certain users and/or groups.
+      
+      Attributes:
+      
+      classId:        the id of the class the blongs to
+      viewId:         the id of the view (unique within the class)
+      ref2classRef:   the reference to the class
+      type:           the type of the view (e.g defaultView,user or group )
+      HistoryAttributes
+      
+      Elements:
+      
+      Name:           Display name of the view
+      ShortName:      A short display name
+      UserData1:      User specific data
+      UserData2:      User specific data
+      Description:    A description of the view tat might be shown to the user
+      Comment:        A comment field for the maintainer of the view.
+      File:           Special values for format are Image, Icon and Template
+      GeneralOption:  General Options for the view definition.
+      AdminViewAttribute:  The attributes of the view        
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="Name" type="cl:NameType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="ShortName" type="cl:ShortNameType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="UserData1" type="cl:UserDataType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="UserData2" type="cl:UserDataType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Description" type="cl:DescriptionType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Comment" type="cl:CommentType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="File" type="cl:FileType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="GeneralOption" type="cl:GeneralOptionType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element ref="cl:AdminViewAttribute" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="classId" type="cl:ICSIdType" use="required"/>
+        <xsd:attribute name="viewId" type="cl:ICSIdType" use="required"/>
+        <xsd:attribute name="ref2classRef" type="xsd:IDREF" use="optional" plm:refType="cl:AbstractClass"/>
+        <xsd:attribute name="type" use="optional">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+              <xsd:enumeration value="default"/>
+              <xsd:enumeration value="user"/>
+              <xsd:enumeration value="group"/>
+              <xsd:enumeration value="subclass"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:attribute>
+        <xsd:attributeGroup ref="cl:HistoryAttributes"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="AdminView" type="cl:AdminViewType" substitutionGroup="plm:AttribOwner">
+    <xsd:unique name="sAttr2">
+      <xsd:selector xpath="AdminViewAttribute"/>
+      <xsd:field xpath="@attributeId"/>
+    </xsd:unique>
+  </xsd:element>
+  <!-- -->
+  <!-- ***************************** UserClass ********************************** -->
+  <!-- -->
+  <xsd:complexType name="UserClassAttributeType">
+    <xsd:complexContent>
+      <xsd:extension base="cl:AbstractClassAttributeType">
+        <xsd:sequence>
+          <xsd:element name="Name" type="cl:NameType" maxOccurs="unbounded"/>
+          <xsd:element name="ShortName" type="cl:ShortNameType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Format" type="cl:FormatUserType"/>
+          <xsd:element name="Unit" type="cl:UnitType" minOccurs="0"/>
+          <xsd:element name="Description" type="cl:DescriptionType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="classid" type="cl:ICSIdType" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="UserClassType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Class definition as used by the end user. It combines the class, view, dictionary and keylov 
+      definition into one. This definition can only be used for readonly purposes.
+      
+      Elements:
+      
+      Parent:
+      Attribute:
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="cl:AbstractClassType">
+        <xsd:sequence>
+          <xsd:element name="Parent" type="cl:ParentType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Attribute" type="cl:UserClassAttributeType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:annotation>
+              <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">sdkname=UserAttribute</xsd:appinfo>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="UserClass" type="cl:UserClassType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- ******************************** ICO ********************************** -->
+  <!-- -->
+  <xsd:complexType name="ICOPropertyType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Attributes:
+      
+      attributeId:
+      language:
+      icoRef:             Holds the reference to another ICO if the the property is of type 
+                          reference to ICO.
+      
+      Elements:
+
+      Value:              A property might have single or multiple values
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="Value" type="cl:ValueType" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attribute name="attributeId" type="cl:AttributeIdType" use="required"/>
+    <xsd:attribute name="language" type="xsd:language" use="optional"/>
+    <xsd:attribute name="icoRef" type="xsd:IDREF" use="optional" plm:refType="cl:ICO"/>
+  </xsd:complexType>
+  <!--  -->
+  <xsd:complexType name="ICOClassIdType">
+    <xsd:simpleContent>
+      <xsd:extension base="cl:ICSIdType">
+        <xsd:attribute name="subclassId" type="cl:ICSIdType" use="optional"/>
+        <xsd:attribute name="ref2classRef" type="xsd:IDREF" use="optional" plm:refType="cl:AbstractClass"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <!--  -->
+  <xsd:complexType name="ICOType">
+    <xsd:annotation>
+      <xsd:documentation>
+      The view definition is related to a class. It allows configuration of the appearance
+      of a class for certain users and/or groups.
+      
+      Attributes:
+      
+      icoId:              The id of the ICO. In case there is no wsoRef specified the icoId is treated 
+                          to be unique unless a corresponding workspace object exists in the target database
+      relatedRefs:        References to other ICOs classifying the same WSO
+      wsoRef:             Reference to the classified object if defined in the XML document
+      HistoryAttributes:
+      
+      Elements:
+
+      ClassId:            The ClassId defines to which class this ICO belongs. The ref2Class attribute 
+                          is set if that class is defined within the same plmxml document. On import that 
+                          class definition has to be successfully imported to allow the ICO to be imported.
+      Parent:             This element lists ALL parents of the class the ICO is stored in. The primary 
+                          use is to support a mapping into a different class hierarchy without the transfer 
+                          of the class definition to get the isMemberOf information. On import this 
+                          information will be ignored.
+      Property:           The actual format of  property value is defined by the attribute definition 
+                          referenced by attributeId
+      File: 
+      GeneralOption:      General Options for the ICO definition.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element name="ClassId" type="cl:ICOClassIdType"/>
+          <xsd:element name="Parent" type="cl:ParentType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Property" type="cl:ICOPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="File" type="cl:FileType" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="GeneralOption" type="cl:GeneralOptionType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="icoId" type="xsd:string" use="required"/>
+        <xsd:attribute name="relatedRefs" type="xsd:IDREFS" use="optional" plm:refType="cl:ICO"/>
+        <xsd:attribute name="wsoRef" type="xsd:IDREF" use="optional"/>
+        <xsd:attributeGroup ref="cl:HistoryAttributes"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ICO" type="cl:ICOType" substitutionGroup="plm:AttribOwner"/>
+  <!--  -->
+  <xsd:complexType name="ClassificationType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Elements of this type relate their parent element to its classification 
+      information (ICO).
+      
+      Attributes:
+      
+      icoRefs:          Reference to ICO elements. 
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttributeBase">
+        <xsd:attribute name="icoRefs" type="plm:uriReferenceListType" use="required" plm:refType="cl:ICO"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="Classification" type="cl:ClassificationType" substitutionGroup="plm:Attribute"/>
+  <!--  -->
+</xsd:schema>

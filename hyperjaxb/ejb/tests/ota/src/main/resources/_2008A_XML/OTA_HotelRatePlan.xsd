@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.001" id="OTA2007B2008A">
+	<xs:include schemaLocation="OTA_HotelCommonTypes.xsd"/>
+	<xs:attributeGroup name="DerivedRatePlanGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Provides detailed information for how this rate is derived.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="BaseRatePlanCode" type="StringLength1to64" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The rate plan this rate plan is derived from.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="AdjustedAmount" type="Money" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The amount which should be added to the base rate plan to determine the price of this derived rate plan.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="AdjustedPercentage" type="Percentage" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The percentage off the base rate plan amount used to determine the price of this derived rate plan.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="FloorAmount" type="Money" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The lowest amount for which this derived rate plan should be sold.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CeilingAmount" type="Money" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The highest amount for which this derived rate plan should be sold.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="AdjustUpIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, the adjusted amount or adjusted percentage is added to the amount specified for the base rate plan to determine the derived rate amount.  When false, the adjusted amount or adjusted percentage is subtracted from the amount specified for the base rate plan to determine the derived rate amount.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:complexType name="HotelRatePlanType">
+		<xs:annotation>
+			<xs:documentation>All details pertaining to a specific rate plan. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DestinationSystemsCode" type="DestinationSystemCodesType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of destination system codes. These are systems for which this RatePlan is targeted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BookingRules" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of booking rules. Booking rules can be sent separately in the HotelBookingRuleNotif message or as part of the RatePlanNotif.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="BookingRulesType">
+							<xs:sequence>
+								<xs:element name="InventoryInfo" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Optional element to indicate Inventory information, when nessary to qualify the booking rule.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:attributeGroup ref="InventoryGroup"/>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Rates" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of Rates. Rates can be sent separately using the HotelRateAmountNotif message or as part of the RatePlanNotif.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Rate" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">An individual rate, which is a collection of amounts by guest, additional guests, fees, collection of related guarantee, cancel and payment policies, a description and the unique id to identify the rate. Rate restrictions can be sent along with the rate as attributes of this rate. The indivual rate can also be qualified by the inventory information (InventoryGroup attribute group).</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="RateUploadType">
+										<xs:attributeGroup ref="InventoryGroup"/>
+										<xs:attribute name="Status" type="AvailabilityStatusType" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">This is the status of the room rate combination.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="ExtraNightIndicator" type="xs:boolean" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">When true, indicates that the rate information applies to shoulder night(s).</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attributeGroup ref="DerivedRatePlanGroup">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Provides detailed information for how this rate is derived for this date range and inventory type.</xs:documentation>
+											</xs:annotation>
+										</xs:attributeGroup>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Offers" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of individual offers.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Offer" type="OfferType" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">An individual offer, which defines the type of offer, the conditions under which it can be applied and the amounts and/or percentages deducted.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RatePlanShoulders" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of RatePlanShoulders.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RatePlanShoulder" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The Rate Plan Shoulder defines the allowable dates and where to take inventory during the shoulder seasons for this rate plan.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="SellableProducts" type="SellableProductsType" minOccurs="0"/>
+								</xs:sequence>
+								<xs:attribute name="ShoulderRPH" type="RPH_Type" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">This is a reference placeholder, used as an index for this object.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="PreShoulderSellLimit" type="xs:nonNegativeInteger" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Limit of inventory that can be sold before the StayDateRange.  It should be understood that any stay must book at least one date in the 			StayDateRange.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="PostShoulderSellLimit" type="xs:nonNegativeInteger" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Limit of inventory that can be sold after the StayDateRange. It should be understood that any stay must book at least one date in the 			StayDateRange.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="PreShoulderStartDate" type="DateOrDateTimeType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The earliest stay date that this rate plan/inventory block can be sold.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="PostShoulderEndDate" type="DateOrDateTimeType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The latest stay date that this rate plan/inventory block can be sold.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SellableProducts" type="SellableProductsType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of Sellable Products. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RatePlanLevelFee" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A Fee that is attached directly to the RatePlan. Can  be used to send a global surcharge at the RatePlan level. </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Fee" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Fee Amount that is applied to the rate. Fees are used for non tax amounts like service charges.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="FeeType">
+										<xs:attribute name="MealPlanCode" type="OTA_CodeType" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">This describes meal plans associated with a rate plan. Refer to OTA Code Table Meal Plan Type (MPT).</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attributeGroup ref="CodeListGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Commission" type="CommissionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Commission assoiciated with the RatePlan. This can be a percentage or a flat amount.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="ParagraphType" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Description of the RatePlan being Uploaded.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UniqueID" type="UniqueID_Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The unique identifier element allows the trading partners to  uniquely identify each Rate being uploaded, for transaction tracability. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HotelRef" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Provides hotel indentification data. </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="HotelReferenceGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Provides hotel identification data.</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="DateTimeSpanGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The Start and End date of the rate plan or a season within a rate plan.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+		<xs:attributeGroup ref="CurrencyCodeGroup"/>
+		<xs:attributeGroup ref="RatePlanGroup"/>
+		<xs:attributeGroup ref="RatePlanCodeTypeGroup"/>
+		<xs:attribute name="RatePlanNotifType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">An enumerated type that indicates whether this is a new rate plan or an update of an existing rate plan.</xs:documentation>
+				<xs:documentation xml:lang="en">Values: New, Delta Modification, Full Overlay Modification.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="New"/>
+					<xs:enumeration value="Delta"/>
+					<xs:enumeration value="Overlay"/>
+					<xs:enumeration value="Remove"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="RatePlanStatusType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">An enumerated type that indicates the status of the rate plan, ie: whether this notification is an initial announcement of a new rate plan, an update of an active (bookable) rate plan, or a notification of a rate plan that is no longer in effect.</xs:documentation>
+				<xs:documentation xml:lang="en">Values: Initial, Active, Deactivated.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Initial"/>
+					<xs:enumeration value="Active"/>
+					<xs:enumeration value="Deactivated"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="RatePlanNotifScopeType" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="RatePlanOnly"/>
+					<xs:enumeration value="RateOnly"/>
+					<xs:enumeration value="RatePlanAndRate"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="IsCommissionable" type="xs:boolean" use="optional"/>
+		<xs:attribute name="RateReturn" type="xs:boolean" use="optional"/>
+		<xs:attribute name="YieldableIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Used to indicate the rate plan is subject to yield management logic. When true, the rate plan is yieldable. When false, the rate plan is not yieldable.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="MarketCode" type="StringLength1to64" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The code that relates to the market being sold to (e.g., the corporate market, packages).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="YieldDeltaAmount" type="Money" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The amount to be added or subtracted from the rate. The new calulated value is then used by the yield management logic.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="InventoryAllocatedInd" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, indicates the inventory associated with the rate plan is removed from the house inventory. When false, the inventory associated to the rate plan is not removed from the house inventory.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="RestrictedDisplayIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, used to indicate the rate should not be displayed. When false, indicates the rate may be displayed. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="EarliestStartIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">This is used in conjunction with the Start attribute.  When true, it indicates that the Start date is both the beginning of a season as well as the first date the rate plan is valid. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="LatestEndIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">This is used in conjunction with the End attribute.  When true, it indicates that the End date is both the end of a season as well as the last date the rate plan is valid. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ExtraNightRatePlanCode" type="StringLength1to64" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Used to indicate what rate plan is used for shoulder night(s) booked in addition to the base nights.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="DerivedRatePlanGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Provides detailed information for how this rate is derived.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+	</xs:complexType>
+	<xs:complexType name="OfferType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines the type of offer, the conditions under which the offer can be applied and the amounts and/or percentages deducted.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OfferRules" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Collection of offer rules.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="OfferRule" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Defines conditions for which the offer applies.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="DateRestriction" minOccurs="0" maxOccurs="5">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Defines date restrictions for booking and/or stays with this offer.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attributeGroup ref="DateTimeSpanGroup">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The date or date range to which the date restriction applies.</xs:documentation>
+												</xs:annotation>
+											</xs:attributeGroup>
+											<xs:attribute name="RestrictionType" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The type of date restriction being defined.</xs:documentation>
+												</xs:annotation>
+												<xs:simpleType>
+													<xs:restriction base="xs:NMTOKEN">
+														<xs:enumeration value="arrival">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Indicates that the date(s) found in the date time span group attributes apply to the arrival date(s) for which this offer applies.</xs:documentation>
+															</xs:annotation>
+														</xs:enumeration>
+														<xs:enumeration value="departure">
+															<xs:annotation>
+																<xs:documentation xml:lang="en"> Indicates that the date(s) found in the date time span group attributes apply to the departure date(s) for which this offer applies.</xs:documentation>
+															</xs:annotation>
+														</xs:enumeration>
+														<xs:enumeration value="booking">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Indicates that the dates found in the date time span group attributes apply to the booking dates for which this offer applies.</xs:documentation>
+															</xs:annotation>
+														</xs:enumeration>
+														<xs:enumeration value="stay">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Indicates that the dates found in the date time span group attributes apply to the stay dates for which this offer applies.</xs:documentation>
+															</xs:annotation>
+														</xs:enumeration>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="LengthsOfStay" type="LengthsOfStayType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">A collection of lengths of stay.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="DOW_Restrictions" type="DOW_RestrictionsType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">A collection of Day Of Week  restrictions.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="Occupancy" minOccurs="0" maxOccurs="5">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Provides parameters of occupancy limits.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attributeGroup ref="OccupancyGroup">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Minimum or maximum number of people allowed in a room type as defined by age.</xs:documentation>
+												</xs:annotation>
+											</xs:attributeGroup>
+											<xs:attributeGroup ref="AgeQualifyingGroup">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Specifies the age requirements for this offer.</xs:documentation>
+												</xs:annotation>
+											</xs:attributeGroup>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Inventories" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Collection of inventory.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Inventory" maxOccurs="99">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Defines the inventory (e.g., Room type or Board) which is required in order for the offer to apply.</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:attributeGroup ref="InventoryGroup">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Defines the inventory type for which this offer may or may not apply (e.g., room, board or extra).  Used in conjunction with the AppliesToIndicator.</xs:documentation>
+															</xs:annotation>
+														</xs:attributeGroup>
+														<xs:attribute name="AppliesToIndicator" type="xs:boolean" use="required">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">When true, the offer applies to the defined inventory. When false, the offer does not apply to the defined inventory.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="StayOverDate" type="DayOfWeekType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Indicates a specific day on which the guest must stay over in order to be eligible for the offer.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="MinTotalOccupancy" type="xs:nonNegativeInteger" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Defines the minimum number of total occupants required for a rate plan.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="MaxTotalOccupancy" type="xs:nonNegativeInteger" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Defines the maximum number of total occupants allowed for a rate plan.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="MaxContiguousBookings" type="xs:nonNegativeInteger" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The maximum number of times a rate may be booked contiguously within a reservation (often used with packages).</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="MaxAdvancedBookingOffset" type="xs:duration" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Maximum days before the arrival date for which this offer may be booked.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="MinAdvancedBookingOffset" type="xs:duration" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Minimum days before the arrival date for which this offer may be booked.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Discount" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the characteristics of the offer.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="NightsRequired" type="xs:nonNegativeInteger" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The number of nights required to be booked in order to apply the discount (this may be the extact number of nights required or the minimum number of nights required).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="NightsDiscounted" type="xs:nonNegativeInteger" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The number of nights discounted for each multiple of NightsRequired.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="DiscountPattern" type="StringLength1to32" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This defines the pattern for the night(s) the discount applies (e.g., if NightsRequired="7" and the NightsDiscounted="1" then DiscountPattern="NNNNNNY" or DiscountPattern="0000001" when the discount is applied to the last night).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attributeGroup ref="CurrencyAmountGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Provides the discount as an amount as well as the currency code and decimal places for the currency in which the discount applies. Typically when an amount is applied the Percent would not be passed.</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+					<xs:attribute name="Percent" type="Percentage" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Defines the percentage which is deducted from the rate amounts if this offer is applicable.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ChargeUnitCode" type="OTA_CodeType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Defines the unit per which the unit the discount applies (e.g., per person per stay). Refer to OTA Code List Charge Type (CHG).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="FreeUpgrade" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines offers of the type "book A and get B".</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="UpgradeFrom" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The specifics of the typical room or service.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attributeGroup ref="InventoryGroup">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Defines the room or service that is typical for this rate.</xs:documentation>
+									</xs:annotation>
+								</xs:attributeGroup>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="UpgradeTo" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The specifics of the upgraded room or service.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attributeGroup ref="InventoryGroup">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Defines the upgraded room or service.</xs:documentation>
+									</xs:annotation>
+								</xs:attributeGroup>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="UpgradeBookingCode" type="StringLength1to16" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Code that identifies the  inventory item which must appear in the booking.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="OfferDescription" type="ParagraphType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A description of the offer. If the offer is based on a written contract, the appropriate paragraph from the contract could be quoted here.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CompatibleOffers" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Collection of compatible offers.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="CompatibleOffer" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Defines which other offers this offer may be use in conjuction with.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="OfferRPH" type="ListOfRPH" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">References the other offer(s) with which this offer may be used. </xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="IncompatibleOfferIndicator" type="xs:boolean" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">When true this offer is incompatible with the OfferRPH. When false this offer is compatible with the OfferRPH.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Inventories" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Collection of inventory.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Inventory" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Defines the inventory (e.g., Room type or Board) to which the offer may or may not apply.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attributeGroup ref="InventoryGroup">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Defines the inventory type for which this offer may or may not apply (e.g., room, board or extra).  Used in conjunction with the AppliesToIndicator.</xs:documentation>
+									</xs:annotation>
+								</xs:attributeGroup>
+								<xs:attribute name="AppliesToIndicator" type="xs:boolean" use="required">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">When true, the offer applies to the defined inventory. When false, the offer does not apply to the defined inventory.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="OfferCode" type="StringLength1to16" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">A code which uniquely names this offer.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="RPH" type="RPH_Type" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">A reference place holder for this particular offer.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ApplicationOrder" type="xs:integer" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The order in which the discounts are applied.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+</xs:schema>

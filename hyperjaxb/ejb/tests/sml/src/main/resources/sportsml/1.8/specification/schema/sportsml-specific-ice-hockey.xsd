@@ -1,0 +1,739 @@
+<?xml version="1.0"?>
+<!--
+IPTC - International Press Telecommunications Council
+Royal Albert House, Windsor, Berkshire SL4 1BE, England
+www.iptc.org
+
+See sportsml.xsd to view Non-Exclusive License Agreement for 
+International Press Telecommunications Council, which
+applies to this specification.
+-->
+<schema 
+	targetNamespace="http://iptc.org/std/SportsML/2006-10-18/"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:sportsml="http://iptc.org/std/SportsML/2006-10-18/"
+	version="1.8"
+	>
+	<attributeGroup name="eventStateIceHockey">
+		<attribute name="period-value" type="string" use="optional">
+			<annotation>
+				<documentation>Identifier for which period of a game. (1,2,3 for main periods, 4 for first overtime, etc. shootout also allowed value.)</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="period-time-elapsed" type="string" use="optional">
+			<annotation>
+				<documentation>The time elapsed in the period.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="period-time-remaining" type="string" use="optional">
+			<annotation>
+				<documentation>The time remaining in the period.</documentation>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+	<element name="event-metadata-ice-hockey">
+		<annotation>
+			<documentation>Metadata about the event itself. | Specific to ice-hockey.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateIceHockey"/>
+		</complexType>
+	</element>
+	<element name="team-metadata-ice-hockey">
+		<annotation>
+			<documentation>Metadata about one team. | Specific to ice-hockey.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="team-stats-ice-hockey">
+		<annotation>
+			<documentation>Stats about one team. | Specific to ice-hockey.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-ice-hockey-offensive" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-ice-hockey-defensive" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="plus-minus" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times players on this team were on ice when own team scored minus the number of times players were on ice when opponent scored.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="plus-total" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times players on this team were on ice when own team scored.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="minus-total" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times players were on ice when opponent scored.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-minutes" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of penalty minutes accrued by a single team.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-ice-hockey-offensive">
+		<annotation>
+			<documentation>Offensive stats for one team. | Specific to ice-hockey, including stats on shots, goals, and faceoffs.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="goals-game-winning" type="string" use="optional">
+				<annotation>
+					<documentation>Goals that provided the winning margin in a game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-game-tying" type="string" use="optional">
+				<annotation>
+					<documentation>Goals that caused the game to be tied.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-power-play" type="string" use="optional">
+				<annotation>
+					<documentation>Goals scored while the team was having a power-play.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-short-handed" type="string" use="optional">
+				<annotation>
+					<documentation>Goals scored while the team was playing short-handed.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-even-strength" type="string" use="optional">
+				<annotation>
+					<documentation>Goals scored while the teams were at even strength.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-empty-net" type="string" use="optional">
+				<annotation>
+					<documentation>Goals scored on an empty goal, with the opposing goalie pulled from the net.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-overtime" type="string" use="optional">
+				<annotation>
+					<documentation>Goals scored during overtime.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-shootout" type="string" use="optional">
+				<annotation>
+					<documentation>Goals scored during a shootout.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-shootout-attempts" type="string" use="optional">
+				<annotation>
+					<documentation>Goals attempted during a shootout.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-penalty-shot" type="string" use="optional">
+				<annotation>
+					<documentation>Goals scored as penalty shots.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-per-game" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="assists" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of assists.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="assists-power-play" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of assists made during a power play.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="assists-short-handed" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of assists made while short-handed.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of points, with a score and an assist generally counted as one point each.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points-power-play" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of points during power plays, with a score and an assist generally counted as one point each.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points-short-handed" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of points while short-handed, with a score and an assist generally counted as one point each.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="power-play-amount" type="string" use="optional">
+				<annotation>
+					<documentation>Number of power-play opportunities a team has had.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="power-play-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Measure of success at power plays. Figured by dividing goals-power-play by power-play-amount.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-penalty-shot-taken" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of penalty shots taken by a shooting player.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-penalty-shot-missed" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of penalty shots missed by a shooting player.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-penalty-shot-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Percentage of penalty shots that resulted in goals.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="giveaways" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times that passes were attempted but intercepted. A judgment call whose exact conditions vary.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="minutes-power-play" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of minutes played in a power-play.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="faceoff-wins" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of won faceoffs.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="faceoff-losses" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of lost faceoffs.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="faceoff-win-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Percentage of faceoffs that were won.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="scoring-chances" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of qualified chances to score.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="hat-tricks" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of hat-trick games.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-ice-hockey-defensive">
+		<annotation>
+			<documentation>Defensive stats for the team. | Specific to ice-hockey, including saves and shots allowed.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="shots-power-play-allowed" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of shots on goal allowed during power-play.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-penalty-shot-allowed" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of shots allowed as penalty-shots.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-power-play-allowed" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of goals allowed while the opposing team has a power-play.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-penalty-shot-allowed" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of goals allowed as penalty-shots.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-empty-net-allowed" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of goals allowed while the net was empty.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-short-handed-allowed" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of goals allowed while playing short-handed.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-against-average" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of goals per game allowed by the team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="saves" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of saves.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="save-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Percentage of saves compared to total number of shots.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goals-shootout-allowed" type="string" use="optional">
+				<annotation>
+					<documentation>Number of shootout goals that went in for a score for the opposing team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-shootout-allowed" type="string" use="optional">
+				<annotation>
+					<documentation>Number of shootout shots that were attempted by the opposing team.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-killing-amount" type="string" use="optional">
+				<annotation>
+					<documentation>Number of penalty-killing sessions, aka number of short-handed sessions.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-killing-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Equals goals-penalty-allowed divided by penalty-killing-amount.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shots-blocked" type="string" use="optional">
+				<annotation>
+					<documentation>Number of shots that were blocked. This statistic is generally tracked for non-goalies.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="takeaways" type="string" use="optional">
+				<annotation>
+					<documentation>Number of intercepted passes. A judgment call whose exact conditions vary.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shutouts" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of games where the opposing team did not score.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="minutes-penalty-killing" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of minutes played short-handed, while the other team had a power-play.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="hits" type="string" use="optional">
+				<annotation>
+					<documentation>Number of body checks made against an opposing player.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="player-metadata-ice-hockey">
+		<annotation>
+			<documentation>Metadata for a player. | Specific to ice-hockey. Reserved for future use.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="player-stats-ice-hockey">
+		<annotation>
+			<documentation>Stats for a player specific to ice-hockey. | Includes the same offensive and defensive stats available for a team.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-ice-hockey-offensive" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-ice-hockey-defensive" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="plus-minus" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times player was on ice when own team scored minus the number of times player was on ice when opponent scored.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="plus-total" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times player was on ice when own team scored.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="minus-total" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times player was on ice when opponent scored.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="minutes-played" type="string" use="optional">
+				<annotation>
+					<documentation>Number of minutes player was on ice.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-minutes" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of penalty minutes accrued by a single player.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goaltender-wins" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goaltender-losses" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="goaltender-ties" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="event-actions-ice-hockey">
+		<annotation>
+			<documentation>Event actions specific to ice-hockey. | Include scores, penalties, timeouts, etc.</documentation>
+		</annotation>
+		<complexType>
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="sportsml:action-ice-hockey-substitution"/>
+				<element ref="sportsml:action-ice-hockey-score-attempt"/>
+				<element ref="sportsml:action-ice-hockey-score"/>
+				<element ref="sportsml:action-ice-hockey-penalty"/>
+				<element ref="sportsml:action-ice-hockey-timeout"/>
+				<element ref="sportsml:action-ice-hockey-other"/>
+			</choice>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="action-ice-hockey-score-attempt">
+		<annotation>
+			<documentation>Used to record shots that are NOT made. | If the shot was made, use the action-ice-hockey-score.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateIceHockey"/>
+			<attribute name="player-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the player that attempted to score.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="team-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the team that attempted to score.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-attempt-type" type="sportsml:scoreAttemptType.IceHockey" use="optional">
+				<annotation>
+					<documentation>The type of shot.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-attempt-result" type="sportsml:scoreAttemptResult.IceHockey" use="optional">
+				<annotation>
+					<documentation>The result of the shot.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="skaters-on-ice" type="string" use="optional">
+				<annotation>
+					<documentation>The number of non-goalie skaters on the ice when the team that did the shooting shot the puck.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="skaters-on-ice-opposing" type="string" use="optional">
+				<annotation>
+					<documentation>The number of non-goalie skaters on the ice for the team that was shot upon.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shootout-shot-order" type="string" use="optional">
+				<annotation>
+					<documentation>When this shot was take, amongst all the shootout shots of a game for one particular team. For example: 3 (if it was the third shot of the shootout).</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A textual comment.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-ice-hockey-score">
+		<annotation>
+			<documentation>Data about a score in ice-hockey. | Includes elements detailing who was on the ice during the score.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:action-ice-hockey-assisting-player" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:action-ice-hockey-scoring-players" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:action-ice-hockey-scored-on-players" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateIceHockey"/>
+			<attribute name="score-attempt-type" type="sportsml:scoreAttemptType.IceHockey" use="optional">
+				<annotation>
+					<documentation>The type of shot. Called attempt because it shares the same values as score-attempt element.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="player-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the player that scored the goal.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="team-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the team that scored the goal.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A textual comment.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-team" type="string" use="optional">
+				<annotation>
+					<documentation>After this action took place, the score of the team that team-idref points to.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-team-opposing" type="string" use="optional">
+				<annotation>
+					<documentation>After this action took place, the score of the team opposing that listed in team-idref.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="skaters-on-ice" type="string" use="optional">
+				<annotation>
+					<documentation>The number of non-goalie skaters on the ice when the team that did the shooting shot the puck.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="skaters-on-ice-opposing" type="string" use="optional">
+				<annotation>
+					<documentation>The number of non-goalie skaters on the ice for the team that was shot upon.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shootout-shot-order" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-ice-hockey-assisting-player">
+		<annotation>
+			<documentation>Player who assisted with a score. | Generally, a player who passed the puck to the player who scored.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="player-idref" type="IDREF" use="required">
+				<annotation>
+					<documentation>A pointer to a player who assisted in the score.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-ice-hockey-scoring-players">
+		<annotation>
+			<documentation>Player who was on the ice playing for the side that scored a goal. | One element is used for each player who was on the ice when a score was made.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="player-idref" type="IDREF" use="required">
+				<annotation>
+					<documentation>A pointer to a player on ice during a score.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-ice-hockey-scored-on-players">
+		<annotation>
+			<documentation>Player who was on the ice playing for the side that was scored upon. | One element is used for each player who was on the ice when the score was made.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="player-idref" type="IDREF" use="required">
+				<annotation>
+					<documentation>A pointer to a player who was on ice when a score was made.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-ice-hockey-penalty">
+		<annotation>
+			<documentation>Action describing a penalty. | Includes who caused and who called the penalty. One element is used per penalized player.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateIceHockey"/>
+			<attribute name="recipient-type" use="required">
+				<annotation>
+					<documentation>Whether the receiver of the penalty was the team, the player, a coach, a ref, etc.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="team"/>
+						<enumeration value="player"/>
+						<enumeration value="auxilliary"/>
+						<enumeration value="official"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="recipient-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the receiver of the penalty.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="served-by-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the player that served the penalty.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="caller-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the official who called the penalty.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-status" use="optional">
+				<annotation>
+					<documentation>Whether this action indicates the start of a penalty, or the end of a penalty.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="start"/>
+						<enumeration value="end"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="penalty-level" type="sportsml:penaltyLevel.IceHockey" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-name" type="sportsml:penaltyName.IceHockey" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="penalty-length" type="string" use="optional">
+				<annotation>
+					<documentation>In minutes:seconds. Not necessarily the time actually served.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A textual comment.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-ice-hockey-substitution">
+		<annotation>
+			<documentation>Description of a substitution. | Describes who substituted for whom, and why.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateIceHockey"/>
+			<attribute name="person-type" use="optional">
+				<annotation>
+					<documentation>The type of person who is substituting, for example: a player, a coach, a referree.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="player"/>
+						<enumeration value="auxilliary"/>
+						<enumeration value="official"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="person-original-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the player who left the ice.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="person-original-position" type="sportsml:position.IceHockey" use="optional">
+				<annotation>
+					<documentation>The position of the player who left the ice. Could be a goalie.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="person-replacing-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the player who now went on the ice.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="person-replacing-position" type="sportsml:position.IceHockey" use="optional">
+				<annotation>
+					<documentation>The position of the player who went on the ice. If original player was a goalie, and this value is a forward, than the goalie has been pulled.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="substitution-reason" type="string" use="optional">
+				<annotation>
+					<documentation>The reason why a substitution was made.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A textual comment.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-ice-hockey-timeout">
+		<annotation>
+			<documentation>Description of a timeout. | Includes the duration of the timeout, and who called for the timeout.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateIceHockey"/>
+			<attribute name="timeout-duration" type="string" use="optional">
+				<annotation>
+					<documentation>How long a timeout was called for.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="caller" use="optional">
+				<annotation>
+					<documentation>Who called the timeout, either team or official.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="team"/>
+						<enumeration value="official"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="caller-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>If caller is team, say, a pointer to the team element.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A textual comment.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-ice-hockey-other">
+		<annotation>
+			<documentation>A custom action. | For use when none of the pre-build actions apply.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateIceHockey"/>
+			<attribute name="action-source" type="string" use="optional">
+				<annotation>
+					<documentation>The name of the controlled-vocabulary for the action-type attribute.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="action-type" type="string" use="optional">
+				<annotation>
+					<documentation>A selection from a controlled-vocabulary list maintained by the publisher.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment about the action.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+</schema>

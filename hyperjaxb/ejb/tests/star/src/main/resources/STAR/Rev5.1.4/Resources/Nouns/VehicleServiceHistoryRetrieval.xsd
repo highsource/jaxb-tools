@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    User    Mod     Date       Description
+    ==========================================================================
+    DC            20061031     Removed DocumentID
+    DC     CR351  20070417     Added CurrrentDistanceMeasure to VehicleRetrievalType
+                               Added ComplaintCode to VehicleServiceHistoryRetrievalHeaderType 
+ -->
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns="http://www.starstandard.org/STAR/5" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="VehicleServiceHistoryRetrieval" type="VehicleServiceHistoryRetrievalType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Vehicle Service History Retrieval.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VehicleServiceHistoryRetrievalHeader" type="VehicleServiceHistoryRetrievalHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Vehicle Service History Retrieval Header
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VehicleServiceHistoryRetrievalDetail" type="VehicleServiceHistoryRetrievalDetailType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Vehicle Service History Retrieval Detail
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="IndividualOwnerRetrieval" type="IndividualOwnerRetrievalType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Indiviual Owner Retrieval
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="OrganizationalOwnerRetrieval" type="OrganizationalOwnerRetrievalType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Organizational Owner Retrieval
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="RetrievalPersonName" type="RetrievalPersonNameType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Retrieval Person Name
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="RetrievalAddress" type="RetrievalAddressType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Retrieval Address
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VehicleRetrieval" type="VehicleRetrievalType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Vehicle Retrieval
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="VehicleServiceHistoryRetrievalType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 4.0 - Draft</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 3.0, STAR approved 04/20/2005; effective date 07/04/2005</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.0, STAR approved 05/07/2004; effective date 07/04/2004</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 1.0, STAR approved 7/31/2002; OAGI approved 8/16/2002; effective date 1/01/2003</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="VehicleServiceHistoryRetrievalHeader" />
+            <xsd:element ref="VehicleServiceHistoryRetrievalDetail" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="VehicleServiceHistoryRetrievalHeaderType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+                <xsd:sequence>
+                    <xsd:element ref="IndividualOwnerRetrieval" minOccurs="0" />
+                    <xsd:element ref="OrganizationalOwnerRetrieval" minOccurs="0" />
+                    <xsd:element ref="VehicleRetrieval" minOccurs="0" />
+                    <xsd:element ref="ComplaintCode" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="VehicleServiceHistoryRetrievalDetailType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Dates for history retrieval</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="RepairOrderCompletedDate" minOccurs="0" />
+            <!--<xsd:element ref="DocumentID" minOccurs="0" />-->
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="IndividualOwnerRetrievalType">
+        <xsd:sequence>
+            <xsd:element ref="RetrievalPersonName" minOccurs="0" />
+            <xsd:element ref="RetrievalAddress" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="OrganizationalOwnerRetrievalType">
+        <xsd:sequence>
+            <xsd:element ref="CompanyName" minOccurs="0" />
+            <xsd:element ref="RetrievalAddress" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="RetrievalPersonNameType">
+        <xsd:sequence>
+            <xsd:element ref="FamilyName" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="RetrievalAddressType">
+        <xsd:sequence>
+            <xsd:element ref="StateOrProvinceString" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="VehicleRetrievalType">
+        <xsd:sequence>
+            <xsd:element ref="VIN" minOccurs="0" />
+            <xsd:element ref="CurrentDistanceMeasure" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

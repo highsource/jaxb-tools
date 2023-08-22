@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.009" id="OTA2008A">
+	<xs:include schemaLocation="OTA_HotelCommonTypes.xsd"/>
+	
+	
+	
+	
+	
+	
+	
+	
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_HotelInvCountNotifRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The OTA_InvCountNotifRQ is the message that sends a notification to reservation systems that synchronizes the inventory available for sale at the hotel.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">POS provides a mechanisim to indicate the source of the message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="UniqueID" type="UniqueID_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The unique identifier element allows the trading partners to  uniquely identify each InvCountNotifRQ, (i.e.  the entire message) for transaction tracability.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Inventories" type="InvCountType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A collection of Inventory. Hotel identification information are the attributes of this element.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="TPA_Extensions" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This element defines standard attributes that appear on the root element for all OTA payloads.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

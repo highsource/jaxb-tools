@@ -1,0 +1,815 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
+	jaxb:extensionBindingPrefixes="xjc hj orm"
+	jaxb:version="2.0">
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.one"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+	
+	<!-- Simple types -->
+	<xs:element name="simpleTypes" type="simpleTypesType"/>
+	<xs:complexType name="simpleTypesType">
+		<xs:sequence>
+			<xs:element name="base64Binary" type="xs:base64Binary" 
+				minOccurs="0"/>
+			<xs:element name="hexBinary" type="xs:hexBinary" minOccurs="0"/>
+			<xs:element name="duration" type="xs:duration" minOccurs="0"/>
+			<xs:element name="dateTime" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="date" type="xs:date" minOccurs="0"/>
+			<xs:element name="time" type="xs:time" minOccurs="0"/>
+			<xs:element name="gYearMonth" type="xs:gYearMonth" minOccurs="0"/>
+			<xs:element name="gYear" type="xs:gYear" minOccurs="0"/>
+			<xs:element name="gMonthDay" type="xs:gMonthDay" minOccurs="0"/>
+			<xs:element name="gDay" type="xs:gDay" minOccurs="0"/>
+			<xs:element name="gMonth" type="xs:gMonth" minOccurs="0"/>
+			<xs:element name="float" type="xs:float" minOccurs="0"/>
+			<xs:element name="double" type="xs:double" minOccurs="0"/>
+			<xs:element name="decimal" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="integer" type="xs:integer" minOccurs="0"/>
+			<xs:element name="long" type="xs:long" minOccurs="0"/>
+			<xs:element name="int" type="xs:int" minOccurs="0"/>
+			<xs:element name="short" type="xs:short" minOccurs="0"/>
+			<xs:element name="byte" type="xs:byte" minOccurs="0"/>
+			<xs:element name="unsignedLong" type="xs:unsignedLong" 
+				minOccurs="0"/>
+			<xs:element name="unsignedInt" type="xs:unsignedInt" minOccurs="0"/>
+			<xs:element name="unsignedShort" type="xs:unsignedShort" 
+				minOccurs="0"/>
+			<xs:element name="unsignedByte" type="xs:unsignedByte" 
+				minOccurs="0"/>
+			<xs:element name="nonNegativeInteger" type="xs:nonNegativeInteger" 
+				minOccurs="0"/>
+			<xs:element name="nonPositiveInteger" type="xs:nonPositiveInteger" 
+				minOccurs="0"/>
+			<xs:element name="positiveInteger" type="xs:positiveInteger" 
+				minOccurs="0"/>
+			<xs:element name="negativeInteger" type="xs:negativeInteger" 
+				minOccurs="0"/>
+			<xs:element name="boolean" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="anyURI" type="xs:anyURI" minOccurs="0"/>
+			<xs:element name="QName" type="xs:QName" minOccurs="0"/>
+
+			<!-- ** xs:element name="NOTATION" type="xs:NOTATION" minOccurs="0"/-->
+
+			<xs:element name="string" type="xs:string" minOccurs="0"/>
+			<xs:element name="normalizedString" type="xs:normalizedString" 
+				minOccurs="0"/>
+			<xs:element name="token" type="xs:token" minOccurs="0"/>
+			<xs:element name="language" type="xs:language" minOccurs="0"/>
+			<xs:element name="Name" type="xs:Name" minOccurs="0"/>
+			<xs:element name="NCName" type="xs:NCName" minOccurs="0"/>
+			<xs:element name="ID" type="xs:ID" minOccurs="0"/>
+			<!-- ** #51 xs:element name="IDREF" type="xs:IDREF" minOccurs="0"/-->
+			<!-- ** #51 xs:element name="IDREFS" type="xs:IDREFS"/-->
+			<xs:element name="ENTITY" type="xs:ENTITY" minOccurs="0"/>
+			<xs:element name="ENTITIES" type="xs:ENTITIES" minOccurs="0"/>
+			<xs:element name="NMTOKEN" type="xs:NMTOKEN" minOccurs="0"/>
+			<xs:element name="NMTOKENS" type="xs:NMTOKENS" minOccurs="0"/>
+
+			<xs:element name="base64BinaryNillable" type="xs:base64Binary" minOccurs="0" nillable="true"/>
+			<xs:element name="hexBinaryNillable" type="xs:hexBinary" minOccurs="0" nillable="true"/>
+			<xs:element name="durationNillable" type="xs:duration" 
+				minOccurs="0" nillable="true"/>
+			<xs:element name="dateTimeNillable" type="xs:dateTime" 
+				minOccurs="0" nillable="true"/>
+			<xs:element name="dateNillable" type="xs:date" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="timeNillable" type="xs:time" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="gYearMonthNillable" type="xs:gYearMonth" 
+				minOccurs="0" nillable="true"/>
+			<xs:element name="gYearNillable" type="xs:gYear" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="gMonthDayNillable" type="xs:gMonthDay" 
+				minOccurs="0" nillable="true"/>
+			<xs:element name="gDayNillable" type="xs:gDay" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="gMonthNillable" type="xs:gMonth" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="floatNillable" type="xs:float" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="doubleNillable" type="xs:double" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="decimalNillable" type="xs:decimal" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="integerNillable" type="xs:integer" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="longNillable" type="xs:long" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="intNillable" type="xs:int" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="shortNillable" type="xs:short" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="byteNillable" type="xs:byte" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="unsignedLongNillable" type="xs:unsignedLong" 
+				minOccurs="0" nillable="true"/>
+			<xs:element name="unsignedIntNillable" type="xs:unsignedInt" 
+				minOccurs="0" nillable="true"/>
+			<xs:element name="unsignedShortNillable" type="xs:unsignedShort" 
+				minOccurs="0" nillable="true"/>
+			<xs:element name="unsignedByteNillable" type="xs:unsignedByte" 
+				minOccurs="0" nillable="true"/>
+			<xs:element name="nonNegativeIntegerNillable" 
+				type="xs:nonNegativeInteger" minOccurs="0" nillable="true"/>
+			<xs:element name="nonPositiveIntegerNillable" 
+				type="xs:nonPositiveInteger" minOccurs="0" nillable="true"/>
+			<xs:element name="positiveIntegerNillable" 
+				type="xs:positiveInteger" minOccurs="0" nillable="true"/>
+			<xs:element name="negativeIntegerNillable" 
+				type="xs:negativeInteger" minOccurs="0" nillable="true"/>
+			<xs:element name="booleanNillable" type="xs:boolean" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="anyURINillable" type="xs:anyURI" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="QNameNillable" type="xs:QName" minOccurs="0" 
+				nillable="true"/>
+			<!-- ** xs:element name="NOTATION" type="xs:NOTATION" minOccurs="0"/-->
+			<xs:element name="stringNillable" type="xs:string" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="normalizedStringNillable" 
+				type="xs:normalizedString" minOccurs="0" nillable="true"/>
+			<xs:element name="tokenNillable" type="xs:token" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="languageNillable" type="xs:language" 
+				minOccurs="0" nillable="true"/>
+			<xs:element name="NameNillable" type="xs:Name" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="NCNameNillable" type="xs:NCName" minOccurs="0" 
+				nillable="true"/>
+			<!-- xs:element name="IDNillable" type="xs:ID" minOccurs="0" nillable="true"/-->
+			<!-- ** #51 xs:element name="IDREFNillable" type="xs:IDREF" minOccurs="0" 
+				nillable="true"/ -->
+			<!-- ** #51 xs:element name="IDREFSNillable" type="xs:IDREFS" nillable="true"/ -->
+			<xs:element name="ENTITYNillable" type="xs:ENTITY" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="ENTITIESNillable" type="xs:ENTITIES" 
+				minOccurs="0" nillable="true"/>
+			<xs:element name="NMTOKENNillable" type="xs:NMTOKEN" minOccurs="0" 
+				nillable="true"/>
+			<xs:element name="NMTOKENSNillable" type="xs:NMTOKENS" 
+				minOccurs="0" nillable="true"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="enumTypes" type="enumTypesType"/>
+	<xs:complexType name="enumTypesType">
+		<xs:sequence>
+			<xs:element name="stringEnum" minOccurs="0">
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:appinfo>
+							<jaxb:typesafeEnumClass name="StringEnum"/>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="a"/>
+						<xs:enumeration value="b"/>
+						<xs:enumeration value="c"/>
+						<xs:enumeration value="d"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="intEnum" minOccurs="0">
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:appinfo>
+							<jaxb:typesafeEnumClass name="IntEnum"/>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:restriction base="xs:int">
+						<xs:enumeration value="1"/>
+						<xs:enumeration value="2"/>
+						<xs:enumeration value="3"/>
+						<xs:enumeration value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="stringEnumNillable" minOccurs="0" nillable="true">
+				<xs:simpleType>
+					<xs:annotation>
+						<xs:appinfo>
+							<jaxb:typesafeEnumClass name="StringEnumNillable"/>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="a"/>
+						<xs:enumeration value="b"/>
+						<xs:enumeration value="c"/>
+						<xs:enumeration value="d"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="complexTypes" type="complexTypesType"/>
+	<xs:complexType name="complexTypesType">
+		<xs:sequence>
+			<xs:element name="single" type="complexType" minOccurs="0"/>
+			<xs:element name="collection" type="complexType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="singleNillable" type="complexType" minOccurs="0" nillable="true"/>
+			<xs:element name="collectionNillable" type="complexType" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="complexType">
+		<xs:sequence>
+			<xs:element name="a" type="xs:string" minOccurs="0"/>
+			<xs:element name="b" type="xs:long" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:element name="anyTypes" type="anyTypesType"/>
+
+	<xs:complexType name="anyTypesType">
+		<xs:sequence>
+			<xs:element name="single" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+
+
+						<xs:element name="single" minOccurs="0">
+							<xs:annotation>
+								<xs:appinfo>
+									<xjc:dom/>
+								</xs:appinfo>
+							</xs:annotation> 
+						</xs:element>
+
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="singleNillable" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+
+						<xs:element name="singleNillable" minOccurs="0" nillable="true">
+							<xs:annotation>
+								<xs:appinfo>
+									<xjc:dom/>
+								</xs:appinfo>
+							</xs:annotation> 
+						</xs:element>
+
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="singleAny" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="singleAny" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="singleAnyNillable" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+
+						<xs:element name="singleAnyNillable" minOccurs="0" nillable="true"/>
+
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<!-- ** #54 -->
+			<xs:element name="collection" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+
+						<!-- ** [#7] -->
+						<xs:element name="collection" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:appinfo>
+									<xjc:dom/>
+								</xs:appinfo>
+							</xs:annotation> 
+						</xs:element>
+
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<!-- ** #54 -->
+			<xs:element name="collectionNillable" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+
+						<xs:element name="collectionNillable" minOccurs="0" maxOccurs="unbounded" nillable="true">
+							<xs:annotation>
+								<xs:appinfo>
+									<xjc:dom/>
+								</xs:appinfo>
+							</xs:annotation> 
+						</xs:element>
+
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+
+
+			<xs:element name="collectionAny" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+
+
+						<xs:element name="collectionAny" minOccurs="0" maxOccurs="unbounded"/>
+
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+
+			<xs:element name="collectionAnyNillable" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+
+						<xs:element name="collectionAnyNillable" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+
+
+			<xs:element name="anySingleSkip" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:any namespace="##other" processContents="skip" minOccurs="0" maxOccurs="1" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="anySingleStrict" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:any namespace="##other" processContents="strict" minOccurs="0" maxOccurs="1" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<!-- #44 -->
+			<xs:element name="anySingleLax" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="1" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<!-- #54 -->
+			<xs:element name="anyCollectionSkip" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:any namespace="##other" processContents="skip" minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<!-- #54 -->
+			<xs:element name="anyCollectionStrict" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:any namespace="##other" processContents="strict" minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<!-- ** xs:element name="anyCollectionLax" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element -->
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="simpleCollectionTypes" type="simpleCollectionTypesType"/>
+
+	<!-- ** [#8] -->
+	<xs:complexType name="simpleCollectionTypesType">
+		<xs:sequence>
+			<xs:element name="base64Binary" type="xs:base64Binary" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="hexBinary" type="xs:hexBinary" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="duration" type="xs:duration" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="dateTime" type="xs:dateTime" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="date" type="xs:date" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="time" type="xs:time" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="gYearMonth" type="xs:gYearMonth" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="gYear" type="xs:gYear" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="gMonthDay" type="xs:gMonthDay" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="gDay" type="xs:gDay" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="gMonth" type="xs:gMonth" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="float" type="xs:float" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="double" type="xs:double" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="decimal" type="xs:decimal" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="integer" type="xs:integer" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="long" type="xs:long" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="int" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="short" type="xs:short" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="byte" type="xs:byte" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="unsignedLong" type="xs:unsignedLong" 
+				minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="unsignedInt" type="xs:unsignedInt" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="unsignedShort" type="xs:unsignedShort" 
+				minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="unsignedByte" type="xs:unsignedByte" 
+				minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="nonNegativeInteger" type="xs:nonNegativeInteger" 
+				minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="nonPositiveInteger" type="xs:nonPositiveInteger" 
+				minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="positiveInteger" type="xs:positiveInteger" 
+				minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="negativeInteger" type="xs:negativeInteger" 
+				minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="boolean" type="xs:boolean" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="anyURI" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="QName" type="xs:QName" minOccurs="0" maxOccurs="unbounded"/>
+
+			<!-- ** xs:element name="NOTATION" type="xs:NOTATION" minOccurs="0" maxOccurs="unbounded"/-->
+
+			<xs:element name="string" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="normalizedString" type="xs:normalizedString" 
+				minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="token" type="xs:token" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="language" type="xs:language" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Name" type="xs:Name" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="NCName" type="xs:NCName" minOccurs="0" maxOccurs="unbounded"/>
+			<!-- ** #51 xs:element name="ID" type="xs:ID" minOccurs="0" maxOccurs="unbounded"/ -->
+			<!-- ** #51 xs:element name="IDREF" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded"/ -->
+			<!-- ** #51 xs:element name="IDREFS" type="xs:IDREFS" minOccurs="0" maxOccurs="unbounded"/ -->
+			<xs:element name="ENTITY" type="xs:ENTITY" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ENTITIES" type="xs:ENTITIES" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="NMTOKEN" type="xs:NMTOKEN" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="NMTOKENS" type="xs:NMTOKENS" minOccurs="0" maxOccurs="unbounded"/>
+
+			<xs:element name="base64BinaryNillable" type="xs:base64Binary" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			<xs:element name="hexBinaryNillable" type="xs:hexBinary" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			<xs:element name="durationNillable" type="xs:duration" 
+				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			<xs:element name="dateTimeNillable" type="xs:dateTime" 
+				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			<xs:element name="dateNillable" type="xs:date" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="timeNillable" type="xs:time" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="gYearMonthNillable" type="xs:gYearMonth" 
+				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			<xs:element name="gYearNillable" type="xs:gYear" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="gMonthDayNillable" type="xs:gMonthDay" 
+				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			<xs:element name="gDayNillable" type="xs:gDay" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="gMonthNillable" type="xs:gMonth" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="floatNillable" type="xs:float" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="doubleNillable" type="xs:double" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="decimalNillable" type="xs:decimal" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="integerNillable" type="xs:integer" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="longNillable" type="xs:long" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="intNillable" type="xs:int" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="shortNillable" type="xs:short" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="byteNillable" type="xs:byte" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="unsignedLongNillable" type="xs:unsignedLong" 
+				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			<xs:element name="unsignedIntNillable" type="xs:unsignedInt" 
+				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			<xs:element name="unsignedShortNillable" type="xs:unsignedShort" 
+				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			<xs:element name="unsignedByteNillable" type="xs:unsignedByte" 
+				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			<xs:element name="nonNegativeIntegerNillable" 
+				type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			<xs:element name="nonPositiveIntegerNillable" 
+				type="xs:nonPositiveInteger" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			<xs:element name="positiveIntegerNillable" 
+				type="xs:positiveInteger" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			<xs:element name="negativeIntegerNillable" 
+				type="xs:negativeInteger" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			<xs:element name="booleanNillable" type="xs:boolean" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="anyURINillable" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="QNameNillable" type="xs:QName" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<!-- ** xs:element name="NOTATION" type="xs:NOTATION" minOccurs="0" maxOccurs="unbounded"/-->
+			<xs:element name="stringNillable" type="xs:string" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="normalizedStringNillable" 
+				type="xs:normalizedString" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			<xs:element name="tokenNillable" type="xs:token" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="languageNillable" type="xs:language" 
+				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			<xs:element name="NameNillable" type="xs:Name" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="NCNameNillable" type="xs:NCName" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<!-- ** #51 xs:element name="IDNillable" type="xs:ID" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/ -->
+			<!-- ** #51 xs:element name="IDREFNillable" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/ -->
+			<!-- ** #51 xs:element name="IDREFSNillable" type="xs:IDREFS" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/ -->
+			<xs:element name="ENTITYNillable" type="xs:ENTITY" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="ENTITIESNillable" type="xs:ENTITIES" 
+				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+			<xs:element name="NMTOKENNillable" type="xs:NMTOKEN" minOccurs="0" maxOccurs="unbounded" 
+				nillable="true"/>
+			<xs:element name="NMTOKENSNillable" type="xs:NMTOKENS" 
+				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ** [#9] -->
+	<xs:element name="heteroSequence" type="heteroSequenceType"/>
+	<xs:complexType name="heteroSequenceType">
+		<xs:sequence>
+			<xs:element name="a" type="xs:string"/>
+			<xs:element name="b" type="xs:string"/>
+			<xs:sequence>
+				<xs:element name="c" type="xs:string"/>
+				<xs:element name="d" type="xs:string"/>
+			</xs:sequence>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element name="e" type="xs:string"/>
+				<xs:element name="f" type="complexType"/>
+			</xs:sequence>
+			<xs:element name="g" type="xs:string" nillable="true"/>
+			<xs:element name="h" type="xs:string" nillable="true"/>
+			<xs:sequence>
+				<xs:element name="i" type="xs:string" nillable="true"/>
+				<xs:element name="j" type="xs:string" nillable="true"/>
+			</xs:sequence>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element name="k" type="xs:string" nillable="true"/>
+				<xs:element name="l" type="complexType" nillable="true"/>
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="m" type="xs:string"/>
+				<xs:element name="n" type="xs:string" nillable="true"/>
+			</xs:sequence>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element name="o" type="xs:string"/>
+				<xs:element name="p" type="complexType" nillable="true"/>
+			</xs:sequence>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element name="q" type="xs:string"/>
+				<xs:element name="r" type="complexType" nillable="true"/>
+			</xs:sequence>
+			<!-- ** 
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element name="s" type="complexType"/>
+				<xs:element name="t" type="complexType"/>
+			</xs:sequence>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element name="v" type="complexType"/>
+				<xs:element name="u" type="complexType" nillable="true"/>
+			</xs:sequence> -->
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="heteroChoice" type="heteroChoiceType"/>
+	<xs:complexType name="heteroChoiceType">
+		<xs:choice>
+			<xs:element name="a" type="xs:string"/>
+			<xs:element name="b" type="xs:string"/>
+			<xs:choice>
+				<xs:element name="c" type="xs:string"/>
+				<xs:element name="d" type="xs:string"/>
+			</xs:choice>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="e" type="xs:string"/>
+				<xs:element name="f" type="complexType"/>
+			</xs:choice>
+			<xs:element name="g" type="xs:string" nillable="true"/>
+			<xs:element name="h" type="xs:string" nillable="true"/>
+			<xs:choice>
+				<xs:element name="i" type="xs:string" nillable="true"/>
+				<xs:element name="j" type="xs:string" nillable="true"/>
+			</xs:choice>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="k" type="xs:string" nillable="true"/>
+				<xs:element name="l" type="complexType" nillable="true"/>
+			</xs:choice>
+			<xs:choice>
+				<xs:element name="m" type="xs:string"/>
+				<xs:element name="n" type="xs:string" nillable="true"/>
+			</xs:choice>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="o" type="xs:string"/>
+				<xs:element name="p" type="complexType" nillable="true"/>
+			</xs:choice>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="q" type="xs:string"/>
+				<xs:element name="r" type="complexType" nillable="true"/>
+			</xs:choice>
+		</xs:choice>
+	</xs:complexType>
+
+	<!-- ** [#10] -->
+	<!--xs:element name="mixed" type="mixedType"/>
+
+	<xs:complexType name="mixedType" mixed="true">
+		<xs:sequence>
+			<xs:element name="a" type="xs:string"/>
+			<xs:element name="b" type="xs:positiveInteger"/>
+			<xs:element name="c" type="xs:date"/>
+			<xs:element name="d" type="xs:string" nillable="true"/>
+			<xs:element name="e" type="xs:positiveInteger" nillable="true"/>
+			<xs:element name="f" type="xs:date" nillable="true"/>
+		</xs:sequence>
+	</xs:complexType-->
+
+	<xs:element name="ignoredType" type="ignoredType"/>
+	<xs:complexType name="ignoredType">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:ignored/>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="a" type="xs:string"/>
+			<xs:element name="b" type="xs:positiveInteger"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ignoredFieldsType" type="ignoredFieldsType"/>
+	<xs:complexType name="ignoredFieldsType">
+		<xs:sequence>
+			<xs:element name="a" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:ignored/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="b" type="ignoredType"/>
+			<xs:element name="c" type="xs:positiveInteger"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="customizedId" type="customizedIdType"/>
+	<xs:complexType name="customizedIdType">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:id merge="false"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="version" type="xs:dateTime">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:version>
+							<orm:column name="C_I_D_VERSION"/>
+						</hj:version>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="customizedIdNillable" type="customizedIdNillableType"/>
+	<xs:complexType name="customizedIdNillableType">
+		<xs:sequence>
+			<xs:element name="id" type="xs:string" nillable="true" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:id merge="false"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="version" type="xs:long" nillable="true" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:version/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:element name="base" type="baseType"/>
+	<xs:complexType name="baseType">
+		<xs:sequence>
+			<xs:element name="a" type="xs:string"/>
+			<xs:element name="b" type="xs:long"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="extended" type="extendedType"/>
+	<xs:complexType name="extendedType">
+		<xs:complexContent>
+		    <xs:extension base="baseType">
+				<xs:sequence>
+					<xs:element name="c" type="xs:dateTime"/>
+					<xs:element name="d" type="xs:base64Binary"/>
+				</xs:sequence>
+		    </xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:element name="mixedHeteroReference" type="mixedHeteroReferenceType"/>
+
+	<xs:complexType name="mixedHeteroReferenceType" mixed="true">
+		<xs:sequence>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:element name="issue57" type="issue57Type"/>
+
+	<xs:complexType name="issue57Type">
+		<xs:attribute name="integers">
+			<xs:simpleType>
+				<xs:list itemType="xs:integer"/>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:element name="issue58" type="issue58Type"/>
+
+	<xs:simpleType name="issue58EnumType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="a"/>
+			<xs:enumeration value="b"/>
+			<xs:enumeration value="c"/>
+			<xs:enumeration value="d"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:complexType name="issue58Type">
+		<xs:attribute name="enums">
+			<xs:simpleType>
+				<xs:list itemType="issue58EnumType"/>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:element name="issue61" type="issue61Type"/>
+
+	<xs:simpleType name="issue61SimpleType">
+		<xs:list itemType="xs:integer"/>
+	</xs:simpleType>
+
+	<xs:complexType name="issue61Type">
+		<xs:simpleContent>
+			<xs:extension base="issue61SimpleType">
+				<xs:attribute name="name" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:element name="issue62" type="issue62Type"/>
+
+	<xs:simpleType name="issue62EnumType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="a"/>
+			<xs:enumeration value="b"/>
+			<xs:enumeration value="c"/>
+			<xs:enumeration value="d"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="issue62SimpleType">
+		<xs:list itemType="issue62EnumType"/>
+	</xs:simpleType>
+
+	<xs:complexType name="issue62Type">
+		<xs:simpleContent>
+			<xs:extension base="issue62SimpleType">
+				<xs:attribute name="name" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="integersType">
+		<xs:sequence>
+			<xs:element name="integers" maxOccurs="unbounded">
+				<xs:simpleType>
+					<xs:list itemType="xs:integer"/>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

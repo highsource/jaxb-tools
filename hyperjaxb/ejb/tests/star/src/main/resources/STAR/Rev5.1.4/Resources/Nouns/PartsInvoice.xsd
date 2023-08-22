@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- User   MOD      Date              Description  
+    =========================================================================
+    
+    MV     CRx     20061031          Commented out "DocumentID"
+    DC     CR238   20061130          Updated Party Components
+    DC     CR299   20070212          Consolidated new PartProductItem
+    MV     MT379   20070820          Added: PartsInvoiceHeader.PartInvoiceType, PartInvoiceDueDate, DealerOrderNumberString, OrderDate
+    MV     MT379   20070822          Added: PartsInvoiceHeader.ReceivableID, OrderTypeCode, PartsOrderReceivedDateTime
+    MV     MT379   20070823          Changed: PartsInvoiceHeader.PartInvoiceType, PartInvoiceDueDate to PartsInvoiceType and PartsInvoiceDueDate
+    MV     MT405   20070829          Added: Line.OrderTypeCode, OrderDate
+    DC     MT444   20071001          Added: ShippingPDC to the line level
+    MV     MT596   20080205          Added: PartsInvoiceLine.PalletID, ShipmentCarrierDetail
+                                            PartsInvoiceHeader.ShipmentCarrierDetail
+                                     Deprecated: PartsInvoiceHeader.ShipmentCarrier.  Use ShipmentCarrierDetail
+    MV     MT615   20080219          Changed: PartsInvoiceLineItem.Price from 0..1 to 0..*                                         
+    
+                                                                               
+                                                                                                                      
+-->
+
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns="http://www.starstandard.org/STAR/5" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="PartsInvoice" type="PartsInvoiceType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                For each Parts Invoice represented in the Data Area of the PartsInvoice Business Object Document, there must be one occurrence of the PartsInvoice Component. 
+            </xsd:documentation>
+        </xsd:annotation>        
+    </xsd:element>
+    <xsd:element name="PartsInvoiceHeader" type="PartsInvoiceHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                For each PartsInvoice represented in the DataArea of the PartsInvoice Business Object Document, there must be once occurrence of the Header Component. 
+            </xsd:documentation>
+        </xsd:annotation>        
+    </xsd:element>
+    <xsd:element name="PartsInvoiceLine" type="PartsInvoiceLineType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                The PaymentTerms Component represents payment due date and terms information.        
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="PartsInvoiceType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 3.0 - Draft</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.1, STAR approved 04/20/2005; effective date 07/04/2005</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.0, STAR approved 05/07/2004; effective date 07/04/2004</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 1.0 STAR approved 01/10/2003; OAGI approved 3/15/2003; effective date 01/01/2003</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="PartsInvoiceHeader" />
+            <xsd:element ref="PartsInvoiceLine" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PartsInvoiceHeaderType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+                <xsd:sequence>
+                <!--    <xsd:element ref="DocumentID" minOccurs="0" /> -->
+                    <xsd:element ref="TransactionTypeCode" minOccurs="0" />
+                    <xsd:element ref="InvoiceDate" minOccurs="0" />
+                    <xsd:element ref="ReferenceNumberString" minOccurs="0" />
+                    <xsd:element ref="ShipmentCarrierCode" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated: Use ShipmentCarrierDetail</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>    
+                    <xsd:element ref="ShipDate" minOccurs="0" />
+                    <xsd:element ref="ShipmentNumberString" minOccurs="0" />
+                    <xsd:element ref="PDC" minOccurs="0" />
+                    <xsd:element ref="ShippingPDC" minOccurs="0" />
+                    <xsd:element ref="TotalPartPiecesNumeric" minOccurs="0" />
+                    <xsd:element ref="ProcessDate" minOccurs="0" />
+                    <xsd:element ref="PaymentTerms" minOccurs="0" />
+                    <xsd:element ref="StockOrderNetAmount" minOccurs="0" />
+                    <xsd:element ref="StockAdjustmentValueAmount" minOccurs="0" />
+                    <xsd:element ref="TotalPartsAmount" minOccurs="0" />
+                    <xsd:element ref="TotalAccessoriesAmount" minOccurs="0" />
+                    <xsd:element ref="TotalOtherAmount" minOccurs="0" />
+                    <xsd:element ref="SubtotalBeforeDiscountsAmount" minOccurs="0" />
+                    <xsd:element ref="PartsDiscountAmount" minOccurs="0" />
+                    <xsd:element ref="AccessoriesDiscountAmount" minOccurs="0" />
+                    <xsd:element ref="OtherDiscountAmount" minOccurs="0" />
+                    <xsd:element ref="TotalDiscountAmount" minOccurs="0" />
+                    <xsd:element ref="SubtotalIncludingDiscount" minOccurs="0" />
+                    <xsd:element ref="ExtendedAmount" minOccurs="0" />
+                    <xsd:element ref="Allowance"  minOccurs="0" />
+                    <xsd:element ref="TotalMiscellaneousExpense" minOccurs="0" />
+                    <xsd:element ref="Charges" minOccurs="0" />
+                    <xsd:element ref="Tax" minOccurs="0" maxOccurs="unbounded" />
+                    <xsd:element ref="TotalAmount" minOccurs="0" />
+                    <xsd:element ref="SalesPromotionCode" minOccurs="0" />
+                    <xsd:element ref="ProcessCode" minOccurs="0" />
+                    <xsd:element ref="ManufacturerOrderNumberString" minOccurs="0" />
+                    <xsd:element ref="FundsCode" minOccurs="0" />
+                    <xsd:element ref="DiscountCode" minOccurs="0" />
+                    <xsd:element ref="TotalSubjectToDutyAmount" minOccurs="0" />
+                    <xsd:element ref="ExtendedCoreAmount" minOccurs="0" />
+                    <xsd:element ref="BulkDiscountAmount" minOccurs="0" />
+                    <xsd:element ref="LetterOfCredit" minOccurs="0" />
+                    <xsd:element ref="LOCExpirationDate" minOccurs="0" />
+                    <xsd:element ref="DeclarationStatement" minOccurs="0" />
+                    <xsd:element ref="TotalRackContainerDepositAmount" minOccurs="0" />
+                    <xsd:element ref="FOBTermsString" minOccurs="0" />
+                    <xsd:element ref="FreightTermsString" minOccurs="0" />
+                    <xsd:element ref="SoldToParty" minOccurs="0" />
+                    <xsd:element ref="ShipToParty" minOccurs="0" />
+                    <xsd:element ref="HTSSummary" minOccurs="0" maxOccurs="unbounded" />
+                    <xsd:element ref="PartCountrySummary" minOccurs="0" maxOccurs="unbounded" />
+                    <xsd:element ref="PartsInvoiceType" minOccurs="0" maxOccurs="1" />
+                    <xsd:element ref="PartsInvoiceDueDate" minOccurs="0" maxOccurs="1" />
+                    <xsd:element ref="DealerOrderNumberString" minOccurs="0" maxOccurs="1" />
+                    <xsd:element ref="OrderDate" minOccurs="0" maxOccurs="1" />
+                    <xsd:element ref="ReceivableID" minOccurs="0" maxOccurs="1" />
+                    <xsd:element ref="OrderTypeCode" minOccurs="0" maxOccurs="1" />
+                    <xsd:element ref="PartsOrderReceivedDateTime" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="ShipmentCarrierDetail" minOccurs="0" maxOccurs="unbounded"/>                    
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="PartsInvoiceLineType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="LineNumberString" minOccurs="0" />
+            <xsd:element ref="ShipmentNumberString" minOccurs="0" />
+            <xsd:element ref="PartsProductItem" minOccurs="0" />
+            <xsd:element ref="OrderQuantity" minOccurs="0" />
+            <xsd:element ref="BackOrderQuantity" minOccurs="0" />
+            <xsd:element ref="QuantityShipped" minOccurs="0" />
+            <xsd:element ref="UnitPackQuantity" minOccurs="0" />
+            <xsd:element ref="PartDimensions" minOccurs="0" />
+            <xsd:element ref="FormerPartNumberID" minOccurs="0" />
+            <xsd:element ref="PartCountryCode" minOccurs="0" />
+            <xsd:element ref="Price" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="OrderReferenceNumberString" minOccurs="0" />
+            <xsd:element ref="DiscountCode" minOccurs="0" />
+            <xsd:element ref="DiscountPercentage" minOccurs="0" />
+            <xsd:element ref="BulkDiscountAmount" minOccurs="0" />
+            <xsd:element ref="StockReturnAllowanceCode" minOccurs="0" />
+            <xsd:element ref="Allowance" minOccurs="0" />
+            <xsd:element ref="Charges" minOccurs="0" />
+            <xsd:element ref="TaxIndicator" minOccurs="0" />
+            <xsd:element ref="Tax" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="ReturnReasonCode" minOccurs="0" />
+            <xsd:element ref="RestockCode" minOccurs="0" />
+            <xsd:element ref="ProcessDate" minOccurs="0" />
+            <xsd:element ref="SalesPromotionCode" minOccurs="0" />
+            <xsd:element ref="ProcessCode" minOccurs="0" />
+            <xsd:element ref="InventoryMovementDemandCode" minOccurs="0" />
+            <xsd:element ref="MiscellaneousNotes" minOccurs="0" />
+            <xsd:element ref="ManufacturerOrderNumberString" minOccurs="0" />
+            <xsd:element ref="HTSCode" minOccurs="0" />
+            <xsd:element ref="PageNumberNumeric" minOccurs="0" />
+            <xsd:element ref="TotalSubjectToDutyAmount" minOccurs="0" />
+            <xsd:element ref="ExtendedCoreAmount" minOccurs="0" />
+            <xsd:element ref="CoreUnitAmount" minOccurs="0" />
+            <xsd:element ref="ETADate" minOccurs="0" />
+            <xsd:element ref="ConveyanceNumberString" minOccurs="0" />
+            <xsd:element ref="CaseMarks" minOccurs="0" />
+            <xsd:element ref="CaseCartonNumberString" minOccurs="0" />
+            <xsd:element ref="RackContainerTypeString" minOccurs="0" />
+            <xsd:element ref="RackContainerQuantityNumeric" minOccurs="0" />
+            <xsd:element ref="RackContainerNumberString" minOccurs="0" />
+            <xsd:element ref="RackContainerDepositAmount" minOccurs="0" />
+            <xsd:element ref="OrderTypeCode" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="OrderDate" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="ShippingPDC" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="PalletID" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="ShipmentCarrierDetail" minOccurs="0" maxOccurs="unbounded"/> 
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

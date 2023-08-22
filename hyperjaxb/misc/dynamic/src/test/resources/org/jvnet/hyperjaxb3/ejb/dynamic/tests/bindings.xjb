@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings
+	version="2.1"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	jaxb:extensionBindingPrefixes="hj orm">
+
+	<!-- jaxb:bindings scd="x-schema::">
+		<jaxb:bindings scd="~PurchaseOrderType" -->
+
+	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+		<jaxb:globalBindings generateIsSetMethod="true"/>
+		<jaxb:schemaBindings>
+			<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.pocustomized"/>
+		</jaxb:schemaBindings>
+		<jaxb:bindings node="xs:complexType[@name='PurchaseOrderType']">
+			<hj:entity>
+				<orm:table name="po"/>
+			</hj:entity>
+		</jaxb:bindings>
+		<jaxb:bindings node="xs:complexType[@name='USAddress']">
+			<hj:entity>
+				<orm:table name="address"/>
+			</hj:entity>
+		</jaxb:bindings>
+		<jaxb:bindings node="xs:complexType[@name='Items']//xs:complexType">
+			<hj:entity>
+				<orm:table name="item"/>
+			</hj:entity>
+		</jaxb:bindings>
+		<jaxb:bindings node="xs:complexType[@name='Items']//xs:attribute[@name='partNum']">
+			<hj:id merge="false"/>
+		</jaxb:bindings>
+		<jaxb:bindings node="xs:complexType[@name='Items']//xs:element[@name='USPrice']">
+			<hj:basic>
+				<orm:column name="Price"/>
+			</hj:basic>
+		</jaxb:bindings>
+		<jaxb:bindings node="xs:complexType[@name='Items']//xs:complexType//xs:element[@name='productName']">
+			<hj:basic>
+				<orm:column length="1024"/>
+			</hj:basic>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+
+</jaxb:bindings>

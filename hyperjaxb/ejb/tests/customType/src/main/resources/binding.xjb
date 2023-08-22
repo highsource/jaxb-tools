@@ -1,0 +1,16 @@
+<jaxb:bindings xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:hj="http://hyperjaxb2.jvnet.org/customizations" jaxb:extensionBindingPrefixes="hj" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
+		<jaxb:globalBindings typesafeEnumBase="xs:string">
+			<jaxb:javaType name="long" xmlType="xs:unsignedLong" parseMethod="java.lang.Long.parseLong" printMethod="java.lang.Long.toString"/>
+		</jaxb:globalBindings>
+		<jaxb:schemaBindings>
+			<jaxb:package name="com.typetest"/>
+		</jaxb:schemaBindings>
+		<jaxb:bindings node="//xs:complexType[@name='TypeTestType']/xs:sequence/xs:element[@name='Value']">
+			<hj:simpleSingleProperty>
+				<hj:column name="k"/>
+				<hj:type name="org.hibernate.type.LongType"/>
+			</hj:simpleSingleProperty>
+		</jaxb:bindings>
+	</jaxb:bindings>
+</jaxb:bindings>

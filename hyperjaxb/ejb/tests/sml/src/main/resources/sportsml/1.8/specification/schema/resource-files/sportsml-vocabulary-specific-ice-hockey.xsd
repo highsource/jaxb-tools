@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<schema
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:sportsml="http://iptc.org/std/SportsML/2006-10-18/"
+	version="1.8"
+	>
+	<simpleType name="scoreAttemptType.IceHockey.Vocabulary">
+		<restriction base="string">
+			<enumeration value="regular">
+				<annotation>
+					<documentation>Occurs while both teams have an equal number of players on the ice.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="penalty-shot">
+				<annotation>
+					<documentation>Occurs while shooting player is taking a penalty shot.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="power-play">
+				<annotation>
+					<documentation>Occurs when shooting team has more players on the ice due to penalty or penalities by opponent.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="short-handed">
+				<annotation>
+					<documentation>Occurs when shooting team has fewer players on the ice due to a penalty or penalties.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="empty-net">
+				<annotation>
+					<documentation>Occurs when shot is taken on net vacated by goalie who has been replaced on the ice by a non-goalie.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="own-goal">
+				<annotation>
+					<documentation>Occurs when shot is inadvertantly scored into the wrong goal.</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+	<simpleType name="scoreAttemptResult.IceHockey.Vocabulary">
+		<restriction base="string">
+			<enumeration value="missed">
+				<annotation>
+					<documentation>The puck missed the goal.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="saved">
+				<annotation>
+					<documentation>The goalie has stopped the shot.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="blocked">
+				<annotation>
+					<documentation>A non-goalie diverted the shot from reaching the goal.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="off-post">
+				<annotation>
+					<documentation>The framework of the goal itself blocked the shot.</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+	<simpleType name="penaltyLevel.IceHockey.Vocabulary">
+		<restriction base="string">
+			<enumeration value="minor">
+				<annotation>
+					<documentation>A two-minute penalty given to a player.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="bench-minor">
+				<annotation>
+					<documentation>A two-minute penalty given to a team (served by player on that team).</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="double-minor">
+				<annotation>
+					<documentation>A four-minute penalty given to a player.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="major">
+				<annotation>
+					<documentation>A five-minute penalty given to a player.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="misconduct">
+				<annotation>
+					<documentation>A ten-minute penalty given to a player.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="match">
+				<annotation>
+					<documentation>A player is removed for the balance of the game. A substitute is allowed after five minutes.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="game-misconduct">
+				<annotation>
+					<documentation>Suspension of a player for the balance of the game. A substitute is permitted to replace the penalized player immediately.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="gross-misconduct">
+				<annotation>
+					<documentation>Suspension of any player, coach or trainer for the balance of the game. A substitute is permitted to replace the penalized player immediately.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="penalty-shot">
+				<annotation>
+					<documentation>For certain penalities, a free shot is awarded instead of a player being required to serve penalty time.</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+	<simpleType name="penaltyName.IceHockey.Vocabulary">
+		<restriction base="string">
+			<enumeration value="abuse-of-officials"/>
+			<enumeration value="adjustment-to-clothing-equipment">
+				<annotation>
+					<documentation>A penalty may be assessed when a player adjusting his equipment delays the game.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="attempt-to-injure"/>
+			<enumeration value="boarding"/>
+			<enumeration value="broken-stick"/>
+			<enumeration value="butt-ending"/>
+			<enumeration value="charging"/>
+			<enumeration value="checking-from-behind"/>
+			<enumeration value="clipping"/>
+			<enumeration value="closing-hand-on-puck"/>
+			<enumeration value="cross-checking"/>
+			<enumeration value="delay-of-game"/>
+			<enumeration value="deliberate-injury"/>
+			<enumeration value="diving"/>
+			<enumeration value="elbowing"/>
+			<enumeration value="falling-on-puck"/>
+			<enumeration value="fighting"/>
+			<enumeration value="goalie-interference"/>
+			<enumeration value="gross-misconduct"/>
+			<enumeration value="head-butting"/>
+			<enumeration value="high-sticking"/>
+			<enumeration value="holding"/>
+			<enumeration value="holding-the-stick"/>
+			<enumeration value="hooking"/>
+			<enumeration value="illegal-stick"/>
+			<enumeration value="instigator"/>
+			<enumeration value="interference"/>
+			<enumeration value="interference-by-with-spectator"/>
+			<enumeration value="kicking"/>
+			<enumeration value="kneeing"/>
+			<enumeration value="leaving-the-bench-penalty"/>
+			<enumeration value="left-crease"/>
+			<enumeration value="ob-high-sticking"/>
+			<enumeration value="ob-holding"/>
+			<enumeration value="ob-holding-the-stick"/>
+			<enumeration value="ob-hooking"/>
+			<enumeration value="ob-interference"/>
+			<enumeration value="ob-tripping"/>
+			<enumeration value="obscene-language"/>
+			<enumeration value="refusal-to-start-play"/>
+			<enumeration value="roughing"/>
+			<enumeration value="slashing"/>
+			<enumeration value="spearing"/>
+			<enumeration value="too-many-men-on-ice"/>
+			<enumeration value="tripping"/>
+			<enumeration value="unsportsmanlike-conduct"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="position.IceHockey.Vocabulary">
+		<restriction base="string">
+			<enumeration value="defenseman"/>
+			<enumeration value="left-defenseman"/>
+			<enumeration value="right-defenseman"/>
+			<enumeration value="forward"/>
+			<enumeration value="left-forward"/>
+			<enumeration value="right-forward"/>
+			<enumeration value="goalie"/>
+			<enumeration value="referee"/>
+			<enumeration value="linesman"/>
+			<enumeration value="goal-judge"/>
+			<enumeration value="penalty-timekeeper"/>
+			<enumeration value="official-scorer"/>
+			<enumeration value="game-timekeeper"/>
+			<enumeration value="coach"/>
+			<enumeration value="assistant-coach"/>
+		</restriction>
+	</simpleType>
+</schema>

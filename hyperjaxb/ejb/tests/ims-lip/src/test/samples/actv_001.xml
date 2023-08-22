@@ -1,0 +1,151 @@
+<?xml version="1.0" standalone="no"?>
+<!-- Author:	Colin Smythe     						-->
+<!-- Date:		15th December, 2004	     				-->
+<!-- Version:	1.0										-->
+<!-- Basic example.  Used to test the LIPv1.0.1 XSD 	-->
+<learnerinformation xmlns = "http://www.imsglobal.org/xsd/imslip_v1p0" 
+	xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation = "http://www.imsglobal.org/xsd/imslip_v1p0 http://www.imsglobal.org/xsd/imslip_v1p0.xsd">
+	<comment>An example of LIP Activity information.</comment>
+	<contentype>
+		<referential>
+			<sourcedid>
+				<source>IMS_LIP_V1p0_Example</source>
+				<id>1001</id>
+			</sourcedid>
+		</referential>
+	</contentype>
+	<activity>
+		<typename>
+			<tysource sourcetype = "imsdefault"/>
+			<tyvalue>Education</tyvalue>
+		</typename>
+		<contentype>
+			<referential>
+				<indexid>activity_1</indexid>
+			</referential>
+		</contentype>
+		<date>
+			<typename>
+				<tysource sourcetype = "imsdefault"/>
+				<tyvalue>Award</tyvalue>
+			</typename>
+			<datetime>1919-10-11T00:00:00</datetime>
+		</date>
+		<status>
+			<typename>
+				<tysource sourcetype = "imsdefault"/>
+				<tyvalue>Completed</tyvalue>
+			</typename>
+			<date>
+				<typename>
+					<tysource sourcetype = "imsdefault"/>
+					<tyvalue>Finish</tyvalue>
+				</typename>
+				<datetime>1919-06-06T00:00:00</datetime>
+			</date>
+		</status>
+		<units>
+			<unitsfield>
+				<fieldlabel>
+					<typename>
+						<tyvalue>CreditNumber</tyvalue>
+					</typename>
+				</fieldlabel>
+				<fielddata>10</fielddata>
+			</unitsfield>
+		</units>
+		<learningactivityref>
+			<text>Degree in Philiosphy</text>
+		</learningactivityref>
+		<definition>
+			<typename>
+				<tysource sourcetype = "imsdefault"/>
+				<tyvalue>Curriculum</tyvalue>
+			</typename>
+			<contentype>
+				<referential>
+					<indexid>degreecourse</indexid>
+				</referential>
+			</contentype>
+			<definitionfield>
+				<fieldlabel>
+					<typename>
+						<tyvalue>Duration</tyvalue>
+					</typename>
+				</fieldlabel>
+				<fielddata>3</fielddata>
+			</definitionfield>
+		</definition>
+		<product>
+			<typename>
+				<tysource sourcetype = "imsdefault"/>
+				<tyvalue>Coursework</tyvalue>
+			</typename>
+			<contentype>
+				<referential>
+					<indexid>activity_product_01</indexid>
+				</referential>
+			</contentype>
+			<description>
+				<short>Thesis on violins</short>
+				<full>
+					<media mediamode = "Text" mimetype = "text/word" contentreftype = "uri">sh/thesis.doc</media>
+				</full>
+			</description>
+		</product>
+		<testimonial>
+			<typename>
+				<tysource sourcetype = "imsdefault"/>
+				<tyvalue>Academic</tyvalue>
+			</typename>
+			<contentype>
+				<referential>
+					<indexid>activity_testimonial_01</indexid>
+				</referential>
+			</contentype>
+			<description>
+				<short>Tutors reference</short>
+				<full>
+					<media mediamode = "Text" mimetype = "text/word" contentreftype = "uri">tutor/ref.doc</media>
+				</full>
+			</description>
+		</testimonial>
+		<evaluation>
+			<contentype>
+				<referential>
+					<indexid>activity_evaluation_01</indexid>
+				</referential>
+			</contentype>
+			<result>
+				<interpretscore>
+					<fieldlabel>
+						<typename>
+							<tyvalue>MinScore</tyvalue>
+						</typename>
+					</fieldlabel>
+					<fielddata>0</fielddata>
+				</interpretscore>
+				<interpretscore>
+					<fieldlabel>
+						<typename>
+							<tyvalue>MaxScore</tyvalue>
+						</typename>
+					</fieldlabel>
+					<fielddata>100</fielddata>
+				</interpretscore>
+				<score>
+					<fieldlabel>
+						<typename>
+							<tyvalue>Total</tyvalue>
+						</typename>
+					</fieldlabel>
+					<fielddata>80</fielddata>
+				</score>
+			</result>
+		</evaluation>
+		<description>
+			<short>Final degree information.</short>
+		</description>
+	</activity>
+</learnerinformation>

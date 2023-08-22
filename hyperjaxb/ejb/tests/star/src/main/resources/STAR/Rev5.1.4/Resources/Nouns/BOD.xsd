@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  DC   BugFix   20070217       Removed OriginalApplication from BOD Type should use
+                               OriginalApplicationArea in the Confirm verb.
+                                   
+  -->
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5"
+            xmlns:oacl="http://www.openapplications.org/oagis/9/codelists"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0"
+            xmlns="http://www.starstandard.org/STAR/5"
+            xmlns:ccts="urn:un:unece:uncefact:documentation:1.1"
+            xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" targetNamespace="http://www.starstandard.org/STAR/5"
+            xmlns:oagis="http://www.openapplications.org/oagis/9"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:import namespace="http://www.openapplications.org/oagis/9" schemaLocation="../Components/OAGIS/Common/Meta.xsd"/>
+    
+    <xsd:element name="BOD" type="BODType">
+        <xsd:annotation>
+            <xsd:documentation
+                source="http://www.openapplications.org/oagis/9">
+                The outcome of processing a specific BOD. Describes
+                overall/summary outcome, plus the outcome of processing
+                each noun of the BOD. Includes noun-specific error
+                and/or warning messaages encountered during processing.
+                May include summary and/or roll-up messages at the BOD
+                level.
+            </xsd:documentation>
+        </xsd:annotation>
+        
+    </xsd:element>
+    
+    <xsd:complexType name="BODType">
+        <xsd:annotation>
+            <xsd:documentation>
+                The outcome of processing a specific BOD. Describes
+                overall/summary outcome, plus the outcome of processing
+                each noun of the BOD. Includes noun-specific error
+                and/or warning messaages encountered during processing.
+                May include summary and/or roll-up messages at the BOD
+                level.
+            </xsd:documentation>
+        </xsd:annotation>
+        
+        <xsd:sequence>
+            <xsd:annotation>
+                <xsd:documentation>
+                    OriginalApplicationArea is depricated from the BOD
+                    of the ConfirmBOD, the OriginalApplicationArea
+                    should be used off of the Confirm Verb.
+                </xsd:documentation>
+            </xsd:annotation>
+            
+<!--            <xsd:element ref="OriginalApplicationArea" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation
+                        source="http://www.openapplications.org/oagis/9">
+                        A copy of the ApplicationArea for the original
+                        BOD that was processed. Present either as
+                        additional reference information, or for use in
+                        identifying the BOD in situations where a
+                        BODReference is not known.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+-->            
+            <xsd:group ref="oagis:FreeFormTextGroup" />
+            <xsd:element ref="oagis:BODFailureMessage" minOccurs="0" />
+            <xsd:element ref="oagis:BODSuccessMessage" minOccurs="0" />
+            <xsd:element ref="oagis:PartialBODFailureMessage" minOccurs="0" />
+            <!-- <xsd:element ref="UserArea" minOccurs="0" /> -->
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  User    Mod     Date      Description
+  =============================================================================
+  DC            20061031    Removed DocumentID
+  DC      CR262 20061108    Updated for Sales Lead Redesign.  Numerous changes.
+  DC      CR283 20061202    Removed extraneous Party global elements.
+  MV      CR325 20070214    Added: Header.LeadCreationDateTime, PreferredManufacturerCode, LeadPreference
+                            Added: Detail.LeadDepartment
+                            Added: SalesLeadVehicleLineItem.CurrentDistanceMeasure 
+  MV      CR325 20070221    Added: SalesLeadVehicleLineItem.SalesStockNumberString, VehicleSegmentCode 
+  MV      CR349 20070307    Changed: "NewSalesFinancing" to "Financing"
+  DC      MT584 20080129    Added: OriginalInServiceDate and OriginalInServiceDistanceMeasure to SalesLeadVehicleLineItem
+ -->
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns="http://www.starstandard.org/STAR/5" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="SalesLead" type="SalesLeadType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Sales Lead
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SalesLeadHeader" type="SalesLeadHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Sales Lead Header
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SalesLeadDetail" type="SalesLeadDetailType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Sales Lead Detail
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="SalesLeadType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 5.0 - Draft</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 4.0, STAR approved 04/20/2005; effective date 07/04/2005</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 3.0, STAR approved 05/07/2004; effective date 07/04/2004</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.1 STAR approved 04/09/2003; OAGI approved 8/16/2002 effective date 07/04/2003</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.0, STAR approved 7/31/2002; OAGI approved 8/16/2002; effective date 1/01/2003</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="SalesLeadHeader" />
+            <xsd:element ref="SalesLeadDetail" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="SalesLeadHeaderType">
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+                <xsd:sequence>
+                    <xsd:element ref="ExpirationDate" minOccurs="0" />
+                    <xsd:element ref="PurchaseEarliestDate" minOccurs="0" />
+                    <xsd:element ref="PurchaseLatestDate" minOccurs="0" />
+                    <xsd:element ref="LeadInterestCode" minOccurs="0" />
+                    <xsd:element ref="SaleClassCode" minOccurs="0" />
+                    <xsd:element ref="LeadTypeCode" minOccurs="0" />
+                    <xsd:element ref="LeadReceiptCode" minOccurs="0" />
+                    <xsd:element ref="LeadSourceCode" minOccurs="0" />
+                    <xsd:element ref="DiscountEligibility" minOccurs="0" />
+                    <xsd:element ref="CustomerComments" minOccurs="0" />
+                    <xsd:element ref="LeadComments" minOccurs="0" />
+                    <xsd:element ref="CustomerProspect" minOccurs="0"/>
+                    <xsd:element ref="ReceivingDealerParty" minOccurs="0" />
+                    <xsd:element ref="ProviderParty" minOccurs="0" />
+                    <xsd:element ref="Marketing" minOccurs="0" maxOccurs="unbounded" />
+                    <xsd:element ref="LeadCreationDateTime" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="PreferredManufacturerCode" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element ref="LeadPreference" minOccurs="0" maxOccurs="1"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+<!--    <xsd:complexType name="SalesLeadDetailBaseType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:appinfo>Is derived from oa:SaleLeadDetail by restriction.</xsd:appinfo>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Deprecated: Delete</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="LeadStatus" />
+            <xsd:element ref="Preference" minOccurs="0" />
+            <xsd:element name="Financing" type="NewSalesFinancingType" minOccurs="0" />
+            <xsd:element name="Appointment" type="AppointmentType" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="SalesActivity" type="SalesActivityType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType> -->
+    <xsd:complexType name="SalesLeadDetailType">
+        <xsd:sequence>
+            <xsd:element ref="LeadStatus" minOccurs="0" />
+            <xsd:element ref="Preference" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="Financing" minOccurs="0" />
+            <xsd:element ref="Appointment" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="SalesActivity" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="LeadRequestTypeString" minOccurs="0" />
+            <xsd:element ref="LeadIndustryTypeCode" minOccurs="0" />
+            <xsd:element ref="SalesLeadLineItem" minOccurs="0"/>
+            <xsd:element ref="CompetingSalesLeadLineItem" minOccurs="0"/>
+            <xsd:element ref="LeadDepartment" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="SalesLeadMarineLineItem" type="SalesLeadMarineLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                A grouping of Marine Line Items
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="SalesLeadMarineLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">The detail information regarding marine industry related components.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="SalesLeadBoatLineItem" minOccurs="0" />
+            <xsd:element ref="SalesLeadEngineLineItem" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="SalesLeadTrailerLineItem" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:element name="SalesLeadVehicleLineItem" type="SalesLeadVehicleLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Detail information regarding a vehicle for a particular sales lead.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="SalesLeadVehicleLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Detail information regarding a vehicle for a particular sales lead.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="PricingABIE" minOccurs="0"/>
+            <xsd:element ref="Tax" minOccurs="0"/>
+            <xsd:element ref="LeadDealerParty" minOccurs="0"/>
+            <xsd:element ref="ImageAttachmentExtended" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="AdditionalMedia" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="Inspection" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="LastModificationDate" minOccurs="0"/>
+            <xsd:element ref="FinancingAvailableIndicator" minOccurs="0"/>
+            <xsd:element ref="CertificationGroup" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="ItemReceivedDate" minOccurs="0"/>
+            <xsd:element ref="Location" minOccurs="0"/>
+            <xsd:element ref="SalesLeadVehicle" minOccurs="0"/> 
+            <xsd:element ref="PreferenceDetail" minOccurs="0"/>
+            <xsd:element ref="AdditionalDetailDescription" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="CurrentDistanceMeasure" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="SalesStockNumberString" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="VehicleSegmentCode" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="OriginalInServiceDate" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="OriginalInServiceDistanceMeasure" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>        
+    </xsd:complexType>
+    
+    <xsd:element name="SalesLeadLineItem" type="SalesLeadLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">
+                The detail information for a Sales Lead Line Item
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="CompetingSalesLeadLineItem" type="SalesLeadLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org">
+                The detail information for a Competing Sales Lead Line Item
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    
+    <xsd:complexType name="SalesLeadLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                The detail information for a Sales Lead Line Item
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="SalesLeadVehicleLineItem" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="SalesLeadMarineLineItem" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="SalesLeadBoatLineItem" type="SalesLeadBoatLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Detail information regarding a boat for a particular sales lead.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="SalesLeadBoatLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Detail information regarding a boat for a particular sales lead.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="PricingABIE" minOccurs="0"/>
+            <xsd:element ref="Tax" minOccurs="0"/>
+            <xsd:element ref="LeadDealerParty" minOccurs="0"/>
+            <xsd:element ref="ImageAttachmentExtended" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="AdditionalMedia" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="Inspection" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="LastModificationDate" minOccurs="0"/>
+            <xsd:element ref="FinancingAvailableIndicator" minOccurs="0"/>
+            <xsd:element ref="CertificationGroup" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="ItemReceivedDate" minOccurs="0"/>
+            <xsd:element ref="Location" minOccurs="0"/>
+            <xsd:element ref="SalesLeadBoat" minOccurs="0"/>
+            <xsd:element ref="SalesLeadEngineLineItem" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="SalesLeadTrailerLineItem" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="PreferenceDetail" minOccurs="0"/>
+            <xsd:element ref="AdditionalDetailDescription" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>        
+    </xsd:complexType>
+
+    <xsd:element name="SalesLeadEngineLineItem" type="SalesLeadEngineLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Detail information regarding an engine for a particular sales lead.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+
+    <xsd:complexType name="SalesLeadEngineLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Detail information regarding an engine for a particular sales lead.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="PricingABIE" minOccurs="0"/>
+            <xsd:element ref="Tax" minOccurs="0"/>
+            <xsd:element ref="LeadDealerParty" minOccurs="0"/>
+            <xsd:element ref="ImageAttachmentExtended" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="AdditionalMedia" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="Inspection" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="LastModificationDate" minOccurs="0"/>
+            <xsd:element ref="FinancingAvailableIndicator" minOccurs="0"/>
+            <xsd:element ref="CertificationGroup" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="ItemReceivedDate" minOccurs="0"/>
+            <xsd:element ref="Location" minOccurs="0"/>
+            <xsd:element ref="SalesLeadEngine" minOccurs="0"/>  
+            <xsd:element ref="PreferenceDetail" minOccurs="0"/>
+            <xsd:element ref="AdditionalDetailDescription" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>        
+    </xsd:complexType>
+    
+    <xsd:element name="SalesLeadTrailerLineItem" type="SalesLeadTrailerLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Detail information regarding a trailer for a particular sales lead.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="SalesLeadTrailerLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Detail information regarding a trailer for a particular sales lead.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="PricingABIE" minOccurs="0"/>
+            <xsd:element ref="Tax" minOccurs="0"/>
+            <xsd:element ref="LeadDealerParty" minOccurs="0"/>
+            <xsd:element ref="ImageAttachmentExtended" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="AdditionalMedia" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="Inspection" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="LastModificationDate" minOccurs="0"/>
+            <xsd:element ref="FinancingAvailableIndicator" minOccurs="0"/>
+            <xsd:element ref="CertificationGroup" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="ItemReceivedDate" minOccurs="0"/>
+            <xsd:element ref="Location" minOccurs="0"/>
+            <xsd:element ref="SalesLeadTrailer" minOccurs="0"/>  
+            <xsd:element ref="PreferenceDetail" minOccurs="0"/>
+            <xsd:element ref="AdditionalDetailDescription" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>        
+    </xsd:complexType>
+    
+</xsd:schema>

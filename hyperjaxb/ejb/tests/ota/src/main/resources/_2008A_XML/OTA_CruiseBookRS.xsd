@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="2.004" id="OTA2008A">
+	<xs:include schemaLocation="OTA_CruiseCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA 
+specification are made available according to the terms defined by the OTA 
+License Agreement at 
+http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_CruiseBookRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+The book response message contains booking information 
+for a given sailing with a specific mode of transportation/gateway city pair and currency and for a selected fare/category pair. This message contains similar information to a standard airline CRS or 
+GDS sailing availability response message.			
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType">
+						<xs:annotation>
+							<xs:documentation xml:lang="en"> Standard way to indicate successful 
+processing of an OTA message. Returning an empty element of this type indicates 
+success.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en"> Standard way to indicate successful 
+processing of an OTA message, but one in which warnings are 
+generated.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ReservationID" minOccurs="0" maxOccurs="2">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies the reservation control information or the guest's booking ID in modification mode (e.g. PNR Record Locator and/or Vendor Confirmation Number).</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="UniqueID_Type">
+									<xs:attributeGroup ref="ReservationStatusGroup"/>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="SailingInfo" type="SailingCategoryInfoType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies the selected category to book.Contains information related to the selected sailing. Typically the selected sailing is one of the sailings returned in the previous sailing availability response. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="PolicyInfo" type="ParagraphType" minOccurs="0" maxOccurs="5">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">May be used to provide policy information regarding the booking.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="BookingPayment" type="CruiseBookingInfoType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Specifies pricing and payment information about the booking.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en"> A collection of errors that occurred during 
+the processing of a message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The standard attributes that appear on the root element for all OTA payloads. </xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

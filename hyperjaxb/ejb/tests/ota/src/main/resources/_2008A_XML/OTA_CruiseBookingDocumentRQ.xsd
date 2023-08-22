@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.002" id="OTA2008A">
+	<xs:include schemaLocation="OTA_CruiseCommonTypes.xsd"/>
+	
+	
+	
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA 
+specification are made available according to the terms defined by the OTA 
+License Agreement at 
+http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_CruiseBookingDocumentRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This message requests booking related documents and the delivery method for a given Reservation ID.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Point of sale 
+object.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ReservationID" type="UniqueID_Type">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Contains the Reservation ID of a booking.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CruiseDocument" maxOccurs="9">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The document and the delivery method of the request.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="DocumentHandlingType">
+								<xs:sequence>
+									<xs:element name="RecipientInfo" type="ContactPersonType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Provides the address details for a recipient. The address is only sent when different than that of the reservation. </xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The standard attributes that appear on the root element for all OTA payloads. </xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

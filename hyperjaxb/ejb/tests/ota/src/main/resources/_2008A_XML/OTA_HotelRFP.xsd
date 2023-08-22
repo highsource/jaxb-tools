@@ -1,0 +1,1952 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="5.000" id="OTA2003A2008A">
+	<xs:include schemaLocation="OTA_HotelContentDescription.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:attributeGroup name="AdditionalInfoGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Provides details regarding additional information.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="AddtionalInfoCode" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Indicates a specific type of attachment.  Refer to OTA Code list Additional Info Code (AIC).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DeliveryMethodCode" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Indicates the type of delivery method available for this attachment.  Refer to OTA Codelist Distribution Type (DTB). </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="BudgetInclusiveGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Details regarding costs included in a budget.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="IncludesTaxInd" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">If true, tax is included in the budget. If false, the budget does not include taxes.  Apex added</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="IncludesServiceFeesInd" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">If true, service fees are included in the budget. If false, the budget does not include service fees.  Apex added</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="IncludesGratuityInd" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">If true, gratuity is included in the budget. If false, the budget does not include gratuity.  Apex added</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="EventStatisticsGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Provides statistics regarding an event.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="AttendeeQuantity" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The number of people attending the previous event.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="RoomBlockQuantity" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The number of rooms previously requested.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="RoomPickupQuantity" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The number of rooms actualized by the previous event.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="TotalGuestRoomAmount" type="Money" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The monetary value expended for the previous event on rooms.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="TotalFoodAndBevAmount" type="Money" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The monetary value expended for the previous event on food and beverage, etc.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="TotalMeetingRoomRentalAmount" type="Money" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The monetary value expended for the previous event on meeting space.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="TotalAudioVisualRentalAmount" type="Money" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The monetary value expended for the previous event on audio visual equipment rental.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="TotalMiscAmount" type="Money" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The monetary value expended for the previous event on all other goods and services.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:simpleType name="FrequencyType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Identifies the frequency of an occurrence.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="OneTimeOnly"/>
+			<xs:enumeration value="Biennial"/>
+			<xs:enumeration value="Annual"/>
+			<xs:enumeration value="Semi-annual"/>
+			<xs:enumeration value="Quarterly"/>
+			<xs:enumeration value="Monthly"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:attributeGroup name="ProposalGroup">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Details regarding a proposal.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="ResponseDue" type="DateOrDateTimeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The date the requestor requires a response/proposal.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="DecisionDue" type="DateOrDateTimeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The date the requestor intends to decide on a particular site.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ResponseFormat" type="OTA_CodeType" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The format of the response the requestor would like to receive the response (e.g. fax, e-mail, xml). Refer to OTA Code List Distribution Type (DTB).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ResponseLanguage" type="xs:language" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The response language the requestor would like to receive the response (e.g. English, Spanish, French).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="PreliminaryCutIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">If true, indicates a preliminary cut typically with a second review of finalists. If false, no preliminary cut.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="PreliminaryCutDate" type="xs:date" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines the date that the preliminary cut will be made.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="RFP_DistributionDate" type="xs:date" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Date the RFP or RFPs were distributed.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="RFP_PublishedDate" type="xs:date" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Date the RFP or RFPs were published.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="RFP_CreationDate" type="xs:date" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">The date the RFP was created.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:complexType name="AccountSpecificInformationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This describes data that is specific to a single account.   </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AccountSpecificRateInfo" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">It describes specific criteria upon which the client rate is based.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="RoomNightTargetIndicator" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">If true indicates that the client rate is based on a minimum room night target for next year's program.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="RoomNightTargetQuantity" type="xs:nonNegativeInteger" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Defines minimum room nights.
+</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="RoomNightProductionQuantity" type="xs:nonNegativeInteger" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Allows you to pass the number of room nights previously produced.  </xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attributeGroup ref="DateTimeSpanGroup">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">These are the dates to which this proposal applies.</xs:documentation>
+						</xs:annotation>
+					</xs:attributeGroup>
+					<xs:attribute name="SubsidiaryEmpRateIndicator" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This means the account specific rate is available to that organization's subsidiary employees.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="PersonalUseRateIndicator" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This means the account specific rate is available to that organization's employees for personal use.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ContractorsRateIndicator" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This means the account specific rate is available to that organization's contractors or consultants.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="RetireeRateIndicator" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This means the account specific rate is available to that organization's retirees.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RoomTypes" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A Collection of room types.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RoomType" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Defines each room type included in Client negotiated rate. </xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="RoomTypeType">
+										<xs:sequence>
+											<xs:element name="RoomRateInfos" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">A collection of room rate information.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="RoomRateInfo" maxOccurs="unbounded">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Descibes room rate information.  This may include information on the negotiated rate as well as inforrmation on other rates offered by the hotel.</xs:documentation>
+															</xs:annotation>
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="Rates" type="RateType">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">
+																	Individual rate amount. This rate is valid for a range of number of occupants and an occupant type.
+																	</xs:documentation>
+																		</xs:annotation>
+																	</xs:element>
+																	<xs:element name="RoomRateDescription" type="FormattedTextTextType" minOccurs="0">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">Provides textual description of the room rate.</xs:documentation>
+																		</xs:annotation>
+																	</xs:element>
+																	<xs:element name="Commission" type="CommissionType" minOccurs="0" maxOccurs="unbounded">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">
+Commission associated with the RatePlan.</xs:documentation>
+																		</xs:annotation>
+																	</xs:element>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="BlackoutDates" type="BlackoutDateType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of blackout dates.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ContactInfos" type="ContactInfosType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the contacts related to the RFP.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Comments" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Collection of supplemental information.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Comment" type="ParagraphType" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Provides additional account specific information (e.g. notes about all rates or questions specific to this account).</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ContractAgreementIndicator" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">This indicates the information contained in this message is correct and binding.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="EventChargeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Provides details for specific event charges.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EventCharge" maxOccurs="999">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A specific charge associated to an event.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Taxes" type="TaxesType">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Taxes associated to this event charge.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="EventCharge" type="OTA_CodeType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This describes charges related to an event (e.g. set-up; room rental; break-out; breakfast; lunch; dinner; miscellaneous). Refer to OTA Code List Event Charge (EVT).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="PrimaryChargeType" type="OTA_CodeType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This is used to indicate the basis of the charge (e.g. per person). Refer to OTA Code List Charge Type (CHG).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="SecondaryChargeType" type="OTA_CodeType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This is used in conjunction with the PrimaryChargeType to indicate the basis of the charge (e.g. per person, per day, where per person is the PrimaryChargeType and per day is the SecondaryChargeType). Refer to OTA Code List Charge Type (CHG).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="AppliedPercentageEventCharge" type="OTA_CodeType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">This is used when MinChargeAmount and MaxChargeAmount are percentages and it refers to what the percentage is applied. For example, the EventCharge may be gratuity, the AppliedPercentageEventCharge is Food and Beverage, and the MinChargeAmount is 15%, indicating the 15% gratutity applies to all Food and Beverage charges. Refer to OTA Code List Event Charge (EVT).</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MinChargeAmount" type="MoneyOrPercentageType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The minimum possible amount or percent as related to the EventCharge.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MaxChargeAmount" type="MoneyOrPercentageType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The maximum possible charge for the event in the requested date range.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="AverageChargeAmount" type="MoneyOrPercentageType" use="optional"/>
+					<xs:attributeGroup ref="CurrencyCodeGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Comment" type="ParagraphType" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Comments related to this specific event charge.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RFP_RequestSegmentsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Provides request data for an event.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RFP_RequestSegment" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This is the request data for an event, whether it be a block of rooms and/or meeting space.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ProposalSpecification" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Used to provide details on the proposal such as the key factors that will play a role in the proposal evaluation.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="KeyDecisionFactors" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">A collection of key decision factors used in the proposal evaluation.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="KeyDecisionFactor" maxOccurs="unbounded">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Defines what each key decision factor is and how important it is in the proposal evaluation.</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:attribute name="Code" type="OTA_CodeType" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Used to define the key decision factor. Refer to OTA Code List Key Decision Factors.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attribute name="Ranking" type="xs:integer" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Defines a ranking scale based on integers; meaning and scale is based on individual implementations. Typically 1 would indicate most important.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Presentation" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Used to provide information on where and when the sites should present their proposals to the meeting planners.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Location" type="LocationGeneralType" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Location for which the proposal will be presented.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+											<xs:attributeGroup ref="DateTimeSpanGroup">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Indicates a date or date range in which the proposal should be presented.</xs:documentation>
+												</xs:annotation>
+											</xs:attributeGroup>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Comments" type="ParagraphType" minOccurs="0" maxOccurs="5">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Comments regarding the proposal itself.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+								<xs:attributeGroup ref="ProposalGroup">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Provides information regarding the requirements of a specific proposal.</xs:documentation>
+									</xs:annotation>
+								</xs:attributeGroup>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Profiles" type="ProfilesType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This is who is submitting the request.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Dates">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">A collection of dates which allows you  to request preferred and/or alternate dates.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Date" maxOccurs="99">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Specifies a
+specific date or date range.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="DateTimeSpanType">
+													<xs:attribute name="DateType" use="optional">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">This is the type of date for a block of rooms and/or meeting space.</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:NMTOKEN">
+																<xs:enumeration value="Primary">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">This is the preferred dates of the event.</xs:documentation>
+																	</xs:annotation>
+																</xs:enumeration>
+																<xs:enumeration value="Alternate">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">Acceptable dates if primary cannot be accommodated.</xs:documentation>
+																	</xs:annotation>
+																</xs:enumeration>
+																<xs:enumeration value="Published">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">APEX added.
+
+Date when official functions begin. This excludes the Set-up and Breakdown dates, time and duration.</xs:documentation>
+																	</xs:annotation>
+																</xs:enumeration>
+																<xs:enumeration value="Set-up">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">Defines the duration and dates needed for set-up.</xs:documentation>
+																	</xs:annotation>
+																</xs:enumeration>
+																<xs:enumeration value="Breakdown">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">Defines the duration and dates needed for breakdown.</xs:documentation>
+																	</xs:annotation>
+																</xs:enumeration>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:attribute>
+													<xs:attribute name="PromotionRPH" type="RPH_Type" use="optional">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">This reference place holder refers to the promotion date range. This is used to link a particular promotion to a particular date range.</xs:documentation>
+														</xs:annotation>
+													</xs:attribute>
+												</xs:extension>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Comments" type="ParagraphType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Comments regarding the set of date ranges as a whole.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Sites" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">A collection of sites for which the request is being submitted (e.g. a hotel, national sales office, convention center). </xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Site" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Specifies an individual destination of the request.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="ContactInfos" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">A collection of contacts (e.g. a catering manager, national sales office, management company, franchisee, etc.)</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="ContactInfo" type="ContactPersonType" maxOccurs="99">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">This is who recieves the requested information.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="Promotions" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">A collection of promotions that have similar date criteria as the meeting dates. </xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="Promotion" maxOccurs="99">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">A promotion that has similar date criteria as the meeting dates.</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="AvailableDateRange">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">This is the date range the rooms are available at the hotel.</xs:documentation>
+																			</xs:annotation>
+																			<xs:complexType>
+																				<xs:complexContent>
+																					<xs:extension base="DateTimeSpanType">
+																						<xs:attribute name="DateRPH" type="RPH_Type" use="optional">
+																							<xs:annotation>
+																								<xs:documentation xml:lang="en">This reference place holder refers back to the applicable date range. This is used to link a particular promotion to a particular date range.</xs:documentation>
+																							</xs:annotation>
+																						</xs:attribute>
+																					</xs:extension>
+																				</xs:complexContent>
+																			</xs:complexType>
+																		</xs:element>
+																		<xs:element name="OfferedDateRange" type="DateTimeSpanType">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">This is the date range for which the promotion is offered.</xs:documentation>
+																			</xs:annotation>
+																		</xs:element>
+																		<xs:element name="Description" type="ParagraphType">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">Used to describe a particular promotion.</xs:documentation>
+																			</xs:annotation>
+																		</xs:element>
+																	</xs:sequence>
+																	<xs:attribute name="UserAcknowledgementIndicator" type="xs:boolean" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">When true this notifies the receiving application that a user is requesting this promotion (e.g. internal rebates) if available.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																	<xs:attribute name="PromotionCode" type="StringLength1to16" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">A published code defining a specific site promotion that is proprietary to the organization.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																	<xs:attribute name="AdvertisedRoomQuantity" type="xs:nonNegativeInteger" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">This is the number of advertised rooms available for this promotion.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																	<xs:attribute name="AdvertisedHighAmount" type="Money" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">If a rate range is advertised this is the high end.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																	<xs:attribute name="AdvertisedLowAmount" type="Money" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">If a rate range is advertised this is the low end. If there is not a range, AdvertisedLowAmount should be used.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																	<xs:attributeGroup ref="CurrencyCodeGroup">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">This applies to the high and low advertised amounts to indicate the currency type.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attributeGroup>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="AdditionalInfos" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">A collection of additional information requests.</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="AdditionalInfo" maxOccurs="99">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">A request for additional information and the required delivery method.</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:attributeGroup ref="AdditionalInfoGroup">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">Provides detail regarding an attachment.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attributeGroup>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+											<xs:attributeGroup ref="HotelReferenceGroup">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The hotel reference identifies a hotel or group of hotels to receive the request.</xs:documentation>
+												</xs:annotation>
+											</xs:attributeGroup>
+											<xs:attribute name="ApproxSiteInspectionDate" type="xs:gYearMonth" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Used to provide an approximate date for a site inspection.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="SiteInspectionAttendeeQuantity" type="xs:nonNegativeInteger" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The number of antipicated attendees for the site inspection.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="RoomBlock" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This is information pertaining to room requirements for this request.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="BudgetedRoomRate" minOccurs="0" maxOccurs="5">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">A general indication of the planner's budget for individual room nights and/or delegate rates.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attributeGroup ref="CurrencyAmountGroup"/>
+											<xs:attribute name="TotalRoomNightQuantity" type="xs:nonNegativeInteger" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Number of rooms requiring this rate. </xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="RequestedRateType" type="OTA_CodeType" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Refer to OTA code list Rate Plan Type (RPT). APEX added.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attributeGroup ref="BudgetInclusiveGroup"/>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="ReservationMethod" minOccurs="0" maxOccurs="5">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Contains information regarding the reservation method.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="Code" type="OTA_CodeType" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Identifies the type of reservation method to be used. Refer to OTA Code list Reservation Method Code (RMC).</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="StayDays" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">A collection of multiple StayDays.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="StayDay" maxOccurs="unbounded">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">A container for the DayNumber.</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="StayDayRooms" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">A collection of multiple StayDayRooms.</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="StayDayRoom" maxOccurs="unbounded">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">A container for the room requirements data.</xs:documentation>
+																			</xs:annotation>
+																			<xs:complexType>
+																				<xs:sequence>
+																					<xs:element name="Comment" type="ParagraphType" minOccurs="0"/>
+																				</xs:sequence>
+																				<xs:attribute name="RoomTypeRequirement" type="StringLength1to64" use="optional">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">This is where a requester specifies the room type they wish to procure (e.g. king, double, double double, accessible). This is NOT an OTA codelist due to the infinite number of possible room types.</xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																				<xs:attribute name="NumberOfUnits" type="xs:nonNegativeInteger" use="optional">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">This is the required number of rooms for a particular day for a particular room type.</xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																				<xs:attributeGroup ref="CurrencyAmountGroup"/>
+																			</xs:complexType>
+																		</xs:element>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+														<xs:attribute name="DayNumber" type="xs:positiveInteger" use="required">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">The number which indicates the day of the room requirements (e.g. 1, 2, 3, etc).</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attribute name="GuestQuantity" type="xs:nonNegativeInteger" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Total number of guests for this day.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attribute name="TotalNumberOfUnits" type="xs:nonNegativeInteger" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Total number of rooms needed per day.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+											<xs:attribute name="FirstStayDayOfWeek" type="DayOfWeekType" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">This is used to identify the first day of the room block.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Comments" type="ParagraphType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">An open field to comment on the room block.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="TotalRoomNightQuantity" type="xs:nonNegativeInteger" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Total number of room nights needed for the entire event. </xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="PeakRoomNightQuantity" type="xs:nonNegativeInteger" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Total number of rooms needed on the peak night. APEX add. Sandy to look for potential reuse.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="ConcessionsIndicator" type="xs:boolean" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">If true, used to indicate a rebate, assessment or commision exists. If false, rebates, assessments or commissions do not exist for this RFP. </xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="EventBlock" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This is information pertaining to the event requirements for this request.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="FunctionSpaceReq" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Used to define requirements for function space for the event.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attribute name="LargestRoomSpace" type="xs:nonNegativeInteger" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The minimum size required for the largest function space. </xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="MeetingRoomFormatCode" type="OTA_CodeType" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The code for the format of the meeting that will take place in the largest room space (as denoted in the LargestRoomSpaceAttribute), such as U-shape, banquet, conference style, etc.  Refer to OTA Code List Meeting Room Format Code (MRF).</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="MinOccupancy" type="xs:nonNegativeInteger" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Describes the minimum occupancy required for the largest function based on the MeetingRoomFormatCode. APEX added.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="CeilingHeight" type="xs:decimal" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The minimum height required for the ceiling in the largest function space. APEX added.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="UnitOfMeasure" type="StringLength1to16" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">This is the standard unit of measure for the largest function space required (e.g. it could be generic such as metric or imperial or specific such as inches, feet, yards, miles, millimeters, centimeters, meters, kilometers). </xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="MinBreakoutRoomQuantity" type="xs:nonNegativeInteger" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Minimum number of breakout rooms required simultaneously.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="EventBudget" minOccurs="0" maxOccurs="5">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">A general indication of the planner's budget for the event.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attributeGroup ref="CurrencyAmountGroup"/>
+											<xs:attribute name="BudgetType" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Used to indicate the specific budget being described for the event. Apex added</xs:documentation>
+												</xs:annotation>
+												<xs:simpleType>
+													<xs:restriction base="xs:NMTOKEN">
+														<xs:enumeration value="Total">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">The overall budget for the entire event.</xs:documentation>
+															</xs:annotation>
+														</xs:enumeration>
+														<xs:enumeration value="FoodAndBeverage">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Indicates budget for food and beverage only.</xs:documentation>
+															</xs:annotation>
+														</xs:enumeration>
+														<xs:enumeration value="AudioVisual">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Indicates budget for audio visual only.</xs:documentation>
+															</xs:annotation>
+														</xs:enumeration>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+											<xs:attributeGroup ref="BudgetInclusiveGroup"/>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="EventDays" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">A collection of multiple EventDays.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="EventDay" maxOccurs="unbounded">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="EventDayFunctions" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">A collection of multiple EventDayFunctions.</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="EventDayFunction" maxOccurs="unbounded">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">A container for the events requirements data.</xs:documentation>
+																			</xs:annotation>
+																			<xs:complexType>
+																				<xs:sequence minOccurs="0">
+																					<xs:element name="AudioVisualReqs" minOccurs="0">
+																						<xs:annotation>
+																							<xs:documentation xml:lang="en">A collection of audio visual needs for the event.  APEX added</xs:documentation>
+																						</xs:annotation>
+																						<xs:complexType>
+																							<xs:sequence>
+																								<xs:element name="AudioVisualReq" maxOccurs="unbounded">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="en">Defines a specific audio visual need for the event.</xs:documentation>
+																									</xs:annotation>
+																									<xs:complexType>
+																										<xs:sequence>
+																											<xs:element name="Comments" type="ParagraphType"/>
+																										</xs:sequence>
+																										<xs:attribute name="Code" type="OTA_CodeType" use="optional">
+																											<xs:annotation>
+																												<xs:documentation xml:lang="en">Refer to OTA Code Table Meeting Room code (MRC).</xs:documentation>
+																											</xs:annotation>
+																										</xs:attribute>
+																										<xs:attribute name="AudioVisualPref" type="PreferLevelType" use="optional">
+																											<xs:annotation>
+																												<xs:documentation xml:lang="en">Describes whether the audio visual request is preferred or required.</xs:documentation>
+																											</xs:annotation>
+																										</xs:attribute>
+																										<xs:attribute name="Quantity" type="xs:nonNegativeInteger" use="optional">
+																											<xs:annotation>
+																												<xs:documentation xml:lang="en">Describes the number of audio visual units as described by the code.</xs:documentation>
+																											</xs:annotation>
+																										</xs:attribute>
+																									</xs:complexType>
+																								</xs:element>
+																							</xs:sequence>
+																						</xs:complexType>
+																					</xs:element>
+																					<xs:element name="Comments" type="ParagraphType" minOccurs="0"/>
+																				</xs:sequence>
+																				<xs:attribute name="EventName" type="StringLength1to64" use="required">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">The name of the event.</xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																				<xs:attribute name="EventType" type="OTA_CodeType">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">Indicates the type of event being requested (e.g. breakfast meeting or reception). Refer to OTA Code table Event Charge (EVT).</xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																				<xs:attribute name="StartTime" type="xs:time" use="required">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">The time the event is scheduled to begin.</xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																				<xs:attribute name="EndTime" type="xs:time" use="required">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">The time the event is scheduled to finish.</xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																				<xs:attributeGroup ref="UnitsOfMeasureGroup">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">This identifies the space requirement.</xs:documentation>
+																					</xs:annotation>
+																				</xs:attributeGroup>
+																				<xs:attribute name="AttendeeQuantity" type="xs:nonNegativeInteger" use="optional">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">The number of people attending this event.</xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																				<xs:attribute name="RoomSetup" type="OTA_CodeType" use="optional">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">Indicates the arrangement of the meeting space (e.g. conference or banquet style). Refer to OTA Code List Meeting Room Format Code (MRF).</xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																				<xs:attribute name="TwentyFourHourHold" type="xs:boolean" use="optional">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">Indicates a room is held on a 24-hour basis (i.e., ensures a room set-up is not disturbed).</xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																			</xs:complexType>
+																		</xs:element>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+														<xs:attribute name="DayNumber" type="xs:positiveInteger" use="required">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">The number which indicates the day of the event (e.g. 1, 2, 3, etc).</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+											<xs:attribute name="FirstEventDayOfWeek" type="DayOfWeekType" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">This is used to identify the first day of the event block.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Exhibition" minOccurs="0" maxOccurs="5">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Describes an event at which products and services are displayed, typically the primary activity of attendees is visiting exhibits on the show floor.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="ExhibitDetail" minOccurs="0" maxOccurs="5">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Describes display areas constructed to showcase products, services or to convey a message. </xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:attribute name="ExhibitTypeCode" type="OTA_CodeType" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Type of booths for the entire exhibition. Refer to OTA Code Table Exhibit Type (EXH).</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="Comments" type="ParagraphType" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">An open field to comment on the exhibition.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+											<xs:attribute name="Type" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Used to designate the exhibition as public, private or public/private.</xs:documentation>
+												</xs:annotation>
+												<xs:simpleType>
+													<xs:restriction base="xs:NMTOKEN">
+														<xs:enumeration value="Public">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Indicates the exhibition is public.</xs:documentation>
+															</xs:annotation>
+														</xs:enumeration>
+														<xs:enumeration value="Private">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Indicates the exhibition is private.</xs:documentation>
+															</xs:annotation>
+														</xs:enumeration>
+														<xs:enumeration value="PublicPrivate">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Portons of the exhibition are public and portions of the exhibition are private.</xs:documentation>
+															</xs:annotation>
+														</xs:enumeration>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+											<xs:attribute name="KitDistributionCode" type="OTA_CodeType" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Describes how an exhibitor kit will be distributed (e.g. e-mail, fax). Refer to OTA Code table Distribution Type (DTB)</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="KitFormatCode" type="OTA_CodeType" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Describes the format of the exhibitor kit (e.g. hardcopy, CDROM). Refer to OTA Code table Format (FMT)</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="GeneralServiceContractorInd" type="xs:boolean" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">If true, a General Service Contractor (GSC) has been selected and details can be found under ProfileInfo. If false, no GSC has been selected.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="GrossExhibitionSpace" type="xs:nonNegativeInteger" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Defines the gross amount of exhibition space required for the event.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="NetExhibitionSpace" type="xs:nonNegativeInteger" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Defines the net amount of exhibition space required for the event.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="GrossUnitOfMeasure" type="StringLength1to16" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">This is the standard unit of measure (e.g. square feet, square meters). </xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="NetUnitOfMeasure" type="StringLength1to16" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">This is the standard unit of measure (e.g. square feet, square meters). </xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="ExhibitQuantity" type="xs:nonNegativeInteger" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The number of exhibits expected.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="CompanyQuantity" type="xs:nonNegativeInteger" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The number of exhibiting companies expected.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="SecuredAreaIndicator" type="xs:boolean" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">If true, indicates the area needs to be secured. If false, the area does not need to be secured.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Comments" type="ParagraphType" minOccurs="0" maxOccurs="10">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">An open field to comment on the event block.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="Type" type="OTA_CodeType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Specifies the type of event. Refer to OTA Code table Event Type Code List.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="MarketSegmentCode" type="OTA_CodeType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Used to identify the market segment for the meeting. Refer to OTA Code Table Inventory Block Type (IBT). </xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="DefiniteIndicator" type="xs:boolean" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">If true, the event is definite (i.e., the event is budgeted). If false, the event is potential (i.e., the event is not yet budgeted).</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Frequency" type="FrequencyType" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Used to indicate the frequency of this event.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="ExpectedTotalAttendanceQuantity" type="xs:nonNegativeInteger" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">This is the expected total attendance at the event.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="FirstTimeIndicator" type="xs:boolean" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">If true, indicates this is a first time event. If false, indicates this event has taken place previously.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="FutureOpenDatesIndicator" type="xs:boolean" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">If true, future open dates exist for this event. If false, no future dates exist for this event.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="ExhibitionIncludedIndicator" type="xs:boolean" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">When true, indicates this event will include an exhibition component. When false, an exhibition will not be a part of this event.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="EventName" type="xs:string" use="optional">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">This is used to identify the event in the request.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Preferences" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Collection of preferences or requirements for the RFP.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Preference" maxOccurs="5">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Describes various preferences or requirements for the RFP. </xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="LocationCategories" minOccurs="0" maxOccurs="5">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Used to define requirements or preferences in location for the event,</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="Location" type="LocationGeneralType" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">Preferred event location.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="Category" minOccurs="0" maxOccurs="99">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">Used to define the preferences or requirements regarding an event location.</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:simpleContent>
+																		<xs:extension base="FormattedTextTextType">
+																			<xs:attribute name="LocationCategoryCode" type="OTA_CodeType" use="optional">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="en">Refer to OTA Code table Location Category Codes (LOC).</xs:documentation>
+																				</xs:annotation>
+																			</xs:attribute>
+																			<xs:attributeGroup ref="PreferLevelGroup">
+																				<xs:annotation>
+																					<xs:documentation xml:lang="en">Describes whether the location is preferred, required or there is no preference.</xs:documentation>
+																				</xs:annotation>
+																			</xs:attributeGroup>
+																		</xs:extension>
+																	</xs:simpleContent>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="Recreations" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">A collection of recreation preferences.</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="Recreation" maxOccurs="unbounded">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">Used to define recreation preferences for the event site.</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:attribute name="Code" type="OTA_CodeType" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">Defines a specific recreation .  Used in conjuction with the Recreation Pref attribute to state whether the recreation is preferred or required at the event site.  Refer to OTA Code list Recreation Srvc Type (RST).</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																	<xs:attributeGroup ref="PreferLevelGroup">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">Describes whether the recreation is preferred or required.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attributeGroup>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="Properties" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">A collection of preferred properties.</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="Property" maxOccurs="99">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">Used to define the preferred type of property for the event.</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:attribute name="PropertyTypeCode" type="OTA_CodeType" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">Used to indicate a property type. Refer to OTA Code List Property Class Type (PCT).</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																	<xs:attributeGroup ref="PreferLevelGroup">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">Used to specify whether the Property Type is preferred or required.</xs:documentation>
+																		</xs:annotation>
+																	</xs:attributeGroup>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="Comments" type="ParagraphType" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Used to further define event preference information.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Histories" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">A collection of individual Histories.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="History" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Data pertaining to previous instances of the same or similar event in the past.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="UniqueID" type="UniqueID_Type" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">This is used to identify the previous room block and/or meeting space information.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="ContactInfos" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">A collection of previous contacts (e.g. a catering manager, national sales office, management company, franchisee, etc.)</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="ContactInfo" type="ContactPersonType" maxOccurs="99">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">This is the previous contact for the past event. This information would be useful to make follow-up requests of information.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="DaySummaries" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">A collection of DaySummaries.</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="DaySummary" maxOccurs="unbounded">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">A container for the previous event detail data.</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:attribute name="DayNumber" type="xs:positiveInteger" use="optional">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">The number which indicates the day of the previous room requirements and/or previous event (e.g. 1, 2, 3, etc).</xs:documentation>
+																		</xs:annotation>
+																	</xs:attribute>
+																	<xs:attributeGroup ref="CurrencyCodeGroup"/>
+																	<xs:attributeGroup ref="EventStatisticsGroup">
+																		<xs:annotation>
+																			<xs:documentation xml:lang="en">Previously existed and just grouped in order to be able to use it at the aggregate level</xs:documentation>
+																		</xs:annotation>
+																	</xs:attributeGroup>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="Comments" type="ParagraphType" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">An open field to comment on the previous event.</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+											<xs:attributeGroup ref="DateTimeSpanGroup">
+												<xs:annotation>
+													<xs:documentation/>
+													<xs:documentation xml:lang="en">Identifies the dates of the previous meeting.</xs:documentation>
+												</xs:annotation>
+											</xs:attributeGroup>
+											<xs:attribute name="MeetingName" type="xs:string" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The name of the previous meeting for which data is being provided.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attribute name="SiteName" type="xs:string" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The site where the previous meeting was held.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attributeGroup ref="EventStatisticsGroup">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Newly Created Att Group added here</xs:documentation>
+												</xs:annotation>
+											</xs:attributeGroup>
+											<xs:attribute name="PostEventReportExistsInd" type="xs:boolean" use="optional">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">If true, a report exists. IF false, a report does not exist.
+
+Thinking is that this info would come in a seperate message, whether that be as a file attachment or as a structured message will be determined later.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
+											<xs:attributeGroup ref="CurrencyCodeGroup"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Comments" type="ParagraphType" minOccurs="0" maxOccurs="5">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">OTA formatted text type</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="RFP_ID" minOccurs="0" maxOccurs="9">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This is a UniqueID that is associated with  an individual RFP. This element repeats to accommodate the IDs of multiple systems.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="UniqueID_Type">
+										<xs:attribute name="MeetingName" type="xs:string" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">This is used to identify the name of the meeting in the request.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="AdditionalInfos" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">A collection of additional information requests.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="AdditionalInfo" maxOccurs="99">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">A request for additional information and the required delivery method.</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:attributeGroup ref="AdditionalInfoGroup">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Provides detail regarding an attachment.</xs:documentation>
+												</xs:annotation>
+											</xs:attributeGroup>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element ref="TPA_Extensions" minOccurs="0"/>
+					</xs:sequence>
+					<xs:attribute name="RoomBlockIndicator" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true, indicates a room block is requested. When false, indicates no room block is requested and RoomBlock will not be passed.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="EventBlockIndicator" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">When true, indicates function space is required. When false, indicates no function space is required and EventBlock will not be passed.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="AttendeeQuantity" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">This specifies the number of people who will attend the function and/or need rooms.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attributeGroup ref="ProposalGroup">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Provides information regarding the requirements of the RFPs contained in this message.</xs:documentation>
+			</xs:annotation>
+		</xs:attributeGroup>
+	</xs:complexType>
+	<xs:complexType name="RFP_ResponseType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Provides detailed RFP information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RFP_ResponseSegments">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of ResponseSegments that allows multiple responses for different blocks of rooms and/or meeting space to be sent in one message. </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RFP_ResponseSegment" maxOccurs="99">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This is the response data for a block of rooms and/or meeting space.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Profiles" type="ProfilesType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">This can be used to echo back the profile information of the submitter of the request.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="Sites" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">A collection of sites that the response is being submitted for (e.g. a hotel, national sales office, convention center). </xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Site" maxOccurs="unbounded">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Specifies an individual destination of the response.</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="ResponseType" type="RFP_ResponseDetailType" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">This is used to send information about the data that will be returned, specifically when and in what delivery mode.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="ContactInfos" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">A collection of contacts (e.g. a catering manager, national sales office, management company, franchisee)</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="ContactInfo" type="ContactPersonType">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">A contact for this site for this specific RFP.</xs:documentation>
+																			</xs:annotation>
+																		</xs:element>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+															<xs:element name="Dates" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">A collection of inquiry dates. </xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="Date" minOccurs="0">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">The dates correspond to the appropriate primary or secondary dates identified in the request.</xs:documentation>
+																			</xs:annotation>
+																			<xs:complexType>
+																				<xs:sequence>
+																					<xs:element name="RoomBlock" minOccurs="0">
+																						<xs:annotation>
+																							<xs:documentation xml:lang="en">This is information pertaining to room requirements for this request.</xs:documentation>
+																						</xs:annotation>
+																						<xs:complexType>
+																							<xs:sequence>
+																								<xs:element name="StayDates" minOccurs="0">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="en">A collection of multiple StayDates.</xs:documentation>
+																									</xs:annotation>
+																									<xs:complexType>
+																										<xs:sequence>
+																											<xs:element name="StayDate" maxOccurs="unbounded">
+																												<xs:annotation>
+																													<xs:documentation xml:lang="en">Contains the date or date span for the room type availability. </xs:documentation>
+																												</xs:annotation>
+																												<xs:complexType>
+																													<xs:sequence>
+																														<xs:element name="StayDateRooms" minOccurs="0">
+																															<xs:annotation>
+																																<xs:documentation xml:lang="en">A collection of multiple StayDateRooms.</xs:documentation>
+																															</xs:annotation>
+																															<xs:complexType>
+																																<xs:sequence>
+																																	<xs:element name="StayDateRoom" maxOccurs="unbounded">
+																																		<xs:annotation>
+																																			<xs:documentation xml:lang="en">A container for the room availability data.</xs:documentation>
+																																		</xs:annotation>
+																																		<xs:complexType>
+																																			<xs:sequence>
+																																				<xs:element name="Rates" minOccurs="0">
+																																					<xs:annotation>
+																																						<xs:documentation xml:lang="en">Collection of rates for a particular room type.</xs:documentation>
+																																					</xs:annotation>
+																																					<xs:complexType>
+																																						<xs:sequence>
+																																							<xs:element name="Rate" maxOccurs="99">
+																																								<xs:annotation>
+																																									<xs:documentation xml:lang="en">Rate for a particular room type.</xs:documentation>
+																																								</xs:annotation>
+																																								<xs:complexType>
+																																									<xs:sequence>
+																																										<xs:element name="Taxes" type="TaxesType" minOccurs="0">
+																																											<xs:annotation>
+																																												<xs:documentation xml:lang="en">Taxes related to this room type.</xs:documentation>
+																																											</xs:annotation>
+																																										</xs:element>
+																																										<xs:element name="Fees" type="FeesType" minOccurs="0">
+																																											<xs:annotation>
+																																												<xs:documentation xml:lang="en">Fees associated with this room type.</xs:documentation>
+																																											</xs:annotation>
+																																										</xs:element>
+																																									</xs:sequence>
+																																									<xs:attributeGroup ref="CurrencyAmountGroup"/>
+																																									<xs:attribute name="OccupancyRate" use="optional">
+																																										<xs:annotation>
+																																											<xs:documentation xml:lang="en">The different rates charged for the occupancy for the room which could be flat (a rate not variable by number of people), single, double, triple, or quad.</xs:documentation>
+																																										</xs:annotation>
+																																										<xs:simpleType>
+																																											<xs:restriction base="xs:string">
+																																												<xs:enumeration value="Flat"/>
+																																												<xs:enumeration value="Single"/>
+																																												<xs:enumeration value="Double"/>
+																																												<xs:enumeration value="Triple"/>
+																																												<xs:enumeration value="Quad"/>
+																																											</xs:restriction>
+																																										</xs:simpleType>
+																																									</xs:attribute>
+																																								</xs:complexType>
+																																							</xs:element>
+																																						</xs:sequence>
+																																					</xs:complexType>
+																																				</xs:element>
+																																				<xs:element name="Comment" type="ParagraphType" minOccurs="0" maxOccurs="5">
+																																					<xs:annotation>
+																																						<xs:documentation xml:lang="en">Comments for this specific room type.</xs:documentation>
+																																					</xs:annotation>
+																																				</xs:element>
+																																			</xs:sequence>
+																																			<xs:attribute name="RoomType" type="StringLength1to64" use="optional">
+																																				<xs:annotation>
+																																					<xs:documentation xml:lang="en">This identifies the room type (e.g. king, double, double double). This is NOT an OTA codelist due to the infinite number of possible room types.</xs:documentation>
+																																				</xs:annotation>
+																																			</xs:attribute>
+																																			<xs:attribute name="NumberOfUnits" type="Numeric1to999" use="optional">
+																																				<xs:annotation>
+																																					<xs:documentation xml:lang="en">This is the number of rooms proposed for a particular day or date range for the room type indicated in the RoomTypeRequirement attribute.</xs:documentation>
+																																				</xs:annotation>
+																																			</xs:attribute>
+																																		</xs:complexType>
+																																	</xs:element>
+																																</xs:sequence>
+																															</xs:complexType>
+																														</xs:element>
+																														<xs:element name="Comment" type="ParagraphType" minOccurs="0" maxOccurs="5">
+																															<xs:annotation>
+																																<xs:documentation xml:lang="en">Comments for the date or date range as a whole.</xs:documentation>
+																															</xs:annotation>
+																														</xs:element>
+																													</xs:sequence>
+																													<xs:attributeGroup ref="DateTimeSpanGroup"/>
+																													<xs:attribute name="AvailabilityOptionType" use="optional">
+																														<xs:annotation>
+																															<xs:documentation xml:lang="en">Indicates the availability of the dates offered.   </xs:documentation>
+																														</xs:annotation>
+																														<xs:simpleType>
+																															<xs:restriction base="xs:NMTOKEN">
+																																<xs:enumeration value="First">
+																																	<xs:annotation>
+																																		<xs:documentation xml:lang="en">Indicates that there is no other group currently holding these same dates and that this group has the right of first refusal. </xs:documentation>
+																																	</xs:annotation>
+																																</xs:enumeration>
+																																<xs:enumeration value="Second">
+																																	<xs:annotation>
+																																		<xs:documentation xml:lang="en">Indicates that there is another group currently holding these same dates and they have the right of first refusal. </xs:documentation>
+																																	</xs:annotation>
+																																</xs:enumeration>
+																															</xs:restriction>
+																														</xs:simpleType>
+																													</xs:attribute>
+																												</xs:complexType>
+																											</xs:element>
+																										</xs:sequence>
+																									</xs:complexType>
+																								</xs:element>
+																								<xs:element name="Fees" type="FeesType" minOccurs="0">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="en">These fees apply to the dates or date range specified in the Date element. This provides the ability to apply fees to all room types being returned. </xs:documentation>
+																									</xs:annotation>
+																								</xs:element>
+																								<xs:element name="Comments" type="ParagraphType" minOccurs="0" maxOccurs="5">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="en">An open field to comment on the room block.</xs:documentation>
+																									</xs:annotation>
+																								</xs:element>
+																							</xs:sequence>
+																						</xs:complexType>
+																					</xs:element>
+																					<xs:element name="EventBlock" minOccurs="0">
+																						<xs:annotation>
+																							<xs:documentation xml:lang="en">This is information pertaining to the event requirements for this request.</xs:documentation>
+																						</xs:annotation>
+																						<xs:complexType>
+																							<xs:sequence>
+																								<xs:element name="EventDates" minOccurs="0">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="en">A collection of multiple EventDates.</xs:documentation>
+																									</xs:annotation>
+																									<xs:complexType>
+																										<xs:sequence>
+																											<xs:element name="EventDate" maxOccurs="unbounded">
+																												<xs:complexType>
+																													<xs:sequence>
+																														<xs:element name="EventDateFunctions" minOccurs="0">
+																															<xs:annotation>
+																																<xs:documentation xml:lang="en">A collection of multiple EventDateFunctions.</xs:documentation>
+																															</xs:annotation>
+																															<xs:complexType>
+																																<xs:sequence>
+																																	<xs:element name="EventDateFunction" maxOccurs="unbounded">
+																																		<xs:annotation>
+																																			<xs:documentation xml:lang="en">A container for the events requirements data.</xs:documentation>
+																																		</xs:annotation>
+																																		<xs:complexType>
+																																			<xs:sequence minOccurs="0">
+																																				<xs:element name="EventCharges" type="EventChargeType" minOccurs="0">
+																																					<xs:annotation>
+																																						<xs:documentation xml:lang="en">A collection of charges associated to an event.</xs:documentation>
+																																					</xs:annotation>
+																																				</xs:element>
+																																				<xs:element name="Comment" type="ParagraphType" minOccurs="0" maxOccurs="5">
+																																					<xs:annotation>
+																																						<xs:documentation xml:lang="en">Comments associated to this  specific event.</xs:documentation>
+																																					</xs:annotation>
+																																				</xs:element>
+																																			</xs:sequence>
+																																			<xs:attribute name="EventName" type="StringLength1to64" use="optional">
+																																				<xs:annotation>
+																																					<xs:documentation xml:lang="en">The name of the event.</xs:documentation>
+																																				</xs:annotation>
+																																			</xs:attribute>
+																																			<xs:attribute name="EventType" type="OTA_CodeType" use="optional">
+																																				<xs:annotation>
+																																					<xs:documentation xml:lang="en">Indicates the type of event being requested (e.g. breakfast meeting, reception).</xs:documentation>
+																																				</xs:annotation>
+																																			</xs:attribute>
+																																			<xs:attribute name="StartTime" type="xs:time" use="optional">
+																																				<xs:annotation>
+																																					<xs:documentation xml:lang="en">The time the event is scheduled to begin.</xs:documentation>
+																																				</xs:annotation>
+																																			</xs:attribute>
+																																			<xs:attribute name="EndTime" type="xs:time" use="optional">
+																																				<xs:annotation>
+																																					<xs:documentation xml:lang="en">The time the event is scheduled to finish.</xs:documentation>
+																																				</xs:annotation>
+																																			</xs:attribute>
+																																			<xs:attributeGroup ref="UnitsOfMeasureGroup">
+																																				<xs:annotation>
+																																					<xs:documentation xml:lang="en">This identifies the space requirement.</xs:documentation>
+																																				</xs:annotation>
+																																			</xs:attributeGroup>
+																																			<xs:attribute name="AttendeeQuantity" type="xs:nonNegativeInteger" use="optional">
+																																				<xs:annotation>
+																																					<xs:documentation xml:lang="en">The number of people attending this event.</xs:documentation>
+																																				</xs:annotation>
+																																			</xs:attribute>
+																																			<xs:attribute name="RoomSetup" type="OTA_CodeType" use="optional">
+																																				<xs:annotation>
+																																					<xs:documentation xml:lang="en">Indicates the arrangement of the meeting space (e.g. conference or banquet style). Refer to OTA Code List Meeting Room Format Code (MRF).</xs:documentation>
+																																				</xs:annotation>
+																																			</xs:attribute>
+																																			<xs:attribute name="TwentyFourHourHold" type="xs:boolean" use="optional">
+																																				<xs:annotation>
+																																					<xs:documentation xml:lang="en">Indicates the room must be accessable for 24 hours before the event (usually for set-up purposes).</xs:documentation>
+																																				</xs:annotation>
+																																			</xs:attribute>
+																																			<xs:attribute name="MeetingRoomName" type="StringLength1to64" use="optional">
+																																				<xs:annotation>
+																																					<xs:documentation xml:lang="en">Indicates the name of the room that the event will be held in.</xs:documentation>
+																																				</xs:annotation>
+																																			</xs:attribute>
+																																			<xs:attribute name="MeetingRoomCapacity" type="xs:nonNegativeInteger" use="optional">
+																																				<xs:annotation>
+																																					<xs:documentation xml:lang="en">The total number of people permitted in the meeting room. </xs:documentation>
+																																				</xs:annotation>
+																																			</xs:attribute>
+																																			<xs:attribute name="AvailabilityOptionType" use="optional">
+																																				<xs:annotation>
+																																					<xs:documentation xml:lang="en">Indicates the availability of the dates offered.</xs:documentation>
+																																				</xs:annotation>
+																																				<xs:simpleType>
+																																					<xs:restriction base="xs:NMTOKEN">
+																																						<xs:enumeration value="First">
+																																							<xs:annotation>
+																																								<xs:documentation xml:lang="en">Indicates that there is no other group currently holding these same dates and that this group has the right of first refusal.</xs:documentation>
+																																							</xs:annotation>
+																																						</xs:enumeration>
+																																						<xs:enumeration value="Second">
+																																							<xs:annotation>
+																																								<xs:documentation xml:lang="en">Indicates that there is another group currently holding these same dates and they have the right of first refusal.</xs:documentation>
+																																							</xs:annotation>
+																																						</xs:enumeration>
+																																					</xs:restriction>
+																																				</xs:simpleType>
+																																			</xs:attribute>
+																																		</xs:complexType>
+																																	</xs:element>
+																																</xs:sequence>
+																																<xs:attribute name="ChargeType" type="OTA_CodeType" use="optional">
+																																	<xs:annotation>
+																																		<xs:documentation xml:lang="en">This denotes the way a charge is applied (e.g. per day, first time use, per hour). Refer to OTA Code List Charge Type (CHG).</xs:documentation>
+																																	</xs:annotation>
+																																</xs:attribute>
+																															</xs:complexType>
+																														</xs:element>
+																														<xs:element name="EventCharges" type="EventChargeType" minOccurs="0">
+																															<xs:annotation>
+																																<xs:documentation xml:lang="en">A collection of charges associated to an event.</xs:documentation>
+																															</xs:annotation>
+																														</xs:element>
+																													</xs:sequence>
+																													<xs:attributeGroup ref="DateTimeSpanGroup"/>
+																												</xs:complexType>
+																											</xs:element>
+																										</xs:sequence>
+																									</xs:complexType>
+																								</xs:element>
+																								<xs:element name="Comment" type="ParagraphType" minOccurs="0" maxOccurs="5">
+																									<xs:annotation>
+																										<xs:documentation xml:lang="en">An open field to comment on the event block.</xs:documentation>
+																									</xs:annotation>
+																								</xs:element>
+																							</xs:sequence>
+																							<xs:attribute name="EventName" type="xs:string" use="optional">
+																								<xs:annotation>
+																									<xs:documentation xml:lang="en">Used to identify the event.</xs:documentation>
+																								</xs:annotation>
+																							</xs:attribute>
+																						</xs:complexType>
+																					</xs:element>
+																				</xs:sequence>
+																				<xs:attributeGroup ref="DateTimeSpanGroup"/>
+																				<xs:attribute name="ProposedDateIndicator" use="optional">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">This is an indicator that identifies if the dates match the primary or alternate dates or the suppliers other proposed dates.</xs:documentation>
+																					</xs:annotation>
+																					<xs:simpleType>
+																						<xs:restriction base="xs:string">
+																							<xs:enumeration value="Primary"/>
+																							<xs:enumeration value="Alternate"/>
+																							<xs:enumeration value="Other"/>
+																						</xs:restriction>
+																					</xs:simpleType>
+																				</xs:attribute>
+																			</xs:complexType>
+																		</xs:element>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+															<xs:element name="Comment" type="ParagraphType" minOccurs="0" maxOccurs="5">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">This holds information from a specific site on the requested data.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="SiteID" type="UniqueID_Type" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">This is a UniqueID for this site for this request.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="InsuranceInfos" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">A collection of Insurance Information</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="InsuranceInfo" minOccurs="0" maxOccurs="99">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">Indicates the type of insurance that the site carries and the coverage amount.</xs:documentation>
+																			</xs:annotation>
+																			<xs:complexType>
+																				<xs:attribute name="InsuranceTypeCode" type="OTA_CodeType" use="optional">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">Indicates the type of insurance.  Refer to OTA Codelist Coverage Type (COV).</xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																				<xs:attributeGroup ref="CurrencyAmountGroup"/>
+																			</xs:complexType>
+																		</xs:element>
+																		<xs:element name="Comments" type="ParagraphType" minOccurs="0" maxOccurs="5">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">An open field to comment on  insurance information.</xs:documentation>
+																			</xs:annotation>
+																		</xs:element>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+															<xs:element name="References" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">A collection of recommendation references.</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="Reference" maxOccurs="99">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">Identifies contact information and event details for a recommendation reference.</xs:documentation>
+																			</xs:annotation>
+																			<xs:complexType>
+																				<xs:complexContent>
+																					<xs:extension base="ContactPersonType">
+																						<xs:attribute name="MeetingName" type="StringLength1to64" use="optional">
+																							<xs:annotation>
+																								<xs:documentation xml:lang="en">The name of the meeting for this reference.</xs:documentation>
+																							</xs:annotation>
+																						</xs:attribute>
+																						<xs:attribute name="MeetingHost" type="StringLength1to64" use="optional">
+																							<xs:annotation>
+																								<xs:documentation xml:lang="en">The name of the organization that hosted the event.</xs:documentation>
+																							</xs:annotation>
+																						</xs:attribute>
+																						<xs:attribute name="MeetingType" type="OTA_CodeType" use="optional">
+																							<xs:annotation>
+																								<xs:documentation xml:lang="en">The type of the meeting for this reference.  Refer to OTA Codelist (a new codelist needs to be created)  Apex added.</xs:documentation>
+																							</xs:annotation>
+																						</xs:attribute>
+																						<xs:attributeGroup ref="DateTimeSpanGroup">
+																							<xs:annotation>
+																								<xs:documentation xml:lang="en">Defines the dates that the event took place.</xs:documentation>
+																							</xs:annotation>
+																						</xs:attributeGroup>
+																					</xs:extension>
+																				</xs:complexContent>
+																			</xs:complexType>
+																		</xs:element>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+															<xs:element name="AdditionalInfos" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation xml:lang="en">Collection of additional information.</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="AdditionalInfo" maxOccurs="99">
+																			<xs:annotation>
+																				<xs:documentation xml:lang="en">Details regarding the additional information and its delivery method.</xs:documentation>
+																			</xs:annotation>
+																			<xs:complexType>
+																				<xs:attributeGroup ref="AdditionalInfoGroup">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">Provides details regarding the attachment.</xs:documentation>
+																					</xs:annotation>
+																				</xs:attributeGroup>
+																			</xs:complexType>
+																		</xs:element>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+														<xs:attributeGroup ref="HotelReferenceGroup"/>
+														<xs:attribute name="CrossSellIndicator" type="xs:boolean" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">When True, the associated site was not included as part of the original Request message, but is being included as part of the Response message as an alternate location.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attribute name="SimilarEventCount" type="xs:nonNegativeInteger" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">Indicates how many events of a similar size this location has hosted in the past year.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Comment" type="ParagraphType" minOccurs="0" maxOccurs="5">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">This holds information that pertains to all sites requested.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="RFP_ID" type="UniqueID_Type" minOccurs="0" maxOccurs="9">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">This is a UniqueID that is associated with  an individual RFP. This element repeats to accommodate the IDs of multiple systems.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element ref="TPA_Extensions" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="MessageID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This is a UniqueID that is associated with the messages that may include more than one RFP. The instance attribute is used to indicate subsequent transmissions of new or updated information (e.g. an initial message will be instance 1 and an update to this message will be reflected with instance 2).</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="UniqueID_Type"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RFP_TransientDetailsType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en"> This is used by OTA_HotelRFP_TransientNotifRQ schema. This accommodates detailed transient RFP information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RFP_TransientResponses" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">A collection of RFP Transient Responses</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RFP_TransientResponse" type="RFP_TransientResponseType" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This is the Response data.  The response element can repeat for each hotel that is providing a response to the RFP.  Each hotel is defined in the HotelRefGroup attributes of this element.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="MessageID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The ID is used to identify the original request. The instance attribute is used to indicate subsequent transmissions of new or updated information (e.g. an initial message will be instance 1 and an update to this message will be reflected with instance 2).</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="UniqueID_Type"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RFP_TransientResponseType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Provides the detailed RFP data and/or the  the general information to let the requestor know when and the detailed information will be returned.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RFP_ResponseDetail" type="RFP_ResponseDetailType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Provides the method and time for when the detailed response should be expected as well as other information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HotelDescription" type="HotelDescriptiveContentType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Provides the details associated with a hotel (e.g. the amenities and services provided and distance to local attractions.)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AccountSpecificInformation" type="AccountSpecificInformationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the information that is specific to the RFP for this account.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attributeGroup ref="HotelReferenceGroup"/>
+	</xs:complexType>
+</xs:schema>

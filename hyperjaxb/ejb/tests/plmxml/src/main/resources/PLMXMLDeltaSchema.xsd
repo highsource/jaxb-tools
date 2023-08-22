@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Copyright 2005 UGS Corp.  All Rights Reserved.
+This software and related documentation are proprietary to UGS Corp.
+-->
+<xsd:schema targetNamespace="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:plm="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" xml:lang="en">
+  <xsd:include schemaLocation="PLMXMLSchema.xsd"/>
+  <xsd:annotation>
+    <xsd:documentation>
+    
+                        PLM XML Delta Schema
+                        
+    </xsd:documentation>
+    <xsd:appinfo source="http://www.plmxml.org/Schemas/PLMXMLDeltaSchema">
+      <plm:SchemaInfo name="PLMXMLDeltaSchema.xsd" date="2005-01-24" version="6.0" status="development"/>
+    </xsd:appinfo>
+  </xsd:annotation>
+  <!-- -->
+  <!-- DeltaOperation -->
+  <!-- -->
+  <xsd:complexType name="DeltaOperationBase" mixed="true" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation>
+      Base class for elements which define Delta operations, 
+      i.e. DeltaAdd, DeltaDelete, DeltaModify, DeltaReplace
+      </xsd:documentation>
+      <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">allowMixed=true</xsd:appinfo>
+    </xsd:annotation>
+  </xsd:complexType>
+  <!-- -->
+  <!-- Add -->
+  <!-- -->
+  <xsd:complexType name="DeltaAddType" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element represents adding a fragment of PLMXML, i.e. a tree of elements, to
+      a master document.
+      
+      The sub-elements of this element are all added.
+      
+      Attributes:
+      
+      parentRef:       A URI reference to a placeholder element which represents the
+                       element in the master document which will become the parent of the
+                       added elements. Exactly one of parentRef or siblingRef should be present.
+                       
+      siblingRef:      A URI reference to a placeholder element which represents the
+                       element in the master document which will become a sibling
+                       of the added elements. There is no implication that the added element
+                       will be adjacent to the sibling element in the sub-element ordering -
+                       only that it will have the same parent.
+      
+      Elements:
+      
+      Any PLMXML elements may be included as sub-elements.
+      </xsd:documentation>
+      <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">allowMixed=true</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:DeltaOperationBase">
+        <xsd:sequence>
+          <xsd:any namespace="##any" maxOccurs="unbounded" processContents="skip"/>
+        </xsd:sequence>
+        <xsd:attribute name="parentRef" type="plm:anyURIType" use="optional"/>
+        <xsd:attribute name="siblingRef" type="plm:anyURIType" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!-- Replace -->
+  <!-- -->
+  <xsd:complexType name="DeltaReplaceType" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element represents replacing a fragment of PLMXML, i.e. a tree of elements, with
+      another tree.
+      
+      The sub-element of this element is used to replace the target element and all its
+      descendents.
+      
+      Attributes:
+      
+      targetRef:       A URI reference to a placeholder element which represents the
+                       element in the master document which will be replaced.
+      
+      Elements:
+      
+      Any PLMXML element may be included as sub-element. There must be exactly one.
+      </xsd:documentation>
+      <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">allowMixed=true</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:DeltaOperationBase">
+        <xsd:sequence>
+          <xsd:any namespace="##any" maxOccurs="unbounded" processContents="skip"/>
+        </xsd:sequence>
+        <xsd:attribute name="targetRef" type="plm:anyURIType" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!-- Delete -->
+  <!-- -->
+  <xsd:complexType name="DeltaDeleteType" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element represents deleting a fragment of PLMXML, i.e. a tree of elements, from
+      a master document.
+      
+      NOTE that it also removes any IDREF or local URI references to those elements, since 
+      normally you would not want 'dangling' references left. For example, deleting an Instance 
+      will automatically remove that Instance from any 'instanceRefs' attributes which reference
+      it. 
+      
+      Attributes:
+      
+      targetRefs:       A multiple URI reference to placeholder element(s) which represent the
+                        elements in the master document which will be deleted, along with
+                        their sub-elements.
+      </xsd:documentation>
+      <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">allowMixed=true</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:DeltaOperationBase">
+        <xsd:attribute name="targetRefs" type="plm:uriReferenceListType" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:simpleType name="DeltaModifyOpType">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="replace"/>
+      <xsd:enumeration value="add"/>
+      <xsd:enumeration value="remove"/>
+      <xsd:enumeration value="delete"/>
+      <xsd:enumeration value="modifyUserData"/>
+      <xsd:enumeration value="setOwner"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <!-- Modify -->
+  <!-- -->
+  <xsd:complexType name="DeltaModifyType" mixed="true">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element represents modifying an element in a master document in some way, 
+      depending on the 'op' attribute.
+            
+      Attributes:
+      
+      targetRef:        A URI reference to a placeholder element which represents the
+                        element in the master document which will be modified.
+                        
+      attributeName:    The name of the attribute being modified, if any.
+      
+      values:           The value or values to be used when modifying the attribute. The way in 
+                          which this is used to make the modification is determined by the 
+                          'op' attribute. 
+                          
+      valueRefs:        URI reference to placeholder element(s) which represent
+                          elements in the master document; or to elements in Add or Replace
+                          blocks in this delta. The attribute being modified is
+                          altered to reference these elements, according to the value of the
+                          'op' attribute.
+                          
+      op:               This determines the operation used to make the modification. One of
+      
+                        'replace'        completely replaces an existing attribute value, with 
+                                         the value in 'values' or 'valueRefs'.
+                        'add'            adds the values in 'values' or 'valueRefs' to an existing
+                                         attribute, for example an integer array, IDREFS or multiple
+                                         URI attribute.
+                        'remove'         removes the values in 'values' or 'valueRefs' from an
+                                         existing attribute.
+                        'delete'         deletes an existing attribute entirely.
+                        
+                        'modifyUserData' merges the UserData of this Modify element into the 
+                                         UserData of the target element. 'attributeName' is
+                                         not set in this case.
+      </xsd:documentation>
+      <xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">allowMixed=content</xsd:appinfo>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:DeltaOperationBase">
+        <xsd:sequence>
+          <xsd:any namespace="##any" maxOccurs="unbounded" processContents="skip"/>
+        </xsd:sequence>
+        <xsd:attribute name="targetRef" type="plm:anyURIType" use="optional"/>
+        <xsd:attribute name="op" type="plm:DeltaModifyOpType" default="replace" use="optional"/>
+        <xsd:attribute name="attributeName" type="xsd:string" use="optional"/>
+        <xsd:attribute name="values" type="xsd:string" use="optional"/>
+        <xsd:attribute name="valueRefs" type="plm:uriReferenceListType" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <!-- ExternalReference -->
+  <!-- -->
+  <xsd:complexType name="ExternalReferenceType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element is a reference to an object in an Application data model. At present it 
+      identifies the object by containing one or more ApplicationRef sub-elements.
+      
+      Attributes:
+      
+      type:           Optional PLMXML type of the external object, e.g. "ProductRevision"
+      
+      select:         If this attribute is present, it will be an XPATH string, which 
+                      identifies the referenced object relative to a parent object, which 
+                      is identified by the ApplcationRef sub-elements. The XPATH string will
+                      be in terms of the PLMXML schema, but it will be interpreted as 
+                      applying to the Application data model.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="type" type="xsd:string" use="optional"/>
+        <xsd:attribute name="select" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ExternalReference" type="plm:ExternalReferenceType" substitutionGroup="plm:AttribOwner"/>
+  <!-- -->
+  <!-- DeltaOperationGroup -->
+  <!-- -->
+  <xsd:complexType name="DeltaOperationGroupType">
+    <xsd:annotation>
+      <xsd:documentation>
+      NB This is an extension to the DELTA schema included here to avoid
+      the need for a separate schema.
+      
+      A group of Delta Operations. A context can be provided by adding an
+      ApplicationRef sub-element of this element.
+      
+      SubElements:
+      
+      Add:            Add elements, representing the addition of a tree of elements
+      Replace:        Replace elements, representing the replacement of a tree of elements
+      Delete:         Delete elements, representing the deletion of trees of elements
+      Modify:         Modify elements, representing an alteration to an attribute of
+                        an element.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:DescriptionBase">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element name="Add" type="plm:DeltaAddType"/>
+          <xsd:element name="Replace" type="plm:DeltaReplaceType"/>
+          <xsd:element name="Delete" type="plm:DeltaDeleteType"/>
+          <xsd:element name="Modify" type="plm:DeltaModifyType"/>
+        </xsd:choice>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="DeltaOperationGroup" type="plm:DeltaOperationGroupType"/>
+  <!-- -->
+  <!-- PLMXMLDelta -->
+  <!-- -->
+  <xsd:complexType name="PLMXMLDeltaType">
+    <xsd:annotation>
+      <xsd:documentation>
+      The top-level element in a PLMXML Delta file. This represents a delta, or change,
+      to be applied to a PLMXML file or equivalent Application model (the 'master' file/model).
+      
+      Attributes:
+      
+      context:        A URI or other indication of the master Document or model to which 
+                      this delta is to be applied.
+      
+      SubElements:
+      
+      Add:            Add elements, representing the addition of a tree of elements
+      Replace:        Replace elements, representing the replacement of a tree of elements
+      Delete:         Delete elements, representing the deletion of trees of elements
+      Modify:         Modify elements, representing an alteration to an attribute of
+                        an element.
+                        
+      ExternalReference:    References to Application objects. 
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:DocumentBase">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element name="Add" type="plm:DeltaAddType"/>
+          <xsd:element name="Replace" type="plm:DeltaReplaceType"/>
+          <xsd:element name="Delete" type="plm:DeltaDeleteType"/>
+          <xsd:element name="Modify" type="plm:DeltaModifyType"/>
+          <xsd:element ref="plm:ExternalReference"/>
+          <xsd:element ref="plm:DeltaOperationGroup"/>
+        </xsd:choice>
+        <xsd:attribute name="context" type="xsd:string" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="PLMXMLDelta" type="plm:PLMXMLDeltaType"/>
+  <!-- -->
+</xsd:schema>

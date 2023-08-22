@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   User     Mod      Date       Description
+   ===========================================================================
+   DC             20061031      Removed DocumentID
+   MV             20061109      Changed: DealerExtendedAddress to DealerParty based on PartyABIE
+                                Replaced: IndividualOwnerPartyMinimal and OrganizationalOwnerPartyMinimal with OriginalOwnerParty based on PartyABIE
+   MV       CR139 20061120      Added: "SalesStatus" and "Initiative" to Boat, Engine, Trailer Line Items
+   MV             20061212      Added to VehicleRemarketingVehicleLineItem:
+                                       NonUSVehicleIndicator                                
+                                       VehicleDemoIndicator
+                                       LicenseNumberString
+                                       BrandedInfo
+                                       RestrictionIndicator
+                                       RestrictionDescription
+                                       TelematicsServiceIndicator
+                                       IgnitionKeyNumberString
+                                       DoorKeyNumberString
+                                       OdometerStatus       
+                                Changed:"VehicleRemarketingVehicleRedesigned" to "VehicleRemarketingVehicle" based on VehicleABIEType 
+   DC       CR317 20070129      Added Co-OpIndicator to the VehichleRemarketingBoatLineItem
+                                Added CentralIndicator to the VehicleRemarketingBoatLineItem
+                                Added NotForSaleInCountry to the VehicleRemarketingBoatLineItem
+   MV       CR349 20070307      Changed: RemarketingFinancing to Financing referencing the FinancingABIEType
+                                Changed: VehicleRemarketingVehicle name to Vehicle still referencing VehicleABIEType
+   MV       CR399 20070517      Added: VehicleRemarketingVehicleLineItem.LastModificationTime,
+                                Added: VehicleRemarketingBoatLineItem.LastModificationTime
+                                Added: VehicleRemarketingEngineLineItem.LastModificationTime
+                                Added: VehicleRemarketingTrailerLineItem.LastModificationTime                                      
+                                       
+ -->
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns="http://www.starstandard.org/STAR/5" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="VehicleRemarketing" type="VehicleRemarketingType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Vehicle Remarketing
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VehicleRemarketingHeader" type="VehicleRemarketingHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Vehicle Remarketing Header
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VehicleRemarketingVehicleLineItem" type="VehicleRemarketingVehicleLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Line item information about a vehicle being remarketed</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VehicleRemarketingBoatLineItem" type="VehicleRemarketingBoatLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Line item information about a boat being remarketed</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VehicleRemarketingEngineLineItem" type="VehicleRemarketingEngineLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Line item information about a engine being remarketed</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VehicleRemarketingTrailerLineItem" type="VehicleRemarketingTrailerLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Line item information about a trailer being remarketed</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="VehicleRemarketingType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.0 - Draft</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 1.0, STAR approved 04/20/2005; OAGI approved 03/03/2005; effective date 07/04/2005</xsd:documentation>
+            <xsd:appinfo>STAR unique Noun - Created Rev 2.1 PS 09/30/2004</xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="VehicleRemarketingHeader" />
+            <xsd:element ref="VehicleRemarketingVehicleLineItem" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="VehicleRemarketingBoatLineItem" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="VehicleRemarketingEngineLineItem" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="VehicleRemarketingTrailerLineItem" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="VehicleRemarketingHeaderType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Header information related to Vehicle Remarketing</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+                <xsd:sequence>
+                    <!--<xsd:element ref="DocumentID" />-->
+                    <xsd:element ref="OrganizationID" minOccurs="0" />
+                    <xsd:element ref="ContractStartDate" minOccurs="0" />
+                    <xsd:element ref="ContractExpirationDate" minOccurs="0" />
+                    <xsd:element ref="ContractID" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="VehicleRemarketingVehicleLineItemType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Information related to vehicle being remarketed.</xsd:documentation>
+        </xsd:annotation>         
+            <xsd:sequence>
+                <xsd:element ref="RemarketingOption" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element ref="ExpectedDeliveryDate" minOccurs="0"/>
+                <xsd:element ref="VehicleLocation" minOccurs="0"/>
+                <xsd:element ref="ItemAcquisitionDate" minOccurs="0"/>
+                <xsd:element ref="PricingABIE" minOccurs="0"/>
+                <xsd:element ref="Tax" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element ref="DealerParty" minOccurs="0"/>
+                <xsd:element ref="JobToDo" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element ref="JobCompleted" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element ref="RepairDamage" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element ref="RemarketingWarranty" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element ref="Financing" minOccurs="0"/>
+                <xsd:element ref="OriginalOwnerParty" minOccurs="0"/>
+                <xsd:element ref="ImageAttachmentExtended" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element ref="AdditionalMedia" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element ref="Inspection" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element ref="LastModificationDate" minOccurs="0"/>
+                <xsd:element ref="SoldDate" minOccurs="0"/>
+                <xsd:element ref="FinancingAvailableIndicator" minOccurs="0"/>
+                <xsd:element ref="CertificationGroup" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element ref="ItemReceivedDate" minOccurs="0"/>
+                <xsd:element ref="TireCondition" minOccurs="0"/>
+                <xsd:element ref="PreviousVehicleUse" minOccurs="0"/>
+                <xsd:element ref="Advertising" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element ref="OriginalSoldDate" minOccurs="0"/>
+                <xsd:element ref="Vehicle" minOccurs="1"/>
+                <xsd:element ref="NonUSVehicleIndicator" minOccurs="0"/>                                
+                <xsd:element ref="VehicleDemoIndicator" minOccurs="0"/>
+                <xsd:element ref="LicenseNumberString" minOccurs="0"/>
+                <xsd:element ref="BrandedInfo" minOccurs="0"/>
+                <xsd:element ref="RestrictionIndicator" minOccurs="0"/>
+                <xsd:element ref="RestrictionDescription" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element ref="TelematicsServiceIndicator" minOccurs="0"/>
+                <xsd:element ref="IgnitionKeyNumberString" minOccurs="0"/>
+                <xsd:element ref="DoorKeyNumberString" minOccurs="0"/>
+                <xsd:element ref="OdometerStatus" minOccurs="0"/>
+                <xsd:element ref="AdditionalDetailDescription" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element ref="LastModificationTime" minOccurs="0" maxOccurs="1"/>
+            </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="VehicleRemarketingBoatLineItemType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Information related to boat being remarketed.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="RemarketingOption" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="ExpectedDeliveryDate" minOccurs="0"/>
+            <xsd:element ref="ItemAcquisitionDate" minOccurs="0"/>
+            <xsd:element ref="PricingABIE" minOccurs="0"/>
+            <xsd:element ref="Tax" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="DealerParty" minOccurs="0"/>
+            <xsd:element ref="JobToDo" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="JobCompleted" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="RepairDamage" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="RemarketingWarranty" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="Financing" minOccurs="0"/>
+            <xsd:element ref="ImageAttachmentExtended" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="AdditionalMedia" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="Inspection" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="LastModificationDate" minOccurs="0"/>
+            <xsd:element ref="SoldDate" minOccurs="0"/>
+            <xsd:element ref="FinancingAvailableIndicator" minOccurs="0"/>
+            <xsd:element ref="CertificationGroup" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="ItemReceivedDate" minOccurs="0"/>
+            <xsd:element ref="Location" minOccurs="0"/>
+            <xsd:element ref="VehicleRemarketingBoat" minOccurs="1"/>            
+            <xsd:element ref="VehicleRemarketingEngineLineItem" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="VehicleRemarketingTrailerLineItem" minOccurs="0"/>
+            <xsd:element ref="OriginalOwnerParty" minOccurs="0"/>
+            <xsd:element ref="SalesStatus" minOccurs="0"/>
+            <xsd:element ref="Initiative" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="Co-OpIndicator" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="CentralIndicator" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="NotForSaleInCountry" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="AdditionalDetailDescription" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="LastModificationTime" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>                       
+    </xsd:complexType>
+    <xsd:complexType name="VehicleRemarketingEngineLineItemType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Information related to engine being remarketed.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="RemarketingOption" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="ExpectedDeliveryDate" minOccurs="0"/>
+            <xsd:element ref="ItemAcquisitionDate" minOccurs="0"/>
+            <xsd:element ref="PricingABIE" minOccurs="0"/>
+            <xsd:element ref="Tax" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="DealerParty" minOccurs="0"/>
+            <xsd:element ref="JobToDo" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="JobCompleted" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="RepairDamage" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="RemarketingWarranty" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="Financing" minOccurs="0"/>
+            <xsd:element ref="ImageAttachmentExtended" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="AdditionalMedia" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="Inspection" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="LastModificationDate" minOccurs="0"/>
+            <xsd:element ref="SoldDate" minOccurs="0"/>
+            <xsd:element ref="FinancingAvailableIndicator" minOccurs="0"/>
+            <xsd:element ref="CertificationGroup" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="ItemReceivedDate" minOccurs="0"/>
+            <xsd:element ref="Location" minOccurs="0"/>
+            <xsd:element ref="VehicleRemarketingEngine" minOccurs="1"/>
+            <xsd:element ref="OriginalOwnerParty" minOccurs="0"/>
+            <xsd:element ref="SalesStatus" minOccurs="0"/>
+            <xsd:element ref="Initiative" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="AdditionalDetailDescription" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="LastModificationTime" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="VehicleRemarketingTrailerLineItemType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Information related to trailer being remarketed.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="RemarketingOption" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="ExpectedDeliveryDate" minOccurs="0"/>
+            <xsd:element ref="ItemAcquisitionDate" minOccurs="0"/>
+            <xsd:element ref="PricingABIE" minOccurs="0"/>
+            <xsd:element ref="Tax" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="DealerParty" minOccurs="0"/>
+            <xsd:element ref="JobToDo" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="JobCompleted" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="RepairDamage" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="RemarketingWarranty" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="Financing" minOccurs="0"/>
+            <xsd:element ref="ImageAttachmentExtended" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="AdditionalMedia" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="Inspection" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="LastModificationDate" minOccurs="0"/>
+            <xsd:element ref="SoldDate" minOccurs="0"/>
+            <xsd:element ref="FinancingAvailableIndicator" minOccurs="0"/>
+            <xsd:element ref="CertificationGroup" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="ItemReceivedDate" minOccurs="0"/>
+            <xsd:element ref="Location" minOccurs="0"/>
+            <xsd:element ref="VehicleRemarketingTrailer" minOccurs="1"/>
+            <xsd:element ref="OriginalOwnerParty" minOccurs="0"/>
+            <xsd:element ref="SalesStatus" minOccurs="0"/>
+            <xsd:element ref="Initiative" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="AdditionalDetailDescription" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="LastModificationTime" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

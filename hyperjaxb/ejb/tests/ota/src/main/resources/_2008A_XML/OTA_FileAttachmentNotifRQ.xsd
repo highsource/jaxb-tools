@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.opentravel.org/OTA/2003/05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.004" id="OTA2008A">
+	<xs:include schemaLocation="OTA_CommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_FileAttachmentNotifRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">                                                             Enables sending encoded binary file(s). The request message lists each file attached and defines all attributes required by the receiver to decode the message and reconstruct the files at the endpoint.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Point of sale object. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="FileAttachmentReferences">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Container for file attachment references.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="FileAttachmentReference" maxOccurs="99">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Specifies details about the file attached to this message.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attributeGroup ref="FileAttachmentGroup"/>
+									<xs:attributeGroup ref="DateTimeStampGroup">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Creation date time, creator ID, last modification date time and last modifier ID.</xs:documentation>
+										</xs:annotation>
+									</xs:attributeGroup>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

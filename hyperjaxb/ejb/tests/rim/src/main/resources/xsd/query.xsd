@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!-- $Header: /cvsroot/ebxmlrr/ebxmlrr-spec/misc/3.0/schema/query.xsd,v 1.13 2005/03/29 08:52:10 farrukh_najmi Exp $ -->
+<schema attributeFormDefault="unqualified" elementFormDefault="qualified" 
+  targetNamespace="urn:oasis:names:tc:ebxml-regrep:xsd:query:4.0" 
+  xmlns="http://www.w3.org/2001/XMLSchema" 
+  xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" 
+  xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:4.0" 
+  xmlns:tns="urn:oasis:names:tc:ebxml-regrep:xsd:query:4.0"
+  >
+  <!-- Import the rim.xsd file with XML schema mappaing from RIM -->
+  <import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" schemaLocation="rim.xsd"/>
+  <import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:rs:4.0" schemaLocation="rs.xsd"/>
+  <complexType name="ResponseOptionType">
+    <attribute default="RegistryObject" name="returnType">
+      <simpleType>
+        <restriction base="NCName">
+          <enumeration value="ObjectRef"/>
+          <enumeration value="RegistryObject"/>
+          <enumeration value="LeafClass"/>
+          <enumeration value="LeafClassWithRepositoryItem"/>
+        </restriction>
+      </simpleType>
+    </attribute>
+    <attribute default="false" name="returnComposedObjects" type="boolean"/>
+  </complexType>
+  <element name="ResponseOption" type="tns:ResponseOptionType"/>
+  <element name="QueryRequest">
+    <annotation>
+      <documentation xml:lang="en">Request to invoke a query.</documentation>
+    </annotation>
+    <complexType>
+      <complexContent>
+        <extension base="rs:RegistryRequestType">
+          <sequence>
+            <element maxOccurs="1" minOccurs="1" ref="tns:ResponseOption"/>
+            <element ref="rim:QueryInvocation"/>
+          </sequence>
+          <attribute default="false" name="federated" type="boolean" use="optional"/>
+          <attribute name="federation" type="anyURI" use="optional"/>
+          <attribute default="application/ebrim+xml" name="format" type="string" use="optional"/>
+          <attribute name="language" type="string" use="optional"/>
+          <attribute default="0" name="startIndex" type="integer"/>
+          <attribute default="-1" name="maxResults" type="integer"/>
+          <attribute default="0" name="depth" type="integer"/>
+        </extension>
+      </complexContent>
+    </complexType>
+  </element>
+  <element name="QueryResponse">
+    <annotation>
+      <documentation xml:lang="en">
+        The response includes a RegistryObjectList which has zero or more
+        RegistryObjects that match the query specified in QueryRequest.
+      </documentation>
+    </annotation>
+    <complexType>
+      <complexContent>
+        <extension base="rs:RegistryResponseType">
+          <sequence>
+            <element ref="rim:RegistryObjectList"/>
+          </sequence>
+          <attribute default="0" name="startIndex" type="integer"/>
+          <attribute name="totalResultCount" type="integer" use="optional"/>
+        </extension>
+      </complexContent>
+    </complexType>
+  </element>
+  
+</schema>

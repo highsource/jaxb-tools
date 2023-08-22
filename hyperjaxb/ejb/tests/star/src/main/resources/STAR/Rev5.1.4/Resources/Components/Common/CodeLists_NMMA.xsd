@@ -1,0 +1,1196 @@
+<?xml version="1.0"?>
+<!-- 
+   User    Mod     Date            Description
+   ====================================================================                                            
+   MV     CR139    20061017       Added: BoatLengthEnumeratedType, BoatDraftEnumeratedType, BoatCategoryEnumeratedType                                                                                  
+                                         BoatClassEnumeratedType, BoatHullMaterialEnumeratedType, BoatHullDesignEnumeratedType, BoatKeelEnumeratedType
+   MV     CR139    20061020       Added: BoatEngineLocationEnumeratedType    
+   MV     CR285    20061211       Modified the following BoatClass Descriptions:
+                                          Jon Boat, Dailysailers, Personl Watercraft, Racer cruisers, Ski & Fish, Ski Wakeboard Boats, Stempicker
+                                          Submarine, Bowerider 
+                                  Added the following BoatClasses:
+                                          Angler, Downeast, Submersibe, Trawlers   
+   DC              20061221       Clean up for Unit Tests
+   DC    CR288     20070102       Added missing code lists descriptions. 
+   DC    CR288     20070110       Added Bilge Keel, Twin Keel, Bulb Keel, Winged Keel, Lifting Keel, Swing Keel, Daggerboad Keel, Centreboard Keel, Canting Keel, Triple Keel
+   DC    CR310     20070118       Bugfix:  Corrected Namespace for NMMA
+   DC    CR322     20070212       Code List updates
+   MV    MT350     20070712       Definition Fix: "Ski and Fish", "Saltwater Fishing"
+   DC    MT369     20070731       BoatClass: "Duck Boat", BoatEngine: "Other", BoatHullDesign: "Inflatble Ridged", "Inflatable Non Ridged".
+                                                                    
+ -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.nmma.org/CodeLists"
+            xmlns:nmmacl="http://www.nmma.org/CodeLists"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation>XML Schema simpleType definitions for unique marine requirements.</xsd:documentation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+        
+    </xsd:annotation>
+    <xsd:simpleType name="BoatLengthContentType">
+        <xsd:annotation>
+            <xsd:documentation> </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="Length Overall">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">The overall length of the boat.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Length Of Deck">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">The length of the boat's deck.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Length At Water Line">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">The length of the boat at the water line.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Nominal Length">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">The nominal or advertised length of the boat.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="BoatDraftContentType">
+        <xsd:annotation>
+            <xsd:documentation> </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="Max Draft">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Maximum Draft</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Drive Up">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Draft with engine up.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Drive Down">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Draft with engine down.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Keel Up">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Draft with keel up.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Keel Down">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Draft with keel down.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="BoatCategoryContentType">
+        <xsd:annotation>
+            <xsd:documentation> </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="Power">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A boat propelled by an internal-combustion engine</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Fish">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A vessel for fishing;</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Sail">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A boat which uses the wind as its primary means of propulsion.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Personal Water Craft">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Personal Water Craft or PWC is a power driven ship that- has a fully enclosed hull; and does not take on water if capsized; and is designed to be operated by a person standing, sitting astride, or kneeling on it, but not seated within it</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Small Boats">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Dinghies, rafts, kayaks, canoes, row boats and other forms of smaller floatable vessels.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Commercial">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A vessel used for commerce,  for-profit activities, or trade.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="BoatClassContentType">
+        <xsd:annotation>
+            <xsd:documentation> </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="Air Boat">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Also called fan boats, these are flat-bottomed punts powered by a propeller attached to an automobile or aircraft engine.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Aluminum Fish Boats">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A type of boat used primary for fishing constructed of an alumium body.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Antique and Classics">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Includes wooden hull boats, antique as determined by age, or no longer supported by the boat builder. 
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Barge">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A large, flat-bottomed vessel for carrying cargo, towed behind or pushed by a tugboat.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Bass Boats">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Low, flat-bottomed powerboat usually equipped with an outboard as well as small trolling motor.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Bay Boats">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Low profile, inshore fishing boat intended for use in protected coastal waters, and frequently made with rolled edge construction.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Beach Catamarans">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A small, lightweight sailboat less than 25ft long that can be easily launched and retrieved from a beach.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Bluewater Fishing">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Mid to large V-hulled boat suitable for offshore fishing, typically fitted with outriggers, fish boxes, aluminum towers, a host of electronics and large fuel tank.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Bowrider">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A runabout with seating area in the bow.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Canoe">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A long narrow boat propelled by paddles or a paddle.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Center Consoles">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A fishing boat with helm station located amidships for maximum walk through space around the perimeter of the boat.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Charter">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A boat rental either 1. with paid crew, called a crewed charter or 2. without paid crew, called a bareboat charter.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Combination Carrier">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A ship for transportation of both liquid and dry bulk cargoes.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Commercial Boats">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Boats used for activities which receive payment, such as fishing boats, hire boats, etc.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Crabber">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Crab fishing boats which vary in shape and size, from aluminum skiffs with outboard motors that fish the inside waters for Dungeness, to seagoing vessels of 100' or more that fish for king crab. The decks of a crabber are usually stacked with pots.  
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Crew">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A rowing boating used in the sport of crew.  Also a large powerful boat used for tranporting crew members or supplies.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Cruisers">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A boat where living accomodations and comfort are given precedence over performance and speed.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Cuddy Cabin">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Small cabin below decks with limited space for shelter or amenities.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Cutter">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Similar to a sloop, a single-masted fore-and-aft-rigged sailing vessel.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Convertible Boats">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Powerboat with a flying bridge, outfitted with both fishing gear and comfortable accomodations.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Daysailers">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A boat without a cabin used for short sails or racing.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Deck Boats">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A boat with a single-level deck and often rails or gunnels all around. A runabout with an extra wide bow seating area.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Dinghies">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A small boat used as tender or a small racing boat.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Dive Boat">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A powerboat specially equipped to support SCUBA and other diving operations.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Dragger">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A fishing boat operating a trawl or dragnet.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Dual Console">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A type of boat with twin dashboards separated by a centerline walk-through-deck leading to the bow.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Express Cruiser">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A planing powerboat with a comfortable cockpit for entertaining, helm on the same level, and cabin below. A crusing boat without a deck-level salon.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Flats Boats">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A shallow-draft boat, usually fiberglass, with tilting outboard engines to allow access to shallow water and saltwater flats for fishing.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Flybridge">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A high steering position above the normal wheelhouse on a power cruiser.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Folding Boat">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A small collapsible boat typically ranging between 8 to 12 feet.  Typically made of highly bouyant material some designs literally can be folded for stowage and off water transport. 
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Freshwater Fishing">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Any fishing boat used in fresh water.  Boat may not be equipped to handle the harsh saltwater environment.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="High Performance Boats">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A watercraft that can exceed 50 miles per hour.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="House Boats">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Boxy, flat-bottomed or pontoon boat usually used in lakes and rivers.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Inflatables">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">An inflatable boat or personal floatation device (life jacket)</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Jet Boats">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A waterfraft propelled by an engine that drives a jet pump and has no external propeller.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Jon Boats">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Multi-purpose camping, fishing and hunting craft, typically aluminum and powered by a small outboard or oars.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Kayak">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A light, closed, narrow, generally sea-going boat propelled by single- or double-bladded paddles.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Ketch">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Two-masted sailing rig in which the mizzen (aft) mast is shorter than the main mast and stepped in front of the rudder post.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Longliner">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A type of fishing vessel that is used to fish different species with equipment to support longline fishing, which entails suspending baited hooks at intervals on droppers from a heavy main line that may extend many feet or kilometres.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Mega Yachts">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A pleasure yacht, usually worth more than 1 million dollars with full time paid captain and crew. A "Megayacht" is a motoryacht in excess of 100 feet LOA</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Motor Yachts">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A large and luxurious powerboat designed for comfortable cruising.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Motorsailers">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A boat that is designed for propulsion by both sails and engine power, either alternately or simultaneously OR a sailboat with a larger than normal engine and spacious accomodations designed to motor moe and sail less than typical sailboats.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Multi-Hulls">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A boat designed with more than one hull, such as a catamaran or trimaran.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Other">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Boat class not known or specified.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Passenger">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A powerboat designed for the transportation of people.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Personal Watercraft">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">PWC; small, jet-driven one- or two-seater motorboat, also called a wet bike.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Pilothouse">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">The place on a vessel that houses the helm and protects the helmsperson from the elements.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Pontoon Boats">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A flat, usually square deck boat with aluminum, steel or composite pontoons.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Power Catamarans">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A multihulled powerboat with two identical side-by-side hulls.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Power Cruisers">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A powerboat with overnight accommodations, typically up to 40 feet long.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Processor">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Also known as a factory ship, processors receive a fish catch from other boats. They, gut, package and freeze the catch.  This allows the fish to be frozen as soon as possible after catch, and permits the boat(s) to stay at sea longer before returning to port to unload the packaged catch.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Racers and Cruisers">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A fast sailboat designed with comfortable accommodations, often 'one design' yachts that are eligible for one design class racing</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Racers">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A boat designed for speed and ease of handling, often at the expense of comfort.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Runabouts">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A powerboat less than 25 feet designed for cruising and watersports. May have outboard or sterndrive engine.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Saltwater Fishing">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Any fishing boat used in the ocean or coastal waters that's specially equipped to handle the harsh saltwater environment</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Schooner">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Fore-and-aft rigged sailing vessel with two to six masts, with the fore mast shorter than the main mast.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Sea Kayak">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">An ocean going or seaworthy kayak, able to withstand adverse conditions of weather and sea.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Seiner">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A seiner is so named because it fishes with a net called a seine that is laid out in a circle around a school of fish and drawn into a purse that closes the bottom, trapping the catch inside.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Ski and Fish">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A powerboat designed for both towing waterskiers and recreational fishing</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Ski and Wakeboard Boats">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Low profile, pleasure boats with minimal deadrise specifically designed for waterskiing and/or wakeboarding.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Skiff">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A small open boat, generally with an outboard engine.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Sloop">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A boat with a single mast and working sails(genoa and main)set fore and after respectively.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Sports Fishing Boats">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A type of bluewater fishing boat with at least two sleeping cabins and many dedicated fish-fighting features
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Sternpicker">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Also known as a gillnetter, this type of boat is used in troll, crab and sport fishery. Usually 30-40 feet long, with curtain-like nets
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Submarine">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A vessel that can operate submerged.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Tender">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A small boat used to transport persons, gear, and supplies to and from a yacht or other pleasure vessel, a dinghy.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Troller">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Used primarily on the salmon grounds off southeast Alaska and in deep-ocean albacore tuna fisheries, these fishing boats range in size from small skiffs to offshore boats of up to seventy feet.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Tug">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A boat used to maneuver, primarily by towing or pushing other vessels in harbours, over the open sea or through rivers and canals. They are also used to tow barges, disabled ships, or other equipment like towboats.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Tuna">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A fishing boat equipped with a tall aluminum "tuna tower" used for spotting fish in the distance, often equipped with a second set of helm controls.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Unspecified">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Boat class is unknown or not specified
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Utility Boats">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Small, inexpensive all purpose boats similar to jon boats. Typically constructed of steel with flat bottoms.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Walkarounds">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A open motorboat with cockpit-level deck access all around the console or cabin.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Yawl">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A two-masted sailboat with a main mast and smaller mizzen mast stepped after of the rudder post.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Angler">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">An open fishing boat designed for offshore or large bays and lakes</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Downeast">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A type of yacht used traditionally for lobster and other types of fishing off the coast of Maine, normally measuring between 20 and 50 feet in length.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Submersible">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">A craft that can go underwater and explore, and collect samples.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Trawlers">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Large, long distance powerboats with stable, comfortable cabins and creature comforts for living aboard.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Cargo Ship">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">General purpose freight ship. Often configured with onboard cranes for autonomous materials handling.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Container Ship">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Ship designed to efficiently transport standard 20 and 40 foot shipping containers.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Cruise Ship">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Large passenger ship designed for ocean cruising and providing comfortable accommodation and resort-like facilities.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Dredger">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Specialized vessel for excavating the sea floor to provide depth in harbors and navigation channels.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Ferry">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Passenger and/or roll-on roll-off vehicle carrying ship designed for scheduled sea, lake or river crossings.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Fire Boat">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Fire-fighting boat.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Floatel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Floating accommodation barge. Typically used for accommodating construction or drilling workers close to work site.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Floating Dry Dock">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        High sided semi-submersible barge that provides floating dry-dock facilities.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Ice Breaker">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Powerful heavily built ship designed to clear navigation channels in frozen seas.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Landing Craft">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Shallow draft vessel used for landing vehicles, passengers or animals in shallow waters and beaches.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Life Boat">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Rugged boat carried aboard ships for use in the event of emergency.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Patrol Boat">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        High performance ship used for marine security. Typically naval or coastguard type vessels.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Pilot Boat">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        High performance work boat designed with good seakeeping qualities and wide deck access for delivering port pilots to and from visiting ships.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Platform Barge">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Flat decked barge for carrying cranes, excavators or other heavy equipment on the water.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Rescue Boat">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Specialist high performance vessel designed to rescue mariners in distress in the roughest of sea conditions.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Research Ship">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Ship equipped for exploration or other research work at sea. Self-contained for extended periods at sea.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Supply Ship">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Offshore support and supply vessel.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Tanker">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Crude oil or gas carrier
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Water Taxi">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Small shuttle boat for carrying passengers short distances around harbours, marinas or islands.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Dory">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Open boat with highly stable cathedral hull configuration. Popularly used as a tender, for fishing and in club safety work.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Lobster Boat">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Open water work boat designed for easy transport, setting and recovery of lobster pots.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Aft Cabin">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Power cruiser with an aft cabin.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Hover Craft">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        An air-cushion vehicle capable of operating over water or land. Used both recreationally and commercially.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Hydrofoil">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Fast motor boat with wing-like foils attached to the hull. Designed to raise the hull out of the water at speed.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Hydroplane">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Racing power boat designed for high speed over the water with minimal surface contact.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Motor Barge">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        European motor barges traditionally used for cargo, but now being built as cruising and liveaboard barges.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Narrow Boat">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Narrow beam boat designed to navigate the narrow British canal network. Originally working cargo boats; now entirely recreational.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Rigid Cabin Inflatable">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Large inflatable with enclosed cabin accommodation or wheelhouse.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Rigid Dive and Rescue Inflatable">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Heavy duty rigid inflatable designed for easy entry and recovery from the water.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Rigid Sports Inflatable">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Recreational inflatable designed for passenger comfort and/or high performance. Commonly used as a yacht tender or runabout day boat.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="River Cruiser">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Shallow draft and low air-draft full displacement motor cruiser designed for inland waterways. Typically configured with a modest single engine.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Roll Up Inflatable">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Soft floor inflatable that can be deflated and stowed in a locker or car trunk.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Side Console">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Sports or fishing boat with a single console offset to one side.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Sports Cruiser">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Equivalent to an Express Cruiser; more commonly used in Europe.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Gulet">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Large wooden heavily constructed Turkish motor sailing yacht. Typically 50 to 100+ feet in length
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Sailing Barge">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        European sailing barges traditionally used for cargo, but now being built and used as cruising and liveaboard barges.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Rowing Shell">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Single, double, four or eight man sculling or rowing boat. Generally constructed in either racing or recreational styles.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Duck Boat">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A boat developed for the primary purpose of hunting water fowl.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="BoatHullMaterialContentType">
+        <xsd:annotation>
+            <xsd:documentation> </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="Aluminum">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        The primary material used for construction of the hull is aluminum
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Composite">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Material used for construction of the hull is a composite - often plastics reinforced with fibers other than (or in addition to) glass
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Ferro Cement">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        The primary material used for construction of the hull is Ferro Cement, a type of steel reinforced cement
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Fiberglass">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        The primary material used for construction of the hull is fiberglass
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Hypalon">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        The primary material used for construction of the hull is Hypalon, a trademark for chlorosulfonated polyethylene (CSPE) synthetic rubber (CSM) noted for its resistance to chemicals, temperature extremes, and ultraviolet light. It is a product of DuPont Performance Elastomers.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Other">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Other</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="PVC">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        The primary material used for construction of the hull is PVC
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Roplene">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        The primary material used for construction of the hull is roplene, a type of roto-molded plastic.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Steel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        The primary material used for construction of the hull is steel
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Wood">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        The primary material used for construction of the hull is wood
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Carbon Fiber">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        The primary material used for construction of the hull is carbon fiber, a space age, relatively expensive material.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Rubber">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        The primary material used for construction of the hull is rubber
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="BoatKeelContentType">
+        <xsd:annotation>
+            <xsd:documentation> </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="3/4 Keel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A keel with length approximately 75% as long as the boat's hull.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Detachable Keel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A keel design that can be removed for transport and stowage.  See daggerboard, centreboard or retractable. 
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Full Keel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A keel with length approximately as long as the boat's hull
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Fin Keel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A keel shaped like the fin of a fish that is shorter and deeper than a full-length keel.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Ocean Keel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A canting keel with large bulb found on ocean going racing yachts.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Retractable Keel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A keel design that can be raised or lowered for movement in shallow water or for transportation
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Other">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Keel type is unknown or unlisted
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Twin Keel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Two fin keels side by side enabling the yacht to sit upright when out of the water.  Also known as a bilge keel.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Bulb Keel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A type of fin keel with a bulb at the bottom to lower the centre of gravity
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Winged Keel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A type of bulb keel but with a wing.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Lifting Keel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A keel that pivots on it's forward edge enabling the keel to be lifted.  Also known a a Swing Keel.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Daggerboard Keel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A keel that can be raised vertically (usually by electric or hydraulic means) to reduce draught.  May also be referred to as centreboard or retractable.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Canting Keel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A canting keel is a form of sailing ballast, suspended from a rigid canting strut beneath the boat, which can be swung to windward of a boat under sail, in order to counteract the heeling force of the sail. The canting keel must be able to pivot to either port or starboard, depending on the current tack 
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Triple Keel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">
+                        Three fin keels side by side enabling the yacht to sit upright when out of water.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="BoatHullDesignContentType">
+        <xsd:annotation>
+            <xsd:documentation> </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="Catamaran">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A hull design consisting of two hulls joined by a frame
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Deep Vee">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A hull shape characterized by a sharp deadrise, typically more than 20 degrees
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Displacement">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A hull shape designed to run through water rather than on top of it in the manner of a planing hull.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Flat">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Typically a small open boat such as a jon boat, intended for use on calm waters such as ponds, small lakes, and slow rivers.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Foldable">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A type of boat hull design that folds for stowage or transport, including inflatables.
+                        </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Modified Vee">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A modification of the deep-V hull shape with a deadrise of less than 20 degrees
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Monohull">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A type of boat having only one hull
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Other">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Hull Design not known or specified
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Pontoon">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A type of boat with a flat deck attached to airtight flotation tubes or logs.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="RIB">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Rigid Inflatable Boat: An inflatable boat fitted with a rigid bottom
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Roll-up">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        An inflatable hull that can be rolled up for storage
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Round Bottom">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        Boats having a round shaped bottom for moving through water easily at slow speeds.  Examples include some trawlers, canoes and sailboats 
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Sea-V2">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A SeaV2 hull design has no two places on the keel where the deadrise is the same. The vee continuously sharpens from the transom to the bow stem
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Semi Displacement">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A hull shape with soft chines or a rounded bottom that enables the boat to achieve minimal planing characteristics.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Trimaran">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A multihull design consisting of a main hull and two smaller outrigger hulls attached to the main hull with lateral struts
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Tunnel">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A catamaran.  Essentially two deep-v hulls joined by a platform/cockpit area.  This design offers benefits in stability, speed, and roominess 
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Inflatable Ridgid">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">Deprecated: Use Inflatable Ridged</xsd:documentation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A type of boat with air chambers into which air is pumped either manually or automatically for buoyancy with a rigid bottom.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Inflatable Non Ridgid">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">Deprecated: Use Inflatable Non Ridged</xsd:documentation>
+                    <xsd:documentation source="http://www.starstandard.org/">
+                        A type of boat with air chambers into which air is pumped either manually or automatically for buoyancy, without a rigid bottom.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Inflatable Ridged">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">
+                        A type of boat with air chambers into which air is pumped either manually or automatically for buoyancy with a rigid bottom.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Inflatable Non Ridged">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org">
+                        A type of boat with air chambers into which air is pumped either manually or automatically for buoyancy with a rigid bottom.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="BoatEngineLocationContentType">
+        <xsd:annotation>
+            <xsd:documentation> </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:normalizedString">
+            <xsd:enumeration value="Port">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Port</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Center Port">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Center Port</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Starboard">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Starboard</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Center Starboard">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Center Starboard</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Center">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Center</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="Bow">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/">Bow</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os" xmlns:xacml-context="urn:oasis:names:tc:xacml:1.0:context" 
+	xmlns:md="urn:med:example:schemas:record" PolicyId="urn:oasis:names:tc:xacml:2.0:example:policyid:3" 
+	RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:permit-overrides">
+	<Description> Policy for any medical record in the http://www.med.example.com/schemas/record.xsd namespace </Description>
+	<PolicyDefaults>
+		<XPathVersion>http://www.w3.org/TR/1999/Rec-xpath-19991116</XPathVersion>
+	</PolicyDefaults>
+	<Target>
+		<Resources>
+			<Resource>
+				<ResourceMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">urn:med:example:schemas:record</AttributeValue>
+					<ResourceAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:resource:target-namespace" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+				</ResourceMatch>
+			</Resource>
+		</Resources>
+	</Target>
+	<Rule RuleId="urn:oasis:names:tc:xacml:2.0:example:ruleid:3" Effect="Permit">
+		<Description> A physician may write any medical element in a record for which he or she is the designated primary care physician, provided an email is sent 
+			to the patient </Description>
+		<Target>
+			<Subjects>
+				<Subject>
+					<SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">physician</AttributeValue>
+						<SubjectAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:2.0:example:attribute:role" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+					</SubjectMatch>
+				</Subject>
+			</Subjects>
+			<Resources>
+				<Resource>
+					<ResourceMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">urn:med:example:schemas:record</AttributeValue>
+						<ResourceAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:resource:target-namespace" 
+							DataType="http://www.w3.org/2001/XMLSchema#string"/>
+					</ResourceMatch>
+				</Resource>
+			</Resources>
+			<Actions>
+				<Action>
+					<ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">write</AttributeValue>
+						<ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+					</ActionMatch>
+				</Action>
+			</Actions>
+		</Target>
+		<Condition>
+			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+					<SubjectAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:2.0:example:attribute:physician-id" 
+						DataType="http://www.w3.org/2001/XMLSchema#string"/>
+				</Apply>
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+					<AttributeSelector RequestContextPath="//Resource/ResourceContent/record/primaryCarePhysician/registrationID/text()" 
+						DataType="http://www.w3.org/2001/XMLSchema#string"/>
+				</Apply>
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule RuleId="DenyAllOthers" Effect="Deny"/>
+</Policy>

@@ -1,0 +1,279 @@
+<?xml version="1.0"?>
+<schema
+	targetNamespace="http://iptc.org/std/SportsML/2006-10-18/"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:sportsml="http://iptc.org/std/SportsML/2006-10-18/"
+	version="1.8"
+	>
+	<simpleType name="statsCoverage.Core.Vocabulary">
+		<restriction base="string">
+			<enumeration value="compact"/>
+			<enumeration value="standard"/>
+			<enumeration value="expanded"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="teamCoverage.Core.Vocabulary">
+		<restriction base="string">
+			<enumeration value="single-team"/>
+			<enumeration value="multi-team"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="dateCoverageType.Core.Vocabulary">
+		<restriction base="string">
+			<enumeration value="period"/>
+			<enumeration value="event"/>
+			<enumeration value="tournament"/>
+			<enumeration value="tournament-pool"/>
+			<enumeration value="tournament-seed"/>
+			<enumeration value="recent-ten-events"/>
+			<enumeration value="hourly"/>
+			<enumeration value="daily"/>
+			<enumeration value="weekly"/>
+			<enumeration value="monthly"/>
+			<enumeration value="preseason"/>
+			<enumeration value="season-exhibition"/>
+			<enumeration value="season-regular">
+				<annotation>
+					<documentation>The default value.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="season-playoffs"/>
+			<enumeration value="season-full"/>
+			<enumeration value="career"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="durationScope.Core.Vocabulary">
+		<restriction base="string">
+			<enumeration value="events-all">
+				<annotation>
+					<documentation>Every event played, including overtime games, the most recent ones, etc. The default option.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="events-overtime"/>
+			<enumeration value="events-shootout"/>
+			<enumeration value="events-most-recent-10"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="competitionScope.Core.Vocabulary">
+		<restriction base="string">
+			<enumeration value="events-all">
+				<annotation>
+					<documentation>Every event played, including those played against teams in the same division or conference. The default option.</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="division"/>
+			<enumeration value="division-opposing"/>
+			<enumeration value="conference"/>
+			<enumeration value="conference-opposing"/>
+			<enumeration value="team-opposing"/>
+			<enumeration value="player-opposing"/>
+			<enumeration value="tournament"/>
+			<enumeration value="league"/>
+			<enumeration value="top-25"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="alignmentScope.Core.Vocabulary">
+		<annotation>
+			<documentation>Every event played, including those played at home and away. The default option.</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="events-all"/>
+			<enumeration value="events-home"/>
+			<enumeration value="events-away"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="recordMakingScope.Core.Vocabulary">
+		<restriction base="string">
+			<enumeration value="high"/>
+			<enumeration value="low"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="codeType.Core.Vocabulary">
+		<annotation>
+			<documentation>What type of item is being described.</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="sport-class"/>
+			<enumeration value="sport-category"/>
+			<enumeration value="sport"/>
+			<enumeration value="sport-competition"/>
+			<enumeration value="league"/>
+			<enumeration value="conference"/>
+			<enumeration value="division"/>
+			<enumeration value="team"/>
+			<enumeration value="special-event"/>
+			<enumeration value="site"/>
+			<enumeration value="article-ref"/>
+			<enumeration value="photo-ref"/>
+			<enumeration value="audio-ref"/>
+			<enumeration value="video-ref"/>
+			<enumeration value="xref-key"/>
+			<enumeration value="slug"/>
+			<enumeration value="slug-category"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="eventStyle.Core.Vocabulary">
+		<annotation>
+			<documentation>Indicates whether competitors are trying to defeat each other or just outdo one another.</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="head-to-head"/>
+			<enumeration value="ranked"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="eventStatus.Core.Vocabulary">
+		<annotation>
+			<documentation>pre-event, mid-event, post-event.</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="pre-event"/>
+			<enumeration value="mid-event"/>
+			<enumeration value="post-event"/>
+			<enumeration value="postponed"/>
+			<enumeration value="suspended"/>
+			<enumeration value="halted"/>
+			<enumeration value="forfeited"/>
+			<enumeration value="rescheduled"/>
+			<enumeration value="delayed"/>
+			<enumeration value="canceled"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="postponementStatus.Core.Vocabulary">
+		<annotation>
+			<documentation>Either none, weather-delay, or other.</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="none"/>
+			<enumeration value="weather-delay"/>
+			<enumeration value="other"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="status.Core.Vocabulary">
+		<annotation>
+			<documentation>Whether a player starts playing at the beginning of a sports-event, joins mid-game, or is not available to participate.</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="starter"/>
+			<enumeration value="bench"/>
+			<enumeration value="scratched"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="health.Core.Vocabulary">
+		<annotation>
+			<documentation>An indication of the health of the player.</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="injured"/>
+			<enumeration value="fine"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="phaseType.Core.Vocabulary">
+		<restriction base="string">
+			<enumeration value="scholastic"/>
+			<enumeration value="college"/>
+			<enumeration value="amateur"/>
+			<enumeration value="professional"/>
+			<enumeration value="semi-professional"/>
+			<enumeration value="former-professional"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="gender.Core.Vocabulary">
+		<annotation>
+			<documentation>One specific gender or mixed.</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="male"/>
+			<enumeration value="female"/>
+			<enumeration value="mixed"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="participantCount.Core.Vocabulary">
+		<annotation>
+			<documentation>Number of participants playing on a team or side in the events covered.</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="individual"/>
+			<enumeration value="doubles"/>
+			<enumeration value="team"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="professionalStatus.Core.Vocabulary">
+		<annotation>
+			<documentation>The professional-status of the events covered.</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="amateur"/>
+			<enumeration value="professional"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="specialGroup.Core.Vocabulary">
+		<annotation>
+			<documentation>If the events covered are for special groups. Can be school-oriented, age-oriented, or group names, like Firefighters.</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="college"/>
+			<enumeration value="senior"/>
+			<enumeration value="junior"/>
+			<enumeration value="high-school"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="specialNeeds.Core.Vocabulary">
+		<annotation>
+			<documentation>Events for persons with special-needs.</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="none"/>
+			<enumeration value="disabled"/>
+			<enumeration value="deaf"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="siteStyle.Core.Vocabulary">
+		<annotation>
+			<documentation>Whether it is an indoor or outdoor site.</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="indoor"/>
+			<enumeration value="outdoor"/>
+			<enumeration value="retractable-dome"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="siteSurface.Core.Vocabulary">
+		<annotation>
+			<documentation>Describes the surface upon which events are played.</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="hard-court"/>
+			<enumeration value="clay"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="scoreUnits.Core.Vocabulary">
+		<annotation>
+			<documentation>Describes how the score and score-opposing is valued.</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="time-absolute"/>
+			<enumeration value="time-relative"/>
+			<enumeration value="below-par"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="resultEffect.Core.Vocabulary">
+		<restriction base="string">
+			<enumeration value="qualification"/>
+			<enumeration value="promotion"/>
+			<enumeration value="demotion"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="awardType.Core.Vocabulary">
+		<restriction base="string">
+			<enumeration value="medal"/>
+			<enumeration value="trophy"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="statusChangeType.Core.Vocabulary">
+		<restriction base="string">
+			<enumeration value="injury"/>
+			<enumeration value="trade"/>
+			<enumeration value="cut"/>
+		</restriction>
+	</simpleType>
+</schema>

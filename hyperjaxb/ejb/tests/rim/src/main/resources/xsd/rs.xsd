@@ -1,0 +1,163 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!-- $Id:$ -->
+<schema targetNamespace="urn:oasis:names:tc:ebxml-regrep:xsd:rs:4.0" 
+        xmlns="http://www.w3.org/2001/XMLSchema" 
+        xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" 
+        xmlns:tns="urn:oasis:names:tc:ebxml-regrep:xsd:rs:4.0"
+        elementFormDefault="qualified"
+        attributeFormDefault="unqualified">
+    
+    <annotation>
+        <documentation xml:lang="en">The schema for OASIS ebXML Registry Services</documentation>
+    </annotation>
+    
+    <!-- Import the rim.xsd file with XML schema mappaing from RIM -->
+    <import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0" schemaLocation="rim.xsd"/>
+    
+    <complexType name="RegistryRequestType">
+        <annotation>
+            <documentation xml:lang="en">Base type for all ebXML Registry requests</documentation>
+        </annotation>
+        <complexContent>
+          <extension base="rim:ExtensibleObjectType">
+            <attribute name="id" type="anyURI" use="optional"/>
+            <!--Comment may be used by requestor to describe the request. Used in VersionInfo.comment-->
+            <attribute name="comment" type="string" use="optional"/>
+          </extension>
+        </complexContent>
+    </complexType>
+    <element name="RegistryRequest" type="tns:RegistryRequestType"/>
+    <complexType name="RegistryResponseType">
+        <annotation>
+            <documentation xml:lang="en">Base type for all ebXML Registry responses</documentation>
+        </annotation>
+        <complexContent>
+          <extension base="rim:ExtensibleObjectType">
+            <attribute name="status" type="rim:referenceURI" use="required"/>
+            <!-- id is the request if for the request for which this is a response -->
+            <attribute name="requestId" type="anyURI" use="optional"/>
+          </extension>
+        </complexContent>
+    </complexType>
+    <element name="RegistryResponse" type="tns:RegistryResponseType"/>
+    <complexType name="RegistryExceptionType">
+        <annotation>
+            <documentation>Base for all registry exceptions</documentation>
+        </annotation>
+        <attribute name="code" type="string" use="optional"/>
+        <attribute name="severity" type="rim:referenceURI" default="urn:oasis:names:tc:ebxml-regrep:ErrorSeverityType:Error"/>
+    </complexType>
+    <element name="RegistryException" type="tns:RegistryExceptionType"/>
+    <complexType name="ObjectNotFoundExceptionType">
+        <complexContent>
+            <extension base="tns:RegistryExceptionType">
+                <sequence/>
+            </extension>
+        </complexContent>
+    </complexType>
+    <element name="ObjectNotFoundException" type="tns:ObjectNotFoundExceptionType"/>
+    <complexType name="InvalidRequestExceptionType">
+        <complexContent>
+            <extension base="tns:RegistryExceptionType">
+                <sequence/>
+            </extension>
+        </complexContent>
+    </complexType>
+    <element name="InvalidRequestException" type="tns:InvalidRequestExceptionType"/>
+    <complexType name="AuthorizationExceptionType">
+        <complexContent>
+            <extension base="tns:RegistryExceptionType">
+                <sequence/>
+            </extension>
+        </complexContent>
+    </complexType>
+    <element name="AuthorizationException" type="tns:AuthorizationExceptionType"/>
+    <complexType name="TimeoutExceptionType">
+        <complexContent>
+            <extension base="tns:RegistryExceptionType">
+                <sequence/>
+            </extension>
+        </complexContent>
+    </complexType>
+    <element name="TimeoutException" type="tns:TimeoutExceptionType"/>
+    <complexType name="UnsupportedCapabilityExceptionType">
+        <complexContent>
+            <extension base="tns:RegistryExceptionType">
+                <sequence/>
+            </extension>
+        </complexContent>
+    </complexType>
+    <element name="UnsupportedCapabilityException" type="tns:UnsupportedCapabilityExceptionType"/>
+    <complexType name="UnresolvedReferenceExceptionType">
+        <complexContent>
+            <extension base="tns:RegistryExceptionType">
+                <sequence/>
+            </extension>
+        </complexContent>
+    </complexType>
+    <element name="UnresolvedReferenceException" type="tns:UnresolvedReferenceExceptionType"/>
+    <complexType name="QuotaExceededExceptionType">
+        <complexContent>
+            <extension base="tns:RegistryExceptionType">
+                <sequence/>
+            </extension>
+        </complexContent>
+    </complexType>
+    <element name="QuotaExceededException" type="tns:QuotaExceededExceptionType"/>
+    <complexType name="ReferencesExistExceptionType">
+        <complexContent>
+            <extension base="tns:RegistryExceptionType">
+                <sequence/>
+            </extension>
+        </complexContent>
+    </complexType>
+    <element name="ReferencesExistException" type="tns:ReferencesExistExceptionType"/>
+    
+    <complexType name="QueryExceptionType">
+      <complexContent>
+        <extension base="tns:RegistryExceptionType">
+          <sequence/>
+        </extension>
+      </complexContent>
+    </complexType>
+    <element name="QueryException" type="tns:QueryExceptionType"/>
+    
+    <!-- 
+        == Exceptions from spec == 
+        TODO: Need to review with a fine tooth comb??
+        
+        - RegistryRequest
+        AuthorizationException
+        InvalidRequestException
+        SignatureValidationException
+        TimeoutException
+        UnsupportedCapabilityException
+        
+        - SubmitObjectsRequest
+        UnresolvedReferenceException
+        UnsignedRepositoryItemException
+        QuotaExceededException
+        
+        - UpdateObjectsRequest
+        UnresolvedReferenceException
+        UnsignedRepositoryItemException
+        QuotaExceededException
+        
+        - ApproveObjectsRequest
+        ObjectNotFoundException
+        
+        - DepracateObjectsRequest
+        UnresolvedReferenceException
+        
+        - UndepracateObjectsRequest
+        UnresolvedReferenceException
+        
+        - RemoveObjectsRequest
+        UnresolvedReferenceException
+        ReferencesExistException
+        
+        - AdhocQueryRequest
+        InvalidQueryException
+        
+        -->
+</schema>

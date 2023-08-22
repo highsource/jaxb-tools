@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.010" id="OTA2008A">
+	<xs:include schemaLocation="OTA_GolfCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_GolfCourseResRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The OTA_CourseResRS message is used as a response to the OTA_CourseResRQ.  The specific information about the golfer or golfers is necessary in order to validate booking rules and set rates.  The response includes all rate and confirmation information.  Where the booking entity has the authority to make the booking and uses the Request message as a notification, the Response message is merely an acknowledgment of receipt of that booking.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:annotation>
+				<xs:documentation xml:lang="en">May have either errors or warnings or both, but must have one if there is no success</xs:documentation>
+			</xs:annotation>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType"/>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0"/>
+					<xs:element name="UniqueID" type="UniqueID_Type" minOccurs="0"/>
+					<xs:element name="GolfCoursesRes">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="GolfCourseRes" type="GolfCourseResType" maxOccurs="99"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType"/>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attributeGroup ref="ID_Group"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

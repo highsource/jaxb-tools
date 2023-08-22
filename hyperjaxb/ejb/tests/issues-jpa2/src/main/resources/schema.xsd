@@ -1,0 +1,250 @@
+<xsd:schema
+	targetNamespace="urn:test" xmlns:test="urn:test" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	jaxb:version="2.1" 
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified"
+
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+
+	jaxb:extensionBindingPrefixes="hj orm xjc"
+
+	>
+
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.issuesjpa2"/>
+			</jaxb:schemaBindings>
+                        <hj:persistence>
+                                <hj:default-element-collection fetch="EAGER"/>
+				<!--hj:default-collection-property type="xsd:string">
+					<hj:element-collection fetch="EAGER">
+						<orm:column length="255"/>
+					</hj:element-collection>
+				</hj:default-collection-property-->
+                        </hj:persistence>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+	<xsd:element name="HJIII-73-Parent" type="test:HJIII-73-Parent"/>
+
+	<xsd:complexType name="HJIII-73-Parent">
+		<xsd:sequence>
+			<xsd:element name="HJIII-73-Child-One-To-Many" type="test:HJIII-73-Child" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<hj:one-to-many>
+							<orm:order-column/>
+						</hj:one-to-many>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="HJIII-73-Child-Many-To-Many" type="test:HJIII-73-Child" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<hj:many-to-many>
+							<orm:order-column name="ORDNUNG"/>
+						</hj:many-to-many>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="HJIII-73-Child">
+		<xsd:attribute name="value" type="xsd:string" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:element name="HJIII-63-Alpha" type="test:HJIII-63-Alpha"/>
+	
+	<xsd:complexType name="HJIII-63-Alpha">
+		<xsd:sequence>
+			<xsd:element name="stringElements" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+			<!--xsd:element name="dateElements" type="xsd:date" minOccurs="0" maxOccurs="unbounded"/-->
+			<!-- xsd:element name="base64BinaryElements" type="xsd:base64Binary" minOccurs="0" maxOccurs="unbounded"/ -->
+			<xsd:element name="decimalElements" type="xsd:decimal" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="stringsElement" type="test:HJIII-63-Strings" minOccurs="0"/>
+			<xsd:element name="stringsElements" type="test:HJIII-63-Strings" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="stringsAttribute" type="test:HJIII-63-Strings" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:simpleType name="HJIII-63-Strings">
+		<xsd:list itemType="xsd:string"/>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="HJIII-63-QNames">
+		<xsd:list itemType="xsd:QName"/>
+	</xsd:simpleType>
+
+	<xsd:element name="HJIII-63-Beta" type="test:HJIII-63-Beta"/>
+
+	<xsd:complexType name="HJIII-63-Beta">
+		<xsd:simpleContent>
+			<xsd:extension base="test:HJIII-63-Strings">
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+	<xsd:simpleType name="HJIII-63-StringEnum">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="A"/>
+			<xsd:enumeration value="B"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="HJIII-63-StringEnums">
+		<xsd:list itemType="test:HJIII-63-StringEnum"/>
+	</xsd:simpleType>
+
+	<xsd:element name="HJIII-63-Gamma" type="test:HJIII-63-Gamma"/>
+	<xsd:complexType name="HJIII-63-Gamma">
+		<xsd:sequence>
+			<xsd:element name="enumElements" type="test:HJIII-63-StringEnum" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="enumsElement" type="test:HJIII-63-StringEnums" minOccurs="0"/>
+			<xsd:element name="enumsElements" type="test:HJIII-63-StringEnums" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="enumsAttribute" type="test:HJIII-63-StringEnums" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:element name="HJIII-63-Delta" type="test:HJIII-63-Delta"/>
+	<xsd:complexType name="HJIII-63-Delta">
+		<xsd:sequence>
+			<xsd:element name="qnameElements" type="xsd:QName" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="qnamesElement" type="test:HJIII-63-QNames" minOccurs="0"/>
+			<xsd:element name="qnamesElements" type="test:HJIII-63-QNames" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="qnamesAttribute" type="test:HJIII-63-QNames" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:element name="HJIII-63-Epsilon" type="test:HJIII-63-Epsilon"/>
+
+	<xsd:complexType name="HJIII-63-Epsilon">
+		<xsd:simpleContent>
+			<xsd:extension base="test:HJIII-63-QNames"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+	<xsd:element name="HJIII-63-Zeta" type="test:HJIII-63-Zeta"/>
+
+	<xsd:complexType name="HJIII-63-Zeta">
+		<xsd:simpleContent>
+			<xsd:extension base="test:HJIII-63-StringEnums"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+
+	<xsd:group name="HJIII-91-Group">
+		<xsd:sequence>
+			<xsd:element name="one" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="two" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+
+	<xsd:element name="HJIII-91-A" type="test:HJIII-91-A-Type"/>
+
+	<xsd:complexType name="HJIII-91-A-Type">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<hj:entity>
+					<orm:table name="HJIII91GROUP"/>
+					<orm:secondary-table name="HJIII91ATYPE"/>
+				</hj:entity>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="test:HJIII-91-Group"/>
+			<xsd:element name="athree" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<hj:basic>
+							<orm:column table="HJIII91ATYPE"/>
+						</hj:basic>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:string">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<hj:id/>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:element name="HJIII-91-B" type="test:HJIII-91-B-Type"/>
+
+	<xsd:complexType name="HJIII-91-B-Type">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<hj:entity>
+					<orm:table name="HJIII91GROUP"/>
+					<orm:secondary-table name="HJIII91BTYPE"/>
+				</hj:entity>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="test:HJIII-91-Group"/>
+			<xsd:element name="bthree" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<hj:basic>
+							<orm:column table="HJIII91BTYPE"/>
+						</hj:basic>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:string">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<hj:id/>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:element name="HJIII-53"/>
+
+	<xsd:complexType name="HJIII-53">
+		<xsd:sequence>
+			<xsd:element name="a" type="test:HJIII-53-A"/>
+			<xsd:element name="b" type="test:HJIII-53-B"/>
+			<xsd:element name="c" type="test:HJIII-53-C"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="HJIII-53-A">
+		<xsd:sequence>
+			<xsd:element name="b" type="xsd:IDREF"/>
+			<xsd:element name="b1" type="test:HJIII-53-B"/>
+			<xsd:element name="c" type="xsd:IDREFS"/>
+			<xsd:element name="c1" type="test:HJIII-53-C" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="HJIII-53-B">
+        	<xsd:attribute name="id" type="xsd:ID" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="HJIII-53-C">
+        	<xsd:attribute name="id" type="xsd:ID" use="required"/>
+	</xsd:complexType>
+
+        <xsd:element name="HJIII-101" type="test:HJIII-101-Type"/> 
+
+	<xsd:complexType name="HJIII-101-Type"> 
+		<xsd:sequence> 
+			<xsd:element name="id" type="xsd:string" nillable="false"/> 
+			<xsd:element name="hjiii101" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence> 
+        </xsd:complexType> 
+
+
+</xsd:schema>

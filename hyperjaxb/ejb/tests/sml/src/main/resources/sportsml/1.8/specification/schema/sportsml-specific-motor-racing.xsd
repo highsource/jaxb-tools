@@ -1,0 +1,530 @@
+<?xml version="1.0"?>
+<!--
+IPTC - International Press Telecommunications Council
+Royal Albert House, Windsor, Berkshire SL4 1BE, England
+www.iptc.org
+
+See sportsml.xsd to view Non-Exclusive License Agreement for 
+International Press Telecommunications Council, which
+applies to this specification.
+-->
+<schema
+	targetNamespace="http://iptc.org/std/SportsML/2006-10-18/"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:sportsml="http://iptc.org/std/SportsML/2006-10-18/"
+	version="1.8"
+	>
+	<attributeGroup name="eventStateMotorRacing">
+		<attribute name="lap" type="string" use="optional">
+			<annotation>
+				<documentation>An integer. 1,2,3,4 for the current lap that (generally) the leader of the race is amidst.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="laps-remaining" type="string" use="optional">
+			<annotation>
+				<documentation>The number of laps (generally for the leader) that are remaining in the race.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="time-elapsed" type="string" use="optional">
+			<annotation>
+				<documentation>The time elapsed in the race.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="flag-state" type="sportsml:flagType.MotorRacing" use="optional">
+			<annotation>
+				<documentation>The current flag issued within the race.</documentation>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+	<element name="event-metadata-motor-racing">
+		<annotation>
+			<documentation>Metadata about the event itself. | Includes what state the game is in.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateMotorRacing"/>
+		</complexType>
+	</element>
+	<element name="event-stats-motor-racing">
+		<annotation>
+			<documentation>Statistics about the event itself. | Includes the total number of lead changes, and the average speed.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="speed-average" type="string" use="optional">
+				<annotation>
+					<documentation>The average speed of the race.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="speed-units" type="string" use="optional">
+				<annotation>
+					<documentation>The units used for speed-average. For example: mph.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="lead-changes" type="string" use="optional">
+				<annotation>
+					<documentation>The number of times the lead changed in this race.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="lead-changes-drivers" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of drivers that comprised the lead changes.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="margin-of-victory" type="string" use="optional">
+				<annotation>
+					<documentation>Time behind leader for 2nd place driver.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="caution-flags" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of flags for race.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="caution-flags-laps" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of laps there were caution flags.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="laps-total" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of laps for race.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="distance-lap" type="string" use="optional">
+				<annotation>
+					<documentation>Length of one lap.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="distance-total" type="string" use="optional">
+				<annotation>
+					<documentation>Total distance of race.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="distance-units" type="string" use="optional">
+				<annotation>
+					<documentation>Unit of measure for distance-lap and distance-total.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="team-metadata-motor-racing">
+		<annotation>
+			<documentation>Metadata about the team. | Specific to the sport of motor racing.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:metadata-motor-racing-vehicle" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="team-stats-motor-racing">
+		<annotation>
+			<documentation>Specific statistics for motor racing. | Includes stats about the qualifying round, as well as for the race itself.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-motor-racing-qualifying" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-motor-racing-race" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+		</complexType>
+	</element>
+	<element name="metadata-motor-racing-vehicle">
+		<annotation>
+			<documentation>Details on the car, motorcycle, etc., being driven. | Includes manufacturing information.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="number" type="string" use="optional">
+				<annotation>
+					<documentation>The number written on the side of the vehicle.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="make-key" type="string" use="optional">
+				<annotation>
+					<documentation>A unique identifier for the make of the car. For example: m.dodge</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="make-name" type="string" use="optional">
+				<annotation>
+					<documentation>A display-name for the make-key.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="sponsor" type="string" use="optional">
+				<annotation>
+					<documentation>The name of the sponsor for the car.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="chassis" type="string" use="optional">
+				<annotation>
+					<documentation>The type of chassis.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="engine" type="string" use="optional">
+				<annotation>
+					<documentation>The type of engine.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="tire" type="string" use="optional">
+				<annotation>
+					<documentation>The type of tire.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-motor-racing-qualifying">
+		<annotation>
+			<documentation>Statistics for the qualifying round of a race. | Includes pole position and qualifying times.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="grid" type="string" use="optional">
+				<annotation>
+					<documentation>The arrangement or order of cars in the starting lineup.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="pole-position" type="string" use="optional">
+				<annotation>
+					<documentation>Position relative to the inside wall, at the start of the race.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="pole-wins" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times this driver or team had a pole position of 1.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="qualifying-speed" type="string" use="optional">
+				<annotation>
+					<documentation>Speed of lap which qualified the driver.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="qualifying-speed-units" type="string" use="optional">
+				<annotation>
+					<documentation>Units used for qualifying-speed.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="qualifying-time" type="string" use="optional">
+				<annotation>
+					<documentation>Time received for qualifying lap.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="qualifying-position" type="string" use="optional">
+				<annotation>
+					<documentation>Where the car had ranked within the preliminary round.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-motor-racing-race">
+		<annotation>
+			<documentation>Statistics for the race itself. | Includes time information and can include cumulative stats for the driver or team.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-motor-racing-lap" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="time-behind-leader" type="string" use="optional">
+				<annotation>
+					<documentation>Amount of time this driver was behind the car that is currently in first place.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="laps-behind-leader" type="string" use="optional">
+				<annotation>
+					<documentation>Amount of laps this driver was behind the car that is currently in first place.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="time-ahead-follower" type="string" use="optional">
+				<annotation>
+					<documentation>Amount of time this driver was ahead of the car immediately behind it.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="laps-ahead-follower" type="string" use="optional">
+				<annotation>
+					<documentation>Amount of laps this driver was ahead of the car immediately behind it.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="time" type="string" use="optional">
+				<annotation>
+					<documentation>Total amount of time this driver has been competing in the race.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points" type="string" use="optional">
+				<annotation>
+					<documentation>Total accumulation of points in the league-authorized standings for the season.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="points-rookie" type="string" use="optional">
+				<annotation>
+					<documentation>Total accumulation of points in the league-authorized standings for the season, amongst other drivers who are competing in their first year.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="bonus" type="string" use="optional">
+				<annotation>
+					<documentation>Amount of bonus points driver has earned in this race. For example, NASCAR drivers may receive five bonus points for leading a lap, and an additional five points for leading the most laps.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="laps-completed" type="string" use="optional">
+				<annotation>
+					<documentation>Number of laps this driver has completed during this race.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="laps-leading-total" type="string" use="optional">
+				<annotation>
+					<documentation>Number of laps in which this driver has led the field.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="distance-leading" type="string" use="optional">
+				<annotation>
+					<documentation>Distance (in, say, miles or kilometers) that driver has led the race.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="distance-completed" type="string" use="optional">
+				<annotation>
+					<documentation>Distance (in, say, miles or kilometers) that driver has completed in this race.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="distance-units" type="string" use="optional">
+				<annotation>
+					<documentation>The unit of measure used for distances.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="speed-average" type="string" use="optional">
+				<annotation>
+					<documentation>Average speed during the race.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="speed-units" type="string" use="optional">
+				<annotation>
+					<documentation>Units used for denoting the speed.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="status" type="string" use="optional">
+				<annotation>
+					<documentation>Whether the driver is running, or is out of the race.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="finishes-top-5" type="string" use="optional">
+				<annotation>
+					<documentation>Number of top-5 finishes this driver has had.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="finishes-top-10" type="string" use="optional">
+				<annotation>
+					<documentation>Number of top-10 finishes this driver has had.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="starts" type="string" use="optional">
+				<annotation>
+					<documentation>Number of races this driver had started.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="finishes" type="string" use="optional">
+				<annotation>
+					<documentation>Number of races this driver had finished.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="non-finishes" type="string" use="optional">
+				<annotation>
+					<documentation>Number of races this driver had started but had not finished.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="wins" type="string" use="optional">
+				<annotation>
+					<documentation>Number of races this driver had won.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="races-leading" type="string" use="optional">
+				<annotation>
+					<documentation>Number of races in which this driver has held a lead.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="money" type="string" use="optional">
+				<annotation>
+					<documentation>Amount of money this driver had won.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="money-units" type="string" use="optional">
+				<annotation>
+					<documentation>Units in which the money attribute is specified.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="leads-total" type="string" use="optional">
+				<annotation>
+					<documentation>Number of total leads this driver has had, presumably during this race.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A comment or highlight on this driver.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-motor-racing-lap">
+		<annotation>
+			<documentation>Statistics for a particular lap. | Can be used for all laps in a race, or just say for the fastest lap.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="speed-range" type="string" use="optional">
+				<annotation>
+					<documentation>A controlled vocabulary. Either fastest or slowest.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="number" type="string" use="optional">
+				<annotation>
+					<documentation>The lap number in question.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="start-time-elapsed" type="string" use="optional">
+				<annotation>
+					<documentation>The time since the start of the race at which this lap was begun.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="speed-average" type="string" use="optional">
+				<annotation>
+					<documentation>The average speed of this lap.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="speed-units" type="string" use="optional">
+				<annotation>
+					<documentation>The units used for speed-average.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="duration" type="string" use="optional">
+				<annotation>
+					<documentation>The length of time this lap (or partial lap) was completed.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="split-location" type="string" use="optional">
+				<annotation>
+					<documentation>Used when partial laps are being timed. If omitted, it is assumed that the stats herein are for the entire lap. Sample values include: start | stretch | finish | marker-1 | marker-2</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="player-metadata-motor-racing">
+		<annotation>
+			<documentation>Metadata about the driver. | Specific to the sport of motor racing.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:metadata-motor-racing-vehicle" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="player-stats-motor-racing">
+		<annotation>
+			<documentation>Specific statistics for motor racing. | Includes stats about the qualifying round, as well as for the race itself.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-motor-racing-qualifying" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-motor-racing-race" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+		</complexType>
+	</element>
+	<element name="associate-metadata-motor-racing">
+		<annotation>
+			<documentation>Metadata about the associate. | Specific to the sport of motor racing.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:metadata-motor-racing-vehicle" minOccurs="0"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="event-actions-motor-racing">
+		<annotation>
+			<documentation>A container for specific motor-racing actions. | Generally ordered chronologically.</documentation>
+		</annotation>
+		<complexType>
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="sportsml:action-motor-racing-flag-change"/>
+				<element ref="sportsml:action-motor-racing-position-change"/>
+			</choice>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="action-motor-racing-flag-change">
+		<annotation>
+			<documentation>Used when a flag is changed from one to another. | Signals the start of race, or a switch to caution mode.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateMotorRacing"/>
+			<attribute name="flag-original" type="sportsml:flagType.MotorRacing" use="optional">
+				<annotation>
+					<documentation>A key for the original flag.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="flag-new" type="sportsml:flagType.MotorRacing" use="optional">
+				<annotation>
+					<documentation>A key for the new flag.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A textual comment.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-motor-racing-position-change">
+		<annotation>
+			<documentation>Used when one driver passes another. | Could be used to just track the leaders, or could track the relative shiftings of all drivers in the race.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateMotorRacing"/>
+			<attribute name="passer-type" use="required">
+				<annotation>
+					<documentation>Whether the passer is a team or a player.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="team"/>
+						<enumeration value="player"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="passer-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>An IDREF for the passer.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="passer-key" type="string" use="optional">
+				<annotation>
+					<documentation>A key for the passer.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="position-original" type="string" use="optional">
+				<annotation>
+					<documentation>The original position of the passer, with respect to the race leader.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="position-new" type="string" use="optional">
+				<annotation>
+					<documentation>the new position of the passer, following the pass.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>A textual comment.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+</schema>

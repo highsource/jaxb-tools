@@ -1,0 +1,50 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" elementFormDefault="unqualified"
+attributeFormDefault="unqualified" version="1.0" jaxb:version="1.0"
+jaxb:extensionBindingPrefixes="xjc">
+   <xs:element name="Root">
+       <xs:annotation>
+           <xs:documentation>Comment describing your root element</xs:documentation>
+       </xs:annotation>
+       <xs:complexType>
+           <xs:sequence>
+               <xs:element name="Man" type="ManType" minOccurs="0"
+maxOccurs="unbounded"/>
+               <xs:element name="Dog" type="DogType" minOccurs="0"
+maxOccurs="unbounded"/>
+           </xs:sequence>
+       </xs:complexType>
+   </xs:element>
+   <xs:complexType name="ManType">
+       <xs:sequence>
+           <xs:element name="dog" type="xs:IDREF" minOccurs="0">
+               <xs:annotation>
+                   <xs:appinfo>
+                       <xjc:idSymbolSpace name="dogSpace"/>
+                   </xs:appinfo>
+               </xs:annotation>
+           </xs:element>
+           <xs:element name="dogs" type="xs:IDREFS" minOccurs="0">
+               <xs:annotation>
+                   <xs:appinfo>
+                       <xjc:idSymbolSpace name="dogSpace"/>
+                   </xs:appinfo>
+               </xs:annotation>
+           </xs:element>
+       </xs:sequence>
+       <xs:attribute name="first_name" type="xs:string"/>
+       <xs:attribute name="last_name" type="xs:string"/>
+   </xs:complexType>
+   <xs:complexType name="DogType">
+       <xs:attribute name="nickname" type="xs:string"/>
+       <xs:attribute name="age" type="xs:int"/>
+       <xs:attribute name="id_dog" type="xs:ID">
+           <xs:annotation>
+               <xs:appinfo>
+                   <xjc:idSymbolSpace name="dogSpace"/>
+               </xs:appinfo>
+           </xs:annotation>
+       </xs:attribute>
+   </xs:complexType>
+</xs:schema>

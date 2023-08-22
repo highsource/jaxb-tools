@@ -1,0 +1,223 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:hj="http://hyperjaxb2.jvnet.org/customizations" 
+	jaxb:extensionBindingPrefixes="hj" jaxb:version="1.0">
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.jvnet.hyperjaxb2.customizations.test"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+	<!-- ... -->
+	<xs:element name="cclass" type="cclassType"/>
+	<xs:complexType name="cclassType">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:class lazy="false" discriminator-value="cclass" polymorphism="explicit" >
+					<hj:table name="cclass_table" schema="cclass_schema" catalog="cclass_catalog"/>
+					<hj:cache usage="read-write" region="none"/>
+				</hj:class>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="idProperty" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:id unsaved-value="undefined"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<!-- ... -->
+			<xs:element name="simpleSingleProperty" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:simpleSingleProperty update="false" insert="false" optimistic-lock="false" lazy="false">
+							<hj:column name="a_column" length="32" not-null="true" unique="true"/>
+							<hj:type name="string"/>
+						</hj:simpleSingleProperty>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<!-- ... -->
+			<xs:element name="complexSingleProperty" type="cclassType" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:complexSingleProperty>
+							<hj:many-to-one update="false" insert="false" optimistic-lock="false" lazy="false" cascade="none" outer-join="true" 
+								fetch="select" not-found="ignore">
+								<hj:column name="b_column"/>
+							</hj:many-to-one>
+						</hj:complexSingleProperty>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="complexSinglePropertyOneToOne" type="cclassType" minOccurs="0">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:complexSingleProperty>
+							<hj:one-to-one access="property" constrained="false" lazy="proxy" cascade="none" outer-join="true" 
+								fetch="select"/>
+						</hj:complexSingleProperty>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<!-- ... -->
+			<!--xs:any processContents="strict">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:wildcardSingleProperty access="property" update="false" insert="false" optimistic-lock="false" lazy="true" cascade="none">
+							<hj:classColumn name="anyclass"/>
+							<hj:idColumn name="anyid"/>
+						</hj:wildcardSingleProperty>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:any-->
+			<!-- ... -->
+			<xs:element name="simpleCollectionProperty" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:simpleCollectionProperty lazy="false" inverse="false" cascade="none" batch-size="3" outer-join="auto" fetch="join" 
+							optimistic-lock="false">
+							<hj:table name="c_table" catalog="c_catalog" schema="c_schema"/>
+							<hj:cache usage="read-write"/>
+							<hj:key not-null="false" update="false" unique="false">
+								<hj:column name="c_key"/>
+							</hj:key>
+							<hj:list-index base="15">
+								<hj:column name="c_index"/>
+							</hj:list-index>
+							<hj:element>
+								<hj:type name="string"/>
+								<hj:column name="c_value"/>
+							</hj:element>
+						</hj:simpleCollectionProperty>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<!-- ... -->
+			<xs:element name="complexCollectionProperty" type="cclassType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:complexCollectionProperty lazy="false" inverse="false" cascade="none" batch-size="3" outer-join="auto" fetch="join" 
+							optimistic-lock="false">
+							<hj:table name="d_table" catalog="d_catalog" schema="d_schema"/>
+							<hj:cache usage="read-write"/>
+							<hj:key not-null="false" update="false" unique="false">
+								<hj:column name="d_key"/>
+							</hj:key>
+							<hj:list-index base="15">
+								<hj:column name="d_index"/>
+							</hj:list-index>
+							<hj:one-to-many not-found="ignore"/>
+						</hj:complexCollectionProperty>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<!-- ... -->
+			<xs:element name="manyToManyCollectionProperty" type="cclassType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:complexCollectionProperty lazy="false" inverse="false" cascade="none" batch-size="3" outer-join="auto" fetch="join" 
+							optimistic-lock="false" order-by="column1">
+							<hj:table name="e_table" catalog="e_catalog" schema="e_schema"/>
+							<hj:cache usage="read-write"/>
+							<hj:key not-null="false" update="false" unique="false">
+								<hj:column name="e_key"/>
+							</hj:key>
+							<hj:list-index base="15">
+								<hj:column name="e_index"/>
+							</hj:list-index>
+							<hj:many-to-many not-found="ignore" outer-join="true" fetch="join" lazy="false" unique="true">
+								<hj:column name="e_e_column"/>
+							</hj:many-to-many>
+						</hj:complexCollectionProperty>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="bagCollectionProperty" type="cclassType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:appinfo>
+						<hj:complexCollectionProperty order-by="column1">
+							<hj:no-index/>
+						</hj:complexCollectionProperty>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="dclass">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:id>
+					<hj:column name="hjidentifier"/>
+				</hj:id>
+				<hj:version>
+					<hj:column name="hjv"/>
+				</hj:version>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="cclass" type="cclassType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="areaType">
+		<xs:sequence>
+			<xs:any namespace="##targetNamespace"	processContents="strict" minOccurs="0" maxOccurs="unbounded">
+			<xs:annotation>
+				<xs:appinfo>
+					<hj:ignored/>
+				</xs:appinfo>
+			</xs:annotation>
+			</xs:any>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="string256Type">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:id>
+					<hj:generator generatorClass="assigned"/>
+				</hj:id>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="codeType">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:class discriminator-value="c">
+					<hj:discriminator formula="'c'">
+						<hj:no-column/>
+					</hj:discriminator>
+				</hj:class>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="string256Type">
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="BasicContentDescriptionType">
+		<xs:sequence>
+			<xs:element name="ReleaseInformation" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ReleaseDate" minOccurs="0">
+							<xs:complexType>
+								<xs:choice>
+									<xs:element name="DayAndYear" type="xs:date"/>
+									<xs:element name="Year" type="xs:gYear"/>
+								</xs:choice>
+                					  </xs:complexType>
+						</xs:element>
+						<xs:element name="ReleaseLocation" type="xs:string" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

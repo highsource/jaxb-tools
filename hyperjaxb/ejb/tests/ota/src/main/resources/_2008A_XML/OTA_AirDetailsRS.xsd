@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.009" id="OTA2008A">
+	<xs:include schemaLocation="OTA_AirCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_AirDetailsRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The AirDetails Response message provides additional flight details for each leg of a flight (e.g. journey time, meal service).  Types of information in the response include: 
+- Marketing Airline
+- Board and Off points for each flight leg
+- Operating Airline
+- Equipment
+- Meal service for each cabin type
+</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType">
+						<xs:annotation>
+							<xs:documentation xml:lang="en"> Standard way to indicate successful processing of an OTA message. 
+
+Returning an empty element of this type indicates success.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en"> Standard way to indicate successful processing of an OTA message, but 
+
+one in which warnings are generated.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="FlightDetails" minOccurs="0" maxOccurs="150">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Construct to describe details for a specific flight.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="FlightLegDetails" maxOccurs="10">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Construct for holding flight leg information.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="DepartureAirport" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The departure airport of the flight leg.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:attributeGroup ref="AirportLocationGroup"/>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="ArrivalAirport" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The arrival airport of the flight leg.</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:attributeGroup ref="AirportLocationGroup"/>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="MarketingAirline" type="CompanyNameType" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The marketing airline.</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="OperatingAirline" type="OperatingAirlineType" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The air carrier engaged directly in the operation of the flight.</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="Equipment" type="EquipmentType" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">The type of equipment  used for the  flight..</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="Comment" type="FreeTextType" minOccurs="0" maxOccurs="unbounded">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Any special comments on the leg. (eg. operated by  XX)</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="MarketingCabinAvailability" type="CabinAvailabilityType" minOccurs="0" maxOccurs="9">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Identifies the cabins available for the flight.</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="Warnings" type="WarningsType" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Warning information for this flight leg.</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+										<xs:attribute name="SequenceNumber" type="xs:integer" use="required">
+											<xs:annotation>
+												<xs:documentation xml:lang="en"> The sequence number of the flight leg.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="FlightNumber" type="xs:positiveInteger" use="required">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">The flight number of the flight.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="JourneyDuration" type="xs:duration" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">The duration of the flight from departure location to destination  location.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="GroundDuration" type="xs:duration" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">The duration of a ground stop.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attributeGroup ref="SmokingIndicatorGroup">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Specifies if the flight is smoking or not.</xs:documentation>
+											</xs:annotation>
+										</xs:attributeGroup>
+										<xs:attribute name="OnTimeRate" type="Percentage" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Specifies the Dept. of Transport on time rate of the  flight.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="Ticket" type="TicketType" default="Paper">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Specifies if the flight is e-ticketable or not.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="DepartureDateTime" type="xs:dateTime" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en"> Scheduled flight departure date/time for flight leg.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="ArrivalDateTime" type="xs:dateTime" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en"> Scheduled flight arrival date/time for flight leg.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="DepartureDayOfWeek" type="DayOfWeekType" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">A three letter abbreviation for the day of the week as specified in the departure date.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="LegDistance" type="xs:positiveInteger" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">The number of miles for this flight leg.
+</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="DateChangeNbr" use="optional">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">When present contains the number of days by which the flight's arrival date differs from its departure date.</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="-1">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">The date of arrival is 1 day before the departure date.</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="+1">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">The date of arrival is 1 day after the departure date.</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+													<xs:enumeration value="+2">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">The date of arrival is 2 days after the departure date.</xs:documentation>
+														</xs:annotation>
+													</xs:enumeration>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+							<xs:attributeGroup ref="AirDetailsRSAttributes"/>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en"> A collection of errors that occurred during the processing of a message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

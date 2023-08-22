@@ -1,0 +1,30 @@
+!!! Hyperjaxb3 release 0.3
+
+Dear community!
+I'm glad to [announce|Hyperjaxb3Release0.3Announce] the 0.3 release of Hyperjaxb3.
+
+[Hyperjaxb3|https://hyperjaxb3.dev.java.net] is a [JAXB|https://jaxb.dev.java.net/] plugin which annotates schema-derived classes with JPA ([Java Persistence API |http://jcp.org/en/jsr/detail?id=220]) annotations effectively making these classes ''persistent''.
+
+JAXB is a great tool which makes XML processing in Java a lot easier. Few lines of code and your XML is turned into an object structure which is much suitable for Java code than, for instance, DOM or SAX. And you can always turn your object structure back to XML with almost zero effort.
+
+In JAXB you can start with an XML Schema and compile it into a set of ''schema-derived classes'' which can be marshalled as XML (or unmarshalled from XML) instantly. [Hyperjaxb3|https://hyperjaxb3.dev.java.net] takes you one step further. It makes schema-derived classes persistable with [JPA|http://jcp.org/en/jsr/detail?id=220], allowing for storing and querying your JAXB objects (instances of schema-derived classes) in a relational database. This essentially enables __XML<->Objects<->RDB__ exchange.
+
+XML Schema-driven object-relational XML database for free.
+
+[Hyperjaxb3|https://hyperjaxb3.dev.java.net] resolves a lot of incompatibilities between JAXB and JPA, taking into an account JPA limitations and JAXB peculiarities.
+Generated annotations are 100% standard (no vendor extensions used) meaning your classes will be portable across EJB3 containers.
+There are no database dependencies - you can persist your schema-derived classes in any database supported by your container.
+[Hyperjaxb3|https://hyperjaxb3.dev.java.net] supports a very large set of schemas - and we are working towards supporting all the schemas that JAXB supports.
+
+Both generated and runtime code is stable and can be used in production.
+
+!! Documentation
+
+* [Usage|Hyperjaxb3Usage]
+* [Configuration|Hyperjaxb3Configuration]
+* [Reference documentation|Hyperjaxb3Reference]
+
+!! Downloads
+
+* [Sample project for Maven|http://download.java.net/maven/2/org/jvnet/hyperjaxb3/hyperjaxb3-ejb-samples-po-initial/0.3/hyperjaxb3-ejb-samples-po-initial-0.3-maven-src.zip]
+* [Sample project for Ant|http://download.java.net/maven/2/org/jvnet/hyperjaxb3/hyperjaxb3-ejb-samples-po-initial/0.3/hyperjaxb3-ejb-samples-po-initial-0.3-ant-src.zip]

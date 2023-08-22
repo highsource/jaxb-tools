@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+	xmlns:udt="http://www.openapplications.org/oagis/9/unqualifieddatatypes/1.1"
+	xmlns:oacl="http://www.openapplications.org/oagis/9/codelists"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0"
+	xmlns="http://www.starstandard.org/STAR/5"
+	xmlns:ccts="urn:un:unece:uncefact:documentation:1.1"
+	xmlns:qdt="http://www.openapplications.org/oagis/9/qualifieddatatypes/1.1"
+	xmlns:scl="http://www.starstandard.org/STAR/5/codelists"
+	xmlns:oagis="http://www.openapplications.org/oagis/9"
+	xmlns:star="http://www.starstandard.org/STAR/5"
+	targetNamespace="http://www.starstandard.org/STAR/5"
+	elementFormDefault="qualified" attributeFormDefault="unqualified"
+	blockDefault="#all">
+	<xsd:annotation>
+		<xsd:documentation source="http://www.starstandard.org/STAR/5">
+			This schema is made available under an Eclipse Public Licenses 1.0.  This
+			license may be found in the STAR/License directory as well as the STAR BOD
+			Guidelines.
+		</xsd:documentation>
+	</xsd:annotation>
+	
+	<xsd:include
+		schemaLocation="../../Resources/Nouns/VehicleInvoice.xsd" />
+	<!--Global Fields that reference Component types--><!--Global Elements based on Components-->
+	<xsd:element name="AcknowledgeVehicleInvoice"
+		type="AcknowledgeVehicleInvoiceType">
+		<xsd:annotation>
+			<xsd:documentation source="http://www.starstandard.org/STAR/5">Acknowledge Vehicle Invoice</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AcknowledgeVehicleInvoiceDataArea"
+		type="AcknowledgeVehicleInvoiceDataAreaType">
+		<xsd:annotation>
+			<xsd:documentation source="http://www.starstandard.org/STAR/5">Acknowledge Vehicle Invoice Data Area</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+
+
+	<xsd:complexType name="AcknowledgeVehicleInvoiceType">
+		<xsd:annotation>
+			<xsd:appinfo>STAR unique BOD</xsd:appinfo>
+			<xsd:documentation source="http://www.starstandard.org/STAR/5">Acknowledge Vehicle Invoice</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BusinessObjectDocumentType">
+				<xsd:sequence>
+					<xsd:element ref="AcknowledgeVehicleInvoiceDataArea" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="AcknowledgeVehicleInvoiceDataAreaType">
+		<xsd:annotation>
+			<xsd:documentation source="http://www.starstandard.org/STAR/5">Acknowledge Vehicle Invoice Data Area</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="Acknowledge" />
+			<xsd:element ref="VehicleInvoice" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

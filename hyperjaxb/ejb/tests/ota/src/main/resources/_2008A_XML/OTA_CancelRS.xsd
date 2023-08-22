@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="2.005" id="OTA2008A">
+	<xs:include schemaLocation="OTA_CommonTypes.xsd"/>
+	<xs:include schemaLocation="OTA_AirCommonTypes.xsd"/>
+	<xs:include schemaLocation="OTA_SimpleTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_CancelRS">
+		<xs:annotation>
+			<xs:documentation>Used to respond to a CancelRQ and may provide details about the cancellation.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType">
+						<xs:annotation>
+							<xs:documentation>Standard way to indicate successful processing of an OTA message. Returning an empty element of this type indicates success.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Used in conjunction with the success element to define one or more business errors.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="UniqueID" type="UniqueID_Type" minOccurs="0" maxOccurs="5">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Contains the reference(s) of the items being cancelled.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CancelInfoRS" type="CancelInfoRSType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">May contain rules associated with canceling a reservation as well as the supplier's cancellation number.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Comment" type="ParagraphType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Textual information regarding the cancellation.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Segment" minOccurs="0" maxOccurs="99">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Used to specify a segment that has been cancelled.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="UniqueID" type="UniqueID_Type" minOccurs="0" maxOccurs="2">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Contains the supplier's cancellation or confirmation number.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="Warnings" type="WarningsType" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">Warning information for the segment that was requested to be cancelled.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+							<xs:attribute name="ItinSegNbr" type="xs:nonNegativeInteger" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Number identifying the segment item that was cancelled.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="TPA_Extensions" minOccurs="0"/>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType"/>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attribute name="Status" type="TransactionStatusType" use="required"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

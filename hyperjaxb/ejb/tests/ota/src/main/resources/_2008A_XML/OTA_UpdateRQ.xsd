@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.008" id="OTA2008A">
+	<xs:include schemaLocation="OTA_CommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_UpdateRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">
+This element represents the incremental changes to the business document
+referred to by UniqueID.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="UniqueID" type="UniqueID_Type"/>
+				<xs:element name="POS" type="POS_Type" minOccurs="0"/>
+				<xs:element name="Position" type="UpdatePositionType" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+			<xs:attributeGroup ref="ReqRespVersion"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="UpdatePositionType">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element ref="Attribute" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="Element" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="Subtree" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:element ref="Root"/>
+		</xs:choice>
+		<xs:attribute name="XPath" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:element name="Attribute">
+		<xs:complexType>
+			<xs:attribute name="Operation" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="insert"/>
+						<xs:enumeration value="modify"/>
+						<xs:enumeration value="delete"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="Name" type="xs:string" use="required"/>
+			<xs:attribute name="Value" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Element">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="Operation" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="insert"/>
+						<xs:enumeration value="modify"/>
+						<xs:enumeration value="delete"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="Child" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Root">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any/>
+			</xs:sequence>
+			<xs:attribute name="Operation" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="replace"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Subtree">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="Operation" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="insert"/>
+						<xs:enumeration value="delete"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="Child" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

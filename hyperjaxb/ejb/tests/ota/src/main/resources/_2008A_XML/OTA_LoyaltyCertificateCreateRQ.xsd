@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.010" id="OTA2008A">
+	<xs:include schemaLocation="OTA_LoyaltyCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_LoyaltyCertificateCreateRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The CertificateCreateRQ allows businesses to communicate with their loyalty service provider to generate redemption certificates for their customers.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Customer" type="PersonNameType" minOccurs="0"/>
+				<xs:element name="TravelInfos">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="TravelInfo" type="LoyaltyTravelInfoType" maxOccurs="99"/>
+							<xs:element name="LoyaltyCertificateDetail">
+								<xs:complexType>
+									<xs:attributeGroup ref="LoyaltyCertificateNumberGroup"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

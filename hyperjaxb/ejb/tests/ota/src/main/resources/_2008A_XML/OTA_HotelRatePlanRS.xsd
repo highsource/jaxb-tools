@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.001" id="OTA2008A">
+	<xs:include schemaLocation="OTA_HotelRatePlan.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_HotelRatePlanRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Returns information about hotel rate plans that meet the requested criteria.  </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType">
+						<xs:annotation>
+							<xs:documentation>The presence of the empty Success element explicitly indicates that the request message was successful.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Used in conjunction with the Success element to define one or more business errors. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RatePlans">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">A collection of rate plans.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="RatePlan" type="HotelRatePlanType" maxOccurs="unbounded">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">An individual rate plan.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+							<xs:attributeGroup ref="HotelReferenceGroup"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Offers" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>A collection of offers that apply to all of the rate plans.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Offer" type="OfferType" maxOccurs="99">
+									<xs:annotation>
+										<xs:documentation>An offer that applies to all of the rate plans. It defines the type of offer, the conditions under which it can be applied and the amounts and/or percentages deducted.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="TPA_Extensions" minOccurs="0"/>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType">
+					<xs:annotation>
+						<xs:documentation>Errors are returned if the request was unable to be processed.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This element defines standard attributes that appear on the root element for all OTA payloads.</xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+			<xs:attribute name="MessageContentCode" type="OTA_CodeType" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines specific content of the message being sent. 
+Refer to OTA Code List TDB.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

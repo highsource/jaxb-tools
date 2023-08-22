@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.007" id="OTA2008A">
+	<xs:include schemaLocation="OTA_HotelRFP.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_HotelRFP_TransientRQ">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">This message is used to request a business rate for a specific account for one or many locations.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POS" type="POS_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Used to identify the sender of the request. If the sender is an intermediary, this may additionally be used to identify the company on whose behalf the information is being requested.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TransientRFP_RequestSegments">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A collection of TransientRFP_RequestSegment.   This allows for the RFP to be sent to multiple properties.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="RequestedInfos" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">A collection of RequestedInfo elements.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="RequestedInfo" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Used to specify what information should be returned in the response.  </xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="SpecificRequests" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation xml:lang="en">A collection of specific information being requested.</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="SpecificRequest" maxOccurs="unbounded">
+																	<xs:annotation>
+																		<xs:documentation xml:lang="en">Used to request specific information within the response.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:complexContent>
+																			<xs:extension base="ParagraphType">
+																				<xs:attribute name="MandatoryIndicator" type="xs:boolean" use="optional">
+																					<xs:annotation>
+																						<xs:documentation xml:lang="en">When true, indicates the data requested by the Name attribute or Text element is mandatory. </xs:documentation>
+																					</xs:annotation>
+																				</xs:attribute>
+																			</xs:extension>
+																		</xs:complexContent>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="RequestedInfoCode" type="OTA_CodeType" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Used to identify information to be included in the response. Refer to OTA Code List Requested Info Code Category (RQC) code list.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="SingleFileIndicator" type="xs:boolean" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">When true, all response data should be sent in a single file and when false, the response for each RequestedInfoCode should be in a separate file. Typically used when the response is requested in electronic format.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="TransientRFP_RequestSegment" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Provides the details of the data being requested. </xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ContactInfos" type="ContactInfosType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">A collection of ContactInfo elements.  This may be used for who this is from as well as who this is going to.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="HotelAddress" type="AddressPrefType" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">May be used in conjuction with the HotelName attribute found in TransientRFP_RequestSegment to specify a particular hotel, or simply to pass hotel address information.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="AccountSpecificInfo" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">Used to specify information that is specific to the requesting account.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="HotelPotentialRoomQuantity" type="xs:nonNegativeInteger" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">This is the potential number of room nights that the requestor believes they will produce for the single specified hotel.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="CityPotentialRoomQuantity" type="xs:nonNegativeInteger" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">This is the potential number of room nights that the requestor believes they will produce for the specified city.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="AdditionalHotelIndicator" type="xs:boolean" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">When true, this means hotels that weren't in the original request can offer their own negotiated rate for this specific account.</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attributeGroup ref="HotelReferenceGroup">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Used to specify from who the requestor would like an RFP.  This may be a specific property, all the properties for a specific brand and chain in a specific city or other combinations of data.</xs:documentation>
+										</xs:annotation>
+									</xs:attributeGroup>
+									<xs:attribute name="IntermediaryPropertyCode" type="StringLength1to16" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">This is an intermediary specific code used to identify a specific hotel (i.e., RFPExpress uses a proprietary code that could be passed here).</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Comments" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">A collection of Comment elements.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Comment" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">May be used to send textual information regarding the request such as questions, legal text, special requests, etc.  </xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:complexContent>
+													<xs:extension base="ParagraphType">
+														<xs:attribute name="FormatType" type="StringLength1to64" use="optional">
+															<xs:annotation>
+																<xs:documentation xml:lang="en">This is used to identify the format in which the response should return the specific requested data.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+													</xs:extension>
+												</xs:complexContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="ResponseMethod" type="OTA_CodeType" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This defines how the detailed response to the RFP should be communicated (e.g., http, e-mail, telephone). Refer to OTA Code List Distribution Type (DTB).</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ResponseFormat" type="OTA_CodeType" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This defines the format in which the response to the RFP should be communicated (e.g., XML, Excel, hardcopy). Refer to OTA Code List Format Type (FMT).</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ResponseDueDate" type="DateOrDateTimeType" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The date the requestor requires a response.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="DecisionDueDate" type="DateOrDateTimeType" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The date the requestor intends to make a decision.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ContractDuration" type="xs:duration" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">This specifies the intended length of time to which this request applies.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="ContractStart" type="YearOrYearMonthType" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">The intended originating contract year or year and month</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="MessageID" type="UniqueID_Type" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">The ID is used to identify the request. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

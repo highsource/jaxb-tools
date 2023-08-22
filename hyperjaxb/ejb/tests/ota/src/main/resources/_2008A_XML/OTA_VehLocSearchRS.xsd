@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="2.009" id="OTA2008A">
+	<xs:include schemaLocation="OTA_VehicleCommonTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">All Schema files in the OTA specification are made available according to the terms defined by the OTA License Agreement at http://www.opentravel.org/ota_downloads_form.cfm</xs:documentation>
+	</xs:annotation>
+	<xs:element name="OTA_VehLocSearchRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Vehicle Location Search response will allow car rental customers to view location(s) available based on their request information.  The response will include the OTA_VehLocSearchRQ information as well as physical address, telephone number, and additional information of the rental location(s) meeting their request.  For example, a facility was identified based on a certain search criterion, and the facility is 10 miles away. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType"/>
+					<xs:element name="Warnings" type="WarningsType" minOccurs="0"/>
+					<xs:element name="VehMatchedLocs">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">A collection of vehicle locations that match the search criteria.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="VehMatchedLoc" type="VehicleMatchedLocationType" maxOccurs="99">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">A specific vehicle location that matches a search criteria.  This information includes the location along with the search criteria that were used to indicate how the location was selected, and its distance from the area specified by the search.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Vendor" type="CompanyNameType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Information on the vendor associated with the locations identified in the response.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element ref="TPA_Extensions" minOccurs="0"/>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType" minOccurs="0"/>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="VehicleMatchedLocationType">
+		<xs:sequence>
+			<xs:element name="LocationDetail" type="VehicleLocationDetailsType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Detailed information on a specific vehicle rental location.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VehLocSearchCriterion" type="ItemSearchCriterionType" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The search criterion may be echoed to indicate how the location was selected, and to provide a distance from that search location.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="AlternateLocInd" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">When true, the location being returned is an alternate location to what was initially requested.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+</xs:schema>

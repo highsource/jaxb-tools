@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+** OAGIS® Revision: 9.1  **
+** Date: 11 May 2007 **
+** Copyright 1997-2007, All Rights Reserved **
+
+This is an OAGIS® BOD XML Schema (XSD) Definition.
+
+License information for this file is provided in the file **2005 OAGi License Agreement.txt** that is provided with this download package.
+
+For support, more information, or to report implementation bugs, please contact the Open Applications Group at xml@openapplications.org.
+    
+     XML Schema 
+     
+    Name: \OAGIS\9.0\Resources\Components\CoreComponents\QualifiedDataTypes.xsd
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:udt="http://www.openapplications.org/oagis/9/unqualifieddatatypes/1.1" xmlns:qdt="http://www.openapplications.org/oagis/9/qualifieddatatypes/1.1" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" targetNamespace="http://www.openapplications.org/oagis/9/qualifieddatatypes/1.1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+        <xsd:import namespace="http://www.openapplications.org/oagis/9/unqualifieddatatypes/1.1" schemaLocation="../CoreComponents/UnqualifiedDataTypes.xsd"/>
+        <xsd:import namespace="http://www.openapplications.org/oagis/9/codelists" schemaLocation="../Common/CodeLists.xsd"/>
+        <xsd:simpleType name="HexBinaryObjectType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000001</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>Hex_ Binary Object. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText>hexBinary represents arbitrary hex-encoded binary data. The ·value space· of hexBinary is the set of finite-length sequences of binary octets.</ccts:DefinitionText>
+                                <ccts:RepresentationTermName>Binary Object</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>Hex</ccts:QualifierTerm>
+                                <ccts:PrimitiveType>binary</ccts:PrimitiveType>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:hexBinary"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="YearDateType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000002</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>Year_ Date. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText>gYear represents a gregorian calendar year. The ·value space· of gYear is the set of Gregorian calendar years as defined in § 5.2.1 of [ISO 8601]. Specifically, it is a set of one-year long, non-periodic instances e.g. lexical 1999 to represent the whole year 1999, independent of how many months and days this year has.</ccts:DefinitionText>
+                                <ccts:RepresentationTermName>Date</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>Year</ccts:QualifierTerm>
+                                <ccts:PrimitiveType>string</ccts:PrimitiveType>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:gYear"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="YearMonthDateType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000003</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>Year Month_ Date. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText>gYearMonth represents a specific gregorian month in a specific gregorian year. The ·value space·of gYearMonth is the set of Gregorian calendar months as defined in § 5.2.1 of [ISO 8601]. Specifically, it is a set of one-month long, non-periodic instances e.g. 1999-10 to represent the whole month of 1999-10, independent of how many days this month has.</ccts:DefinitionText>
+                                <ccts:RepresentationTermName>Date</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>Year Month</ccts:QualifierTerm>
+                                <ccts:PrimitiveType>string</ccts:PrimitiveType>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:gYearMonth"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="FloatNumericType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000004</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>Float_ Numeric. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText>float corresponds to the IEEE single-precision 32-bit floating point type [IEEE 754-1985]. The basic·value space· of float consists of the values m × 2^e, where m is an integer whose absolute value is less than 2^24, and e is an integer between -149 and 104, inclusive. In addition to the basic ·value space· described above, the ·value space· of float also contains the following special values: positive and negative zero, positive and negative infinity and not-a-number. The ·order-relation· on float is: x less than y iff y - x is positive. Positive zero is greater than negative zero. Not-a-number equals itself and is greater than all float values including positive infinity.</ccts:DefinitionText>
+                                <ccts:RepresentationTermName>Numeric</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>Float</ccts:QualifierTerm>
+                                <ccts:PrimitiveType>decimal</ccts:PrimitiveType>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:float"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="DoubleNumericType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000005</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>Double_ Numeric. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText>The double datatype corresponds to IEEE double-precision 64-bit floating point type [IEEE 754-1985]. The basic ·value space· of double consists of the values m × 2^e, where m is an integer whose absolute value is less than 2^53, and e is an integer between -1075 and 970, inclusive. In addition to the basic ·value space· described above, the ·value space· of double also contains the following special values: positive and negative zero, positive and negative infinity and not-a-number. The ·order-relation· on double is: x less than y iff y - x is positive. Positive zero is greater than negative zero. Not-a-number equals itself and is greater than all double values including positive infinity.</ccts:DefinitionText>
+                                <ccts:RepresentationTermName>Numeric</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>Double</ccts:QualifierTerm>
+                                <ccts:PrimitiveType>decimal</ccts:PrimitiveType>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:double"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="IntegerNumericType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000006</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>Integer_ Numeric. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText>integer is ·derived· from decimal by fixing the value of ·fractionDigits· to be 0. This results in the standard mathematical concept of the integer numbers. The ·value space· of integer is the infinite set {...,-2,-1,0,1,2,...}. The ·base type· of integer is decimal.</ccts:DefinitionText>
+                                <ccts:RepresentationTermName>Numeric</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>Integer</ccts:QualifierTerm>
+                                <ccts:PrimitiveType>decimal</ccts:PrimitiveType>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:integer"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="PositiveIntegerNumericType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000007</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>Positive Integer_ Numeric. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText>positiveInteger is ·derived· from nonNegativeInteger by setting the value of ·minInclusive· to be 1.  This results in the standard mathematical concept of the positive integer numbers. The ·value space· of positiveInteger is the infinite set {1,2,...}. The ·base type· of positiveInteger is nonNegativeInteger.</ccts:DefinitionText>
+                                <ccts:RepresentationTermName>Numeric</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>Positive Integer</ccts:QualifierTerm>
+                                <ccts:PrimitiveType>decimal</ccts:PrimitiveType>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:positiveInteger"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="NegativeIntegerNumericType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000008</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>Negative Integer_ Numeric. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText>negativeInteger is ·derived· from nonPositiveInteger by setting the value of ·maxInclusive· to be -1.  This results in the standard mathematical concept of the negative integers. The ·value space· of negativeInteger is the infinite set {...,-2,-1}. The ·base type· of negativeInteger is nonPositiveInteger.</ccts:DefinitionText>
+                                <ccts:RepresentationTermName>Numeric</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>Negative Integer</ccts:QualifierTerm>
+                                <ccts:PrimitiveType>decimal</ccts:PrimitiveType>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:negativeInteger"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="NonPositiveIntegerNumericType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000009</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>Non Positive Integer_ Numeric. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText>nonPositiveInteger is ·derived· from integer by setting the value of ·maxInclusive· to be 0. This results in the standard mathematical concept of the non-positive integers. The ·value space· of nonPositiveInteger is the infinite set {...,-2,-1,0}. The ·base type· of nonPositiveInteger is integer.</ccts:DefinitionText>
+                                <ccts:RepresentationTermName>Numeric</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>Non Positive Integer</ccts:QualifierTerm>
+                                <ccts:PrimitiveType>decimal</ccts:PrimitiveType>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:nonPositiveInteger"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="NonNegativeIntegerNumericType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000010</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>Non Negative Integer_ Numeric. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText>nonNegativeInteger is ·derived· from integer by setting the value of ·minInclusive· to be 0. This results in the standard mathematical concept of the non-negative integers. The ·value space· of nonNegativeInteger is the infinite set {0,1,2,...}. The ·base type· of nonNegativeInteger is integer.</ccts:DefinitionText>
+                                <ccts:RepresentationTermName>Numeric</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>Non Negative Integer</ccts:QualifierTerm>
+                                <ccts:PrimitiveType>decimal</ccts:PrimitiveType>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:nonNegativeInteger"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="DurationMeasureType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000011</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>Duration_ Measure. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText>duration represents a duration of time. The ·value space· of duration is a six-dimensional space where the coordinates designate the Gregorian year, month, day, hour, minute, and second components defined in § 5.5.3.2 of [ISO 8601], respectively. These components are ordered in their significance by their order of appearance i.e. as year, month, day, hour, minute, and second.</ccts:DefinitionText>
+                                <ccts:RepresentationTermName>Measure</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>Duration</ccts:QualifierTerm>
+                                <ccts:PrimitiveType/>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:duration"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="StringType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000012</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>String_ Text. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText>The string datatype represents character strings in XML. The ·value space· of string is the set of finite-length sequences of characters (as defined in [XML 1.0 (Second Edition)]) that ·match· the Char production from [XML 1.0 (Second Edition)]. A character is an atomic unit of communication; it is not further specified except to note that every character has a corresponding Universal Character Set code point, which is an integer.</ccts:DefinitionText>
+                                <ccts:RepresentationTermName>Text</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>String</ccts:QualifierTerm>
+                                <ccts:PrimitiveType>string</ccts:PrimitiveType>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:string"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="NormalizedStringType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000013</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>Normalized String_ Text. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText>normalizedString represents white space normalized strings. The ·value space· of normalizedString is the set of strings that do not contain the carriage return (#xD), line feed (#xA) nor tab (#x9) characters. The ·lexical space· of normalizedString is the set of strings that do not contain the carriage return (#xD) nor tab (#x9) characters. The ·base type· of normalizedString is string.</ccts:DefinitionText>
+                                <ccts:RepresentationTermName>Text</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>Normalized String</ccts:QualifierTerm>
+                                <ccts:PrimitiveType>string</ccts:PrimitiveType>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:normalizedString"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="TokenType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000014</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>Token_ Text. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText>token represents tokenized strings. The ·value space· of token is the set of strings that do not contain the line feed (#xA) nor tab (#x9) characters, that have no leading or trailing spaces (#x20) and that have no internal sequences of two or more spaces. The ·lexical space· of token is the set of strings that do not contain the line feed (#xA) nor tab (#x9) characters, that have no leading or trailing spaces (#x20) and that have no internal sequences of two or more spaces. The ·base type· of token is normalizedString.</ccts:DefinitionText>
+                                <ccts:RepresentationTermName>Text</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>Token</ccts:QualifierTerm>
+                                <ccts:PrimitiveType>string</ccts:PrimitiveType>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="URIType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000015</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>URI_ Identifier. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText>anyURI represents a Uniform Resource Identifier Reference (URI). An anyURI value can be absolute or relative, and may have an optional fragment identifier (i.e., it may be a URI Reference). This type should be used to specify the intention that the value fulfills the role of a URI as defined by [RFC 2396], as amended by [RFC 2732].</ccts:DefinitionText>
+                                <ccts:RepresentationTermName>Identifier</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>URI</ccts:QualifierTerm>
+                                <ccts:PrimitiveType>string</ccts:PrimitiveType>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:anyURI"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="LanguageCodeType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000016</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>Language_ Code. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText>language represents natural language identifiers as defined by [RFC 1766]. The ·value space· of language is the set of all strings that are valid language identifiers as defined in the language identification section of [XML 1.0 (Second Edition)]. The ·lexical space· of language is the set of all strings that are valid language identifiers as defined in the language identification section of [XML 1.0 (Second Edition)]. The ·base type· of language is token.</ccts:DefinitionText>
+                                <ccts:RepresentationTermName>Code</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>Language</ccts:QualifierTerm>
+                                <ccts:PrimitiveType>string</ccts:PrimitiveType>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="oacl:LanguageCodeContentType"/>
+        </xsd:simpleType>
+        <xsd:simpleType name="MonthDateType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000017</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>Month_ Date. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText/>
+                                <ccts:RepresentationTermName>Date</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>Month</ccts:QualifierTerm>
+                                <ccts:PrimitiveType>string</ccts:PrimitiveType>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:normalizedString">
+                        <xsd:enumeration value="01"/>
+                        <xsd:enumeration value="02"/>
+                        <xsd:enumeration value="03"/>
+                        <xsd:enumeration value="04"/>
+                        <xsd:enumeration value="05"/>
+                        <xsd:enumeration value="06"/>
+                        <xsd:enumeration value="07"/>
+                        <xsd:enumeration value="08"/>
+                        <xsd:enumeration value="09"/>
+                        <xsd:enumeration value="10"/>
+                        <xsd:enumeration value="11"/>
+                        <xsd:enumeration value="12"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="DayDateType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000018</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>Day_ Date. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText/>
+                                <ccts:RepresentationTermName>Date</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>Day</ccts:QualifierTerm>
+                                <ccts:PrimitiveType>string</ccts:PrimitiveType>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:normalizedString">
+                        <xsd:enumeration value="01"/>
+                        <xsd:enumeration value="02"/>
+                        <xsd:enumeration value="03"/>
+                        <xsd:enumeration value="04"/>
+                        <xsd:enumeration value="05"/>
+                        <xsd:enumeration value="06"/>
+                        <xsd:enumeration value="07"/>
+                        <xsd:enumeration value="08"/>
+                        <xsd:enumeration value="09"/>
+                        <xsd:enumeration value="10"/>
+                        <xsd:enumeration value="11"/>
+                        <xsd:enumeration value="12"/>
+                        <xsd:enumeration value="13"/>
+                        <xsd:enumeration value="14"/>
+                        <xsd:enumeration value="15"/>
+                        <xsd:enumeration value="16"/>
+                        <xsd:enumeration value="17"/>
+                        <xsd:enumeration value="18"/>
+                        <xsd:enumeration value="19"/>
+                        <xsd:enumeration value="20"/>
+                        <xsd:enumeration value="21"/>
+                        <xsd:enumeration value="22"/>
+                        <xsd:enumeration value="23"/>
+                        <xsd:enumeration value="24"/>
+                        <xsd:enumeration value="25"/>
+                        <xsd:enumeration value="26"/>
+                        <xsd:enumeration value="27"/>
+                        <xsd:enumeration value="28"/>
+                        <xsd:enumeration value="29"/>
+                        <xsd:enumeration value="30"/>
+                        <xsd:enumeration value="31"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="MonthDayDateType">
+                <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                                <ccts:UniqueID>QDT000019</ccts:UniqueID>
+                                <ccts:CategoryCode>QDT</ccts:CategoryCode>
+                                <ccts:DictionaryEntryName>Month Day_ Date. Type</ccts:DictionaryEntryName>
+                                <ccts:VersionID>1.0</ccts:VersionID>
+                                <ccts:DefinitionText/>
+                                <ccts:RepresentationTermName>Date</ccts:RepresentationTermName>
+                                <ccts:QualifierTerm>Month Day</ccts:QualifierTerm>
+                                <ccts:PrimitiveType>string</ccts:PrimitiveType>
+                        </xsd:documentation>
+                </xsd:annotation>
+                <xsd:restriction base="xsd:token">
+                        <xsd:pattern value="/d/d-/d/d"/>
+                </xsd:restriction>
+        </xsd:simpleType>
+</xsd:schema>

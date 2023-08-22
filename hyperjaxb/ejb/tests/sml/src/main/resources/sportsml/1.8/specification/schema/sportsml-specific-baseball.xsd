@@ -1,0 +1,1147 @@
+<?xml version="1.0"?>
+<!--
+IPTC - International Press Telecommunications Council
+Royal Albert House, Windsor, Berkshire SL4 1BE, England
+www.iptc.org
+
+See sportsml.xsd to view Non-Exclusive License Agreement for
+International Press Telecommunications Council, which
+applies to this specification.
+-->
+<schema
+	targetNamespace="http://iptc.org/std/SportsML/2006-10-18/"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:sportsml="http://iptc.org/std/SportsML/2006-10-18/"
+	version="1.8"
+	>
+	<attributeGroup name="eventStateBaseball">
+		<attribute name="inning-value" type="string" use="optional">
+			<annotation>
+				<documentation>An integer. 1 through 9 for the main innings. 10, 11, 12, etc. for extra innings.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="inning-half" use="optional">
+			<annotation>
+				<documentation>Either top or bottom.</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="top"/>
+					<enumeration value="bottom"/>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="outs" type="string" use="optional">
+			<annotation>
+				<documentation>Either 1, 2, or 3.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="balls" type="string" use="optional">
+			<annotation>
+				<documentation>Either 1, 2, 3, or 4.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="strikes" type="string" use="optional">
+			<annotation>
+				<documentation>Either 1, 2, or 3.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="runner-on-first" type="string" use="optional">
+			<annotation>
+				<documentation>Whether or not a player is standing on first base. Either true or false.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="runner-on-first-idref" type="IDREF" use="optional">
+			<annotation>
+				<documentation>A pointer to the player on first base.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="runner-on-second" type="string" use="optional">
+			<annotation>
+				<documentation>Whether or not a player is standing on second base. Either true or false.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="runner-on-second-idref" type="IDREF" use="optional">
+			<annotation>
+				<documentation>A pointer to the player on second base.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="runner-on-third" type="string" use="optional">
+			<annotation>
+				<documentation>Whether or not a player is standing on third base. Either true or false.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="runner-on-third-idref" type="IDREF" use="optional">
+			<annotation>
+				<documentation>A pointer to the player on third base.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="runs-this-inning-half" type="string" use="optional">
+			<annotation>
+				<documentation>An integer.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="pitcher-idref" type="IDREF" use="optional">
+			<annotation>
+				<documentation>A pointer to the player element for the pitcher standing on the mound.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="batter-idref" type="IDREF" use="optional">
+			<annotation>
+				<documentation>A pointer to the player element for the batter at the plate.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="batter-side" use="optional">
+			<annotation>
+				<documentation>Which side of the plate the batter was on when taking the pitch.</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="left"/>
+					<enumeration value="right"/>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="at-bat-number" type="string" use="optional">
+			<annotation>
+				<documentation>Incremented throughout game on a per-team basis. A perfect game would have at-bat-number go from 1 to 27 for the team that didn't get any hits.</documentation>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+	<element name="event-metadata-baseball">
+		<annotation>
+			<documentation>Metadata about the event itself. | Includes what state the game is in.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateBaseball"/>
+		</complexType>
+	</element>
+	<element name="team-metadata-baseball">
+		<annotation>
+			<documentation>Metadata about the team. | Specific to the sport of baseball.</documentation>
+		</annotation>
+		<complexType>
+			<attribute name="probable-starting-pitcher-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>ID of the pitcher who will probably start the game.</documentation>
+				</annotation>
+			</attribute>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="team-stats-baseball">
+		<annotation>
+			<documentation>Specific statistics for baseball. | Includes offensive, pitching, and defensive stats.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-baseball-offensive" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-baseball-pitching" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-baseball-defensive" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+		</complexType>
+	</element>
+	<element name="stats-baseball-offensive">
+		<annotation>
+			<documentation>Stats accumulated while a team is at bat. | Includes hits and runs.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="average" type="string" use="optional">
+				<annotation>
+					<documentation>Average number of hits per at-bats</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="runs-scored" type="string" use="optional">
+				<annotation>
+					<documentation>Number of runs scored</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="at-bats" type="string" use="optional">
+				<annotation>
+					<documentation>Number of at-bats  (Does not include walks or Sacrifice Hits)</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="hits" type="string" use="optional">
+				<annotation>
+					<documentation>Number of hits</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rbi" type="string" use="optional">
+				<annotation>
+					<documentation>Number of runs batted in</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="total-bases" type="string" use="optional">
+				<annotation>
+					<documentation>Calculated by hits + doubles + (triples times 2) + (home-runs times 3).</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="slugging-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Total bases divided by at-bats.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="bases-on-balls" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times batter was walked</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="bases-on-balls-rate" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="bases-on-balls-intentional" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="strikeouts" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times batter struck out</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="strikeouts-looking" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="outs-ground" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="outs-fly" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="left-on-base" type="string" use="optional">
+				<annotation>
+					<documentation>Number of runners left on base</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="left-in-scoring-position" type="string" use="optional">
+				<annotation>
+					<documentation>Number of runners left on second and/or third base</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="singles" type="string" use="optional">
+				<annotation>
+					<documentation>Number of hits off of which batter advances to first base</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="doubles" type="string" use="optional">
+				<annotation>
+					<documentation>Number of hits off of which batter advances to second base</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="triples" type="string" use="optional">
+				<annotation>
+					<documentation>Number of hits off of which batter advances to third base</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="home-runs" type="string" use="optional">
+				<annotation>
+					<documentation>Number of hits off of which batter advances to home plate</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="home-runs-season" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="grand-slams" type="string" use="optional">
+				<annotation>
+					<documentation>Number of home runs with bases loaded</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="streak-hits" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="hits-event-winning" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="at-bats-per-rbi" type="string" use="optional">
+				<annotation>
+					<documentation>RBI per at-bat ratio</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="plate-appearances-per-rbi" type="string" use="optional">
+				<annotation>
+					<documentation>Plate appearances per at-bat ratio</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="at-bats-per-home-run" type="string" use="optional">
+				<annotation>
+					<documentation>Home runs per at-bat ratio</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="plate-appearances-per-home-run" type="string" use="optional">
+				<annotation>
+					<documentation>Plate appearances per home run ratio</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="sac-flies" type="string" use="optional">
+				<annotation>
+					<documentation>Number of hits resulting in batter out which advance base runner(s)</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="sac-bunts" type="string" use="optional">
+				<annotation>
+					<documentation>Number of bunts resulting in batter out which advance base runner(s)</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="sacrifices" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="grounded-into-double-play" type="string" use="optional">
+				<annotation>
+					<documentation>Number of ground balls which result in batter and base runner outs</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="hit-into-double-play" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="moved-up" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times runner advances to another base</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="on-base-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Calculated as follows: (hits + bases-on-balls + hit-by-pitch) / (at-bats + bases-on-balls + hit-by-pitch + sac-flies)</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="stolen-bases" type="string" use="optional">
+				<annotation>
+					<documentation>Number of successfully stolen bases.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="stolen-bases-caught" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times the runner was caught while trying to steal bases.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="stolen-bases-average" type="string" use="optional">
+				<annotation>
+					<documentation>Success rate for stealing bases.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="hit-by-pitch" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times batter hit by pitch</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="reached-base-defensive-interference" type="string" use="optional">
+				<annotation>
+					<documentation>The number of times the player reached a base due to interference by the defense.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="reached-base-error" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="reached-base-fielder-choice" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="on-base-plus-slugging" type="string" use="optional">
+				<annotation>
+					<documentation>Calculated by adding on-base-percentage to slugging-percentage.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="plate-appearances" type="string" use="optional">
+				<annotation>
+					<documentation>Calculated by adding at-bats, bases-on-balls, hit-by-pitch, sac-flies, sac-bunts, and defensive-interfance-reaches.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="hits-extra-base" type="string" use="optional">
+				<annotation>
+					<documentation>Calculated by adding doubles, triples, and home-runs.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="strikeout-rate" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shutouts" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="double-plays-against" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="triple-plays-against" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="pick-offs-against" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="games-played" type="string" use="optional">
+				<annotation>
+					<documentation>Number of games played.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-baseball-pitching">
+		<annotation>
+			<documentation>Stats accumulated while a team is pitching. | Includes strikeouts and shutouts.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="runs-allowed" type="string" use="optional">
+				<annotation>
+					<documentation>Number of runs against</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="home-runs-allowed" type="string" use="optional">
+				<annotation>
+					<documentation>Number of home runs against</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="sacrifice-bunts-allowed" type="string" use="optional">
+				<annotation>
+					<documentation>Number of sacrifice bunts against</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="sacrifice-hits-allowed" type="string" use="optional">
+				<annotation>
+					<documentation>Number of sacrifice hits against</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="interferences" type="string" use="optional">
+				<annotation>
+					<documentation>Number of interference or obstruction calls</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="innings-pitched" type="string" use="optional">
+				<annotation>
+					<documentation>Number of innings pitched</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="innings-pitched-average" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="hits" type="string" use="optional">
+				<annotation>
+					<documentation>Number of hits against</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="earned-runs" type="string" use="optional">
+				<annotation>
+					<documentation>Number of earned runs against</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="unearned-runs" type="string" use="optional">
+				<annotation>
+					<documentation>Number of unearned runs against</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="bases-on-balls" type="string" use="optional">
+				<annotation>
+					<documentation>Number of earned walks allowed</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="bases-on-balls-intentional" type="string" use="optional">
+				<annotation>
+					<documentation>Number of batters intentionally walked</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="strikeouts" type="string" use="optional">
+				<annotation>
+					<documentation>Number of earned strikeouts</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="strikeout-to-bb-ratio" type="string" use="optional">
+				<annotation>
+					<documentation>Strikeout to walks ratio</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="number-of-pitches" type="string" use="optional">
+				<annotation>
+					<documentation>Number of pitches thrown</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="number-of-strikes" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="era" type="string" use="optional">
+				<annotation>
+					<documentation>Earned run average: Number of earned runs divided by number of innings pitched multiplied by nine</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="whip" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="inherited-runners-scored" type="string" use="optional">
+				<annotation>
+					<documentation>Number of runners which a previous pitcher allowed on base which scored</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="pick-offs" type="string" use="optional">
+				<annotation>
+					<documentation>The number of times the pitcher caught a player trying to steal, before making the pitch.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="errors-hit-with-pitch" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times pitcher hits batter with pitch</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="errors-wild-pitch" type="string" use="optional">
+				<annotation>
+					<documentation>Number of wild pitches thrown</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="balks" type="string" use="optional">
+				<annotation>
+					<documentation>Number of balks</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="wins" type="string" use="optional">
+				<annotation>
+					<documentation>Number of games pitcher has won</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="losses" type="string" use="optional">
+				<annotation>
+					<documentation>Number of games pitcher has lost</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="saves" type="string" use="optional">
+				<annotation>
+					<documentation>Number of games pitcher has saved</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="saves-blown" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="saves-tough" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="saves-opportunities" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="relief-points" type="string" use="optional">
+				<annotation>
+					<documentation>Formula for rating relief performances. 4 points for a tough save; 3 points for a save; 2 for a relief win; minus 2 for a relief loss and blown save.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shutouts" type="string" use="optional">
+				<annotation>
+					<documentation>Number of games pitched in which opposing team did not score</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="games-complete" type="string" use="optional">
+				<annotation>
+					<documentation>Number of complete games pitched</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="games-finished" type="string" use="optional">
+				<annotation>
+					<documentation>Number of games pitched to the end</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="games-pitched" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="winning-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>Calculated by wins divided by (wins + losses).</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="event-credit" use="optional">
+				<annotation>
+					<documentation>Whether a pitcher has received credit for winning or losing the game. TBD. Controlled Vocabulary. (win|loss|save|blown-save|win-blown-save|loss-blown-save|hold-win|hold-loss)</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="win"/>
+						<enumeration value="loss"/>
+						<enumeration value="save"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="save-credit" use="optional">
+				<annotation>
+					<documentation>Whether a pitcher has received credit for winning or losing the game. TBD. Controlled Vocabulary. (win|loss|save|blown-save|win-blown-save|loss-blown-save|hold-win|hold-loss)</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="hold"/>
+						<enumeration value="blown"/>
+						<enumeration value="save"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+
+			<attribute name="batters-average-against" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="batters-at-bats-against" type="string" use="optional">
+				<annotation>
+					<documentation>Number of batters faced who were credited with at-bats.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="batters-total-against" type="string" use="optional">
+				<annotation>
+					<documentation>Total number of batters faced.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="batters-total-bases-against" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="batters-slugging-percentage-against" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="batters-on-base-percentage-against" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="batters-doubles-against" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="batters-triples-against" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="batters-home-runs-against" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="inherited-runners-total" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="sacrifice-flies-allowed" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="shutouts-combined" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="stats-baseball-defensive">
+		<annotation>
+			<documentation>Stats accumulated while a team is out in the field. | Includes double-plays and errors.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+			<attribute name="position" type="sportsml:position.Baseball" use="optional">
+				<annotation>
+					<documentation>Position played for these stats.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="double-plays" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times two runners thrown out at the base.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="triple-plays" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times three runners thrown out at the base.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="putouts" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times a fielder caught a fly ball for an out.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="assists" type="string" use="optional">
+				<annotation>
+					<documentation>Number of plays in which a fielder throws a ball to another fielder for the out.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="errors" type="string" use="optional">
+				<annotation>
+					<documentation>Number of plays in which a fielder committed an error, such as dropping a ball.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fielding-chances" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="fielding-percentage" type="string" use="optional">
+				<annotation>
+					<documentation>A measure of fielding success. Calculated as follows: (putouts + assists) / (putouts + assists + errors).</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="defensive-average" type="string" use="optional">
+				<annotation>
+					<documentation>Rate a fielder turns a bill hit to their area into an out.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="errors-passed-ball" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times a catcher is faulted with letting a pitched ball go past.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="errors-catchers-interference" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times a catcher has improperly interfered with play.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="stolen-bases" type="string" use="optional">
+				<annotation>
+					<documentation>Number of bases successfully stolen while this player was on the field.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="stolen-bases-caught" type="string" use="optional">
+				<annotation>
+					<documentation>Number of times a runner was caught while trying to steal bases while this player was on the field.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="stolen-bases-average" type="string" use="optional">
+				<annotation>
+					<documentation>Success rate for stealing bases while this player was on the field.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="innings-played" type="string" use="optional">
+				<annotation>
+					<documentation>Number of innings played at the named position.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="games-played" type="string" use="optional">
+				<annotation>
+					<documentation>Number of games played at the named position.</documentation>
+				</annotation>
+			</attribute>
+
+		</complexType>
+	</element>
+	<element name="player-metadata-baseball">
+		<annotation>
+			<documentation>Metadata about the player. | Specific to the sport of baseball.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="batting-hand" use="optional">
+				<annotation>
+					<documentation>Indicates whether player bats left, right, or is a switch-hitter.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="left"/>
+						<enumeration value="right"/>
+						<enumeration value="both"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="throwing-hand" use="optional">
+				<annotation>
+					<documentation>Indicates whether player throws left, right, or is a switch-thrower.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="left"/>
+						<enumeration value="right"/>
+						<enumeration value="both"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="player-stats-baseball">
+		<annotation>
+			<documentation>Stats collected by a player. | Includes offensive, pitching, and defensive stats.</documentation>
+		</annotation>
+		<complexType>
+			<sequence>
+				<element ref="sportsml:stats-baseball-offensive" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-baseball-pitching" minOccurs="0" maxOccurs="unbounded"/>
+				<element ref="sportsml:stats-baseball-defensive" minOccurs="0" maxOccurs="unbounded"/>
+			</sequence>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:coverageAttributes"/>
+		</complexType>
+	</element>
+	<element name="event-actions-baseball">
+		<annotation>
+			<documentation>A container for specific baseball actions. | Generally ordered chronologically.</documentation>
+		</annotation>
+		<complexType>
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="sportsml:action-baseball-substitution"/>
+				<element ref="sportsml:action-baseball-score"/>
+				<element ref="sportsml:action-baseball-play"/>
+				<element ref="sportsml:action-baseball-other"/>
+			</choice>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+		</complexType>
+	</element>
+	<element name="action-baseball-substitution">
+		<annotation>
+			<documentation>An exchange of players occurred. | Most commonly-recorded substitution is a pitching change.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateBaseball"/>
+			<attribute name="person-type" use="optional">
+				<annotation>
+					<documentation>Whether this substitution was for a player, a coach, an umpire.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="player"/>
+						<enumeration value="associate"/>
+						<enumeration value="official"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="person-original-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the person who left the game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="person-original-position" type="sportsml:position.Baseball" use="optional">
+				<annotation>
+					<documentation>The position of the original person.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="person-original-lineup-slot" type="string" use="optional">
+				<annotation>
+					<documentation>The order in the lineup that the player held.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="person-replacing-idref" type="IDREF" use="optional">
+				<annotation>
+					<documentation>A pointer to the person who entered the game.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="person-replacing-position" type="string" use="optional">
+				<annotation>
+					<documentation>The position of the replacing person.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="person-replacing-lineup-slot" type="string" use="optional">
+				<annotation>
+					<documentation>The order in the lineup that the player will hold.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="substitution-reason" type="string" use="optional">
+				<annotation>
+					<documentation>Why a substitution was made.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment about the action.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-baseball-score">
+		<annotation>
+			<documentation>Issued when a run is scored. | Describes which players scored, also.</documentation>
+		</annotation>
+		<complexType>
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="sportsml:action-baseball-pitch"/>
+			</choice>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateBaseball"/>
+			<attribute name="play-type" type="sportsml:playType.Baseball" use="optional">
+				<annotation>
+					<documentation>A description for the play.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="play-scorekeepers-notation" type="string" use="optional">
+				<annotation>
+					<documentation>Denotes which fielders touched the ball during the play. Example: 6-4-3.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="walk-type" type="sportsml:walkType.Baseball" use="optional">
+				<annotation>
+					<documentation>If this play was a base-on-balls, the type of walk.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="hit-type" type="sportsml:hitType.Baseball" use="optional">
+				<annotation>
+					<documentation>A description for the hit.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="hit-by-pitch-type" type="sportsml:hitByPitchType.Baseball" use="optional">
+				<annotation>
+					<documentation>A description for how or why a batter was hit by a pitch.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="out-type" type="sportsml:outType.Baseball" use="optional">
+				<annotation>
+					<documentation>How the out was made.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="outs-recorded" use="optional">
+				<annotation>
+					<documentation>How many outs were recorded on the play. Values are 1, 2, 3.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="none"/>
+						<enumeration value="one"/>
+						<enumeration value="two"/>
+						<enumeration value="three"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment about the action.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="rbi" type="string" use="optional">
+				<annotation>
+					<documentation>How many runs-batted-in were credited on the play. An error may preclude the assigning of an rbi.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="runs-scored" type="string" use="optional">
+				<annotation>
+					<documentation>How many runs scored on the play.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-team" type="string" use="optional">
+				<annotation>
+					<documentation>The score of the team that did the scoring, once the play completed.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="score-team-opposing" type="string" use="optional">
+				<annotation>
+					<documentation>The current score of the team that did not do the scoring.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="earned-runs-scored" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-baseball-play">
+		<annotation>
+			<documentation>Issued when a non-scoring play occurred. | Records a hit, a strikeout, etc.</documentation>
+		</annotation>
+		<complexType>
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="sportsml:action-baseball-pitch"/>
+			</choice>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateBaseball"/>
+			<attribute name="play-type" type="sportsml:playType.Baseball" use="optional">
+				<annotation>
+					<documentation>A description for the play.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="play-scorekeepers-notation" type="string" use="optional">
+				<annotation>
+					<documentation>Denotes which fielders touched the ball during the play. Example: 6-4-3.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="walk-type" type="sportsml:walkType.Baseball" use="optional">
+				<annotation>
+					<documentation>If this play was a base-on-balls, the type of walk.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="hit-type" type="sportsml:hitType.Baseball" use="optional">
+				<annotation>
+					<documentation>A description for the hit.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="hit-by-pitch-type" type="sportsml:hitByPitchType.Baseball" use="optional">
+				<annotation>
+					<documentation>A description for how or why a batter was hit by a pitch.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="out-type" type="sportsml:outType.Baseball" use="optional">
+				<annotation>
+					<documentation>How the out was made.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="outs-recorded" use="optional">
+				<annotation>
+					<documentation>How many outs were recorded on the play. Values are 1, 2, 3.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="none"/>
+						<enumeration value="one"/>
+						<enumeration value="two"/>
+						<enumeration value="three"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment about the action.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-baseball-pitch">
+		<annotation>
+			<documentation>Issued after a pitch. Not used if the batter hit the ball into play. | Can indicate whether the pitch was a ball or strike, and where the pitch was located.</documentation>
+		</annotation>
+		<complexType>
+			<choice minOccurs="0">
+				<element ref="sportsml:action-baseball-contact"/>
+			</choice>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateBaseball"/>
+			<attribute name="umpire-call" use="optional">
+				<annotation>
+					<documentation>The net result of the pitch.</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="ball"/>
+						<enumeration value="strike"/>
+						<enumeration value="in-play"/>
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="pitch-type" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="pitch-velocity" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="trajectory-coordinates" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="strike-type" type="sportsml:strikeType.Baseball" use="optional">
+				<annotation>
+					<documentation>Whether a strike was called by the umpire, or due to swinging.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="ball-location" type="sportsml:ballLocation.Baseball" use="optional">
+				<annotation>
+					<documentation>Where with respect to the batter the ball was pitched.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment about the action.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-baseball-contact">
+		<annotation>
+			<documentation>TBD.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attribute name="location" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="strength" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="velocity" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="trajectory-coordinates" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>TBD.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+	<element name="action-baseball-other">
+		<annotation>
+			<documentation>A custom action. | For use when none of the pre-build actions apply.</documentation>
+		</annotation>
+		<complexType>
+			<attributeGroup ref="sportsml:globalAttributes"/>
+			<attributeGroup ref="sportsml:eventStateBaseball"/>
+			<attribute name="action-source" type="string" use="optional">
+				<annotation>
+					<documentation>The name of the controlled-vocabulary for the action-type attribute.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="action-type" type="string" use="optional">
+				<annotation>
+					<documentation>A selection from a controlled-vocabulary list maintained by the publisher.</documentation>
+				</annotation>
+			</attribute>
+			<attribute name="comment" type="string" use="optional">
+				<annotation>
+					<documentation>Textual comment about the action.</documentation>
+				</annotation>
+			</attribute>
+		</complexType>
+	</element>
+</schema>

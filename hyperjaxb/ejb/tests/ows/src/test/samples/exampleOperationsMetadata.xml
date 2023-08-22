@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OperationsMetadata xmlns="http://www.opengis.net/ows/1.1" 
+xmlns:xlink="http://www.w3.org/1999/xlink" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.opengis.net/ows/1.1 ../owsOperationsMetadata.xsd">
+	<!-- Partial example for WMS. Primary editor: Arliss Whiteside. Last updated 2006-03-16 -->
+	<Operation name="GetCapabilities">
+		<DCP>
+			<HTTP>
+				<Get xlink:href="http://ww.lat-lon.de/transform?"/>
+			</HTTP>
+		</DCP>
+		<Parameter name="Format">
+			<AllowedValues>
+				<Value>text/xml</Value>
+			</AllowedValues>
+		</Parameter>
+	</Operation>
+	<Operation name="GetMap">
+		<DCP>
+			<HTTP>
+				<Get xlink:href="http://ww.lat-lon.de/transform?"/>
+				<Post xlink:href="http://ww.lat-lon.de/transform?">
+					<Constraint name="InputFormat">
+						<AllowedValues>
+							<Value>text/xml</Value>
+						</AllowedValues>
+					</Constraint>
+				</Post>
+			</HTTP>
+		</DCP>
+		<Parameter name="Format">
+			<AllowedValues>
+				<Value>image/gif</Value>
+				<Value>image/png</Value>
+				<Value>image/jpeg</Value>
+			</AllowedValues>
+		</Parameter>
+		<Parameter name="ExceptionFormat">
+			<AllowedValues>
+				<Value>text/xml</Value>
+				<Value>text/plain</Value>
+				<Value>text/html</Value>
+				<Value>application/vnd.ogc.se_inimage</Value>
+			</AllowedValues>
+		</Parameter>
+	</Operation>
+	<Operation name="GetFeatureInfo">
+		<DCP>
+			<HTTP>
+				<Get xlink:href="http://ww.lat-lon.de/transform?"/>
+			</HTTP>
+		</DCP>
+		<Parameter name="Format">
+			<AllowedValues>
+				<Value>text/xml</Value>
+				<Value>text/plain</Value>
+				<Value>text/html</Value>
+			</AllowedValues>
+		</Parameter>
+	</Operation>
+	<Parameter name="ExceptionFormat">
+		<AllowedValues>
+			<Value>text/xml</Value>
+			<Value>text/plain</Value>
+			<Value>text/html</Value>
+		</AllowedValues>
+	</Parameter>
+	<Constraint name="MaximumLayerLevels">
+		<AllowedValues>
+			<Value>5</Value>
+		</AllowedValues>
+	</Constraint>
+	<Constraint name="MaximumWidth">
+		<AllowedValues>
+			<Value>4000</Value>
+		</AllowedValues>
+	</Constraint>
+	<Constraint name="MaximumHeight">
+		<AllowedValues>
+			<Value>4000</Value>
+		</AllowedValues>
+	</Constraint>
+</OperationsMetadata>

@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+== Copyright (c) 2002-2006. All rights reserved. 
+== Financial Products Markup Language is subject to the FpML public license. 
+== A copy of this license is available at http://www.fpml.org/license/license.html
+-->
+<!--View is pretrade-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns="http://www.fpml.org/FpML-5-0/pretrade" xmlns:fpml-annotation="http://www.fpml.org/annotation" targetNamespace="http://www.fpml.org/FpML-5-0/pretrade" ecore:documentRoot="FpML" ecore:nsPrefix="pre" ecore:package="org.fpml.pretrade" version="$Revision: 2864 $" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xsd:include schemaLocation="fpml-eq-shared-5-0.xsd" />
+  <xsd:complexType name="BrokerEquityOption">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining the broker equity options.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="EquityDerivativeShortFormBase">
+        <xsd:sequence>
+          <xsd:element name="deltaCrossed" type="xsd:boolean" />
+          <xsd:element name="brokerageFee" type="Money" />
+          <xsd:element name="brokerNotes" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="EquityAmericanExercise">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining exercise procedures associated with an American style exercise of an equity option. This entity inherits from the type SharedAmericanExercise.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="SharedAmericanExercise">
+        <xsd:sequence minOccurs="0">
+          <xsd:element name="latestExerciseTimeType" type="TimeTypeEnum" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The latest time of day at which the equity option can be exercised, for example the official closing time of the exchange.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="equityExpirationTimeType" type="TimeTypeEnum" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The time of day at which the equity option expires, for example the official closing time of the exchange.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="equityExpirationTime" type="BusinessCenterTime" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The specific time of day at which the equity option expires.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="equityMultipleExercise" type="EquityMultipleExercise" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The presence of this element indicates that the option may be exercised on different days. It is not applicable to European options.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="EquityBermudaExercise">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining exercise procedures associated with a Bermuda style exercise of an equity option. The term Bermuda is adopted in FpML for consistency with the ISDA Definitions.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="SharedAmericanExercise">
+        <xsd:sequence minOccurs="0">
+          <xsd:element name="bermudaExerciseDates" type="DateList">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">List of Exercise Dates for a Bermuda option</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="latestExerciseTimeType" type="TimeTypeEnum" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The latest time of day at which the equity option can be exercised, for example the official closing time of the exchange.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="equityExpirationTimeType" type="TimeTypeEnum" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The time of day at which the equity option expires, for example the official closing time of the exchange.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="equityExpirationTime" type="BusinessCenterTime" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The specific time of day at which the equity option expires.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="equityMultipleExercise" type="EquityMultipleExercise" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The presence of this element indicates that the option may be exercised on different days. It is not applicable to European options.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="EquityDerivativeBase" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining the common features of equity derivatives.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="Product">
+        <xsd:sequence>
+          <xsd:group ref="BuyerSeller.model" />
+          <xsd:element name="optionType" type="OptionTypeEnum" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The type of option transaction.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="equityEffectiveDate" type="xsd:date" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">Effective date for a forward starting option</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="underlyer" type="Underlyer" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">Specifies the underlying component, which can be either one or many and consists in either equity, index or convertible bond component, or a combination of these.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="notional" type="Money" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The notional amount.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="equityExercise" type="EquityExerciseValuationSettlement" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The parameters for defining how the equity option can be exercised, how it is valued and how it is settled.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:group ref="Feature.model" minOccurs="0" />
+          <xsd:element name="strategyFeature" type="StrategyFeature" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">A equity option simple strategy feature</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="EquityDerivativeLongFormBase" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">type for defining the common features of equity derivatives.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="EquityDerivativeBase">
+        <xsd:sequence minOccurs="0">
+          <xsd:element name="dividendConditions" type="DividendConditions" minOccurs="0" />
+          <xsd:element name="methodOfAdjustment" type="MethodOfAdjustmentEnum" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">Defines how adjustments will be made to the contract should one or more of the extraordinary events occur.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="extraordinaryEvents" type="ExtraordinaryEvents" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">Where the underlying is shares, specifies events affecting the issuer of those shares that may require the terms of the transaction to be adjusted.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="EquityDerivativeShortFormBase" abstract="true">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining short form equity option basic features</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="EquityDerivativeBase">
+        <xsd:sequence minOccurs="0">
+          <xsd:element name="strike" type="EquityStrike" minOccurs="0"></xsd:element>
+          <xsd:element name="spotPrice" type="NonNegativeDecimal" minOccurs="0" />
+          <xsd:element name="numberOfOptions" type="PositiveDecimal" minOccurs="0"></xsd:element>
+          <xsd:element name="equityPremium" type="EquityPremium" minOccurs="0"></xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="EquityEuropeanExercise">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining exercise procedures associated with a European style exercise of an equity option.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="Exercise">
+        <xsd:sequence minOccurs="0">
+          <xsd:element name="expirationDate" type="AdjustableOrRelativeDate">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The last day within an exercise period for an American style option. For a European style option it is the only day within the exercise period.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="equityExpirationTimeType" type="TimeTypeEnum" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The time of day at which the equity option expires, for example the official closing time of the exchange.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="equityExpirationTime" type="BusinessCenterTime" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The specific time of day at which the equity option expires.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="EquityExerciseValuationSettlement">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining exercise procedures for equity options.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence minOccurs="0">
+      <xsd:choice>
+        <xsd:element name="equityEuropeanExercise" type="EquityEuropeanExercise">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">The parameters for defining the expiration date and time for a European style equity option</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="equityAmericanExercise" type="EquityAmericanExercise">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">The parameters for defining the exercise period for an American style equity option together with the rules governing the quantity of the underlying that can be exercised on any given exercise date.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="equityBermudaExercise" type="EquityBermudaExercise">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">The parameters for defining the exercise period for an Bermuda style equity option together with the rules governing the quantity of the underlying that can be exercised on any given exercise date.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:choice>
+      <xsd:choice minOccurs="0">
+        <xsd:sequence>
+          <xsd:element name="automaticExercise" type="xsd:boolean">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">If true then each option not previously exercised will be deemed to be exercised at the expiration time on the expiration date without service of notice unless the buyer notifies the seller that it no longer wishes this to occur.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="makeWholeProvisions" type="MakeWholeProvisions" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">Provisions covering early exercise of option.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <xsd:element name="prePayment" type="PrePayment">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">Prepayment features for Forward.</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:choice>
+      <xsd:element name="equityValuation" type="EquityValuation" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The parameters for defining when valuation of the underlying takes place.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="settlementDate" type="AdjustableOrRelativeDate" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">Date on which settlement of option premiums will occur.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="settlementCurrency" type="Currency" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">The currency in which a cash settlement for non-deliverable forward and non-deliverable options.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="settlementPriceSource" type="SettlementPriceSource" minOccurs="0" />
+      <xsd:element name="settlementType" type="SettlementTypeEnum" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">How the option will be settled.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="settlementMethodElectionDate" type="AdjustableOrRelativeDate" minOccurs="0" />
+      <xsd:element name="settlementMethodElectingPartyReference" type="PartyReference" minOccurs="0" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="EquityForward">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining equity forwards.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="EquityDerivativeLongFormBase">
+        <xsd:sequence>
+          <xsd:element name="forwardPrice" type="Money" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The forward price per share, index or basket.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="EquityMultipleExercise">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining the multiple exercise provisions of an American or Bermuda style equity option.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="integralMultipleExercise" type="PositiveDecimal" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">When multiple exercise is applicable and this element is present it specifies that the number of options that can be exercised on a given exercise date must either be equal to the value of this element or be an integral multiple of it.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="minimumNumberOfOptions" type="PositiveDecimal">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">When multiple exercise is applicable this element specifies the minimum number of options that can be exercised on a given exercise date. If this element is not present then the minimum number is deemed to be 1. Its value can be a fractional number as a result of corporate actions.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="maximumNumberOfOptions" type="PositiveDecimal">
+        <xsd:annotation>
+          <xsd:documentation xml:lang="en">When multiple exercise is applicable this element specifies the maximum number of options that can be exercised on a given exercise date. If this element is not present then the maximum number is deemed to be the same as the number of options. Its value can be a fractional number as a result of corporate actions.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="EquityOption">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining equity options.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="EquityDerivativeLongFormBase">
+        <xsd:sequence minOccurs="0">
+          <xsd:element name="strike" type="EquityStrike" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">Defines whether it is a price or level at which the option has been, or will be, struck.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="spotPrice" type="NonNegativeDecimal" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The price per share, index or basket observed on the trade or effective date.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="numberOfOptions" type="PositiveDecimal" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The number of options comprised in the option transaction.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="optionEntitlement" type="PositiveDecimal" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The number of shares per option comprised in the option transaction.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="equityPremium" type="EquityPremium" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">The equity option premium payable by the buyer to the seller.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="EquityOptionTermination">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining Equity Option Termination</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="settlementAmountPaymentDate" type="AdjustableDate" />
+      <xsd:element name="settlementAmount" type="Money" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="EquityOptionTransactionSupplement">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining equity option transaction supplements</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="EquityDerivativeShortFormBase">
+        <xsd:sequence>
+          <xsd:element name="exchangeLookAlike" type="xsd:boolean" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">For a share option transaction, a flag used to indicate whether the transaction is to be treated as an 'exchange look-alike'. This designation has significance for how share adjustments (arising from corporate actions) will be determined for the transaction. For an 'exchange look-alike' transaction the relevant share adjustments will follow that for a corresponding designated contract listed on the related exchange (referred to as Options Exchange Adjustment (ISDA defined term), otherwise the share adjustments will be determined by the calculation agent (referred to as Calculation Agent Adjustment (ISDA defined term)).</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="exchangeTradedContractNearest" type="xsd:boolean" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">For an index option transaction, a flag used in conjuction with Futures Price Valuation (ISDA defined term) to indicate whether the Nearest Index Contract provision is applicable. The Nearest Index Contract provision is a rule for determining the Exchange-traded Contract (ISDA defined term) without having to explicitly state the actual contract, delivery month and exchange on which it is traded.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="multipleExchangeIndexAnnexFallback" type="xsd:boolean" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">For an index option transaction, a flag to indicate whether a relevant Multiple Exchange Index Annex is applicable to the transaction. This annex defines additional provisions which are applicable where an index is comprised of component securities that are traded on multiple exchanges.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="methodOfAdjustment" type="MethodOfAdjustmentEnum" minOccurs="0" />
+          <xsd:element name="localJurisdiction" type="Country" minOccurs="0">
+            <xsd:annotation>
+              <xsd:documentation xml:lang="en">Local Jurisdiction is a term used in the AEJ Master Confirmation, which is used to determine local taxes, which shall mean taxes, duties, and similar charges imposed by the taxing authority of the Local Jurisdiction If this element is not present Local Jurisdiction is Not Applicable.</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:choice minOccurs="0">
+            <xsd:element name="optionEntitlement" type="PositiveDecimal">
+              <xsd:annotation>
+                <xsd:documentation xml:lang="en">The number of shares per option comprised in the option transaction supplement.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="multiplier" type="PositiveDecimal">
+              <xsd:annotation>
+                <xsd:documentation xml:lang="en">Specifies the contract multiplier that can be associated with an index option.</xsd:documentation>
+              </xsd:annotation>
+            </xsd:element>
+          </xsd:choice>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:complexType name="PrePayment">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A type for defining PrePayment.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:group ref="PayerReceiver.model" />
+      <xsd:element name="prePayment" type="xsd:boolean" />
+      <xsd:element name="prePaymentAmount" type="Money" />
+      <xsd:element name="prePaymentDate" type="AdjustableDate" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="brokerEquityOption" type="BrokerEquityOption" substitutionGroup="product">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A component describing a Broker View of an Equity Option.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="equityForward" type="EquityForward" substitutionGroup="product">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A component describing an Equity Forward product.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="equityOption" type="EquityOption" substitutionGroup="product">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A component describing an Equity Option product.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="equityOptionTransactionSupplement" type="EquityOptionTransactionSupplement" substitutionGroup="product">
+    <xsd:annotation>
+      <xsd:documentation xml:lang="en">A component describing an Equity Option Transaction Supplement.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+</xsd:schema>
+

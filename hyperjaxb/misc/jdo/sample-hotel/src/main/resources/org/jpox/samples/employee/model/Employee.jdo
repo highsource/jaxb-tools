@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+<jdo>
+    <package name="org.jpox.samples.employee.model">
+        <class name="Employee" table="EMP">
+            <datastore-identity strategy="increment">
+                <column name="EMPNO"/>
+            </datastore-identity>
+            <field name="department" persistence-modifier="persistent">
+                <column name="DEPTID"/>
+            </field>
+            <field name="name" persistence-modifier="persistent">
+                <column name="ENAME"/>
+            </field>
+            <field name="salary" persistence-modifier="persistent">
+                <column name="SAL"/>
+            </field>
+            <field name="projects" persistence-modifier="persistent" mapped-by="employee">
+                <collection element-type="org.jpox.samples.employee.model.Project">
+                </collection>
+            </field>
+        </class>
+    </package>
+</jdo>

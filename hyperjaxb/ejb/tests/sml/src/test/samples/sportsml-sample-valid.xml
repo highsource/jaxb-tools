@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE sports-content SYSTEM "../specification/dtd/sportsml-core.dtd"> -->
+<sports-content
+	xmlns="http://iptc.org/std/SportsML/2006-10-18/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://iptc.org/std/SportsML/2006-10-18/ ../specification/schema/sportsml-loose.xsd"
+	>
+	<sports-metadata doc-id="foo" date-time="2004-12-11T08:00:00Z">
+		<sports-title>Sample Hockey Document - valid</sports-title>
+	</sports-metadata>
+	<sports-event>
+		<event-metadata
+			stats-coverage="compact"
+			team-coverage="single-team"
+			>
+			<event-metadata-ice-hockey
+				period-value="1"
+				/>
+		</event-metadata>
+		<team>
+			<team-metadata team-key="l.nhl.com-t.2"/>
+			<team-stats score="4"/>
+			<player id="p4">
+				<player-metadata player-key="l.nhl.com-p.1312" position-regular="guard"/>
+				<player-stats score="3"/>
+			</player>
+		</team>
+		<team>
+			<team-metadata team-key="l.nhl.com-t.4"/>
+			<team-stats score="3"/>
+		</team>
+		<event-actions>
+			<event-actions-ice-hockey>
+				<action-ice-hockey-score-attempt
+					player-idref="p4"
+					score-attempt-type="short-handed"
+					/>
+			</event-actions-ice-hockey>
+		</event-actions>
+	</sports-event>
+</sports-content>

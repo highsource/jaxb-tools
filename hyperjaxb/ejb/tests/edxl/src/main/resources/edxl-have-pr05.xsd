@@ -1,0 +1,950 @@
+<!-- edited with XMLSpy v2007 rel. 3 (http://www.altova.com) by Sukumar Dwarkanath (private) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xnal="urn:oasis:names:tc:ciq:xnal:3" xmlns:xpil="urn:oasis:names:tc:ciq:xpil:3" xmlns:xal="urn:oasis:names:tc:ciq:xal:3" xmlns:xnl="urn:oasis:names:tc:ciq:xnl:3" xmlns:geo-oasis="urn:oasis:names:tc:emergency:EDXL:HAVE:1.0:geo-oasis" xmlns="urn:oasis:names:tc:emergency:EDXL:HAVE:1.0" xmlns:ns1="urn:oasis:names:tc:emergency:EDXL:HAVE:1.0:geo-oasis" targetNamespace="urn:oasis:names:tc:emergency:EDXL:HAVE:1.0" elementFormDefault="qualified" attributeFormDefault="qualified">
+	<xsd:import namespace="urn:oasis:names:tc:ciq:xpil:3" schemaLocation="xPIL.xsd"/>
+	<xsd:import namespace="urn:oasis:names:tc:emergency:EDXL:HAVE:1.0:geo-oasis" schemaLocation="geo-oasis.xsd"/>
+	<xsd:element name="HospitalStatus">
+		<xsd:annotation>
+			<xsd:documentation>The top level container element for reporting status of any number of hospitals. The EDXL-HAVE has no independent routing mechanism, so it requires a routing mechanism that is consistent with the EDXL-DE distribution types. It must contain one or more Hospital elements.
+  </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Hospital" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>The container element for reporting status of a hospital. Multiple Instances of the Hospital element MAY occur within the HospitalStatus container element. </xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element ref="Organization">
+								<xsd:annotation>
+									<xsd:documentation>The container element for organization information elements. The generic element Organisation refers to the entity that is providing the data. This generic name is used throughout this document. Typically, this will include hospitals, nursing care centers, trauma centers etc.
+</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="EmergencyDepartmentStatus" type="EmergencyDepartmentStatus" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>Report on the emergency department status for the organization.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="HospitalBedCapacityStatus" type="HospitalBedCapacityStatus" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>The hospital bed capacity for the organization.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="ServiceCoverageStatus" type="ServiceCoverageStatus" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>The physician service coverage status for the organization.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="HospitalFacilityStatus" type="HospitalFacilityStatus" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>The status of operations for the organization.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="HospitalResourcesStatus" type="HospitalResourcesStatus" minOccurs="0">
+								<xsd:annotation>
+									<xsd:documentation>The status of resources for the organization.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="LastUpdateTime" type="xsd:dateTime">
+								<xsd:annotation>
+									<xsd:documentation>The last time the information was updated.</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="CommentText" type="xsd:string">
+		<xsd:annotation>
+			<xsd:documentation>One or more comments</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Organization">
+		<xsd:annotation>
+			<xsd:documentation>The container element for Organization Information and location elements. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="OrganizationInformation" type="OrganizationInformation"/>
+				<xsd:element name="OrganizationGeoLocation" type="OrganizationGeoLocation" minOccurs="0"/>
+				<xsd:element ref="CommentText" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="OrganizationInformation">
+		<xsd:annotation>
+			<xsd:documentation>The container element for organization information elements. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="xpil:OrganisationDetailsType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="OrganizationGeoLocation">
+		<xsd:annotation>
+			<xsd:documentation>The container element for specifying the geo-coded address. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="geo-oasis:WhereType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="EmergencyDepartmentStatus">
+		<xsd:annotation>
+			<xsd:documentation> The container of all of the elements related to the emergency department status. It describes the ability of this emergency department to treat patients.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="EMSTraffic" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Ability of this emergency department to receive patients via emergency medical services.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="EMSTrafficStatus" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>Identifies the status of EMS traffic operations</xsd:documentation>
+							</xsd:annotation>
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:enumeration value="Normal">
+										<xsd:annotation>
+											<xsd:documentation>Accepting all EMS traffic.</xsd:documentation>
+										</xsd:annotation>
+									</xsd:enumeration>
+									<xsd:enumeration value="Advisory">
+										<xsd:annotation>
+											<xsd:documentation>Experiencing specific resource limitations which may affect transport of some EMS traffic.</xsd:documentation>
+										</xsd:annotation>
+									</xsd:enumeration>
+									<xsd:enumeration value="Closed">
+										<xsd:annotation>
+											<xsd:documentation>Requesting re-route of EMS traffic to other facilities.</xsd:documentation>
+										</xsd:annotation>
+									</xsd:enumeration>
+									<xsd:enumeration value="NotApplicable">
+										<xsd:annotation>
+											<xsd:documentation>Not Applicable. This hospital does not have an emergency department.</xsd:documentation>
+										</xsd:annotation>
+									</xsd:enumeration>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="EMSTrafficReason" type="xsd:string" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>It is used to report the contributing factor to an EMSTraffic Status.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element ref="CommentText" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="EMSCapacity" type="TriageCount" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The number of each triage patient type the hospital can accept.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EMSCensus" type="TriageCount" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The number of each triage patient type the hospital currently has.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EMSAmbulanceStatus" type="Offload" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The container element to indicate the status and offload time for air transport capabilities. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EMSAirTransportStatus" type="Offload" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The container element to indicate the status and offload time for ambulance capabilities.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="CommentText" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HospitalBedCapacityStatus">
+		<xsd:annotation>
+			<xsd:documentation>The container of all of the elements related to the hospital bed capacity and status. For each of the bed types (AdultICU, MedicalSurgical, etc.), if needed, a collection of named sub-types can be provided. The totals of sub-categories SHOULD equal the capacity data specified in the parent.  
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="BedCapacity" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Container element to identify the number of available beds. Each Bed Type and the sub-categories under it must be encapsulated by a BedCapacity element. Multiple instances of BedCapacity elements are allowed. For example, a hospital may sub-categorize Adult ICU beds into Surgery, Cardiac, General and Neuro. 
+</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="BedType" block="restriction" minOccurs="0" maxOccurs="unbounded">
+							<xsd:annotation>
+								<xsd:documentation>Enumerated list of available Bed Types</xsd:documentation>
+							</xsd:annotation>
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:enumeration value="AdultICU">
+										<xsd:annotation>
+											<xsd:documentation>These can support critically ill or injured patients, including ventilator support.  
+This category includes all major subtypes of ICU beds, including neuro, cardiac, trauma, or medical, with the exception that this category does not include burn ICU beds.
+</xsd:documentation>
+										</xsd:annotation>
+									</xsd:enumeration>
+									<xsd:enumeration value="PediatricICU"/>
+									<xsd:enumeration value="NeonatalICU"/>
+									<xsd:enumeration value="EmergencyDepartment"/>
+									<xsd:enumeration value="NurseryBeds"/>
+									<xsd:enumeration value="MedicalSurgical">
+										<xsd:annotation>
+											<xsd:documentation>These are also thought of as ward beds. These beds may or may not include cardiac telemetry capability. 
+</xsd:documentation>
+										</xsd:annotation>
+									</xsd:enumeration>
+									<xsd:enumeration value="RehabLongTermCare"/>
+									<xsd:enumeration value="Burn">
+										<xsd:annotation>
+											<xsd:documentation>These are thought of as burn ICU beds, either approved by the American Burn Association or self-designated. These beds are NOT to be included in other ICU bed counts.
+</xsd:documentation>
+										</xsd:annotation>
+									</xsd:enumeration>
+									<xsd:enumeration value="Pediatrics">
+										<xsd:annotation>
+											<xsd:documentation>Capacity status for pediatrics beds. These are ward medical/surgical beds for patients 17-years-old and younger.</xsd:documentation>
+										</xsd:annotation>
+									</xsd:enumeration>
+									<xsd:enumeration value="AdultPsychiatric">
+										<xsd:annotation>
+											<xsd:documentation>Capacity status for psychiatric beds. These are ward beds on a closed/locked psychiatric unit or ward beds where a patient will be attended by a sitter. </xsd:documentation>
+										</xsd:annotation>
+									</xsd:enumeration>
+									<xsd:enumeration value="PediatricPsychiatric"/>
+									<xsd:enumeration value="NegativeFlowIsolation">
+										<xsd:annotation>
+											<xsd:documentation>Capacity status for negative airflow isolation beds. These provide respiratory isolation. NOTE: This value may represent available beds included in the counts of other types. </xsd:documentation>
+										</xsd:annotation>
+									</xsd:enumeration>
+									<xsd:enumeration value="OtherIsolation">
+										<xsd:annotation>
+											<xsd:documentation>Capacity status for other isolation beds. These provide isolation where airflow is not a concern.  NOTE: This value may represent available beds included in the counts of other types.  </xsd:documentation>
+										</xsd:annotation>
+									</xsd:enumeration>
+									<xsd:enumeration value="OperatingRooms">
+										<xsd:annotation>
+											<xsd:documentation>Capacity status for operating rooms which are equipped staffed and could be made available for patient care in a short period of time.</xsd:documentation>
+										</xsd:annotation>
+									</xsd:enumeration>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="SubCategoryBedType" block="extension" minOccurs="0" maxOccurs="unbounded">
+							<xsd:annotation>
+								<xsd:documentation>The name of the sub-category bed type. Each bed type (AdultICU, MedicalSurgical, etc.) may optionally contain a collection of named sub-categories. Each bed type may have many one or more named sub-type categories. 
+- If one or more sub category bed types are used, they must be preceded by the parent BedType element. In this case, CapacityStatus of the Bed Type CANNOT be Not Available. 
+Each parent BedType element and its associated sub-category bed types must be encapsulated with a BedCapacity element. 
+If the capacity counts of sub-category beds are specified, they need not equal the capacity count of the parent bed type. 
+In general, if capacities of are specified using sub-category bed types, then only the CapacityStatus of the parent bed type should be used, and this should reflect an Available value. </xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="Capacity" type="Capacity" minOccurs="0" maxOccurs="unbounded">
+							<xsd:annotation>
+								<xsd:documentation>Container element to define the capacity information of each specified bed type or sub category bed type.  </xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element ref="CommentText" minOccurs="0" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ServiceCoverageStatus">
+		<xsd:annotation>
+			<xsd:documentation>Container element of all the elements of service coverage. This includes both the necessary staff and facilities.  Indicator of the availability of specialty service coverage.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Burn" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The availability of Burn center services. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CardiologyIndicator" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The container element for specifying the availability of Cardiology services.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="Cardiology" type="xsd:boolean" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>The availability of Cardiology services. </xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="CardiologySubType" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>The container element for specifying the availability of Cardiology services that are broken down into sub-types.</xsd:documentation>
+							</xsd:annotation>
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="CardiologyInvasive" type="xsd:boolean" minOccurs="0"/>
+									<xsd:element name="CardiologyNonInvasive" type="xsd:boolean" minOccurs="0"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Dialysis" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The availability of dialysis services. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EmergencyDepartment" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The availability of Emergency Department services. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="HyperbaricChamber" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The availability of hyperbaric chamber services for decompression and/or wound care.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="InfectiousDisease" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The availability of Infectious Diseases. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Neonatology" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The availability of Neonatology services.  </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NeurologyIndicator" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The container element for specifying the availability of Neurology services.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="Neurology" type="xsd:boolean" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>The availability of OBGYN services</xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="NeurologySubType" minOccurs="0">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="NeurologyInvasive" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>The availability of Neurology-Invasive services, including invasive catheterization. </xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element name="NeurologyNonInvasive" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>The availability of Neurology-Non-Invasive services with no invasive catheterization capability.  </xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="OBGYNIndicator" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The container element for specifying the availability of OBGYN services.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="OBGYN" type="xsd:boolean" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>The availability of OBGYN services. </xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="OBGYNSubType" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>The availability of OBGYN services</xsd:documentation>
+							</xsd:annotation>
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="OBGYNWithLaborDelivery" type="xsd:boolean" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>Availability of OBGYN with labor delivery. </xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element name="OBGYNWithoutLaborDelivery" type="xsd:boolean" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>Sub-type element of the OBGYN Services. Availability of Labor Delivery services. </xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Ophthalmology" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The availability of Ophthalmology services.  </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Orthopedic" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The availability of Orthopedic services.  </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Pediatrics" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The availability of pediatric services. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PsychiatricIndicator" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The container element for specifying the availability of psychiatric services.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="Psychiatric" type="xsd:boolean" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>The availability of psychiatric services. </xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="PsychiatricSubType" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>The availability of psychiatric services. </xsd:documentation>
+							</xsd:annotation>
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="PsychiatricAdultGeneral" type="xsd:boolean" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>Availability of Adult General Psychiatric services. </xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element name="PsychiatricPediatric" type="xsd:boolean" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>Availability of Pediatric Psychiatric services. </xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="SurgeryIndicator" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The container element for specifying the availability of surgery services.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="Surgery" type="xsd:boolean" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>The availability of surgery services. </xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="SurgerySubType" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>The availability of general surgery services.   </xsd:documentation>
+							</xsd:annotation>
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="General" type="xsd:boolean" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>The availability of general surgical services.  </xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element name="AdultGeneralSurgery" type="xsd:boolean" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>The availability of adult general services.  </xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element name="Pediatrics" type="xsd:boolean" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>The availability of Pediatrics general surgical services. </xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element name="Orthopedics" type="xsd:boolean" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>The availability of Orthopedic surgical services.</xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element name="Neurosurgery" type="xsd:boolean" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>The availability of Neurosurgery services. </xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element name="Facial" type="xsd:boolean" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>The availability of facial surgical services. </xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element name="CardioThoracic" type="xsd:boolean" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>The availability of cardiothoracic surgical services.</xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element name="Hand" type="xsd:boolean" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>The availability of hand surgery services.</xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element name="Reimplantation" type="xsd:boolean" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>The availability of reimplantation surgical services.  </xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element name="Spinal" type="xsd:boolean" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>The availability of spinal surgical services.  </xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element name="Vascular" type="xsd:boolean" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>The availability of vascular surgical services. </xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element name="Anesthesia" type="xsd:boolean" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>The availability of anesthesia services. </xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="TransportServicesIndicator" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The container element for specifying the availability of transport services.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="TransportServices" type="xsd:boolean" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>The availability of transport services. </xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="TransportServicesSubType" minOccurs="0">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="AmbulanceServices" type="xsd:boolean" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>The availability of ground transport services. </xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+									<xsd:element name="AirTransportServices" type="xsd:boolean" minOccurs="0">
+										<xsd:annotation>
+											<xsd:documentation>The availability of air transport services. </xsd:documentation>
+										</xsd:annotation>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="TraumaCenterServicesIndicator" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The container element for specifying the availability of Trauma Center Services and its service level. </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="TraumaCenterServices" type="xsd:boolean" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>The availability of trauma center services. </xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="TraumaCenterServicesLevel" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>The service level of the trauma center. </xsd:documentation>
+							</xsd:annotation>
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:enumeration value="Level1"/>
+									<xsd:enumeration value="Level2"/>
+									<xsd:enumeration value="Level3"/>
+									<xsd:enumeration value="Level4"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element ref="CommentText" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HospitalFacilityStatus">
+		<xsd:annotation>
+			<xsd:documentation>The container of all of the elements related to the status of the facility.  </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="HospitalEOCStatus" default="Inactive" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the Hospital EOC is currently operating.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="Active"/>
+						<xsd:enumeration value="Inactive"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="HospitalEOCPlan" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Whether the Hospital EOC has activated its Emergency Operations Plan (EOP).</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="Active"/>
+						<xsd:enumeration value="Inactive"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="ClinicalStatus" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The clinical status of the facility. </xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="Normal">
+							<xsd:annotation>
+								<xsd:documentation>Hospital clinical resources are operating within normal conditions.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+						<xsd:enumeration value="Full">
+							<xsd:annotation>
+								<xsd:documentation>Hospital clinical resources are exceeded and acceptable care cannot be
+                                provided to additional patients. Diversion or community surge response is required.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="DeconCapacity" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The status of Decon Capacity</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="DeconCapacityStatus" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>The capacity for chemical/biological/radiological patient decontamination.</xsd:documentation>
+							</xsd:annotation>
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:enumeration value="Inactive"/>
+									<xsd:enumeration value="Open"/>
+									<xsd:enumeration value="Full"/>
+									<xsd:enumeration value="Exceeded"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="AmbulatoryPatientsDeconCapacity" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>The number of ambulatory patients which can be decontaminated over time (typically an hour). </xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+						<xsd:element name="NonAmbulatoryPatientsDeconCapacity" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>The number of non-ambulatory patients which can be decontaminated over time (typically an hour). </xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="MorgueCapacity" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The status of the morgue capacity. </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="MorgueCapacityStatus" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>The status of the morgue capacity. </xsd:documentation>
+							</xsd:annotation>
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:string">
+									<xsd:enumeration value="Open"/>
+									<xsd:enumeration value="Full"/>
+									<xsd:enumeration value="Exceeded"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="MorgueCapacityUnits" type="xsd:integer" minOccurs="0">
+							<xsd:annotation>
+								<xsd:documentation>The number of vacant/available units to which victims can be immediately transported.  </xsd:documentation>
+							</xsd:annotation>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="FacilityStatus" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The status of the facility.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="Normal">
+							<xsd:annotation>
+								<xsd:documentation>No conditions exist that adversely affect
+                                the general operations of the facility.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+						<xsd:enumeration value="Compromised">
+							<xsd:annotation>
+								<xsd:documentation>General operations of the facility have been
+                                affected due to damage, operating on emergency backup systems,
+                                or facility contamination.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+						<xsd:enumeration value="Evacuating">
+							<xsd:annotation>
+								<xsd:documentation>Indicates that a hospital is in the process
+                                of a partial or full evacuation.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+						<xsd:enumeration value="Closed">
+							<xsd:annotation>
+								<xsd:documentation>Indicates that a hospital is no longer capable
+                                of providing services and only emergency services/restoration
+                                personnel remain in the facility.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="SecurityStatus" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The status of security procedures in the hospital.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="Normal">
+							<xsd:annotation>
+								<xsd:documentation>The hospital is operating under routine security
+                                procedures.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+						<xsd:enumeration value="Elevated">
+							<xsd:annotation>
+								<xsd:documentation>The hospital has activated increased security
+                                procedures (awareness, surveillance) due to a potential threat,
+                                or specific security related event i.e. increase in local threat
+                                level, VIP, bomb threat.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+						<xsd:enumeration value="RestrictedAccess">
+							<xsd:annotation>
+								<xsd:documentation>Based on security needs, the hospital has
+                                activated procedures to allow access to the facility through
+                                a reduced number of controlled entrances.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+						<xsd:enumeration value="Lockdown">
+							<xsd:annotation>
+								<xsd:documentation>Based on security needs, the hospital has
+                                activated procedures to control entry to the facility to
+                                authorized persons only.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+						<xsd:enumeration value="Quarantine">
+							<xsd:annotation>
+								<xsd:documentation>Based on a public health emergency, the
+                                entry and exit of the facility is controlled by public
+                                health officials.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Activity24Hr" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The container element for reporting activities in the last 24 hours.  </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Admissions" minOccurs="0"/>
+						<xsd:element name="Discharges" minOccurs="0"/>
+						<xsd:element name="Deaths" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element ref="CommentText" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HospitalResourcesStatus">
+		<xsd:annotation>
+			<xsd:documentation>The container for all the elements related to the operations of the facility.  </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Staffing" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The status of staffing.  </xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="Adequate">
+							<xsd:annotation>
+								<xsd:documentation>Meets the current needs.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+						<xsd:enumeration value="Insufficient">
+							<xsd:annotation>
+								<xsd:documentation>Current needs not being met.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="FacilityOperations" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The status of supplies necessary for facility operations.  </xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="Adequate">
+							<xsd:annotation>
+								<xsd:documentation>Meets the current needs.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+						<xsd:enumeration value="Insufficient">
+							<xsd:annotation>
+								<xsd:documentation>Current needs not being met.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="ClinicalOperations" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The status of supplies necessary for clinical operations. </xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="Adequate">
+							<xsd:annotation>
+								<xsd:documentation>Meets the current needs.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+						<xsd:enumeration value="Insufficient">
+							<xsd:annotation>
+								<xsd:documentation>Current needs not being met.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="ResourcesInformationText" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>The type of resources and their status or count.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="CommentText" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TriageCount">
+		<xsd:annotation>
+			<xsd:documentation>The number of each triage patient type the overall hospital currently has.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="TriageCodeListURN" type="xsd:anyURI" default="urn:oasis:names:tc:emergency:have:1.0:triagecolorcode" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The name of a certified list maintained by the Community of Interest (COI) for the value referenced. If no TriageCodeListURN is specified, the default list should be used. Default Value: urn: oasis:names:tc:emergency:have:1.0:triagecolorcode.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:sequence>
+				<xsd:element name="TriageCode" minOccurs="0" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>The container element to specify the triage values and their quantity</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="TriageCodeValue" minOccurs="0" maxOccurs="unbounded">
+								<xsd:annotation>
+									<xsd:documentation>The list of values must be from the list identified in TriageCodeListURN. Default Values - Red: Number of victims with immediate needs - Yellow: Number of victims with delayed needs - Green: Number of victims with minor needs -Black: Number of deceased victims. If a TriageCodeValue is specified, a TriageCountQuantity element must be specified. </xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="Red"/>
+										<xsd:enumeration value="Yellow"/>
+										<xsd:enumeration value="Green"/>
+										<xsd:enumeration value="Black"/>
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="TriageCountQuantity" type="xsd:integer" minOccurs="0" maxOccurs="unbounded">
+								<xsd:annotation>
+									<xsd:documentation>The integer value associated with the TrageCodeValue. It refers to the preceeding TriageCodeValue element.  If a TriageCodeValue is specified, a TriageCountQuantity element must be specified. </xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Capacity">
+		<xsd:annotation>
+			<xsd:documentation>Top level complex schema type defining bed capacity counts given a specific type of bed.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="CapacityStatus" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicator of status of bed type or sub-category bed type.  </xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="Vacant/Available"/>
+						<xsd:enumeration value="NotAvailable"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="AvailableCount" type="xsd:integer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The number of vacant/available beds to which patients can be immediately transported.  These must include supporting space, equipment, medical material, ancillary and support services and staff to operate under normal circumstances. These beds are licensed, physically available and have staff on hand to attend to the patient who occupies the bed.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BaselineCount" type="xsd:integer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The maximum (baseline) number of beds in this category.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AdditionalCapacityCount24Hr" type="xsd:integer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Estimate how many beds above the current number could be made vacant/available within 24 hours. This includes institutional surge beds as well as beds made available by discharging/transferring patients.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AdditionalCapacityCount72Hr" type="xsd:integer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Estimate how many beds above the current number could be made vacant/available within 72 hours. This includes institutional surge beds as well as beds made available by discharging/transferring patients.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Offload">
+		<xsd:annotation>
+			<xsd:documentation>Indicator of offload times of ambulance capabilities.  The time it takes to transfer care of a patient to hospital staff, thereby freeing the transport for assignment. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="EMSOffloadStatus" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicator of offload times of ambulance capabilities.  </xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="Normal">
+							<xsd:annotation>
+								<xsd:documentation>The time required to offload a patient is typical.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+						<xsd:enumeration value="Delayed">
+							<xsd:annotation>
+								<xsd:documentation>The time required to offload a patient is longer than typical. </xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="EMSOffloadMinutes" type="xsd:integer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Average offload time in minutes.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

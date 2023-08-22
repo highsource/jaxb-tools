@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05" targetNamespace="http://www.opentravel.org/OTA/2003/05" elementFormDefault="qualified" version="1.002" id="OTA2008A">
+	<xs:include schemaLocation="OTA_AirCommonTypes.xsd"/>
+	<xs:element name="OTA_AirDemandTicketRS">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Provides the capability to respond to a demand ticket request, returning minimal information about the ticket that was issued.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Success" type="SuccessType">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The presence of the empty Success element explicitly indicates that the OTA message succeeded.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Warnings" type="WarningType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Used in conjunction with the Success element to define one or more business errors.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="BookingReferenceID" type="UniqueID_Type" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The PNR record locator for which a ticket was issued.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TicketItemInfo" minOccurs="0" maxOccurs="99">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Information for the ticket that was issued.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="PassengerName" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation xml:lang="en">The name of the person for whom the ticket was issued.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="PersonNameType">
+												<xs:attribute name="PassengerTypeCode" type="AlphaLength3" use="optional">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">Used to identify the PTC code (passenger type code) for the passenger (e.g. infant).</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="ConjunctiveTicket" minOccurs="0" maxOccurs="3">
+									<xs:annotation>
+										<xs:documentation>Used to specify conjunctive ticket/document numbers.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:attribute name="TicketNumber" type="StringLength1to32" use="required">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">The number of the conjunctive ticket/document that was issued.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+							<xs:attribute name="TicketNumber" type="StringLength1to32" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The number of the document that was issued.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="Type" type="TicketType" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The type of document that was issued (e.g., electronic ticket, MCO).</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="ItemNumber" type="NumericStringLength1to5" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The number associated with the document for back office accounting purposes.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="InvoiceNumber" type="StringLength1to8" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The invoice number associated with the document that was issued.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="TotalAmount" type="Money" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The gross total amount of the ticket.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="CommissionAmount" type="Money" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The amount of commission that will be paid.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="PaymentType" type="OTA_CodeType" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The form of payment for the ticket. Refer to OTA code list Payment Type (PMT).</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="NetAmount" type="Money" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The monetary value of the ticket after any applicable deductions have been made to the total (i.e., gross) amount.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="TicketingStatus" type="OTA_CodeType" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The status of the ticket. Refer to OTA Code List Ticketing Status (TST).</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="QueuePNR" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Information to specify which queue a PNR was placed on after the ticket was isssued.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:attributeGroup ref="QueueGroup">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Information to identify a queue.</xs:documentation>
+								</xs:annotation>
+							</xs:attributeGroup>
+							<xs:attribute name="Date" type="DateOrMonthDay" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">The month and day of the queue on which the PNR is to be placed.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="DateRangeNumber" type="xs:integer" use="optional">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">A number specifying a range of days (e.g., today plus 3, today plus 6) for the queue on which the PNR is to be placed. </xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Comment" type="FreeTextType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">A comment associated with the ticket.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Errors" type="ErrorsType">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Errors are returned if the request was unable to be processed.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:attributeGroup ref="OTA_PayloadStdAttributes">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">The standard attributes that appear on the root element for all OTA payloads. </xs:documentation>
+				</xs:annotation>
+			</xs:attributeGroup>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

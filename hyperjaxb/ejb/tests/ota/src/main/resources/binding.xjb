@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jaxb:bindings
+		version="2.1" 
+		xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+		xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+		xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+		xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+		xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+		jaxb:extensionBindingPrefixes="xjc hj orm"
+
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb  http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd">
+
+
+
+    <jaxb:bindings schemaLocation="_2008A_XML/OTA_CommonTypes.xsd" node="/xs:schema">
+
+		<hj:persistence>
+			<hj:default-one-to-many>
+				<orm:join-table/>
+			</hj:default-one-to-many>
+		</hj:persistence>
+
+		<jaxb:bindings node="xs:attributeGroup[@name='OTA_PayloadStdAttributes']/xs:attribute[@name='Version']">
+			<hj:basic>
+				<orm:column precision="8" scale="4"/>
+			</hj:basic>
+		</jaxb:bindings>
+    </jaxb:bindings>
+
+
+    <!--jaxb:bindings schemaLocation="_2008A_XML/OTA_CommonTypes.xsd" node="/xs:schema">
+	<jaxb:schemaBindings>
+		<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.ota"/>
+	</jaxb:schemaBindings>
+
+
+
+    </jaxb:bindings>
+
+    <jaxb:bindings schemaLocation="_2008A_XML/OTA_RailAvailRS.xsd" node="/xs:schema">        
+
+	<jaxb:bindings node="xs:complexType[@name='PriceRuleType']//xs:attribute[@name='Value']">
+		<jaxb:property name="QualifyingValue"/>
+	</jaxb:bindings>
+
+    </jaxb:bindings>
+
+    <jaxb:bindings schemaLocation="_2008A_XML/OTA_TourInformation.xsd" node="/xs:schema">        
+
+	<jaxb:bindings node="xs:complexType[@name='TourInformationType']//xs:element[@name='Duration']">
+		<jaxb:property name="TourDuration"/>
+	</jaxb:bindings>
+
+
+    </jaxb:bindings-->
+
+
+
+</jaxb:bindings>

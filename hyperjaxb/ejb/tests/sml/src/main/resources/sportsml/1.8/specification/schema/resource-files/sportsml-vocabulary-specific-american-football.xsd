@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<schema
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:sportsml="http://iptc.org/std/SportsML/2006-10-18/"
+	version="1.8"
+	>
+	<simpleType name="scoreAttemptResult.AmericanFootball.Vocabulary">
+		<restriction base="string">
+			<enumeration value="conversion-attempt"/>
+			<enumeration value="field-goal-attempt"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="driveResult.AmericanFootball.Vocabulary">
+		<restriction base="string">
+			<enumeration value="score"/>
+			<enumeration value="score-attempt"/>
+			<enumeration value="punt"/>
+			<enumeration value="fumble"/>
+			<enumeration value="interception"/>
+			<enumeration value="marker-not-reached">
+				<annotation>
+					<documentation>On the final down, the team in possession did not reach the first-down marker.</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+	<simpleType name="scoreType.AmericanFootball.Vocabulary">
+		<restriction base="string">
+			<enumeration value="touchdown"/>
+			<enumeration value="safety"/>
+			<enumeration value="conversion"/>
+			<enumeration value="conversion-1pt"/>
+			<enumeration value="conversion-2pt"/>
+			<enumeration value="field-goal"/>
+			<enumeration value="extra-point"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="penaltySide.AmericanFootball.Vocabulary">
+		<restriction base="string">
+			<enumeration value="offensive"/>
+			<enumeration value="defensive"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="penaltyLevel.AmericanFootball.Vocabulary">
+		<restriction base="string">
+			<enumeration value="delay-of-game"/>
+			<enumeration value="encroachment"/>
+			<enumeration value="false-start"/>
+			<enumeration value="offside"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="timeoutType.AmericanFootball.Vocabulary">
+		<restriction base="string">
+			<enumeration value="2-minute"/>
+			<enumeration value="1-minute"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="role.AmericanFootball.Vocabulary">
+		<restriction base="string">
+			<enumeration value="snapper"/>
+			<enumeration value="snap-receiver"/>
+			<enumeration value="handoff-receiver"/>
+			<enumeration value="lateral-receiver"/>
+			<enumeration value="pass-receiver"/>
+			<enumeration value="interceptor"/>
+			<enumeration value="fumble-recoverer"/>
+			<enumeration value="rusher"/>
+			<enumeration value="tackler"/>
+			<enumeration value="kick-blocker"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="result.AmericanFootball.Vocabulary">
+		<restriction base="string">
+			<enumeration value="tackle"/>
+			<enumeration value="sack"/>
+			<enumeration value="forward-pass"/>
+			<enumeration value="lateral-pass"/>
+			<enumeration value="incomplete-pass"/>
+			<enumeration value="kick"/>
+			<enumeration value="handoff"/>
+			<enumeration value="fumble"/>
+			<enumeration value="ball-grounded"/>
+			<enumeration value="ball-out-of-bounds"/>
+			<enumeration value="score"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="kickType.AmericanFootball.Vocabulary">
+		<restriction base="string">
+			<enumeration value="punt"/>
+			<enumeration value="onside"/>
+			<enumeration value="extra-point"/>
+			<enumeration value="field-goal-attempt"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="penaltyType.AmericanFootball.Vocabulary">
+		<restriction base="string">
+			<enumeration value="none"/>
+			<enumeration value="batting-ball"/>
+			<enumeration value="fair-catch-interference"/>
+			<enumeration value="helping-runner"/>
+			<enumeration value="holding"/>
+			<enumeration value="illegal-contact"/>
+			<enumeration value="illegal-forward-pass"/>
+			<enumeration value="illegal-motion"/>
+			<enumeration value="ineligible-player-downfield"/>
+			<enumeration value="intentional-grounding"/>
+			<enumeration value="pass-interference"/>
+			<enumeration value="personal-foul"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="position.AmericanFootball.Vocabulary">
+		<annotation>
+			<documentation>.american-football</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="center"/>
+			<enumeration value="guard"/>
+			<enumeration value="end"/>
+			<enumeration value="tackle"/>
+			<enumeration value="running-back"/>
+			<enumeration value="half-back"/>
+			<enumeration value="full-back"/>
+			<enumeration value="quarterback"/>
+			<enumeration value="wide-receiver"/>
+			<enumeration value="receiver"/>
+			<enumeration value="lineman"/>
+			<enumeration value="safety"/>
+			<enumeration value="cornerback"/>
+			<enumeration value="linebacker"/>
+			<enumeration value="referee"/>
+			<enumeration value="linesman"/>
+			<enumeration value="line-judge"/>
+			<enumeration value="back-judge"/>
+			<enumeration value="side-judge"/>
+			<enumeration value="field-judge"/>
+			<enumeration value="coach"/>
+			<enumeration value="assistant-coach"/>
+		</restriction>
+	</simpleType>
+	<simpleType name="caller.AmericanFootball.Vocabulary">
+		<restriction base="string">
+			<enumeration value="team"/>
+			<enumeration value="official"/>
+		</restriction>
+	</simpleType>
+</schema>

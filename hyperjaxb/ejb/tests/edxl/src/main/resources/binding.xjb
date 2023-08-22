@@ -1,0 +1,28 @@
+<jaxb:bindings
+	version="1.0"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	jaxb:extensionBindingPrefixes="xjc hj orm">
+
+	<jaxb:bindings schemaLocation="xlink-2003-12-31.xsd" node="/xs:schema">
+		<jaxb:bindings node="xs:attribute[@name='type']">
+			<jaxb:property name="LinkType"/>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="gml-oasis.xsd" node="/xs:schema">
+		<jaxb:schemaBindings>
+			<jaxb:package name="net.opengis.gml"/>
+		</jaxb:schemaBindings>
+		<jaxb:bindings node="xs:element[@name='_Curve']">
+			<jaxb:class name="AbstractCurve"/>
+		</jaxb:bindings>
+		<hj:ignored-package name="net.opengis.gml"/>
+	</jaxb:bindings>
+
+
+
+</jaxb:bindings>

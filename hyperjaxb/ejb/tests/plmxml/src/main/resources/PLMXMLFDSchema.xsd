@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Copyright 2005 UGS Corp.  All Rights Reserved.
+This software and related documentation are proprietary to UGS Corp.
+-->
+<xsd:schema targetNamespace="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:plm="http://www.plmxml.org/Schemas/PLMXMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" xml:lang="en">
+  <xsd:include schemaLocation="PLMXMLSchema.xsd"/>
+  <xsd:annotation>
+    <xsd:documentation>
+    
+                        PLMXML FD (FeatureDescriptions) Schema
+                        
+    Note: all length values are in metres, all angles are in radians.
+    </xsd:documentation>
+    <xsd:appinfo source="http://www.plmxml.org/Schemas/PLMXMLFDSchema">
+      <plm:SchemaInfo name="PLMXMLFDSchema.xsd" date="2005-01-24" version="6.0" status="development"/>
+    </xsd:appinfo>
+  </xsd:annotation>
+  <!-- -->
+  <xsd:simpleType name="ThreadEntrySettingType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Thread Entry Setting.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="standard"/>
+      <xsd:enumeration value="straightPipe"/>
+      <xsd:enumeration value="taperedPipe"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:simpleType name="ThreadExtentType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Thread Extent.
+      
+         finite:   of specific length
+         toExtent: extent is that of the parent feature
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="finite"/>
+      <xsd:enumeration value="toExtent"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="ThreadType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element describes a Thread.
+      
+      Note: the thread defaults to right-handed. An attribute to indicate left-handed
+      may be added in the future if required.
+      
+      Attributes:
+      
+      type:              The type (standard) of thread. Some possible values are:
+      
+                            ANSI threads:      UNC, UNF, UNEF
+                            ANSI pipe threads: NPSM, NPT
+                            ISO threads:       M
+                            ISO pipe threads:  Rp, Rc
+                            
+                         This attribute is a string to allow custom standards.
+                             
+      extent:            The extent type of the thread.
+                             
+      length:            The length of the thread, if extent = 'finite'.
+      
+      offset:            The offset distance, from the start of the owning feature,
+                            before the thread starts.
+                             
+      nominalDiameter:   Nominal diameter, i.e. diameter of cylinder to which the
+                            thread applies. 
+      internalDiameter:  Diameter as applied to inside of thread.
+      externalDiameter:  Diameter as applies to outside of thread. For these three 
+                            diameters we have:
+                            
+                            internalDiameter .LT. nominalDiameter .LT. externalDiameter
+      
+      designateDiameter: Designated diameter. This is a string, e.g. "M8".
+                            
+      effectiveLength:   This is the length of the thread which is cut at full depth. 
+      
+      height:            The distance from the inside of the thread
+                            to the outside of the thread. 
+                         TODO: check if we need this as well is internal and externalDiameter?
+                            
+      taperAngle:        The angle of taper, in radians. This is positive
+                            and less than pi/2. The taper is always towards the
+                            centreline, in the direction of the thread.
+
+      pitch:             The distance between adjacent threads, measured
+                            along the length of the thread, in metres (SI units).
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:attribute name="type" type="xsd:string" use="optional"/>
+        <xsd:attribute name="extent" type="plm:ThreadExtentType" use="optional"/>
+        <xsd:attribute name="length" type="xsd:double" use="optional"/>
+        <xsd:attribute name="offset" type="xsd:double" use="optional"/>
+        <xsd:attribute name="nominalDiameter" type="xsd:double" use="optional"/>
+        <xsd:attribute name="internalDiameter" type="xsd:double" use="optional"/>
+        <xsd:attribute name="externalDiameter" type="xsd:double" use="optional"/>
+        <xsd:attribute name="designateDiameter" type="xsd:string" use="optional"/>
+        <xsd:attribute name="effectiveLength" type="xsd:double" use="optional"/>
+        <xsd:attribute name="height" type="xsd:double" use="optional"/>
+        <xsd:attribute name="taperAngle" type="xsd:double" use="optional"/>
+        <xsd:attribute name="pitch" type="xsd:double" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!--  -->
+  <xsd:complexType name="CounterSinkType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element specifies a CounterSink component of a HoleFeature. The CounterSink
+      starts with a given diameter and tapers down.
+      
+      Attributes:
+      
+      diameter:     The diameter of the start of countersink.
+      
+      angle:        The angle of the countersink. This is the angle between a line
+                       lying in the cone of the CounterSink, and a plane through the
+                       start of the CounterSink. The range is 0 to pi/2. For example, 
+                       just below pi/2 would be a nearly-cylindrical CounterSink.
+                       
+      length:       The length of the countersink along its axis.
+                       
+      Elements:
+      
+      EntityRef:    Reference to entities that are related to the CounterSink
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element ref="plm:EntityRef" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="diameter" type="xsd:double" use="optional"/>
+        <xsd:attribute name="angle" type="xsd:double" use="optional"/>
+        <xsd:attribute name="length" type="xsd:double" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="CounterBoreType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This element specifies a CounterBore component of a HoleFeature. 
+
+      Attributes:
+       
+      diameter:        The diameter of the CounterBore.
+      length:          The length of the CounterBore.
+
+      Elements:
+       
+      EntityRef:       Reference to entities that are related to the CounterBore
+      Thread:          Definition of thread for CounterBore (at most one)
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element ref="plm:EntityRef" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Thread" type="plm:ThreadType" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="diameter" type="xsd:double" use="optional"/>
+        <xsd:attribute name="length" type="xsd:double" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:simpleType name="HoleExtentType">
+    <xsd:annotation>
+      <xsd:documentation>
+      Extent of hole, i.e. how its length is determined.
+      
+        throughAll:     through all faces
+        throughNext:    through to the next face in the model
+        fromTo:         between specified points
+        finite:         from a specified point for a specified length
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="throughAll"/>
+      <xsd:enumeration value="throughNext"/>
+      <xsd:enumeration value="fromTo"/>
+      <xsd:enumeration value="finite"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="HoleComponentType">
+    <xsd:annotation>
+      <xsd:documentation>
+      A component of a HoleFeature.
+      
+      Attributes:
+       
+      diameter:       The diameter of the hole.
+      length:         The length of the hole.
+      extent:         The way the hole length was determined. 
+                         
+      blindHoleAngle: The angle of the termination of the a blind hole. This is the
+                         total angle at the tip, in radians, so pi would be a flat tip.
+                         If omitted, the termination is flat.
+      taperAngle:     The angle of taper, in radians. This is positive
+                         and less than pi/2.
+
+      Elements:
+      
+      Thread:         Definition of Thread(s) for hole component
+    </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:sequence>
+          <xsd:element ref="plm:EntityRef" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element name="Thread" type="plm:ThreadType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="diameter" type="xsd:double" use="optional"/>
+        <xsd:attribute name="length" type="xsd:double" use="optional"/>
+        <xsd:attribute name="extent" type="plm:HoleExtentType" use="optional"/>
+        <xsd:attribute name="taperAngle" type="xsd:double" use="optional"/>
+        <xsd:attribute name="blindHoleAngle" type="xsd:double" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:complexType name="HolePositionType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This specifies the position, and optionally the direction, of a Hole.
+      
+      Attributes:
+      
+      position:       Position of the start of the hole in global 3-space coords.
+      direction:      Direction of of the hole. This direction defines the reference
+                         direction when evaluating the sequence of HoleComponent, 
+                         CounterSink and CounterBore elements; and the extent/offsets 
+                         values within those items. If absent, the direction attribute 
+                         on the HoleFeature is used.
+    </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:IdBase">
+        <xsd:attribute name="position" type="plm:VectorType" use="required"/>
+        <xsd:attribute name="direction" type="plm:VectorType" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <!-- -->
+  <xsd:simpleType name="HoleOrientationType">
+    <xsd:annotation>
+      <xsd:documentation>
+      The way in which the orientation of a hole is determined.
+       
+         normalToEntrySurface:      normal to the face in which the hole lies
+         normalToPlacementPlane:    normal to a defined plane (not specified)
+         coaxial:                   coaxial with another hole (not specified)
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="normalToPlacementPlane"/>
+      <xsd:enumeration value="normalToEntrySurface"/>
+      <xsd:enumeration value="coaxial"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <!-- -->
+  <xsd:complexType name="HoleFeatureType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a Hole Feature. It may consist of a number of actual holes, each of which
+      has the same sequence of Components (HoleComponent, CounterSink, CounterBore), but
+      which may have differing positions and directions.
+      
+      Attributes:
+      
+      direction:      Direction of of the hole. This direction defines the reference
+                         direction when evaluating the sequence of hole, countersink and
+                         counterbore elements; and the extent/offsets values within those
+                         elements. Individual HolePosition elements may override this 
+                         direction. 
+
+      sequenceRefs:   The sequence of HoleComponent, CounterSink and CounterBore elements 
+                         that make up the complete hole description, in order along the
+                         Hole axis. These elements must be sub-elements of this HoleFeature.
+                        
+      orientation:    The orientation of the hole with respect to the starting geometry. 
+                         This is for information/presentation purposes. 
+                        
+      Elements:
+      
+      HolePosition:   One HolePosition element per actual hole. At least one.
+       
+      HoleComponent:  Definition of a HoleComponent
+      CounterBore:    Definition of a CounterBore component
+      CounterSink:    Definition of a CounterSink component
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:FeatureBase">
+        <xsd:sequence>
+          <xsd:element name="HolePosition" type="plm:HolePositionType" maxOccurs="unbounded"/>
+          <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="HoleComponent" type="plm:HoleComponentType"/>
+            <xsd:element name="CounterBore" type="plm:CounterBoreType"/>
+            <xsd:element name="CounterSink" type="plm:CounterSinkType"/>
+          </xsd:choice>
+        </xsd:sequence>
+        <xsd:attribute name="direction" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="sequenceRefs" type="xsd:IDREFS" use="required"/>
+        <xsd:attribute name="orientation" type="plm:HoleOrientationType" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="HoleFeature" type="plm:HoleFeatureType" substitutionGroup="plm:Feature"/>
+  <!-- -->
+  <xsd:complexType name="ThreadedFeatureType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a Thread Feature, not associated with a Hole. Only a single position
+      and direction can be specified.
+      
+      Attributes:
+      
+      position:       Position of the start of the thread in global 3-space coords
+      direction:      Direction of the thread. This direction defines the reference
+                         direction when evaluating the sequence of thread elements; 
+                         and the extent/offsets values within those items.
+      sequenceRefs:   The sequence of thread elements that make up the complete 
+                         thread description. These elements must be defined as elements 
+                         within this thread description.
+      inside:         'true' if a thread feature on the inside of a hole, 'false' if
+                         a thread feature on a boss.
+      setting         The thread entry setting.
+                       
+      Elements:
+      
+      Thread:         Definition of a thread component. More than one is allowed.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:FeatureBase">
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="Thread" type="plm:ThreadType"/>
+        </xsd:choice>
+        <xsd:attribute name="position" type="plm:VectorType" use="required"/>
+        <xsd:attribute name="direction" type="plm:VectorType" use="optional"/>
+        <xsd:attribute name="sequenceRefs" type="xsd:IDREFS" use="required"/>
+        <xsd:attribute name="inside" type="xsd:boolean" use="optional"/>
+        <xsd:attribute name="setting" type="plm:ThreadEntrySettingType" default="standard"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="ThreadedFeature" type="plm:ThreadedFeatureType" substitutionGroup="plm:Feature"/>
+  <!-- -->
+  <xsd:complexType name="FeatureDescriptionsType">
+    <xsd:annotation>
+      <xsd:documentation>
+      This is a collection (sequence) of Features.
+      
+      Attributes:
+      
+      firstFeature:    The first feature in the sequence.
+      ownerRef:        Reference to owning ProductRevisionView or Representation.
+ 
+      Elements:
+      
+      Feature:         A HoleFeature or any other elements derived from Feature.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="plm:AttribOwnerBase">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element ref="plm:Feature" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:choice>
+        <xsd:attribute name="firstFeature" type="xsd:IDREF" use="optional">
+			<xsd:annotation>
+				<xsd:appinfo source="http://www.plmxml.org/tools/CodeGenerator">validate=skipName</xsd:appinfo>
+			</xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="ownerRef" type="plm:anyURIType" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="FeatureDescriptions" type="plm:FeatureDescriptionsType" substitutionGroup="plm:AttribOwner"/>
+</xsd:schema>

@@ -1,0 +1,62 @@
+<hj:persistence
+	xmlns="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm">
+	<hj:default-entity class="##default">
+	</hj:default-entity>
+	<hj:default-mapped-superclass class="##default">
+	</hj:default-mapped-superclass>
+	<hj:default-embeddable class="##default">
+	</hj:default-embeddable>
+	<hj:default-id>
+		<orm:column/>
+	</hj:default-id>
+	<hj:default-generated-id name="Hjid" javaType="java.lang.Long" schemaType="xsd:long">
+		<orm:column/>
+		<orm:generated-value strategy="AUTO"/>
+	</hj:default-generated-id>
+	<hj:default-version>
+		<orm:column/>
+	</hj:default-version>
+	<hj:default-basic>
+		<orm:column/>
+	</hj:default-basic>
+	<hj:default-to-one>
+		<hj:many-to-one/>
+	</hj:default-to-one>
+	<hj:default-to-many>
+		<hj:one-to-many/>
+	</hj:default-to-many>
+	<hj:default-many-to-one>
+		<orm:join-column/>
+		<orm:cascade>
+			<orm:cascade-all/>
+		</orm:cascade>
+	</hj:default-many-to-one>
+	<hj:default-one-to-many>
+		<orm:join-column/>
+		<orm:cascade>
+			<orm:cascade-all/>
+		</orm:cascade>
+	</hj:default-one-to-many>
+	<hj:default-one-to-one>
+		<orm:join-column/>
+		<orm:cascade>
+			<orm:cascade-all/>
+		</orm:cascade>
+	</hj:default-one-to-one>
+	<hj:default-many-to-many>
+		<orm:join-table/>
+		<orm:cascade>
+			<orm:cascade-all/>
+		</orm:cascade>
+	</hj:default-many-to-many>
+	<hj:default-embedded>
+	</hj:default-embedded>
+	<hj:default-single-property type="xsd:string">
+		<hj:basic>
+			<orm:column length="255"/>
+		</hj:basic>
+	</hj:default-single-property>
+</hj:persistence>

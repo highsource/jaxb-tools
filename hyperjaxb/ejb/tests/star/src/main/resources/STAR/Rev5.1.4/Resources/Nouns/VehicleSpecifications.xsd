@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+ 
+  User    Mod       Date         Description
+  ===================================================================================
+  DC     CR348    20070205       Refactorred BOD so that it follows the Header/Detail pattern
+  MV     MT614    20080226       Added Option to  VehicleSpecificationsLine  
+  MV     MT622    20080317       Added VehicleSpecificationsLine.VehicleMajorPartsProductItem
+     
+  -->
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns="http://www.starstandard.org/STAR/5" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="VehicleSpecifications" type="VehicleSpecificationsType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Vehicle Specifications
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VehicleSpecificationsHeader" type="VehicleSpecificationsHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Vehicle Specifications Header
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="VehicleSpecificationsType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="VehicleSpecificationsHeader" />
+            <xsd:element ref="VehicleSpecificationsLine" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="VehicleSpecificationsHeaderType">
+        <xsd:annotation xmlns="http://www.starstandards.org/STAR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Header information related to Vehicle Specifications</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+                <xsd:sequence>
+                    <xsd:element ref="ManufacturerParty" minOccurs="0"  maxOccurs="1"/>
+                    <xsd:element ref="IncrementalIndicator" minOccurs="0" />
+                    <xsd:element ref="IncrementalDateTime" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="VehicleSpecificationsLine" type="VehicleSpecificationsLineType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5"></xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="VehicleSpecificationsLineType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Line detail information regarding a particular specification.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="LineNumberString" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="IncrementalIndicator" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="IncrementalDateTime" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="ManufacturerParty" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="DistributorParty" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="Vehicle" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="Option" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="VehicleMajorPartsProductItem" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+</xsd:schema>

@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<xs:schema
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	targetNamespace="urn:test"
+	xmlns="urn:test"
+
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
+	jaxb:extensionBindingPrefixes="xjc hj orm"
+	jaxb:version="2.1">
+
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.polyform"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+
+	<xs:element name="A" type="AType" abstract="true"/>
+
+	<xs:complexType name="AType" abstract="true">
+		<xs:annotation>
+			<xs:appinfo>
+				<hj:generated-id name="id" transient="true"/>
+				<hj:entity>
+					<orm:table name="ATYPE_TABLE"/>
+					<orm:inheritance strategy="SINGLE_TABLE"/>
+				</hj:entity>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:attribute name="timestamp" type="xs:dateTime"/>
+	</xs:complexType>
+
+	<xs:element name="B" type="BType" substitutionGroup="A"/>
+
+	<xs:complexType name="BType">
+		<xs:complexContent>
+			<xs:extension base="AType">
+				<xs:attribute name="b" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:element name="C" type="CType" substitutionGroup="A"/>
+
+	<xs:complexType name="CType">
+		<xs:complexContent>
+			<xs:extension base="AType">
+				<xs:attribute name="c" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:element name="Alpha" type="AlphaType"/>
+
+	<xs:complexType name="AlphaType">
+		<xs:sequence>
+			<xs:element name="item" type="AType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property name="Items"/>
+						<hj:one-to-many>
+                        				<orm:join-column name="ALPHA_ID"/>
+						</hj:one-to-many>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="Beta" type="BetaType"/>
+
+	<xs:complexType name="BetaType">
+		<xs:sequence>
+			<xs:element ref="A" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property name="Items"/>
+						<!--hj:one-to-many>
+                        				<orm:join-column name="DELTA_ID"/>
+						</hj:one-to-many-->
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="Gamma" type="GammaType"/>
+
+	<xs:complexType name="GammaType">
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property name="Items"/>
+						<hj:one-to-many>
+                        				<orm:join-column name="GAMMA_ID"/>
+						</hj:one-to-many>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:element name="B" type="BType"/>
+				<xs:element name="C" type="CType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="Delta" type="DeltaType"/>
+
+	<xs:complexType name="DeltaType">
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:appinfo>
+						<jaxb:property name="Items"/>
+						<!--hj:one-to-many>
+                        				<orm:join-column name="DELTA_ID"/>
+						</hj:one-to-many-->
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:element name="B" type="BType"/>
+				<xs:element name="B1" type="BType"/>
+				<xs:element name="C" type="CType"/>
+				<xs:element name="C1" type="CType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

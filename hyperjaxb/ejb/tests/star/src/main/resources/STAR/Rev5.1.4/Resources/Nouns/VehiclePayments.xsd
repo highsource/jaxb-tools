@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   User    Mod     Date         Description
+   ============================================================================
+   MV      CR272   20061115     Created
+ -->
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns="http://www.starstandard.org/STAR/5" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="VehiclePayments" type="VehiclePaymentsType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Vehicle Payments
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VehiclePaymentsHeader" type="VehiclePaymentsHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Vehicle Payments Header
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VehiclePaymentsDetail" type="VehiclePaymentsDetailType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Vehicle Payments Detail</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="VehiclePaymentsType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Vehicle Payments</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="VehiclePaymentsHeader">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/STAR/5">Vehicle Payments Header</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element ref="VehiclePaymentsDetail" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation source="http://www.starstandard.org/STAR/5">Vehicle Payments Detail</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>            
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="VehiclePaymentsHeaderType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Header information related to Vehicle Payments</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+                <xsd:sequence>
+                    <xsd:element ref="VehiclePaymentCycleStartDate" />
+                    <xsd:element ref="VehiclePaymentCycleEndDate" minOccurs="0" />
+                    <xsd:element ref="VehiclePaymentDate" minOccurs="0" />
+                    <xsd:element ref="VehiclePaymentID" minOccurs="0" />
+                    <xsd:element ref="TotalVehicleCalculationAmount" minOccurs="0" />
+                    <xsd:element ref="TotalHoldbackAmount" minOccurs="0" />
+                    <xsd:element ref="TotalTransitAllowanceAmount" minOccurs="0" />
+                    <xsd:element ref="TotalHoldbackTransitAllowanceAmount" minOccurs="0" />
+                    <xsd:element ref="BroughtForwardAmount" minOccurs="0" />
+                    <xsd:element ref="TotalIncludingBroughtForwardAmount" minOccurs="0" />                    
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="VehiclePaymentsDetailType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Detail information related to Vehicle Payments</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="VehicleOrderNumber" minOccurs="0"/>
+            <xsd:element ref="VehiclePaymentActionCode" minOccurs="0"/>
+            <xsd:element ref="VehicleInvoiceDate" minOccurs="0"/>
+            <xsd:element ref="VehicleID" minOccurs="0"/>
+            <xsd:element ref="ModelCode" minOccurs="0"/>
+            <xsd:element ref="VehicleCalculationAmount" minOccurs="0"/>
+            <xsd:element ref="HoldbackAmount" minOccurs="0"/>
+            <xsd:element ref="TransitAllowanceAmount" minOccurs="0"/>
+            <xsd:element ref="FloorPlanDaysNumeric" minOccurs="0"/>
+            <xsd:element ref="PricingABIE" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

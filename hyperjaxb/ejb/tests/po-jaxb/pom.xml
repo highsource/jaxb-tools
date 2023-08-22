@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jvnet.hyperjaxb3</groupId>
+		<artifactId>hyperjaxb3-ejb-tests</artifactId>
+		<version>0.6.3-SNAPSHOT</version>
+	</parent>
+	<artifactId>hyperjaxb3-ejb-tests-po-jaxb</artifactId>
+	<packaging>jar</packaging>
+	<name>Hyperjaxb3 EJB Test [po-jaxb]</name>
+	<dependencies>
+		<!-- Hibernate Dependencies -->
+		<!-- Test -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<defaultGoal>test</defaultGoal>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>target/generated-sources/xjc</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>        
+		<plugins>
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<configuration>
+					<args>
+						<arg>-Xhyperjaxb3-jpa2</arg>
+						<!--arg>-Xhyperjaxb3-jpa2-result=mappingFiles</arg-->
+						<arg>-Xequals</arg>
+						<arg>-XhashCode</arg>
+						<arg>-XtoString</arg>
+						<arg>-Xannotate</arg>
+						<arg>-Xinheritance</arg>
+					</args>
+					<plugins>
+						<plugin>
+							<groupId>org.jvnet.hyperjaxb3</groupId>
+							<artifactId>hyperjaxb3-ejb-plugin</artifactId>
+							<version>${project.version}</version>
+						</plugin>
+					</plugins>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

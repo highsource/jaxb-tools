@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               version="1.0">
+  <!--
+    $Header: /cvs/hyperjaxb3/ejb/tests/ebxmlrr/src/main/resources/jaxbCustomization.xjb,v 1.1 2007/11/25 12:25:12 lexi Exp $
+    Binding customizations defining package names for generated code.    
+  -->
+  <jaxb:bindings schemaLocation="rim.xsd" node="/xsd:schema">
+    <jaxb:globalBindings
+        collectionType="java.util.ArrayList"
+        typesafeEnumBase="xsd:string">               
+
+        <jaxb:javaType name="java.lang.Float" xmlType="xsd:float" parseMethod="new" printMethod="toString" />
+    </jaxb:globalBindings>
+    
+    <jaxb:schemaBindings>
+      <jaxb:package name="org.oasis.ebxml.registry.bindings.rim"/>
+    </jaxb:schemaBindings>    
+        
+  </jaxb:bindings>   
+  
+  <jaxb:bindings schemaLocation="rs.xsd" node="/xsd:schema">
+    <jaxb:schemaBindings>
+      <jaxb:package name="org.oasis.ebxml.registry.bindings.rs"/>
+    </jaxb:schemaBindings>
+        
+  </jaxb:bindings>
+    
+  <jaxb:bindings schemaLocation="lcm.xsd" node="/xsd:schema">
+    <jaxb:schemaBindings>
+      <jaxb:package name="org.oasis.ebxml.registry.bindings.lcm"/>
+    </jaxb:schemaBindings>
+        
+  </jaxb:bindings>
+  
+  <jaxb:bindings schemaLocation="query.xsd" node="/xsd:schema">
+    <jaxb:schemaBindings>
+      <jaxb:package name="org.oasis.ebxml.registry.bindings.query"/>
+    </jaxb:schemaBindings>
+    
+    <!--jaxb:bindings node="//xsd:complexType[@name='ResponseOptionType']//xsd:attribute[@name='returnType']/xsd:simpleType">
+        <jaxb:typesafeEnumClass name="ReturnType"/>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@name='CompoundClause']//xsd:attribute[@name='connectivePredicate']/xsd:simpleType">
+        <jaxb:typesafeEnumClass name="ConnectivePredicate"/>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@name='RationalClause']//xsd:attribute[@name='logicalPredicate']/xsd:simpleType">
+        <jaxb:typesafeEnumClass name="LogicalPredicate"/>
+    </jaxb:bindings>
+    
+    <jaxb:bindings node="//xsd:element[@name='StringClause']//xsd:attribute[@name='stringPredicate']/xsd:simpleType">
+        <jaxb:typesafeEnumClass name="StringPredicate"/>
+    </jaxb:bindings-->
+        
+  </jaxb:bindings>
+  
+  <jaxb:bindings schemaLocation="cms.xsd" node="/xsd:schema">
+    <jaxb:schemaBindings>
+      <jaxb:package name="org.oasis.ebxml.registry.bindings.cms"/>
+    </jaxb:schemaBindings>
+  </jaxb:bindings>
+    
+  
+</jaxb:bindings>

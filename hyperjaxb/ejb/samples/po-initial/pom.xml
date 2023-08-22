@@ -1,0 +1,94 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jvnet.hyperjaxb3</groupId>
+	<artifactId>hyperjaxb3-ejb-samples-po-initial</artifactId>
+	<packaging>pom</packaging>
+	<name>Hyperjaxb3 EJB Sample [po-initial]</name>
+	<parent>
+		<groupId>org.jvnet.hyperjaxb3</groupId>
+		<artifactId>hyperjaxb3-ejb-samples</artifactId>
+		<version>0.6.3-SNAPSHOT</version>
+	</parent>
+	<dependencies>
+		<dependency>
+			<groupId>org.jvnet.hyperjaxb3</groupId>
+			<artifactId>hyperjaxb3-ejb-plugin</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jvnet.jaxb2_commons</groupId>
+			<artifactId>jaxb2-basics-ant</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-xjc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+		</dependency>
+		<!-- Hibernate Dependencies -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- Roundtrip -->
+		<dependency>
+			<groupId>org.jvnet.hyperjaxb3</groupId>
+			<artifactId>hyperjaxb3-ejb-roundtrip</artifactId>
+		</dependency>
+		<!-- Database -->
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>${hsqldb.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>ant-assembly</id>
+						<phase>package</phase>
+					</execution>
+					<execution>
+						<id>maven-assembly</id>
+						<phase>package</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<!-- TODO execution>
+						<id>ant-unpack</id>
+						<phase>pre-integration-test</phase>
+					</execution-->
+					<execution>
+						<id>maven-unpack</id>
+						<phase>pre-integration-test</phase>
+					</execution>
+					<!-- TODO execution>
+						<id>ant-integration-test</id>
+						<phase>integration-test</phase>
+					</execution-->
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-invoker-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>maven-integration-test</id>
+						<phase>integration-test</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

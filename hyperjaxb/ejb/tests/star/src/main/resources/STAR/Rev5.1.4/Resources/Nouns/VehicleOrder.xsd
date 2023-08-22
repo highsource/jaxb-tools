@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   User    Mod     Date         Description
+   ============================================================================
+   DC            20061031       Removed DocumentID
+   DC      CR283 20061202       Updated Party Components
+   MV      CR325 20070227       Replaced: VehicleOrderVehicle with VehicleOrderVehicleLineItem
+ -->
+<xsd:schema xmlns:star="http://www.starstandard.org/STAR/5" xmlns:oacl="http://www.openapplications.org/oagis/9/codelists" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sqdt="http://www.starstandard.org/STAR/5/qualifieddatatypes/1.0" xmlns="http://www.starstandard.org/STAR/5" xmlns:ccts="urn:un:unece:uncefact:documentation:1.1" xmlns:sudt="http://www.starstandard.org/STAR/5/unqualifieddatatypes/1.0" xmlns:scl="http://www.starstandard.org/STAR/5/codelists" targetNamespace="http://www.starstandard.org/STAR/5" elementFormDefault="qualified" attributeFormDefault="unqualified" blockDefault="#all">
+    <xsd:annotation>
+        <xsd:documentation source="http://www.starstandard.org/STAR/5">
+            This schema is made available under an Eclipse Public Licenses 1.0.  This
+            license may be found in the STAR/License directory as well as the STAR BOD
+            Guidelines.
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:include schemaLocation="../Components/Common/Fields.xsd" />
+    <xsd:include schemaLocation="../Components/Common/Meta.xsd" />
+    <xsd:element name="OrderedByOrderedByParty" type="OrderedByPartyType">
+        <xsd:annotation>
+            <xsd:documentation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR" source="http://www.starstandard.org/STAR/5">Business party who ordered the vehicle(s)</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">This definition came from the VehicleOrderHeader Component</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ShipToShipToPartyVO" type="ShipToPartyVOType">
+        <xsd:annotation>
+            <xsd:documentation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR" source="http://www.starstandard.org/STAR/5">Business entity that is receiving the vehicle(s)</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">This definition came from the VehicleOrderHeader Component</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="SoldToSoldToPartyExtended" type="SoldToPartyExtendedType">
+        <xsd:annotation>
+            <xsd:documentation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR" source="http://www.starstandard.org/STAR/5">Business party wo was invoiced for the vehicle(s)</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">This definition came from the VehicleOrderHeader Component</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VehicleOrder" type="VehicleOrderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Vehicle Order
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VehicleOrderHeader" type="VehicleOrderHeaderType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                Vehicle Order Header
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="VehicleOrderVehicleLineItem" type="VehicleOrderVehicleLineItemType">
+        <xsd:annotation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="VehicleOrderType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 2.0 - Draft</xsd:documentation>
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">STAR Version 1.0, STAR approved 04/20/2005; OAGI approved 03/03/2005; effective date 07/04/2005</xsd:documentation>
+            <xsd:appinfo>STAR unique Noun - Created Rev 2.1 PS 07/29/2004</xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="VehicleOrderHeader" />
+            <xsd:element ref="VehicleOrderVehicleLineItem" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="VehicleOrderHeaderType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5">Header information related to Vehicle Order</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="HeaderBaseType">
+                <xsd:sequence>
+                    <!--<xsd:element ref="DocumentID" minOccurs="0" />-->
+                    <xsd:element ref="OrderDate" minOccurs="0" />
+                    <xsd:element ref="VehicleOrderTypeString" minOccurs="0" />
+                    <xsd:element ref="OrderedByParty" minOccurs="0" />
+                    <xsd:element ref="SoldToParty" minOccurs="0" />
+                    <xsd:element ref="ShipToParty" minOccurs="0" />
+                    <xsd:element ref="VehicleOrderQtyNumeric" minOccurs="0" />
+                    <xsd:element ref="LoadNumberString" minOccurs="0" />
+                    <xsd:element ref="BorderCrossingIndicator" minOccurs="0" />
+                    <xsd:element ref="PortOfEntry" minOccurs="0" />
+                    <xsd:element ref="ReqDeliveryRangeStartDate" minOccurs="0" />
+                    <xsd:element ref="ReqDeliveryRangeEndDate" minOccurs="0" />
+                    <xsd:element ref="CarrierID" minOccurs="0" />
+                    <xsd:element ref="WarehouseID" minOccurs="0" />
+                    <xsd:element ref="DealerAssignedNumberString" minOccurs="0" />
+                    <xsd:element ref="StatusDate" minOccurs="0" />
+                    <xsd:element ref="TargetBuildDate" minOccurs="0" />
+                    <xsd:element ref="PromisedDeliveryDate" minOccurs="0" />
+                    <xsd:element ref="PromisedShipDate" minOccurs="0" />
+                    <xsd:element ref="SpecialInstructions" minOccurs="0" />
+                    <xsd:element ref="OrderComments" minOccurs="0" />
+                    <xsd:element ref="PriorityString" minOccurs="0" />
+                    <xsd:element name="Status" type="StatusDetailType" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation source="http://www.starstandard.org/STAR/5">
+                                Deprecated:  Use StatusDetail.  This is a correction in the naming and design rules.  StatusDetail contains
+                                the same information as this component.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element ref="StatusDetail" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="VehicleOrderVehicleLineItemType">
+        <xsd:annotation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.starstandards.org/STAR">
+            <xsd:documentation source="http://www.starstandard.org/STAR/5"> </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="Vehicle" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="Option" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="StatusDetail" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="MarketingInitiativesVO" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="FleetAccount" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="CertifiedPreownedIndicator" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="DealerInvoiceDate" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="DeliveryDistanceMeasure" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="DeliveryRangeEndDate" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="DeliveryRangeStartDate" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="IgnitionKeyNumberString" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="OrderPriceProtectDate" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="OwnerParty" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="PlantCode" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="PlantOrderNumberString" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="PreviousVIN" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="ProductionDate" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="ShipToParty" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="VehicleAllocatedDate" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="VehicleLocation" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="VehicleOrderNumber" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="VehicleOrderQtyNumeric" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="VehicleShipDate" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="VehicleStatusCode" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="VehicleStockString" minOccurs="0" maxOccurs="1" />
+            <xsd:element ref="WholesaleDate" minOccurs="0" maxOccurs="1" />            
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

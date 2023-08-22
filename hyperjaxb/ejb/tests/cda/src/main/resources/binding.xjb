@@ -1,0 +1,25 @@
+<jaxb:bindings
+	version="1.0"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+	jaxb:extensionBindingPrefixes="xjc"
+	xmlns:cda="urn:hl7-org:v3">
+	
+	<jaxb:bindings scd="x-schema::cda">
+		<jaxb:schemaBindings>
+			<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.cda.tests"/>
+		</jaxb:schemaBindings>
+		<jaxb:bindings scd="~cda:POCD_MT000040.ObservationMedia/@ID">
+			<jaxb:property name="PID"/>
+		</jaxb:bindings>
+		<jaxb:bindings scd="~cda:POCD_MT000040.Section/@ID">
+			<jaxb:property name="PID"/>
+		</jaxb:bindings>
+		<jaxb:bindings scd="~cda:POCD_MT000040.RegionOfInterest/@ID">
+			<jaxb:property name="PID"/>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
+</jaxb:bindings>

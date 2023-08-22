@@ -1,0 +1,49 @@
+package com.example.customerservice.service;
+
+import org.springframework.orm.jpa.support.JpaDaoSupport;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.example.customerservice.model.Customer;
+import com.example.customerservice.service.CustomerService;
+import com.example.customerservice.service.NoSuchCustomer;
+import com.example.customerservice.service.NoSuchCustomerException;
+
+@Transactional
+public class CustomerServiceImpl extends JpaDaoSupport implements
+		CustomerService {
+
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public void deleteCustomerById(final Integer customerId)
+			throws NoSuchCustomerException {
+
+		final Customer customer = getCustomerById(customerId);
+		getJpaTemplate().remove(customer);
+	}
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Customer getCustomerById(final Integer customerId)
+			throws NoSuchCustomerException {
+
+		final Customer customer = getJpaTemplate().find(Customer.class,
+				customerId);
+
+		if (customer == null) {
+			NoSuchCustomer noSuchCustomer = new NoSuchCustomer();
+			noSuchCustomer.setCustomerId(customerId);
+			throw new NoSuchCustomerException(
+					"Did not find any matching customer for id [" + customerId
+							+ "].", noSuchCustomer);
+
+		} else {
+			return customer;
+		}
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public Integer updateCustomer(Customer customer) {
+		final Customer mergedCustomer = getJpaTemplate().merge(customer);
+		return mergedCustomer.getCustomerId();
+	}
+
+}

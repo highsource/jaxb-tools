@@ -55,9 +55,9 @@
 		<defaultGoal>test</defaultGoal>
 		<plugins>
 			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
-				<version>${maven-jaxb2-plugin.version}</version>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb-maven-plugin</artifactId>
+				<version>${project.version}</version>
 				<executions>
 					<execution>
 						<goals>
@@ -72,8 +72,8 @@
 					</args>
 					<plugins>
 						<plugin>
-							<groupId>org.jvnet.jaxb2_commons</groupId>
-							<artifactId>jaxb2-basics-annotate</artifactId>
+							<groupId>org.jvnet.jaxb</groupId>
+							<artifactId>jaxb-basics-annotate</artifactId>
 							<version>${project.version}</version>
 						</plugin>
 					</plugins>
@@ -90,8 +90,8 @@
 				<inherited>true</inherited>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 		</plugins>

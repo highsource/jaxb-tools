@@ -1,6 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jvnet.jaxb</groupId>
 	<artifactId>jaxb-maven-plugin-samples</artifactId>
 	<packaging>pom</packaging>
 	<name>JAXB Tools :: Maven Plugin :: Samples</name>
@@ -20,7 +19,6 @@
             <dependency>
                 <groupId>org.jvnet.jaxb</groupId>
                 <artifactId>jaxb2-basics</artifactId>
-                <version>${project.version}</version>
                 <scope>provided</scope>
             </dependency>
         </dependencies>
@@ -31,6 +29,9 @@
 		<module>jaxbplugins</module>
 		<module>po</module>
 	</modules>
+  <properties>
+    <maven.deploy.skip>true</maven.deploy.skip>
+  </properties>
 	<build>
 		<plugins>
 			<plugin>
@@ -72,7 +73,6 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-invoker-plugin</artifactId>
-				<version>2.0.0</version>
 				<executions>
 					<execution>
 						<id>maven-integration-test</id>
@@ -87,13 +87,6 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

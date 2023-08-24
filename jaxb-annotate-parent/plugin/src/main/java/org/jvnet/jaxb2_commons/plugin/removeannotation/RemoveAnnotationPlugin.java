@@ -38,7 +38,7 @@ import java.util.Set;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jvnet.annox.Constants;
+import org.jvnet.jaxb.annox.Constants;
 import org.jvnet.jaxb2_commons.plugin.AbstractParameterizablePlugin;
 import org.jvnet.jaxb2_commons.plugin.AnnotationTarget;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;

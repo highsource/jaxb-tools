@@ -33,30 +33,27 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.jvnet.jaxb2_commons</groupId>
-		<artifactId>jaxb2-annotate-plugin-tests</artifactId>
-		<version>1.1.1-SNAPSHOT</version>
+		<groupId>org.jvnet.jaxb</groupId>
+		<artifactId>jaxb-annotate-plugin-tests</artifactId>
+		<version>2.0.5-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>jaxb2-annotate-plugin-test-issues</artifactId>
+	<artifactId>jaxb-annotate-plugin-test-issues</artifactId>
 	<packaging>jar</packaging>
-	<name>JAXB2 Annotate Plugin - Test [issues]</name>
-	<properties>
-		<jaxb2-annotate-plugin-test-annox-annotations.version>1.0.0</jaxb2-annotate-plugin-test-annox-annotations.version>
-	</properties>
+	<name>JAXB Tools :: Annotate :: Test [issues]</name>
 	<dependencies>
 		<dependency>
-			<groupId>org.jvnet.jaxb2.maven2</groupId>
-			<artifactId>maven-jaxb2-plugin-testing</artifactId>
+			<groupId>org.jvnet.jaxb</groupId>
+			<artifactId>jaxb-maven-plugin-testing</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-basics-annotate</artifactId>
+			<groupId>org.jvnet.jaxb</groupId>
+			<artifactId>jaxb-basics-annotate</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-annotate-plugin-test-annotations</artifactId>
+			<groupId>org.jvnet.jaxb</groupId>
+			<artifactId>jaxb-annotate-plugin-test-annotations</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
@@ -69,8 +66,8 @@
 		<defaultGoal>test</defaultGoal>
 		<plugins>
 			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb-maven-plugin</artifactId>
 				<configuration>
 					<extension>true</extension>
 					<args>
@@ -82,20 +79,20 @@
 					</args>
 					<plugins>
 						<plugin>
-							<groupId>org.jvnet.jaxb2_commons</groupId>
+							<groupId>org.jvnet.jaxb</groupId>
 							<artifactId>jaxb2-basics</artifactId>
 						</plugin>
 						<plugin>
-							<groupId>org.jvnet.jaxb2_commons</groupId>
-							<artifactId>jaxb2-basics-annotate</artifactId>
+							<groupId>org.jvnet.jaxb</groupId>
+							<artifactId>jaxb-basics-annotate</artifactId>
 						</plugin>
 						<plugin>
 							<groupId>com.fasterxml.jackson.core</groupId>
 							<artifactId>jackson-annotations</artifactId>
 						</plugin>
 						<plugin>
-							<groupId>org.jvnet.jaxb2_commons</groupId>
-							<artifactId>jaxb2-annotate-plugin-test-annotations</artifactId>
+							<groupId>org.jvnet.jaxb</groupId>
+							<artifactId>jaxb-annotate-plugin-test-annotations</artifactId>
 						</plugin>
 					</plugins>
 				</configuration>

@@ -1,9 +1,9 @@
 package org.jvnet.hyperjaxb3.ejb.strategy.annotate;
 
-import org.jvnet.annox.model.XAnnotationFieldVisitor;
-import org.jvnet.annox.model.annotation.field.XArrayAnnotationField;
-import org.jvnet.annox.model.annotation.field.XSingleAnnotationField;
-import org.jvnet.annox.model.annotation.value.XAnnotationValue;
+import org.jvnet.jaxb.annox.model.XAnnotationFieldVisitor;
+import org.jvnet.jaxb.annox.model.annotation.field.XArrayAnnotationField;
+import org.jvnet.jaxb.annox.model.annotation.field.XSingleAnnotationField;
+import org.jvnet.jaxb.annox.model.annotation.value.XAnnotationValue;
 
 import com.sun.codemodel.JAnnotationArrayMember;
 import com.sun.codemodel.JAnnotationUse;

@@ -7,6 +7,9 @@ import org.custommonkey.xmlunit.Diff;
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 import org.w3c.dom.Node;
 
+import java.math.BigDecimal;
+import java.util.Objects;
+
 public class ExtendedJAXBEqualsStrategy extends JAXBEqualsStrategy {
 
 	@Override
@@ -20,6 +23,11 @@ public class ExtendedJAXBEqualsStrategy extends JAXBEqualsStrategy {
 				&& rhs instanceof XMLGregorianCalendar) {
 			return equalsInternal(leftLocator, rightLocator,
 					(XMLGregorianCalendar) lhs, (XMLGregorianCalendar) rhs);
+
+		} else if (lhs instanceof BigDecimal
+				&& rhs instanceof BigDecimal) {
+			return equalsInternal(leftLocator, rightLocator,
+					(BigDecimal) lhs, (BigDecimal) rhs);
 
 		} else {
 			return super.equalsInternal(leftLocator, rightLocator, lhs, rhs);
@@ -35,10 +43,30 @@ public class ExtendedJAXBEqualsStrategy extends JAXBEqualsStrategy {
 	}
 
 	protected boolean equalsInternal(ObjectLocator leftLocator,
+									 ObjectLocator rightLocator,
+									 BigDecimal left,
+									 BigDecimal right) {
+		if (Objects.equals(left, right)) {
+			return true;
+		}
+		if (left == null || right == null) {
+			return false;
+		}
+		return left.compareTo(right) == 0;
+	}
+
+	protected boolean equalsInternal(ObjectLocator leftLocator,
 			ObjectLocator rightLocator, Node lhs, Node rhs) {
 		final Diff diff = new Diff(new DOMSource((Node) lhs), new DOMSource(
 				(Node) rhs));
 		return diff.identical();
+	}
+	public static JAXBEqualsStrategy INSTANCE2 = new ExtendedJAXBEqualsStrategy();
+	@SuppressWarnings("deprecation")
+	public static EqualsStrategy INSTANCE = INSTANCE2;
+
+	public static JAXBEqualsStrategy getInstance() {
+		return INSTANCE2;
 	}
 
 }

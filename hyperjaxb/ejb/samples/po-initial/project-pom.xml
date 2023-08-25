@@ -2,16 +2,16 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jvnet.hyperjaxb3</groupId>
+	<groupId>org.jvnet.jaxb</groupId>
 	<artifactId>hyperjaxb3-ejb-samples-po-initial-maven</artifactId>
 	<version>${project.version}</version>
 	<packaging>jar</packaging>
 	<name>Hyperjaxb3 Samples [po-initial:maven]</name>
 	<dependencies>
 		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.1-api</artifactId>
-			<version>${hibernate-jpa-2.1-api.version}</version>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
+			<version>${jpa-api.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
@@ -19,7 +19,7 @@
 			<version>${jaxb.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.hyperjaxb3</groupId>
+			<groupId>org.jvnet.jaxb</groupId>
 			<artifactId>hyperjaxb3-ejb-runtime</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -33,7 +33,7 @@
 
 		<!-- Roundtrip -->
 		<dependency>
-			<groupId>org.jvnet.hyperjaxb3</groupId>
+			<groupId>org.jvnet.jaxb</groupId>
 			<artifactId>hyperjaxb3-ejb-roundtrip</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -58,7 +58,7 @@
 		<defaultGoal>install</defaultGoal>
 		<plugins>
 			<plugin>
-				<groupId>org.jvnet.hyperjaxb3</groupId>
+				<groupId>org.jvnet.jaxb</groupId>
 				<artifactId>hyperjaxb3-maven-plugin</artifactId>
 				<version>${project.version}</version>
 				<executions>
@@ -77,8 +77,8 @@
 				<inherited>true</inherited>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 		</plugins>

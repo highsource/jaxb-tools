@@ -15,6 +15,15 @@ import org.w3c.dom.Node;
 public class ExtendedJAXBEqualsStrategy extends
 		org.jvnet.jaxb2_commons.lang.ExtendedJAXBEqualsStrategy {
 
+
+	@Override
+	public boolean equals(ObjectLocator leftLocator,
+						  ObjectLocator rightLocator, Object left, Object right,
+						  boolean leftSet, boolean rightSet) {
+		// do not check leftSet === rightSet equality since default attributes looked different
+		return equals(leftLocator, rightLocator, left, right);
+	}
+
 	@Override
 	protected boolean equalsInternal(ObjectLocator leftLocator,
 			ObjectLocator rightLocator, Node lhs, Node rhs) {

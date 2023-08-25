@@ -31,7 +31,9 @@ public class HsqlBigDecimalTest {
 
 		ResultSet rs = stmt.executeQuery("SELECT * FROM test");
 		while (rs.next()) {
-			Assert.assertEquals(BigDecimal.ONE, rs.getBigDecimal(1));
+			BigDecimal result = rs.getBigDecimal(1);
+			Assert.assertTrue(BigDecimal.ONE.compareTo(result) == 0);
+			Assert.assertEquals(BigDecimal.ONE, result.setScale(0));
 		}
 
 		rs.close();

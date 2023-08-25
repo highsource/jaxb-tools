@@ -2,13 +2,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jvnet.hyperjaxb3</groupId>
+	<groupId>org.jvnet.jaxb</groupId>
 	<artifactId>hyperjaxb3-templates</artifactId>
 	<version>0.5.7-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Hyperjaxb3 Templates</name>
 	<parent>
-		<groupId>org.jvnet.hyperjaxb3</groupId>
+		<groupId>org.jvnet.jaxb</groupId>
 		<artifactId>hyperjaxb3</artifactId>
 		<version>0.5.7-SNAPSHOT</version>
 	</parent>
@@ -64,7 +64,7 @@
 							<id>unpack</id>
 							<phase>pre-integration-test</phase>
 							<configuration>
-								<tasks>
+								<target>
 									<unzip src="${basedir}/target/${project.artifactId}-${project.version}-ant-src.zip" dest="${basedir}/target/test-ant-assembly"/>
 									<unzip src="${basedir}/target/${project.artifactId}-${project.version}-maven-src.zip" dest="${basedir}/target/test-maven-assembly"/>
 									<mkdir dir="${basedir}/target/test-repository"/>
@@ -98,7 +98,7 @@
 											<include name="**/*.*"/>
 										</fileset>
 									</copy>
-								</tasks>
+								</target>
 							</configuration>
 							<goals>
 								<goal>run</goal>
@@ -108,9 +108,9 @@
 							<id>test</id>
 							<phase>integration-test</phase>
 							<configuration>
-								<tasks>
+								<target>
 									<ant dir="${basedir}/target/test-ant-assembly/${project.artifactId}-${project.version}" target="install"/>
-								</tasks>
+								</target>
 							</configuration>
 							<goals>
 								<goal>run</goal>

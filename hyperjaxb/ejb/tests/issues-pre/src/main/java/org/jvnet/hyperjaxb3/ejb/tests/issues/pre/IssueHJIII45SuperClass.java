@@ -8,10 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.xml.bind.annotation.XmlElement;
-import org.jvnet.jaxb2_commons.lang.Equals;
-import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
-import org.jvnet.jaxb2_commons.lang.HashCode;
-import org.jvnet.jaxb2_commons.lang.HashCodeStrategy;
+import org.jvnet.jaxb2_commons.lang.Equals2;
+import org.jvnet.jaxb2_commons.lang.EqualsStrategy2;
+import org.jvnet.jaxb2_commons.lang.HashCode2;
+import org.jvnet.jaxb2_commons.lang.HashCodeStrategy2;
 import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
 import org.jvnet.jaxb2_commons.lang.JAXBHashCodeStrategy;
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
@@ -19,7 +19,7 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
 
 
 @MappedSuperclass
-public abstract class IssueHJIII45SuperClass implements Serializable, Equals, HashCode{
+public abstract class IssueHJIII45SuperClass implements Serializable, Equals2, HashCode2 {
 
     private static final long serialVersionUID = 7724857660567518243L;
 
@@ -49,7 +49,7 @@ public abstract class IssueHJIII45SuperClass implements Serializable, Equals, Ha
 	
 	
 	
-    public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy) {
+    public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy2 strategy) {
         if (!(object instanceof IssueHJIII45SuperClass)) {
             return false;
         }
@@ -62,7 +62,9 @@ public abstract class IssueHJIII45SuperClass implements Serializable, Equals, Ha
             lhsId = this.getId();
             String rhsId;
             rhsId = that.getId();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "id", lhsId), LocatorUtils.property(thatLocator, "id", rhsId), lhsId, rhsId)) {
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "id", lhsId),
+                    LocatorUtils.property(thatLocator, "id", rhsId), lhsId, rhsId,
+                    this.id != null, that.id != null)) {
                 return false;
             }
         }
@@ -70,22 +72,22 @@ public abstract class IssueHJIII45SuperClass implements Serializable, Equals, Ha
     }
 
     public boolean equals(Object object) {
-        final EqualsStrategy strategy = JAXBEqualsStrategy.INSTANCE;
+        final EqualsStrategy2 strategy = JAXBEqualsStrategy.INSTANCE2;
         return equals(null, null, object, strategy);
     }
 
-    public int hashCode(ObjectLocator locator, HashCodeStrategy strategy) {
+    public int hashCode(ObjectLocator locator, HashCodeStrategy2 strategy) {
         int currentHashCode = 1;
         {
             String theId;
             theId = this.getId();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "id", theId), currentHashCode, theId);
+            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "id", theId), currentHashCode, theId, this.id != null);
         }
         return currentHashCode;
     }
 
     public int hashCode() {
-        final HashCodeStrategy strategy = JAXBHashCodeStrategy.INSTANCE;
+        final HashCodeStrategy2 strategy = JAXBHashCodeStrategy.INSTANCE2;
         return this.hashCode(null, strategy);
     }
 

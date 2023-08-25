@@ -7,7 +7,7 @@ import com.sun.codemodel.JOp;
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.model.CEnumLeafInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;
-import  com.sun.tools.xjc.model.Aspect;
+import com.sun.tools.xjc.outline.Aspect;
 
 public class SingleEnumValueWrappingField extends AbstractWrappingField {
 

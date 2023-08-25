@@ -12,10 +12,10 @@ import javax.persistence.MapKeyJoinColumns;
 import javax.persistence.QueryHint;
 import javax.persistence.TemporalType;
 
-import org.jvnet.annox.model.XAnnotation;
-import org.jvnet.annox.model.annotation.field.XSingleAnnotationField;
-import org.jvnet.annox.model.annotation.value.XClassByNameAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XEnumAnnotationValue;
+import org.jvnet.jaxb.annox.model.XAnnotation;
+import org.jvnet.jaxb.annox.model.annotation.field.XSingleAnnotationField;
+import org.jvnet.jaxb.annox.model.annotation.value.XClassByNameAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XEnumAnnotationValue;
 import org.jvnet.hyperjaxb3.annotation.util.AnnotationUtils;
 
 import com.sun.java.xml.ns.persistence.orm.AssociationOverride;

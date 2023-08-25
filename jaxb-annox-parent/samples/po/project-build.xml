@@ -4,6 +4,7 @@
 	<path id="compile.path">
 		<fileset dir="${basedir}/lib">
 			<include name="commons-lang3-*.jar"/>
+      <include name="commons-text-*.jar"/>
 			<include name="codemodel-*.jar"/>
 			<include name="istack-commons-*.jar"/>
 			<include name="jakarta.xml.bind-api-*.jar"/>
@@ -13,7 +14,7 @@
 			<include name="rngom-*.jar"/>
 			<include name="txw2-*.jar"/>
 			<include name="xsom-*.jar"/>
-			
+
 			<include name="jaxb-annox-*.jar"/>
 			<include name="javaparser-*.jar"/>
 		</fileset>
@@ -32,13 +33,14 @@
 			<include name="codemodel-*.jar"/>
 			<include name="commons-io-*.jar"/>
 			<include name="commons-lang3-*.jar"/>
+      <include name="commons-text-*.jar"/>
 			<include name="slf4j-*.jar"/>
 			<include name="jcl-over-slf4j-*.jar"/>
 			<include name="relaxng-datatype-*.jar"/>
 			<include name="rngom-*.jar"/>
 			<include name="txw2-*.jar"/>
 			<include name="xsom-*.jar"/>
-			
+
 			<include name="jaxb-annox-*.jar"/>
 			<include name="javaparser-*.jar"/>
 		</fileset>
@@ -58,13 +60,14 @@
 			<include name="codemodel-*.jar"/>
 			<include name="commons-io-*.jar"/>
 			<include name="commons-lang3-*.jar"/>
+      <include name="commons-text-*.jar"/>
 			<include name="slf4j-*.jar"/>
 			<include name="jcl-over-slf4j-*.jar"/>
 			<include name="relaxng-datatype-*.jar"/>
 			<include name="rngom-*.jar"/>
 			<include name="txw2-*.jar"/>
 			<include name="xsom-*.jar"/>
-			
+
 			<include name="jaxb-annox-*.jar"/>
 			<include name="javaparser-*.jar"/>
 		</fileset>
@@ -79,7 +82,7 @@
 	<target name="compile" depends="generate-sources">
 		<mkdir dir="${basedir}/target/classes"/>
 		<javac
-			destdir="${basedir}/target/classes" 
+			destdir="${basedir}/target/classes"
 			srcdir="${basedir}/src/main/java"
 			classpathref="compile.path"
 			source="1.8"
@@ -92,7 +95,7 @@
 	<target name="test-compile" depends="compile">
 		<mkdir dir="${basedir}/target/test-classes"/>
 		<javac
-			destdir="${basedir}/target/test-classes" 
+			destdir="${basedir}/target/test-classes"
 			srcdir="${basedir}/src/test/java"
 			classpathref="test-compile.path"
 			source="1.8"
@@ -125,7 +128,7 @@
 	<target name="package" depends="test">
 		<mkdir dir="${basedir}/target"/>
 		<jar destfile="${basedir}/target/${artifactId}.jar"
-			basedir="${basedir}/target/classes"/> 
+			basedir="${basedir}/target/classes"/>
 	</target>
 	<target name="install" depends="package"/>
 </project>

@@ -3,15 +3,15 @@ package org.jvnet.hyperjaxb3.annotation.util;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
 
-import org.jvnet.annox.model.XAnnotation;
-import org.jvnet.annox.model.annotation.field.XAnnotationField;
-import org.jvnet.annox.model.annotation.field.XArrayAnnotationField;
-import org.jvnet.annox.model.annotation.field.XSingleAnnotationField;
-import org.jvnet.annox.model.annotation.value.XBooleanAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XEnumAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XIntAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XStringAnnotationValue;
-import org.jvnet.annox.model.annotation.value.XXAnnotationAnnotationValue;
+import org.jvnet.jaxb.annox.model.XAnnotation;
+import org.jvnet.jaxb.annox.model.annotation.field.XAnnotationField;
+import org.jvnet.jaxb.annox.model.annotation.field.XArrayAnnotationField;
+import org.jvnet.jaxb.annox.model.annotation.field.XSingleAnnotationField;
+import org.jvnet.jaxb.annox.model.annotation.value.XBooleanAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XEnumAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XIntAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XStringAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XXAnnotationAnnotationValue;
 
 public class AnnotationUtils {
 

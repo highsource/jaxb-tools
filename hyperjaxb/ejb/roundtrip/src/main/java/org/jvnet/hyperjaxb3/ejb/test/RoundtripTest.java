@@ -116,24 +116,15 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest {
 			public boolean equals(ObjectLocator leftLocator,
 					ObjectLocator rightLocator, Object lhs, Object rhs) {
 				if (!super.equals(leftLocator, rightLocator, lhs, rhs)) {
-					logger.debug("Objects are not equal.");
-					super.equals(leftLocator, rightLocator, lhs, rhs);
-					logger.debug("Left: "
-							+ (lhs == null ? "null" : lhs.toString()));
-					if (leftLocator != null) {
-						logger.debug("At [" + leftLocator.getPathAsString()
-								+ "].");
-					}
-					logger.debug("Right: "
-							+ (rhs == null ? "null" : rhs.toString()));
-					if (rightLocator != null) {
-						logger.debug("At [" + rightLocator.getPathAsString()
-								+ "].");
-					}
+					logger.debug("Objects are not equal."
+							+ "\nLeft: "
+							+ (lhs == null ? "null" : lhs.toString())
+							+ (leftLocator == null ? "" : ("\nAt [" + leftLocator.getPathAsString() + "]."))
+							+ "\nRight: "
+							+ (rhs == null ? "null" : rhs.toString())
+							+ (rightLocator == null ? "" : ("\nAt [" + rightLocator.getPathAsString() + "].")));
 					return false;
-				} else
-
-				{
+				} else {
 					return true;
 				}
 			}

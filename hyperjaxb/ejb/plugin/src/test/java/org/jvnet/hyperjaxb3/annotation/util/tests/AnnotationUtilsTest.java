@@ -6,8 +6,8 @@ import java.util.LinkedList;
 
 import junit.framework.TestCase;
 
-import org.jvnet.annox.model.XAnnotation;
-import org.jvnet.annox.model.annotation.field.XAnnotationField;
+import org.jvnet.jaxb.annox.model.XAnnotation;
+import org.jvnet.jaxb.annox.model.annotation.field.XAnnotationField;
 import org.jvnet.hyperjaxb3.annotation.util.AnnotationUtils;
 
 public class AnnotationUtilsTest extends TestCase {

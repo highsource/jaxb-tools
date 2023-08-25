@@ -24,10 +24,10 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.jvnet.jaxb2_commons.lang.Equals;
-import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
-import org.jvnet.jaxb2_commons.lang.HashCode;
-import org.jvnet.jaxb2_commons.lang.HashCodeStrategy;
+import org.jvnet.jaxb2_commons.lang.Equals2;
+import org.jvnet.jaxb2_commons.lang.EqualsStrategy2;
+import org.jvnet.jaxb2_commons.lang.HashCode2;
+import org.jvnet.jaxb2_commons.lang.HashCodeStrategy2;
 import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
 import org.jvnet.jaxb2_commons.lang.JAXBHashCodeStrategy;
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
@@ -58,7 +58,7 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
 @Entity(name = "org.jvnet.hyperjaxb3.ejb.tests.issues.MyIssueXXXType")
 @Table(name = "MYISSUEXXXTYPE")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class MyIssueXXXType implements Serializable, Equals, HashCode {
+public class MyIssueXXXType implements Serializable, Equals2, HashCode2 {
 
 	@XmlAttribute
 	protected String value;
@@ -113,7 +113,7 @@ public class MyIssueXXXType implements Serializable, Equals, HashCode {
 	}
 
 	public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator,
-			Object object, EqualsStrategy strategy) {
+			Object object, EqualsStrategy2 strategy) {
 		if (!(object instanceof MyIssueXXXType)) {
 			return false;
 		}
@@ -128,7 +128,8 @@ public class MyIssueXXXType implements Serializable, Equals, HashCode {
 			rhsValue = that.getValue();
 			if (!strategy.equals(LocatorUtils.property(thisLocator,
 					"simpleSingle", lhsValue), LocatorUtils.property(thatLocator,
-					"simpleSingle", rhsValue), lhsValue, rhsValue)) {
+					"simpleSingle", rhsValue), lhsValue, rhsValue,
+					this.value != null, that.value != null)) {
 				return false;
 			}
 		}
@@ -136,7 +137,7 @@ public class MyIssueXXXType implements Serializable, Equals, HashCode {
 	}
 
 	public boolean equals(Object object) {
-		final EqualsStrategy strategy = JAXBEqualsStrategy.INSTANCE;
+		final EqualsStrategy2 strategy = JAXBEqualsStrategy.INSTANCE2;
 		return equals(null, null, object, strategy);
 	}
 
@@ -144,20 +145,20 @@ public class MyIssueXXXType implements Serializable, Equals, HashCode {
 		hashCodeBuilder.append(this.getValue());
 	}
 
-	public int hashCode(ObjectLocator locator, HashCodeStrategy strategy) {
+	public int hashCode(ObjectLocator locator, HashCodeStrategy2 strategy) {
 		int currentHashCode = 1;
 		{
 			String theValue;
 			theValue = this.getValue();
 			currentHashCode = strategy.hashCode(LocatorUtils.property(locator,
-					"value", theValue), currentHashCode, theValue);
+					"value", theValue), currentHashCode, theValue, value != null);
 		}
 
 		return currentHashCode;
 	}
 
 	public int hashCode() {
-		final HashCodeStrategy strategy = JAXBHashCodeStrategy.INSTANCE;
+		final HashCodeStrategy2 strategy = JAXBHashCodeStrategy.INSTANCE2;
 		return this.hashCode(null, strategy);
 	}
 

@@ -1,19 +1,21 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jvnet.jaxb</groupId>
+		<artifactId>hyperjaxb3-ejb</artifactId>
+		<version>2.0.6-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
 	<artifactId>hyperjaxb3-ejb-roundtrip</artifactId>
 	<packaging>jar</packaging>
-	<name>Hyperjaxb3 EJB Roundtrip</name>
-	<parent>
-		<groupId>org.jvnet.hyperjaxb3</groupId>
-		<artifactId>hyperjaxb3-ejb</artifactId>
-		<version>0.6.3-SNAPSHOT</version>
-	</parent>
+	<name>JAXB Tools :: Hyperjaxb3 :: EJB :: Roundtrip</name>
+
 	<dependencies>
 		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -27,11 +29,11 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
+			<groupId>org.jvnet.jaxb</groupId>
 			<artifactId>jaxb2-basics-testing</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.hyperjaxb3</groupId>
+			<groupId>org.jvnet.jaxb</groupId>
 			<artifactId>hyperjaxb3-ejb-runtime</artifactId>
 			<scope>provided</scope>
 		</dependency>

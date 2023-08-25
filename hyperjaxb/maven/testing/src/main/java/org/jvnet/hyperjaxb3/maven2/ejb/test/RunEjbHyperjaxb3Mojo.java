@@ -2,8 +2,8 @@ package org.jvnet.hyperjaxb3.maven2.ejb.test;
 
 import org.apache.maven.project.MavenProject;
 import org.jvnet.hyperjaxb3.maven2.Hyperjaxb3Mojo;
-import org.jvnet.jaxb2.maven2.AbstractXJC2Mojo;
-import org.jvnet.jaxb2.maven2.test.RunXJC2Mojo;
+import org.jvnet.jaxb.maven.AbstractXJC2Mojo;
+import org.jvnet.jaxb.maven.test.RunXJC2Mojo;
 
 public class RunEjbHyperjaxb3Mojo extends RunXJC2Mojo {
 

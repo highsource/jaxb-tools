@@ -136,7 +136,7 @@ public class MappingFilePersistenceProcessor implements
 		}
 
 		targetPersistenceUnit.mergeFrom(null, null, persistenceUnit,
-				targetPersistenceUnit, JAXBMergeCollectionsStrategy.INSTANCE);
+				targetPersistenceUnit, JAXBMergeCollectionsStrategy.INSTANCE2);
 		targetPersistenceUnit.setName(persistenceUnitName);
 		Collections.sort(targetPersistenceUnit.getMappingFile());
 		Collections.sort(targetPersistenceUnit.getClazz());

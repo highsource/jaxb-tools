@@ -5,9 +5,9 @@ import javax.persistence.OrderColumn;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.jvnet.annox.reflect.AnnotatedElementFactory;
-import org.jvnet.annox.reflect.DualAnnotatedElementFactory;
-import org.jvnet.annox.reflect.ParameterizedAnnotatedElement;
+import org.jvnet.jaxb.annox.reflect.AnnotatedElementFactory;
+import org.jvnet.jaxb.annox.reflect.DualAnnotatedElementFactory;
+import org.jvnet.jaxb.annox.reflect.ParameterizedAnnotatedElement;
 
 public class HJIII73Test extends TestCase {
 

@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.ejb.strategy.annotate;
 
-import org.jvnet.annox.model.annotation.value.XStringAnnotationValue;
+import org.jvnet.jaxb.annox.model.annotation.value.XStringAnnotationValue;
 import org.jvnet.hyperjaxb3.xsd.util.StringUtils;
 
 import com.sun.codemodel.JAnnotationUse;

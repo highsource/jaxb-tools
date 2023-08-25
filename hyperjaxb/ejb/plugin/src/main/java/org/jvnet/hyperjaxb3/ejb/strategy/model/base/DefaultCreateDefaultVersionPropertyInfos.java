@@ -7,7 +7,7 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.lang3.Validate;
-import org.jvnet.annox.util.ClassUtils;
+import org.jvnet.jaxb.annox.util.ClassUtils;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.GeneratedVersion;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Version;

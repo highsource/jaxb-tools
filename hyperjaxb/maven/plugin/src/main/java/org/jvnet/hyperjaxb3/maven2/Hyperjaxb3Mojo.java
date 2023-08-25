@@ -36,9 +36,9 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
-import org.jvnet.mjiip.v_2.XJC2Mojo;
 
 import com.sun.tools.xjc.Options;
+import org.jvnet.jaxb.maven.XJC2Mojo;
 
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.COMPILE, threadSafe = true)
 public class Hyperjaxb3Mojo extends XJC2Mojo {

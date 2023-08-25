@@ -78,6 +78,7 @@
 			<!-- XJC2 Task classpath -->
 			<classpath>
 				<fileset dir="${basedir}/lib">
+          <include name="commons-text-*.jar"/>
 					<include name="codemodel-*.jar"/>
 					<include name="istack-commons-*.jar"/>
 					<include name="jakarta.activation-*.jar"/>
@@ -119,6 +120,7 @@
 					<include name="commons-beanutils-*.jar"/>
 					<include name="commons-logging-*.jar"/>
 					<include name="commons-lang3-*.jar"/>
+          <include name="commons-text-*.jar"/>
 				</fileset>
 			</classpath>
 		</xjc>
@@ -126,7 +128,7 @@
 	<target name="compile" depends="generate-sources">
 		<mkdir dir="${basedir}/target/classes"/>
 		<javac
-			destdir="${basedir}/target/classes" 
+			destdir="${basedir}/target/classes"
 			srcdir="${basedir}/src/main/java:${basedir}/target/generated-sources/xjc"
 			classpathref="compile.path"
 			includeantruntime="false"
@@ -143,7 +145,7 @@
 	<target name="test-compile" depends="compile">
 		<mkdir dir="${basedir}/target/test-classes"/>
 		<javac
-			destdir="${basedir}/target/test-classes" 
+			destdir="${basedir}/target/test-classes"
 			srcdir="${basedir}/src/test/java:${basedir}/target/generated-sources/xjc"
 			classpathref="test-compile.path"
 			includeantruntime="false"
@@ -184,7 +186,7 @@
 	<target name="package" depends="test">
 		<mkdir dir="${basedir}/target"/>
 		<jar destfile="${basedir}/target/${artifactId}.jar"
-			basedir="${basedir}/target/classes"/> 
+			basedir="${basedir}/target/classes"/>
 	</target>
 	<target name="install" depends="package"/>
 </project>

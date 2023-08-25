@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>jaxb-maven-plugin-tests-306</artifactId>
+	<parent>
+		<groupId>org.jvnet.jaxb</groupId>
+		<artifactId>jaxb-maven-plugin-tests</artifactId>
+		<version>2.0.5-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<packaging>pom</packaging>
+	<name>JAXB Tools :: Maven Plugin :: Test [JAXB-TOOLS 306]</name>
+	<description>
+		This project tests Catalog resolution on complex projects.
+	</description>
+
+  <modules>
+    <module>common-model</module>
+    <module>import-ws-model</module>
+    <module>helper-ws-model</module>
+  </modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb-maven-plugin-tests-306-common-model</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb-maven-plugin-tests-306-import-ws-model</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jvnet.jaxb</groupId>
+				<artifactId>jaxb-maven-plugin-tests-306-helper-ws-model</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<defaultGoal>test</defaultGoal>
+    <pluginManagement>
+      <plugins>
+      <!-- Bug https://github.com/eclipse-ee4j/jaxb-ri/issues/1001 -->
+      <!-- Bug https://github.com/eclipse-ee4j/jaxb-ri/issues/1006 -->
+        <plugin>
+          <groupId>org.jvnet.jaxb</groupId>
+          <artifactId>jaxb-maven-plugin</artifactId>
+          <version>${project.version}</version>
+          <configuration>
+            <schemaIncludes>
+              <include>**/*.xsd</include>
+            </schemaIncludes>
+            <bindingIncludes>
+              <include>**/*.xjb</include>
+            </bindingIncludes>
+            <readOnly>true</readOnly>
+            <episode>true</episode>
+            <specVersion>2.3</specVersion>
+            <extension>true</extension>
+            <removeOldOutput>true</removeOldOutput>
+            <locale>en</locale>
+            <strict>false</strict>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+	</build>
+</project>

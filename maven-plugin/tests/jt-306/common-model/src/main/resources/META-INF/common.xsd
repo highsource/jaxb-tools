@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="urn:example-com:model:common"
+  xmlns:tns="urn:example-com:model:common">
+
+<!-- ===================================== Attribute types ===================================== -->
+
+  <xs:simpleType name="owningGroup">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Templates" />
+      <xs:enumeration value="Motor" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="role">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Approval Engineer" />
+      <xs:enumeration value="Manufacturing" />
+      <xs:enumeration value="Assistant" />
+      <xs:enumeration value="Publisher" />
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

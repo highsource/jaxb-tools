@@ -48,10 +48,10 @@ public class MavenCatalogResolver extends
 	@Override
 	public String getResolvedEntity(String publicId, String systemId) {
 		getLog().debug(
-				MessageFormat.format("Resolving publicId [{0}], systemId [{1}].", publicId, systemId));
+				MessageFormat.format("MavenCatalogResolver : Resolving publicId [{0}], systemId [{1}].", publicId, systemId));
 		final String superResolvedEntity = super.getResolvedEntity(publicId, systemId);
 		getLog().debug(
-				MessageFormat.format("Parent resolver has resolved publicId [{0}], systemId [{1}] to [{2}].", publicId, systemId, superResolvedEntity));
+				MessageFormat.format("MavenCatalogResolver : Parent resolver has resolved publicId [{0}], systemId [{1}] to [{2}].", publicId, systemId, superResolvedEntity));
 		if (superResolvedEntity != null) {
 			systemId = superResolvedEntity;
 		}
@@ -64,7 +64,7 @@ public class MavenCatalogResolver extends
 			final URI uri = new URI(systemId);
 			if (URI_SCHEME_MAVEN.equals(uri.getScheme())) {
 				getLog().debug(
-						MessageFormat.format("Resolving systemId [{1}] as Maven dependency resource.", publicId, systemId));
+						MessageFormat.format("MavenCatalogResolver : Resolving systemId [{1}] as Maven dependency resource.", publicId, systemId));
 				final String schemeSpecificPart = uri.getSchemeSpecificPart();
 				try {
 					final DependencyResource dependencyResource = DependencyResource.valueOf(schemeSpecificPart);
@@ -74,32 +74,32 @@ public class MavenCatalogResolver extends
 						String resolved = url.toString();
 						getLog().debug(
 								MessageFormat.format(
-										"Resolved systemId [{1}] to [{2}].",
+										"MavenCatalogResolver : Resolved systemId [{1}] to [{2}].",
 										publicId, systemId, resolved));
 						return resolved;
 					} catch (Exception ex) {
 						getLog().error(
 								MessageFormat
-										.format("Error resolving dependency resource [{0}].",
+										.format("MavenCatalogResolver : Error resolving dependency resource [{0}].",
 												dependencyResource));
 					}
 				} catch (IllegalArgumentException iaex) {
 					getLog().error(
 							MessageFormat
-									.format("Error parsing dependency descriptor [{0}].",
+									.format("MavenCatalogResolver : Error parsing dependency descriptor [{0}].",
 											schemeSpecificPart));
 
 				}
 				getLog().error(
 						MessageFormat
-								.format("Failed to resolve systemId [{1}] as dependency resource. "
+								.format("MavenCatalogResolver : Failed to resolve systemId [{1}] as dependency resource. "
 										+ "Returning parent resolver result [{2}].",
 										publicId, systemId, superResolvedEntity));
 				return superResolvedEntity;
 			} else {
 				getLog().debug(
 						MessageFormat
-								.format("SystemId [{1}] is not a Maven dependency resource URI. "
+								.format("MavenCatalogResolver : SystemId [{1}] is not a Maven dependency resource URI. "
 										+ "Returning parent resolver result [{2}].",
 										publicId, systemId, superResolvedEntity));
 				return superResolvedEntity;
@@ -107,7 +107,7 @@ public class MavenCatalogResolver extends
 		} catch (URISyntaxException urisex) {
 			getLog().debug(
 					MessageFormat
-							.format("Coul not parse the systemId [{1}] as URI. "
+							.format("MavenCatalogResolver : Could not parse the systemId [{1}] as URI. "
 									+ "Returning parent resolver result [{2}].",
 									publicId, systemId, superResolvedEntity));
 			return superResolvedEntity;

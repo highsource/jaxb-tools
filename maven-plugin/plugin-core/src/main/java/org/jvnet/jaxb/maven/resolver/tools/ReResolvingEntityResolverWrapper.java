@@ -1,10 +1,6 @@
 package org.jvnet.jaxb.maven.resolver.tools;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.Optional;
 
@@ -39,36 +35,9 @@ public class ReResolvingEntityResolverWrapper implements EntityResolver {
 		} else {
 			log.debug(MessageFormat.format("ReResolvingEntityResolverWrapper : Resolved to publicId [{0}], systemId [{1}].", resolvedInputSource.getPublicId(), resolvedInputSource.getSystemId()));
 			final String pId = !StringUtils.isEmpty(publicId) ? publicId : resolvedInputSource.getPublicId();
-			final String sId = computeSystemId(systemId, resolvedInputSource.getSystemId(), log);
-			return new ReResolvingInputSourceWrapper(this.entityResolver, resolvedInputSource, pId, sId, resolvedInputSource.getPublicId(), resolvedInputSource.getSystemId());
+			final String sId = !StringUtils.isEmpty(systemId) ? systemId : resolvedInputSource.getSystemId();
+            log.debug(MessageFormat.format("ReResolvingEntityResolverWrapper : Final Resolved to publicId [{0}], systemId [{1}].", pId, sId));
+            return new ReResolvingInputSourceWrapper(this.entityResolver, this.log, resolvedInputSource, pId, sId);
 		}
-	}
-
-	private static String computeSystemId(String systemId, String resolvedSystemId, Log log) {
-		if (systemId == null) {
-			return resolvedSystemId;
-		}
-		if (resolvedSystemId == null) {
-			return systemId;
-		}
-		boolean fileExistsSystemId = checkFileExists(systemId, log);
-		boolean fileExistsResolvedSystemId = checkFileExists(resolvedSystemId, log);
-		return !StringUtils.isEmpty(systemId) && fileExistsSystemId ? systemId : fileExistsResolvedSystemId ? resolvedSystemId : systemId;
-	}
-
-	private static boolean checkFileExists(String sId, Log log) {
-		try {
-			URI uriSystemId = new URI(sId);
-			if ("file".equals(uriSystemId.getScheme())) {
-				if (!Files.exists(Paths.get(uriSystemId))) {
-					// resolved file does not exist, warn and let's continue with original systemId
-					log.warn(MessageFormat.format("ReResolvingEntityResolverWrapper : File {0} does not exists.", sId));
-					return false;
-				}
-			}
-		} catch (URISyntaxException ex) {
-			// ignore, let it be handled by parser as is
-		}
-		return true;
 	}
 }

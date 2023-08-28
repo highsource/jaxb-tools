@@ -9,7 +9,7 @@ public class ToStringTest extends AbstractSamplesTest {
 
   @Override
   protected void checkSample(File sample) throws Exception {
-    
+
     final Object object = createContext().createUnmarshaller().unmarshal(sample);
     logger.debug(JAXBToStringStrategy.INSTANCE.append(null, new StringBuilder(), object).toString());
   }

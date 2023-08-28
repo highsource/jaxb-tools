@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <wsdl:definitions
-	targetNamespace="urn:test:wsdl" 
-	xmlns:test-wsdl="urn:test:wsdl" 
+	targetNamespace="urn:test:wsdl"
+	xmlns:test-wsdl="urn:test:wsdl"
 	xmlns:test-schema="urn:test:schema"
 	xmlns:test-wsdl-schema="urn:test:wsdl:schema"
-	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
 	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	name="main">
@@ -50,8 +50,8 @@
 		<wsdl:part name="fault" element="test-wsdl-schema:Fault"/>
 	</wsdl:message>
 
-		<!-- 
-	WSDL portType element describes a web service, the operations that can be performed, 
+		<!--
+	WSDL portType element describes a web service, the operations that can be performed,
 				and the messages that are involved.
 		-->
 	<wsdl:portType name="RequestResponsePortType" >
@@ -62,7 +62,7 @@
 		</wsdl:operation>
 	</wsdl:portType>
 
-	 <!-- 
+	 <!--
 			 WSDL Bindings element defines the message format and protocol details for each port.
 	 -->
 	<wsdl:binding name="RequestResponseBinding" type="test-wsdl:RequestResponsePortType" >
@@ -85,8 +85,8 @@
 		</wsdl:operation>
 	</wsdl:binding>
 
-	 <!-- 
-	The service element defines the ports supported by the Web service. 
+	 <!--
+	The service element defines the ports supported by the Web service.
 	 -->
 	<wsdl:service name="RequestResponseService" >
 		<wsdl:port name="RequestResponsePort" binding="test-wsdl:RequestResponseBinding" >

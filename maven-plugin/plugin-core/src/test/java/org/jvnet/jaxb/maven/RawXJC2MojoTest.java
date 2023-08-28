@@ -8,8 +8,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.jvnet.jaxb.maven.IOptionsFactory;
-import org.jvnet.jaxb.maven.RawXJC2Mojo;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -58,7 +56,7 @@ public class RawXJC2MojoTest {
             public MavenProject getProject() {
                 MavenProject project = new MavenProject() {
                     @Override
-                    public Set getArtifacts() {
+                    public Set<Artifact> getArtifacts() {
                         Set<Artifact> artifacts = new HashSet<>();
                         ArtifactStub stubJar = new ArtifactStub();
                         stubJar.setArtifactId("test");

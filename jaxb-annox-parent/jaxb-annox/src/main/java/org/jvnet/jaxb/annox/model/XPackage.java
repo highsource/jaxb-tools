@@ -28,6 +28,8 @@ public class XPackage extends XAnnotatedElement<Package> {
 	 *            target package.
 	 * @param xannotations
 	 *            package annotations, may be <code>null</code>.
+	 * @param xclasses
+	 *            annotated classes
 	 */
 	public XPackage(Package targetPackage, XAnnotation<?>[] xannotations,
 			XClass[] xclasses) {

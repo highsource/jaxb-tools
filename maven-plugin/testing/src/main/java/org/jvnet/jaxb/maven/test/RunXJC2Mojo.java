@@ -13,6 +13,8 @@ import org.jvnet.jaxb.maven.XJC2Mojo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.sun.tools.xjc.Options;
+
 /**
  * Abstract test for plugins.
  * 
@@ -63,17 +65,17 @@ public class RunXJC2Mojo extends TestCase {
 		return true;
 	}
 
-	public AbstractXJC2Mojo initMojo() {
-		final AbstractXJC2Mojo mojo = createMojo();
+	public AbstractXJC2Mojo<Options> initMojo() {
+		final AbstractXJC2Mojo<Options> mojo = createMojo();
 		configureMojo(mojo);
 		return mojo;
 	}
 
-	protected AbstractXJC2Mojo createMojo() {
+	protected AbstractXJC2Mojo<Options> createMojo() {
 		return new XJC2Mojo();
 	}
 
-	protected void configureMojo(final AbstractXJC2Mojo mojo) {
+	protected void configureMojo(final AbstractXJC2Mojo<Options> mojo) {
 		mojo.setProject(new MavenProject());
 		mojo.setSchemaDirectory(getSchemaDirectory());
 		mojo.setGenerateDirectory(getGeneratedDirectory());

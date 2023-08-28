@@ -116,11 +116,11 @@ public class SimpleEqualsPlugin extends
 //						: leftValue.ne(JExpr._null());
 				final JExpression leftHasSetValue = (leftFieldAccessor.isAlwaysSet() || leftFieldAccessor
 						.hasSetValue() == null) ? JExpr.TRUE
-						: leftFieldAccessor.hasSetValue();					
-				
+						: leftFieldAccessor.hasSetValue();
+
 //				final JExpression rightHasSetValue = exposedType.isPrimitive() ? JExpr.TRUE
 //						: rightValue.ne(JExpr._null());
-				
+
 				final JExpression rightHasSetValue = (rightFieldAccessor.isAlwaysSet() || rightFieldAccessor
 						.hasSetValue() == null) ? JExpr.TRUE
 						: rightFieldAccessor.hasSetValue();

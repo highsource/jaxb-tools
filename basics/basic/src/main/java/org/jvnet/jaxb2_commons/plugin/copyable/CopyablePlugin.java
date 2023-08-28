@@ -330,7 +330,7 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 					copyFieldAccessor.fromRawValue(ifShouldBeSetBlock, "unique"
 							+ fieldOutline.getPropertyInfo().getName(true),
 							copyField);
-					
+
 					copyFieldAccessor.unsetValues(ifShouldBeUnsetBlock);
 				}
 			}

@@ -20,7 +20,7 @@ import com.sun.codemodel.JMethod;
 
 /**
  * Information used to generate a fluent API method.
- * 
+ *
  * @author Hanson Char
  */
 public class FluentMethodInfo {
@@ -30,26 +30,26 @@ public class FluentMethodInfo {
 	private final boolean isOverride;
 	// Type of fluent API method to be generated.
 	private final FluentMethodType fluentMethodType;
-	
-	public FluentMethodInfo(JMethod jmethod, FluentMethodType fluentMethodType, boolean isOverride) 
+
+	public FluentMethodInfo(JMethod jmethod, FluentMethodType fluentMethodType, boolean isOverride)
 	{
 		this.jmethod = jmethod;
 		this.fluentMethodType = fluentMethodType;
 		this.isOverride = isOverride;
 	}
-	
+
 	/**
 	 * Creates a fluent API method in the given class.
-	 * 
+	 *
 	 * @param implClass the class to create fluent-api
-	 */ 
+	 */
 	public void createFluentMethod(JDefinedClass implClass) {
 		fluentMethodType.createFluentMethod(implClass, this);
 	}
 
 	/**
 	 * Returns true if the fluent API method is one overriding a parent method.
-	 * 
+	 *
 	 * @return <code>true</code> if fluent api method is one overriding a parent method
 	 */
 	public boolean isOverride() {
@@ -58,7 +58,7 @@ public class FluentMethodInfo {
 
 	/**
 	 * Returns the original method for which a fluent API method will be generated.
-	 * 
+	 *
 	 * @return original JMethod for which a fluent-api method will be generated
 	 */
 	public JMethod getJmethod() {

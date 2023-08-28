@@ -16,7 +16,7 @@ public class AddressTest {
         Assert.assertEquals(0, a.getNumber());
         Assert.assertNull(a.getCareOf());
         Assert.assertNull(a.getStreet());
-        
+
         Assert.assertEquals(ToStringBuilder.reflectionToString(a, ToStringStyle.MULTI_LINE_STYLE), a.toString());
     }
 }

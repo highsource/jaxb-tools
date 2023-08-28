@@ -1,7 +1,7 @@
 package org.jvnet.jaxb.annox.parser.tests;
 
 @A(
-	booleanField = false, 
+	booleanField = false,
 	byteField = 0,
 	charField = 'a',
 	classField = String[][][].class,

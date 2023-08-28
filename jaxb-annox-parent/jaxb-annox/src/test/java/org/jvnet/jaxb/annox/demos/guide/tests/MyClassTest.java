@@ -20,11 +20,11 @@ public class MyClassTest extends TestCase {
 		assertEquals("My class", myClassAnnotation.printName());
 		assertEquals("My field", myFieldAnnotation.printName());
 	}
-	
+
 	public void testAnnox() throws Exception {
-		
+
 		final AnnotatedElementFactory aef = new DualAnnotatedElementFactory();
-		
+
 		final AnnotatedElement myClass = aef.getAnnotatedElement(MyClass.class);
 		final AnnotatedElement myField = aef.getAnnotatedElement(MyClass.class.getDeclaredField("myField"));
 		final MyAnnotation myClassAnnotation = myClass.getAnnotation(MyAnnotation.class);

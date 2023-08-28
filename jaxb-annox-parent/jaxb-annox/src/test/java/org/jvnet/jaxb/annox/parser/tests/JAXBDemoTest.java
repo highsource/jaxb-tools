@@ -20,11 +20,11 @@ public class JAXBDemoTest extends TestCase {
 			(XAnnotation<XmlRootElement>) XAnnotationParser.INSTANCE.parse
 				("@javax.xml.bind.annotation.XmlRootElement(name=\"foo\")");
 
-		// Create an instance of the annotation 
+		// Create an instance of the annotation
 		XmlRootElement xmlRootElement = xannotation.getResult();
 		assertEquals("foo", xmlRootElement.name());
 		assertEquals("##default", xmlRootElement.namespace());
-		
+
 		// Analyze the structure of the annotation
 		assertEquals(String.class, xannotation.getFieldsMap().get("name").getType());
 		assertEquals("##default", xannotation.getFieldsMap().get("namespace").getResult());

@@ -1,38 +1,38 @@
 <package xmlns="http://annox.dev.java.net" xmlns:annox="http://annox.dev.java.net" xmlns:jaxb="http://annox.dev.java.net/javax.xml.bind.annotation"
 	xmlns:adap="http://annox.dev.java.net/javax.xml.bind.annotation.adapters">
 
-	<adap:XmlJavaTypeAdapters>
-		<adap:XmlJavaTypeAdapter value="org.jvnet.jaxb.annox.samples.po.BigDecimalAdapter" type="java.math.BigDecimal" />
-	</adap:XmlJavaTypeAdapters>
+  <adap:XmlJavaTypeAdapters>
+    <adap:XmlJavaTypeAdapter value="org.jvnet.jaxb.annox.samples.po.BigDecimalAdapter" type="java.math.BigDecimal" />
+  </adap:XmlJavaTypeAdapters>
 
-	<class name="ObjectFactory">
-		<jaxb:XmlRegistry />
-		<method name="createPurchaseOrder">
-			<jaxb:XmlElementDecl namespace="" name="purchaseOrder" />
-		</method>
-		<method name="createComment">
-			<jaxb:XmlElementDecl namespace="" name="comment" />
-		</method>
-	</class>
-	<class name="PurchaseOrderType">
-		<jaxb:XmlAccessorType value="FIELD" />
-		<jaxb:XmlType name="PurchaseOrderType" propOrder="shipTo billTo comment items" />
-		<field name="shipTo">
-			<jaxb:XmlElement required="true" />
-		</field>
-		<field name="billTo">
-			<jaxb:XmlElement required="true" />
-		</field>
-		<field name="items">
-			<jaxb:XmlElement required="true" />
-		</field>
-		<field name="orderDate">
-			<jaxb:XmlAttribute />
-			<jaxb:XmlSchemaType name="date" />
-		</field>
-	</class>
-	<class name="Items">
-		<jaxb:XmlAccessorType value="FIELD" />
-		<jaxb:XmlType name="Items" propOrder="item" />
-	</class>
+  <class name="ObjectFactory">
+    <jaxb:XmlRegistry />
+    <method name="createPurchaseOrder">
+      <jaxb:XmlElementDecl namespace="" name="purchaseOrder" />
+    </method>
+    <method name="createComment">
+      <jaxb:XmlElementDecl namespace="" name="comment" />
+    </method>
+  </class>
+  <class name="PurchaseOrderType">
+    <jaxb:XmlAccessorType value="FIELD" />
+    <jaxb:XmlType name="PurchaseOrderType" propOrder="shipTo billTo comment items" />
+    <field name="shipTo">
+      <jaxb:XmlElement required="true" />
+    </field>
+    <field name="billTo">
+      <jaxb:XmlElement required="true" />
+    </field>
+    <field name="items">
+      <jaxb:XmlElement required="true" />
+    </field>
+    <field name="orderDate">
+      <jaxb:XmlAttribute />
+      <jaxb:XmlSchemaType name="date" />
+    </field>
+  </class>
+  <class name="Items">
+    <jaxb:XmlAccessorType value="FIELD" />
+    <jaxb:XmlType name="Items" propOrder="item" />
+  </class>
 </package>

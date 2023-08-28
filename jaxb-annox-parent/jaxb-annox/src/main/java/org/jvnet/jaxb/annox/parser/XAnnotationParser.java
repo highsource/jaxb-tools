@@ -49,7 +49,7 @@ public class XAnnotationParser {
 
 	/**
 	 * Constructor with a specified class loader.
-	 * 
+	 *
 	 * @param classLoader
 	 *            the class loader which should be used to get classes (like
 	 *            annotations)

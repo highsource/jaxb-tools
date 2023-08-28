@@ -4,7 +4,7 @@ import org.apache.commons.lang3.Validate;
 
 /**
  * Defines an annotated class.
- * 
+ *
  * @author Aleksei Valikov
  */
 public class XClass extends XAnnotatedElement<Class<?>> {
@@ -48,7 +48,7 @@ public class XClass extends XAnnotatedElement<Class<?>> {
 
 	/**
 	 * Constructs an annotated class.
-	 * 
+	 *
 	 * @param targetClass
 	 *            target class.
 	 * @param xannotations
@@ -90,7 +90,7 @@ public class XClass extends XAnnotatedElement<Class<?>> {
 
 	/**
 	 * Returns the target class.
-	 * 
+	 *
 	 * @return Target class.
 	 */
 	public Class<?> getTargetClass() {
@@ -99,7 +99,7 @@ public class XClass extends XAnnotatedElement<Class<?>> {
 
 	/**
 	 * Returns annotated members of the class.
-	 * 
+	 *
 	 * @return Annotated members of the class.
 	 */
 	public XMember<?>[] getMembers() {
@@ -108,7 +108,7 @@ public class XClass extends XAnnotatedElement<Class<?>> {
 
 	/**
 	 * Returns annotated constructors of the class.
-	 * 
+	 *
 	 * @return Annotated constructors of the class.
 	 */
 	public XConstructor[] getConstructors() {
@@ -117,7 +117,7 @@ public class XClass extends XAnnotatedElement<Class<?>> {
 
 	/**
 	 * Returns annotated fields of the class.
-	 * 
+	 *
 	 * @return Annotated fields of the class.
 	 */
 	public XField[] getFields() {
@@ -126,7 +126,7 @@ public class XClass extends XAnnotatedElement<Class<?>> {
 
 	/**
 	 * Returns annotated methods of the class.
-	 * 
+	 *
 	 * @return Annotated methods of the class.
 	 */
 	public XMethod[] getMethods() {

@@ -8,7 +8,7 @@ import org.jvnet.jaxb.annox.reflect.ParameterizedAnnotatedElement;
 
 /**
  * Defines an annotated method.
- * 
+ *
  * @author Aleksei Valikov
  */
 public class XMethod extends XMember<Method> implements
@@ -26,7 +26,7 @@ public class XMethod extends XMember<Method> implements
 
 	/**
 	 * Constructs an annotated method.
-	 * 
+	 *
 	 * @param method
 	 *            target method.
 	 * @param xannotations
@@ -44,7 +44,7 @@ public class XMethod extends XMember<Method> implements
 
 	/**
 	 * Returns annotated parameters of the method.
-	 * 
+	 *
 	 * @return Annotated parameters of the method.
 	 */
 	public XParameter[] getParameters() {
@@ -53,7 +53,7 @@ public class XMethod extends XMember<Method> implements
 
 	/**
 	 * Checks if annoated parameters match method parameters.
-	 * 
+	 *
 	 * @throws IllegalArgumentException
 	 *             If annotated parameters do not match method parameters.
 	 */
@@ -75,7 +75,7 @@ public class XMethod extends XMember<Method> implements
 
 	/**
 	 * Returns the target methid.
-	 * 
+	 *
 	 * @return Target method.
 	 */
 	public Method getMethod() {

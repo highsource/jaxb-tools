@@ -7,7 +7,7 @@ import org.apache.commons.lang3.Validate;
 
 /**
  * Defines an annotated element.
- * 
+ *
  * @param <T>
  *            type of the annotated element.
  * @author Aleksei Valikov
@@ -22,7 +22,7 @@ public class XAnnotatedElement<T extends AnnotatedElement> extends XAnnotated
 
 	/**
 	 * Constructs an annotated element.
-	 * 
+	 *
 	 * @param annotatedElement
 	 *            target annotated element.
 	 * @param xannotations
@@ -37,7 +37,7 @@ public class XAnnotatedElement<T extends AnnotatedElement> extends XAnnotated
 
 	/**
 	 * Returns the target annotated element.
-	 * 
+	 *
 	 * @return Target annotated element.
 	 */
 	public T getAnnotatedElement() {

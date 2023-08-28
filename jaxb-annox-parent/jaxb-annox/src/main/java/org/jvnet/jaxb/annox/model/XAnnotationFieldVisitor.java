@@ -5,7 +5,7 @@ import org.jvnet.jaxb.annox.model.annotation.field.XSingleAnnotationField;
 
 /**
  * Annotation visitor.
- * 
+ *
  * @param <T>
  *            Visitor return type.
  * @author Aleksei Valikov

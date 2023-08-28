@@ -27,7 +27,7 @@
  * either expressed or implied, of the FreeBSD Project.
  */
 /**
- * 
+ *
  */
 package org.jvnet.jaxb2_commons.plugin.annotate.tests;
 

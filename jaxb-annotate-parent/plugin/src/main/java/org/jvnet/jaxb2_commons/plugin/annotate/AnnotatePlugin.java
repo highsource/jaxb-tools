@@ -92,7 +92,7 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 			Constants.NAMESPACE_URI, "annotateEnumFromValueMethod");
 	public static final QName ANNOTATE_QNAME = new QName(
 			Constants.NAMESPACE_URI, "annotate");
-	
+
 	public static final Set<QName> CUSTOMIZATION_ELEMENT_QNAMES = Collections.unmodifiableSet(
 			new HashSet<QName>(Arrays.asList(
 					ANNOTATE_QNAME,
@@ -108,7 +108,7 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 					ANNOTATE_ENUM_CONSTANT_QNAME,
 					ANNOTATE_ENUM_VALUE_METHOD_QNAME,
 					ANNOTATE_ENUM_FROM_VALUE_METHOD_QNAME)));
-	
+
 
 	@Override
 	public String getOptionName() {
@@ -412,7 +412,7 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 			}
 		}
 	}
-	
+
 	private boolean isCustomizationElementName(final QName name) {
 		return name != null &&
 				Constants.NAMESPACE_URI.equals(name.getNamespaceURI()) &&

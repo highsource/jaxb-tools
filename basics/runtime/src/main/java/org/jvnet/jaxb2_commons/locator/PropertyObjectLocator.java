@@ -2,9 +2,9 @@ package org.jvnet.jaxb2_commons.locator;
 
 /**
  * Models a property locator.
- * 
+ *
  * @author Aleksei Valikov
- * 
+ *
  */
 public interface PropertyObjectLocator extends ObjectLocator {
 

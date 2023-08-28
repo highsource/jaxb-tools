@@ -127,7 +127,7 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	 * <p>
 	 * Append to the <code>toString</code> the class name.
 	 * </p>
-	 * 
+	 *
 	 * @param buffer
 	 *            the <code>StringBuilder</code> to populate
 	 * @param object
@@ -147,7 +147,7 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	 * <p>
 	 * Append the {@link System#identityHashCode(java.lang.Object)}.
 	 * </p>
-	 * 
+	 *
 	 * @param buffer
 	 *            the <code>StringBuilder</code> to populate
 	 * @param object
@@ -164,7 +164,7 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	 * <p>
 	 * Append to the <code>toString</code> the content start.
 	 * </p>
-	 * 
+	 *
 	 * @param buffer
 	 *            the <code>StringBuilder</code> to populate
 	 */
@@ -176,7 +176,7 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	 * <p>
 	 * Append to the <code>toString</code> the content end.
 	 * </p>
-	 * 
+	 *
 	 * @param buffer
 	 *            the <code>StringBuilder</code> to populate
 	 */
@@ -200,11 +200,11 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	 * <p>
 	 * Append to the <code>toString</code> an indicator for <code>null</code>.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * The default indicator is <code>'&lt;null&gt;'</code>.
 	 * </p>
-	 * 
+	 *
 	 * @param buffer
 	 *            the <code>StringBuilder</code> to populate
 	 */
@@ -216,7 +216,7 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	 * <p>
 	 * Append to the <code>toString</code> the field start.
 	 * </p>
-	 * 
+	 *
 	 * @param parentLocator
 	 *            locator of the parent object.
 	 * @param parent
@@ -238,7 +238,7 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	 * <p>
 	 * Append to the <code>toString</code> the field start.
 	 * </p>
-	 * 
+	 *
 	 * @param parentLocator
 	 *            locator of the parent object.
 	 * @param parent
@@ -262,7 +262,7 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	 * <p>
 	 * Append to the <code>toString</code> the field end.
 	 * </p>
-	 * 
+	 *
 	 * @param parentLocator
 	 *            locator of the parent object.
 	 * @param parent
@@ -281,7 +281,7 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	 * <p>
 	 * Append to the <code>toString</code> the field end.
 	 * </p>
-	 * 
+	 *
 	 * @param parentLocator
 	 *            locator of the parent object.
 	 * @param parent
@@ -307,7 +307,7 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	 * <p>
 	 * Append to the <code>toString</code> the field separator.
 	 * </p>
-	 * 
+	 *
 	 * @param buffer
 	 *            the <code>StringBuilder</code> to populate
 	 */
@@ -323,20 +323,20 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	 * <p>
 	 * Append to the <code>toString</code> a size summary.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * The size summary is used to summarize the contents of
 	 * <code>Collections</code>, <code>Maps</code> and arrays.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * The output consists of a prefix, the passed in size and a suffix.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * The default format is <code>'&lt;size=n&gt;'</code>.
 	 * </p>
-	 * 
+	 *
 	 * @param locator
 	 *            locator.
 	 * @param buffer
@@ -971,7 +971,7 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	 * <p>
 	 * Remove the last field separator from the buffer.
 	 * </p>
-	 * 
+	 *
 	 * @param buffer
 	 *            the <code>StringBuilder</code> to populate
 	 * @since 2.0
@@ -1212,7 +1212,7 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 
 	public static final DefaultToStringStrategy INSTANCE2 = new DefaultToStringStrategy();
 	public static final ToStringStrategy INSTANCE = INSTANCE2;
-	
+
 	public static DefaultToStringStrategy getInstance() {
 		return INSTANCE2;
 	}

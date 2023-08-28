@@ -14,7 +14,7 @@ public final class DefaultItemObjectLocator extends AbstractObjectLocator
 
 	/**
 	 * Constructs a new item locator.
-	 * 
+	 *
 	 * @param parentLocator
 	 *            parent locator.
 	 * @param itemIndex
@@ -30,7 +30,7 @@ public final class DefaultItemObjectLocator extends AbstractObjectLocator
 
 	/**
 	 * Returns item index.
-	 * 
+	 *
 	 * @return Index of the item.
 	 */
 	public int getIndex() {

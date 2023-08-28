@@ -13,7 +13,7 @@ public class ClassUtils {
 	 * <p>
 	 * Gets the class name minus the package name from a <code>Class</code>.
 	 * </p>
-	 * 
+	 *
 	 * @param cls
 	 *            the class to get the short name for.
 	 * @return the class name without the package name or an empty string
@@ -29,11 +29,11 @@ public class ClassUtils {
 	 * <p>
 	 * Gets the class name minus the package name from a String.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * The string passed in is assumed to be a class name - it is not checked.
 	 * </p>
-	 * 
+	 *
 	 * @param className
 	 *            the className to get the short name for
 	 * @return the class name of the class without the package name or an empty

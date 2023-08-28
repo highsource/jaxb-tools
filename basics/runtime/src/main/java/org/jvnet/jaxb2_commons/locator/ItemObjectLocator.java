@@ -2,9 +2,9 @@ package org.jvnet.jaxb2_commons.locator;
 
 /**
  * Models item locator.
- * 
+ *
  * @author Aleksei Valikov
- * 
+ *
  */
 public interface ItemObjectLocator extends ObjectLocator {
 

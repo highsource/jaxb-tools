@@ -62,7 +62,7 @@ public class JAXBEqualsStrategy extends DefaultEqualsStrategy {
 	public static JAXBEqualsStrategy INSTANCE2 = new JAXBEqualsStrategy();
 	@SuppressWarnings("deprecation")
 	public static EqualsStrategy INSTANCE = INSTANCE2;
-	
+
 	public static JAXBEqualsStrategy getInstance() {
 		return INSTANCE2;
 	}

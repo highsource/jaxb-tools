@@ -39,10 +39,10 @@ public class CMIDREF<T, C extends T> implements MIDREF<T, C> {
 	public QName getTypeName() {
 		return XmlSchemaConstants.IDREF;
 	}
-	
+
 	@Override
 	public boolean isSimpleType() {
-		return getValueTypeInfo().isSimpleType(); 
+		return getValueTypeInfo().isSimpleType();
 	}
 
 	@Override

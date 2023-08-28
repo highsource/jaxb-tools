@@ -32,12 +32,12 @@ public class CMList<T, C extends T> implements MList<T, C> {
 	public T getTargetType() {
 		return targetType;
 	}
-	
+
 	@Override
 	public QName getTypeName() {
 		return typeName;
 	}
-	
+
 	@Override
 	public boolean isSimpleType() {
 		return true;

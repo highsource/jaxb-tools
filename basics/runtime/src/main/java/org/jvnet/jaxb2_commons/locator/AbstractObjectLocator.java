@@ -9,7 +9,7 @@ import org.w3c.dom.Node;
 
 /**
  * Abstract base class for event locators.
- * 
+ *
  * @author Aleksei Valikov
  */
 public abstract class AbstractObjectLocator implements ObjectLocator {
@@ -24,7 +24,7 @@ public abstract class AbstractObjectLocator implements ObjectLocator {
 
 	/**
 	 * Constructs a new validation event locator.
-	 * 
+	 *
 	 * @param parentLocator
 	 *            parent location (may be <code>null</code>).
 	 * @param object
@@ -38,7 +38,7 @@ public abstract class AbstractObjectLocator implements ObjectLocator {
 
 	/**
 	 * Returns parent locator.
-	 * 
+	 *
 	 * @return Parent locator.
 	 */
 	public ObjectLocator getParentLocator() {
@@ -111,7 +111,7 @@ public abstract class AbstractObjectLocator implements ObjectLocator {
 
 	/**
 	 * Returns message code.
-	 * 
+	 *
 	 * @return Message code.
 	 */
 	public String getMessageCode() {
@@ -136,7 +136,7 @@ public abstract class AbstractObjectLocator implements ObjectLocator {
 
 	/**
 	 * Returns location message.
-	 * 
+	 *
 	 * @return Location message.
 	 */
 	public String getMessage() {

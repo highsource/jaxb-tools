@@ -19,9 +19,9 @@ public class Gh1Test {
 		item.getAs();
 		item.getBs();
 		item.getMixedContent();
-		
+
 	}
-	
+
 	@Test
 	public void contextIsSuccessfullyCreated() throws JAXBException {
 		final JAXBContext context = JAXBContext.newInstance(Gh1.class);

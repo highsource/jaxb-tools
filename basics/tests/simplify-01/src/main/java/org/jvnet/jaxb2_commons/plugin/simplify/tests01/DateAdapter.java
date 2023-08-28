@@ -9,8 +9,8 @@ import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
 /**
- * 
- * 
+ *
+ *
  * @author
  */
 public class DateAdapter extends XmlAdapter<String, Date> {

@@ -620,17 +620,17 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	public void setAccessExternalDTD(String accessExternalDTD) {
 		this.accessExternalDTD = accessExternalDTD;
 	}
-	
+
 	/**
 	 * Enables external entity processing.
 	 */
 	@Parameter(defaultValue = "true", property = "maven.xjc2.enableExternalEntityProcessing")
 	private boolean enableExternalEntityProcessing;
-	
+
 	public boolean isEnableExternalEntityProcessing() {
 		return enableExternalEntityProcessing;
 	}
-	
+
 	public void setEnableExternalEntityProcessing(boolean enableExternalEntityProcessing) {
 		this.enableExternalEntityProcessing = enableExternalEntityProcessing;
 	}
@@ -850,7 +850,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	public void setOtherDepends(File[] otherDepends) {
 		this.otherDepends = otherDepends;
 	}
-	
+
 	@Parameter
 	private String[] otherDependsIncludes;
 
@@ -1221,12 +1221,12 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 			List<org.apache.maven.artifact.Artifact> plugingArtifacts) {
 		this.pluginArtifacts = plugingArtifacts;
 	}
-	
+
 	public List<Dependency> getProjectDependencies() {
-		
+
 		@SuppressWarnings("unchecked")
 		final Set<Artifact> artifacts = getProject().getArtifacts();
-		
+
 		if (artifacts == null) {
 			return Collections.emptyList();
 		} else {

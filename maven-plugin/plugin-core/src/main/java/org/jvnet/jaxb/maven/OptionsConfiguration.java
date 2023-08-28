@@ -141,7 +141,7 @@ public class OptionsConfiguration {
 	public String getAccessExternalDTD() {
 		return accessExternalDTD;
 	}
-	
+
 	public boolean isEnableExternalEntityProcessing() {
 		return enableExternalEntityProcessing;
 	}

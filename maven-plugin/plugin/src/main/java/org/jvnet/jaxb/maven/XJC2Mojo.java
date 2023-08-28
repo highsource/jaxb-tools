@@ -21,7 +21,7 @@ import com.sun.tools.xjc.outline.Outline;
 
 /**
  * JAXB 2.x Mojo.
- * 
+ *
  * @author Aleksei Valikov (valikov@gmx.net)
  */
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.COMPILE, requiresDependencyCollection = ResolutionScope.COMPILE, threadSafe = true)

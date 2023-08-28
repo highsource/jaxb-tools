@@ -21,7 +21,7 @@ public abstract class AbstractSchemeAwareURILastModifiedResolver implements
 	public String getScheme() {
 		return scheme;
 	}
-	
+
 	protected Log getLogger() {
 		return logger;
 	}

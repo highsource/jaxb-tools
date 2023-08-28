@@ -7,7 +7,7 @@ public class StringUtils {
 
 	/**
 	 * Checks if a (trimmed) String is <code>null</code> or empty.
-	 * 
+	 *
 	 * @param string
 	 *            the String to check
 	 * @return <code>true</code> if the string is <code>null</code>, or length

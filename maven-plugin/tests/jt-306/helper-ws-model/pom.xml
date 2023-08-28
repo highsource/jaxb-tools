@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-	<artifactId>jaxb-maven-plugin-tests-306-helper-ws-model</artifactId>
-	<parent>
-		<groupId>org.jvnet.jaxb</groupId>
-		<artifactId>jaxb-maven-plugin-tests-306</artifactId>
-		<version>2.0.5-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
-	</parent>
+  <artifactId>jaxb-maven-plugin-tests-306-helper-ws-model</artifactId>
+  <parent>
+    <groupId>org.jvnet.jaxb</groupId>
+    <artifactId>jaxb-maven-plugin-tests-306</artifactId>
+    <version>2.0.5-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
 
-	<packaging>jar</packaging>
+  <packaging>jar</packaging>
 
   <name>JAXB Tools :: Maven Plugin :: Test [JAXB-TOOLS 306 - Helper Web Service Model]</name>
-	<description>TODO</description>
+  <description>TODO</description>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.jvnet.jaxb</groupId>
-			<artifactId>jaxb-maven-plugin-tests-306-common-model</artifactId>
-		</dependency>
-	</dependencies>
+  <dependencies>
+    <dependency>
+      <groupId>org.jvnet.jaxb</groupId>
+      <artifactId>jaxb-maven-plugin-tests-306-common-model</artifactId>
+    </dependency>
+  </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.jvnet.jaxb</groupId>
-				<artifactId>jaxb-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>generate</id>
-						<goals>
-							<goal>generate</goal>
-						</goals>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jvnet.jaxb</groupId>
+        <artifactId>jaxb-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>generate</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
             <configuration>
               <catalog>src/main/resources/META-INF/helper-catalog.xml</catalog>
               <episodes>
@@ -42,9 +42,9 @@
                 </episode>
               </episodes>
             </configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

@@ -22,10 +22,10 @@ public class IOUtils {
 
 	/**
 	 * Creates an input source for the given file.
-	 * 
+	 *
 	 * @param file
 	 *            file to create input source for.
-	 * 
+	 *
 	 * @return Created input source object.
 	 */
 	public static InputSource getInputSource(File file) {
@@ -58,7 +58,7 @@ public class IOUtils {
 	/**
 	 * Scans given directory for files satisfying given inclusion/exclusion
 	 * patterns.
-	 * 
+	 *
 	 * @param buildContext
 	 *            Build context provided by the environment, used to scan for files.
 	 * @param directory

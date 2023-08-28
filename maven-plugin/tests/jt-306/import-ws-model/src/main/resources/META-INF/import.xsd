@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="urn:example-com:model:import"
+  xmlns:tns="urn:example-com:model:import"
+  xmlns:common="urn:example-com:model:common"
+  xmlns:helper="urn:example-com:model:helper">
+
+  <xs:import namespace="urn:example-com:model:common"
+    schemaLocation="common.xsd" />
+  <xs:import namespace="urn:example-com:model:helper"
+    schemaLocation="helper.xsd" />
+
+<!-- ================================== SOAP Header Elements =================================== -->
+
+  <xs:complexType name="Authorization">
+    <xs:attribute name="user" type="xs:string" use="required" />
+    <xs:attribute name="group" type="common:owningGroup" use="required" />
+    <xs:attribute name="role" type="common:role" use="required" />
+  </xs:complexType>
+
+<!-- =================================== SOAP Body Elements ==================================== -->
+
+  <xs:complexType name="Workflow">
+    <xs:sequence>
+      <xs:element name="ReviewerGroup" type="helper:ReviewerGroup" minOccurs="0" maxOccurs="4" />
+    </xs:sequence>
+    <xs:attribute name="name" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Design Lock" />
+          <xs:enumeration value="Design Release" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="group" type="common:owningGroup" />
+  </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="urn:example-com:model:helper"
+  xmlns:tns="urn:example-com:model:helper"
+  xmlns:common="urn:example-com:model:common">
+
+  <xs:import namespace="urn:example-com:model:common"
+    schemaLocation="common.xsd" />
+
+  <!-- ================================== SOAP Header Elements =============================== -->
+
+  <!-- =================================== SOAP Body Elements ================================ -->
+
+  <xs:complexType name="ReviewerGroup">
+    <xs:sequence>
+      <xs:element name="Reviewer" type="tns:Reviewer" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Reviewer">
+    <xs:attribute name="user" type="xs:string" use="required" />
+    <xs:attribute name="role" type="common:role" use="required" />
+    <xs:attribute name="name" type="xs:string" use="required" />
+    <xs:attribute name="mail" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <!-- ===================================== Attribute Types ================================= -->
+
+</xs:schema>

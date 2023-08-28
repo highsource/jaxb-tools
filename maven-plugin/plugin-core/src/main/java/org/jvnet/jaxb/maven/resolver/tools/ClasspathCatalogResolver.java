@@ -1,7 +1,5 @@
 package org.jvnet.jaxb.maven.resolver.tools;
 
-import com.sun.org.apache.xml.internal.resolver.CatalogManager;
-
 import org.apache.maven.plugin.logging.Log;
 import org.jvnet.jaxb.maven.plugin.logging.NullLog;
 

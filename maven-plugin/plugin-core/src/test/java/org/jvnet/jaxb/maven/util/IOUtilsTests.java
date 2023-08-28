@@ -3,8 +3,6 @@ package org.jvnet.jaxb.maven.util;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 public class IOUtilsTests {

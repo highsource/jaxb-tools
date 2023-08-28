@@ -1,7 +1,5 @@
 package org.jvnet.jaxb.annox.parser;
 
-import japa.parser.ast.Node;
-import japa.parser.ast.expr.AnnotationExpr;
 import japa.parser.ast.expr.ArrayInitializerExpr;
 import japa.parser.ast.expr.Expression;
 

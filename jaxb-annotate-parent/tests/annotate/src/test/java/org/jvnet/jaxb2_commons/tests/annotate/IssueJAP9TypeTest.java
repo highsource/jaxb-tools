@@ -28,7 +28,7 @@ public class IssueJAP9TypeTest {
 
     @Test
     public void testIssueJAP9TypeCField() throws NoSuchFieldException {
-        String valueInXsd = "EscapedQuote\"/Here";
+        String valueInXsd = "NoEscapedBackSlashes\"/Here";
         IssueJAP9Type type = new IssueJAP9Type();
         XmlMimeType ann = type.getClass().getDeclaredField("c").getAnnotation(XmlMimeType.class);
         Assert.assertEquals(valueInXsd, ann.value());

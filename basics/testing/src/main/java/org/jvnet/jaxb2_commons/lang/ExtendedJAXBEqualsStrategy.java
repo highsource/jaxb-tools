@@ -4,7 +4,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.transform.dom.DOMSource;
 
 import org.custommonkey.xmlunit.Diff;
-import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 import org.w3c.dom.Node;
 

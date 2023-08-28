@@ -23,7 +23,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectBuilder;
-import org.jvnet.jaxb.maven.XJC2Mojo;
 
 public abstract class JAXBGenerateTest extends AbstractMojoTestCase {
 

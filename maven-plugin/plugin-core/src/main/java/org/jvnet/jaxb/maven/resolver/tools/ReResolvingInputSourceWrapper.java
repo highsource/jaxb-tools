@@ -9,7 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Optional;
 
-import com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser;
 import org.apache.maven.plugin.logging.Log;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;

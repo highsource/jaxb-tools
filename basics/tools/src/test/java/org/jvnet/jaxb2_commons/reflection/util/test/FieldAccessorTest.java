@@ -1,6 +1,5 @@
 package org.jvnet.jaxb2_commons.reflection.util.test;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.junit.Assert;

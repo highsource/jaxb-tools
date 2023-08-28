@@ -7,10 +7,12 @@ import org.jvnet.jaxb.maven.DependencyResource;
 import org.jvnet.jaxb.maven.ResourceEntry;
 import org.jvnet.jaxb.maven.test.RunXJC2Mojo;
 
+import com.sun.tools.xjc.Options;
+
 public class RunResMojo extends RunXJC2Mojo {
 
 	@Override
-	protected void configureMojo(AbstractXJC2Mojo mojo) {
+	protected void configureMojo(AbstractXJC2Mojo<Options> mojo) {
 		super.configureMojo(mojo);
 		
 		mojo.setCatalog(new File(getBaseDir(),"src/main/jaxb/catalog.cat"));

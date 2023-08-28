@@ -8,7 +8,7 @@ public class JCMTypeVar extends JCMType<JTypeVar> {
 	public JCMTypeVar(JCMTypeFactory factory, JTypeVar type) {
 		super(factory, type);
 	}
-	
+
 	@Override
 	public JType getDeclarableType() {
 		return getType();

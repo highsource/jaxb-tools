@@ -13,7 +13,7 @@ public class JCMNullType extends JCMType<JNullType> {
 	public <V> V accept(JCMTypeVisitor<V> visitor) {
 		return visitor.visit(this);
 	}
-	
+
 	@Override
 	public JType getDeclarableType() {
 		// We'll just assume Object as a declarable type for null

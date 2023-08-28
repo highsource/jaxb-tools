@@ -28,6 +28,6 @@ public class XJCCMClassInfoOrigin extends
 	public XSComponent getSchemaComponent() {
 		return getSource().getSchemaComponent();
 	}
-	
+
 
 }

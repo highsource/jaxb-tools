@@ -23,7 +23,7 @@ public class XJCCMEnumLeafInfoOrigin extends
 	public MEnumOutlineGenerator createGenerator(Outline outline) {
 		return new CMEnumOutlineGenerator(outline, getSource());
 	}
-	
+
 	@Override
 	public XSComponent getSchemaComponent() {
 		return getSource().getSchemaComponent();

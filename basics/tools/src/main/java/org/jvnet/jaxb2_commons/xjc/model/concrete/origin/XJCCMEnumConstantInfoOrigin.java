@@ -23,7 +23,7 @@ public class XJCCMEnumConstantInfoOrigin extends
 	public MEnumConstantOutlineGenerator createGenerator(Outline outline) {
 		return new CMEnumConstantOutlineGenerator(outline, getSource());
 	}
-	
+
 	@Override
 	public XSComponent getSchemaComponent() {
 		return getSource().getSchemaComponent();

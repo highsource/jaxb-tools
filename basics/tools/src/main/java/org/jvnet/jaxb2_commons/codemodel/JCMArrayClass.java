@@ -16,7 +16,7 @@ public class JCMArrayClass extends JCMType<JClass> {
 	public JCMType<?> getElementType() {
 		return elementType;
 	}
-	
+
 	@Override
 	public JType getDeclarableType() {
 		return getElementType().getDeclarableType().array();

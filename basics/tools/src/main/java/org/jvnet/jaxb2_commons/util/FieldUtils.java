@@ -24,7 +24,7 @@ import com.sun.tools.xjc.outline.Outline;
 
 /**
  * Field utilities.
- * 
+ *
  * @author valikov
  */
 public class FieldUtils {

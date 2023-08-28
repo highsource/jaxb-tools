@@ -18,7 +18,7 @@ import com.sun.tools.xjc.Options;
  * <code>setBar("test")</code> invocation.</p>
  * <p>Values are injected using Commons BeanUtils as bean properties, so
  * types will be converted correspondingly</p>
- *  
+ *
  * @author valikov
  */
 public abstract class AbstractParameterizablePlugin extends AbstractPlugin {

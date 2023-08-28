@@ -20,7 +20,7 @@ import com.sun.tools.xjc.outline.ClassOutline;
 
 /**
  * Property file utilities.
- * 
+ *
  * @author valikov
  */
 public class CodeModelUtils {
@@ -29,7 +29,7 @@ public class CodeModelUtils {
 
 	/**
 	 * Returns a property file (created if necessary).
-	 * 
+	 *
 	 * @param thePackage
 	 *            package to create property file
 	 * @param name

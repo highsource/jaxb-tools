@@ -81,7 +81,7 @@ public class ClassUtils {
 	}
 
 	public static String getPackagedClassName(final CEnumLeafInfo enumLeafInfo) {
-		
+
 		if (enumLeafInfo.parent instanceof CClassInfo) {
 			return getPackagedClassName((CClassInfo) enumLeafInfo.parent) + '$'
 					+ enumLeafInfo.shortName;

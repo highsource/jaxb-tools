@@ -30,7 +30,7 @@ public class FieldAccessorUtils {
 	/**
 	 * Returns the <code>isSetProperty()</code> method for the given field
 	 * outline or <code>null</code> if no such method exists.
-	 * 
+	 *
 	 * @param fieldOutline
 	 *            field outline.
 	 * @return The <code>isSetProperty()</code> method for the given field
@@ -46,7 +46,7 @@ public class FieldAccessorUtils {
 	/**
 	 * Returns the field for the given field outline or <code>null</code> if no
 	 * such field exists.
-	 * 
+	 *
 	 * @param fieldOutline
 	 *            field outline.
 	 * @return The field for the given field outline or <code>null</code> if no
@@ -61,7 +61,7 @@ public class FieldAccessorUtils {
 	/**
 	 * Returns the <code>setProperty(...)</code> method for the given field
 	 * outline or <code>null</code> if no such method exists.
-	 * 
+	 *
 	 * @param fieldOutline
 	 *            field outline.
 	 * @return The <code>setProperty(...)</code> method for the given field

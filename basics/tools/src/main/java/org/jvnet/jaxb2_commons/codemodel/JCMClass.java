@@ -13,7 +13,7 @@ public class JCMClass extends JCMType<JClass> {
 	public <V> V accept(JCMTypeVisitor<V> visitor) {
 		return visitor.visit(this);
 	}
-	
+
 	@Override
 	public JType getDeclarableType() {
 		return getType();
@@ -23,7 +23,7 @@ public class JCMClass extends JCMType<JClass> {
 	public boolean matches(JCMType<?> type) {
 		return type.accept(matchesTypeVisitor);
 	}
-	
+
 	private boolean matches(final JClass thatType) {
 		final JClass thisType = getType();
 		if (thisType.isAssignableFrom(thatType))
@@ -62,15 +62,15 @@ public class JCMClass extends JCMType<JClass> {
 		public Boolean visit(JCMTypeVar type) {
 			return matches(type.getType());
 		}
-		
+
 		@Override
 		public Boolean visit(JCMArrayClass type) {
 			return Boolean.FALSE;
 		}
-		
+
 		public Boolean visit(JCMTypeWildcard type) {
 			return getType().isAssignableFrom(type.getType()._extends());
-			
+
 		};
 	};
 }

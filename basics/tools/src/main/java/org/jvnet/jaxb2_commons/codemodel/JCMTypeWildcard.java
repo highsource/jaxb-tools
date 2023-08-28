@@ -6,16 +6,16 @@ import com.sun.codemodel.JType;
 public class JCMTypeWildcard extends JCMType<JClass> {
 
 	private final JCMType<? extends JClass> boundType;
-	
+
 	public JCMTypeWildcard(JCMTypeFactory factory, JClass type) {
 		super(factory, type);
 		boundType = factory.create(type._extends());
 	}
-	
+
 	public JCMType<? extends JClass> getBoundType() {
 		return boundType;
 	}
-	
+
 	@Override
 	public JType getDeclarableType() {
 		return getBoundType().getDeclarableType();

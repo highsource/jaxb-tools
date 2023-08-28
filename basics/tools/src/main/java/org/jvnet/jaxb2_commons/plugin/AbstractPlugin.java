@@ -100,7 +100,7 @@ public abstract class AbstractPlugin extends Plugin {
 			for (QName customizationElementName : customizationElementNames) {
 				final String namespaceURI = customizationElementName
 						.getNamespaceURI();
-				if (!(namespaceURI== null || namespaceURI.length() == 0)) { 
+				if (!(namespaceURI== null || namespaceURI.length() == 0)) {
 					this.customizationURIs.add(namespaceURI);
 				}
 			}

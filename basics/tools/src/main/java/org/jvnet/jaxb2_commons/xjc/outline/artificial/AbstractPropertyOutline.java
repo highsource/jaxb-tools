@@ -156,7 +156,7 @@ public abstract class AbstractPropertyOutline implements MPropertyOutline {
 			Validate.notNull(target);
 			this.target = target;
 		}
-		
+
 		public JType getType() {
 			return AbstractPropertyOutline.this.type;
 		}
@@ -164,7 +164,7 @@ public abstract class AbstractPropertyOutline implements MPropertyOutline {
 		public boolean isConstant() {
 			return false;
 		}
-		
+
 		public boolean isVirtual() {
 			return false;
 		}

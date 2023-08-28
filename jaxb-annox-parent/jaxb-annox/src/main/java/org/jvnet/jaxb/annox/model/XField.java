@@ -4,9 +4,9 @@ import java.lang.reflect.Field;
 
 /**
  * Defines an annotated field.
- * 
+ *
  * @author Aleksei Valikov
- * 
+ *
  */
 public class XField extends XMember<Field> {
 
@@ -17,7 +17,7 @@ public class XField extends XMember<Field> {
 
 	/**
 	 * Constructs an annotated field.
-	 * 
+	 *
 	 * @param field
 	 *            target field.
 	 * @param xannotations
@@ -29,7 +29,7 @@ public class XField extends XMember<Field> {
 
 	/**
 	 * Returns the target field.
-	 * 
+	 *
 	 * @return Target field.
 	 */
 	public Field getField() {

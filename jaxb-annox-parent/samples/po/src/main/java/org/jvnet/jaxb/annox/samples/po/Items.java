@@ -18,10 +18,10 @@ public class Items {
 		return this.item;
 	}
 
-	
+
 	public static class Item {
 
-		
+
 		protected String productName;
 
 		protected int quantity;

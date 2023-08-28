@@ -96,7 +96,7 @@ public class XArrayAnnotationFieldParser<T, V> extends
 		try {
 			return expression.accept(
 					new ExpressionVisitor<XAnnotationField<T[]>>(type) {
-						
+
 						@Override
 						public XAnnotationField<T[]> visitDefault(Expression n, Void arg) {
 							final XAnnotationValue<T> v = n.accept(expressionVisitor, null);
@@ -105,7 +105,7 @@ public class XArrayAnnotationFieldParser<T, V> extends
 									name, type, new XAnnotationValue[]{v});
 							return arrayAnnotationField;
 						}
-						
+
 						@Override
 						public XAnnotationField<T[]> visit(
 								ArrayInitializerExpr n, Void arg) {

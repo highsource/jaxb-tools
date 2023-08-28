@@ -4,7 +4,7 @@ import org.apache.commons.lang3.Validate;
 
 /**
  * Defines an annotated method or constructor parameter.
- * 
+ *
  * @author Aleksei Valikov
  */
 public class XParameter extends XAnnotated {
@@ -16,7 +16,7 @@ public class XParameter extends XAnnotated {
 
 	/**
 	 * Constructs an annotated method parameter.
-	 * 
+	 *
 	 * @param type
 	 *            parameter type.
 	 * @param xannotations
@@ -30,7 +30,7 @@ public class XParameter extends XAnnotated {
 
 	/**
 	 * Returns type of the method parameter.
-	 * 
+	 *
 	 * @return Type of the method parameter.
 	 */
 	public Class<?> getType() {

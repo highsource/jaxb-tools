@@ -100,12 +100,12 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 	{
 		return visitDefault((Expression) n, arg);
 	}
-	
+
 	public R visitDefault(StringLiteralExpr n, A arg)
 	{
 		return visitDefault((LiteralExpr) n, arg);
 	}
-	
+
 	public R visitDefault(IntegerLiteralExpr n, A arg)
 	{
 		return visitDefault((StringLiteralExpr) n, arg);
@@ -115,7 +115,7 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 	{
 		return visitDefault((IntegerLiteralExpr) n, arg);
 	}
-	
+
 	public R visitDefault(LongLiteralExpr n, A arg)
 	{
 		return visitDefault((StringLiteralExpr) n, arg);
@@ -129,7 +129,7 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 	public R visitDefault(NameExpr n, A arg) {
 		return visitDefault((Expression) n, arg);
 	}
-	
+
 
 	@Override
 	public R visit(CompilationUnit n, A arg) {
@@ -411,13 +411,13 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 		return visitDefault(n, arg);
 	}
 
-	
+
 	public R visitDefault(AnnotationExpr n, A arg)
 	{
 		return visitDefault((Expression) n, arg);
 	}
-	
-	
+
+
 	@Override
 	public R visit(NormalAnnotationExpr n, A arg) {
 		return visitDefault(n, arg);
@@ -532,7 +532,7 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 	public R visit(CatchClause n, A arg) {
 		return visitDefault(n, arg);
 	}
-	
+
 	@Override
 	public R visit(MultiTypeParameter n, A arg) {
 		return visitDefault(n, arg);

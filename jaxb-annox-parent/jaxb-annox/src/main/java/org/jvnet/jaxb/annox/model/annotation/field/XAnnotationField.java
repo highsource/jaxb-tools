@@ -5,7 +5,7 @@ import org.jvnet.jaxb.annox.model.XAnnotationFieldVisitor;
 
 /**
  * Defines an annotation field.
- * 
+ *
  * @param <T>
  *            Type of the field.
  * @author Aleksei Valikov
@@ -19,7 +19,7 @@ public abstract class XAnnotationField<T> {
 
 	/**
 	 * Returns the name of the field.
-	 * 
+	 *
 	 * @return Name of the field.
 	 */
 	public String getName() {
@@ -28,7 +28,7 @@ public abstract class XAnnotationField<T> {
 
 	/**
 	 * Returns the value of the field.
-	 * 
+	 *
 	 * @return Value of the field.
 	 */
 	public abstract T getValue();
@@ -37,7 +37,7 @@ public abstract class XAnnotationField<T> {
 	 * Returns the internal value of the field used for {@link #hashCode()},
 	 * {@link #equals(Object)} and {@link #toString()} operations. Defaults to
 	 * the value of the field.
-	 * 
+	 *
 	 * @return Returns the value of the field.
 	 */
 	protected final Object getInternalValue() {
@@ -47,7 +47,7 @@ public abstract class XAnnotationField<T> {
 	/**
 	 * Returns the result value of the field. By default, returns the value of
 	 * the field.
-	 * 
+	 *
 	 * @return Result value of the field.
 	 */
 	public Object getResult() {
@@ -56,14 +56,14 @@ public abstract class XAnnotationField<T> {
 
 	/**
 	 * Return the type of the field.
-	 * 
+	 *
 	 * @return Type of the field.
 	 */
 	public abstract Class<?> getType();
 
 	/**
 	 * Accepts the annotation visitor.
-	 * 
+	 *
 	 * @param
 	 * <P>
 	 * Return type of the visitor.
@@ -75,7 +75,7 @@ public abstract class XAnnotationField<T> {
 
 	/**
 	 * Constructrs an annotation field with the given name.
-	 * 
+	 *
 	 * @param name
 	 *            name of the field.
 	 */

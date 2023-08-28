@@ -21,7 +21,7 @@ public class XSingleAnnotationFieldParser<T, V> extends
 		XAnnotationFieldParser<T, V> {
 
 	private final XAnnotationValueParser<T, V> annotationValueParser;
-	
+
 	public XSingleAnnotationFieldParser(
 			XAnnotationValueParser<T, V> annotationValueParser) {
 		Validate.notNull(annotationValueParser);

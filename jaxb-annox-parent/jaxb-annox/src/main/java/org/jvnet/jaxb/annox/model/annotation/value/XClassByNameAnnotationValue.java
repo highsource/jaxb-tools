@@ -15,7 +15,7 @@ public class XClassByNameAnnotationValue<I> extends
 	public <P> P accept(XAnnotationValueVisitor<P> visitor) {
 		return visitor.visit(this);
 	}
-	
+
 	public String getClassName() {
 		return className;
 	}

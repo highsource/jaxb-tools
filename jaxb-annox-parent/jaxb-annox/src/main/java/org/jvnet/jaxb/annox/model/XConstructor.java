@@ -8,9 +8,9 @@ import org.jvnet.jaxb.annox.reflect.ParameterizedAnnotatedElement;
 
 /**
  * Defines an annotated constructor.
- * 
+ *
  * @author Aleksei Valikov
- * 
+ *
  */
 public class XConstructor extends XMember<Constructor<?>> implements
 		ParameterizedAnnotatedElement {
@@ -27,7 +27,7 @@ public class XConstructor extends XMember<Constructor<?>> implements
 
 	/**
 	 * Constructs an annotated constructor.
-	 * 
+	 *
 	 * @param constructor
 	 *            target constructor.
 	 * @param xannotations
@@ -44,7 +44,7 @@ public class XConstructor extends XMember<Constructor<?>> implements
 
 	/**
 	 * Returns annotated parameters of the method.
-	 * 
+	 *
 	 * @return Annotated parameters of the method.
 	 */
 	public XParameter[] getParameters() {
@@ -53,7 +53,7 @@ public class XConstructor extends XMember<Constructor<?>> implements
 
 	/**
 	 * Checks if annoated parameters match method parameters.
-	 * 
+	 *
 	 * @throws IllegalArgumentException
 	 *             If annotated parameters do not match method parameters.
 	 */
@@ -75,7 +75,7 @@ public class XConstructor extends XMember<Constructor<?>> implements
 
 	/**
 	 * Returns the target constructor.
-	 * 
+	 *
 	 * @return Target constructor.
 	 */
 	public Constructor<?> getConstructor() {

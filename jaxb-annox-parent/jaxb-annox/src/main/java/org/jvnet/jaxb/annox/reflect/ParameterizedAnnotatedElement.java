@@ -14,7 +14,7 @@ public interface ParameterizedAnnotatedElement extends AnnotatedElement {
 	 * with no annotations.) The caller of this method is free to modify the
 	 * returned arrays; it will have no effect on the arrays returned to other
 	 * callers.
-	 * 
+	 *
 	 * @return an array of arrays that represent the annotations on the formal
 	 *         parameters, in declaration order.
 	 */

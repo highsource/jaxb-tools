@@ -10,7 +10,7 @@ import junit.framework.TestCase;
 public class ProxyTest extends TestCase {
 
   public void testProxy() throws Exception {
-	  
+
 
     final InvocationHandler handler = new InvocationHandler() {
       public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -25,7 +25,7 @@ public class ProxyTest extends TestCase {
 
     Assert.assertEquals("Wrong value.", "a", a.stringField());
   }
-  
+
   public static interface A {
     public String stringField();
   }

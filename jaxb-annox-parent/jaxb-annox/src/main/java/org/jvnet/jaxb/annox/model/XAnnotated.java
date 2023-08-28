@@ -4,7 +4,7 @@ import java.lang.annotation.Annotation;
 
 /**
  * Defines an item with an array of the associated annotations.
- * 
+ *
  * @author Aleksei Valikov
  */
 public abstract class XAnnotated {
@@ -16,7 +16,7 @@ public abstract class XAnnotated {
 
 	/**
 	 * Constructs an annotated item.
-	 * 
+	 *
 	 * @param xannotations
 	 *            item annotations, may be <code>null</code>
 	 */
@@ -27,7 +27,7 @@ public abstract class XAnnotated {
 
 	/**
 	 * Returns the annotations associated with the item.
-	 * 
+	 *
 	 * @return Item annotations.
 	 */
 	public XAnnotation<?>[] getXAnnotations() {
@@ -36,7 +36,7 @@ public abstract class XAnnotated {
 
 	/**
 	 * Returns annotations for this annotated item.
-	 * 
+	 *
 	 * @return Array of annotations.
 	 */
 	public Annotation[] getAnnotations() {

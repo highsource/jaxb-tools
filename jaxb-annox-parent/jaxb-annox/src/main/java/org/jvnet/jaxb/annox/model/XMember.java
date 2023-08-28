@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * Defines an annotated member.
- * 
+ *
  * @param <T>
  *            type of the target member.
  * @author Aleksei Valikov
@@ -18,7 +18,7 @@ public abstract class XMember<T extends Member & AnnotatedElement> extends
 
 	/**
 	 * Returns the target member.
-	 * 
+	 *
 	 * @return Target member.
 	 */
 	public T getMember() {
@@ -27,7 +27,7 @@ public abstract class XMember<T extends Member & AnnotatedElement> extends
 
 	/**
 	 * Returns name of the target member.
-	 * 
+	 *
 	 * @return Name of the target memeber.
 	 */
 	public String getName() {
@@ -36,7 +36,7 @@ public abstract class XMember<T extends Member & AnnotatedElement> extends
 
 	/**
 	 * Constructs an annotated member.
-	 * 
+	 *
 	 * @param member
 	 *            target member.
 	 * @param xannotations

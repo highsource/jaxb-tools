@@ -15,7 +15,7 @@ public abstract class XStaticAnnotationValue<T> extends XAnnotationValue<T> {
 	public T getValue() {
 		return this.value;
 	}
-	
+
 	@Override
 	protected Object getInternalValue() {
 		return getValue();

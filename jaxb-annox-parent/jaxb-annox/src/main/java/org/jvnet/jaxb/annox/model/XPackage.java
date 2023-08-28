@@ -4,7 +4,7 @@ import org.apache.commons.lang3.Validate;
 
 /**
  * Defines an annotated package.
- * 
+ *
  * @author Aleksei Valikov
  */
 public class XPackage extends XAnnotatedElement<Package> {
@@ -23,7 +23,7 @@ public class XPackage extends XAnnotatedElement<Package> {
 
 	/**
 	 * Constructs an annotated package.
-	 * 
+	 *
 	 * @param targetPackage
 	 *            target package.
 	 * @param xannotations
@@ -40,7 +40,7 @@ public class XPackage extends XAnnotatedElement<Package> {
 
 	/**
 	 * Returns the target package.
-	 * 
+	 *
 	 * @return Target package.
 	 */
 	public Package getPackage() {
@@ -49,7 +49,7 @@ public class XPackage extends XAnnotatedElement<Package> {
 
 	/**
 	 * Returns annotated classes of the package.
-	 * 
+	 *
 	 * @return Annotated classes of the package.
 	 */
 	public XClass[] getClasses() {

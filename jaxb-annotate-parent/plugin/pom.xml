@@ -28,43 +28,43 @@
     either expressed or implied, of the FreeBSD Project.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-        <parent>
-                <groupId>org.jvnet.jaxb</groupId>
-                <artifactId>jaxb-annotate-plugin-parent</artifactId>
-                <version>2.0.5-SNAPSHOT</version>
-                <relativePath>../pom.xml</relativePath>
-        </parent>
-	<artifactId>jaxb-basics-annotate</artifactId>
-	<packaging>jar</packaging>
-	<name>JAXB Tools :: Annotate :: Plugin</name>
-	<dependencies>
-		<dependency>
-			<groupId>org.jvnet.jaxb</groupId>
-			<artifactId>jaxb2-basics-tools</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.commons</groupId>
-					<artifactId>commons-lang3</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.jvnet.jaxb</groupId>
-					<artifactId>jaxb2-basics-runtime</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jaxb</groupId>
-			<artifactId>jaxb-xjc</artifactId>
-			<scope>provided</scope>
-		</dependency>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.jvnet.jaxb</groupId>
+    <artifactId>jaxb-annotate-plugin-parent</artifactId>
+    <version>2.0.5-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  <artifactId>jaxb-basics-annotate</artifactId>
+  <packaging>jar</packaging>
+  <name>JAXB Tools :: Annotate :: Plugin</name>
+  <dependencies>
+    <dependency>
+      <groupId>org.jvnet.jaxb</groupId>
+      <artifactId>jaxb2-basics-tools</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-lang3</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jvnet.jaxb</groupId>
+          <artifactId>jaxb2-basics-runtime</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-xjc</artifactId>
+      <scope>provided</scope>
+    </dependency>
 		<!-- Annox -->
-		<dependency>
-			<groupId>org.jvnet.jaxb</groupId>
-			<artifactId>jaxb-annox</artifactId>
-		</dependency>
-	</dependencies>
+    <dependency>
+      <groupId>org.jvnet.jaxb</groupId>
+      <artifactId>jaxb-annox</artifactId>
+    </dependency>
+  </dependencies>
 </project>

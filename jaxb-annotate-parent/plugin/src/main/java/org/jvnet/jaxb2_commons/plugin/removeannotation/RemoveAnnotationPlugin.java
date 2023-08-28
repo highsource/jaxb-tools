@@ -90,7 +90,7 @@ public class RemoveAnnotationPlugin extends AbstractParameterizablePlugin {
 			Constants.NAMESPACE_URI, "removeAnnotationFromEnumFromValueMethod");
 	public static final QName REMOVE_ANNOTATION_QNAME = new QName(
 			Constants.NAMESPACE_URI, "removeAnnotation");
-	
+
 	public static final Set<QName> CUSTOMIZATION_ELEMENT_QNAMES = Collections.unmodifiableSet(
 			new HashSet<QName>(Arrays.asList(
 					REMOVE_ANNOTATION_QNAME,
@@ -106,7 +106,7 @@ public class RemoveAnnotationPlugin extends AbstractParameterizablePlugin {
 					REMOVE_ANNOTATION_FROM_ENUM_CONSTANT_QNAME,
 					REMOVE_ANNOTATION_FROM_ENUM_VALUE_METHOD_QNAME,
 					REMOVE_ANNOTATION_FROM_ENUM_FROM_VALUE_METHOD_QNAME)));
-	
+
 	public static final String CLASS_ATTRIBUTE_NAME = "class";
 
 	@Override
@@ -351,7 +351,7 @@ public class RemoveAnnotationPlugin extends AbstractParameterizablePlugin {
 			final CPluginCustomization customization,
 			final Element element,
 			final JAnnotatable annotatable) {
-		
+
 		final String aClass = element.getAttribute(CLASS_ATTRIBUTE_NAME);
 		if (StringUtils.isBlank(aClass)) {
 			try {
@@ -365,7 +365,7 @@ public class RemoveAnnotationPlugin extends AbstractParameterizablePlugin {
 		}
 		else {
 			JClass annotationClass = codeModel.ref(aClass);
-			
+
 			JAnnotationUse annotationUse = null;
 			for (JAnnotationUse annotation : annotatable.annotations()) {
 				if (annotationClass.equals(annotation.getAnnotationClass())) {

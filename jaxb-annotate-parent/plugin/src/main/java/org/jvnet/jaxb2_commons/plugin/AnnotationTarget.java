@@ -248,7 +248,7 @@ public enum AnnotationTarget {
 						MessageFormat
 								.format("Could not annotate the fromValue(String) method of the enum [{0}] since it could not be found.",
 										enumOutline.clazz.name()));
-				
+
 			}
 			return fromValueMethod;
 		}

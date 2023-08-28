@@ -1,6 +1,6 @@
-# Highsource Open Source Community Code of Conduct 
+# Highsource Open Source Community Code of Conduct
 
-## Code of Conduct 
+## Code of Conduct
 
 Act appropriately
 

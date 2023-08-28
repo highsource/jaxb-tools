@@ -63,10 +63,10 @@ public class GH26Test {
 		Assert.assertNotNull(a.getDefaultValueNamespaceContext());
 		final MElementsPropertyInfo<NType, NClass> bOrC = (MElementsPropertyInfo<NType, NClass>) classInfo
 				.getProperty("bOrC");
-		
+
 //		Assert.assertEquals("b", bOrC.getElementTypeInfos().get(0).getDefaultValue());
 		Assert.assertNotNull(bOrC.getElementTypeInfos().get(0).getDefaultValueNamespaceContext());
-		
+
 //		Assert.assertEquals("3", bOrC.getElementTypeInfos().get(1).getDefaultValue());
 		Assert.assertNotNull(bOrC.getElementTypeInfos().get(1).getDefaultValueNamespaceContext());
 
@@ -74,7 +74,7 @@ public class GH26Test {
 				.getProperty("dOrE");
 //		Assert.assertEquals("e", dOrE.getElementTypeInfos().get(0).getDefaultValue());
 		Assert.assertNotNull(dOrE.getElementTypeInfos().get(0).getDefaultValueNamespaceContext());
-		
+
 //		Assert.assertEquals("d", dOrE.getElementTypeInfos().get(1).getDefaultValue());
 		Assert.assertNotNull(dOrE.getElementTypeInfos().get(1).getDefaultValueNamespaceContext());
 

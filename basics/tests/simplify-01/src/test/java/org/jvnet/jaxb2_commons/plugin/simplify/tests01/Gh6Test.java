@@ -22,7 +22,7 @@ public class Gh6Test {
 		item.getInts();
 		item.getStrings();
 	}
-	
+
 	public void testElementsPropertyAsElementPropertyType() throws Exception {
 
 		@SuppressWarnings("unchecked")

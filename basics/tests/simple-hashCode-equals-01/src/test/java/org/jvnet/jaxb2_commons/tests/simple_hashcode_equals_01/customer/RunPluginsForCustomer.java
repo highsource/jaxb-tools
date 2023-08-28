@@ -30,7 +30,7 @@ public class RunPluginsForCustomer {
 				schema.toExternalForm(), "-b", binding.toExternalForm(), "-d",
 				"target/generated-sources/xjc", "-extension",
 				"-XsimpleHashCode",
-//				"-XsimpleEquals", "-XsimpleToString" 
+//				"-XsimpleEquals", "-XsimpleToString"
 				};
 
 		Options options = new Options();

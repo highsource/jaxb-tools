@@ -23,7 +23,7 @@ Please refer to the [wiki](https://github.com/highsource/jaxb-tools/wiki) for th
 
 * [Jakarta Slack](https://jakarta.ee/connect/) Join the #jaxb channel on Jakarta EE Slack
 * [User Guide](https://github.com/highsource/jaxb-tools/wiki/User-Guide)
-* Maven Documentation  (Work in progress)
+* [Maven Documentation](https://github.com/highsource/jaxb-tools/wiki/Maven-Documentation)
 * [Configuration Cheat Sheet](https://github.com/highsource/jaxb-tools/wiki/Configuration-Cheat-Sheet)
 * [Common Pitfalls and Problems](https://github.com/highsource/jaxb-tools/wiki/Common-Pitfalls-and-Problems) (Work in progress)
 * [Best Practices](https://github.com/highsource/jaxb-tools/wiki/Best-Practices) (Work in progress)
@@ -37,7 +37,7 @@ Please refer to the [wiki](https://github.com/highsource/jaxb-tools/wiki) for th
 
 This project is not developed, supported or in any other way affiliated with Apache. The `org.jvnet.jaxb:jaxb-tools` is not an Apache product (and does not pretend to be one), it is a completely independent development.
 
-This project is also *not* developed by or affiliated with Oracle or Sun. Even if it is featured on [https://jaxb.java.net/](https://jaxb.java.net) pages, 
+This project is also *not* developed by or affiliated with Oracle or Sun. Even if it is featured on [https://jaxb.java.net/](https://jaxb.java.net) pages,
 
 **This plugin is in no way _official_ JAXB Maven plugin by Sun or Oracle.**
 
@@ -95,48 +95,50 @@ compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Mav
 
 # JAXB2 Basics
 
-JAXB2 Basics is an [open source](https://github.com/highsource/jaxb2-basics/blob/master/LICENSE) project
+JAXB2 Basics is an [open source](https://github.com/highsource/jaxb-tools/blob/master/LICENSE) project
 which provides useful plugins and tools for [JAXB 2.x reference implementation](https://jaxb.java.net/).
 
 ## Documentation
 
-Please refer to the [wiki](https://github.com/highsource/jaxb2-basics/wiki) for documentation.
+Please refer to the [wiki](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Basic) for documentation.
 
 JAXB2 Basics can only be used with JAXB/XJC 2.3.0 and higher. JAXB/XJC versions 2.2.x and earlier are no longer supported.
 
 ## Using JAXB2 Basics
 
-* [Using JAXB2 Basics Plugins](https://github.com/highsource/jaxb2-basics/wiki/Using-JAXB2-Basics-Plugins)
+* [Using JAXB2 Basics Plugins](https://github.com/highsource/jaxb-tools/wiki/Using-JAXB2-Basics-Plugins)
 
 ## JAXB2 Basics Plugins
-* [SimpleEquals Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-SimpleEquals-Plugin) - generates runtime-free reflection-free `equals(...)` methods.
-* [SimpleHashCode Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-SimpleHashCode-Plugin) - generates runtime-free reflection-free `hashCode()` methods.
-* Equals Plugin - generates reflection-free strategic `equals(...)` method.
-* HashCode Plugin - generates reflection-free strategic `hashCode()` method.
-* ToString Plugin - generates reflection-free strategic `toString()` methods.
-* Copyable Plugin - generates reflection-free strategic `copy(...)` deep copying.
-* Mergeable Plugin - generates reflection-free strategic `merge(...)` methods to merge data from two source objects into the given object.
-* Inheritance Plugin - makes schema-derived classes extend certain class or implement certain interfaces.
-* Wildcard Plugin - allows you to specify the wildcard mode for the wildcard properties.
-* AutoInheritance Plugin - makes classes derived from global elements or complex types extend or implement certain classes or interfaces automatically.
-* [Setters Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-Setters-Plugin) - generates setters for collections.
-* [Simplify Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-Simplify-Plugin) - simplifies weird properties like `aOrBOrC`.
-* [EnumValue Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-EnumValue-Plugin) - makes all the generated enums implement the `EnumValue<T>` interface.
-* JAXBIndex Plugin - generated `jaxb.index` files listing schema-derived classes.
-* [FixJAXB1058 Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-FixJAXB1058-Plugin) - fixes [JAXB-1058](https://java.net/jira/browse/JAXB-1058).
-* Commons Lang Plugin - generates the toString(), hashCode() and equals() methods using Apache commons-lang3.
-* Default Value Plugin - modifies the JAXB code model to set default values to the schema `default` attribute.
-* Fluent API Plugin - support a fluent api in addition to the default (JavaBean) setter methods.
-* Namespace Prefix Plugin - adds `javax.xml.bind.annotation.XmlNs` annotations to `package-info.java` files
-* Value Constructor Plugin - generates another constructor, taking an argument for each field in the class and initialises the field with the argument value.
+* [SimpleEquals Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-SimpleEquals-Plugin) - generates runtime-free reflection-free `equals(...)` methods.
+* [SimpleHashCode Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-SimpleHashCode-Plugin) - generates runtime-free reflection-free `hashCode()` methods.
+* [Equals Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Equals-Plugin) - generates reflection-free strategic `equals(...)` method.
+* [HashCode Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-HashCode-Plugin) - generates reflection-free strategic `hashCode()` method.
+* [ToString Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-ToString-Plugin) - generates reflection-free strategic `toString()` methods.
+* [Copyable Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Copyable-Plugin) - generates reflection-free strategic `copy(...)` deep copying.
+* [Mergeable Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Mergeable-Plugin) - generates reflection-free strategic `merge(...)` methods to merge data from two source objects into the given object.
+* [Inheritance Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Inheritance-Plugin) - makes schema-derived classes extend certain class or implement certain interfaces.
+* [Wildcard Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Wildcard-Plugin) - allows you to specify the wildcard mode for the wildcard properties.
+* [AutoInheritance Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-AutoInheritance-Plugin) - makes classes derived from global elements or complex types extend or implement certain classes or interfaces automatically.
+* [Setters Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Setters-Plugin) - generates setters for collections.
+* [Simplify Plugin](https://github.com/highsource/jaxb2-tools/wiki/JAXB2-Simplify-Plugin) - simplifies weird properties like `aOrBOrC`.
+* [EnumValue Plugin](https://github.com/highsource/jaxb2-tools/wiki/JAXB2-EnumValue-Plugin) - makes all the generated enums implement the `EnumValue<T>` interface.
+* [JAXBIndex Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-JAXBIndex-Plugin) - generated `jaxb.index` files listing schema-derived classes.
+* [FixJAXB1058 Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-FixJAXB1058-Plugin) - fixes [JAXB-1058](https://java.net/jira/browse/JAXB-1058).
+* [Commons Lang Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Commons-Lang-Plugin) - generates the toString(), hashCode() and equals() methods using Apache commons-lang3.
+* [Default Value Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Default-Value-Plugin) - modifies the JAXB code model to set default values to the schema `default` attribute.
+* [Fluent API Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Fluent-API-Plugin) - support a fluent api in addition to the default (JavaBean) setter methods.
+* [Namespace Prefix Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Namespace-Prefix-Plugin) - adds `javax.xml.bind.annotation.XmlNs` annotations to `package-info.java` files
+* [Value Constructor Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Value-Constructor-Plugin) - generates another constructor, taking an argument for each field in the class and initialises the field with the argument value.
 
 ## Credits
 
-* Many thanks to **James Annesley** for his ideas and help with the [SimpleEquals Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-SimpleEquals-Plugin) and the [SimpleHashCode Plugin](https://github.com/highsource/jaxb2-basics/wiki/JAXB2-SimpleHashCode-Plugin).
+* Many thanks to **James Annesley** for his ideas and help with the [SimpleEquals Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-SimpleEquals-Plugin) and the [SimpleHashCode Plugin](https://github.com/highsource/jaxb2-tools/wiki/JAXB2-SimpleHashCode-Plugin).
 
 # Annox
 
 Parse Java annotations from text or XML resources.
+
+Please refer to the [wiki](https://github.com/highsource/jaxb-tools/wiki/Annox-Home) for documentation.
 
 ```java
 // Parse annotation from the string
@@ -144,7 +146,7 @@ XAnnotation<XmlRootElement> xannotation =
 	(XAnnotation<XmlRootElement>) XAnnotationParser.INSTANCE.parse
 		("@javax.xml.bind.annotation.XmlRootElement(name=\"foo\")");
 
-// Create an instance of the annotation 
+// Create an instance of the annotation
 XmlRootElement xmlRootElement = xannotation.getResult();
 assertEquals("foo", xmlRootElement.name());
 assertEquals("##default", xmlRootElement.namespace());
@@ -158,6 +160,8 @@ assertEquals("##default", xannotation.getFieldsMap().get("namespace").getResult(
 
 JAXB Annotate Plugin is capable of adding or removing arbitrary annotations to/from the generated sources.
 
+Please refer to the [wiki](https://github.com/highsource/jaxb-tools/wiki/JAXB-Annotate-Home) for documentation.
+
 ## Usage overview
 
 * Annotate your schema using binding files or directly in schema
@@ -168,7 +172,7 @@ JAXB Annotate Plugin is capable of adding or removing arbitrary annotations to/f
 ## Providing annotations
 
 You can annotate your schema-derived elements using normal Java annotation syntax.
-([Old XML syntax](http://confluence.highsource.org/display/J2B/Annotate+Plugin) is still supported but no longer recommended.)
+([Old XML syntax](https://github.com/highsource/jaxb-tools/wiki/JAXB-Annotate-Home) is still supported but no longer recommended.)
 
 **Current limitations:**
 * Annotation classes must be known in compile time. I.e. annotation classes must be made available in the XJC classpath.
@@ -181,11 +185,11 @@ Inner classes should use the dot (`.`) as delimiter (not `$`).
 You can put your annotations directly in schema:
 
 ````xml
-<xsd:schema 
-        xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
-        jaxb:version="2.1" 
-        xmlns:annox="http://annox.dev.java.net" 
+<xsd:schema
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+        jaxb:version="2.1"
+        xmlns:annox="http://annox.dev.java.net"
         jaxb:extensionBindingPrefixes="annox">
 
 
@@ -233,15 +237,15 @@ Or in binding files:
 
 ````xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jaxb:bindings 
-        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-        xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
+<jaxb:bindings
+        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:annox="http://annox.dev.java.net" 
-        xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd" 
-        jaxb:extensionBindingPrefixes="xjc annox" 
+        xmlns:annox="http://annox.dev.java.net"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+        jaxb:extensionBindingPrefixes="xjc annox"
         version="2.1">
-    
+
     <jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
         <jaxb:bindings node="xs:complexType[@name='issueJIIB39CType']">
             <annox:annotateClass>@javax.xml.bind.annotation.XmlRootElement(name="IssueJIIB39CType")</annox:annotateClass>
@@ -292,13 +296,13 @@ This is just a namespace, there must not necessarily be content there. Treat it 
 You can remove annotations using customizations directly in schema:
 
 ````xml
-<xsd:schema 
-        xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
-        jaxb:version="2.1" 
-        xmlns:annox="http://annox.dev.java.net" 
+<xsd:schema
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+        jaxb:version="2.1"
+        xmlns:annox="http://annox.dev.java.net"
         jaxb:extensionBindingPrefixes="annox">
-    
+
     <xsd:complexType name="FooType">
         <xsd:annotation>
             <xsd:appinfo>
@@ -324,15 +328,15 @@ Or in binding files:
 
 ````xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jaxb:bindings 
+<jaxb:bindings
         xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema"
         xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-        xmlns:annox="http://annox.dev.java.net" 
-        xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd" 
-        jaxb:extensionBindingPrefixes="xjc annox" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:annox="http://annox.dev.java.net"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+        jaxb:extensionBindingPrefixes="xjc annox"
         version="2.1">
-    
+
     <jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
         <jaxb:bindings node="xs:complexType[@name='FooType']">
             <annox:removeAnnotation class="javax.xml.bind.annotation.XmlType" />
@@ -407,10 +411,10 @@ Example:
     </configuration>
 </plugin>
 ````
-See [this example](https://github.com/highsource/jaxb2-annotate-plugin/tree/master/tests/annox).
+See [this example](https://github.com/highsource/jaxb-tools/tree/master/jaxb-annotate-parent/tests/annox).
 
 Note that annotations are first compiled in the `annotations` module and the added to the classpath of the `jaxb-maven-plugin` in the `schema` module:
 
 ## Using JAXB2 Annotate Plugin with Ant
 
-See [this example](https://github.com/highsource/jaxb2-annotate-plugin/blob/master/samples/annotate/project-build.xml).
+See [this example](https://github.com/highsource/jaxb-tools/blob/master/jaxb-annotate-parent/samples/annotate/project-build.xml).

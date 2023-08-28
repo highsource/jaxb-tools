@@ -34,11 +34,11 @@ import com.sun.codemodel.JVar;
  * @author Hanson Char
  */
 public enum FluentMethodType {
-	FLUENT_SETTER 
+	FLUENT_SETTER
 	{
-	    /** 
+	    /**
 	     * Adds a fluent api method, which invokes the given setter method, to the given class.
-	     * This applies to both simple property setter method and 
+	     * This applies to both simple property setter method and
 	     * indexed property setter method.
 	     */
 	    @Override
@@ -48,7 +48,7 @@ public enum FluentMethodType {
 	        String name = setterMethod.name();
 	        // Create a with* method for the respective set* method.
 	        int mods = JMod.PUBLIC | setterMethod.mods().getValue() & JMod.FINAL;
-	        JMethod fluentMethod = implClass.method(mods, implClass,  
+	        JMethod fluentMethod = implClass.method(mods, implClass,
 	            FLUENT_SETTER_METHOD_PREFIX + name.substring(SETTER_METHOD_PREFIX_LEN));
 	        if (fluentMethodInfo.isOverride())
 	        	fluentMethod.annotate(Override.class);
@@ -70,7 +70,7 @@ public enum FluentMethodType {
 	        return;
 	    }
 	},
-	FLUENT_LIST_SETTER 
+	FLUENT_LIST_SETTER
 	{
 	    /**
 	     * Create a fluent setter method for List, with support of variable arguments.
@@ -82,7 +82,7 @@ public enum FluentMethodType {
 	    	String name = listGetterMethod.name();
 	        // Create a with* method for the respective List<T> get* method.
 	        int mods = JMod.PUBLIC | listGetterMethod.mods().getValue() & JMod.FINAL;
-	        JMethod fluentMethod = implClass.method(mods, implClass,  
+	        JMethod fluentMethod = implClass.method(mods, implClass,
 	                FLUENT_SETTER_METHOD_PREFIX + name.substring(GETTER_METHOD_PREFIX_LEN));
 	        if (fluentMethodInfo.isOverride())
 	        	fluentMethod.annotate(Override.class);
@@ -94,7 +94,7 @@ public enum FluentMethodType {
 	        List<JClass> typeParams = returnJClass.getTypeParameters();
 	        assert typeParams.size() == 1;
 	        JClass typeParam = typeParams.get(0);
-	        // Support variable arguments  
+	        // Support variable arguments
 	        JVar jvarParam = fluentMethod.varParam(typeParam, VALUES);
 	        JBlock body = fluentMethod.body();
             JConditional cond = body._if(
@@ -128,7 +128,7 @@ public enum FluentMethodType {
 	    	String name = listGetterMethod.name();
 	        // Create a with* method for the respective List<T> get* method.
 	        int mods = JMod.PUBLIC | listGetterMethod.mods().getValue() & JMod.FINAL;
-	        JMethod fluentMethod = implClass.method(mods, implClass,  
+	        JMethod fluentMethod = implClass.method(mods, implClass,
 	                FLUENT_SETTER_METHOD_PREFIX + name.substring(GETTER_METHOD_PREFIX_LEN));
 	        if (fluentMethodInfo.isOverride())
 	        	fluentMethod.annotate(Override.class);
@@ -164,9 +164,9 @@ public enum FluentMethodType {
     public static final String SETTER_METHOD_PREFIX = "set";
     public static final String FLUENT_SETTER_METHOD_PREFIX = "with";
     public static final String PARAMETERIZED_LIST_PREFIX = List.class.getName() + "<";
-    
+
     public static final int SETTER_METHOD_PREFIX_LEN = SETTER_METHOD_PREFIX.length();
     public static final int GETTER_METHOD_PREFIX_LEN = GETTER_METHOD_PREFIX.length();
-    
+
     public abstract void createFluentMethod(JDefinedClass implClass, FluentMethodInfo fluentMethodInfo);
 }

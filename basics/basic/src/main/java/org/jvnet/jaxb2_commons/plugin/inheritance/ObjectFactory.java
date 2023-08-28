@@ -12,7 +12,7 @@ public class ObjectFactory {
 	public ImplementsInterface createImplementsInterface() {
 		return new ImplementsInterface();
 	}
-	
+
 	public ObjectFactoryCustomization createObjectFactoryCustomization() {
 		return new ObjectFactoryCustomization();
 	}

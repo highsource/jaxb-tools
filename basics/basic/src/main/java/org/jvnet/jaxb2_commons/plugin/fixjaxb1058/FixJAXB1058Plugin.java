@@ -83,7 +83,7 @@ public class FixJAXB1058Plugin extends Plugin {
 			final JClass coreList = DummyListField_coreList
 					.get(fieldOutline);
 			final JMethod $get = fieldOutline.parent().implClass.method(
-					JMod.PUBLIC, listT, "get" + 
+					JMod.PUBLIC, listT, "get" +
 					fieldOutline.getPropertyInfo().getName(true));
 			JBlock block = $get.body();
 			block._if(field.eq(JExpr._null()))._then()

@@ -36,7 +36,7 @@ import org.xml.sax.ErrorHandler;
 /**
  * This plugin adds {@link javax.xml.bind.annotation.XmlNs} annotations to <i>package-info.java</i> files. Those annotations tells Jaxb to generate XML schema's instances with specific namespaces
  * prefixes, instead of the auto-generated (ns1, ns2, ...) prefixes. Definition of thoses prefixes is done in the bindings.xml file.
- * 
+ *
  * Bindings.xml file example:
  * <pre>
  *  &lt;?xml version=&quot;1.0&quot;?&gt;

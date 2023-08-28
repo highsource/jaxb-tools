@@ -63,19 +63,19 @@ public class DefaultValuePlugin
 {
 
     /**
-     * Name of Option to enable this plugin 
+     * Name of Option to enable this plugin
      */
     static private final String OPTION_NAME = "Xdefault-value";
-    
-    
+
+
     /**
      * Creates a new <code>DefaultValuePlugin</code> instance.
-     * 
+     *
      */
     public DefaultValuePlugin() {
     }
 
-    
+
     /**
      * DefaultValuePlugin uses "-Xdefault-value" as the command-line
      * argument
@@ -85,10 +85,10 @@ public class DefaultValuePlugin
         return OPTION_NAME;
     }
 
-    
+
     /**
      * Return usage information for plugin
-     * 
+     *
      */
     public String getUsage()
     {
@@ -116,10 +116,10 @@ public class DefaultValuePlugin
     {
         // For all Classes generated
         for (ClassOutline co : outline.getClasses()) {
-            
+
             // Some conversions may have to add class level code
             JFieldVar dtf = null;        // Helper code: DatatypeFactory
-            
+
             // check all Fields in Class
             for (FieldOutline f : co.getDeclaredFields()) {
                 CPropertyInfo fieldInfo = f.getPropertyInfo();
@@ -151,7 +151,7 @@ public class DefaultValuePlugin
                 if (type.isPrimitive())
                     type = type.boxify();
                 String typeFullName = type.fullName();
-                
+
                 // Create an appropriate default expression depending on type
                 if ("java.lang.String".equals(typeFullName)) {
                     var.init(JExpr.lit(defaultValue));
@@ -160,7 +160,7 @@ public class DefaultValuePlugin
                             +fieldInfo.displayName()
                             +" to \""+defaultValue+"\"");
                 }
-                
+
                 else if ("java.lang.Boolean".equals(typeFullName)) {
                     var.init(JExpr.lit(Boolean.valueOf(defaultValue)));
                     if (opt.verbose)
@@ -168,7 +168,7 @@ public class DefaultValuePlugin
                             +fieldInfo.displayName()
                             +" to "+defaultValue+"");
                 }
-                
+
                 else if ( ("java.lang.Byte".equals(typeFullName))
                     || ("java.lang.Short".equals(typeFullName))
                     || ("java.lang.Integer".equals(typeFullName))
@@ -180,7 +180,7 @@ public class DefaultValuePlugin
                             +fieldInfo.displayName()
                             +" to "+defaultValue+"");
                 }
-                
+
                 else if ("java.lang.Long".equals(typeFullName)) {
                     var.init(JExpr.lit(Long.valueOf(defaultValue)));
                     if (opt.verbose)
@@ -188,15 +188,15 @@ public class DefaultValuePlugin
                             +fieldInfo.displayName()
                             +" to "+defaultValue+"");
                 }
-                
+
                 else if ("java.lang.Float".equals(typeFullName)) {
                     var.init(JExpr.lit(Float.valueOf(defaultValue)));
                     if (opt.verbose)
                         System.out.println("[INFO] Initializing Float variable "
                             +fieldInfo.displayName()
                             +" to "+defaultValue+"");
-                } 
-                
+                }
+
                 else if ( ("java.lang.Single".equals(typeFullName))
                     || ("java.lang.Double".equals(typeFullName))
                 ) {
@@ -207,7 +207,7 @@ public class DefaultValuePlugin
                             +fieldInfo.displayName()
                             +" to "+defaultValue+"");
                 }
-                
+
                 else if ("javax.xml.datatype.XMLGregorianCalendar".equals(typeFullName)) {
                     // XMLGregorianCalender is constructed by DatatypeFactory, so we have to have
                     // an instance of that once per class
@@ -223,11 +223,11 @@ public class DefaultValuePlugin
                             +fieldInfo.displayName()
                             +" with value of "+defaultValue);
                 }
-                
-                else if ( (type instanceof JDefinedClass) 
+
+                else if ( (type instanceof JDefinedClass)
                     && (((JDefinedClass) type).getClassType() == ClassType.ENUM) ) {
                     // Find Enum constant
-                    JEnumConstant constant = findEnumConstant(type, defaultValue, outline);                    
+                    JEnumConstant constant = findEnumConstant(type, defaultValue, outline);
                     if (constant != null) {
                         var.init(constant);
                         if (opt.verbose)
@@ -235,7 +235,7 @@ public class DefaultValuePlugin
                                 + fieldInfo.displayName() + " with constant " + constant.getName());
                     }
                 }
-                
+
                 // Don't know how to create default for this type
                 else {
                     System.out.println("[WARN] Did not create default value for field "
@@ -245,15 +245,15 @@ public class DefaultValuePlugin
                         + ". Default value of \""+defaultValue+"\" specified in schema"
                         );
                 }
-                
+
             } // for FieldOutline
-            
+
         } // for ClassOutline
 
         return true;
     }
-    
-    
+
+
     /**
      * Retrieve the enum constant that correlates to the string value.
      * @param enumType    Type identifying an Enum in the code model
@@ -283,8 +283,8 @@ public class DefaultValuePlugin
         System.out.println("[WARN] Could not find Enum class for type: "+enumType.fullName());
         return null;
     }
-    
-    
+
+
     /**
      * Enhance the CodeModel of a Class to include a {@link DatatypeFactory} as a static private field.
      * The factory is needed to construct {@link XMLGregorianCalendar} from String representation.
@@ -297,7 +297,7 @@ public class DefaultValuePlugin
             JCodeModel cm = parentClass.owner();
             // Create a static variable of type DatatypeFactory
             JClass dtfClass = cm.ref(DatatypeFactory.class);
-            JFieldVar dtf = parentClass.field(JMod.STATIC | JMod.FINAL | JMod.PRIVATE, 
+            JFieldVar dtf = parentClass.field(JMod.STATIC | JMod.FINAL | JMod.PRIVATE,
                 dtfClass, "DATATYPE_FACTORY");
             // Initialize variable in static block
             JBlock si = parentClass.init();

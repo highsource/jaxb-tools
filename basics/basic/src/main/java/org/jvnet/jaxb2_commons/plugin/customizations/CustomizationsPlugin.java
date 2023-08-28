@@ -95,11 +95,11 @@ public class CustomizationsPlugin extends AbstractParameterizablePlugin {
 	private void postProcessClassInfo(Model model, CClassInfo classInfo) {
 		final String packagedClassName = ClassUtils.getPackagedClassName(classInfo);
 		final String customizationsFileName = packagedClassName.replace(".", "/") + ".xml";
-		
+
 		final List<CPluginCustomization> customizations = readCustomizations(customizationsFileName);
-		
+
 		classInfo.getCustomizations().addAll(customizations);
-		
+
 		for (CPropertyInfo propertyInfo: classInfo.getProperties())
 		{
 			postProcessPropertyInfo(model, classInfo, propertyInfo);
@@ -116,9 +116,9 @@ public class CustomizationsPlugin extends AbstractParameterizablePlugin {
 	private void postProcessEnumLeafInfo(Model model, CEnumLeafInfo enumLeafInfo) {
 		final String packagedClassName = ClassUtils.getPackagedClassName(enumLeafInfo);
 		final String customizationsFileName = packagedClassName.replace(".", "/") + ".xml";
-		
+
 		final List<CPluginCustomization> customizations = readCustomizations(customizationsFileName);
-		
+
 		enumLeafInfo.getCustomizations().addAll(customizations);
 		for (CEnumConstant enumConstant : enumLeafInfo.getConstants()) {
 			postProcessEnumConstant(model, enumLeafInfo, enumConstant);

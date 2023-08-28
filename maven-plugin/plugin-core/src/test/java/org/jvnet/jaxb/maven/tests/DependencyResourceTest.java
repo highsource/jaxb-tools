@@ -7,7 +7,7 @@ public class DependencyResourceTest {
 
 	@Test
 	public void correctlyParsesDepenencyResource() {
-		
+
 		{
 			@SuppressWarnings("unused")
 			DependencyResource dependencyResource = DependencyResource

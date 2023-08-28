@@ -1,15 +1,15 @@
 /*
  * Copyright [2006] java.net
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 		http://www.apache.org/licenses/LICENSE-2.0 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed on an "AS IS" BASIS, 
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
- * See the License for the specific language governing permissions and 
- * limitations under the License. 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 		http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.jvnet.jaxb.maven;
@@ -83,7 +83,7 @@ import com.sun.xml.txw2.annotation.XmlNamespace;
 
 /**
  * Maven JAXB Mojo.
- * 
+ *
  * @author Aleksei Valikov (valikov@gmx.net)
  */
 public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
@@ -606,7 +606,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	 * enabled in the log), turn on the verbose mode in Mojo. Further on, if vebose
 	 * mode is on, set the <code>com.sun.tools.xjc.Options.findServices</code>
 	 * system property on to enable debuggin of XJC plugins.
-	 * 
+	 *
 	 */
 	protected void setupLogging() {
 
@@ -886,7 +886,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 	/**
 	 * Creates an instance of catalog resolver.
-	 * 
+	 *
 	 * @return Instance of the catalog resolver.
 	 * @throws MojoExecutionException
 	 *             If catalog resolver cannot be instantiated.
@@ -1090,7 +1090,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	 * Returns array of command line arguments for XJC. These arguments are based on
 	 * the configured arguments (see {@link #getArgs()}) but also include episode
 	 * arguments.
-	 * 
+	 *
 	 * @return String array of XJC command line options.
 	 */
 
@@ -1164,7 +1164,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		final OptionsConfiguration optionsConfiguration = new OptionsConfiguration(getEncoding(), getSchemaLanguage(),
 				getGrammars(), getBindFiles(), getEntityResolver(), getGeneratePackage(), getGenerateDirectory(),
 				getReadOnly(), getPackageLevelAnnotations(), getNoFileHeader(), getEnableIntrospection(),
-				getDisableXmlSecurity(), getAccessExternalSchema(), getAccessExternalDTD(), isEnableExternalEntityProcessing(), 
+				getDisableXmlSecurity(), getAccessExternalSchema(), getAccessExternalDTD(), isEnableExternalEntityProcessing(),
 				getContentForWildcard(),
 				getExtension(), getStrict(), getVerbose(), getDebug(), getArguments(), getXjcPluginURLs(),
 				getSpecVersion());

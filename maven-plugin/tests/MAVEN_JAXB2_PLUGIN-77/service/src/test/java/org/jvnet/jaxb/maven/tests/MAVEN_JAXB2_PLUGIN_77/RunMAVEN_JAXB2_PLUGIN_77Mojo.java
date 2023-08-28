@@ -12,7 +12,7 @@ public class RunMAVEN_JAXB2_PLUGIN_77Mojo extends RunXJC2Mojo {
 	@Override
 	protected void configureMojo(AbstractXJC2Mojo<Options> mojo) {
 		super.configureMojo(mojo);
-		
+
 		mojo.setSchemaDirectory(new File(getBaseDir(), "src/main/resources/META-INF/project/schemas"));
 		mojo.setGeneratePackage("com.company.project.service.types");
 		mojo.setCatalog(new File(getBaseDir(),"src/main/jaxb/catalog.cat"));

@@ -105,19 +105,19 @@ public class RawXJC2MojoTest {
     @Test
     public void collectsBindingUrisFromArtifact() throws Exception {
         List<URI> bindings = new ArrayList<>();
-        
+
         final RawXJC2Mojo<Void> mojo = new RawXJC2Mojo<Void>() {
-			
+
 			@Override
 			protected IOptionsFactory<Void> getOptionsFactory() {
 				throw new UnsupportedOperationException();
 			}
-			
+
 			@Override
 			public void doExecute(Void options) throws MojoExecutionException {
 				throw new UnsupportedOperationException();
 			}
-		}; 
+		};
 
         mojo.collectBindingUrisFromArtifact(testJarFile, bindings);
 

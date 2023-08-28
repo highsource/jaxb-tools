@@ -17,7 +17,7 @@ import com.sun.tools.xjc.Options;
 
 /**
  * Abstract test for plugins.
- * 
+ *
  * @author Aleksei Valikov
  */
 

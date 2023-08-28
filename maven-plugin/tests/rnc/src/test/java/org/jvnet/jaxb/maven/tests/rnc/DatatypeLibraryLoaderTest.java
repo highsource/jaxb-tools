@@ -14,6 +14,6 @@ public class DatatypeLibraryLoaderTest {
 		b.createDatatypeLibrary("");
 		b.createDatatypeLibrary("http://www.w3.org/2001/XMLSchema-datatypes");
 		b.createDatatypeLibrary("http://www.w3.org/2001/XMLSchema-datatypes");
-		
+
 	}
 }

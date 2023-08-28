@@ -14,7 +14,7 @@ public class RunResMojo extends RunXJC2Mojo {
 	@Override
 	protected void configureMojo(AbstractXJC2Mojo<Options> mojo) {
 		super.configureMojo(mojo);
-		
+
 		mojo.setCatalog(new File(getBaseDir(),"src/main/jaxb/catalog.cat"));
 		mojo.setExtension(true);
 		final ResourceEntry purchaseorder_xsd = new ResourceEntry();
@@ -25,7 +25,7 @@ public class RunResMojo extends RunXJC2Mojo {
 		purchaseorder_xsd.getDependencyResource().setResource("purchaseorder.xsd");
 		mojo.setSchemas(new ResourceEntry[]{
 				purchaseorder_xsd
-				
+
 		});
 //		mojo.
 //

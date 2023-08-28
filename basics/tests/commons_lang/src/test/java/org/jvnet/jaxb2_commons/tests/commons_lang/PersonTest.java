@@ -14,7 +14,7 @@ public class PersonTest {
         Person p = new Person();
         // No plugin default-value present, checking everything is null or default java value
         Assert.assertEquals(false, p.isMailingAddressIdentical());
-        
+
         Assert.assertEquals(ToStringBuilder.reflectionToString(p, ToStringStyle.MULTI_LINE_STYLE), p.toString());
     }
 }

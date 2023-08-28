@@ -103,8 +103,8 @@
                 <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
                 <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
                 <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
-
                 <cxf-codegen-plugin.version>3.3.13</cxf-codegen-plugin.version>
+                <editorconfig-maven-plugin.version>0.1.1</editorconfig-maven-plugin.version>
 	</properties>
 	<profiles>
 		<profile>
@@ -170,7 +170,27 @@
 				</plugins>
 			</build>
 		</profile>
-	</profiles>
+                <profile>
+                  <id>checks</id>
+                  <build>
+                    <plugins>
+                      <plugin>
+                        <groupId>org.ec4j.maven</groupId>
+                        <artifactId>editorconfig-maven-plugin</artifactId>
+                          <executions>
+                            <execution>
+                              <id>check</id>
+                              <phase>verify</phase>
+                              <goals>
+                                <goal>check</goal>
+                              </goals>
+                            </execution>
+                          </executions>
+                       </plugin>
+                     </plugins>
+                  </build>
+               </profile>
+   	</profiles>
 	<!--distributionManagement>
 		<snapshotRepository>
 			<id>ossrh</id>
@@ -659,6 +679,11 @@
                                         <groupId>org.apache.felix</groupId>
                                         <artifactId>maven-bundle-plugin</artifactId>
                                         <version>3.5.0</version>
+                                </plugin>
+                                <plugin>
+                                   <groupId>org.ec4j.maven</groupId>
+                                   <artifactId>editorconfig-maven-plugin</artifactId>
+                                   <version>${editorconfig-maven-plugin.version}</version>
                                 </plugin>
                                 <plugin>
                                         <groupId>org.owasp</groupId>

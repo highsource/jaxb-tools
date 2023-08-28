@@ -20,7 +20,7 @@ public class ExecuteJAXB1058 {
 		final String[] arguments = new String[] { "-xmlschema",
 				new File("src/main/resources/schema.xsd").toURI().toString(),
 				"-d",
-				"target/generated-sources/xjc", 
+				"target/generated-sources/xjc",
 				"-XfixJAXB1058",
 				"-extension", "-XtoString",
 				"-Xequals", "-XhashCode", "-Xcopyable", "-Xmergeable"};

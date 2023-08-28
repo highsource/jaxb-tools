@@ -111,7 +111,7 @@ TR extends TypeRef<T, C>> {
 		this.typeInfoSet = typeInfoSet;
 
 	}
-	
+
 	public TIS getTypeInfoSet() {
 		return typeInfoSet;
 	}
@@ -619,7 +619,7 @@ TR extends TypeRef<T, C>> {
 
 	/**
 	 * Returns Java class for the reference type or null if it can't be found.
-	 * 
+	 *
 	 * @param referencedType
 	 *            referenced type.
 	 * @return Java class for the reference type or null.

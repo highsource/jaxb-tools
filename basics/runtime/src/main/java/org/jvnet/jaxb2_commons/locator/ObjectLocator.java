@@ -6,9 +6,9 @@ import org.jvnet.jaxb2_commons.i18n.Reportable;
 
 /**
  * Object locator denotes a location in an object structure.
- * 
+ *
  * @author Aleksei Valikov
- * 
+ *
  */
 public interface ObjectLocator extends ValidationEventLocator, Reportable {
 
@@ -29,7 +29,7 @@ public interface ObjectLocator extends ValidationEventLocator, Reportable {
 
 	/**
 	 * Creates a locator for the property, relative to this locator.
-	 * 
+	 *
 	 * @param propertyName
 	 *            name of the property, must not be <code>null</code>.
 	 * @param propertyValue
@@ -42,7 +42,7 @@ public interface ObjectLocator extends ValidationEventLocator, Reportable {
 	/**
 	 * Creates a locator for the item (like list or array item) relative to this
 	 * locator.
-	 * 
+	 *
 	 * @param itemIndex
 	 *            index of the item.
 	 * @param itemValue

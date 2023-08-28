@@ -39,7 +39,7 @@ public class CMID<T, C extends T> implements MID<T, C> {
 	public QName getTypeName() {
 		return XmlSchemaConstants.ID;
 	}
-	
+
 	@Override
 	public boolean isSimpleType() {
 		return getValueTypeInfo().isSimpleType();

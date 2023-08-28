@@ -483,7 +483,7 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 			return merge(leftLocator, rightLocator, left, right);
 		}
 	}
-	
+
 	public static final DefaultMergeStrategy INSTANCE2 = new DefaultMergeStrategy();
 	public static final MergeStrategy INSTANCE = INSTANCE2;
 

@@ -41,7 +41,7 @@ public class JAXBToStringStrategy extends DefaultToStringStrategy {
 		appendJAXBElementEnd(stringBuilder);
 		return stringBuilder;
 	}
-	
+
 	public static final JAXBToStringStrategy INSTANCE2 = new JAXBToStringStrategy();
 	@SuppressWarnings("deprecation")
 	public static final ToStringStrategy INSTANCE = INSTANCE2;

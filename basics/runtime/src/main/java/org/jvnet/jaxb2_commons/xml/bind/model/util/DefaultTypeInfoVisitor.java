@@ -50,7 +50,7 @@ public class DefaultTypeInfoVisitor<T, C extends T, V> implements
 	public V visitClassInfo(MClassInfo<T, C> info) {
 		return visitTypeInfo(info);
 	}
-	
+
 	public V visitClassRef(MClassRef<T, C> info) {
 		return visitTypeInfo(info);
 	}

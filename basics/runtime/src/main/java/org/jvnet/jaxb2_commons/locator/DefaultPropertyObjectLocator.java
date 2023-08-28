@@ -4,7 +4,7 @@ import java.text.MessageFormat;
 
 /**
  * Validation event locator.
- * 
+ *
  * @author Aleksei Valikov
  */
 public final class DefaultPropertyObjectLocator extends AbstractObjectLocator
@@ -17,7 +17,7 @@ public final class DefaultPropertyObjectLocator extends AbstractObjectLocator
 
 	/**
 	 * Constructs a new validation event locator.
-	 * 
+	 *
 	 * @param parentLocator
 	 *            locator of the parent object.
 	 * @param propertyName
@@ -37,7 +37,7 @@ public final class DefaultPropertyObjectLocator extends AbstractObjectLocator
 
 	/**
 	 * Returns parameters for message formatting.
-	 * 
+	 *
 	 * @return Message formatting parameters.
 	 */
 	public Object[] getMessageParameters() {

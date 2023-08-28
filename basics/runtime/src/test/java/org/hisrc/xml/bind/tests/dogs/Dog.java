@@ -19,7 +19,7 @@ public class Dog extends JAXBElement<DogType> {
 //			value.setName(dogName);
 //		}
 	}
-	
+
 	@Override
 	public QName getName() {
 		final DogType value = getValue();

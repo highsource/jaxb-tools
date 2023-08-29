@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -305,26 +306,25 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	 */
 	public void execute() throws MojoExecutionException {
 		synchronized (lock) {
-			injectDependencyDefaults();
-			resolveArtifacts();
+            injectDependencyDefaults();
+            resolveArtifacts();
 
-			// Install project dependencies into classloader's class path
-			// and execute xjc2.
-			final ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
-			final ClassLoader classLoader = createClassLoader(currentClassLoader);
-			Thread.currentThread().setContextClassLoader(classLoader);
-			final Locale currentDefaultLocale = Locale.getDefault();
-			try {
-				final Locale locale = LocaleUtils.valueOf(getLocale());
-				Locale.setDefault(locale);
-				//
-				doExecute();
-
-			} finally {
-				Locale.setDefault(currentDefaultLocale);
-				// Set back the old classloader
-				Thread.currentThread().setContextClassLoader(currentClassLoader);
-			}
+            // Install project dependencies into classloader's class path and execute xjc2.
+            final ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
+            final Locale currentDefaultLocale = Locale.getDefault();
+            try (URLClassLoader classLoader = createClassLoader(currentClassLoader)) {
+                Thread.currentThread().setContextClassLoader(classLoader);
+                final Locale locale = LocaleUtils.valueOf(getLocale());
+                Locale.setDefault(locale);
+                //
+                doExecute();
+            } catch (IOException e) {
+                throw new MojoExecutionException("IOException while executing with URLClassloader", e);
+            } finally {
+                Locale.setDefault(currentDefaultLocale);
+                // Set back the old classloader
+                Thread.currentThread().setContextClassLoader(currentClassLoader);
+            }
 		}
 	}
 
@@ -416,7 +416,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		this.episodeFiles = ArtifactUtils.getFiles(this.episodeArtifacts);
 	}
 
-	protected ClassLoader createClassLoader(ClassLoader parent) {
+	protected URLClassLoader createClassLoader(ClassLoader parent) {
 
 		final Collection<URL> xjcPluginURLs = getXjcPluginURLs();
 

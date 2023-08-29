@@ -12,6 +12,7 @@ Organizing pull requests allows us to more readily backport changes and support 
 * PR per-feature change
 * PRs must be signed by GitHub verified GPG or SSH key
 * PRs must be reviewed and approved by a jaxb-tools Committer
+* PR comments must be in the from of '[#{issuenumber}]' (ie [#319] Update something to do this)
 
 ## Code Style
 

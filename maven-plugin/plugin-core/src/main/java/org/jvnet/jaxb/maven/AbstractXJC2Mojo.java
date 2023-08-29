@@ -432,6 +432,21 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		this.catalogResolver = catalogResolver;
 	}
 
+
+    /**
+     * If 'true', the fix for issue #306 will no more be applied.
+     */
+    @Parameter(defaultValue = "false", property = "maven.xjc2.disableSystemIdResolution")
+    private boolean disableSystemIdResolution;
+
+    public boolean getDisableSystemIdResolution() {
+        return disableSystemIdResolution;
+    }
+
+    public void setDisableSystemIdResolution(boolean disableSystemIdResolution) {
+        this.disableSystemIdResolution = disableSystemIdResolution;
+    }
+
 	/**
 	 * <p>
 	 * The generated classes will all be placed under this Java package (xjc's

@@ -54,7 +54,7 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 		return "This plugin allows simplifying \"complex\" properties"
 				+ " (ex. aOrBOrC generated from repeatable choices)"
 				+ " into several \"simple\" properties (ex. a, b, c).\n"
-				+ " Please visit http://confluence.highsource.org/display/J2B/Simplify+Plugin"
+				+ " Please visit https://github.com/highsource/jaxb-tools/wiki/JAXB2-Simplify-Plugin"
 				+ " for plugin documentation.";
 	}
 

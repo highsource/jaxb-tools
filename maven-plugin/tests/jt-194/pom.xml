@@ -6,46 +6,14 @@
     <artifactId>jaxb-maven-plugin-tests</artifactId>
     <version>2.0.6-SNAPSHOT</version>
   </parent>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
   <name>JAXB Tools :: Maven Plugin :: Test [JAXB-TOOLS 194]</name>
   <description>
-		This project tests pom artifacts filtering that may cause scanDependenciesForBindings fails on dependency of type pom.
+    This project tests pom artifacts filtering that may cause scanDependenciesForBindings fails on dependency of type pom.
   </description>
-  <dependencies>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <version>3.12.0</version>
-      <type>pom</type>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.jaxb</groupId>
-      <artifactId>jaxb-runtime</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jvnet.jaxb</groupId>
-      <artifactId>jaxb-maven-plugin-testing</artifactId>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.jvnet.jaxb</groupId>
-        <artifactId>jaxb-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>generate</id>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-            <configuration>
-              <scanDependenciesForBindings>true</scanDependenciesForBindings>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+  <modules>
+    <module>xjb</module>
+    <module>xsd</module>
+    <module>main</module>
+  </modules>
 </project>

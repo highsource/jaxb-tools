@@ -16,43 +16,48 @@ import org.xml.sax.SAXException;
 
 public class ReResolvingInputSourceWrapper extends InputSource {
 
-	private final EntityResolver entityResolver;
+    private final EntityResolver entityResolver;
+
+    private final boolean disableSystemIdResolution;
 
     private final Log log;
 
-	private final InputSource inputSource;
+    private final InputSource inputSource;
 
-	public ReResolvingInputSourceWrapper(EntityResolver entityResolver, Log log,
-			InputSource inputSource, String publicId, String systemId) {
-		this.entityResolver = entityResolver;
+    public ReResolvingInputSourceWrapper(EntityResolver entityResolver, boolean disableSystemIdResolution,
+                                         Log log, InputSource inputSource, String publicId, String systemId) {
+        this.entityResolver = entityResolver;
+        this.disableSystemIdResolution = disableSystemIdResolution;
         this.log = log;
-		this.inputSource = inputSource;
-		this.setPublicId(publicId);
-		this.setSystemId(systemId);
-	}
+        this.inputSource = inputSource;
+        this.setPublicId(publicId);
+        this.setSystemId(systemId);
+    }
 
     @Override
     public String getSystemId() {
         String systemId = super.getSystemId();
-        String callerClassName = getCallerClassName();
-        if (callerClassName.endsWith("domforest")) {
-            log.debug("ReResolvingInputSourceWrapper : Handling DOMForest xjc 2.3.4+ change");
-            // DomForest checks now if file in initial systemId exists and override it if it doesnt
-            //  --> This breaks CatalogResolution (JT-306)
-            // Do the check here, and if file doesn't exist, return the inputSource.systemId instead,
-            //  which is the resolved systemId of the resource
-            try {
-                URI uri = new URI(systemId);
-                if ("file".equals(uri.getScheme())) {
-                    if (!Files.exists(Paths.get(uri))) {
-                        log.debug("ReResolvingInputSourceWrapper : Initial systemId "
-                            + systemId + " is file, and does not exist"
-                            + ", returning inputSource.getSystemId() as systemId (" + inputSource.getSystemId() + ")");
-                        systemId = inputSource.getSystemId();
+        if (!disableSystemIdResolution) {
+            String callerClassName = getCallerClassName();
+            if (callerClassName.endsWith("domforest")) {
+                log.debug("ReResolvingInputSourceWrapper : Handling DOMForest xjc 2.3.4+ change");
+                // DomForest checks now if file in initial systemId exists and override it if it doesnt
+                //  --> This breaks CatalogResolution (JT-306)
+                // Do the check here, and if file doesn't exist, return the inputSource.systemId instead,
+                //  which is the resolved systemId of the resource
+                try {
+                    URI uri = new URI(systemId);
+                    if ("file".equals(uri.getScheme())) {
+                        if (!Files.exists(Paths.get(uri))) {
+                            log.debug("ReResolvingInputSourceWrapper : Initial systemId "
+                                + systemId + " is file, and does not exist"
+                                + ", returning inputSource.getSystemId() as systemId (" + inputSource.getSystemId() + ")");
+                            systemId = inputSource.getSystemId();
+                        }
                     }
+                } catch (URISyntaxException ex) {
+                    //ignore, let it be handled by parser as is
                 }
-            } catch (URISyntaxException ex) {
-                //ignore, let it be handled by parser as is
             }
         }
         return systemId;

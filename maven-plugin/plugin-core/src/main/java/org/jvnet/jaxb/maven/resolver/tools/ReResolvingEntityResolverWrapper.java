@@ -14,14 +14,21 @@ import org.xml.sax.SAXException;
 public class ReResolvingEntityResolverWrapper implements EntityResolver {
 
 	private final EntityResolver entityResolver;
-	private final Log log;
+    private final Log log;
+    private final boolean disableSystemIdResolution;
 
-	public ReResolvingEntityResolverWrapper(EntityResolver entityResolver, Log log) {
+	public ReResolvingEntityResolverWrapper(EntityResolver entityResolver, Log log, boolean disableSystemIdResolution) {
 		if (entityResolver == null) {
 			throw new IllegalArgumentException("Provided entity resolver must not be null.");
 		}
 		this.entityResolver = entityResolver;
 		this.log = Optional.ofNullable(log).orElse(NullLog.INSTANCE);
+        this.disableSystemIdResolution = disableSystemIdResolution;
+        if (disableSystemIdResolution) {
+            log.warn("ReResolvingEntityResolverWrapper : systemIdResolution fix is disable, you may have problems with schema resolution.");
+        } else {
+            log.debug("ReResolvingEntityResolverWrapper : systemIdResolution fix is enabled");
+        }
 	}
 
 	@Override
@@ -37,7 +44,7 @@ public class ReResolvingEntityResolverWrapper implements EntityResolver {
 			final String pId = !StringUtils.isEmpty(publicId) ? publicId : resolvedInputSource.getPublicId();
 			final String sId = !StringUtils.isEmpty(systemId) ? systemId : resolvedInputSource.getSystemId();
             log.debug(MessageFormat.format("ReResolvingEntityResolverWrapper : Final Resolved to publicId [{0}], systemId [{1}].", pId, sId));
-            return new ReResolvingInputSourceWrapper(this.entityResolver, this.log, resolvedInputSource, pId, sId);
+            return new ReResolvingInputSourceWrapper(this.entityResolver, this.disableSystemIdResolution, this.log, resolvedInputSource, pId, sId);
 		}
 	}
 }

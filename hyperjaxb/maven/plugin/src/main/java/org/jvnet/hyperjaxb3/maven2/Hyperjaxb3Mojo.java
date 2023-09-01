@@ -1,15 +1,15 @@
 /*
  * Copyright [2006] java.net
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 		http://www.apache.org/licenses/LICENSE-2.0 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed on an "AS IS" BASIS, 
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
- * See the License for the specific language governing permissions and 
- * limitations under the License. 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 		http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.jvnet.hyperjaxb3.maven2;
@@ -46,7 +46,7 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 	/**
 	 * Target directory for the generated mappings. If left empty, mappings are
 	 * generated together with sources.
-	 * 
+	 *
 	 */
 	@Parameter(property = "maven.hj3.target")
 	public File target;
@@ -54,14 +54,14 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 	/**
 	 * Name of the roundtrip test case. If omitted, no roundtrip test case is
 	 * generated.
-	 * 
+	 *
 	 */
 	@Parameter(property = "maven.hj3.roundtripTestClassName")
 	public String roundtripTestClassName;
 
 	/**
 	 * Patterns for files to be included as resources.
-	 * 
+	 *
 	 */
 	@Parameter
 	public String[] resourceIncludes = new String[] { "**/*.hbm.xml",
@@ -70,54 +70,54 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 	/**
 	 * Persistence variant. Switches between various persistence
 	 * implementations. Possible values are "hibernate" and "ejb-hibernate".
-	 * 
+	 *
 	 */
 	@Parameter(property = "maven.hj3.variant", defaultValue = "ejb")
 	public String variant = "ejb";
 
 	/**
-	 * 
+	 *
 	 * Persistence unit name (EJB3 specific).
-	 * 
+	 *
 	 */
 	@Parameter(property = "maven.hj3.persistenceUnitName")
 	public String persistenceUnitName;
 
 	/**
-	 * 
+	 *
 	 * Persistence unit name (EJB3 specific).
-	 * 
+	 *
 	 */
 	@Parameter(property = "maven.hj3.persistenceXml")
 	public File persistenceXml;
 
 	/**
-	 * 
+	 *
 	 * Whether the <code>hashCode()</code> method should be generated.
-	 * 
+	 *
 	 */
 	@Parameter(property = "maven.hj3.generateHashCode", defaultValue = "true")
 	public boolean generateHashCode = true;
 
 	/**
-	 * 
+	 *
 	 * Whether the <code>equals(...)</code> methods should be generated.
-	 * 
+	 *
 	 */
 	@Parameter(property = "maven.hj3.generateEquals", defaultValue = "true")
 	public boolean generateEquals = true;
 
 	/**
-	 * 
+	 *
 	 * Whether the generated id property must be transient.
-	 * 
+	 *
 	 */
 	@Parameter(property = "maven.hj3.generateTransientId", defaultValue = "false")
 	public boolean generateTransientId = false;
 
 	/**
 	 * Generation result. Possible values are "annotations", "mappingFiles".
-	 * 
+	 *
 	 */
 	@Parameter(property = "maven.hj3.result", defaultValue = "annotations")
 	public String result = "annotations";
@@ -275,9 +275,6 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 	/**
 	 * Updates XJC's compilePath ans resources and update hyperjaxb2's
 	 * resources, that is, *.hbm.xml files and hibernate.config.xml file.
-	 * 
-	 * @param xjcOpts
-	 * @throws MojoExecutionException
 	 */
 	protected void setupMavenPaths() {
 		super.setupMavenPaths();

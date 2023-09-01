@@ -11,6 +11,7 @@ The project is currently containing the following tools :
 * [JAXB Basics Plugins](#jaxb2-basics)
 * [Annox](#annox)
 * [JAXB Annotate Plugin](#jaxb-annotate-plugin)
+* [JAXB Hyperjaxb3](#jaxb-hyperjaxb) (Preview)
 
 ## Java versions
 
@@ -418,3 +419,8 @@ Note that annotations are first compiled in the `annotations` module and the add
 ## Using JAXB2 Annotate Plugin with Ant
 
 See [this example](https://github.com/highsource/jaxb-tools/blob/master/jaxb-annotate-parent/samples/annotate/project-build.xml).
+
+# JAXB Hyperjaxb
+
+Hyperjaxb3 provides relational persistence for JAXB objects.
+This is preview feature (please give feedback if any problems).

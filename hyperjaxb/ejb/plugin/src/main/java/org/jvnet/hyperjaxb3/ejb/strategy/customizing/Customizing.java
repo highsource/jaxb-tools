@@ -86,9 +86,7 @@ public interface Customizing {
 	/**
 	 * Returns the one-to-many customization for the given property. Must not
 	 * return null.
-	 * 
-	 * @param context
-	 *            processing context.
+	 *
 	 * @param property
 	 *            property to retrieve customization for.
 	 * @return One-to-many customization for the given property, never null.

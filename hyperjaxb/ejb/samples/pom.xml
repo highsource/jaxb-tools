@@ -1,11 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.jvnet.jaxb</groupId>
 		<artifactId>hyperjaxb3-ejb</artifactId>
-		<version>2.0.6-SNAPSHOT</version>
+		<version>2.0.6</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>hyperjaxb3-ejb-samples</artifactId>
@@ -94,7 +92,7 @@
 						<phase>none</phase>
 						<configuration>
 							<target>
-								<unzip src="${basedir}/target/${project.artifactId}-${project.version}-ant-src.zip" dest="${basedir}/target/test-ant-assembly"/>
+								<unzip src="${basedir}/target/${project.artifactId}-${project.version}-ant-src.zip" dest="${basedir}/target/test-ant-assembly" />
 							</target>
 						</configuration>
 						<goals>
@@ -107,7 +105,7 @@
 						<phase>none</phase>
 						<configuration>
 							<target>
-								<ant dir="${basedir}/target/test-ant-assembly/${project.artifactId}-${project.version}" target="package"/>
+								<ant dir="${basedir}/target/test-ant-assembly/${project.artifactId}-${project.version}" target="package" />
 							</target>
 						</configuration>
 						<goals>

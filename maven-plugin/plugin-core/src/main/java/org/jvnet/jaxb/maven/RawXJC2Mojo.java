@@ -509,7 +509,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 		} catch (ClassNotFoundException cnfex) {
 			getLog().warn(
-					MessageFormat.format("Class [{0}] could not be found. Processing bindings will probably faile.",
+					MessageFormat.format("Class [{0}] could not be found. Processing bindings will probably fail.",
 							packageInfoClassName),
 					cnfex);
 		}
@@ -536,7 +536,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 		} catch (ClassNotFoundException cnfex) {
 			getLog().warn(
-					MessageFormat.format("Class [{0}] could not be found. Processing bindings will probably faile.",
+					MessageFormat.format("Class [{0}] could not be found. Processing bindings will probably fail.",
 							packageInfoClassName),
 					cnfex);
 		}

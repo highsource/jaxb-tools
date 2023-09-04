@@ -10,6 +10,7 @@
   <artifactId>jaxb-maven-plugin-tests-gh-issue-19</artifactId>
   <packaging>pom</packaging>
   <name>JAXB Tools :: Maven Plugin :: Test [GitHub Issue #19]</name>
+  <description>Test project for catalog relative uri resolution.</description>
   <modules>
     <module>a</module>
     <module>b</module>
@@ -18,10 +19,20 @@
     <dependency>
       <groupId>org.glassfish.jaxb</groupId>
       <artifactId>jaxb-runtime</artifactId>
-      <version>${jaxb.version}</version>
     </dependency>
   </dependencies>
   <build>
     <defaultGoal>test</defaultGoal>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.jvnet.jaxb</groupId>
+          <artifactId>jaxb-maven-plugin</artifactId>
+          <configuration>
+            <relativeCatalogResolution>true</relativeCatalogResolution>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 </project>

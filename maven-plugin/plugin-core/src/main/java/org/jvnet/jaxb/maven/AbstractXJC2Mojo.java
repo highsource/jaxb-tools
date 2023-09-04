@@ -446,6 +446,19 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
     public void setDisableSystemIdResolution(boolean disableSystemIdResolution) {
         this.disableSystemIdResolution = disableSystemIdResolution;
     }
+    /**
+     * If 'true', the fix for issue #19 will be applied.
+     */
+    @Parameter(defaultValue = "false", property = "maven.xjc2.relativeCatalogResolution")
+    private boolean relativeCatalogResolution;
+
+    public boolean getRelativeCatalogResolution() {
+        return relativeCatalogResolution;
+    }
+
+    public void getRelativeCatalogResolution(boolean relativeCatalogResolution) {
+        this.relativeCatalogResolution = relativeCatalogResolution;
+    }
 
 	/**
 	 * <p>

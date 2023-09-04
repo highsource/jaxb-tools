@@ -68,6 +68,7 @@ import org.jvnet.jaxb.maven.net.URILastModifiedResolver;
 import org.jvnet.jaxb.maven.resolver.tools.LoggingCatalogResolver;
 import org.jvnet.jaxb.maven.resolver.tools.MavenCatalogResolver;
 import org.jvnet.jaxb.maven.resolver.tools.ReResolvingEntityResolverWrapper;
+import org.jvnet.jaxb.maven.resolver.tools.RelativeCatalog;
 import org.jvnet.jaxb.maven.util.ArtifactUtils;
 import org.jvnet.jaxb.maven.util.CollectionUtils;
 import org.jvnet.jaxb.maven.util.IOUtils;
@@ -907,6 +908,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		final CatalogManager catalogManager = new CatalogManager();
 		catalogManager.setIgnoreMissingProperties(true);
 		catalogManager.setUseStaticCatalog(false);
+        if (getRelativeCatalogResolution()) {
+            catalogManager.setCatalogClassName(RelativeCatalog.class.getName());
+        }
 		// TODO Logging
 		if (getLog().isDebugEnabled()) {
 			catalogManager.setVerbosity(Integer.MAX_VALUE);

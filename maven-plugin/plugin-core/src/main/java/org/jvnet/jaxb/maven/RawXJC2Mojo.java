@@ -810,26 +810,38 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 	}
 
-	void collectBindingUrisFromArtifact(File file, List<URI> bindingUris) throws MojoExecutionException {
-		try (JarFile jarFile = new JarFile(file))
-		{
-			final Enumeration<JarEntry> jarFileEntries = jarFile.entries();
-			while (jarFileEntries.hasMoreElements()) {
-				JarEntry entry = jarFileEntries.nextElement();
-				if (entry.getName().endsWith(".xjb")) {
-					try {
-						bindingUris.add(new URI("jar:" + file.toURI() + "!/" + entry.getName()));
-					} catch (URISyntaxException urisex) {
-						throw new MojoExecutionException(MessageFormat.format(
-								"Could not create the URI of the binding file from [{0}]", entry.getName()), urisex);
-					}
-				}
-			}
-		} catch (IOException ioex) {
-			throw new MojoExecutionException(
-					"Unable to read the artifact JAR file [" + file.getAbsolutePath() + "].", ioex);
-		}
-	}
+    void collectBindingUrisFromArtifact(File file, List<URI> bindingUris) throws MojoExecutionException {
+        if (file.isDirectory()) {
+            try {
+                List<File> files = IOUtils.scanDirectoryForFiles(
+                    null, file, new String[]{"**/*.xjb"}, null, false);
+                for (File bindingFile : files) {
+                    bindingUris.add(bindingFile.toURI());
+                }
+            } catch (IOException ioex) {
+                throw new MojoExecutionException(
+                    "Unable to read the artifact directory [" + file.getAbsolutePath() + "].", ioex);
+            }
+        } else {
+            try (JarFile jarFile = new JarFile(file)) {
+                final Enumeration<JarEntry> jarFileEntries = jarFile.entries();
+                while (jarFileEntries.hasMoreElements()) {
+                    JarEntry entry = jarFileEntries.nextElement();
+                    if (entry.getName().endsWith(".xjb")) {
+                        try {
+                            bindingUris.add(new URI("jar:" + file.toURI() + "!/" + entry.getName()));
+                        } catch (URISyntaxException urisex) {
+                            throw new MojoExecutionException(MessageFormat.format(
+                                    "Could not create the URI of the binding file from [{0}]", entry.getName()), urisex);
+                        }
+                    }
+                }
+            } catch (IOException ioex) {
+                throw new MojoExecutionException(
+                        "Unable to read the artifact JAR file [" + file.getAbsolutePath() + "].", ioex);
+            }
+        }
+    }
 
 	private CatalogResolver catalogResolverInstance;
 

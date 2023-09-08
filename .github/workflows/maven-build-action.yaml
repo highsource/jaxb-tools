@@ -32,7 +32,7 @@ jobs:
       run: mvn -Pall -no-transfer-progress  clean install
 
     - name: Maven with JDK 11 - Release dry run
-      run: mvn -Psonatype-oss-release,release -DperformRelease -DdryRun=true -B release:clean release:prepare clean install
+      run: mvn -Psonatype-oss-release,release -DperformRelease -DdryRun=true -Dgpg.skip=true -Dgpg.homedir=~/work/jaxb-tools/jaxb-tools/build/gpg -Dgpg.passphrase=password -B release:clean release:prepare clean install
 
     - name: Set up JDK 17
       uses: actions/setup-java@v3
@@ -44,4 +44,4 @@ jobs:
       run: mvn -Pall -no-transfer-progress  clean install
 
     - name: Maven with JDK 17 - Release dry run
-      run: mvn -Psonatype-oss-release,release -DperformRelease -DdryRun=true -B release:clean release:prepare clean install
+      run: mvn -Psonatype-oss-release,release -DperformRelease -DdryRun=true -Dgpg.skip=true -Dgpg.homedir=~/work/jaxb-tools/jaxb-tools/build/gpg -Dgpg.passphrase=password -B release:clean release:prepare clean install

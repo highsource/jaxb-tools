@@ -456,7 +456,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
         return relativeCatalogResolution;
     }
 
-    public void getRelativeCatalogResolution(boolean relativeCatalogResolution) {
+    public void setRelativeCatalogResolution(boolean relativeCatalogResolution) {
         this.relativeCatalogResolution = relativeCatalogResolution;
     }
 

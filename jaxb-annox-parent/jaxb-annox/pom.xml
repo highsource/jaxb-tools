@@ -12,6 +12,28 @@
   <properties>
     <annox.osgi.version>${project.version}</annox.osgi.version>
     <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+    <!-- jaxb.osgi properties -->
+    <jaxb.osgi.version>${project.version}</jaxb.osgi.version>
+    <jaxb.osgi.export />
+    <jaxb.osgi.export.defaults>${project.groupId}*;version=${jaxb.osgi.version};-noimport:=true</jaxb.osgi.export.defaults>
+    <jaxb.osgi.export.pkg>${jaxb.osgi.export}</jaxb.osgi.export.pkg>
+    <jaxb.osgi.import />
+    <jaxb.osgi.private>!*</jaxb.osgi.private>
+    <jaxb.osgi.private.pkg>${jaxb.osgi.private}</jaxb.osgi.private.pkg>
+    <jaxb.osgi.bundle.name>${project.name}</jaxb.osgi.bundle.name>
+    <jaxb.osgi.import.default.version>[$(version;==;$(@)),$(version;+;$(@)))</jaxb.osgi.import.default.version>
+    <jaxb.osgi.import.defaults>org.slf4j;version="${hyte.slf4j.version.range}";provider=paxlogging,org.apache.logging.log4j;version="${hyte.log4j2.version.range}";provider=paxlogging</jaxb.osgi.import.defaults>
+    <jaxb.osgi.import.pkg>${jaxb.osgi.import},${jaxb.osgi.import.defaults},*</jaxb.osgi.import.pkg>
+    <jaxb.osgi.failok>false</jaxb.osgi.failok>
+    <jaxb.osgi.split.pkg>-split-package:=first</jaxb.osgi.split.pkg>
+    <jaxb.osgi.dynamic />
+    <jaxb.osgi.symbolic.name>${project.groupId}.${project.artifactId}</jaxb.osgi.symbolic.name>
+    <jaxb.osgi.exclude.dependencies>false</jaxb.osgi.exclude.dependencies>
+    <jaxb.osgi.resource>{maven-resources}</jaxb.osgi.resource>
+    <jaxb.osgi.services.export />
+    <jaxb.osgi.embed.dependency>!*</jaxb.osgi.embed.dependency>
+    <jaxb.osgi.embed.transitive>false</jaxb.osgi.embed.transitive>
+    <jaxb.osgi.service.component />
   </properties>
   <dependencies>
     <dependency>
@@ -48,6 +70,42 @@
   </dependencies>
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <inherited>true</inherited>
+        <extensions>true</extensions>
+        <configuration>
+          <versions>
+            <jaxb.osgi.version>${project.version}</jaxb.osgi.version>
+          </versions>
+          <excludeDependencies>${jaxb.osgi.exclude.dependencies}</excludeDependencies>
+          <obrRepository>NONE</obrRepository>
+          <instructions>
+            <Bundle-Name>${jaxb.osgi.bundle.name}</Bundle-Name>
+            <Bundle-SymbolicName>${jaxb.osgi.symbolic.name}</Bundle-SymbolicName>
+            <Bundle-DocURL>${project.url}</Bundle-DocURL>
+            <Implementation-Title>${project.description}</Implementation-Title>
+            <Implementation-Version>${project.version}</Implementation-Version>
+            <Maven-URI>mvn:${project.groupId}/${project.artifactId}/${project.version}</Maven-URI>
+            <!-- not needed
+            <Bundle-Activator>${jaxb.osgi.activator}</Bundle-Activator>
+            <DynamicImport-Package>${jaxb.osgi.dynamic}</DynamicImport-Package>
+            <Embed-Dependency>${jaxb.osgi.embed.dependency}</Embed-Dependency>
+            <Embed-Transitive>${jaxb.osgi.embed.transitive}</Embed-Transitive>
+            <Export-Package>${jaxb.osgi.export.pkg}</Export-Package>
+            <Import-Package>${jaxb.osgi.import.pkg}</Import-Package>
+            <Service-Component>${jaxb.osgi.service.component}</Service-Component>
+            -->
+            <!-- Advanced OSGi <Private-Package>${jaxb.osgi.private.pkg}</Private-Package>
+            <Include-Resource>${jaxb.osgi.resource}</Include-Resource>
+            <_versionpolicy>${jaxb.osgi.import.default.version}</_versionpolicy>
+            <_failok>${jaxb.osgi.failok}</_failok>
+            <Export-Service>${jaxb.osgi.services.export}</Export-Service> -->
+          </instructions>
+        </configuration>
+      </plugin>
+      <!-- legacy
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
@@ -97,7 +155,7 @@
           </archive>
         </configuration>
       </plugin>
-
+      -->
     </plugins>
   </build>
 </project>

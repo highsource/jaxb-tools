@@ -4,7 +4,7 @@
 [![GitHub Actions Status](https://github.com/highsource/jaxb-tools/workflows/Maven%20CI/badge.svg)](https://github.com/highsource/jaxb-tools/actions)
 [![CodeQL](https://github.com/highsource/jaxb-tools/workflows/CodeQL/badge.svg)](https://github.com/highsource/jaxb-tools/actions/workflows/codeql-analysis.yml?query=workflow%3ACodeQL)
 
-Welcome to the most advanced and feature-full sets of JAXB related tools.
+Welcome to the most advanced and feature-full sets of [JAXB](https://github.com/eclipse-ee4j/jaxb-ri)-related tools.
 
 The project is currently containing the following tools :
 * [JAXB Maven Plugin](#jaxb-maven-plugin)
@@ -15,8 +15,9 @@ The project is currently containing the following tools :
 
 ## Java versions
 
-Supported Java versions are `8`, and higher for all projects.
-Build is tested against JDK8, JDK11 and JDK17.
+This project supports Java 8 and higher.
+
+The build is tested against JDK8, JDK11 and JDK17.
 
 ## [Documentation](https://github.com/highsource/jaxb-tools/wiki)
 
@@ -36,17 +37,17 @@ Please refer to the [wiki](https://github.com/highsource/jaxb-tools/wiki) for th
 
 ## Disclaimer
 
-This project is not developed, supported or in any other way affiliated with Apache. The `org.jvnet.jaxb:jaxb-tools` is not an Apache product (and does not pretend to be one), it is a completely independent development.
+This project is not developed, supported or in any other way affiliated with Apache, Eclipse or Oracle.
 
-This project is also *not* developed by or affiliated with Oracle or Sun. Even if it is featured on [https://jaxb.java.net/](https://jaxb.java.net) pages,
+It was a completely independent development by its creator, [Alexey Valikov](https://github.com/highsource).
 
-**This plugin is in no way _official_ JAXB Maven plugin by Sun or Oracle.**
-
-This is a completely independent development. [I](https://github.com/highsource) am *not* an Oracle employee.
+It is now maintained by a group of people who are interested in keeping jaxb-tools working with future versions of Java and Jakarta.
 
 # JAXB Maven Plugin
 
-Welcome to the `org.jvnet.jaxb:jaxb-maven-plugin`, the most advanced and feature-full Maven plugin for XML Schema compilation.
+This Maven plugin generates Java classes during Maven builds from XML Schemas (as well as WSDL, DTDs, RELAX NG formats).
+
+It wraps and enhances the [JAXB Schema Compiler (XJC)](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/xjc.html) with its own set of plugins and customization points.
 
 ## Quick start
 
@@ -61,7 +62,7 @@ Welcome to the `org.jvnet.jaxb:jaxb-maven-plugin`, the most advanced and feature
       <plugin>
         <groupId>org.jvnet.jaxb</groupId>
         <artifactId>jaxb-maven-plugin</artifactId>
-        <version>2.0.0</version>
+        <version>2.0.5</version>
         <executions>
           <execution>
             <goals>
@@ -80,30 +81,29 @@ Welcome to the `org.jvnet.jaxb:jaxb-maven-plugin`, the most advanced and feature
 
 The current version 2.X of this plugin supports only JAXB 2.3.
 
-If you need an older JAXB version, you can use one of the following variants, which are no more supported :
+A version of this plugin that supports JAXB >= 3.x is [currently being worked on](https://github.com/highsource/jaxb-tools/issues/233).
 
-* `org.jvnet.jaxb2.maven2:maven-jaxb20-plugin:0.15.2` - JAXB 2.0.
-* `org.jvnet.jaxb2.maven2:maven-jaxb21-plugin:0.15.2` - JAXB 2.1.
+If you need an older JAXB version, you can use one of the following variants, which are no longer supported:
+
 * `org.jvnet.jaxb2.maven2:maven-jaxb22-plugin:0.15.1` - JAXB 2.2.
+* `org.jvnet.jaxb2.maven2:maven-jaxb21-plugin:0.15.2` - JAXB 2.1.
+* `org.jvnet.jaxb2.maven2:maven-jaxb20-plugin:0.15.2` - JAXB 2.0.
 
-## Related
+## Similar Projects
 
-This Maven plugin wraps and enhances the [JAXB](https://jaxb.java.net/) [Schema Compiler (XJC)](http://docs.oracle.com/javase/6/docs/technotes/tools/share/xjc.html) and allows
-compiling XML Schemas (as well as WSDL, DTDs, RELAX NG) into Java classes in Maven builds.
-
-> If you are interested in the Mojohaus JAXB2 Maven Plugin (`org.codehaus.mojo:jaxb2-maven-plugin`),
-> please follow [this link](https://github.com/mojohaus/jaxb2-maven-plugin) to the corresponding website.
+If you experience issues with the Mojohaus JAXB2 Maven Plugin (`org.codehaus.mojo:jaxb2-maven-plugin`),
+please file it [on their project page](https://github.com/mojohaus/jaxb2-maven-plugin).
 
 # JAXB2 Basics
 
 JAXB2 Basics is an [open source](https://github.com/highsource/jaxb-tools/blob/master/LICENSE) project
-which provides useful plugins and tools for [JAXB 2.x reference implementation](https://jaxb.java.net/).
+which provides useful plugins and tools for [JAXB 2.x reference implementation](https://github.com/eclipse-ee4j/jaxb-ri/tree/EE8).
 
 ## Documentation
 
 Please refer to the [wiki](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Basic) for documentation.
 
-JAXB2 Basics can only be used with JAXB/XJC 2.3.0 and higher. JAXB/XJC versions 2.2.x and earlier are no longer supported.
+JAXB2 Basics can only be used with JAXB/XJC 2.3.x. JAXB/XJC versions 2.2.x and earlier are no longer supported.
 
 ## Using JAXB2 Basics
 
@@ -124,8 +124,8 @@ JAXB2 Basics can only be used with JAXB/XJC 2.3.0 and higher. JAXB/XJC versions 
 * [Simplify Plugin](https://github.com/highsource/jaxb2-tools/wiki/JAXB2-Simplify-Plugin) - simplifies weird properties like `aOrBOrC`.
 * [EnumValue Plugin](https://github.com/highsource/jaxb2-tools/wiki/JAXB2-EnumValue-Plugin) - makes all the generated enums implement the `EnumValue<T>` interface.
 * [JAXBIndex Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-JAXBIndex-Plugin) - generated `jaxb.index` files listing schema-derived classes.
-* [FixJAXB1058 Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-FixJAXB1058-Plugin) - fixes [JAXB-1058](https://java.net/jira/browse/JAXB-1058).
-* [Commons Lang Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Commons-Lang-Plugin) - generates the toString(), hashCode() and equals() methods using Apache commons-lang3.
+* [FixJAXB1058 Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-FixJAXB1058-Plugin) - fixes [JAXB-1058](https://github.com/eclipse-ee4j/jaxb-ri/issues/1058).
+* [Commons Lang Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Commons-Lang-Plugin) - generates the `toString()`, `hashCode()` and `equals()` methods using Apache commons-lang3.
 * [Default Value Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Default-Value-Plugin) - modifies the JAXB code model to set default values to the schema `default` attribute.
 * [Fluent API Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Fluent-API-Plugin) - support a fluent api in addition to the default (JavaBean) setter methods.
 * [Namespace Prefix Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Namespace-Prefix-Plugin) - adds `javax.xml.bind.annotation.XmlNs` annotations to `package-info.java` files

@@ -53,7 +53,6 @@
     <module>jaxb-bom-parent</module>
     <module>jaxb-annotate-parent</module>
     <module>jaxb-annox-parent</module>
-    <module>jaxb-tools-docs</module>
     <module>basics</module>
     <module>maven-plugin</module>
     <module>hyperjaxb</module>
@@ -112,6 +111,12 @@
     <editorconfig-maven-plugin.version>0.1.3</editorconfig-maven-plugin.version>
   </properties>
   <profiles>
+    <profile>
+      <id>all</id>
+      <modules>
+        <module>jaxb-tools-docs</module>
+      </modules>
+    </profile>
     <profile>
       <id>sonatype-oss-release</id>
       <build>

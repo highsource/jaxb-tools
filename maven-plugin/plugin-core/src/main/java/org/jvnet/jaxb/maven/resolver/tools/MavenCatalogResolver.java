@@ -10,14 +10,13 @@ import org.jvnet.jaxb.maven.DependencyResource;
 import org.jvnet.jaxb.maven.DependencyResourceResolver;
 import org.jvnet.jaxb.maven.plugin.logging.NullLog;
 
-import com.sun.org.apache.xml.internal.resolver.CatalogManager;
+import org.apache.xml.resolver.CatalogManager;
 
 public class MavenCatalogResolver extends
-		com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver {
+		org.apache.xml.resolver.tools.CatalogResolver {
 
 	public static final String URI_SCHEME_MAVEN = "maven";
 	private final DependencyResourceResolver dependencyResourceResolver;
-	private final CatalogManager catalogManager;
 	private final Log log;
 
 	public MavenCatalogResolver(CatalogManager catalogManager,
@@ -28,17 +27,12 @@ public class MavenCatalogResolver extends
 	public MavenCatalogResolver(CatalogManager catalogManager,
 			DependencyResourceResolver dependencyResourceResolver, Log log) {
 		super(catalogManager);
-		this.catalogManager = catalogManager;
 		if (dependencyResourceResolver == null) {
 			throw new IllegalArgumentException(
 					"Dependency resource resolver must not be null.");
 		}
 		this.dependencyResourceResolver = dependencyResourceResolver;
 		this.log = log != null ? log : NullLog.INSTANCE;
-	}
-
-	protected CatalogManager getCatalogManager() {
-		return catalogManager;
 	}
 
 	protected Log getLog() {

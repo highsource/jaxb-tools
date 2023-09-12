@@ -101,7 +101,7 @@
 					<include name="dtd-parser-*.jar"/>
 					<include name="istack-commons-tools-*.jar"/>
 					<include name="relaxngDatatype-*.jar"/>
-					<include name="resolver-*.jar"/>
+          <include name="xml-resolver-*.jar"/>
 					<include name="rngom-*.jar"/>
 					<include name="xsom-*.jar"/>
 
@@ -135,7 +135,7 @@
 	<target name="compile" depends="generate-sources">
 		<mkdir dir="${basedir}/target/classes"/>
 		<javac
-			destdir="${basedir}/target/classes" 
+			destdir="${basedir}/target/classes"
 			srcdir="${basedir}/src/main/java:${basedir}/target/generated-sources/xjc"
 			classpathref="compile.path"
 			source="1.8"
@@ -151,7 +151,7 @@
 	<target name="test-compile" depends="compile">
 		<mkdir dir="${basedir}/target/test-classes"/>
 		<javac
-			destdir="${basedir}/target/test-classes" 
+			destdir="${basedir}/target/test-classes"
 			srcdir="${basedir}/src/test/java:${basedir}/target/generated-sources/xjc"
 			classpathref="test-compile.path"
 			source="1.8"
@@ -191,7 +191,7 @@
 	<target name="package" depends="test">
 		<mkdir dir="${basedir}/target"/>
 		<jar destfile="${basedir}/target/${artifactId}-${version}.jar"
-			basedir="${basedir}/target/classes"/> 
+			basedir="${basedir}/target/classes"/>
 	</target>
 	<target name="install" depends="package"/>
 </project>

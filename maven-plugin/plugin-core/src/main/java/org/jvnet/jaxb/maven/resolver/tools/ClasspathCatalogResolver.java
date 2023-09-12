@@ -9,7 +9,7 @@ import java.net.URL;
 import java.text.MessageFormat;
 
 public class ClasspathCatalogResolver extends
-		com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver implements LoggingCatalogResolver {
+		org.apache.xml.resolver.tools.CatalogResolver implements LoggingCatalogResolver {
 
 	public static final String URI_SCHEME_CLASSPATH = "classpath";
 	private Log log;

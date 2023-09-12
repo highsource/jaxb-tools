@@ -79,8 +79,8 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.sun.org.apache.xml.internal.resolver.CatalogManager;
-import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
+import org.apache.xml.resolver.CatalogManager;
+import org.apache.xml.resolver.tools.CatalogResolver;
 import com.sun.xml.txw2.annotation.XmlNamespace;
 
 /**
@@ -909,6 +909,8 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		catalogManager.setIgnoreMissingProperties(true);
 		catalogManager.setUseStaticCatalog(false);
         if (getRelativeCatalogResolution()) {
+            getLog().info("Using RelativeCatalogResolution as CatalogManager" +
+                " (enable resolution of '../' path for REWRITE_SYSTEM in catalog files)");
             catalogManager.setCatalogClassName(RelativeCatalog.class.getName());
         }
 		// TODO Logging
@@ -923,7 +925,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		}
 	}
 
-	private CatalogResolver createCatalogResolverByClassName(final String catalogResolverClassName)
+    private CatalogResolver createCatalogResolverByClassName(final String catalogResolverClassName)
 			throws MojoExecutionException {
 		try {
 			final Class<?> draftCatalogResolverClass = Thread.currentThread().getContextClassLoader()

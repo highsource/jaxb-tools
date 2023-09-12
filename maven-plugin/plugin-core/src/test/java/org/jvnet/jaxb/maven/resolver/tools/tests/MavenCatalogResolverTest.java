@@ -7,8 +7,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.xml.sax.InputSource;
 
-import com.sun.org.apache.xml.internal.resolver.CatalogManager;
-import com.sun.org.apache.xml.internal.resolver.tools.CatalogResolver;
+import org.apache.xml.resolver.CatalogManager;
+import org.apache.xml.resolver.tools.CatalogResolver;
 
 public class MavenCatalogResolverTest {
 

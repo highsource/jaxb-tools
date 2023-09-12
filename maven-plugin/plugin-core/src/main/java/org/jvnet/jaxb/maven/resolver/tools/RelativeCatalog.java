@@ -1,8 +1,8 @@
 package org.jvnet.jaxb.maven.resolver.tools;
 
-import com.sun.org.apache.xml.internal.resolver.Catalog;
-import com.sun.org.apache.xml.internal.resolver.CatalogEntry;
-import com.sun.org.apache.xml.internal.resolver.CatalogException;
+import org.apache.xml.resolver.Catalog;
+import org.apache.xml.resolver.CatalogEntry;
+import org.apache.xml.resolver.CatalogException;
 
 import java.util.Vector;
 
@@ -11,6 +11,7 @@ public class RelativeCatalog extends Catalog {
     public void addEntry(CatalogEntry entry) {
         super.addEntry(entry);
         if (entry.getEntryType() == REWRITE_SYSTEM) {
+            catalogManager.debug.message(0, "REWRITE_SYSTEM relativeCatalog checking");
             try {
                 if (entry.getEntryArg(0) != null && entry.getEntryArg(0).startsWith("..")) {
                     // generate new entry for catalog
@@ -20,8 +21,8 @@ public class RelativeCatalog extends Catalog {
 
                     CatalogEntry duplicatedEntry = new CatalogEntry(entry.getEntryType(), args);
 
-                    catalogManager.debug.message(4, "REWRITE_SYSTEM",
-                        duplicatedEntry.getEntryArg(0), duplicatedEntry.getEntryArg(1));
+                    catalogManager.debug.message(0, "REWRITE_SYSTEM adding "
+                        + duplicatedEntry.getEntryArg(0) + " to " + duplicatedEntry.getEntryArg(1));
 
                     catalogEntries.addElement(duplicatedEntry);
                 }

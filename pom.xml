@@ -62,15 +62,11 @@
     <maven.version>2.0.9</maven.version>
 
     <!-- Dependencies versions -->
-    <activation.version>1.2.2</activation.version>
     <ant.version>1.10.12</ant.version>
     <dtd-parser.version>1.4.5</dtd-parser.version>
-    <fastinfoset.version>1.2.18</fastinfoset.version>
+    <!-- jakarta.activation.version>1.2.2</jakarta.activation.version -->
+    <jaxb.version>2.3.8</jaxb.version>
     <istack.version>3.0.12</istack.version>
-    <jaxb23.version>2.3.8</jaxb23.version>
-    <jaxb-api.version>2.3.3</jaxb-api.version>
-    <jaxb.version>${jaxb23.version}</jaxb.version>
-    <jaxb-core.version>2.3.0.1</jaxb-core.version>
 
     <commons-beanutils.version>1.9.4</commons-beanutils.version>
     <commons-io.version>2.11.0</commons-io.version>
@@ -236,63 +232,18 @@
     <dependencies>
       <dependency>
         <groupId>org.glassfish.jaxb</groupId>
-        <artifactId>jaxb-runtime</artifactId>
+        <artifactId>jaxb-bom</artifactId>
         <version>${jaxb.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
-      <dependency>
-        <groupId>org.glassfish.jaxb</groupId>
-        <artifactId>jaxb-core</artifactId>
-        <version>${jaxb-core.version}</version>
-      </dependency>
-      <!-- Start of jaxb-runtime dependencies -->
-      <dependency>
-        <groupId>jakarta.xml.bind</groupId>
-        <artifactId>jakarta.xml.bind-api</artifactId>
-        <version>${jaxb-api.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.glassfish.jaxb</groupId>
-        <artifactId>txw2</artifactId>
-        <version>${jaxb.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.sun.istack</groupId>
-        <artifactId>istack-commons-runtime</artifactId>
-        <version>${istack.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.jvnet.staxex</groupId>
-        <artifactId>stax-ex</artifactId>
-        <version>${stax-ex.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.sun.xml.fastinfoset</groupId>
-        <artifactId>FastInfoset</artifactId>
-        <version>${fastinfoset.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.glassfish.jaxb</groupId>
-        <artifactId>jaxb-xjc</artifactId>
-        <version>${jaxb.version}</version>
-      </dependency>
-
-      <!-- Start jaxb-xjc dependencies -->
-      <dependency>
-        <groupId>org.glassfish.jaxb</groupId>
-        <artifactId>xsom</artifactId>
-        <version>${jaxb.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.glassfish.jaxb</groupId>
-        <artifactId>codemodel</artifactId>
-        <version>${jaxb.version}</version>
-      </dependency>
+      <!--
       <dependency>
         <groupId>com.sun.xml.bind.external</groupId>
         <artifactId>rngom</artifactId>
         <version>${jaxb.version}</version>
       </dependency>
+      -->
       <dependency>
         <groupId>com.sun.xml.dtd-parser</groupId>
         <artifactId>dtd-parser</artifactId>
@@ -312,11 +263,6 @@
             <artifactId>tools</artifactId>
           </exclusion>
         </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>com.sun.activation</groupId>
-        <artifactId>jakarta.activation</artifactId>
-        <version>${activation.version}</version>
       </dependency>
       <!-- End of jaxb-xjc dependencies -->
       <dependency>

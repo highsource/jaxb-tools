@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
 
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 
 import org.jvnet.hyperjaxb3.ejb.plugin.EjbPlugin;
 import org.jvnet.hyperjaxb3.ejb.strategy.naming.Naming;

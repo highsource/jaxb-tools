@@ -19,7 +19,7 @@ import com.sun.tools.xjc.model.CElement;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.model.CReferencePropertyInfo;
 import com.sun.tools.xjc.model.CTypeInfo;
-import com.sun.xml.bind.v2.model.core.WildcardMode;
+import org.glassfish.jaxb.core.v2.model.core.WildcardMode;
 
 public class WrapSingleWildcardReference implements CreatePropertyInfos {
 

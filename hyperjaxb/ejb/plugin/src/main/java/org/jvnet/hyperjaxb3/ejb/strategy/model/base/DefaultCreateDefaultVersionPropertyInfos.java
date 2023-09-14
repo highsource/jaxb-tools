@@ -3,7 +3,7 @@ package org.jvnet.hyperjaxb3.ejb.strategy.model.base;
 import java.util.Collection;
 import java.util.Collections;
 
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.lang3.Validate;

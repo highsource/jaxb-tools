@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.xml.bind.annotation.adapters;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
 

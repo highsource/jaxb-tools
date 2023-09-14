@@ -1,7 +1,7 @@
 package org.jvnet.hyperjaxb3.xml.bind.annotation.adapters;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.namespace.QName;
 
 import org.jvnet.hyperjaxb3.item.Converter;

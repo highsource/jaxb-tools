@@ -30,11 +30,11 @@
 
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 	xmlns:annox="http://annox.dev.java.net"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	jaxb:extensionBindingPrefixes="annox xjc"
-	jaxb:version="1.0">
+	jaxb:version="3.0">
 
 	<xs:annotation>
 		<xs:appinfo>
@@ -59,8 +59,8 @@
 			<xs:element name="customBooleanProperty" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:appinfo>
-						<annox:annotate target="field">@javax.xml.bind.annotation.XmlElement(type=java.lang.Boolean.class)</annox:annotate>
-						<annox:annotate target="field">@javax.xml.bind.annotation.XmlSchemaType(name="boolean")</annox:annotate>
+						<annox:annotate target="field">@jakarta.xml.bind.annotation.XmlElement(type=java.lang.Boolean.class)</annox:annotate>
+						<annox:annotate target="field">@jakarta.xml.bind.annotation.XmlSchemaType(name="boolean")</annox:annotate>
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:element>

@@ -2,8 +2,8 @@ package org.jvnet.hyperjaxb3.jdo.test;
 
 import java.io.File;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
 
 import org.jvnet.jaxb2_commons.test.AbstractSamplesTest;
 import org.jvnet.jaxb2_commons.xml.bind.ContextPathAware;

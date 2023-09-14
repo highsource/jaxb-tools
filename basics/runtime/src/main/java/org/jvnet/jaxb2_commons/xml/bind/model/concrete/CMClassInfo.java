@@ -22,8 +22,8 @@ import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.ClassInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.concrete.origin.PropertyInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MClassInfoOrigin;
 
-import com.sun.xml.bind.v2.model.core.ClassInfo;
-import com.sun.xml.bind.v2.model.core.PropertyInfo;
+import org.glassfish.jaxb.core.v2.model.core.ClassInfo;
+import org.glassfish.jaxb.core.v2.model.core.PropertyInfo;
 
 public class CMClassInfo<T, C extends T> implements MClassInfo<T, C> {
 

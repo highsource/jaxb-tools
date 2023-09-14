@@ -1,7 +1,7 @@
 package org.jvnet.hyperjaxb3.persistence.jpa2;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
 
 import org.jvnet.hyperjaxb3.persistence.util.PersistenceUtils;
 

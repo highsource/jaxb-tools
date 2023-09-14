@@ -2,7 +2,7 @@ package org.jvnet.hyperjaxb3.transform;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.jvnet.hyperjaxb3.item.ConvertedList;
 import org.jvnet.hyperjaxb3.item.Converter;

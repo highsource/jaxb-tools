@@ -13,12 +13,6 @@
   <properties>
     <maven.deploy.skip>true</maven.deploy.skip>
   </properties>
-  <modules>
-    <module>po</module>
-    <module>basic</module>
-    <module>po-simple</module>
-    <module>cxf</module>
-  </modules>
   <dependencies>
     <dependency>
       <groupId>org.jvnet.jaxb</groupId>
@@ -28,6 +22,32 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
+  <profiles>
+    <profile>
+      <id>jdk-1.8</id>
+      <activation>
+        <jdk>1.8</jdk>
+      </activation>
+      <modules> 
+        <module>po</module>
+        <module>basic</module>
+        <module>po-simple</module>
+        <!-- only jdk-11+ module>cxf</module --> 
+      </modules>
+    </profile>
+    <profile>
+      <id>jdk-11+</id>
+      <activation>
+        <jdk>[11,)</jdk>
+      </activation>
+      <modules>
+        <module>po</module>
+        <module>basic</module>
+        <module>po-simple</module>
+        <module>cxf</module> 
+      </modules>
+    </profile>
+  </profiles>
   <build>
     <defaultGoal>install</defaultGoal>
     <plugins>
@@ -36,7 +56,7 @@
         <executions>
           <execution>
             <id>maven-assembly</id>
-						<!--phase>package</phase-->
+            <!--phase>package</phase-->
             <phase>none</phase>
             <goals>
               <goal>single</goal>
@@ -50,7 +70,7 @@
           </execution>
           <execution>
             <id>ant-assembly</id>
-						<!--phase>package</phase-->
+            <!--phase>package</phase-->
             <phase>none</phase>
             <goals>
               <goal>single</goal>
@@ -69,7 +89,7 @@
         <executions>
           <execution>
             <id>maven-unpack</id>
-						<!--phase>pre-integration-test</phase-->
+            <!--phase>pre-integration-test</phase-->
             <phase>none</phase>
             <configuration>
               <target>

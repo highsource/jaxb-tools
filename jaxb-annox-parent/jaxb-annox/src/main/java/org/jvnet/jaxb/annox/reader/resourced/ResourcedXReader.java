@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import javax.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBContext;
 
 import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.annox.model.XClass;

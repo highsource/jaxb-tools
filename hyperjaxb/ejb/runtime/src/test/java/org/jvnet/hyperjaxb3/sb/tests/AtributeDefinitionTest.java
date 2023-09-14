@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.sb.tests;
 
-import javax.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBContext;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;

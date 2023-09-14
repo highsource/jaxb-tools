@@ -29,17 +29,17 @@
 
 -->
 <jaxb:bindings
-	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:annox="http://annox.dev.java.net"
 	jaxb:extensionBindingPrefixes="annox"
 
-	jaxb:version="2.1">
+	jaxb:version="3.0">
 
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xsd:schema">
 		<jaxb:bindings node="xsd:complexType[@name='issueJIIB43Type']">
-			<annox:annotate target="class">@javax.xml.bind.annotation.XmlRootElement("someElement")</annox:annotate>
-			<annox:annotate target="package">@javax.xml.bind.annotation.XmlSchema(elementFormDefault=javax.xml.bind.annotation.XmlNsForm.QUALIFIED)</annox:annotate>
+			<annox:annotate target="class">@jakarta.xml.bind.annotation.XmlRootElement("someElement")</annox:annotate>
+			<annox:annotate target="package">@jakarta.xml.bind.annotation.XmlSchema(elementFormDefault=jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED)</annox:annotate>
 			<annox:annotatePackage>@org.jvnet.jaxb2_commons.plugin.annotate.tests.annotations.Marked("XJC")</annox:annotatePackage>
 		</jaxb:bindings>
 
@@ -55,10 +55,10 @@
 			<annox:annotate>@com.fasterxml.jackson.annotation.JsonView(java.lang.Object.class)</annox:annotate>
 		</jaxb:bindings>
 		<jaxb:bindings node="xsd:complexType[@name='gh26Type']/xsd:sequence/xsd:element[@name='x']">
-			<annox:removeAnnotation class="javax.xml.bind.annotation.XmlElement" target="field"/>
+			<annox:removeAnnotation class="jakarta.xml.bind.annotation.XmlElement" target="field"/>
 		</jaxb:bindings>
 		<jaxb:bindings node="xsd:complexType[@name='gh51Type']">
-			<annox:annotateClass>@javax.xml.bind.annotation.XmlType(name="gh51TypeNew")</annox:annotateClass>
+			<annox:annotateClass>@jakarta.xml.bind.annotation.XmlType(name="gh51TypeNew")</annox:annotateClass>
 		</jaxb:bindings>
 	</jaxb:bindings>
 </jaxb:bindings>

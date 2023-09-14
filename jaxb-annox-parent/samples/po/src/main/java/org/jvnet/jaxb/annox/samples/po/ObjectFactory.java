@@ -1,6 +1,6 @@
 package org.jvnet.jaxb.annox.samples.po;
 
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
 

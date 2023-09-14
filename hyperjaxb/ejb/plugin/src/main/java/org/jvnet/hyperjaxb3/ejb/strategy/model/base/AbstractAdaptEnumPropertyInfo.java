@@ -10,7 +10,7 @@ import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.generator.bean.field.FieldRenderer;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.outline.FieldOutline;
-import com.sun.xml.bind.v2.model.core.PropertyKind;
+import org.glassfish.jaxb.core.v2.model.core.PropertyKind;
 
 public abstract class AbstractAdaptEnumPropertyInfo extends
 		AbstractAdaptPropertyInfo {

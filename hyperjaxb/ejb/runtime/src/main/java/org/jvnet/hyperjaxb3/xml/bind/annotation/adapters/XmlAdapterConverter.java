@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.xml.bind.annotation.adapters;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.apache.commons.lang3.Validate;
 import org.jvnet.hyperjaxb3.item.Converter;

@@ -2,7 +2,7 @@ package org.jvnet.jaxb.annox.samples.po;
 
 import java.math.BigDecimal;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 public class BigDecimalAdapter extends XmlAdapter<String, BigDecimal> {
 

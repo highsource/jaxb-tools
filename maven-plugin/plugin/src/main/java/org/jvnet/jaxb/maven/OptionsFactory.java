@@ -28,7 +28,7 @@ public class OptionsFactory implements IOptionsFactory<Options> {
 
 		options.classpaths.addAll(optionsConfiguration.getPlugins());
 
-		options.target = SpecVersion.V2_2;
+		options.target = SpecVersion.V3_0;
 
 		final String encoding = optionsConfiguration.getEncoding();
 

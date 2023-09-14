@@ -145,7 +145,7 @@ Please refer to the [wiki](https://github.com/highsource/jaxb-tools/wiki/Annox-H
 // Parse annotation from the string
 XAnnotation<XmlRootElement> xannotation =
 	(XAnnotation<XmlRootElement>) XAnnotationParser.INSTANCE.parse
-		("@javax.xml.bind.annotation.XmlRootElement(name=\"foo\")");
+		("@jakarta.xml.bind.annotation.XmlRootElement(name=\"foo\")");
 
 // Create an instance of the annotation
 XmlRootElement xmlRootElement = xannotation.getResult();
@@ -188,8 +188,8 @@ You can put your annotations directly in schema:
 ````xml
 <xsd:schema
         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-        jaxb:version="2.1"
+        xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+        jaxb:version="3.0"
         xmlns:annox="http://annox.dev.java.net"
         jaxb:extensionBindingPrefixes="annox">
 
@@ -239,7 +239,7 @@ Or in binding files:
 ````xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings
-        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema"
         xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:annox="http://annox.dev.java.net"
@@ -249,7 +249,7 @@ Or in binding files:
 
     <jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
         <jaxb:bindings node="xs:complexType[@name='issueJIIB39CType']">
-            <annox:annotateClass>@javax.xml.bind.annotation.XmlRootElement(name="IssueJIIB39CType")</annox:annotateClass>
+            <annox:annotateClass>@jakarta.xml.bind.annotation.XmlRootElement(name="IssueJIIB39CType")</annox:annotateClass>
         </jaxb:bindings>
         <jaxb:bindings node="xs:complexType[@name='issueJIIB39CType']/xs:attribute[@name='test']">
             <annox:annotate target="field">@javax.xml.bind.annotation.XmlAttribute(required=false, name="test")</annox:annotate>
@@ -299,15 +299,15 @@ You can remove annotations using customizations directly in schema:
 ````xml
 <xsd:schema
         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-        jaxb:version="2.1"
+        xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+        jaxb:version="3.0"
         xmlns:annox="http://annox.dev.java.net"
         jaxb:extensionBindingPrefixes="annox">
 
     <xsd:complexType name="FooType">
         <xsd:annotation>
             <xsd:appinfo>
-                <annox:removeAnnotation class="javax.xml.bind.annotation.XmlType" />
+                <annox:removeAnnotation class="jakarta.xml.bind.annotation.XmlType" />
             </xsd:appinfo>
         </xsd:annotation>
         <xsd:sequence>
@@ -315,7 +315,7 @@ You can remove annotations using customizations directly in schema:
             <xsd:element name="foobar" type="xsd:string">
                 <xsd:annotation>
                     <xsd:appinfo>
-                        <annox:removeAnnotation class="javax.xml.bind.annotation.XmlElement" target="field" />
+                        <annox:removeAnnotation class="jakarta.xml.bind.annotation.XmlElement" target="field" />
                     </xsd:appinfo>
                 </xsd:annotation>
             </xsd:element>
@@ -330,7 +330,7 @@ Or in binding files:
 ````xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings
-        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema"
         xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:annox="http://annox.dev.java.net"
@@ -340,10 +340,10 @@ Or in binding files:
 
     <jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
         <jaxb:bindings node="xs:complexType[@name='FooType']">
-            <annox:removeAnnotation class="javax.xml.bind.annotation.XmlType" />
+            <annox:removeAnnotation class="jakarta.xml.bind.annotation.XmlType" />
         </jaxb:bindings>
         <jaxb:bindings node="xs:complexType[@name='FooType']//xs:element[@name='foobar']">
-            <annox:removeAnnotation class="javax.xml.bind.annotation.XmlElement" target="field" />
+            <annox:removeAnnotation class="jakarta.xml.bind.annotation.XmlElement" target="field" />
         </jaxb:bindings>
     </jaxb:bindings>
 

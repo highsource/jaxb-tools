@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.eg.tests;
 
-import javax.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlAttribute;
 
 public abstract class Node 
 {

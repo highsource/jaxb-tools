@@ -2,7 +2,7 @@ package org.jvnet.hyperjaxb3.xjc.generator.bean.field;
 
 import java.util.Collection;
 
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
 import org.jvnet.hyperjaxb3.xjc.adapters.XmlAdapterXjcUtils;

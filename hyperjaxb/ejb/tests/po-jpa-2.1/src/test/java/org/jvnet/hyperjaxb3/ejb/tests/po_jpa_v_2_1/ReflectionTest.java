@@ -12,12 +12,12 @@ import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.sun.xml.bind.v2.model.annotation.RuntimeInlineAnnotationReader;
-import com.sun.xml.bind.v2.model.core.ElementInfo;
-import com.sun.xml.bind.v2.model.core.Ref;
-import com.sun.xml.bind.v2.model.core.TypeInfoSet;
-import com.sun.xml.bind.v2.model.impl.ModelBuilder;
-import com.sun.xml.bind.v2.model.nav.Navigator;
+import org.glassfish.jaxb.core.v2.model.annotation.RuntimeInlineAnnotationReader;
+import org.glassfish.jaxb.core.v2.model.core.ElementInfo;
+import org.glassfish.jaxb.core.v2.model.core.Ref;
+import org.glassfish.jaxb.core.v2.model.core.TypeInfoSet;
+import org.glassfish.jaxb.core.v2.model.impl.ModelBuilder;
+import org.glassfish.jaxb.core.v2.model.nav.Navigator;
 import com.sun.xml.bind.v2.runtime.IllegalAnnotationsException;
 
 public class ReflectionTest extends TestCase {

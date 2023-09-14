@@ -1,6 +1,6 @@
 package org.hisrc.xml.bind.tests.dogs;
 
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
 public class Dog extends JAXBElement<DogType> {

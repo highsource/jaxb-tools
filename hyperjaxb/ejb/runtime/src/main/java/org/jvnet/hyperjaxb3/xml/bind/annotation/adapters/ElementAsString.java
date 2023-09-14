@@ -3,7 +3,7 @@ package org.jvnet.hyperjaxb3.xml.bind.annotation.adapters;
 import java.io.StringReader;
 import java.io.StringWriter;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;

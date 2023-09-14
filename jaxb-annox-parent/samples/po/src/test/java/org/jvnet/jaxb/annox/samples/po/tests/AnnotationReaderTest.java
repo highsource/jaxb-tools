@@ -3,16 +3,16 @@ package org.jvnet.jaxb.annox.samples.po.tests;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
 
 import junit.framework.TestCase;
 
 import org.jvnet.jaxb.annox.samples.po.PurchaseOrderType;
 import org.jvnet.jaxb.annox.xml.bind.AnnoxAnnotationReader;
 
-import com.sun.xml.bind.api.JAXBRIContext;
-import com.sun.xml.bind.v2.model.annotation.RuntimeAnnotationReader;
+import org.glassfish.jaxb.runtime.api.JAXBRIContext;
+import org.glassfish.jaxb.runtime.v2.model.annotation.RuntimeAnnotationReader;
 
 public class AnnotationReaderTest extends TestCase {
 

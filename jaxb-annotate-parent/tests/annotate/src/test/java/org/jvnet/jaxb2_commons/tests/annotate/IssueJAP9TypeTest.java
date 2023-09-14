@@ -4,7 +4,7 @@ import generated.IssueJAP9Type;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.xml.bind.annotation.XmlMimeType;
+import jakarta.xml.bind.annotation.XmlMimeType;
 import java.lang.reflect.Field;
 
 public class IssueJAP9TypeTest {

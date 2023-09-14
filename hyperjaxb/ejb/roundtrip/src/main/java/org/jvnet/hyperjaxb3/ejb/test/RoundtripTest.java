@@ -3,9 +3,9 @@ package org.jvnet.hyperjaxb3.ejb.test;
 import java.io.File;
 
 import javax.persistence.EntityManager;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Unmarshaller;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.Unmarshaller;
 
 import org.jvnet.hyperjaxb3.ejb.util.EntityUtils;
 import org.jvnet.jaxb2_commons.lang.ContextUtils;

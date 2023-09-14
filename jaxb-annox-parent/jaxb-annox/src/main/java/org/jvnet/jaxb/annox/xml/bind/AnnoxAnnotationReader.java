@@ -15,11 +15,11 @@ import org.jvnet.jaxb.annox.reflect.DualAnnotatedElementFactory;
 import org.jvnet.jaxb.annox.reflect.MethodAnnotatedElement;
 import org.jvnet.jaxb.annox.reflect.ParameterizedAnnotatedElement;
 
-import com.sun.xml.bind.v2.model.annotation.AbstractInlineAnnotationReaderImpl;
-import com.sun.xml.bind.v2.model.annotation.Locatable;
-import com.sun.xml.bind.v2.model.annotation.LocatableAnnotation;
-import com.sun.xml.bind.v2.model.annotation.RuntimeAnnotationReader;
-import com.sun.xml.bind.v2.runtime.IllegalAnnotationException;
+import org.glassfish.jaxb.core.v2.runtime.IllegalAnnotationException;
+import org.glassfish.jaxb.core.v2.model.annotation.Locatable;
+import org.glassfish.jaxb.runtime.v2.model.annotation.AbstractInlineAnnotationReaderImpl;
+import org.glassfish.jaxb.runtime.v2.model.annotation.LocatableAnnotation;
+import org.glassfish.jaxb.runtime.v2.model.annotation.RuntimeAnnotationReader;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class AnnoxAnnotationReader extends

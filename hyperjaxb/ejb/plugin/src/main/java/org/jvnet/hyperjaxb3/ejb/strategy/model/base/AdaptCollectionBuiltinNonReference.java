@@ -13,7 +13,7 @@ import com.sun.tools.xjc.model.CValuePropertyInfo;
 import com.sun.tools.xjc.model.TypeUse;
 import com.sun.tools.xjc.model.CElementPropertyInfo.CollectionMode;
 import com.sun.tools.xjc.outline.FieldOutline;
-import com.sun.xml.bind.v2.model.core.PropertyKind;
+import org.glassfish.jaxb.core.v2.model.core.PropertyKind;
 
 public class AdaptCollectionBuiltinNonReference extends
 		AbstractAdaptBuiltinPropertyInfo {

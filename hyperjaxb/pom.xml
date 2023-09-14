@@ -23,7 +23,7 @@
 		<derby.version>10.14.2.0</derby.version>
 		<hibernate-jpa-2.0-api.version>1.0.0.Final</hibernate-jpa-2.0-api.version>
 		<hibernate-jpa-2.1-api.version>1.0.0.Final</hibernate-jpa-2.1-api.version>
-		<jpa-api.version>2.2</jpa-api.version>
+		<jpa-api.version>3.1.0</jpa-api.version>
 		<hibernate-entitymanager.version>5.4.33.Final</hibernate-entitymanager.version>
 	</properties>
 	<profiles>
@@ -141,17 +141,19 @@
 			</dependency>
 			<!-- Hibernate -->
 			<dependency>
+        <groupId>org.hibernate.orm</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>6.3.0.Final</version>
+      </dependency>
+      <!--
+			<dependency>
 				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-entitymanager</artifactId>
+				<artifactId>kkkkr</artifactId>
 				<version>${hibernate-entitymanager.version}</version>
 			</dependency>
-
+      -->
 			<!-- Java Persistence API -->
-			<dependency>
-				<groupId>javax.persistence</groupId>
-				<artifactId>persistence-api</artifactId>
-				<version>1.0</version>
-			</dependency>
+			<!--
 			<dependency>
 				<groupId>org.hibernate.javax.persistence</groupId>
 				<artifactId>hibernate-jpa-2.0-api</artifactId>
@@ -162,23 +164,26 @@
 				<artifactId>hibernate-jpa-2.1-api</artifactId>
 				<version>${hibernate-jpa-2.1-api.version}</version>
 			</dependency>
+			-->
 			<dependency>
-				<groupId>javax.persistence</groupId>
-				<artifactId>javax.persistence-api</artifactId>
+				<groupId>jakarta.persistence</groupId>
+				<artifactId>jakarta.persistence-api</artifactId>
 				<version>${jpa-api.version}</version>
 			</dependency>
 			<!-- EclispeLink -->
 			<dependency>
 				<groupId>org.eclipse.persistence</groupId>
 				<artifactId>eclipselink</artifactId>
-				<version>2.5.1</version>
+				<version>3.0.3</version>
 			</dependency>
 			<!-- TopLink -->
+			<!-- no jakarta version
 			<dependency>
 				<groupId>toplink.essentials</groupId>
 				<artifactId>toplink-essentials</artifactId>
 				<version>2.1-60f</version>
 			</dependency>
+			-->
 			<!-- HSQLDB -->
 			<dependency>
 				<groupId>org.hsqldb</groupId>

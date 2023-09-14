@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.xjc.generator.bean.field;
 
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 
 import org.jvnet.hyperjaxb3.xml.bind.JAXBElementUtils;
 

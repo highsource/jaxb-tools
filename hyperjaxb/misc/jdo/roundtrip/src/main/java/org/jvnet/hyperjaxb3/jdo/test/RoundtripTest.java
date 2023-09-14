@@ -6,9 +6,9 @@ import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
 import javax.jdo.identity.SingleFieldIdentity;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Unmarshaller;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.Unmarshaller;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.jvnet.jaxb2_commons.lang.builder.ExtendedJAXBEqualsBuilder;

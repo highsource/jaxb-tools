@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.xjc.generator.bean.field;
 
-import javax.xml.bind.JAXBElement.GlobalScope;
+import jakarta.xml.bind.JAXBElement.GlobalScope;
 
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 

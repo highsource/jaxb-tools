@@ -3,8 +3,8 @@ package org.jvnet.jaxb.annox.reader.resourced;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
 
 import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.annox.io.NestedIOException;

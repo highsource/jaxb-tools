@@ -1,6 +1,6 @@
 package org.jvnet.jaxb.annox.parser.tests;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import org.jvnet.jaxb.annox.model.XAnnotation;
 import org.jvnet.jaxb.annox.parser.XAnnotationParser;
@@ -18,7 +18,7 @@ public class JAXBDemoTest extends TestCase {
 		// Parse annotation from the string
 		XAnnotation<XmlRootElement> xannotation =
 			(XAnnotation<XmlRootElement>) XAnnotationParser.INSTANCE.parse
-				("@javax.xml.bind.annotation.XmlRootElement(name=\"foo\")");
+				("@jakarta.xml.bind.annotation.XmlRootElement(name=\"foo\")");
 
 		// Create an instance of the annotation
 		XmlRootElement xmlRootElement = xannotation.getResult();

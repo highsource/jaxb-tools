@@ -3,8 +3,8 @@ package org.jvnet.hyperjaxb3.ejb.strategy.processor;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
 
 import org.jvnet.hyperjaxb3.persistence.jpa1.JPA1Utils;
 

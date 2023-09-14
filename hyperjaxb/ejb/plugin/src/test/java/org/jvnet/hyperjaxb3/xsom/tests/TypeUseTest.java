@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.xsom.tests;
 
-import javax.xml.bind.annotation.adapters.NormalizedStringAdapter;
+import jakarta.xml.bind.annotation.adapters.NormalizedStringAdapter;
 
 import junit.framework.TestCase;
 

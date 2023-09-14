@@ -2,8 +2,8 @@ package org.jvnet.jaxb.annox.xml.bind;
 
 import java.lang.reflect.Member;
 
-import com.sun.xml.bind.v2.model.annotation.Locatable;
-import com.sun.xml.bind.v2.runtime.Location;
+import org.glassfish.jaxb.core.v2.model.annotation.Locatable;
+import org.glassfish.jaxb.core.v2.runtime.Location;
 
 public class LocatableUtils {
 

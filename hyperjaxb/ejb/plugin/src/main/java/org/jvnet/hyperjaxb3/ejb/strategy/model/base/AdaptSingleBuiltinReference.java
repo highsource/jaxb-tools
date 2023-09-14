@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.ejb.strategy.model.base;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb3.xjc.generator.bean.field.SingleWrappingReferenceField;

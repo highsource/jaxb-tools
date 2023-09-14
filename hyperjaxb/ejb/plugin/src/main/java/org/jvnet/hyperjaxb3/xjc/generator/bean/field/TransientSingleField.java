@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.xjc.generator.bean.field;
 
-import javax.xml.bind.annotation.XmlTransient;
+import jakarta.xml.bind.annotation.XmlTransient;
 
 import com.sun.codemodel.JAnnotatable;
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;

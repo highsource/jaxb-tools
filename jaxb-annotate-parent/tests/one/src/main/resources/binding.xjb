@@ -30,8 +30,8 @@
 
 -->
 <jaxb:bindings
-  version="2.1"
-  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+  version="3.0"
+  xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
 
   xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
@@ -44,14 +44,14 @@
       <jaxb:property>
         <jaxb:baseType>
           <xjc:javaType name="java.lang.String"
-            adapter="javax.xml.bind.annotation.adapters.CollapsedStringAdapter"/>
+            adapter="jakarta.xml.bind.annotation.adapters.CollapsedStringAdapter"/>
         </jaxb:baseType>
       </jaxb:property>
     </jaxb:bindings>
     <jaxb:bindings node="xs:complexType[@name='customizedPropertiesType']/xs:sequence/xs:element[@name='annotatedAdaptedProperty']">
       <annox:annotate target="field">
-        <annox:annotate annox:class="javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter"
-          value="javax.xml.bind.annotation.adapters.CollapsedStringAdapter"/>
+        <annox:annotate annox:class="jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter"
+          value="jakarta.xml.bind.annotation.adapters.CollapsedStringAdapter"/>
       </annox:annotate>
     </jaxb:bindings>
   </jaxb:bindings>

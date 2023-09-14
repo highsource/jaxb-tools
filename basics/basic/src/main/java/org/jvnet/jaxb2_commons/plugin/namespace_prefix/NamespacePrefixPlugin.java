@@ -1,7 +1,7 @@
 package org.jvnet.jaxb2_commons.plugin.namespace_prefix;
 
-import javax.xml.bind.annotation.XmlNs;
-import javax.xml.bind.annotation.XmlSchema;
+import jakarta.xml.bind.annotation.XmlNs;
+import jakarta.xml.bind.annotation.XmlSchema;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,27 +34,27 @@ import com.sun.xml.xsom.impl.SchemaImpl;
 import org.xml.sax.ErrorHandler;
 
 /**
- * This plugin adds {@link javax.xml.bind.annotation.XmlNs} annotations to <i>package-info.java</i> files. Those annotations tells Jaxb to generate XML schema's instances with specific namespaces
+ * This plugin adds {@link jakarta.xml.bind.annotation.XmlNs} annotations to <i>package-info.java</i> files. Those annotations tells JAXB to generate XML schema's instances with specific namespaces
  * prefixes, instead of the auto-generated (ns1, ns2, ...) prefixes. Definition of thoses prefixes is done in the bindings.xml file.
  *
  * Bindings.xml file example:
  * <pre>
  *  &lt;?xml version=&quot;1.0&quot;?&gt;
- *  &lt;jxb:bindings version=&quot;3.0&quot;
- *      xmlns:jxb=&quot;https://jakarta.ee/xml/ns/jaxb&quot;
+ *  &lt;jaxb:bindings version=&quot;3.0&quot;
+ *      xmlns:jaxb=&quot;https://jakarta.ee/xml/ns/jaxb&quot;
  *      xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
  *      xmlns:namespace=&quot;http://jaxb2-commons.dev.java.net/basic/namespace-prefix&quot;&gt;
  *
- *      &lt;jxb:bindings schemaLocation=&quot;unireg-common-1.xsd&quot;&gt;
- *          &lt;jxb:schemaBindings&gt;
- *              &lt;jxb:package name=&quot;ch.vd.unireg.xml.common.v1&quot; /&gt;
- *          &lt;/jxb:schemaBindings&gt;
- *          &lt;jxb:bindings&gt;
+ *      &lt;jaxb:bindings schemaLocation=&quot;unireg-common-1.xsd&quot;&gt;
+ *          &lt;jaxb:schemaBindings&gt;
+ *              &lt;jaxb:package name=&quot;ch.vd.unireg.xml.common.v1&quot; /&gt;
+ *          &lt;/jaxb:schemaBindings&gt;
+ *          &lt;jaxb:bindings&gt;
  *              <b>&lt;namespace:prefix name=&quot;common-1&quot; /&gt;</b>
- *          &lt;/jxb:bindings&gt;
- *      &lt;/jxb:bindings&gt;
+ *          &lt;/jaxb:bindings&gt;
+ *      &lt;/jaxb:bindings&gt;
  *
- *  &lt;/jxb:bindings&gt;
+ *  &lt;/jaxb:bindings&gt;
  * </pre>
  *
  * @author Manuel Siggen (c) 2012 Etat-de-Vaud (www.vd.ch)

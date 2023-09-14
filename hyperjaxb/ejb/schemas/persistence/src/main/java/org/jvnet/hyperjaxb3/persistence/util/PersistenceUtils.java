@@ -1,10 +1,10 @@
 package org.jvnet.hyperjaxb3.persistence.util;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
 
 import com.sun.java.xml.ns.persistence.Persistence;
-import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
+import org.glassfish.jaxb.runtime.marshaller.NamespacePrefixMapper;
 
 public class PersistenceUtils {
 

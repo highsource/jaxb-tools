@@ -1,7 +1,7 @@
 package org.jvnet.jaxb2_commons.plugin.simplify.tests01;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
 
 import org.junit.Assert;
 import org.junit.Before;

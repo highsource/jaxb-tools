@@ -3,8 +3,8 @@ package org.jvnet.hyperjaxb3.ejb.dynamic.tests;
 import java.io.File;
 
 import javax.persistence.Basic;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;

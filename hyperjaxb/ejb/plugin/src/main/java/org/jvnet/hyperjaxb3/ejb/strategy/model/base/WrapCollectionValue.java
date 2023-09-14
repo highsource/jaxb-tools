@@ -39,7 +39,7 @@ import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.reader.Ring;
 import com.sun.tools.xjc.reader.xmlschema.BGMBuilder;
 import com.sun.tools.xjc.reader.xmlschema.bindinfo.LocalScoping;
-import com.sun.xml.bind.v2.model.core.ID;
+import org.glassfish.jaxb.core.v2.model.core.ID;
 
 public class WrapCollectionValue implements CreatePropertyInfos {
 

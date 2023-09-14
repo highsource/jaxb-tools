@@ -1,7 +1,7 @@
 package org.jvnet.hyperjaxb3.xjc.model;
 
 import javax.activation.MimeType;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JExpression;
@@ -11,7 +11,7 @@ import com.sun.tools.xjc.model.CNonElement;
 import com.sun.tools.xjc.model.TypeUse;
 import com.sun.tools.xjc.outline.Outline;
 import com.sun.xml.bind.v2.ClassFactory;
-import com.sun.xml.bind.v2.model.core.ID;
+import org.glassfish.jaxb.core.v2.model.core.ID;
 import com.sun.xml.xsom.XmlString;
 
 public class DefaultTypeUse implements TypeUse {

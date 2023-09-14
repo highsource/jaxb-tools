@@ -3,7 +3,7 @@ package org.jvnet.jaxb2_commons.xml.bind.annotation.adapters;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.jvnet.jaxb2_commons.lang.StringUtils;
 

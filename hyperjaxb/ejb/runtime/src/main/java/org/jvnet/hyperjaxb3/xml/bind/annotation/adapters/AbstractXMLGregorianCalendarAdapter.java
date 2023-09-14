@@ -3,7 +3,7 @@ package org.jvnet.hyperjaxb3.xml.bind.annotation.adapters;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 

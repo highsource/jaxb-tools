@@ -35,7 +35,7 @@ import java.util.TreeMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import javax.xml.bind.annotation.XmlSchema;
+import jakarta.xml.bind.annotation.XmlSchema;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -90,7 +90,7 @@ import com.sun.xml.txw2.annotation.XmlNamespace;
  */
 public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
-	private static final String JAXB_NSURI = "http://java.sun.com/xml/ns/jaxb";
+	private static final String JAXB_NSURI = "https://jakarta.ee/xml/ns/jaxb";
 
 	public static final String ADD_IF_EXISTS_TO_EPISODE_SCHEMA_BINDINGS_TRANSFORMATION_RESOURCE_NAME = "/"
 			+ RawXJC2Mojo.class.getPackage().getName().replace('.', '/') + "/addIfExistsToEpisodeSchemaBindings.xslt";
@@ -518,7 +518,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	}
 
 	private void setupEpisodePackage() {
-		String packageInfoClassName = "com.sun.xml.bind.v2.schemagen.episode.package-info";
+		String packageInfoClassName = "org.glassfish.jaxb.core.v2.schemagen.episode.package-info";
 		try {
 			final Class<?> packageInfoClass = Class.forName(packageInfoClassName);
 			final XmlNamespace xmlNamespace = packageInfoClass.getAnnotation(XmlNamespace.class);

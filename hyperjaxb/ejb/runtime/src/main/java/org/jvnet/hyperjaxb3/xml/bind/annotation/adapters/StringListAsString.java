@@ -3,7 +3,7 @@ package org.jvnet.hyperjaxb3.xml.bind.annotation.adapters;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.apache.commons.lang3.StringUtils;
 

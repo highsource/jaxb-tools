@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.xml.bind;
 
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
 public class JAXBElementUtils {

@@ -55,7 +55,8 @@
     <module>jaxb-annox-parent</module>
     <module>basics</module>
     <module>maven-plugin</module>
-    <module>hyperjaxb</module>
+    <!-- TODO: remove for v3? -->
+    <!-- module>hyperjaxb</module -->
   </modules>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -66,8 +67,8 @@
     <ant.version>1.10.12</ant.version>
     <dtd-parser.version>1.4.5</dtd-parser.version>
     <!-- jakarta.activation.version>1.2.2</jakarta.activation.version -->
-    <jaxb.version>2.3.8</jaxb.version>
-    <istack.version>3.0.12</istack.version>
+    <jaxb.version>3.0.2</jaxb.version>
+    <istack.version>4.0.1</istack.version>
 
     <commons-beanutils.version>1.9.4</commons-beanutils.version>
     <commons-io.version>2.11.0</commons-io.version>
@@ -104,7 +105,7 @@
     <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
     <maven-surefire-plugin.version>3.0.0-M8</maven-surefire-plugin.version>
     <maven-failsafe-plugin.version>3.1.2</maven-failsafe-plugin.version>
-    <cxf-codegen-plugin.version>3.5.6</cxf-codegen-plugin.version>
+    <cxf-codegen-plugin.version>4.0.2</cxf-codegen-plugin.version>
     <editorconfig-maven-plugin.version>0.1.3</editorconfig-maven-plugin.version>
   </properties>
   <profiles>
@@ -622,8 +623,8 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>${maven-compiler-plugin.version}</version>
           <configuration>
-            <source>1.8</source>
-            <target>1.8</target>
+            <source>${jdk.version}</source>
+            <target>${jdk.version}</target>
           </configuration>
         </plugin>
         <plugin>

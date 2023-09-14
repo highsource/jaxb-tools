@@ -6,8 +6,8 @@ package org.jvnet.hyperjaxb3.eg.tests;
 import java.io.InputStream;
 import java.util.Collection;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.Unmarshaller;
 
 import junit.framework.TestCase;
 

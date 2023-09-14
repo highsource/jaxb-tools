@@ -28,7 +28,7 @@
  */
 package org.jvnet.jaxb2_commons.tests.one;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 public class CustomBooleanAdapter extends XmlAdapter<String, Boolean> {
     @Override

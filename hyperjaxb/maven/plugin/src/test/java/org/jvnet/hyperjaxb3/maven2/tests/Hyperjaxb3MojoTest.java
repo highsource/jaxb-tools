@@ -4,18 +4,18 @@ import java.io.File;
 
 import org.apache.maven.project.MavenProject;
 import org.jvnet.hyperjaxb3.maven2.Hyperjaxb3Mojo;
-import org.jvnet.jaxb.maven.AbstractXJC2Mojo;
-import org.jvnet.jaxb.maven.test.RunXJC2Mojo;
+import org.jvnet.jaxb.maven.AbstractXJCMojo;
+import org.jvnet.jaxb.maven.test.RunXJCMojo;
 
-public class Hyperjaxb3MojoTest extends RunXJC2Mojo {
+public class Hyperjaxb3MojoTest extends RunXJCMojo {
 
 	@Override
-	protected AbstractXJC2Mojo createMojo() {
+	protected AbstractXJCMojo createMojo() {
 		return new Hyperjaxb3Mojo();
 	}
 
 	@Override
-	protected void configureMojo(AbstractXJC2Mojo mojo) {
+	protected void configureMojo(AbstractXJCMojo mojo) {
 		super.configureMojo(mojo);
 		configureHyperjaxb3Mojo((Hyperjaxb3Mojo) mojo);
 

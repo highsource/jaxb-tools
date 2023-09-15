@@ -4,12 +4,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jvnet.jaxb.maven.AbstractXJC2Mojo;
-import org.jvnet.jaxb.maven.test.RunXJC2Mojo;
+import org.jvnet.jaxb.maven.AbstractXJCMojo;
+import org.jvnet.jaxb.maven.test.RunXJCMojo;
 
 import com.sun.tools.xjc.Options;
 
-public class RunMergeablePlugin extends RunXJC2Mojo {
+public class RunMergeablePlugin extends RunXJCMojo {
 
 	@Override
 	public File getSchemaDirectory() {
@@ -17,7 +17,7 @@ public class RunMergeablePlugin extends RunXJC2Mojo {
 	}
 
 	@Override
-	protected void configureMojo(AbstractXJC2Mojo<Options> mojo) {
+	protected void configureMojo(AbstractXJCMojo<Options> mojo) {
 		super.configureMojo(mojo);
 		mojo.setForceRegenerate(true);
 	}

@@ -4,9 +4,9 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
-import org.jvnet.jaxb.maven.test.RunXJC2Mojo;
+import org.jvnet.jaxb.maven.test.RunXJCMojo;
 
-public class RunFooPlugin extends RunXJC2Mojo {
+public class RunFooPlugin extends RunXJCMojo {
 
 	@Override
 	public File getSchemaDirectory() {

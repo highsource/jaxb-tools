@@ -24,7 +24,7 @@ import java.util.jar.JarOutputStream;
 
 import static org.junit.Assert.assertEquals;
 
-public class RawXJC2MojoTest {
+public class RawXJCMojoTest {
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
@@ -50,7 +50,7 @@ public class RawXJC2MojoTest {
     public void collectBindingUrisFromDependencies() throws Exception {
         List<URI> bindings = new ArrayList<>();
 
-        final RawXJC2Mojo<Void> mojo = new RawXJC2Mojo<Void>() {
+        final RawXJCMojo<Void> mojo = new RawXJCMojo<Void>() {
 
             @Override
             public MavenProject getProject() {
@@ -106,7 +106,7 @@ public class RawXJC2MojoTest {
     public void collectsBindingUrisFromArtifact() throws Exception {
         List<URI> bindings = new ArrayList<>();
 
-        final RawXJC2Mojo<Void> mojo = new RawXJC2Mojo<Void>() {
+        final RawXJCMojo<Void> mojo = new RawXJCMojo<Void>() {
 
 			@Override
 			protected IOptionsFactory<Void> getOptionsFactory() {

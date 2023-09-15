@@ -88,12 +88,12 @@ import com.sun.xml.txw2.annotation.XmlNamespace;
  *
  * @author Aleksei Valikov (valikov@gmx.net)
  */
-public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
+public abstract class RawXJCMojo<O> extends AbstractXJCMojo<O> {
 
 	private static final String JAXB_NSURI = "https://jakarta.ee/xml/ns/jaxb";
 
 	public static final String ADD_IF_EXISTS_TO_EPISODE_SCHEMA_BINDINGS_TRANSFORMATION_RESOURCE_NAME = "/"
-			+ RawXJC2Mojo.class.getPackage().getName().replace('.', '/') + "/addIfExistsToEpisodeSchemaBindings.xslt";
+			+ RawXJCMojo.class.getPackage().getName().replace('.', '/') + "/addIfExistsToEpisodeSchemaBindings.xslt";
 
 	private Collection<Artifact> xjcPluginArtifacts;
 

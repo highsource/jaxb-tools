@@ -8,14 +8,14 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import java.io.File;
 
 /**
- * JAXB 2.x Test Mojo.
+ * JAXB Test Mojo.
  *
  * Generates sources for testing purpose (ie in /target/generated-test-sources/xjc path).
  *
  * @author Aleksei Valikov (valikov@gmx.net)
  */
 @Mojo(name = "generate-test", defaultPhase = LifecyclePhase.GENERATE_TEST_SOURCES, requiresDependencyResolution = ResolutionScope.TEST, requiresDependencyCollection = ResolutionScope.TEST, threadSafe = true)
-public class XJC2TestMojo extends XJC2Mojo {
+public class XJCTestMojo extends XJCMojo {
 
     /**
      * <p>

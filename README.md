@@ -94,22 +94,22 @@ If you need an older JAXB version, you can use one of the following variants, wh
 If you experience issues with the Mojohaus JAXB2 Maven Plugin (`org.codehaus.mojo:jaxb2-maven-plugin`),
 please file it [on their project page](https://github.com/mojohaus/jaxb2-maven-plugin).
 
-# JAXB2 Basics
+# JAXB Basics
 
-JAXB2 Basics is an [open source](https://github.com/highsource/jaxb-tools/blob/master/LICENSE) project
-which provides useful plugins and tools for [JAXB 2.x reference implementation](https://github.com/eclipse-ee4j/jaxb-ri/tree/EE8).
+JAXB Basics is an [open source](https://github.com/highsource/jaxb-tools/blob/master/LICENSE) project
+which provides useful plugins and tools for [JAXB 3.x reference implementation](https://github.com/eclipse-ee4j/jaxb-ri/tree/3.0.2-RI).
 
 ## Documentation
 
 Please refer to the [wiki](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Basic) for documentation.
 
-JAXB2 Basics can only be used with JAXB/XJC 2.3.x. JAXB/XJC versions 2.2.x and earlier are no longer supported.
+JAXB Basics can only be used with JAXB/XJC 3.x.
 
-## Using JAXB2 Basics
+## Using JAXB Basics
 
-* [Using JAXB2 Basics Plugins](https://github.com/highsource/jaxb-tools/wiki/Using-JAXB2-Basics-Plugins)
+* [Using JAXB Basics Plugins](https://github.com/highsource/jaxb-tools/wiki/Using-JAXB2-Basics-Plugins)
 
-## JAXB2 Basics Plugins
+## JAXB Basics Plugins
 * [SimpleEquals Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-SimpleEquals-Plugin) - generates runtime-free reflection-free `equals(...)` methods.
 * [SimpleHashCode Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-SimpleHashCode-Plugin) - generates runtime-free reflection-free `hashCode()` methods.
 * [Equals Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Equals-Plugin) - generates reflection-free strategic `equals(...)` method.
@@ -198,7 +198,7 @@ You can put your annotations directly in schema:
         <xsd:annotation>
             <xsd:appinfo>
                 <annox:annotate>@java.lang.SuppressWarnings({"unchecked","rawtypes"})</annox:annotate>
-                <annox:annotate target="package">@javax.annotation.Generated({"XJC","JAXB2 Annotate Plugin"})</annox:annotate>
+                <annox:annotate target="package">@javax.annotation.Generated({"XJC","JAXB Annotate Plugin"})</annox:annotate>
             </xsd:appinfo>
         </xsd:annotation>
         <xsd:sequence>
@@ -380,7 +380,7 @@ Note: yes, I know that `http://annox.dev.java.net` no longer exists. Changing th
 This is just a namespace, there must not necessarily be content there. Treat it as a logical identifier, nothing else.
 
 
-## Using JAXB2 Annotate Plugin with Maven
+## Using JAXB Annotate Plugin with Maven
 
 * Add `org.jvnet.jaxb:jaxb-basics-annotate` as XJC plugin
 * Turn on the plugin using `-Xannotate` or `-XremoveAnnotation`switch
@@ -416,7 +416,7 @@ See [this example](https://github.com/highsource/jaxb-tools/tree/master/jaxb-ann
 
 Note that annotations are first compiled in the `annotations` module and the added to the classpath of the `jaxb-maven-plugin` in the `schema` module:
 
-## Using JAXB2 Annotate Plugin with Ant
+## Using JAXB Annotate Plugin with Ant
 
 See [this example](https://github.com/highsource/jaxb-tools/blob/master/jaxb-annotate-parent/samples/annotate/project-build.xml).
 

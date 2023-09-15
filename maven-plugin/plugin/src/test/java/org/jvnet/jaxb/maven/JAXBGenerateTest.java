@@ -67,7 +67,7 @@ public abstract class JAXBGenerateTest extends AbstractMojoTestCase {
 		final MavenProject mavenProject = mavenProjectBuilder.build(pom, localRepository, null);
 
 
-		final XJC2Mojo generator = (XJC2Mojo) lookupMojo("generate", pom);
+		final XJCMojo generator = (XJCMojo) lookupMojo("generate", pom);
 		generator.setProject(mavenProject);
 		generator.setLocalRepository(localRepository);
 		generator.setSchemaDirectory(new File(getBaseDir(),"src/test/resources/"));

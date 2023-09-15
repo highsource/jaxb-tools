@@ -36,7 +36,7 @@ public class SimpleEqualsPlugin extends
 	@Override
 	public String getUsage() {
 		return "  -XsimpleEquals :  Generate reflection-free runtime-free equals(Object that) methods.\n" +
-	           "                    See https://github.com/highsource/jaxb2-basics/wiki/JAXB2-SimpleEquals-Plugin";
+	           "                    See https://github.com/highsource/jaxb-tools/wiki/JAXB2-SimpleEquals-Plugin";
 	}
 
 	@Override

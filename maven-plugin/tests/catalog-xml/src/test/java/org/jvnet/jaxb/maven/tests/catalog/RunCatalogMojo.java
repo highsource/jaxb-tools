@@ -2,16 +2,16 @@ package org.jvnet.jaxb.maven.tests.catalog;
 
 import java.io.File;
 
-import org.jvnet.jaxb.maven.AbstractXJC2Mojo;
+import org.jvnet.jaxb.maven.AbstractXJCMojo;
 import org.jvnet.jaxb.maven.resolver.tools.ClasspathCatalogResolver;
-import org.jvnet.jaxb.maven.test.RunXJC2Mojo;
+import org.jvnet.jaxb.maven.test.RunXJCMojo;
 
 import com.sun.tools.xjc.Options;
 
-public class RunCatalogMojo extends RunXJC2Mojo {
+public class RunCatalogMojo extends RunXJCMojo {
 
 	@Override
-	protected void configureMojo(AbstractXJC2Mojo<Options> mojo) {
+	protected void configureMojo(AbstractXJCMojo<Options> mojo) {
 		super.configureMojo(mojo);
 
 		mojo

@@ -38,7 +38,7 @@ import org.jvnet.jaxb.maven.util.IOUtils;
 import org.sonatype.plexus.build.incremental.BuildContext;
 import org.sonatype.plexus.build.incremental.DefaultBuildContext;
 
-public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
+public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 		DependencyResourceResolver {
 
 	@Parameter(defaultValue = "${settings}", readonly = true)
@@ -767,7 +767,7 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	/**
 	 * <p>
 	 * A list of extra XJC's command-line arguments (items must include the dash
-	 * '-'). Use this argument to enable the JAXB2 plugins you want to use.
+	 * '-'). Use this argument to enable the JAXB plugins you want to use.
 	 * </p>
 	 * <p>
 	 * Arguments set here take precedence over other mojo parameters.

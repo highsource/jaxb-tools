@@ -38,10 +38,10 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 import com.sun.tools.xjc.Options;
-import org.jvnet.jaxb.maven.XJC2Mojo;
+import org.jvnet.jaxb.maven.XJCMojo;
 
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.COMPILE, threadSafe = true)
-public class Hyperjaxb3Mojo extends XJC2Mojo {
+public class Hyperjaxb3Mojo extends XJCMojo {
 
 	/**
 	 * Target directory for the generated mappings. If left empty, mappings are

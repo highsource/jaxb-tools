@@ -35,7 +35,7 @@ public class SimpleHashCodePlugin extends
 	@Override
 	public String getUsage() {
 		return "  -XsimpleEquals :  Generate reflection-free runtime-free hashCode() methods.\n" +
-		       "                    See https://github.com/highsource/jaxb2-basics/wiki/JAXB2-SimpleHashCode-Plugin";
+		       "                    See https://github.com/highsource/jaxb-tools/wiki/JAXB2-SimpleHashCode-Plugin";
 	}
 
 	@Override

@@ -1,14 +1,14 @@
 package org.jvnet.mjiip.tests.p_o;
 
-import org.jvnet.jaxb.maven.AbstractXJC2Mojo;
-import org.jvnet.jaxb.maven.test.RunXJC2Mojo;
+import org.jvnet.jaxb.maven.AbstractXJCMojo;
+import org.jvnet.jaxb.maven.test.RunXJCMojo;
 
 import com.sun.tools.xjc.Options;
 
-public class RunP_OPlugin extends RunXJC2Mojo {
+public class RunP_OPlugin extends RunXJCMojo {
 
 	@Override
-	protected void configureMojo(AbstractXJC2Mojo<Options> mojo) {
+	protected void configureMojo(AbstractXJCMojo<Options> mojo) {
 		super.configureMojo(mojo);
 //		mojo.setExtension(true);
 //		mojo.setForceRegenerate(true);

@@ -8,8 +8,8 @@ import junit.framework.TestCase;
 
 import org.apache.maven.plugin.Mojo;
 import org.apache.maven.project.MavenProject;
-import org.jvnet.jaxb.maven.AbstractXJC2Mojo;
-import org.jvnet.jaxb.maven.XJC2Mojo;
+import org.jvnet.jaxb.maven.AbstractXJCMojo;
+import org.jvnet.jaxb.maven.XJCMojo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,11 +21,11 @@ import com.sun.tools.xjc.Options;
  * @author Aleksei Valikov
  */
 
-public class RunXJC2Mojo extends TestCase {
+public class RunXJCMojo extends TestCase {
 	/**
 	 * Logger.
 	 */
-	protected Logger log = LoggerFactory.getLogger(RunXJC2Mojo.class);
+	protected Logger log = LoggerFactory.getLogger(RunXJCMojo.class);
 
 	public void testExecute() throws Exception {
 		final Mojo mojo = initMojo();
@@ -65,17 +65,17 @@ public class RunXJC2Mojo extends TestCase {
 		return true;
 	}
 
-	public AbstractXJC2Mojo<Options> initMojo() {
-		final AbstractXJC2Mojo<Options> mojo = createMojo();
+	public AbstractXJCMojo<Options> initMojo() {
+		final AbstractXJCMojo<Options> mojo = createMojo();
 		configureMojo(mojo);
 		return mojo;
 	}
 
-	protected AbstractXJC2Mojo<Options> createMojo() {
-		return new XJC2Mojo();
+	protected AbstractXJCMojo<Options> createMojo() {
+		return new XJCMojo();
 	}
 
-	protected void configureMojo(final AbstractXJC2Mojo<Options> mojo) {
+	protected void configureMojo(final AbstractXJCMojo<Options> mojo) {
 		mojo.setProject(new MavenProject());
 		mojo.setSchemaDirectory(getSchemaDirectory());
 		mojo.setGenerateDirectory(getGeneratedDirectory());

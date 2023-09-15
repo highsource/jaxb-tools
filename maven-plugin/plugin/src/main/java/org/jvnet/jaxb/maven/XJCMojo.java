@@ -20,12 +20,12 @@ import com.sun.tools.xjc.model.Model;
 import com.sun.tools.xjc.outline.Outline;
 
 /**
- * JAXB 2.x Mojo.
+ * JAXB Mojo.
  *
  * @author Aleksei Valikov (valikov@gmx.net)
  */
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.COMPILE, requiresDependencyCollection = ResolutionScope.COMPILE, threadSafe = true)
-public class XJC2Mojo extends RawXJC2Mojo<Options> {
+public class XJCMojo extends RawXJCMojo<Options> {
 
 	private final IOptionsFactory<Options> optionsFactory = new OptionsFactory();
 

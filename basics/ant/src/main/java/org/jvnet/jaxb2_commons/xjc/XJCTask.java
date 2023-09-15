@@ -2,7 +2,7 @@ package org.jvnet.jaxb2_commons.xjc;
 
 import org.apache.tools.ant.BuildException;
 
-public class XJC2Task extends com.sun.tools.xjc.XJC2Task {
+public class XJCTask extends com.sun.tools.xjc.XJC2Task {
 
 	private boolean disableXmlSecurity = true;
 

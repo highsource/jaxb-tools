@@ -42,11 +42,11 @@ import com.sun.tools.xjc.outline.Aspect;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldAccessor;
 import com.sun.tools.xjc.outline.FieldOutline;
-import com.sun.xml.bind.v2.TODO;
+import org.glassfish.jaxb.core.v2.TODO;
 
 /**
  * Useful base class for implementing {@link FieldOutline}.
- * 
+ *
  * <p>
  * This class just provides a few utility methods and keep some
  * important variables so that they can be readily accessed any time.
@@ -55,11 +55,11 @@ import com.sun.xml.bind.v2.TODO;
  *     Kohsuke Kawaguchi (kohsuke.kawaguchi@sun.com)
  */
 public abstract class AbstractField implements FieldOutline {
-    
+
     protected final ClassOutlineImpl outline;
-    
+
     protected final CPropertyInfo prop;
-    
+
     protected final JCodeModel codeModel;
 
     /**
@@ -314,7 +314,7 @@ public abstract class AbstractField implements FieldOutline {
          * Evaluates to the target object this accessor should access.
          */
         protected final JExpression $target;
-        
+
         protected Accessor( JExpression $target ) {
             this.$target = $target;
         }
@@ -327,8 +327,8 @@ public abstract class AbstractField implements FieldOutline {
             return prop;
         }
     }
-    
-    
+
+
 //
 //
 //     utility methods
@@ -355,7 +355,7 @@ public abstract class AbstractField implements FieldOutline {
     protected JType getType(final Aspect aspect) {
     	return getType(prop, aspect);
     }
-    
+
     protected JType getType(CPropertyInfo prop, final Aspect aspect) {
         if(prop.getAdapter()!=null)
             return prop.getAdapter().customType.toType(outline.parent(),aspect);
@@ -398,7 +398,7 @@ public abstract class AbstractField implements FieldOutline {
 //            t = t.unboxify();
         return t;
     }
-    
+
 
     /**
      * Returns contents to be added to javadoc.

@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.ejb.tests.issues;
 
-import javax.persistence.NamedQuery;
+import jakarta.persistence.NamedQuery;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;

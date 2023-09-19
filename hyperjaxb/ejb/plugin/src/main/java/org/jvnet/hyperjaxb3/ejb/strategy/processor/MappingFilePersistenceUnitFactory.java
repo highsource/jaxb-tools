@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.jvnet.jaxb2_commons.util.OutlineUtils;
 
-import com.sun.java.xml.ns.persistence.Persistence.PersistenceUnit;
+import jakarta.xml.ns.persistence.Persistence.PersistenceUnit;
 import com.sun.tools.xjc.outline.ClassOutline;
 
 public class MappingFilePersistenceUnitFactory implements

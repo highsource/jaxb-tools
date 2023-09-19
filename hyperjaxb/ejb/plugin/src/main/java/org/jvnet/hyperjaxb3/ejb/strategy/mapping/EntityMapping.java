@@ -1,14 +1,14 @@
 package org.jvnet.hyperjaxb3.ejb.strategy.mapping;
 
-import javax.persistence.InheritanceType;
+import jakarta.persistence.InheritanceType;
 
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
 
-import com.sun.java.xml.ns.persistence.orm.Attributes;
-import com.sun.java.xml.ns.persistence.orm.Entity;
-import com.sun.java.xml.ns.persistence.orm.Inheritance;
-import com.sun.java.xml.ns.persistence.orm.Table;
+import jakarta.xml.ns.persistence.orm.Attributes;
+import jakarta.xml.ns.persistence.orm.Entity;
+import jakarta.xml.ns.persistence.orm.Inheritance;
+import jakarta.xml.ns.persistence.orm.Table;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.ClassOutline;
 
@@ -119,7 +119,7 @@ public class EntityMapping implements ClassOutlineMapping<Entity> {
 		entity.setAttributes(attributes);
 	}
 
-	public javax.persistence.InheritanceType getInheritanceStrategy(
+	public jakarta.persistence.InheritanceType getInheritanceStrategy(
 			Mapping context, ClassOutline classOutline, Entity entity) {
 		if (isRootClass(context, classOutline)) {
 			if (entity.getInheritance() != null
@@ -127,7 +127,7 @@ public class EntityMapping implements ClassOutlineMapping<Entity> {
 				return InheritanceType.valueOf(entity.getInheritance()
 						.getStrategy());
 			} else {
-				return javax.persistence.InheritanceType.JOINED;
+				return jakarta.persistence.InheritanceType.JOINED;
 			}
 		} else {
 			final ClassOutline superClassOutline = getSuperClass(context,
@@ -147,11 +147,11 @@ public class EntityMapping implements ClassOutlineMapping<Entity> {
 	/*
 	 * public ClassOutline getSuperClassOutline(Mapping context, ClassOutline
 	 * classOutline) { return classOutline.getSuperClass(); }
-	 * 
+	 *
 	 * public boolean isEntityClassHierarchyRoot(Mapping context, ClassOutline
 	 * classOutline) { final ClassOutline superClassOutline =
 	 * getSuperClassOutline(context, classOutline);
-	 * 
+	 *
 	 * if (superClassOutline == null) { return true; } else if
 	 * (CustomizationUtils.containsCustomization(classOutline,
 	 * Customizations.MAPPED_SUPERCLASS_ELEMENT_NAME)) { return true; } else if

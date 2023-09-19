@@ -2,9 +2,9 @@ package org.jvnet.hyperjaxb3.ejb.strategy.mapping;
 
 import java.util.List;
 
-import com.sun.java.xml.ns.persistence.orm.AttributeOverride;
-import com.sun.java.xml.ns.persistence.orm.Column;
-import com.sun.java.xml.ns.persistence.orm.Lob;
+import jakarta.xml.ns.persistence.orm.AttributeOverride;
+import jakarta.xml.ns.persistence.orm.Column;
+import jakarta.xml.ns.persistence.orm.Lob;
 import com.sun.tools.xjc.outline.FieldOutline;
 
 public interface AttributeMapping {

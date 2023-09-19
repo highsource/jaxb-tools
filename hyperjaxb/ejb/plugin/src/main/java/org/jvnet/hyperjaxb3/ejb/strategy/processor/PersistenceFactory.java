@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.ejb.strategy.processor;
 
-import com.sun.java.xml.ns.persistence.Persistence;
+import jakarta.xml.ns.persistence.Persistence;
 
 public class PersistenceFactory {
 
@@ -11,7 +11,7 @@ public class PersistenceFactory {
 	}
 
 	protected String getVersion() {
-		return "1.0";
+		return "3.0";
 	}
 
 }

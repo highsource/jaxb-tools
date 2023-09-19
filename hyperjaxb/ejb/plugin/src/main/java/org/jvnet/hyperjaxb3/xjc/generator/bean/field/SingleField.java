@@ -3,12 +3,12 @@
  * of the Common Development and Distribution License
  * (the "License").  You may not use this file except
  * in compliance with the License.
- * 
+ *
  * You can obtain a copy of the license at
  * https://jwsdp.dev.java.net/CDDLv1.0.html
  * See the License for the specific language governing
  * permissions and limitations under the License.
- * 
+ *
  * When distributing Covered Code, include this CDDL
  * HEADER in each file and include the License file at
  * https://jwsdp.dev.java.net/CDDLv1.0.html  If applicable,
@@ -32,24 +32,24 @@ import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.generator.bean.MethodWriter;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.outline.FieldAccessor;
-import com.sun.xml.bind.api.impl.NameConverter;
+import org.glassfish.jaxb.core.api.impl.NameConverter;
 
 /**
  * Realizes a property through one getter and one setter. This renders:
- * 
+ *
  * <pre>
  *  T' field;
  *  T getXXX() { ... }
  *  void setXXX(T value) { ... }
  * </pre>
- * 
+ *
  * <p>
  * Normally T'=T, but under some tricky circumstances they could be different
  * (like T'=Integer, T=int.)
- * 
+ *
  * This realization is only applicable to fields with (1,1) or (0,1)
  * multiplicity.
- * 
+ *
  * @author Kohsuke Kawaguchi (kohsuke.kawaguchi@sun.com)
  */
 public class SingleField extends AbstractFieldWithVar {
@@ -59,7 +59,7 @@ public class SingleField extends AbstractFieldWithVar {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param forcePrimitiveAccess
 	 *            forces the setter/getter to expose the primitive type. it's a
 	 *            pointless customization, but it's nevertheless in the spec.
@@ -70,7 +70,7 @@ public class SingleField extends AbstractFieldWithVar {
 		assert !exposedType.isPrimitive() && !implType.isPrimitive();
 
 		createField();
-		
+
 
 		MethodWriter writer = context.createMethodWriter();
 		@SuppressWarnings("unused")

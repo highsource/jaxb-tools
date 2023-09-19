@@ -1,7 +1,7 @@
 package org.jvnet.hyperjaxb3.ejb.test.tests;
 
-import javax.persistence.Basic;
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.Basic;
+import jakarta.persistence.MappedSuperclass;
 
 import org.jvnet.hyperjaxb3.item.Item;
 import org.jvnet.jaxb2_commons.lang.Equals;

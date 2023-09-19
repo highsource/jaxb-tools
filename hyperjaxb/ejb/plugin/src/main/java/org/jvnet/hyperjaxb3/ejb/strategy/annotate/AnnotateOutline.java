@@ -3,7 +3,7 @@ package org.jvnet.hyperjaxb3.ejb.strategy.annotate;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.persistence.Transient;
+import jakarta.persistence.Transient;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.logging.Log;
@@ -20,11 +20,11 @@ import org.springframework.beans.factory.annotation.Required;
 
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JType;
-import com.sun.java.xml.ns.persistence.orm.Attributes;
-import com.sun.java.xml.ns.persistence.orm.Embeddable;
-import com.sun.java.xml.ns.persistence.orm.EmbeddableAttributes;
-import com.sun.java.xml.ns.persistence.orm.Entity;
-import com.sun.java.xml.ns.persistence.orm.MappedSuperclass;
+import jakarta.xml.ns.persistence.orm.Attributes;
+import jakarta.xml.ns.persistence.orm.Embeddable;
+import jakarta.xml.ns.persistence.orm.EmbeddableAttributes;
+import jakarta.xml.ns.persistence.orm.Entity;
+import jakarta.xml.ns.persistence.orm.MappedSuperclass;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;

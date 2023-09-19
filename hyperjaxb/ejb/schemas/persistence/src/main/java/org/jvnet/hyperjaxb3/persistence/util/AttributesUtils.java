@@ -1,18 +1,18 @@
 package org.jvnet.hyperjaxb3.persistence.util;
 
-import com.sun.java.xml.ns.persistence.orm.Attributes;
-import com.sun.java.xml.ns.persistence.orm.Basic;
-import com.sun.java.xml.ns.persistence.orm.ElementCollection;
-import com.sun.java.xml.ns.persistence.orm.EmbeddableAttributes;
-import com.sun.java.xml.ns.persistence.orm.Embedded;
-import com.sun.java.xml.ns.persistence.orm.EmbeddedId;
-import com.sun.java.xml.ns.persistence.orm.Id;
-import com.sun.java.xml.ns.persistence.orm.ManyToMany;
-import com.sun.java.xml.ns.persistence.orm.ManyToOne;
-import com.sun.java.xml.ns.persistence.orm.OneToMany;
-import com.sun.java.xml.ns.persistence.orm.OneToOne;
-import com.sun.java.xml.ns.persistence.orm.Transient;
-import com.sun.java.xml.ns.persistence.orm.Version;
+import jakarta.xml.ns.persistence.orm.Attributes;
+import jakarta.xml.ns.persistence.orm.Basic;
+import jakarta.xml.ns.persistence.orm.ElementCollection;
+import jakarta.xml.ns.persistence.orm.EmbeddableAttributes;
+import jakarta.xml.ns.persistence.orm.Embedded;
+import jakarta.xml.ns.persistence.orm.EmbeddedId;
+import jakarta.xml.ns.persistence.orm.Id;
+import jakarta.xml.ns.persistence.orm.ManyToMany;
+import jakarta.xml.ns.persistence.orm.ManyToOne;
+import jakarta.xml.ns.persistence.orm.OneToMany;
+import jakarta.xml.ns.persistence.orm.OneToOne;
+import jakarta.xml.ns.persistence.orm.Transient;
+import jakarta.xml.ns.persistence.orm.Version;
 
 public class AttributesUtils {
 

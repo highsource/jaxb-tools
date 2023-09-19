@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.xjc.model;
 
-import javax.activation.MimeType;
+import jakarta.activation.MimeType;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 import com.sun.codemodel.JExpr;
@@ -10,7 +10,7 @@ import com.sun.tools.xjc.model.CAdapter;
 import com.sun.tools.xjc.model.CNonElement;
 import com.sun.tools.xjc.model.TypeUse;
 import com.sun.tools.xjc.outline.Outline;
-import com.sun.xml.bind.v2.ClassFactory;
+import org.glassfish.jaxb.core.v2.ClassFactory;
 import org.glassfish.jaxb.core.v2.model.core.ID;
 import com.sun.xml.xsom.XmlString;
 

@@ -7,9 +7,9 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 import junit.framework.TestCase;
 
@@ -18,7 +18,7 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * Roundtrip test case.
- * 
+ *
  * @author Aleksei Valikov
  */
 public abstract class AbstractEntityManagerTest extends TestCase {

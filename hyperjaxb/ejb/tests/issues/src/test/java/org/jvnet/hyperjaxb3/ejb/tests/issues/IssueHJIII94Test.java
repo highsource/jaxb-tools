@@ -1,7 +1,7 @@
 package org.jvnet.hyperjaxb3.ejb.tests.issues;
 
-import javax.persistence.Id;
-import javax.persistence.Version;
+import jakarta.persistence.Id;
+import jakarta.persistence.Version;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;

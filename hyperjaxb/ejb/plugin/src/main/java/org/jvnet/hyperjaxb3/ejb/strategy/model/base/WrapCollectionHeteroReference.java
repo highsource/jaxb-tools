@@ -26,7 +26,7 @@ import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
 import com.sun.codemodel.JType;
-import com.sun.java.xml.ns.persistence.orm.Lob;
+import jakarta.xml.ns.persistence.orm.Lob;
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.generator.bean.field.FieldRenderer;
 import com.sun.tools.xjc.model.CAttributePropertyInfo;

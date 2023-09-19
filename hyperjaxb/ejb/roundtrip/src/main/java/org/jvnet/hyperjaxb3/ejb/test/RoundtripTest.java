@@ -2,7 +2,7 @@ package org.jvnet.hyperjaxb3.ejb.test;
 
 import java.io.File;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.Unmarshaller;

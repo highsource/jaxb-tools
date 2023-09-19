@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.ejb.tests.st;
 
-import javax.persistence.Column;
+import jakarta.persistence.Column;
 
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;

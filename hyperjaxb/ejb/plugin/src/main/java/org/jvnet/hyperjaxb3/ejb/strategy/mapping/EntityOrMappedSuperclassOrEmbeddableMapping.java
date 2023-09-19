@@ -1,8 +1,8 @@
 package org.jvnet.hyperjaxb3.ejb.strategy.mapping;
 
-import com.sun.java.xml.ns.persistence.orm.Embeddable;
-import com.sun.java.xml.ns.persistence.orm.Entity;
-import com.sun.java.xml.ns.persistence.orm.MappedSuperclass;
+import jakarta.xml.ns.persistence.orm.Embeddable;
+import jakarta.xml.ns.persistence.orm.Entity;
+import jakarta.xml.ns.persistence.orm.MappedSuperclass;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.ClassOutline;
 

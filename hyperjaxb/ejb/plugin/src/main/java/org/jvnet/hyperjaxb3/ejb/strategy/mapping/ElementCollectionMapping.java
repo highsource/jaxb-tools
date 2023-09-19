@@ -2,10 +2,10 @@ package org.jvnet.hyperjaxb3.ejb.strategy.mapping;
 
 import java.util.Collection;
 
-import com.sun.java.xml.ns.persistence.orm.CollectionTable;
-import com.sun.java.xml.ns.persistence.orm.Column;
-import com.sun.java.xml.ns.persistence.orm.ElementCollection;
-import com.sun.java.xml.ns.persistence.orm.OrderColumn;
+import jakarta.xml.ns.persistence.orm.CollectionTable;
+import jakarta.xml.ns.persistence.orm.Column;
+import jakarta.xml.ns.persistence.orm.ElementCollection;
+import jakarta.xml.ns.persistence.orm.OrderColumn;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.FieldOutline;
 

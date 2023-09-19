@@ -2,7 +2,7 @@ package org.jvnet.hyperjaxb3.ejb.dynamic.tests;
 
 import java.io.File;
 
-import javax.persistence.Basic;
+import jakarta.persistence.Basic;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 

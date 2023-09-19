@@ -10,9 +10,9 @@ import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessModel;
 import org.jvnet.jaxb2_commons.util.ClassUtils;
 import org.xml.sax.Locator;
 
-import com.sun.java.xml.ns.persistence.orm.Entity;
-import com.sun.java.xml.ns.persistence.orm.IdClass;
-import com.sun.java.xml.ns.persistence.orm.MappedSuperclass;
+import jakarta.xml.ns.persistence.orm.Entity;
+import jakarta.xml.ns.persistence.orm.IdClass;
+import jakarta.xml.ns.persistence.orm.MappedSuperclass;
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CClassInfoParent;

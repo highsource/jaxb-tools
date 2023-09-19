@@ -13,8 +13,8 @@ import org.jvnet.hyperjaxb3.persistence.util.PersistenceUtils;
 import org.jvnet.jaxb2_commons.lang.JAXBMergeCollectionsStrategy;
 import org.springframework.beans.factory.annotation.Required;
 
-import com.sun.java.xml.ns.persistence.Persistence;
-import com.sun.java.xml.ns.persistence.Persistence.PersistenceUnit;
+import jakarta.xml.ns.persistence.Persistence;
+import jakarta.xml.ns.persistence.Persistence.PersistenceUnit;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;

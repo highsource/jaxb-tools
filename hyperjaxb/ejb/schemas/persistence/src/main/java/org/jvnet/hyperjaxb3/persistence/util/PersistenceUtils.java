@@ -3,7 +3,7 @@ package org.jvnet.hyperjaxb3.persistence.util;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 
-import com.sun.java.xml.ns.persistence.Persistence;
+import jakarta.xml.ns.persistence.Persistence;
 import org.glassfish.jaxb.runtime.marshaller.NamespacePrefixMapper;
 
 public class PersistenceUtils {

@@ -21,10 +21,9 @@
 	<properties>
 		<hsqldb.version>2.7.1</hsqldb.version>
 		<derby.version>10.14.2.0</derby.version>
-		<hibernate-jpa-2.0-api.version>1.0.0.Final</hibernate-jpa-2.0-api.version>
-		<hibernate-jpa-2.1-api.version>1.0.0.Final</hibernate-jpa-2.1-api.version>
-		<jpa-api.version>3.1.0</jpa-api.version>
-		<hibernate-entitymanager.version>5.4.33.Final</hibernate-entitymanager.version>
+		<jpa-api.version>3.0.0</jpa-api.version>
+		<hibernate-entitymanager.version>5.5.9.Final</hibernate-entitymanager.version>
+    <eclipselink.version>3.0.3</eclipselink.version>
 	</properties>
 	<profiles>
 		<profile>
@@ -33,14 +32,6 @@
 				<module>dist</module>
 			</modules>
 		</profile>
-                <!-- dist is now maven central 
-		<profile>
-			<id>release</id>
-			<modules>
-				<module>dist</module>
-			</modules>
-		</profile>
-                -->
 	</profiles>
 	<build>
 		<defaultGoal>install</defaultGoal>
@@ -138,33 +129,14 @@
 				<groupId>commons-logging</groupId>
 				<artifactId>commons-logging</artifactId>
 				<version>1.2</version>
-			</dependency>
-			<!-- Hibernate -->
-			<dependency>
-        <groupId>org.hibernate.orm</groupId>
-        <artifactId>hibernate-core</artifactId>
-        <version>6.3.0.Final</version>
       </dependency>
-      <!--
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>kkkkr</artifactId>
-				<version>${hibernate-entitymanager.version}</version>
-			</dependency>
-      -->
-			<!-- Java Persistence API -->
-			<!--
-			<dependency>
-				<groupId>org.hibernate.javax.persistence</groupId>
-				<artifactId>hibernate-jpa-2.0-api</artifactId>
-				<version>${hibernate-jpa-2.0-api.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate.javax.persistence</groupId>
-				<artifactId>hibernate-jpa-2.1-api</artifactId>
-				<version>${hibernate-jpa-2.1-api.version}</version>
-			</dependency>
-			-->
+      <!-- Hibernate -->
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core-jakarta</artifactId>
+        <version>${hibernate-entitymanager.version}</version>
+      </dependency>
+      <!-- Java Persistence API -->
 			<dependency>
 				<groupId>jakarta.persistence</groupId>
 				<artifactId>jakarta.persistence-api</artifactId>
@@ -174,7 +146,7 @@
 			<dependency>
 				<groupId>org.eclipse.persistence</groupId>
 				<artifactId>eclipselink</artifactId>
-				<version>3.0.3</version>
+				<version>${eclipselink.version}</version>
 			</dependency>
 			<!-- TopLink -->
 			<!-- no jakarta version

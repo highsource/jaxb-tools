@@ -1,9 +1,9 @@
 package org.jvnet.hyperjaxb3.hibernate.tests.hhh;
 
-import javax.persistence.AssociationOverride;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import jakarta.persistence.AssociationOverride;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Entity
 public class D {

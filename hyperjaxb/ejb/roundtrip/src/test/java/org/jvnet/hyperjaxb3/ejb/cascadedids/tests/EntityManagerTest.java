@@ -2,7 +2,7 @@ package org.jvnet.hyperjaxb3.ejb.cascadedids.tests;
 
 import java.io.Serializable;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 import org.jvnet.hyperjaxb3.ejb.cascadedids.tests.Department.DepartmentId;
 import org.jvnet.hyperjaxb3.ejb.test.AbstractEntityManagerTest;

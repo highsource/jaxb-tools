@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.jvnet.hyperjaxb3.xjc.model.CTypeInfoUtils;
 
-import com.sun.java.xml.ns.persistence.orm.OneToMany;
+import jakarta.xml.ns.persistence.orm.OneToMany;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClass;
 import com.sun.tools.xjc.model.CPropertyInfo;

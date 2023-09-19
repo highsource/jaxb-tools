@@ -7,11 +7,11 @@ import java.util.List;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
 
-import com.sun.java.xml.ns.persistence.orm.AssociationOverride;
-import com.sun.java.xml.ns.persistence.orm.JoinColumn;
-import com.sun.java.xml.ns.persistence.orm.JoinTable;
-import com.sun.java.xml.ns.persistence.orm.OrderColumn;
-import com.sun.java.xml.ns.persistence.orm.PrimaryKeyJoinColumn;
+import jakarta.xml.ns.persistence.orm.AssociationOverride;
+import jakarta.xml.ns.persistence.orm.JoinColumn;
+import jakarta.xml.ns.persistence.orm.JoinTable;
+import jakarta.xml.ns.persistence.orm.OrderColumn;
+import jakarta.xml.ns.persistence.orm.PrimaryKeyJoinColumn;
 import com.sun.tools.xjc.model.CPropertyInfo;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;

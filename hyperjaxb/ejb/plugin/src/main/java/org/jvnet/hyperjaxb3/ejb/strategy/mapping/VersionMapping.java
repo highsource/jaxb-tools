@@ -1,7 +1,7 @@
 package org.jvnet.hyperjaxb3.ejb.strategy.mapping;
 
-import com.sun.java.xml.ns.persistence.orm.Column;
-import com.sun.java.xml.ns.persistence.orm.Version;
+import jakarta.xml.ns.persistence.orm.Column;
+import jakarta.xml.ns.persistence.orm.Version;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.FieldOutline;
 

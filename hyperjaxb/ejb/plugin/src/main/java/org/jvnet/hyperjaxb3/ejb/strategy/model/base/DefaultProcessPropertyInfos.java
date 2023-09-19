@@ -5,8 +5,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 
-import javax.persistence.Embeddable;
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.MappedSuperclass;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

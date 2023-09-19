@@ -8,9 +8,9 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.EntityManager;
-import javax.persistence.Id;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Id;
 
 public class EntityUtils {
 

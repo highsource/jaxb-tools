@@ -18,7 +18,7 @@ import org.glassfish.jaxb.core.v2.model.core.Ref;
 import org.glassfish.jaxb.core.v2.model.core.TypeInfoSet;
 import org.glassfish.jaxb.core.v2.model.impl.ModelBuilder;
 import org.glassfish.jaxb.core.v2.model.nav.Navigator;
-import com.sun.xml.bind.v2.runtime.IllegalAnnotationsException;
+import org.glassfish.jaxb.runtime.v2.runtime.IllegalAnnotationsException;
 
 public class ReflectionTest extends TestCase {
 

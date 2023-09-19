@@ -2,7 +2,7 @@ package org.jvnet.hyperjaxb3.ejb.strategy.mapping;
 
 import java.util.Collection;
 
-import com.sun.java.xml.ns.persistence.orm.ManyToOne;
+import jakarta.xml.ns.persistence.orm.ManyToOne;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClass;
 import com.sun.tools.xjc.model.CPropertyInfo;

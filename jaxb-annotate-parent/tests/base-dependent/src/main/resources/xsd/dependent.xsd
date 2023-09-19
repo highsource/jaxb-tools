@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:dependent="ns.dependent"
+  xmlns:base="ns.base"
+  xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+  xmlns:annox="http://annox.dev.java.net"
+  targetNamespace="ns.dependent"
+  attributeFormDefault="unqualified"
+  elementFormDefault="unqualified"
+  jaxb:extensionBindingPrefixes="annox"
+  jaxb:version="3.0"
+>
+
+  <xsd:import schemaLocation="base.xsd" namespace="ns.base" />
+
+  <xsd:element name="baseElement" type="base:BaseType" />
+
+  <xsd:complexType name="DependentType">
+    <xsd:all>
+      <xsd:element ref="dependent:baseElement">
+        <xsd:annotation>
+          <xsd:appinfo>
+            <annox:annotate target="field">@javax.validation.constraints.NotNull</annox:annotate>
+          </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:all>
+  </xsd:complexType>
+
+</xsd:schema>

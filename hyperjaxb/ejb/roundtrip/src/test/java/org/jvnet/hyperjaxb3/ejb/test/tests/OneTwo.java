@@ -1,12 +1,12 @@
 package org.jvnet.hyperjaxb3.ejb.test.tests;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
@@ -23,7 +23,7 @@ import org.jvnet.jaxb2_commons.locator.ObjectLocator;
 @Entity
 @Table(name = "table_onetwo")
 public class OneTwo implements Equals {
-	
+
     @XmlAttribute(name = "Hjid")
     protected Long hjid;
 
@@ -36,11 +36,11 @@ public class OneTwo implements Equals {
 
     /**
      * Sets the value of the hjid property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Long }
-     *     
+     *
      */
     public void setHjid(Long value) {
         this.hjid = value;

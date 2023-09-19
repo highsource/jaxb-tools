@@ -1,8 +1,8 @@
 package org.jvnet.hyperjaxb3.ejb.strategy.mapping;
 
-import com.sun.java.xml.ns.persistence.orm.Embedded;
-import com.sun.java.xml.ns.persistence.orm.ManyToOne;
-import com.sun.java.xml.ns.persistence.orm.OneToOne;
+import jakarta.xml.ns.persistence.orm.Embedded;
+import jakarta.xml.ns.persistence.orm.ManyToOne;
+import jakarta.xml.ns.persistence.orm.OneToOne;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.FieldOutline;
 

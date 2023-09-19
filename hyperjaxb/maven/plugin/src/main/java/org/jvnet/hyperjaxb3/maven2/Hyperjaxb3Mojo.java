@@ -216,43 +216,23 @@ public class Hyperjaxb3Mojo extends XJCMojo {
 				arguments.add("-Xhyperjaxb3-ejb-generateTransientId=true");
 			}
 
-		} else if ("jpa1".equals(variant)) {
-			arguments.add("-Xhyperjaxb3-jpa1");
+		} else if ("jpa3".equals(variant)) {
+			arguments.add("-Xhyperjaxb3-jpa3");
 
 			if (result != null) {
-				arguments.add("-Xhyperjaxb3-jpa1-result=" + result);
+				arguments.add("-Xhyperjaxb3-jpa3-result=" + result);
 			}
 
 			if (roundtripTestClassName != null) {
-				arguments.add("-Xhyperjaxb3-jpa1-roundtripTestClassName="
+				arguments.add("-Xhyperjaxb3-jpa3-roundtripTestClassName="
 						+ roundtripTestClassName);
 			}
 			if (persistenceUnitName != null) {
-				arguments.add("-Xhyperjaxb3-jpa1-persistenceUnitName="
+				arguments.add("-Xhyperjaxb3-jpa3-persistenceUnitName="
 						+ persistenceUnitName);
 			}
 			if (persistenceXml != null) {
-				arguments.add("-Xhyperjaxb3-jpa1-persistenceXml="
-						+ persistenceXml.getAbsolutePath());
-			}
-
-		} else if ("jpa2".equals(variant)) {
-			arguments.add("-Xhyperjaxb3-jpa2");
-
-			if (result != null) {
-				arguments.add("-Xhyperjaxb3-jpa2-result=" + result);
-			}
-
-			if (roundtripTestClassName != null) {
-				arguments.add("-Xhyperjaxb3-jpa2-roundtripTestClassName="
-						+ roundtripTestClassName);
-			}
-			if (persistenceUnitName != null) {
-				arguments.add("-Xhyperjaxb3-jpa2-persistenceUnitName="
-						+ persistenceUnitName);
-			}
-			if (persistenceXml != null) {
-				arguments.add("-Xhyperjaxb3-jpa2-persistenceXml="
+				arguments.add("-Xhyperjaxb3-jpa3-persistenceXml="
 						+ persistenceXml.getAbsolutePath());
 			}
 		}

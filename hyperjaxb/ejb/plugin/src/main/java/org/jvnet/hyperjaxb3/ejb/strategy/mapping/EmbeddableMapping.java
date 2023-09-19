@@ -2,8 +2,8 @@ package org.jvnet.hyperjaxb3.ejb.strategy.mapping;
 
 import org.jvnet.jaxb2_commons.util.OutlineUtils;
 
-import com.sun.java.xml.ns.persistence.orm.Embeddable;
-import com.sun.java.xml.ns.persistence.orm.EmbeddableAttributes;
+import jakarta.xml.ns.persistence.orm.Embeddable;
+import jakarta.xml.ns.persistence.orm.EmbeddableAttributes;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.ClassOutline;
 

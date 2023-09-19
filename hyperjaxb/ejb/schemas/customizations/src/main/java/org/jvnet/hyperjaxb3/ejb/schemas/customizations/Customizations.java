@@ -26,20 +26,20 @@ public class Customizations {
 
 	public static final String NAMESPACE_URI = "http://hyperjaxb3.jvnet.org/ejb/schemas/customizations";
 
-	public static final String ORM_NAMESPACE_URI = "http://java.sun.com/xml/ns/persistence/orm";
+	public static final String ORM_NAMESPACE_URI = "https://jakarta.ee/xml/ns/persistence/orm";
 
 	public static final Set<String> NAMESPACES;
 	static {
 		final Set<String> namespaces = new HashSet<String>(3);
 		namespaces.add(NAMESPACE_URI);
-		namespaces.add("http://java.sun.com/xml/ns/persistence");
+		namespaces.add("https://jakarta.ee/xml/ns/persistence");
 		namespaces.add(ORM_NAMESPACE_URI);
 		NAMESPACES = Collections.unmodifiableSet(namespaces);
 	}
 
 	public static final String CONTEXT_PATH = ContextUtils.getContextPath(
-			com.sun.java.xml.ns.persistence.ObjectFactory.class,
-			com.sun.java.xml.ns.persistence.orm.ObjectFactory.class,
+			jakarta.xml.ns.persistence.ObjectFactory.class,
+            jakarta.xml.ns.persistence.orm.ObjectFactory.class,
 			org.jvnet.hyperjaxb3.ejb.schemas.customizations.ObjectFactory.class
 
 	);
@@ -64,7 +64,7 @@ public class Customizations {
 	public static QName hj(String localPart) {
 		return new QName(NAMESPACE_URI, localPart);
 	}
-	
+
 	public static QName orm(String localPart) {
 		return new QName(ORM_NAMESPACE_URI, localPart);
 	}
@@ -111,16 +111,16 @@ public class Customizations {
 
 	public static QName GENERATED_ELEMENT_NAME = new QName(
 			"http://jaxb2-commons.dev.java.net/basic", "generated");
-	
-	
-	
-	// 
+
+
+
+	//
 	public static final QName ENTITY_ELEMENT_NAME = hj("entity");
 
 	public static final QName MAPPED_SUPERCLASS_ELEMENT_NAME = hj("mapped-superclass");
 
 	public static final QName EMBEDDABLE_ELEMENT_NAME = hj("embeddable");
-	
+
 	public static final QName JAXB_CONTEXT_ELEMENT_NAME = hj("jaxb-context");
 
 
@@ -186,17 +186,17 @@ public class Customizations {
 		return CustomizationUtils.createCustomization(element);
 	}
 
-	private final static com.sun.java.xml.ns.persistence.ObjectFactory persistenceObjectFactory = new com.sun.java.xml.ns.persistence.ObjectFactory();
+	private final static jakarta.xml.ns.persistence.ObjectFactory persistenceObjectFactory = new jakarta.xml.ns.persistence.ObjectFactory();
 
-	private final static com.sun.java.xml.ns.persistence.orm.ObjectFactory ormObjectFactory = new com.sun.java.xml.ns.persistence.orm.ObjectFactory();
-	
+	private final static jakarta.xml.ns.persistence.orm.ObjectFactory ormObjectFactory = new jakarta.xml.ns.persistence.orm.ObjectFactory();
+
 	private final static org.jvnet.hyperjaxb3.ejb.schemas.customizations.ObjectFactory customizationsObjectFactory = new org.jvnet.hyperjaxb3.ejb.schemas.customizations.ObjectFactory();
 
-	public static com.sun.java.xml.ns.persistence.ObjectFactory getPersistenceObjectFactory() {
+	public static jakarta.xml.ns.persistence.ObjectFactory getPersistenceObjectFactory() {
 		return persistenceObjectFactory;
 	}
 
-	public static com.sun.java.xml.ns.persistence.orm.ObjectFactory getOrmObjectFactory() {
+	public static jakarta.xml.ns.persistence.orm.ObjectFactory getOrmObjectFactory() {
 		return ormObjectFactory;
 	}
 

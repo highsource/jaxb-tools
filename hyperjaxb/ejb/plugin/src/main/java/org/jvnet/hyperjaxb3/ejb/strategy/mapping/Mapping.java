@@ -6,22 +6,22 @@ import org.jvnet.hyperjaxb3.ejb.strategy.model.GetTypes;
 import org.jvnet.hyperjaxb3.ejb.strategy.naming.Naming;
 import org.springframework.beans.factory.annotation.Required;
 
-import com.sun.java.xml.ns.persistence.orm.Attributes;
-import com.sun.java.xml.ns.persistence.orm.Basic;
-import com.sun.java.xml.ns.persistence.orm.ElementCollection;
-import com.sun.java.xml.ns.persistence.orm.Embeddable;
-import com.sun.java.xml.ns.persistence.orm.EmbeddableAttributes;
-import com.sun.java.xml.ns.persistence.orm.Embedded;
-import com.sun.java.xml.ns.persistence.orm.EmbeddedId;
-import com.sun.java.xml.ns.persistence.orm.Entity;
-import com.sun.java.xml.ns.persistence.orm.Id;
-import com.sun.java.xml.ns.persistence.orm.ManyToMany;
-import com.sun.java.xml.ns.persistence.orm.ManyToOne;
-import com.sun.java.xml.ns.persistence.orm.MappedSuperclass;
-import com.sun.java.xml.ns.persistence.orm.OneToMany;
-import com.sun.java.xml.ns.persistence.orm.OneToOne;
-import com.sun.java.xml.ns.persistence.orm.Transient;
-import com.sun.java.xml.ns.persistence.orm.Version;
+import jakarta.xml.ns.persistence.orm.Attributes;
+import jakarta.xml.ns.persistence.orm.Basic;
+import jakarta.xml.ns.persistence.orm.ElementCollection;
+import jakarta.xml.ns.persistence.orm.Embeddable;
+import jakarta.xml.ns.persistence.orm.EmbeddableAttributes;
+import jakarta.xml.ns.persistence.orm.Embedded;
+import jakarta.xml.ns.persistence.orm.EmbeddedId;
+import jakarta.xml.ns.persistence.orm.Entity;
+import jakarta.xml.ns.persistence.orm.Id;
+import jakarta.xml.ns.persistence.orm.ManyToMany;
+import jakarta.xml.ns.persistence.orm.ManyToOne;
+import jakarta.xml.ns.persistence.orm.MappedSuperclass;
+import jakarta.xml.ns.persistence.orm.OneToMany;
+import jakarta.xml.ns.persistence.orm.OneToOne;
+import jakarta.xml.ns.persistence.orm.Transient;
+import jakarta.xml.ns.persistence.orm.Version;
 import com.sun.tools.xjc.outline.FieldOutline;
 
 public class Mapping implements Cloneable {
@@ -158,10 +158,10 @@ public class Mapping implements Cloneable {
 	/*
 	 * private FieldOutlineMapping<EmbeddedId> embeddedIdMaping;// = new //
 	 * EmbeddedIdMapping();
-	 * 
+	 *
 	 * public FieldOutlineMapping<EmbeddedId> getEmbeddedIdMapping() { throw new
 	 * UnsupportedOperationException(); // return embeddedIdMaping; }
-	 * 
+	 *
 	 * public void setEmbeddedIdMaping( FieldOutlineMapping<EmbeddedId>
 	 * embeddedIdMaping) { this.embeddedIdMaping = embeddedIdMaping; }
 	 */

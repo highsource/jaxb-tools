@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.EnumType;
+import jakarta.persistence.EnumType;
 import javax.xml.namespace.QName;
 
 import org.jvnet.hyperjaxb3.codemodel.util.JTypeUtils;
@@ -18,12 +18,12 @@ import org.jvnet.jaxb2_commons.util.FieldAccessorUtils;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JType;
-import com.sun.java.xml.ns.persistence.orm.AttributeOverride;
-import com.sun.java.xml.ns.persistence.orm.Basic;
-import com.sun.java.xml.ns.persistence.orm.Column;
-import com.sun.java.xml.ns.persistence.orm.EmbeddableAttributes;
-import com.sun.java.xml.ns.persistence.orm.Embedded;
-import com.sun.java.xml.ns.persistence.orm.Lob;
+import jakarta.xml.ns.persistence.orm.AttributeOverride;
+import jakarta.xml.ns.persistence.orm.Basic;
+import jakarta.xml.ns.persistence.orm.Column;
+import jakarta.xml.ns.persistence.orm.EmbeddableAttributes;
+import jakarta.xml.ns.persistence.orm.Embedded;
+import jakarta.xml.ns.persistence.orm.Lob;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CEnumLeafInfo;

@@ -3,10 +3,10 @@ package org.jvnet.hyperjaxb3.ejb.tests.issues.pre;
 import java.io.Serializable;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
 import jakarta.xml.bind.annotation.XmlElement;
 import org.jvnet.jaxb2_commons.lang.Equals2;
 import org.jvnet.jaxb2_commons.lang.EqualsStrategy2;
@@ -23,32 +23,32 @@ public abstract class IssueHJIII45SuperClass implements Serializable, Equals2, H
 
     private static final long serialVersionUID = 7724857660567518243L;
 
-	
+
     @XmlElement(name = "Id")
-    @Id	
+    @Id
     @Column(name = "Id", updatable = false, nullable = false)
     private String id = "";
-    
+
 
     public String getId() {
 		return this.id;
 	}
-	
-    
+
+
     private void setId(String uuid) {
 		this.id = uuid;
 	}
-    
+
 	@PrePersist
 	private void prePersist() {
 		if (getId().trim().length() == 0) {
 			setId(UUID.randomUUID().toString());
 		}
 	}
-	
-	
-	
-	
+
+
+
+
     public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy2 strategy) {
         if (!(object instanceof IssueHJIII45SuperClass)) {
             return false;

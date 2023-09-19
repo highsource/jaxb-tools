@@ -13,15 +13,15 @@ import org.apache.commons.logging.LogFactory;
 import org.jvnet.hyperjaxb3.ejb.plugin.EjbPlugin;
 import org.jvnet.hyperjaxb3.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb3.ejb.strategy.outline.OutlineProcessor;
-import org.jvnet.hyperjaxb3.persistence.jpa1.JPA1Utils;
+import org.jvnet.hyperjaxb3.persistence.jpa3.JPA3Utils;
 import org.jvnet.jaxb2_commons.util.CodeModelUtils;
 import org.jvnet.jaxb2_commons.util.OutlineUtils;
 
 import com.sun.codemodel.fmt.JTextFile;
-import com.sun.java.xml.ns.persistence.orm.Embeddable;
-import com.sun.java.xml.ns.persistence.orm.Entity;
-import com.sun.java.xml.ns.persistence.orm.EntityMappings;
-import com.sun.java.xml.ns.persistence.orm.MappedSuperclass;
+import jakarta.xml.ns.persistence.orm.Embeddable;
+import jakarta.xml.ns.persistence.orm.Entity;
+import jakarta.xml.ns.persistence.orm.EntityMappings;
+import jakarta.xml.ns.persistence.orm.MappedSuperclass;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
@@ -29,7 +29,7 @@ import com.sun.tools.xjc.outline.Outline;
 public class MarshalMappings implements OutlineProcessor<EjbPlugin> {
 
 	protected Marshaller getMarshaller() throws JAXBException {
-		return JPA1Utils.createMarshaller();
+		return JPA3Utils.createMarshaller();
 	}
 
 	protected Log logger = LogFactory.getLog(getClass());

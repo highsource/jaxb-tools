@@ -7,13 +7,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.jvnet.hyperjaxb3.ejb.strategy.annotate.CreateXAnnotations;
 
-import com.sun.java.xml.ns.persistence.orm.AttributeOverride;
-import com.sun.java.xml.ns.persistence.orm.Column;
+import jakarta.xml.ns.persistence.orm.AttributeOverride;
+import jakarta.xml.ns.persistence.orm.Column;
 
 public class CreateXAnnotationsTest {
 
 	private final CreateXAnnotations createXAnnotations = new CreateXAnnotations();
-	
+
 	@Test
 	public void createsAttributeOverrides()
 	{

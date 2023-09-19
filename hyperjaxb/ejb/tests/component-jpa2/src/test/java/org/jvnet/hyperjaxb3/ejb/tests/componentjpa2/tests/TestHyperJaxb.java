@@ -4,9 +4,9 @@ package org.jvnet.hyperjaxb3.ejb.tests.componentjpa2.tests;
 import org.junit.Test;
 import org.jvnet.hyperjaxb3.xml.bind.JAXBContextUtils;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import java.io.*;
 import java.net.URL;
 import java.util.Enumeration;

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:base="ns.base"
+  xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+  xmlns:annox="http://annox.dev.java.net"
+  targetNamespace="ns.base"
+  attributeFormDefault="unqualified"
+  elementFormDefault="unqualified"
+  jaxb:extensionBindingPrefixes="annox"
+  jaxb:version="3.0"
+>
+
+  <xsd:complexType name="BaseType">
+    <xsd:all>
+      <xsd:element name="textField" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo>
+            <annox:annotate target="field">@javax.validation.constraints.NotNull</annox:annotate>
+          </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:all>
+  </xsd:complexType>
+
+</xsd:schema>

@@ -3,12 +3,12 @@
  * of the Common Development and Distribution License
  * (the "License").  You may not use this file except
  * in compliance with the License.
- * 
+ *
  * You can obtain a copy of the license at
  * https://jwsdp.dev.java.net/CDDLv1.0.html
  * See the License for the specific language governing
  * permissions and limitations under the License.
- * 
+ *
  * When distributing Covered Code, include this CDDL
  * HEADER in each file and include the License file at
  * https://jwsdp.dev.java.net/CDDLv1.0.html  If applicable,
@@ -31,15 +31,15 @@ import com.sun.codemodel.JVar;
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.generator.bean.MethodWriter;
 import com.sun.tools.xjc.model.CPropertyInfo;
-import com.sun.xml.bind.api.impl.NameConverter;
+import org.glassfish.jaxb.core.api.impl.NameConverter;
 
 /**
  * Realizes a property as an untyped {@link List}.
- * 
+ *
  * <pre>
  * List getXXX();
  * </pre>
- * 
+ *
  * <h2>Default value handling</h2>
  * <p>
  * Since unmarshaller just adds new values into the storage,
@@ -51,14 +51,14 @@ import com.sun.xml.bind.api.impl.NameConverter;
  * When the getXXX method is called, we'll check if the storage is
  * modified in anyway. If it is modified, it must mean that the values
  * are found in the document, so we just return it.
- * 
+ *
  * Otherwise we will fill in default values and return it to the user.
- * 
+ *
  * <p>
  * When a list has default values, its dirty flag is set to true.
  * Marshaller will check this and treat it appropriately.
- * 
- * 
+ *
+ *
  * @author
  *     Kohsuke Kawaguchi (kohsuke.kawaguchi@sun.com)
  */

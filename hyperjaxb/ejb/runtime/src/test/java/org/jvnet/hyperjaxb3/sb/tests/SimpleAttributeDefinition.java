@@ -7,9 +7,9 @@ import jakarta.xml.bind.annotation.XmlTransient;
 import jakarta.xml.bind.annotation.XmlValue;
 import javax.xml.namespace.QName;
 
-import com.sun.xml.bind.v2.runtime.JAXBContextImpl;
-import com.sun.xml.bind.v2.runtime.JaxBeanInfo;
-import com.sun.xml.bind.v2.runtime.unmarshaller.UnmarshallerImpl;
+import org.glassfish.jaxb.runtime.v2.runtime.JAXBContextImpl;
+import org.glassfish.jaxb.runtime.v2.runtime.JaxBeanInfo;
+import org.glassfish.jaxb.runtime.v2.runtime.unmarshaller.UnmarshallerImpl;
 
 @XmlRootElement(name = "SimpleAttribute")
 public class SimpleAttributeDefinition<T> {
@@ -77,7 +77,7 @@ public class SimpleAttributeDefinition<T> {
 
 	// private void beforeMarshal(Marshaller marshaller, Object parent)
 	// throws Exception {
-	//		
+	//
 	// // final String content = getContent();
 	// final QName type = getType();
 	// final T value;
@@ -95,8 +95,8 @@ public class SimpleAttributeDefinition<T> {
 	// final Object object = globalType.getTransducer().parse(content);
 	// value = (T) object;
 	// setValue(value);
-	//		
+	//
 	// }
-	//	
+	//
 
 }

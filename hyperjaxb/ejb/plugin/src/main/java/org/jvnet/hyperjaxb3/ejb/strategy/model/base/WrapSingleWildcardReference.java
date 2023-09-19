@@ -13,7 +13,7 @@ import org.jvnet.hyperjaxb3.xjc.model.CExternalLeafInfo;
 import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.ElementAsString;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
 
-import com.sun.java.xml.ns.persistence.orm.Lob;
+import jakarta.xml.ns.persistence.orm.Lob;
 import com.sun.tools.xjc.model.CBuiltinLeafInfo;
 import com.sun.tools.xjc.model.CElement;
 import com.sun.tools.xjc.model.CPropertyInfo;

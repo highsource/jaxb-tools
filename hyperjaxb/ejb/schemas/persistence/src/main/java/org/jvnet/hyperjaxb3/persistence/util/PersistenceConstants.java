@@ -1,7 +1,7 @@
 package org.jvnet.hyperjaxb3.persistence.util;
 
-import com.sun.java.xml.ns.persistence.Persistence;
-import com.sun.java.xml.ns.persistence.orm.Entity;
+import jakarta.xml.ns.persistence.Persistence;
+import jakarta.xml.ns.persistence.orm.Entity;
 
 public class PersistenceConstants {
 
@@ -12,8 +12,8 @@ public class PersistenceConstants {
 			.getName()
 			+ ":" + Entity.class.getPackage().getName();
 
-	public static final String PERSISTENCE_NAMESPACE_URI = "http://java.sun.com/xml/ns/persistence";
+	public static final String PERSISTENCE_NAMESPACE_URI = "https://jakarta.ee/xml/ns/persistence";
 
-	public static final String ORM_NAMESPACE_URI = "http://java.sun.com/xml/ns/persistence/orm";
+	public static final String ORM_NAMESPACE_URI = "https://jakarta.ee/xml/ns/persistence/orm";
 
 }

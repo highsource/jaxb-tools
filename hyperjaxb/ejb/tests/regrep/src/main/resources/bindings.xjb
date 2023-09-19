@@ -1,78 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jaxb:bindings
-		version="2.1" 
-		xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" 
-		xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+		version="3.0"
+		xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+		xmlns:xs="http://www.w3.org/2001/XMLSchema"
 		xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
 		xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 		jaxb:extensionBindingPrefixes="xjc hj"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb  http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd">
-    
-    
+
+
     <!--
-    $Id: bindings.xjb,v 1.2 2007/06/03 19:32:54 lexi Exp $    
+    $Id: bindings.xjb,v 1.2 2007/06/03 19:32:54 lexi Exp $
     -->
-    <jaxb:bindings schemaLocation="rim.xsd" node="/xs:schema">        
+    <jaxb:bindings schemaLocation="rim.xsd" node="/xs:schema">
 	<jaxb:globalBindings>
 		<!--xjc:simple/-->
 	</jaxb:globalBindings>
         <jaxb:bindings node="xs:complexType[@name='IdentifiableType']/xs:attribute[@name='id']">
             <hj:id/>
-            <!--hj:id name="id" type="java.lang.String">            
+            <!--hj:id name="id" type="java.lang.String">
                 <hj:generator
                     generatorClass="org.hibernate.id.UUIDHexGenerator">
                 </hj:generator>
             </hj:id-->
         </jaxb:bindings>
-        
+
         <jaxb:schemaBindings>
             <jaxb:package name="org.freebxml.omar.jaxb.bindings.rim"/>
-        </jaxb:schemaBindings>    
-        
-        
+        </jaxb:schemaBindings>
+
+
     </jaxb:bindings>
-    
-    <jaxb:bindings schemaLocation="rs.xsd" node="/xs:schema">        
+
+    <jaxb:bindings schemaLocation="rs.xsd" node="/xs:schema">
         <jaxb:schemaBindings>
             <jaxb:package name="org.freebxml.omar.jaxb.bindings.rs"/>
-        </jaxb:schemaBindings>    
+        </jaxb:schemaBindings>
     </jaxb:bindings>
-    
-    <jaxb:bindings schemaLocation="lcm.xsd" node="/xs:schema">        
+
+    <jaxb:bindings schemaLocation="lcm.xsd" node="/xs:schema">
         <jaxb:schemaBindings>
             <jaxb:package name="org.freebxml.omar.jaxb.bindings.lcm"/>
-        </jaxb:schemaBindings>    
+        </jaxb:schemaBindings>
     </jaxb:bindings>
-    
-    <jaxb:bindings schemaLocation="query.xsd" node="/xs:schema">        
+
+    <jaxb:bindings schemaLocation="query.xsd" node="/xs:schema">
         <jaxb:schemaBindings>
             <jaxb:package name="org.freebxml.omar.jaxb.bindings.query"/>
         </jaxb:schemaBindings>
-        
+
         <jaxb:bindings node="//xs:complexType[@name='ResponseOptionType']//xs:attribute[@name='returnType']/xs:simpleType">
             <jaxb:typesafeEnumClass name="ReturnType"/>
         </jaxb:bindings>
-        
-    </jaxb:bindings>
-    
-    <jaxb:bindings schemaLocation="cms.xsd" node="/xs:schema">        
-        <jaxb:schemaBindings>
-            <jaxb:package name="org.freebxml.omar.jaxb.bindings.cms"/>
-        </jaxb:schemaBindings>    
+
     </jaxb:bindings>
 
-    <jaxb:bindings schemaLocation="mtom-transport.xsd" node="/xs:schema">        
+    <jaxb:bindings schemaLocation="cms.xsd" node="/xs:schema">
+        <jaxb:schemaBindings>
+            <jaxb:package name="org.freebxml.omar.jaxb.bindings.cms"/>
+        </jaxb:schemaBindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings schemaLocation="mtom-transport.xsd" node="/xs:schema">
         <jaxb:schemaBindings>
             <jaxb:package name="org.freebxml.omar.jaxb.bindings.mtomtransport"/>
-        </jaxb:schemaBindings>    
+        </jaxb:schemaBindings>
     </jaxb:bindings>
-	
+
 	<!--jaxb:bindings scd="x-schema::tns" xmlns:tns="urn:oasis:names:tc:ebxml-regrep:xsd:rim:4.0">
 		<jaxb:bindings scd="~tns:IdentifiableType/@id">
 			<hj:id/>
 		</jaxb:bindings>
 	</jaxb:bindings-->
-	
+
 
 </jaxb:bindings>

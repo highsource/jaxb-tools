@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
@@ -80,7 +80,7 @@ public class JAXBAndJPATest extends TestCase {
 				PurchaseOrderType.class, id);
 		// Using not default equals strategy since BigDecimal has errors in equals strict equality
 		Assert.assertTrue("Objects are not equal.", alpha.equals(null, null, beta, ExtendedJAXBEqualsStrategy.INSTANCE2));
-		
+
 		final Marshaller marshaller = context.createMarshaller();
 		marshaller.marshal(objectFactory.createPurchaseOrder(beta), System.out);
 		loadManager.close();

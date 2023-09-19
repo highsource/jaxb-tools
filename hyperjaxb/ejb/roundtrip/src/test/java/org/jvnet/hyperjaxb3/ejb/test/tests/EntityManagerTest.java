@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.ejb.test.tests;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 import org.jvnet.hyperjaxb3.ejb.test.AbstractEntityManagerTest;
 

@@ -8,7 +8,7 @@ Welcome to the most advanced and feature-full sets of [JAXB](https://github.com/
 
 The project is currently containing the following tools :
 * [JAXB Maven Plugin](#jaxb-maven-plugin)
-* [JAXB Basics Plugins](#jaxb2-basics)
+* [JAXB Plugins](#jaxb-plugins)
 * [Annox](#annox)
 * [JAXB Annotate Plugin](#jaxb-annotate-plugin)
 * [JAXB Hyperjaxb3](#jaxb-hyperjaxb) (Preview)

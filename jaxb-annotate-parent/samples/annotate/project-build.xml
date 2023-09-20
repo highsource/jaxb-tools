@@ -75,7 +75,7 @@
   </target>
   <target name="generate-sources">
     <taskdef name="xjc" classname="org.jvnet.jaxb2_commons.xjc.XJCTask">
-			<!-- XJC Task classpath -->
+      <!-- XJC Task classpath -->
       <classpath>
         <fileset dir="${basedir}/lib">
           <include name="commons-text-*.jar"/>
@@ -89,7 +89,7 @@
           <include name="junit-*.jar"/>
           <include name="stax-api-*.jar"/>
           <include name="jaxb-xjc-*.jar"/>
-          <include name="jaxb2-basics-ant-*.jar"/>
+          <include name="jaxb-plugins-ant-*.jar"/>
           <include name="jcl-over-slf4j-*.jar"/>
           <include name="relaxng-datatype-*.jar"/>
           <include name="rngom-*.jar"/>
@@ -107,14 +107,14 @@
       <schema dir="${basedir}/src/main/resources">
         <include name="**/*.xsd"/>
       </schema>
-			<!-- Plugins -->
+      <!-- Plugins -->
       <classpath>
         <fileset dir="${basedir}/lib">
-					<!-- JAXB2 Basics library -->
+          <!-- JAXB2 Basics library -->
           <include name="jaxb2-basics-*.jar"/>
           <include name="jaxb-annox-*.jar"/>
           <include name="jaxb-basics-annotate-*.jar"/>
-					<!-- JAXB2 Basics library dependencies -->
+          <!-- JAXB2 Basics library dependencies -->
           <include name="hibernate-search-*.jar" />
           <include name="javaparser-*.jar"/>
           <include name="commons-beanutils-*.jar"/>

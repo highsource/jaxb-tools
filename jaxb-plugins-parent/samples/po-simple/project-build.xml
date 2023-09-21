@@ -68,7 +68,7 @@
     <delete dir="${basedir}/target/test-classes"/>
   </target>
   <target name="generate-sources">
-    <taskdef name="xjc" classname="org.jvnet.jaxb2_commons.xjc.XJCTask">
+    <taskdef name="xjc" classname="org.jvnet.jaxb.xjc.XJCTask">
       <!-- XJC Task classpath -->
       <classpath>
         <fileset dir="${basedir}/lib">
@@ -104,7 +104,7 @@
 			<!-- Plugins -->
       <classpath>
         <fileset dir="${basedir}/lib">
-					<!-- JAXB2 Basics library -->
+          <!-- JAXB Basics library -->
           <include name="jaxb-plugins-shaded*.jar"/>
         </fileset>
       </classpath>

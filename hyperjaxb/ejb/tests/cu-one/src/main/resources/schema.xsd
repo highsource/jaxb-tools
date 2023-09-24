@@ -5,7 +5,7 @@
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 
 	xmlns:annox="http://annox.dev.java.net"
 	xmlns:ha="http://annox.dev.java.net/org.hibernate.annotations"
@@ -221,7 +221,7 @@
 			<xs:appinfo>
 				<hj:entity>
 					<orm:sequence-generator name="another-four-sequence" sequence-name="ANOTHER_FOUR_SEQ"/>
-				</hj:entity>	
+				</hj:entity>
 			</xs:appinfo>
 		</xs:annotation>
 		<xs:sequence>
@@ -232,7 +232,7 @@
 							<orm:column name="FOUR_CUSTOM_ID"/>
 							<orm:generated-value strategy="SEQUENCE" generator="four-sequence"/>
 							<orm:sequence-generator name="four-sequence" sequence-name="FOUR_SEQ"/>
-						</hj:id>	
+						</hj:id>
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:element>
@@ -250,7 +250,7 @@
 						<hj:id merge="false">
 							<orm:column name="FIVE_CUSTOM_ID"/>
 							<orm:temporal>DATE</orm:temporal>
-						</hj:id>	
+						</hj:id>
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:element>

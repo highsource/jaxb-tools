@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-	jaxb:extensionBindingPrefixes="hj" jaxb:version="1.0">
+	jaxb:extensionBindingPrefixes="hj" jaxb:version="3.0">
 	<xs:annotation>
 		<xs:appinfo>
 			<jaxb:schemaBindings>
@@ -43,7 +43,7 @@
 				<xs:annotation>
 					<xs:appinfo>
 						<hj:complexSingleProperty>
-							<hj:many-to-one update="false" insert="false" optimistic-lock="false" lazy="false" cascade="none" outer-join="true" 
+							<hj:many-to-one update="false" insert="false" optimistic-lock="false" lazy="false" cascade="none" outer-join="true"
 								fetch="select" not-found="ignore">
 								<hj:column name="b_column"/>
 							</hj:many-to-one>
@@ -55,7 +55,7 @@
 				<xs:annotation>
 					<xs:appinfo>
 						<hj:complexSingleProperty>
-							<hj:one-to-one access="property" constrained="false" lazy="proxy" cascade="none" outer-join="true" 
+							<hj:one-to-one access="property" constrained="false" lazy="proxy" cascade="none" outer-join="true"
 								fetch="select"/>
 						</hj:complexSingleProperty>
 					</xs:appinfo>
@@ -76,7 +76,7 @@
 			<xs:element name="simpleCollectionProperty" type="xs:string" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:appinfo>
-						<hj:simpleCollectionProperty lazy="false" inverse="false" cascade="none" batch-size="3" outer-join="auto" fetch="join" 
+						<hj:simpleCollectionProperty lazy="false" inverse="false" cascade="none" batch-size="3" outer-join="auto" fetch="join"
 							optimistic-lock="false">
 							<hj:table name="c_table" catalog="c_catalog" schema="c_schema"/>
 							<hj:cache usage="read-write"/>
@@ -98,7 +98,7 @@
 			<xs:element name="complexCollectionProperty" type="cclassType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:appinfo>
-						<hj:complexCollectionProperty lazy="false" inverse="false" cascade="none" batch-size="3" outer-join="auto" fetch="join" 
+						<hj:complexCollectionProperty lazy="false" inverse="false" cascade="none" batch-size="3" outer-join="auto" fetch="join"
 							optimistic-lock="false">
 							<hj:table name="d_table" catalog="d_catalog" schema="d_schema"/>
 							<hj:cache usage="read-write"/>
@@ -117,7 +117,7 @@
 			<xs:element name="manyToManyCollectionProperty" type="cclassType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:appinfo>
-						<hj:complexCollectionProperty lazy="false" inverse="false" cascade="none" batch-size="3" outer-join="auto" fetch="join" 
+						<hj:complexCollectionProperty lazy="false" inverse="false" cascade="none" batch-size="3" outer-join="auto" fetch="join"
 							optimistic-lock="false" order-by="column1">
 							<hj:table name="e_table" catalog="e_catalog" schema="e_schema"/>
 							<hj:cache usage="read-write"/>

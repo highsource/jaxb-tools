@@ -1,4 +1,4 @@
-<jaxb:bindings version="1.0" xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" jaxb:extensionBindingPrefixes="hj xjc">
+<jaxb:bindings version="3.0" xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" jaxb:extensionBindingPrefixes="hj xjc">
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
 		<jaxb:globalBindings choiceContentProperty="true"/>
 		<jaxb:schemaBindings>
@@ -162,7 +162,7 @@
 				</hj:key>
 			</hj:complexCollectionProperty>
 		</jaxb:bindings>
-	
+
 		<jaxb:bindings node="xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Product']">
 			<hj:complexCollectionProperty>
 				<hj:key>
@@ -198,14 +198,14 @@
 					<hj:column name="ccr_Prod_Size_Dimension"/>
 				</hj:key>
 			</hj:complexCollectionProperty>
-		</jaxb:bindings>		
+		</jaxb:bindings>
 
 		<jaxb:bindings node="xs:complexType[@name='StructuredProductType']/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Product']/xs:complexType/xs:sequence/xs:element[@name='Size']/xs:complexType/xs:complexContent/xs:extension/xs:sequence/xs:element[@name='Dimensions']/xs:complexType/xs:sequence/xs:element[@name='Dimension']/xs:complexType">
 			<hj:class>
 				<hj:table name="StructuredProductType_SizeType_DimensionType" />
 			</hj:class>
-		</jaxb:bindings>		
-		
-		
+		</jaxb:bindings>
+
+
 	</jaxb:bindings>
 </jaxb:bindings>

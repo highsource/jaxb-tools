@@ -3,11 +3,11 @@
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 
-	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	jaxb:extensionBindingPrefixes="xjc hj orm"
-	jaxb:version="2.0">
+	jaxb:version="3.0">
 	<xs:annotation>
 		<xs:appinfo>
 			<jaxb:schemaBindings>
@@ -15,12 +15,12 @@
 			</jaxb:schemaBindings>
 		</xs:appinfo>
 	</xs:annotation>
-	
+
 	<!-- Simple types -->
 	<xs:element name="simpleTypes" type="simpleTypesType"/>
 	<xs:complexType name="simpleTypesType">
 		<xs:sequence>
-			<xs:element name="base64Binary" type="xs:base64Binary" 
+			<xs:element name="base64Binary" type="xs:base64Binary"
 				minOccurs="0"/>
 			<xs:element name="hexBinary" type="xs:hexBinary" minOccurs="0"/>
 			<xs:element name="duration" type="xs:duration" minOccurs="0"/>
@@ -40,20 +40,20 @@
 			<xs:element name="int" type="xs:int" minOccurs="0"/>
 			<xs:element name="short" type="xs:short" minOccurs="0"/>
 			<xs:element name="byte" type="xs:byte" minOccurs="0"/>
-			<xs:element name="unsignedLong" type="xs:unsignedLong" 
+			<xs:element name="unsignedLong" type="xs:unsignedLong"
 				minOccurs="0"/>
 			<xs:element name="unsignedInt" type="xs:unsignedInt" minOccurs="0"/>
-			<xs:element name="unsignedShort" type="xs:unsignedShort" 
+			<xs:element name="unsignedShort" type="xs:unsignedShort"
 				minOccurs="0"/>
-			<xs:element name="unsignedByte" type="xs:unsignedByte" 
+			<xs:element name="unsignedByte" type="xs:unsignedByte"
 				minOccurs="0"/>
-			<xs:element name="nonNegativeInteger" type="xs:nonNegativeInteger" 
+			<xs:element name="nonNegativeInteger" type="xs:nonNegativeInteger"
 				minOccurs="0"/>
-			<xs:element name="nonPositiveInteger" type="xs:nonPositiveInteger" 
+			<xs:element name="nonPositiveInteger" type="xs:nonPositiveInteger"
 				minOccurs="0"/>
-			<xs:element name="positiveInteger" type="xs:positiveInteger" 
+			<xs:element name="positiveInteger" type="xs:positiveInteger"
 				minOccurs="0"/>
-			<xs:element name="negativeInteger" type="xs:negativeInteger" 
+			<xs:element name="negativeInteger" type="xs:negativeInteger"
 				minOccurs="0"/>
 			<xs:element name="boolean" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="anyURI" type="xs:anyURI" minOccurs="0"/>
@@ -62,7 +62,7 @@
 			<!-- ** xs:element name="NOTATION" type="xs:NOTATION" minOccurs="0"/-->
 
 			<xs:element name="string" type="xs:string" minOccurs="0"/>
-			<xs:element name="normalizedString" type="xs:normalizedString" 
+			<xs:element name="normalizedString" type="xs:normalizedString"
 				minOccurs="0"/>
 			<xs:element name="token" type="xs:token" minOccurs="0"/>
 			<xs:element name="language" type="xs:language" minOccurs="0"/>
@@ -78,86 +78,86 @@
 
 			<xs:element name="base64BinaryNillable" type="xs:base64Binary" minOccurs="0" nillable="true"/>
 			<xs:element name="hexBinaryNillable" type="xs:hexBinary" minOccurs="0" nillable="true"/>
-			<xs:element name="durationNillable" type="xs:duration" 
+			<xs:element name="durationNillable" type="xs:duration"
 				minOccurs="0" nillable="true"/>
-			<xs:element name="dateTimeNillable" type="xs:dateTime" 
+			<xs:element name="dateTimeNillable" type="xs:dateTime"
 				minOccurs="0" nillable="true"/>
-			<xs:element name="dateNillable" type="xs:date" minOccurs="0" 
+			<xs:element name="dateNillable" type="xs:date" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="timeNillable" type="xs:time" minOccurs="0" 
+			<xs:element name="timeNillable" type="xs:time" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="gYearMonthNillable" type="xs:gYearMonth" 
+			<xs:element name="gYearMonthNillable" type="xs:gYearMonth"
 				minOccurs="0" nillable="true"/>
-			<xs:element name="gYearNillable" type="xs:gYear" minOccurs="0" 
+			<xs:element name="gYearNillable" type="xs:gYear" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="gMonthDayNillable" type="xs:gMonthDay" 
+			<xs:element name="gMonthDayNillable" type="xs:gMonthDay"
 				minOccurs="0" nillable="true"/>
-			<xs:element name="gDayNillable" type="xs:gDay" minOccurs="0" 
+			<xs:element name="gDayNillable" type="xs:gDay" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="gMonthNillable" type="xs:gMonth" minOccurs="0" 
+			<xs:element name="gMonthNillable" type="xs:gMonth" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="floatNillable" type="xs:float" minOccurs="0" 
+			<xs:element name="floatNillable" type="xs:float" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="doubleNillable" type="xs:double" minOccurs="0" 
+			<xs:element name="doubleNillable" type="xs:double" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="decimalNillable" type="xs:decimal" minOccurs="0" 
+			<xs:element name="decimalNillable" type="xs:decimal" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="integerNillable" type="xs:integer" minOccurs="0" 
+			<xs:element name="integerNillable" type="xs:integer" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="longNillable" type="xs:long" minOccurs="0" 
+			<xs:element name="longNillable" type="xs:long" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="intNillable" type="xs:int" minOccurs="0" 
+			<xs:element name="intNillable" type="xs:int" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="shortNillable" type="xs:short" minOccurs="0" 
+			<xs:element name="shortNillable" type="xs:short" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="byteNillable" type="xs:byte" minOccurs="0" 
+			<xs:element name="byteNillable" type="xs:byte" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="unsignedLongNillable" type="xs:unsignedLong" 
+			<xs:element name="unsignedLongNillable" type="xs:unsignedLong"
 				minOccurs="0" nillable="true"/>
-			<xs:element name="unsignedIntNillable" type="xs:unsignedInt" 
+			<xs:element name="unsignedIntNillable" type="xs:unsignedInt"
 				minOccurs="0" nillable="true"/>
-			<xs:element name="unsignedShortNillable" type="xs:unsignedShort" 
+			<xs:element name="unsignedShortNillable" type="xs:unsignedShort"
 				minOccurs="0" nillable="true"/>
-			<xs:element name="unsignedByteNillable" type="xs:unsignedByte" 
+			<xs:element name="unsignedByteNillable" type="xs:unsignedByte"
 				minOccurs="0" nillable="true"/>
-			<xs:element name="nonNegativeIntegerNillable" 
+			<xs:element name="nonNegativeIntegerNillable"
 				type="xs:nonNegativeInteger" minOccurs="0" nillable="true"/>
-			<xs:element name="nonPositiveIntegerNillable" 
+			<xs:element name="nonPositiveIntegerNillable"
 				type="xs:nonPositiveInteger" minOccurs="0" nillable="true"/>
-			<xs:element name="positiveIntegerNillable" 
+			<xs:element name="positiveIntegerNillable"
 				type="xs:positiveInteger" minOccurs="0" nillable="true"/>
-			<xs:element name="negativeIntegerNillable" 
+			<xs:element name="negativeIntegerNillable"
 				type="xs:negativeInteger" minOccurs="0" nillable="true"/>
-			<xs:element name="booleanNillable" type="xs:boolean" minOccurs="0" 
+			<xs:element name="booleanNillable" type="xs:boolean" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="anyURINillable" type="xs:anyURI" minOccurs="0" 
+			<xs:element name="anyURINillable" type="xs:anyURI" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="QNameNillable" type="xs:QName" minOccurs="0" 
+			<xs:element name="QNameNillable" type="xs:QName" minOccurs="0"
 				nillable="true"/>
 			<!-- ** xs:element name="NOTATION" type="xs:NOTATION" minOccurs="0"/-->
-			<xs:element name="stringNillable" type="xs:string" minOccurs="0" 
+			<xs:element name="stringNillable" type="xs:string" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="normalizedStringNillable" 
+			<xs:element name="normalizedStringNillable"
 				type="xs:normalizedString" minOccurs="0" nillable="true"/>
-			<xs:element name="tokenNillable" type="xs:token" minOccurs="0" 
+			<xs:element name="tokenNillable" type="xs:token" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="languageNillable" type="xs:language" 
+			<xs:element name="languageNillable" type="xs:language"
 				minOccurs="0" nillable="true"/>
-			<xs:element name="NameNillable" type="xs:Name" minOccurs="0" 
+			<xs:element name="NameNillable" type="xs:Name" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="NCNameNillable" type="xs:NCName" minOccurs="0" 
+			<xs:element name="NCNameNillable" type="xs:NCName" minOccurs="0"
 				nillable="true"/>
 			<!-- xs:element name="IDNillable" type="xs:ID" minOccurs="0" nillable="true"/-->
-			<!-- ** #51 xs:element name="IDREFNillable" type="xs:IDREF" minOccurs="0" 
+			<!-- ** #51 xs:element name="IDREFNillable" type="xs:IDREF" minOccurs="0"
 				nillable="true"/ -->
 			<!-- ** #51 xs:element name="IDREFSNillable" type="xs:IDREFS" nillable="true"/ -->
-			<xs:element name="ENTITYNillable" type="xs:ENTITY" minOccurs="0" 
+			<xs:element name="ENTITYNillable" type="xs:ENTITY" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="ENTITIESNillable" type="xs:ENTITIES" 
+			<xs:element name="ENTITIESNillable" type="xs:ENTITIES"
 				minOccurs="0" nillable="true"/>
-			<xs:element name="NMTOKENNillable" type="xs:NMTOKEN" minOccurs="0" 
+			<xs:element name="NMTOKENNillable" type="xs:NMTOKEN" minOccurs="0"
 				nillable="true"/>
-			<xs:element name="NMTOKENSNillable" type="xs:NMTOKENS" 
+			<xs:element name="NMTOKENSNillable" type="xs:NMTOKENS"
 				minOccurs="0" nillable="true"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -244,7 +244,7 @@
 								<xs:appinfo>
 									<xjc:dom/>
 								</xs:appinfo>
-							</xs:annotation> 
+							</xs:annotation>
 						</xs:element>
 
 					</xs:sequence>
@@ -259,7 +259,7 @@
 								<xs:appinfo>
 									<xjc:dom/>
 								</xs:appinfo>
-							</xs:annotation> 
+							</xs:annotation>
 						</xs:element>
 
 					</xs:sequence>
@@ -292,7 +292,7 @@
 								<xs:appinfo>
 									<xjc:dom/>
 								</xs:appinfo>
-							</xs:annotation> 
+							</xs:annotation>
 						</xs:element>
 
 					</xs:sequence>
@@ -308,7 +308,7 @@
 								<xs:appinfo>
 									<xjc:dom/>
 								</xs:appinfo>
-							</xs:annotation> 
+							</xs:annotation>
 						</xs:element>
 
 					</xs:sequence>
@@ -413,20 +413,20 @@
 			<xs:element name="int" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="short" type="xs:short" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="byte" type="xs:byte" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="unsignedLong" type="xs:unsignedLong" 
+			<xs:element name="unsignedLong" type="xs:unsignedLong"
 				minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="unsignedInt" type="xs:unsignedInt" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="unsignedShort" type="xs:unsignedShort" 
+			<xs:element name="unsignedShort" type="xs:unsignedShort"
 				minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="unsignedByte" type="xs:unsignedByte" 
+			<xs:element name="unsignedByte" type="xs:unsignedByte"
 				minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="nonNegativeInteger" type="xs:nonNegativeInteger" 
+			<xs:element name="nonNegativeInteger" type="xs:nonNegativeInteger"
 				minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="nonPositiveInteger" type="xs:nonPositiveInteger" 
+			<xs:element name="nonPositiveInteger" type="xs:nonPositiveInteger"
 				minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="positiveInteger" type="xs:positiveInteger" 
+			<xs:element name="positiveInteger" type="xs:positiveInteger"
 				minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="negativeInteger" type="xs:negativeInteger" 
+			<xs:element name="negativeInteger" type="xs:negativeInteger"
 				minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="boolean" type="xs:boolean" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="anyURI" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded"/>
@@ -435,7 +435,7 @@
 			<!-- ** xs:element name="NOTATION" type="xs:NOTATION" minOccurs="0" maxOccurs="unbounded"/-->
 
 			<xs:element name="string" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="normalizedString" type="xs:normalizedString" 
+			<xs:element name="normalizedString" type="xs:normalizedString"
 				minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="token" type="xs:token" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="language" type="xs:language" minOccurs="0" maxOccurs="unbounded"/>
@@ -451,88 +451,88 @@
 
 			<xs:element name="base64BinaryNillable" type="xs:base64Binary" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
 			<xs:element name="hexBinaryNillable" type="xs:hexBinary" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
-			<xs:element name="durationNillable" type="xs:duration" 
+			<xs:element name="durationNillable" type="xs:duration"
 				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
-			<xs:element name="dateTimeNillable" type="xs:dateTime" 
+			<xs:element name="dateTimeNillable" type="xs:dateTime"
 				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
-			<xs:element name="dateNillable" type="xs:date" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="dateNillable" type="xs:date" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="timeNillable" type="xs:time" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="timeNillable" type="xs:time" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="gYearMonthNillable" type="xs:gYearMonth" 
+			<xs:element name="gYearMonthNillable" type="xs:gYearMonth"
 				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
-			<xs:element name="gYearNillable" type="xs:gYear" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="gYearNillable" type="xs:gYear" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="gMonthDayNillable" type="xs:gMonthDay" 
+			<xs:element name="gMonthDayNillable" type="xs:gMonthDay"
 				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
-			<xs:element name="gDayNillable" type="xs:gDay" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="gDayNillable" type="xs:gDay" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="gMonthNillable" type="xs:gMonth" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="gMonthNillable" type="xs:gMonth" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="floatNillable" type="xs:float" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="floatNillable" type="xs:float" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="doubleNillable" type="xs:double" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="doubleNillable" type="xs:double" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="decimalNillable" type="xs:decimal" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="decimalNillable" type="xs:decimal" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="integerNillable" type="xs:integer" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="integerNillable" type="xs:integer" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="longNillable" type="xs:long" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="longNillable" type="xs:long" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="intNillable" type="xs:int" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="intNillable" type="xs:int" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="shortNillable" type="xs:short" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="shortNillable" type="xs:short" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="byteNillable" type="xs:byte" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="byteNillable" type="xs:byte" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="unsignedLongNillable" type="xs:unsignedLong" 
+			<xs:element name="unsignedLongNillable" type="xs:unsignedLong"
 				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
-			<xs:element name="unsignedIntNillable" type="xs:unsignedInt" 
+			<xs:element name="unsignedIntNillable" type="xs:unsignedInt"
 				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
-			<xs:element name="unsignedShortNillable" type="xs:unsignedShort" 
+			<xs:element name="unsignedShortNillable" type="xs:unsignedShort"
 				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
-			<xs:element name="unsignedByteNillable" type="xs:unsignedByte" 
+			<xs:element name="unsignedByteNillable" type="xs:unsignedByte"
 				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
-			<xs:element name="nonNegativeIntegerNillable" 
+			<xs:element name="nonNegativeIntegerNillable"
 				type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
-			<xs:element name="nonPositiveIntegerNillable" 
+			<xs:element name="nonPositiveIntegerNillable"
 				type="xs:nonPositiveInteger" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
-			<xs:element name="positiveIntegerNillable" 
+			<xs:element name="positiveIntegerNillable"
 				type="xs:positiveInteger" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
-			<xs:element name="negativeIntegerNillable" 
+			<xs:element name="negativeIntegerNillable"
 				type="xs:negativeInteger" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
-			<xs:element name="booleanNillable" type="xs:boolean" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="booleanNillable" type="xs:boolean" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="anyURINillable" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="anyURINillable" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="QNameNillable" type="xs:QName" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="QNameNillable" type="xs:QName" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
 			<!-- ** xs:element name="NOTATION" type="xs:NOTATION" minOccurs="0" maxOccurs="unbounded"/-->
-			<xs:element name="stringNillable" type="xs:string" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="stringNillable" type="xs:string" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="normalizedStringNillable" 
+			<xs:element name="normalizedStringNillable"
 				type="xs:normalizedString" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
-			<xs:element name="tokenNillable" type="xs:token" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="tokenNillable" type="xs:token" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="languageNillable" type="xs:language" 
+			<xs:element name="languageNillable" type="xs:language"
 				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
-			<xs:element name="NameNillable" type="xs:Name" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="NameNillable" type="xs:Name" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="NCNameNillable" type="xs:NCName" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="NCNameNillable" type="xs:NCName" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<!-- ** #51 xs:element name="IDNillable" type="xs:ID" minOccurs="0" maxOccurs="unbounded" 
+			<!-- ** #51 xs:element name="IDNillable" type="xs:ID" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/ -->
-			<!-- ** #51 xs:element name="IDREFNillable" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded" 
+			<!-- ** #51 xs:element name="IDREFNillable" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/ -->
-			<!-- ** #51 xs:element name="IDREFSNillable" type="xs:IDREFS" minOccurs="0" maxOccurs="unbounded" 
+			<!-- ** #51 xs:element name="IDREFSNillable" type="xs:IDREFS" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/ -->
-			<xs:element name="ENTITYNillable" type="xs:ENTITY" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="ENTITYNillable" type="xs:ENTITY" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="ENTITIESNillable" type="xs:ENTITIES" 
+			<xs:element name="ENTITIESNillable" type="xs:ENTITIES"
 				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
-			<xs:element name="NMTOKENNillable" type="xs:NMTOKEN" minOccurs="0" maxOccurs="unbounded" 
+			<xs:element name="NMTOKENNillable" type="xs:NMTOKEN" minOccurs="0" maxOccurs="unbounded"
 				nillable="true"/>
-			<xs:element name="NMTOKENSNillable" type="xs:NMTOKENS" 
+			<xs:element name="NMTOKENSNillable" type="xs:NMTOKENS"
 				minOccurs="0" maxOccurs="unbounded" nillable="true"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -573,7 +573,7 @@
 				<xs:element name="q" type="xs:string"/>
 				<xs:element name="r" type="complexType" nillable="true"/>
 			</xs:sequence>
-			<!-- ** 
+			<!-- **
 			<xs:sequence maxOccurs="unbounded">
 				<xs:element name="s" type="complexType"/>
 				<xs:element name="t" type="complexType"/>

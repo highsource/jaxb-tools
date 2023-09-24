@@ -1,20 +1,20 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
   xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-  xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+  xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
   jaxb:extensionBindingPrefixes="hj orm">
-	  
+
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
       Purchase order schema for Example.com.
       Copyright 2000 Example.com. All rights reserved.
     </xsd:documentation>
   </xsd:annotation>
-  
+
   <xsd:element name="purchaseOrder" type="PurchaseOrderType"/>
-  
+
   <xsd:element name="comment" type="xsd:string"/>
-  
+
   <xsd:complexType name="PurchaseOrderType">
     <xsd:sequence>
       <xsd:element name="shipTo" type="USAddress"/>
@@ -24,7 +24,7 @@
     </xsd:sequence>
     <xsd:attribute name="orderDate" type="xsd:date"/>
   </xsd:complexType>
-  
+
   <xsd:complexType name="USAddress">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
@@ -35,7 +35,7 @@
     </xsd:sequence>
     <xsd:attribute name="country" type="xsd:NMTOKEN" fixed="US"/>
   </xsd:complexType>
-  
+
   <xsd:complexType name="Items">
     <xsd:sequence>
       <xsd:element name="item" minOccurs="0" maxOccurs="unbounded">
@@ -51,7 +51,7 @@
               </xsd:annotation>
             </xsd:element>
 
-	
+
             <xsd:element name="quantity">
               <xsd:simpleType>
                 <xsd:restriction base="xsd:positiveInteger">
@@ -68,12 +68,12 @@
       </xsd:element>
     </xsd:sequence>
   </xsd:complexType>
-  
+
   <!-- Stock Keeping Unit, a code for identifying products -->
   <xsd:simpleType name="SKU">
     <xsd:restriction base="xsd:string">
       <xsd:pattern value="\d{3}-[A-Z]{2}"/>
     </xsd:restriction>
   </xsd:simpleType>
-  
+
 </xsd:schema>

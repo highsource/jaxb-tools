@@ -1,7 +1,7 @@
 <xs:schema targetNamespace="http://internal.innoq.com/pl"
 	xmlns="http://internal.innoq.com/pl" xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	jaxb:extensionBindingPrefixes="xjc hj orm" jaxb:version="3.0"
 	attributeFormDefault="unqualified" elementFormDefault="qualified">
 
@@ -151,7 +151,7 @@
 			</xs:annotation>
 		</xs:attribute-->
 	</xs:complexType>
-	
+
 	<xs:complexType name="StandardPlanwertGruppe">
 		<xs:annotation>
 			<xs:appinfo>
@@ -220,7 +220,7 @@
 		</xs:annotation>
 		<xs:all>
 			<!-- Replenishment-Block -->
-			
+
 			<!-- Eingabefeld -->
 			<xs:element name="anzahlVariantenReplenishment" minOccurs="0"
 				type="DecimalValue" />
@@ -238,7 +238,7 @@
 				type="CurrencyValue" />
 
 			<!-- Standard-Block -->
-			
+
 			<!-- Eingabefeld -->
 			<xs:element name="anzahlVariantenStandard" minOccurs="0"
 				type="DecimalValue" />
@@ -255,7 +255,7 @@
 				type="CurrencyValue" />
 
 			<!-- Fashion-Block -->
-			
+
 			<!-- Eingabefeld -->
 			<xs:element name="anzahlVariantenFashion" minOccurs="0"
 				type="DecimalValue" />
@@ -272,7 +272,7 @@
 				type="CurrencyValue" />
 
 			<!-- Gesamt-Block -->
-			
+
 			<!-- Eingabefeld -->
 			<xs:element name="anzahlVariantenGesamt" minOccurs="0"
 				type="DecimalValue" />
@@ -370,12 +370,12 @@
 			</xs:annotation>
 		</xs:attribute-->
 	</xs:complexType>
-	
+
 	<xs:element name="PlanunertGruppeElement">
 		<xs:complexType>
 			<!--xs:annotation>
 				<xs:appinfo><hj:ignored/></xs:appinfo>
-			</xs:annotation-->	
+			</xs:annotation-->
 			<xs:sequence>
 				<xs:element name="planwertGruppe" type="PlanwertGruppe"/>
 			</xs:sequence>

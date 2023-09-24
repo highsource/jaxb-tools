@@ -3,10 +3,9 @@ package org.jvnet.jaxb2_commons.tests.one;
 import java.io.File;
 
 import org.junit.Assert;
-
-import org.jvnet.jaxb2_commons.lang.JAXBCopyStrategy;
-import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
-import org.jvnet.jaxb2_commons.test.AbstractSamplesTest;
+import org.jvnet.jaxb.lang.JAXBCopyStrategy;
+import org.jvnet.jaxb.lang.JAXBEqualsStrategy;
+import org.jvnet.jaxb.test.AbstractSamplesTest;
 
 public class CopyableTest extends AbstractSamplesTest {
 

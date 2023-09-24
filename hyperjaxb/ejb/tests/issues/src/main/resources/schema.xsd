@@ -1,14 +1,14 @@
 <xsd:schema
-	targetNamespace="urn:test" xmlns:test="urn:test" 
+	targetNamespace="urn:test" xmlns:test="urn:test"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	jaxb:version="3.0" 
+	jaxb:version="3.0"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 
-	elementFormDefault="qualified" 
+	elementFormDefault="qualified"
 	attributeFormDefault="unqualified"
 
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 
 	jaxb:extensionBindingPrefixes="hj orm xjc"
@@ -110,12 +110,12 @@
 		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:element name="issue44SixElement" type="test:issue44SixType"/> 
+	<xsd:element name="issue44SixElement" type="test:issue44SixType"/>
 	<xsd:complexType name="issue44SixType" mixed="true">
 		<xsd:sequence>
 			<xsd:any namespace="##any" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
-		<xsd:attribute name="name" type="xsd:string" use="required"/> 
+		<xsd:attribute name="name" type="xsd:string" use="required"/>
 	</xsd:complexType>
 
 	<xsd:element name="issue92Element" type="test:issue92Type"/>
@@ -283,12 +283,12 @@
 	</xsd:element>
 
 	<xsd:complexType name="issue121Type">
-		<xsd:sequence>         
+		<xsd:sequence>
 			<xsd:element name="simpleSingle" type="xsd:string" minOccurs="0"/>
 			<xsd:element name="complexSingle" type="test:issue121Type"  minOccurs="0"/>
 			<xsd:element name="simpleCollection" type="xsd:long"  minOccurs="0" maxOccurs="unbounded" />
 			<xsd:element name="complexCollection" type="test:issue121Type"  minOccurs="0" maxOccurs="unbounded" />
-		</xsd:sequence>         
+		</xsd:sequence>
 	</xsd:complexType>
 
 	<xsd:element name="issue120Element">
@@ -544,12 +544,12 @@
 					<orm:query>SELECT
 x
 FROM
-org.jvnet.hyperjaxb3.ejb.tests.issues.IssueHJIII14Type						
+org.jvnet.hyperjaxb3.ejb.tests.issues.IssueHJIII14Type
 x
 </orm:query>
 					</orm:named-query>
 				</hj:entity>
-			</xsd:appinfo> 
+			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="value" type="xsd:string"/>
@@ -613,7 +613,7 @@ x
 	<xsd:complexType name="issueHJIII26TwoType">
 		<xsd:attribute name="two" type="xsd:boolean"/>
 	</xsd:complexType>
-	
+
 	<xsd:simpleType name="issueHJIII28SimpleType">
  		<xsd:restriction base="xsd:string">
 			<xsd:maxLength value="1024"/>
@@ -623,7 +623,7 @@ x
 
 	<xsd:complexType name="issueHJIII28ComplexType">
  		<xsd:attribute name="issueHJIII28" type="test:issueHJIII28SimpleType" use="required"/>
-	</xsd:complexType> 
+	</xsd:complexType>
 
 	<xsd:complexType name="issueHJIII41ParentType">
 		<xsd:annotation>
@@ -643,7 +643,7 @@ x
 				</xsd:appinfo>
 			</xsd:annotation>
 		</xsd:attribute>
-	</xsd:complexType> 
+	</xsd:complexType>
 
 	<xsd:element name="issueHJIII41Child" type="test:issueHJIII41ChildType"/>
 
@@ -653,7 +653,7 @@ x
 				<xsd:attribute name="value" type="xsd:string"/>
 			</xsd:extension>
 		</xsd:complexContent>
-	</xsd:complexType> 
+	</xsd:complexType>
 
 	<xsd:element name="issueHJIII35Element" type="test:issueHJIII35Type"/>
 
@@ -668,7 +668,7 @@ x
 		<xsd:sequence>
 			<xsd:element name="value" type="xsd:string" minOccurs="0"/>
 		</xsd:sequence>
-	</xsd:complexType> 
+	</xsd:complexType>
 
 	<xsd:element name="issueHJIII48AElement" type="test:issueHJIII48AType"/>
 
@@ -693,7 +693,7 @@ x
 				</xsd:annotation>
 			</xsd:any>
 		</xsd:sequence>
-	</xsd:complexType> 
+	</xsd:complexType>
 
 	<xsd:element name="issueHJIII48BElement" type="test:issueHJIII48BType"/>
 
@@ -717,7 +717,7 @@ x
 				</xsd:annotation>
 			</xsd:any>
 		</xsd:sequence>
-	</xsd:complexType> 
+	</xsd:complexType>
 
 	<xsd:element name="issueHJIII48CElement" type="test:issueHJIII48CType"/>
 
@@ -737,7 +737,7 @@ x
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
-	</xsd:complexType> 
+	</xsd:complexType>
 
 	<xsd:element name="issueHJIII40A">
 		<xsd:complexType>
@@ -764,14 +764,14 @@ x
 				</xsd:element>
 			</xsd:sequence>
 		</xsd:complexType>
-	</xsd:element> 
+	</xsd:element>
 
 	<xsd:element name="issueHJIII40B">
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element name="value" type="xsd:string" minOccurs="0"/>
 			</xsd:sequence>
-		</xsd:complexType> 
+		</xsd:complexType>
 	</xsd:element>
 
 	<xsd:simpleType name="issueHJIII85SimpleType">
@@ -844,13 +844,13 @@ x
 
 	<xsd:element name="issueHJIII92" type="test:issueHJIII92Type"/>
 
-	<xsd:complexType name="issueHJIII92Type"> 
-		<xsd:sequence> 
-			<xsd:element name="id1" type="xsd:string" minOccurs="1" maxOccurs="1" /> 
-			<xsd:element name="id2" type="xsd:string" minOccurs="1" maxOccurs="1" /> 
-			<xsd:element name="field1" type="xsd:string" minOccurs="0" />	
-		</xsd:sequence> 
-	</xsd:complexType> 
+	<xsd:complexType name="issueHJIII92Type">
+		<xsd:sequence>
+			<xsd:element name="id1" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="id2" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="field1" type="xsd:string" minOccurs="0" />
+		</xsd:sequence>
+	</xsd:complexType>
 
 	<xsd:complexType name="issueHJIII94Type" abstract="true">
 		<xsd:sequence>
@@ -903,17 +903,17 @@ x
 	<xsd:complexType name="issueHJIII100Type">
 		<xsd:annotation>
 			<xsd:appinfo>
-				<hj:entity> 
-					<orm:named-query name="IssueHJIII100Type.getAll"> 
-						<orm:query>from IssueHJIII100Type</orm:query> 
-						<orm:hint name="org.hibernate.cacheable" value="true" /> 
-					</orm:named-query> 
+				<hj:entity>
+					<orm:named-query name="IssueHJIII100Type.getAll">
+						<orm:query>from IssueHJIII100Type</orm:query>
+						<orm:hint name="org.hibernate.cacheable" value="true" />
+					</orm:named-query>
 				</hj:entity>
  			</xsd:appinfo>
 		</xsd:annotation>
-		<xsd:sequence> 
-			<xsd:element name="a" type="xsd:string" minOccurs="1" maxOccurs="1" /> 
-		</xsd:sequence> 
+		<xsd:sequence>
+			<xsd:element name="a" type="xsd:string" minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
 	</xsd:complexType>
 
 </xsd:schema>

@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xsd:schema targetNamespace="http://www.escience.clrc.ac.uk/schemas/scientific" 
-			xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-			xmlns:cmd="http://www.escience.clrc.ac.uk/schemas/scientific" 
-			elementFormDefault="qualified" 
+<xsd:schema targetNamespace="http://www.escience.clrc.ac.uk/schemas/scientific"
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns:cmd="http://www.escience.clrc.ac.uk/schemas/scientific"
+			elementFormDefault="qualified"
 			attributeFormDefault="unqualified"
 			xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 			xmlns:xjc ="http://java.sun.com/xml/ns/jaxb/xjc"
 			jaxb:extensionBindingPrefixes="xjc"
-			jaxb:version="1.0">
+			jaxb:version="3.0">
 
 	<xsd:annotation>
-		<xsd:documentation xml:lang="en"> 
-			CCLRC Scientific Metadata Model Version 2 - XML Schema implementation 
-			for CCLRC e-Science DataPortal Project (http://www.escience.cclrc.ac.uk/web/projects/dataportal), author: Shoaib Sufi. 
-		</xsd:documentation> 
+		<xsd:documentation xml:lang="en">
+			CCLRC Scientific Metadata Model Version 2 - XML Schema implementation
+			for CCLRC e-Science DataPortal Project (http://www.escience.cclrc.ac.uk/web/projects/dataportal), author: Shoaib Sufi.
+		</xsd:documentation>
 	</xsd:annotation>
 
 	<xsd:annotation>
@@ -27,661 +27,661 @@
 
 <!-- enumerations defined : -->
 
-	<xsd:simpleType name="AccessControlSystemTypes"> 
-		<xsd:restriction base="xsd:string"> 
-			<xsd:enumeration value="On Application"/> 
-			<xsd:enumeration value="Digital Access Control System"/> 
-			<xsd:enumeration value="Other"/> 
-		</xsd:restriction> 
+	<xsd:simpleType name="AccessControlSystemTypes">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="On Application"/>
+			<xsd:enumeration value="Digital Access Control System"/>
+			<xsd:enumeration value="Other"/>
+		</xsd:restriction>
 	</xsd:simpleType>
 
-	<xsd:simpleType name="InvestigationTypes"> 
-		<xsd:restriction base="xsd:string"> 
-			<xsd:enumeration value="Experiment"/> 
-			<xsd:enumeration value="experiment"/> 
-			<xsd:enumeration value="Measurement"/> 
-			<xsd:enumeration value="measurement"/> 
-			<xsd:enumeration value="Simulation"/> 
-			<xsd:enumeration value="simulation"/> 
-			<xsd:enumeration value="other"/> 
-		</xsd:restriction> 
+	<xsd:simpleType name="InvestigationTypes">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Experiment"/>
+			<xsd:enumeration value="experiment"/>
+			<xsd:enumeration value="Measurement"/>
+			<xsd:enumeration value="measurement"/>
+			<xsd:enumeration value="Simulation"/>
+			<xsd:enumeration value="simulation"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
 	</xsd:simpleType>
 
 	<xsd:simpleType name="institutionTypes">
-		<xsd:restriction base="xsd:string"> 
-			<xsd:enumeration value="academic"/> 
-			<xsd:enumeration value="research"/>
-			<xsd:enumeration value="government"/> 
-			<xsd:enumeration value="military"/> 
-			<xsd:enumeration value="commercial"/> 
-			<xsd:enumeration value="nonprofit"/> 
-			<xsd:enumeration value="other"/> 
-		</xsd:restriction> 
-	</xsd:simpleType>
-
-	<xsd:simpleType name="TitleTypes"> 
-		<xsd:restriction base="xsd:string"> 
-			<xsd:enumeration value="professor"/> 
-			<xsd:enumeration value="Professor"/> 
-			<xsd:enumeration value="Prof"/> 
-			<xsd:enumeration value="doctor"/> 
-			<xsd:enumeration value="Doctor"/> 
-			<xsd:enumeration value="Dr"/> 
-			<xsd:enumeration value="Mr"/> 
-			<xsd:enumeration value="Mrs"/> 
-			<xsd:enumeration value="Ms"/> 
-			<xsd:enumeration value="other"/> 
-		</xsd:restriction> 
-	</xsd:simpleType>
-
-	<xsd:simpleType name="StudyRoleTypes"> 
-		<xsd:restriction base="xsd:string"> 
-			<xsd:enumeration value="Post Doctoral Research Assistant"/> 
-			<xsd:enumeration value="pdra"/> 
-			<xsd:enumeration value="PDRA"/> 
-			<xsd:enumeration value="PI"/> 
-			<xsd:enumeration value="Principal Investigator"/> 
-			<xsd:enumeration value="Co-Investigator"/> 
-			<xsd:enumeration value="Data Holder"/> 
-			<xsd:enumeration value="Data Manager"/> 
-			<xsd:enumeration value="other"/> 
-		</xsd:restriction> 
-	</xsd:simpleType>
-
-	<xsd:simpleType name="InstitutionRoleTypes"> 
-		<xsd:restriction base="xsd:string"> 
-			<xsd:enumeration value="Professor"/>
-			<xsd:enumeration value="Senior Lecturer"/> 
-			<xsd:enumeration value="Lecturer"/> 
-			<xsd:enumeration value="PDRA"/> 
-			<xsd:enumeration value="Post Doctoral Research Assistant"/> 
-			<xsd:enumeration value="PG"/> 
-			<xsd:enumeration value="Post Graduate"/> 
-			<xsd:enumeration value="Undergraduate"/> 
-			<xsd:enumeration value="other"/> 
-		</xsd:restriction> 
-	</xsd:simpleType>
-
-	<xsd:simpleType name="PathTypes"> 
-		<xsd:restriction base="xsd:string"> 
-			<xsd:enumeration value="absolute"/> 
-			<xsd:enumeration value="file_absolute"/> 
-			<xsd:enumeration value="relative"/> 
-			<xsd:enumeration value="file_relative"/> 
-			<xsd:enumeration value="database"/> 
-			<xsd:enumeration value="other"/> 
-		</xsd:restriction> 
-	</xsd:simpleType>
-
-	<xsd:simpleType name="FormatSystems"> 
-		<xsd:restriction base="xsd:string"> 
-			<xsd:enumeration value="MIME"/> 
-			<xsd:enumeration value="custom"/> 
-			<xsd:enumeration value="database"/> 
-			<xsd:enumeration value="file"/> 
-			<xsd:enumeration value="other"/> 
-		</xsd:restriction> 
-	</xsd:simpleType>
-
-	<xsd:simpleType name="AuthorTypes"> 
-		<xsd:restriction base="xsd:string"> 
-			<xsd:enumeration value="primary"/> 
-			<xsd:enumeration value="co"/> 
-			<xsd:enumeration value="other"/> 
-		</xsd:restriction> 
-	</xsd:simpleType>
-
-	<xsd:simpleType name="UniqueIdentifierSystem"> 
 		<xsd:restriction base="xsd:string">
-			<xsd:enumeration value="ISBN"/> 
-			<xsd:enumeration value="SAN"/> 
-			<xsd:enumeration value="ISMN"/> 
-		</xsd:restriction> 
+			<xsd:enumeration value="academic"/>
+			<xsd:enumeration value="research"/>
+			<xsd:enumeration value="government"/>
+			<xsd:enumeration value="military"/>
+			<xsd:enumeration value="commercial"/>
+			<xsd:enumeration value="nonprofit"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
 	</xsd:simpleType>
 
-	<xsd:simpleType name="DerivationTypes"> 
-		<xsd:restriction base="xsd:string"> 
-			<!-- i.e. experimental conditions e.g. date, location : --> 
-			<xsd:enumeration value="condition"/> 
-			<!-- i.e. what was actually measured e.g. temperature : --> 
-			<xsd:enumeration value="measured"/> 
-			<!-- i.e. a derived parameter from measured/fixed ones e.g. average temperature : --> 
-			<xsd:enumeration value="calculated"/> 
+	<xsd:simpleType name="TitleTypes">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="professor"/>
+			<xsd:enumeration value="Professor"/>
+			<xsd:enumeration value="Prof"/>
+			<xsd:enumeration value="doctor"/>
+			<xsd:enumeration value="Doctor"/>
+			<xsd:enumeration value="Dr"/>
+			<xsd:enumeration value="Mr"/>
+			<xsd:enumeration value="Mrs"/>
+			<xsd:enumeration value="Ms"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="StudyRoleTypes">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Post Doctoral Research Assistant"/>
+			<xsd:enumeration value="pdra"/>
+			<xsd:enumeration value="PDRA"/>
+			<xsd:enumeration value="PI"/>
+			<xsd:enumeration value="Principal Investigator"/>
+			<xsd:enumeration value="Co-Investigator"/>
+			<xsd:enumeration value="Data Holder"/>
+			<xsd:enumeration value="Data Manager"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="InstitutionRoleTypes">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Professor"/>
+			<xsd:enumeration value="Senior Lecturer"/>
+			<xsd:enumeration value="Lecturer"/>
+			<xsd:enumeration value="PDRA"/>
+			<xsd:enumeration value="Post Doctoral Research Assistant"/>
+			<xsd:enumeration value="PG"/>
+			<xsd:enumeration value="Post Graduate"/>
+			<xsd:enumeration value="Undergraduate"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="PathTypes">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="absolute"/>
+			<xsd:enumeration value="file_absolute"/>
+			<xsd:enumeration value="relative"/>
+			<xsd:enumeration value="file_relative"/>
+			<xsd:enumeration value="database"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="FormatSystems">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="MIME"/>
+			<xsd:enumeration value="custom"/>
+			<xsd:enumeration value="database"/>
+			<xsd:enumeration value="file"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="AuthorTypes">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="primary"/>
+			<xsd:enumeration value="co"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="UniqueIdentifierSystem">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ISBN"/>
+			<xsd:enumeration value="SAN"/>
+			<xsd:enumeration value="ISMN"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="DerivationTypes">
+		<xsd:restriction base="xsd:string">
+			<!-- i.e. experimental conditions e.g. date, location : -->
+			<xsd:enumeration value="condition"/>
+			<!-- i.e. what was actually measured e.g. temperature : -->
+			<xsd:enumeration value="measured"/>
+			<!-- i.e. a derived parameter from measured/fixed ones e.g. average temperature : -->
+			<xsd:enumeration value="calculated"/>
 			<!-- i.e. a characteristic of the environment e.g. compiler version : -->
-			<xsd:enumeration value="environment"/> 
-			<xsd:enumeration value="other"/> 
-		</xsd:restriction> 
+			<xsd:enumeration value="environment"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
 	</xsd:simpleType>
 
-	<xsd:simpleType name="boundTypes"> 
-		<xsd:restriction base="xsd:string"> 
-			<xsd:enumeration value="upper"/> 
-			<xsd:enumeration value="lower"/> 
-			<xsd:enumeration value="other"/> 
-		</xsd:restriction> 
+	<xsd:simpleType name="boundTypes">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="upper"/>
+			<xsd:enumeration value="lower"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
 	</xsd:simpleType>
 
-	<xsd:simpleType name="TypesOfData"> 
-		<xsd:restriction base="xsd:string"> 
-			<xsd:enumeration value="Collection"/> 
-			<xsd:enumeration value="File"/> 
-			<xsd:enumeration value="BLOB"/> 
-			<xsd:enumeration value="Database Select"/> 
-			<xsd:enumeration value="Named Select"/> 
-			<xsd:enumeration value="other"/> 
-			<xsd:enumeration value="other"/> 
-		</xsd:restriction> 
+	<xsd:simpleType name="TypesOfData">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Collection"/>
+			<xsd:enumeration value="File"/>
+			<xsd:enumeration value="BLOB"/>
+			<xsd:enumeration value="Database Select"/>
+			<xsd:enumeration value="Named Select"/>
+			<xsd:enumeration value="other"/>
+			<xsd:enumeration value="other"/>
+		</xsd:restriction>
 	</xsd:simpleType>
 
 <!-- complex types defined : -->
 
 	<xsd:element name="CLRCMetadata" type="cmd:CLRCMetadataType"/>
 
-	<xsd:complexType name="CLRCMetadataType"> 
-		<xsd:sequence> 
-			<xsd:element ref="cmd:MetadataRecord" minOccurs="0" maxOccurs="unbounded"/> 
-		</xsd:sequence> 
+	<xsd:complexType name="CLRCMetadataType">
+		<xsd:sequence>
+			<xsd:element ref="cmd:MetadataRecord" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
 	</xsd:complexType>
 
 	<xsd:element name="MetadataRecord" type="cmd:MetadataRecordType"/>
 
-	<xsd:complexType name="MetadataRecordType"> 
-		<xsd:sequence> 
-			<xsd:element name="Topic" type="cmd:TopicType" /> 
-			<xsd:element name="Study" type="cmd:StudyType"/> 
-			<xsd:element name="AccessConditions" minOccurs="0"> 
-				<xsd:complexType> 
-					<xsd:simpleContent> 
-						<xsd:extension base="xsd:string"> 
-							<xsd:attribute name="acsystem" type="cmd:AccessControlSystemTypes"/> 
-						</xsd:extension> 
-					</xsd:simpleContent> 
-				</xsd:complexType> 
-			</xsd:element> 
-			<xsd:element name="RelatedPublication" type="cmd:PublicationType" minOccurs="0" maxOccurs="unbounded"/> 
-			<xsd:element name="OtherRelatedMaterial" type="cmd:RelatedMaterialTypes" minOccurs="0" maxOccurs="unbounded"/> 
-		</xsd:sequence> 
-		<xsd:attribute name="MetadataID" type="xsd:ID" use="required"/> 
-		<xsd:attribute name="Facility" type="xsd:string" use="required"/> 
+	<xsd:complexType name="MetadataRecordType">
+		<xsd:sequence>
+			<xsd:element name="Topic" type="cmd:TopicType" />
+			<xsd:element name="Study" type="cmd:StudyType"/>
+			<xsd:element name="AccessConditions" minOccurs="0">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="acsystem" type="cmd:AccessControlSystemTypes"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="RelatedPublication" type="cmd:PublicationType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="OtherRelatedMaterial" type="cmd:RelatedMaterialTypes" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="MetadataID" type="xsd:ID" use="required"/>
+		<xsd:attribute name="Facility" type="xsd:string" use="required"/>
 	</xsd:complexType>
 
-	<!-- MetadataID uniquely identified one record - logically it consists of the --> 
-	<!-- name of the data archive (which has to be unique in the dataportal ) --> 
+	<!-- MetadataID uniquely identified one record - logically it consists of the -->
+	<!-- name of the data archive (which has to be unique in the dataportal ) -->
 	<!-- and something which identifies unique records in the data archive -->
 
-	<xsd:complexType name="TopicType"> 
-		<xsd:sequence> 
-			<xsd:element name="Keywords" type="cmd:KeywordsType" minOccurs="0" maxOccurs="unbounded" /> 
+	<xsd:complexType name="TopicType">
+		<xsd:sequence>
+			<xsd:element name="Keywords" type="cmd:KeywordsType" minOccurs="0" maxOccurs="unbounded" />
 			<xsd:element name="Subjects" type="cmd:SubjectsType" minOccurs="1" maxOccurs="unbounded" />
-		</xsd:sequence> 
+		</xsd:sequence>
 	</xsd:complexType>
 
 	<!-- perhaps there is a cleverer way to do this by restriction but for now to control optionality we just use another top level element -->
 
-	<xsd:complexType name="DataTopicType"> 
-		<xsd:sequence> 
-			<xsd:element name="Keywords" type="cmd:KeywordsType" minOccurs="0" maxOccurs="unbounded" /> 
-			<xsd:element name="Subjects" type="cmd:SubjectsType" minOccurs="0" maxOccurs="unbounded" /> 
-		</xsd:sequence> 
+	<xsd:complexType name="DataTopicType">
+		<xsd:sequence>
+			<xsd:element name="Keywords" type="cmd:KeywordsType" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="Subjects" type="cmd:SubjectsType" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:complexType name="KeywordsType"> 
-		<xsd:sequence> 
-			<xsd:element name="Discipline" type="xsd:string"/> 
-			<xsd:element name="KeywordSource" type="xsd:string" minOccurs="0"/> 
-			<xsd:element name="Keyword" type="xsd:string" maxOccurs="unbounded" /> 
-		</xsd:sequence> 
+	<xsd:complexType name="KeywordsType">
+		<xsd:sequence>
+			<xsd:element name="Discipline" type="xsd:string"/>
+			<xsd:element name="KeywordSource" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Keyword" type="xsd:string" maxOccurs="unbounded" />
+		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:complexType name="SubjectsType"> 
-		<xsd:sequence> 
-			<xsd:element name="Discipline" type="xsd:string" /> 
-			<xsd:element name="SubjectSource" type="xsd:string" minOccurs="0"/> 
-			<xsd:element name="Subject" type="cmd:SubjectType" /> 
-		</xsd:sequence> 
+	<xsd:complexType name="SubjectsType">
+		<xsd:sequence>
+			<xsd:element name="Discipline" type="xsd:string" />
+			<xsd:element name="SubjectSource" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Subject" type="cmd:SubjectType" />
+		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:complexType name="SubjectType"> 
-		<xsd:sequence> 
-			<xsd:element name="SubjectName" type="xsd:string"/> 
-			<xsd:element name="Subject" type="cmd:SubjectType" minOccurs="0"/> 
-		</xsd:sequence> 
+	<xsd:complexType name="SubjectType">
+		<xsd:sequence>
+			<xsd:element name="SubjectName" type="xsd:string"/>
+			<xsd:element name="Subject" type="cmd:SubjectType" minOccurs="0"/>
+		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:complexType name="StudyType"> 
-		<xsd:sequence> 
+	<xsd:complexType name="StudyType">
+		<xsd:sequence>
 			<xsd:element name="StudyName" type="xsd:string"/>
-			<xsd:element name="StudyInstitution" type="cmd:InstitutionType" minOccurs="0" maxOccurs="unbounded"/> 
+			<xsd:element name="StudyInstitution" type="cmd:InstitutionType" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element name="StudyPerson" type="cmd:StudyPersonType" minOccurs="1" maxOccurs="unbounded"/>
-			<xsd:element name="StudyInformation" type="cmd:StudyInformationType"/> 
+			<xsd:element name="StudyInformation" type="cmd:StudyInformationType"/>
 			<xsd:element name="Notes" type="xsd:string" minOccurs="0" maxOccurs="1"/>
-			<!-- contains a link to related studies etc --> 
-			<xsd:element name="RelatedReference" type="cmd:RelatedReferenceType" minOccurs="0" maxOccurs="unbounded"/> 
-			<xsd:element name="Investigation" type="cmd:InvestigationType" minOccurs="1" maxOccurs="unbounded"/> 
-		</xsd:sequence> 
-		<xsd:attribute name="StudyID" type="xsd:ID" use="required"/> 
+			<!-- contains a link to related studies etc -->
+			<xsd:element name="RelatedReference" type="cmd:RelatedReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Investigation" type="cmd:InvestigationType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="StudyID" type="xsd:ID" use="required"/>
 	</xsd:complexType>
 
-	<xsd:complexType name="InvestigationType"> 
-		<xsd:sequence> 
-			<xsd:element name="Name" type="xsd:string"/> 
-			<xsd:element name="InvestigationType" type="cmd:InvestigationTypes"/> 
-			<xsd:element name="Abstract" type="xsd:string"/> 
-			<xsd:element name="Resources" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/> 
-			<xsd:element name="RelatedReference" type="cmd:RelatedReferenceType" minOccurs="0" maxOccurs="unbounded"/> 
-			<xsd:element name="DataHolding" type="cmd:DataHoldingType" minOccurs="0"/> 
-		</xsd:sequence> 
-		<xsd:attribute name="InvestigationID" type="xsd:ID" use="required"/> 
+	<xsd:complexType name="InvestigationType">
+		<xsd:sequence>
+			<xsd:element name="Name" type="xsd:string"/>
+			<xsd:element name="InvestigationType" type="cmd:InvestigationTypes"/>
+			<xsd:element name="Abstract" type="xsd:string"/>
+			<xsd:element name="Resources" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="RelatedReference" type="cmd:RelatedReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="DataHolding" type="cmd:DataHoldingType" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="InvestigationID" type="xsd:ID" use="required"/>
 	</xsd:complexType>
 
-	<xsd:complexType name="InstitutionType"> 
-		<xsd:sequence> 
-			<xsd:element name="Name" minOccurs="0" maxOccurs="1"> 
-			<!-- adding attributes to an element --> 
-				<xsd:complexType> 
-					<xsd:simpleContent> 
-						<xsd:extension base="xsd:string"> 
-							<xsd:attribute name="institutionID" type="xsd:string" use="optional"/> 
-							<xsd:attribute name="institutiontype" type="cmd:institutionTypes" use="required"/> 
-						</xsd:extension> 
-					</xsd:simpleContent> 
-				</xsd:complexType> 
-			</xsd:element> 
-			<xsd:element name="Role" type="xsd:string" minOccurs="0"/> 
-		</xsd:sequence> 
+	<xsd:complexType name="InstitutionType">
+		<xsd:sequence>
+			<xsd:element name="Name" minOccurs="0" maxOccurs="1">
+			<!-- adding attributes to an element -->
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="institutionID" type="xsd:string" use="optional"/>
+							<xsd:attribute name="institutiontype" type="cmd:institutionTypes" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Role" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:simpleType name="institutionsType"> 
-		<xsd:list itemType="cmd:institutionTypes"/> 
+	<xsd:simpleType name="institutionsType">
+		<xsd:list itemType="cmd:institutionTypes"/>
 	</xsd:simpleType>
 
-	<xsd:complexType name="PersonType"> 
-		<xsd:sequence> 
-			<xsd:element name="Name" type="cmd:NameType"/> 
+	<xsd:complexType name="PersonType">
+		<xsd:sequence>
+			<xsd:element name="Name" type="cmd:NameType"/>
 			<xsd:element name="InstitutionAffiliatedTo" type="cmd:ContactDetailsType" minOccurs="0"/>
-			<xsd:element name="ContactDetails" type="cmd:ContactDetailsType" maxOccurs="unbounded"/> 
-		</xsd:sequence> 
+			<xsd:element name="ContactDetails" type="cmd:ContactDetailsType" maxOccurs="unbounded"/>
+		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:complexType name="StudyPersonType"> 
-		<xsd:complexContent> 
-			<xsd:extension base="cmd:PersonType"> 
-				<xsd:sequence> 
-					<xsd:element name="RoleInStudy" type="cmd:StudyRoleTypes"/> 
-					<xsd:element name="RoleInInstitution" type="cmd:InstitutionRoleTypes" minOccurs="0" /> 
-				</xsd:sequence> 
-			</xsd:extension> 
-		</xsd:complexContent> 
+	<xsd:complexType name="StudyPersonType">
+		<xsd:complexContent>
+			<xsd:extension base="cmd:PersonType">
+				<xsd:sequence>
+					<xsd:element name="RoleInStudy" type="cmd:StudyRoleTypes"/>
+					<xsd:element name="RoleInInstitution" type="cmd:InstitutionRoleTypes" minOccurs="0" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
 	</xsd:complexType>
 
-	<xsd:complexType name="NameType"> 
-		<xsd:sequence> 
-			<xsd:element name="Surname" type="xsd:string"/> 
-			<xsd:element name="MiddleInitials" type="xsd:string" minOccurs="0"/> 
-			<xsd:element name="Forename" type="xsd:string"/> 
-			<xsd:element name="Title" type="cmd:TitleTypes" minOccurs="0" maxOccurs="1"/> 
-		</xsd:sequence> 
+	<xsd:complexType name="NameType">
+		<xsd:sequence>
+			<xsd:element name="Surname" type="xsd:string"/>
+			<xsd:element name="MiddleInitials" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Forename" type="xsd:string"/>
+			<xsd:element name="Title" type="cmd:TitleTypes" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:complexType name="ContactDetailsType"> 
-		<xsd:sequence> 
+	<xsd:complexType name="ContactDetailsType">
+		<xsd:sequence>
 			<xsd:element name="Address" type="cmd:AddressType"/>
-			<xsd:element name="DirectLine" type="xsd:string" minOccurs="0"/> 
-			<xsd:element name="Switchboard" type="xsd:string"/> 
+			<xsd:element name="DirectLine" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Switchboard" type="xsd:string"/>
 			<xsd:element name="Fax" type="xsd:string" minOccurs="0" maxOccurs="1"/>
 			<xsd:element name="Email" type="xsd:string" minOccurs="0" maxOccurs="1"/>
 			<xsd:element name="WebPage" type="xsd:string" minOccurs="0" maxOccurs="1"/>
-		</xsd:sequence> 
+		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:complexType name="AddressType"> 
-		<xsd:sequence> 
-			<xsd:element name="Addressline1" type="xsd:string"/> 
-			<xsd:element name="Addressline2" type="xsd:string" minOccurs="0" /> 
-			<xsd:element name="Addressline3" type="xsd:string" minOccurs="0" /> 
-			<xsd:element name="Addressline4" type="xsd:string" minOccurs="0" /> 
+	<xsd:complexType name="AddressType">
+		<xsd:sequence>
+			<xsd:element name="Addressline1" type="xsd:string"/>
+			<xsd:element name="Addressline2" type="xsd:string" minOccurs="0" />
+			<xsd:element name="Addressline3" type="xsd:string" minOccurs="0" />
+			<xsd:element name="Addressline4" type="xsd:string" minOccurs="0" />
 			<xsd:element name="Town" type="xsd:string"/>
 			<xsd:element name="Region" type="xsd:string" minOccurs="0" maxOccurs="1"/>
 			<xsd:element name="Postcode" type="xsd:string" minOccurs="0" maxOccurs="1"/>
-			<xsd:element name="Country"> 
-				<xsd:complexType> 
-					<xsd:simpleContent> 
-						<xsd:extension base="xsd:string"> 
-							<!-- country abbreviation candidate for enumeration perhaps --> 
-							<xsd:attribute name="countryabbrev" type="xsd:string" use="optional"/> 
-						</xsd:extension> 
-					</xsd:simpleContent> 
-				</xsd:complexType> 
-			</xsd:element> 
-		</xsd:sequence> 
+			<xsd:element name="Country">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<!-- country abbreviation candidate for enumeration perhaps -->
+							<xsd:attribute name="countryabbrev" type="xsd:string" use="optional"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
 	</xsd:complexType>
 
 <!-- expanding on the study information type -->
 
-	<xsd:complexType name="StudyInformationType"> 
-		<xsd:sequence> 
-			<xsd:element name="Funding" type="xsd:string" minOccurs="0" maxOccurs="1"/> 
-			<xsd:element name="TimePeriod" type="cmd:TimePeriodType"/> 
-			<xsd:element name="Purpose" type="cmd:PurposeType"/> 
-			<xsd:element name="StudyStatus" type="xsd:string"/> 
-			<xsd:element name="Resources" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/> 
-		</xsd:sequence> 
-	</xsd:complexType>
-
-	<xsd:complexType name="TimePeriodType"> 
-		<xsd:sequence> 
-			<xsd:element name="StartDate" type="cmd:DateTimeType" minOccurs="0"/> 
-			<xsd:element name="EndDate" type="cmd:DateTimeType" minOccurs="0"/>
-		</xsd:sequence> 
-	</xsd:complexType>
-
-	<xsd:complexType name="DateTimeType"> 
-		<xsd:sequence> 
-<!-- this format will be CCYY-MM-DD as this is the lexical format for the 'date' --> 
-<!-- datatype in XMLSchema -->
-<!-- the 'date' type also supports an optional timezone component--> 
-<!-- the 'date' type adheres to the ISO8601 -->
-<!-- standard on representing dates- however the right-truncated format of the date --> 
-<!-- appears to be only a subset of what is allowable in ISO8601 --> 
-			<xsd:element name="Date" type="xsd:date"/> 
-<!-- the format of the time attribute is hh:mm:ss.sss with an optional timezone information section --> 
-			<xsd:element name="Time" type="xsd:time" minOccurs="0"/> 
-		</xsd:sequence> 
-	</xsd:complexType>
-
-	<xsd:complexType name="PurposeType"> 
-		<xsd:sequence> 
-			<xsd:element name="Abstract" type="xsd:string" minOccurs="0" maxOccurs="1"/> 
-		</xsd:sequence> 
-	</xsd:complexType>
-
-	<xsd:complexType name="DataHoldingType"> 
-		<xsd:sequence> 
-			<xsd:element name="DataDescription" type="cmd:DataDescriptionType"/>
-			<xsd:element name="DataHoldingLocator" type="cmd:CollectionLocatorType"/> 
-			<xsd:element name="RelatedReference" type="cmd:RelatedReferenceType" minOccurs="0" maxOccurs="unbounded"/> 
-			<xsd:element name="DataCollection" type="cmd:DataCollectionType" minOccurs="0" maxOccurs="unbounded"/> 
-			<xsd:element name="AtomicDataObject" type="cmd:ADOType" minOccurs="0" maxOccurs="unbounded"/> 
-		</xsd:sequence> 
-		<xsd:attribute name="InvestigationID" type="xsd:IDREF" use="required"/> 
-	</xsd:complexType>
-
-	<xsd:complexType name="ParameterType"> 
-		<xsd:sequence> 
-			<xsd:element name="ParamName" type="xsd:string"/> 
-			<xsd:element name="Derivation" type="cmd:DerivationTypes"/> 
-			<xsd:element name="Units" type="cmd:UnitsType" minOccurs="0" maxOccurs="1"/>
-			<xsd:element name="ParamValue" type="xsd:string" minOccurs="0" maxOccurs="1"/> 
-			<xsd:element name="Range" type="cmd:RangeType" minOccurs="0" maxOccurs="1"/> 
-			<xsd:element name="Parameter" type="cmd:ParameterType" minOccurs="0" maxOccurs="unbounded"/> 
-		</xsd:sequence> 
-	</xsd:complexType>
-
-	<xsd:complexType name="UnitsType"> 
-		<xsd:sequence> 
-			<xsd:element name="UnitName" type="xsd:string" minOccurs="0"/> 
-			<xsd:element name="UnitAcronym" type="xsd:string" minOccurs="0"/> 
-			<xsd:element name="UnitSystem" type ="xsd:string" minOccurs="0"/> 
-			<xsd:element name="UnitFormat" type ="xsd:string" minOccurs="0"/> 
-		</xsd:sequence> 
-	</xsd:complexType>
-
-	<xsd:complexType name="RangeType"> 
-		<xsd:sequence> 
-			<xsd:element name="Limit" minOccurs="1" maxOccurs="unbounded"> 
-				<xsd:complexType> 
-					<xsd:simpleContent> 
-						<xsd:extension base="xsd:string"> 
-							<xsd:attribute name="bound" type="cmd:boundTypes" use="optional"/> 
-						</xsd:extension> 
-					</xsd:simpleContent> 
-				</xsd:complexType> 
-			</xsd:element> 
-			<xsd:element name="MarginOfError" type="xsd:string" minOccurs="0"/> 
-		</xsd:sequence> 
-	</xsd:complexType>
-
-	<xsd:complexType name="LogicalDescriptionTypes"> 
-		<xsd:sequence> 
-			<xsd:element name="Parameter" type="cmd:ParameterType" minOccurs="0" maxOccurs="unbounded"/> 
-			<xsd:element name="TimePeriod" type="cmd:TimePeriodType" minOccurs="0"/> 
-			<xsd:element name="Description" type="xsd:string" minOccurs="0"/> 
-			<xsd:element name="FacilityUsed" type="cmd:FacilityType" minOccurs="0"/> 
-		</xsd:sequence> 
-	</xsd:complexType>
-
-	<xsd:complexType name="FacilityType"> 
+	<xsd:complexType name="StudyInformationType">
 		<xsd:sequence>
-			<xsd:element name="FacilityName" type="xsd:string" /> 
-			<xsd:element name="Resource" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/> 
-		</xsd:sequence> 
+			<xsd:element name="Funding" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="TimePeriod" type="cmd:TimePeriodType"/>
+			<xsd:element name="Purpose" type="cmd:PurposeType"/>
+			<xsd:element name="StudyStatus" type="xsd:string"/>
+			<xsd:element name="Resources" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:complexType name="DataDescriptionType"> 
-		<xsd:sequence> 
+	<xsd:complexType name="TimePeriodType">
+		<xsd:sequence>
+			<xsd:element name="StartDate" type="cmd:DateTimeType" minOccurs="0"/>
+			<xsd:element name="EndDate" type="cmd:DateTimeType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="DateTimeType">
+		<xsd:sequence>
+<!-- this format will be CCYY-MM-DD as this is the lexical format for the 'date' -->
+<!-- datatype in XMLSchema -->
+<!-- the 'date' type also supports an optional timezone component-->
+<!-- the 'date' type adheres to the ISO8601 -->
+<!-- standard on representing dates- however the right-truncated format of the date -->
+<!-- appears to be only a subset of what is allowable in ISO8601 -->
+			<xsd:element name="Date" type="xsd:date"/>
+<!-- the format of the time attribute is hh:mm:ss.sss with an optional timezone information section -->
+			<xsd:element name="Time" type="xsd:time" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PurposeType">
+		<xsd:sequence>
+			<xsd:element name="Abstract" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="DataHoldingType">
+		<xsd:sequence>
+			<xsd:element name="DataDescription" type="cmd:DataDescriptionType"/>
+			<xsd:element name="DataHoldingLocator" type="cmd:CollectionLocatorType"/>
+			<xsd:element name="RelatedReference" type="cmd:RelatedReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="DataCollection" type="cmd:DataCollectionType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="AtomicDataObject" type="cmd:ADOType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="InvestigationID" type="xsd:IDREF" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="ParameterType">
+		<xsd:sequence>
+			<xsd:element name="ParamName" type="xsd:string"/>
+			<xsd:element name="Derivation" type="cmd:DerivationTypes"/>
+			<xsd:element name="Units" type="cmd:UnitsType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="ParamValue" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Range" type="cmd:RangeType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Parameter" type="cmd:ParameterType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="UnitsType">
+		<xsd:sequence>
+			<xsd:element name="UnitName" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="UnitAcronym" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="UnitSystem" type ="xsd:string" minOccurs="0"/>
+			<xsd:element name="UnitFormat" type ="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="RangeType">
+		<xsd:sequence>
+			<xsd:element name="Limit" minOccurs="1" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="bound" type="cmd:boundTypes" use="optional"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="MarginOfError" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="LogicalDescriptionTypes">
+		<xsd:sequence>
+			<xsd:element name="Parameter" type="cmd:ParameterType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="TimePeriod" type="cmd:TimePeriodType" minOccurs="0"/>
+			<xsd:element name="Description" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="FacilityUsed" type="cmd:FacilityType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="FacilityType">
+		<xsd:sequence>
+			<xsd:element name="FacilityName" type="xsd:string" />
+			<xsd:element name="Resource" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="DataDescriptionType">
+		<xsd:sequence>
 			<xsd:element name="DataName" type="xsd:string"/>
-			<xsd:element name="TypeOfData" type="cmd:TypesOfData" minOccurs="0" /> 
+			<xsd:element name="TypeOfData" type="cmd:TypesOfData" minOccurs="0" />
 			<xsd:element name="Status" type="xsd:string" minOccurs="0"/>
 			<xsd:element name="DataTopic" type="cmd:DataTopicType" minOccurs="0" />
-			<xsd:element name="LogicalDescription" type="cmd:LogicalDescriptionTypes" minOccurs="0" /> 
-			<xsd:element name="Software" type="cmd:SoftwareType" minOccurs="0" /> 
-		</xsd:sequence> 
+			<xsd:element name="LogicalDescription" type="cmd:LogicalDescriptionTypes" minOccurs="0" />
+			<xsd:element name="Software" type="cmd:SoftwareType" minOccurs="0" />
+		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:complexType name="SoftwareType"> 
-		<xsd:sequence> 
-			<xsd:element name="Production" type="cmd:ProgramType" minOccurs="0" maxOccurs="unbounded"/> 
-			<xsd:element name="Anlaysis" type="cmd:ProgramType" minOccurs="0" maxOccurs="unbounded"/> 
-			<xsd:element name="Conversion" type="cmd:ProgramType" minOccurs="0" maxOccurs="unbounded"/> 
-			<xsd:element name="Visualisation" type="cmd:ProgramType" minOccurs="0" maxOccurs="unbounded"/> 
-			<xsd:element name="MultiPurpose" type="cmd:ProgramType" minOccurs="0" maxOccurs="unbounded"/> 
-			<xsd:element name="other" type="cmd:ProgramType" minOccurs="0" maxOccurs="unbounded"/> 
-		</xsd:sequence> 
+	<xsd:complexType name="SoftwareType">
+		<xsd:sequence>
+			<xsd:element name="Production" type="cmd:ProgramType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Anlaysis" type="cmd:ProgramType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Conversion" type="cmd:ProgramType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Visualisation" type="cmd:ProgramType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="MultiPurpose" type="cmd:ProgramType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="other" type="cmd:ProgramType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:complexType name="ProgramType"> 
-		<xsd:sequence> 
-			<xsd:element name="LongName" type="xsd:string" minOccurs="0" /> 
-			<xsd:element name="ProgramName" type="xsd:string" /> 
-			<xsd:element name="Version" type="xsd:string"/> 
-			<!-- URI should contain a reference to a description of this software e.g. sourceforge link for some oss works --> 
-			<xsd:element name="URI" type="xsd:string"/> 
-			<xsd:element name="OperatingSystem" type="xsd:string" minOccurs="0"/> 
-			<xsd:element name="OperatingSystemVersion" type="xsd:string" minOccurs="0" /> 
-			<xsd:element name="Architecture" type="xsd:string" minOccurs="0"/> 
-		</xsd:sequence> 
+	<xsd:complexType name="ProgramType">
+		<xsd:sequence>
+			<xsd:element name="LongName" type="xsd:string" minOccurs="0" />
+			<xsd:element name="ProgramName" type="xsd:string" />
+			<xsd:element name="Version" type="xsd:string"/>
+			<!-- URI should contain a reference to a description of this software e.g. sourceforge link for some oss works -->
+			<xsd:element name="URI" type="xsd:string"/>
+			<xsd:element name="OperatingSystem" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="OperatingSystemVersion" type="xsd:string" minOccurs="0" />
+			<xsd:element name="Architecture" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:complexType name="DataCollectionType"> 
-		<xsd:sequence> 
-			<xsd:element name="DataDescription" type="cmd:DataDescriptionType"/> 
+	<xsd:complexType name="DataCollectionType">
+		<xsd:sequence>
+			<xsd:element name="DataDescription" type="cmd:DataDescriptionType"/>
 			<xsd:element name="DataCollectionLocator" type="cmd:CollectionLocatorType" minOccurs="0" />
-			<xsd:element name="RelatedReference" type="cmd:RelatedReferenceType" minOccurs="0" maxOccurs="unbounded"/> 
-			<xsd:element name="AtomicDataObject" type="cmd:ADOType" minOccurs="0" maxOccurs="unbounded"/> 
-			<xsd:element name="DataCollection" type="cmd:DataCollectionType" minOccurs="0" maxOccurs="unbounded"/> 
-		</xsd:sequence> 
-		<xsd:attribute name="dataid" type="xsd:ID" use="required"/> 
+			<xsd:element name="RelatedReference" type="cmd:RelatedReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="AtomicDataObject" type="cmd:ADOType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="DataCollection" type="cmd:DataCollectionType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="dataid" type="xsd:ID" use="required"/>
 	</xsd:complexType>
 
-	<xsd:complexType name="RelatedReferenceType"> 
-		<xsd:sequence> 
-			<xsd:element name="Type" type="xsd:string"/> 
-			<xsd:element name="Direction" type="xsd:string" minOccurs="0" /> 
-			<xsd:element name="ReferredToItem" type="xsd:string"/> 
-			<xsd:element name="Method" type="xsd:string"/> 
-			<xsd:element name="ReferenceLocation" type="cmd:ReferenceLocationType" maxOccurs="unbounded"/> 
-		</xsd:sequence> 
+	<xsd:complexType name="RelatedReferenceType">
+		<xsd:sequence>
+			<xsd:element name="Type" type="xsd:string"/>
+			<xsd:element name="Direction" type="xsd:string" minOccurs="0" />
+			<xsd:element name="ReferredToItem" type="xsd:string"/>
+			<xsd:element name="Method" type="xsd:string"/>
+			<xsd:element name="ReferenceLocation" type="cmd:ReferenceLocationType" maxOccurs="unbounded"/>
+		</xsd:sequence>
 	</xsd:complexType>
 
-	<!--service oriented reference location resolution--> 
-	<xsd:complexType name="ReferenceLocationType"> 
-		<xsd:sequence> 
-			<xsd:element name="Server" type="xsd:string" minOccurs="0"/> 
-			<xsd:element name="Port" type="xsd:string" minOccurs="0" /> 
-			<xsd:element name="Service" type="xsd:string" minOccurs="0" /> 
-			<xsd:element name="Archive" type="xsd:string"/> 
-			<xsd:element name="ArchiveId" type="xsd:IDREF" minOccurs="0"/> 
-			<xsd:element name="StudyName" type="xsd:string"/> 
-			<xsd:element name="StudyId" type="xsd:IDREF" minOccurs="0"/> 
-			<xsd:element name="InvestigationName" type="xsd:string" minOccurs="0"/> 
-			<xsd:element name="InvestigationId" type="xsd:IDREF" minOccurs="0"/> 
-			<xsd:element name="DataCollection" type="xsd:string" minOccurs="0"/> 
-			<xsd:element name="DataCollectionId" type="xsd:IDREF" minOccurs="0"/> 
-			<xsd:element name="ADOName" type="xsd:string" minOccurs="0"/> 
-			<xsd:element name="ADOId" type="xsd:IDREF" minOccurs="0"/> 
+	<!--service oriented reference location resolution-->
+	<xsd:complexType name="ReferenceLocationType">
+		<xsd:sequence>
+			<xsd:element name="Server" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Port" type="xsd:string" minOccurs="0" />
+			<xsd:element name="Service" type="xsd:string" minOccurs="0" />
+			<xsd:element name="Archive" type="xsd:string"/>
+			<xsd:element name="ArchiveId" type="xsd:IDREF" minOccurs="0"/>
+			<xsd:element name="StudyName" type="xsd:string"/>
+			<xsd:element name="StudyId" type="xsd:IDREF" minOccurs="0"/>
+			<xsd:element name="InvestigationName" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="InvestigationId" type="xsd:IDREF" minOccurs="0"/>
+			<xsd:element name="DataCollection" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="DataCollectionId" type="xsd:IDREF" minOccurs="0"/>
+			<xsd:element name="ADOName" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="ADOId" type="xsd:IDREF" minOccurs="0"/>
 			<!-- for a none service based reference a URI-esque (if it is an absolute) location can also be stored -->
-			<xsd:element name="Locator" minOccurs="0" maxOccurs="unbounded"> 
-				<xsd:complexType> 
-					<xsd:simpleContent> 
-						<xsd:extension base="xsd:string"> 
-							<xsd:attribute name="pathtype" type="cmd:PathTypes"/> 
-						</xsd:extension> 
-					</xsd:simpleContent> 
-				</xsd:complexType> 
-			</xsd:element> 
-		</xsd:sequence> 
+			<xsd:element name="Locator" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="pathtype" type="cmd:PathTypes"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:complexType name="ADOType"> 
-		<xsd:sequence> 
-			<xsd:element name="DataDescription" type="cmd:DataDescriptionType"/> 
+	<xsd:complexType name="ADOType">
+		<xsd:sequence>
+			<xsd:element name="DataDescription" type="cmd:DataDescriptionType"/>
 			<xsd:element name="ADOLocator" type="cmd:ADOLocatorType" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element name="RelatedReference" type="cmd:RelatedReferenceType" minOccurs="0" maxOccurs="unbounded"/> 
-		</xsd:sequence> 
-		<xsd:attribute name="dataid" type="xsd:ID" use="required"/> 
+			<xsd:element name="RelatedReference" type="cmd:RelatedReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+		<xsd:attribute name="dataid" type="xsd:ID" use="required"/>
 	</xsd:complexType>
 
-	<!-- how to use the specialisation parent/child class/subclass 'feature' : --> 
+	<!-- how to use the specialisation parent/child class/subclass 'feature' : -->
 	<!--
-	<root_element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-		... 
-	> 
-	note this assumed that the cmd schema is the default one 
+	<root_element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		...
+	>
+	note this assumed that the cmd schema is the default one
 	...
 
 	...<ADOLocator xsi:type="FileADOL">
 
 	...
 
-	--> 
+	-->
 
 <!-- note ADOL stands for Atomic Data Object Locator -->
 
-	<xsd:complexType name="FileADOL"> 
-		<xsd:complexContent> 
-			<xsd:extension base="cmd:ADOLocatorType"> 
-				<xsd:sequence> 
-					<xsd:element name="Media" type="xsd:string" minOccurs="0" /> 
+	<xsd:complexType name="FileADOL">
+		<xsd:complexContent>
+			<xsd:extension base="cmd:ADOLocatorType">
+				<xsd:sequence>
+					<xsd:element name="Media" type="xsd:string" minOccurs="0" />
 					<xsd:element name="Filetype" type="xsd:string" minOccurs="0"/>
-				</xsd:sequence> 
-			</xsd:extension> 
-		</xsd:complexContent> 
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
 	</xsd:complexType>
 
-	<xsd:complexType name="SelectNamedADOL"> 
-		<xsd:complexContent> 
-			<xsd:extension base="cmd:ADOLocatorType"> 
-				<xsd:sequence> 
-					<xsd:element name="DatabaseType" type="xsd:string"/> 
-					<xsd:element name="DatabaseProductName" type="xsd:string"/> 
-					<xsd:element name="DatabaseProductVersion" type="xsd:string"/> 
-					<xsd:element name="Host" type="xsd:string"/> 
-					<xsd:element name="Instance" type="xsd:string" minOccurs="0"/> 
-					<xsd:element name="Database" type="xsd:string"/> 
-					<xsd:element name="Port" type="xsd:string" minOccurs="0"/> 
-					<xsd:element name="Query" type="xsd:string"/> 
-					<xsd:element name="Encoding" type="xsd:string" minOccurs="0"/> 
-					<xsd:element name="DataFormat" minOccurs="0" maxOccurs="unbounded"> 
-						<xsd:complexType> 
-							<xsd:simpleContent> 
-								<xsd:extension base="xsd:string"> 
-									<xsd:attribute name="formatsystem" type="cmd:FormatSystems" use="optional"/> 
-								</xsd:extension> 
-							</xsd:simpleContent> 
-						</xsd:complexType> 
-					</xsd:element> 
-					<xsd:element name="ResultSchema" type="xsd:string" minOccurs="0"/> 
-				</xsd:sequence> 
-			</xsd:extension> 
-		</xsd:complexContent> 
+	<xsd:complexType name="SelectNamedADOL">
+		<xsd:complexContent>
+			<xsd:extension base="cmd:ADOLocatorType">
+				<xsd:sequence>
+					<xsd:element name="DatabaseType" type="xsd:string"/>
+					<xsd:element name="DatabaseProductName" type="xsd:string"/>
+					<xsd:element name="DatabaseProductVersion" type="xsd:string"/>
+					<xsd:element name="Host" type="xsd:string"/>
+					<xsd:element name="Instance" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Database" type="xsd:string"/>
+					<xsd:element name="Port" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Query" type="xsd:string"/>
+					<xsd:element name="Encoding" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="DataFormat" minOccurs="0" maxOccurs="unbounded">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="xsd:string">
+									<xsd:attribute name="formatsystem" type="cmd:FormatSystems" use="optional"/>
+								</xsd:extension>
+							</xsd:simpleContent>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="ResultSchema" type="xsd:string" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
 	</xsd:complexType>
 
-	<xsd:complexType name="CollectionLocatorType"> 
-		<xsd:sequence> 
-			<xsd:element name="DataName" type="xsd:string"/> 
-			<xsd:element name="Locator" minOccurs="0" maxOccurs="unbounded"> 
-				<xsd:complexType> 
-					<xsd:simpleContent> 
-						<xsd:extension base="xsd:string"> 
-							<xsd:attribute name="pathtype" type="cmd:PathTypes"/> 
-						</xsd:extension> 
-					</xsd:simpleContent>
-				</xsd:complexType> 
-			</xsd:element> 
-		</xsd:sequence> 
-	</xsd:complexType>
-
-	<xsd:complexType name="ADOLocatorType"> 
-		<xsd:sequence> 
-			<xsd:element name="Locator" minOccurs="0" maxOccurs="unbounded"> 
-				<xsd:complexType> 
-					<xsd:simpleContent> 
-						<xsd:extension base="xsd:string"> 
-							<xsd:attribute name="pathtype" type="cmd:PathTypes"/> 
-						</xsd:extension> 
-					</xsd:simpleContent> 
-				</xsd:complexType> 
-			</xsd:element> 
-			<xsd:element name="AccessMethod" minOccurs="0" maxOccurs="unbounded"> 
-				<xsd:complexType> 
-					<xsd:simpleContent> 
-						<xsd:extension base="xsd:string"> 
-							<xsd:attribute name="authenticationtype" type="xsd:string"/> 
-						</xsd:extension> 
-					</xsd:simpleContent> 
-				</xsd:complexType> 
-			</xsd:element> 
-			<xsd:element name="Size" type="xsd:string" minOccurs="0"/> 
-			<xsd:element name="offset" type="xsd:string" minOccurs="0"/> 
-			<xsd:element name="length" type="xsd:string" minOccurs="0"/> 
-		</xsd:sequence> 
-	</xsd:complexType>
-
-	<xsd:complexType name="PublicationType"> 
-		<xsd:sequence> 
-			<xsd:element name="PublicationName" type="xsd:string"/> 
-			<xsd:element name="Author" minOccurs="1" maxOccurs="unbounded"> 
-				<xsd:complexType> 
-					<xsd:simpleContent> 
-						<xsd:extension base="xsd:string"> 
-							<xsd:attribute name="authortype" type="cmd:AuthorTypes"/> 
-						</xsd:extension> 
-					</xsd:simpleContent> 
-				</xsd:complexType> 
-			</xsd:element> 
-			<xsd:element name="Identifier" minOccurs="0" maxOccurs="unbounded">
-				<xsd:complexType> 
+	<xsd:complexType name="CollectionLocatorType">
+		<xsd:sequence>
+			<xsd:element name="DataName" type="xsd:string"/>
+			<xsd:element name="Locator" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
 					<xsd:simpleContent>
-						<xsd:extension base="xsd:string"> 
-							<xsd:attribute name="identsystem" type="cmd:UniqueIdentifierSystem"/> 
-						</xsd:extension> 
-					</xsd:simpleContent> 
-				</xsd:complexType> 
-			</xsd:element> 
-			<xsd:element name="URI" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/> 
-		</xsd:sequence> 
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="pathtype" type="cmd:PathTypes"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
 	</xsd:complexType>
 
-	<xsd:simpleType name="References"> 
-		<xsd:restriction base="xsd:string"/> 
+	<xsd:complexType name="ADOLocatorType">
+		<xsd:sequence>
+			<xsd:element name="Locator" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="pathtype" type="cmd:PathTypes"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="AccessMethod" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="authenticationtype" type="xsd:string"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Size" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="offset" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="length" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PublicationType">
+		<xsd:sequence>
+			<xsd:element name="PublicationName" type="xsd:string"/>
+			<xsd:element name="Author" minOccurs="1" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="authortype" type="cmd:AuthorTypes"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Identifier" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:string">
+							<xsd:attribute name="identsystem" type="cmd:UniqueIdentifierSystem"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="URI" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:simpleType name="References">
+		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
 
-	<xsd:simpleType name="CommunityInformation"> 
-		<xsd:restriction base="xsd:string"/> 
+	<xsd:simpleType name="CommunityInformation">
+		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
 
-	<xsd:simpleType name="RelatedMaterialTypes"> 
-		<xsd:union memberTypes="xsd:string cmd:References cmd:CommunityInformation"/> 
+	<xsd:simpleType name="RelatedMaterialTypes">
+		<xsd:union memberTypes="xsd:string cmd:References cmd:CommunityInformation"/>
 	</xsd:simpleType>
 
 </xsd:schema>

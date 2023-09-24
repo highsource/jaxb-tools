@@ -9,7 +9,7 @@ public class RunIssuesJPA2Plugin extends RunEjbHyperjaxb3Mojo {
 	protected void configureHyperjaxb3Mojo(Hyperjaxb3Mojo mojo) {
 		super.configureHyperjaxb3Mojo(mojo);
 		mojo.setVerbose(true);
-		mojo.variant = "jpa2";
+		mojo.variant = "jpa3";
 		mojo.roundtripTestClassName = null;
 		mojo.setDebug(false);
 	}

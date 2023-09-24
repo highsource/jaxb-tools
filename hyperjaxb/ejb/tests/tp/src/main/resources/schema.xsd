@@ -1,14 +1,14 @@
 <xsd:schema
-	targetNamespace="http://hyperjaxb3.jvnet.org/ejb/tests/tp" xmlns:tp="http://hyperjaxb3.jvnet.org/ejb/tests/tp" 
+	targetNamespace="http://hyperjaxb3.jvnet.org/ejb/tests/tp" xmlns:tp="http://hyperjaxb3.jvnet.org/ejb/tests/tp"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	jaxb:version="3.0" 
+	jaxb:version="3.0"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 
-	elementFormDefault="qualified" 
+	elementFormDefault="qualified"
 	attributeFormDefault="unqualified"
 
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 
 	jaxb:extensionBindingPrefixes="hj orm xjc"
@@ -21,8 +21,8 @@
 				<jaxb:javaType
 					name="java.util.Calendar"
 					xmlType="xsd:date"
-					parseMethod="javax.xml.bind.DatatypeConverter.parseDate"
-					printMethod="javax.xml.bind.DatatypeConverter.printDate" />
+					parseMethod="jakarta.xml.bind.DatatypeConverter.parseDate"
+					printMethod="jakarta.xml.bind.DatatypeConverter.printDate" />
 			</jaxb:globalBindings>
 			<jaxb:schemaBindings>
 				<jaxb:package name="org.jvnet.hyperjaxb3.ejb.tests.tp"/>
@@ -83,19 +83,19 @@
 
 	<xsd:simpleType name="string8a">
 		<xsd:restriction base="xsd:string">
-			<xsd:maxLength value="8"/>	
+			<xsd:maxLength value="8"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 
 	<xsd:simpleType name="string8b">
 		<xsd:restriction base="xsd:string">
-			<xsd:maxLength value="8"/>	
+			<xsd:maxLength value="8"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 
 	<xsd:simpleType name="string8c">
 		<xsd:restriction base="xsd:string">
-			<xsd:maxLength value="8"/>	
+			<xsd:maxLength value="8"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 

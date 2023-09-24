@@ -1,14 +1,14 @@
 <xsd:schema
-	targetNamespace="urn:test" xmlns:test="urn:test" 
+	targetNamespace="urn:test" xmlns:test="urn:test"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	jaxb:version="3.0" 
+	jaxb:version="3.0"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
 
-	elementFormDefault="qualified" 
+	elementFormDefault="qualified"
 	attributeFormDefault="unqualified"
 
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 
 	jaxb:extensionBindingPrefixes="hj orm xjc"
@@ -61,7 +61,7 @@
 	</xsd:complexType>
 
 	<xsd:element name="HJIII-63-Alpha" type="test:HJIII-63-Alpha"/>
-	
+
 	<xsd:complexType name="HJIII-63-Alpha">
 		<xsd:sequence>
 			<xsd:element name="stringElements" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
@@ -237,14 +237,14 @@
         	<xsd:attribute name="id" type="xsd:ID" use="required"/>
 	</xsd:complexType>
 
-        <xsd:element name="HJIII-101" type="test:HJIII-101-Type"/> 
+        <xsd:element name="HJIII-101" type="test:HJIII-101-Type"/>
 
-	<xsd:complexType name="HJIII-101-Type"> 
-		<xsd:sequence> 
-			<xsd:element name="id" type="xsd:string" nillable="false"/> 
+	<xsd:complexType name="HJIII-101-Type">
+		<xsd:sequence>
+			<xsd:element name="id" type="xsd:string" nillable="false"/>
 			<xsd:element name="hjiii101" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-		</xsd:sequence> 
-        </xsd:complexType> 
+		</xsd:sequence>
+        </xsd:complexType>
 
 
 </xsd:schema>

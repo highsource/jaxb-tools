@@ -1,18 +1,18 @@
-<jaxb:bindings version="1.0" xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" 
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+<jaxb:bindings version="3.0" xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 
-	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
 
 	jaxb:extensionBindingPrefixes="hj xjc">
 
-	<jaxb:bindings schemaLocation="schema.xsd" 
+	<jaxb:bindings schemaLocation="schema.xsd"
 		node="/xsd:schema">
 		<jaxb:globalBindings
 			fixedAttributeAsConstantProperty="false"
 			typesafeEnumBase="xsd:string"
-			typesafeEnumMemberName="generateName" 
+			typesafeEnumMemberName="generateName"
 			generateIsSetMethod="true">
 			<xjc:noValidator/>
 			<xjc:noValidatingUnmarshaller/>
@@ -20,9 +20,9 @@
 
 		<jaxb:bindings node="//xs:complexType[@name='BasicContentDescriptionType']/xs:sequence/xs:element[@name='ReleaseInformation']/xs:complexType/xs:sequence/xs:element[@name='ReleaseDate']/xs:complexType">
 			<hj:class>
-				<hj:table name="ReleaseInfo_Date"/>                    
+				<hj:table name="ReleaseInfo_Date"/>
 			</hj:class>
-		</jaxb:bindings> 
+		</jaxb:bindings>
 	</jaxb:bindings>
 
 </jaxb:bindings>

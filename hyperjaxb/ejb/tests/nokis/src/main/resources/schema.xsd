@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Carsten Heidmann (BAW Hamburg) -->
 <!-- edited with XML Spy v4.1 U (http://www.xmlspy.com) by Forschungszentrum Informatik (FZI)/DBS (Forschungszentrum Informatik (FZI)/DBS) -->
-<xsd:schema targetNamespace="http://nokis.baw.de/" xmlns:decorum="http://www.fzi.de/dbs/decorum" xmlns:setup="http://www.fzi.de/dbs/db/Setup" 
-	xmlns:nokis="http://nokis.baw.de/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" 
-	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" jaxb:version="1.0">
+<xsd:schema targetNamespace="http://nokis.baw.de/" xmlns:decorum="http://www.fzi.de/dbs/decorum" xmlns:setup="http://www.fzi.de/dbs/db/Setup"
+	xmlns:nokis="http://nokis.baw.de/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" jaxb:version="3.0">
 	<xsd:annotation>
 		<xsd:documentation xml:lang="de"> Schema f&#252;r den NOKIS Metadatenstandard Version 1.00 vom 2002/11/08 Carsten Heidmann </xsd:documentation>
 	</xsd:annotation>
 	<xsd:annotation>
 		<xsd:appinfo>
-			<jaxb:globalBindings fixedAttributeAsConstantProperty="true" typesafeEnumBase="xsd:string" typesafeEnumMemberName="generateName" 
+			<jaxb:globalBindings fixedAttributeAsConstantProperty="true" typesafeEnumBase="xsd:string" typesafeEnumMemberName="generateName"
 				generateIsSetMethod="true"/>
 			<jaxb:schemaBindings>
 				<jaxb:nameXmlTransform>
@@ -737,13 +737,13 @@
 			<xsd:element name="dtaTyp" type="xsd:string" minOccurs="0"/>
 			<xsd:element name="nokisItemDesc" type="nokis:longString" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element name="itemQuality" type="nokis:DataQual" minOccurs="0"/>
-			<xsd:element name="nokisNomItem" type="nokis:tNokisNomItem" minOccurs="0" maxOccurs="unbounded" 
+			<xsd:element name="nokisNomItem" type="nokis:tNokisNomItem" minOccurs="0" maxOccurs="unbounded"
 				decorum:show-if="not(nokis:nokisOrdItem) and not(nokis:nokisSkalItem) and not(nokis:nokisOthItem)"/>
-			<xsd:element name="nokisOrdItem" type="nokis:tNokisOrdItem" minOccurs="0" maxOccurs="unbounded" 
+			<xsd:element name="nokisOrdItem" type="nokis:tNokisOrdItem" minOccurs="0" maxOccurs="unbounded"
 				decorum:show-if="not(nokis:nokisNomItem) and not(nokis:nokisSkalItem) and not(nokis:nokisOthItem)"/>
-			<xsd:element name="nokisSkalItem" type="nokis:tNokisSkalItem" minOccurs="0" maxOccurs="unbounded" 
+			<xsd:element name="nokisSkalItem" type="nokis:tNokisSkalItem" minOccurs="0" maxOccurs="unbounded"
 				decorum:show-if="not(nokis:nokisNomItem) and not(nokis:nokisOrdItem) and not(nokis:nokisOthItem)"/>
-			<xsd:element name="nokisOthItem" type="nokis:tNokisOthItem" minOccurs="0" maxOccurs="unbounded" 
+			<xsd:element name="nokisOthItem" type="nokis:tNokisOthItem" minOccurs="0" maxOccurs="unbounded"
 				decorum:show-if="not(nokis:nokisNomItem) and not(nokis:nokisOrdItem) and not(nokis:nokisSkalItem)"/>
 		</xsd:sequence>
 	</xsd:complexType>

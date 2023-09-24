@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="https://jakarta.ee/xml/ns/persistence/orm"
 	xmlns:annox="http://annox.dev.java.net"
 	jaxb:extensionBindingPrefixes="hj orm annox" jaxb:version="3.0">
 	<xs:annotation>
@@ -72,7 +72,7 @@
 			<xs:element name="primaryPhone" nillable="true" minOccurs="0">
 				<xs:annotation>
 					<xs:appinfo>
-						
+
 						<hj:embedded>
 							<orm:attribute-override name="phoneNumber">
 								<orm:column name="PRIMARY_PHONE_NO"/>
@@ -134,7 +134,7 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
- 
+
 	<xs:complexType name="RoutingType">
 		<xs:annotation>
 			<xs:appinfo>
@@ -148,8 +148,8 @@
 						<jaxb:property name="Sender"/>
 					</xs:appinfo>
 				</xs:annotation>
-			</xs:element>	
+			</xs:element>
 		</xs:sequence>
-	</xs:complexType>   
-	
+	</xs:complexType>
+
 </xs:schema>

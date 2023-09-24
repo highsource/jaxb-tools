@@ -1,4 +1,4 @@
-package org.jvnet.jaxbs.tests.po;
+package org.jvnet.jaxb.tests.po;
 
 import java.io.File;
 

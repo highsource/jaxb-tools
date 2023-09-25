@@ -29,6 +29,8 @@ import com.sun.tools.xjc.outline.EnumConstantOutline;
 import com.sun.tools.xjc.outline.EnumOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.outline.Outline;
+import com.sun.xml.xsom.XmlString;
+import com.sun.xml.xsom.XSAttributeUse;
 import com.sun.xml.xsom.XSElementDecl;
 import com.sun.xml.xsom.XSParticle;
 import com.sun.xml.xsom.XSTerm;
@@ -62,6 +64,8 @@ public class DefaultValuePlugin
     extends Plugin
 {
 
+    private static final String OPTION_NAME_ALL = "-Xdefault-value:all";
+    private boolean all = false;
     /**
      * Name of Option to enable this plugin
      */
@@ -92,7 +96,9 @@ public class DefaultValuePlugin
      */
     public String getUsage()
     {
-        return "  -"+OPTION_NAME+"    : enable rewriting of classes to set default values for fields as specified in XML schema";
+        return "  -"+OPTION_NAME+"    : enable rewriting of classes to set default values for fields as specified in XML schema\n"
+            + " [-"+OPTION_NAME+":all : enable rewriting of classes for default values of all fields and attributes]"
+            ;
     }
 
     /**
@@ -102,8 +108,7 @@ public class DefaultValuePlugin
      * <li>Look for fields that:
      * <ul>
      * <li>Were generated from XSD description</li>
-     * <li>The XSD description is of type xsd:element (code level default values
-     *  are not necessary for fields generated from attributes)</li>
+     * <li>The XSD description is of type xsd:element (or xsd:attribute if all is set)</li>
      * <li>A default value is specified</li>
      * <li>Map to one of the supported types</li>
      * </ul>
@@ -123,24 +128,27 @@ public class DefaultValuePlugin
             // check all Fields in Class
             for (FieldOutline f : co.getDeclaredFields()) {
                 CPropertyInfo fieldInfo = f.getPropertyInfo();
-
-                // Do nothing if Field is not created from an xsd particle
-                if (!(fieldInfo.getSchemaComponent() instanceof XSParticle)) {
+                XmlString xmlDefaultValue = null;
+                if (fieldInfo.getSchemaComponent() instanceof XSParticle) {
+                    XSTerm term = ((XSParticle) fieldInfo.getSchemaComponent()).getTerm();// Default values only necessary for fields derived from an xsd:element
+                    if (!term.isElementDecl()) {
+                        continue;
+                    }
+                    XSElementDecl element = term.asElementDecl();
+                    xmlDefaultValue = element.getDefaultValue();
+                } else if (all && fieldInfo.getSchemaComponent() instanceof XSAttributeUse) {
+                    XSAttributeUse attribute = ((XSAttributeUse) fieldInfo.getSchemaComponent());
+                    xmlDefaultValue = attribute.getDefaultValue();
+                } else {
+                    // Do nothing if Field is not created from an xsd particle
                     continue;
                 }
-                XSTerm term = ((XSParticle) fieldInfo.getSchemaComponent()).getTerm();
-
-                // Default values only necessary for fields derived from an xsd:element
-                if (!term.isElementDecl()) {
-                    continue;
-                }
-                XSElementDecl element = term.asElementDecl();
 
                 // Do nothing if no default value
-                if (element.getDefaultValue() == null) {
+                if (xmlDefaultValue == null) {
                     continue;
                 }
-                String defaultValue = element.getDefaultValue().value;
+                String defaultValue = xmlDefaultValue.value;
 
                 // Get handle to JModel representing the field
                 Map<String, JFieldVar> fields = co.implClass.fields();
@@ -318,6 +326,17 @@ public class DefaultValuePlugin
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public int parseArgument(Options opt, String[] args, int i) {
+        // eg. -Xdefault-value:all
+        String arg = args[i].trim();
+        if (arg.startsWith(OPTION_NAME_ALL)) {
+            all = true;
+            return 1;
+        }
+        return 0;
     }
 
 

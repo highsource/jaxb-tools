@@ -7,7 +7,7 @@ import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JCodeModel;
 
 public class AnnotatingSingleValueVisitor extends
-		org.jvnet.jaxb2_commons.plugin.annotate.AnnotatingSingleValueVisitor {
+		org.jvnet.jaxb.plugin.annotate.AnnotatingSingleValueVisitor {
 
 	private String name;
 	private final JAnnotationUse annotationUse;

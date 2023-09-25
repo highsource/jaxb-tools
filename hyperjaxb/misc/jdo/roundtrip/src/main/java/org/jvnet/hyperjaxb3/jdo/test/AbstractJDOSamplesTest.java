@@ -5,8 +5,8 @@ import java.io.File;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 
-import org.jvnet.jaxb2_commons.test.AbstractSamplesTest;
-import org.jvnet.jaxb2_commons.xml.bind.ContextPathAware;
+import org.jvnet.jaxb.test.AbstractSamplesTest;
+import org.jvnet.jaxb.xml.bind.ContextPathAware;
 
 public abstract class AbstractJDOSamplesTest extends
 		AbstractJDOTest implements ContextPathAware {

@@ -11,7 +11,7 @@ import org.jvnet.hyperjaxb3.ejb.schemas.customizations.GeneratedProperty;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.CreatePropertyInfos;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb3.xjc.model.DefaultTypeUse;
-import org.jvnet.jaxb2_commons.util.CustomizationUtils;
+import org.jvnet.jaxb.util.CustomizationUtils;
 import org.w3c.dom.Element;
 
 import com.sun.tools.xjc.model.CAttributePropertyInfo;

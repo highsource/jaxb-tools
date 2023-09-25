@@ -8,10 +8,10 @@ import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.Unmarshaller;
 
 import org.jvnet.hyperjaxb3.ejb.util.EntityUtils;
-import org.jvnet.jaxb2_commons.lang.ContextUtils;
-import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
-import org.jvnet.jaxb2_commons.locator.DefaultRootObjectLocator;
-import org.jvnet.jaxb2_commons.locator.ObjectLocator;
+import org.jvnet.jaxb.lang.ContextUtils;
+import org.jvnet.jaxb.lang.EqualsStrategy;
+import org.jvnet.jaxb.locator.DefaultRootObjectLocator;
+import org.jvnet.jaxb.locator.ObjectLocator;
 
 public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest {
 
@@ -134,6 +134,6 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest {
 		assertTrue("Objects must be equal.", strategy.equals(
 				new DefaultRootObjectLocator(object),
 				new DefaultRootObjectLocator(loadedObject), object,
-				loadedObject));
+				loadedObject, true, true));
 	}
 }

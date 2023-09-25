@@ -14,8 +14,8 @@ import org.jvnet.hyperjaxb3.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb3.ejb.strategy.mapping.Mapping;
 import org.jvnet.hyperjaxb3.ejb.strategy.outline.OutlineProcessor;
 import org.jvnet.hyperjaxb3.persistence.util.AttributesUtils;
-import org.jvnet.jaxb2_commons.util.FieldAccessorUtils;
-import org.jvnet.jaxb2_commons.util.OutlineUtils;
+import org.jvnet.jaxb.util.FieldAccessorUtils;
+import org.jvnet.jaxb.util.OutlineUtils;
 import org.springframework.beans.factory.annotation.Required;
 
 import com.sun.codemodel.JMethod;

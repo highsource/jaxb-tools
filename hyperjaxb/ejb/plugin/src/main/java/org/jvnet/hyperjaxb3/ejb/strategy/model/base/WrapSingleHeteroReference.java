@@ -18,8 +18,8 @@ import org.jvnet.hyperjaxb3.xjc.generator.bean.field.SingleWrappingClassInfoFiel
 import org.jvnet.hyperjaxb3.xjc.generator.bean.field.SingleWrappingReferenceElementInfoField;
 import org.jvnet.hyperjaxb3.xjc.generator.bean.field.SingleWrappingReferenceObjectField;
 import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.ElementAsString;
-import org.jvnet.jaxb2_commons.util.CustomizationUtils;
-import org.jvnet.jaxb2_commons.util.OutlineUtils;
+import org.jvnet.jaxb.util.CustomizationUtils;
+import org.jvnet.jaxb.util.OutlineUtils;
 
 import jakarta.xml.ns.persistence.orm.Lob;
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;

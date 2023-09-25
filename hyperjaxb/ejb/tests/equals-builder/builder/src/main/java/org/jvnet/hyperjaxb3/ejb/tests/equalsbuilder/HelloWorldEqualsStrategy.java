@@ -1,7 +1,7 @@
 package org.jvnet.hyperjaxb3.ejb.tests.equalsbuilder;
 
-import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
-import org.jvnet.jaxb2_commons.locator.ObjectLocator;
+import org.jvnet.jaxb.lang.JAXBEqualsStrategy;
+import org.jvnet.jaxb.locator.ObjectLocator;
 
 public class HelloWorldEqualsStrategy extends JAXBEqualsStrategy {
 

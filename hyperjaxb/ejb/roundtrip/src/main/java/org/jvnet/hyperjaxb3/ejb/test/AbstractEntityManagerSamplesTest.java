@@ -11,8 +11,8 @@ import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.commons.lang3.SystemUtils;
-import org.jvnet.jaxb2_commons.test.AbstractSamplesTest;
-import org.jvnet.jaxb2_commons.xml.bind.ContextPathAware;
+import org.jvnet.jaxb.test.AbstractSamplesTest;
+import org.jvnet.jaxb.xml.bind.ContextPathAware;
 
 public abstract class AbstractEntityManagerSamplesTest extends
 		AbstractEntityManagerTest implements ContextPathAware {

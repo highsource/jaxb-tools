@@ -22,9 +22,9 @@ import org.jvnet.hyperjaxb3.ejb.strategy.naming.Naming;
 import org.jvnet.hyperjaxb3.ejb.strategy.processor.ModelAndOutlineProcessor;
 import org.jvnet.hyperjaxb3.ejb.test.RoundtripTest;
 import org.jvnet.hyperjaxb3.xjc.generator.bean.field.UntypedListFieldRenderer;
-import org.jvnet.jaxb2_commons.plugin.spring.AbstractSpringConfigurablePlugin;
-import org.jvnet.jaxb2_commons.util.CustomizationUtils;
-import org.jvnet.jaxb2_commons.util.GeneratorContextUtils;
+import org.jvnet.jaxb.plugin.spring.AbstractSpringConfigurablePlugin;
+import org.jvnet.jaxb.util.CustomizationUtils;
+import org.jvnet.jaxb.util.GeneratorContextUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.w3c.dom.Element;
@@ -55,7 +55,7 @@ import com.sun.tools.xjc.reader.xmlschema.bindinfo.LocalScoping;
 
 /**
  * Hyperjaxb3 EJB plugin.
- * 
+ *
  */
 public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 
@@ -235,15 +235,15 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 
 		/*
 		 * final Ring ring = Ring.begin(); try {
-		 * 
+		 *
 		 * final ErrorReceiverFilter ef = new
 		 * ErrorReceiverFilter(outline.getErrorReceiver());
-		 * 
+		 *
 		 * Ring.add(XSSchemaSet.class,outline.getModel().schemaComponent);
 		 * Ring.add(outline.getModel()); Ring.add(outline.getCodeModel());
 		 * Ring.add(ErrorReceiver.class,ef);
 		 * Ring.add(CodeModelClassFactory.class,new CodeModelClassFactory(ef));
-		 * 
+		 *
 		 * final Class<BGMBuilder> theClass = BGMBuilder.class; Constructor<?>
 		 * constructor = theClass.getDeclaredConstructors()[0];
 		 * constructor.setAccessible(true); constructor.newInstance(new Object[]

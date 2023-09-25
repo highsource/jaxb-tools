@@ -16,7 +16,7 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectBuilder;
 import org.apache.maven.settings.MavenSettingsBuilder;
 import org.apache.maven.settings.Settings;
-import org.jvnet.hyperjaxb3.maven2.Hyperjaxb3Mojo;
+import org.jvnet.hyperjaxb3.maven.Hyperjaxb3Mojo;
 
 public class RunEpisodesBPlugin extends AbstractMojoTestCase {
 
@@ -76,7 +76,7 @@ public class RunEpisodesBPlugin extends AbstractMojoTestCase {
 
 	/**
 	 * Validate the generation of a java files from purchaseorder.xsd.
-	 * 
+	 *
 	 * @throws MojoExecutionException
 	 */
 	public void testExecute() throws Exception {

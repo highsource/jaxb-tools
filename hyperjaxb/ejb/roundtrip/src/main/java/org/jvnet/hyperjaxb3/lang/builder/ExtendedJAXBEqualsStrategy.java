@@ -9,11 +9,11 @@ import org.custommonkey.xmlunit.Difference;
 import org.custommonkey.xmlunit.DifferenceConstants;
 import org.custommonkey.xmlunit.DifferenceListener;
 import org.jvnet.hyperjaxb3.xml.datatype.util.XMLGregorianCalendarUtils;
-import org.jvnet.jaxb2_commons.locator.ObjectLocator;
+import org.jvnet.jaxb.locator.ObjectLocator;
 import org.w3c.dom.Node;
 
 public class ExtendedJAXBEqualsStrategy extends
-		org.jvnet.jaxb2_commons.lang.ExtendedJAXBEqualsStrategy {
+		org.jvnet.jaxb.lang.ExtendedJAXBEqualsStrategy {
 
 
 	@Override

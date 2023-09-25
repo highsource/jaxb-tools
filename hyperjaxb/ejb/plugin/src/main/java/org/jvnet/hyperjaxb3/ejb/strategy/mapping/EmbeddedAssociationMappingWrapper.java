@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
-import org.jvnet.jaxb2_commons.util.CustomizationUtils;
+import org.jvnet.jaxb.util.CustomizationUtils;
 
 import jakarta.xml.ns.persistence.orm.AssociationOverride;
 import jakarta.xml.ns.persistence.orm.JoinColumn;

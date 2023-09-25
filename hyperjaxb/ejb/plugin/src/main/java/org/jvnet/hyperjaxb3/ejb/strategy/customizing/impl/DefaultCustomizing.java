@@ -38,13 +38,13 @@ import org.jvnet.hyperjaxb3.ejb.schemas.customizations.ToMany;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.ToOne;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Version;
 import org.jvnet.hyperjaxb3.ejb.strategy.customizing.Customizing;
-import org.jvnet.hyperjaxb3.jaxb2_commons.lang.MergeableMergeStrategy;
+import org.jvnet.hyperjaxb3.jaxb.lang.MergeableMergeStrategy;
 import org.jvnet.hyperjaxb3.xsom.SimpleTypeAnalyzer;
 import org.jvnet.hyperjaxb3.xsom.TypeUtils;
-import org.jvnet.jaxb2_commons.lang.JAXBMergeStrategy;
-import org.jvnet.jaxb2_commons.lang.MergeFrom2;
-import org.jvnet.jaxb2_commons.lang.MergeStrategy2;
-import org.jvnet.jaxb2_commons.util.CustomizationUtils;
+import org.jvnet.jaxb.lang.JAXBMergeStrategy;
+import org.jvnet.jaxb.lang.MergeFrom;
+import org.jvnet.jaxb.lang.MergeStrategy;
+import org.jvnet.jaxb.util.CustomizationUtils;
 import org.springframework.beans.factory.annotation.Required;
 
 import jakarta.xml.ns.persistence.orm.Column;
@@ -1112,10 +1112,10 @@ public class DefaultCustomizing implements Customizing {
 		return jaxbContext;
 	}
 
-	private final static MergeStrategy2 MERGE_STRATEGY = new MergeableMergeStrategy(
-			JAXBMergeStrategy.INSTANCE2);
+	private final static MergeStrategy MERGE_STRATEGY = new MergeableMergeStrategy(
+			JAXBMergeStrategy.INSTANCE);
 
-	private <T extends Mergeable & MergeFrom2> void mergeFrom(T value,
+	private <T extends Mergeable & MergeFrom> void mergeFrom(T value,
 			T defaultValue) {
 		value.mergeFrom(null, null, value, defaultValue, MERGE_STRATEGY);
 	}
@@ -1124,7 +1124,7 @@ public class DefaultCustomizing implements Customizing {
 		public void merge(M value, M defaultValue);
 	}
 
-	private <M extends Mergeable & MergeFrom2> Merge<M> merge() {
+	private <M extends Mergeable & MergeFrom> Merge<M> merge() {
 		return new Merge<M>() {
 			public void merge(M value, M defaultValue) {
 				DefaultCustomizing.this.mergeFrom(value, defaultValue);

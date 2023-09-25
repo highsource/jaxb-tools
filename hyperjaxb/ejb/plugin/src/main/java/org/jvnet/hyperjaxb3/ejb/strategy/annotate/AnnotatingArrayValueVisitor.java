@@ -7,7 +7,7 @@ import com.sun.codemodel.JAnnotationArrayMember;
 import com.sun.codemodel.JCodeModel;
 
 public class AnnotatingArrayValueVisitor extends
-		org.jvnet.jaxb2_commons.plugin.annotate.AnnotatingArrayValueVisitor {
+		org.jvnet.jaxb.plugin.annotate.AnnotatingArrayValueVisitor {
 
 	private JAnnotationArrayMember annotationArrayMember;
 

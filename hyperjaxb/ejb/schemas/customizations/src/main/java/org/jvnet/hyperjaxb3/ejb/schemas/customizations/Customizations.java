@@ -10,8 +10,8 @@ import jakarta.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 import javax.xml.transform.dom.DOMResult;
 
-import org.jvnet.jaxb2_commons.lang.ContextUtils;
-import org.jvnet.jaxb2_commons.util.CustomizationUtils;
+import org.jvnet.jaxb.lang.ContextUtils;
+import org.jvnet.jaxb.util.CustomizationUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

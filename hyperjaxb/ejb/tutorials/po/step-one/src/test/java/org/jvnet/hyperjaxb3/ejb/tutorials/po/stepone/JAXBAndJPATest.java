@@ -20,7 +20,7 @@ import javax.xml.transform.dom.DOMResult;
 
 import junit.framework.TestCase;
 import org.junit.Assert;
-import org.jvnet.jaxb2_commons.lang.ExtendedJAXBEqualsStrategy;
+import org.jvnet.jaxb.lang.ExtendedJAXBEqualsStrategy;
 
 public class JAXBAndJPATest extends TestCase {
 

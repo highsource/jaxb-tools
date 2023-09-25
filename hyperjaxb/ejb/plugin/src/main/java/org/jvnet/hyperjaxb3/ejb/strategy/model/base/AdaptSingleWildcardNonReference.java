@@ -3,7 +3,7 @@ package org.jvnet.hyperjaxb3.ejb.strategy.model.base;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.JaxbContext;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb3.xjc.generator.bean.field.SingleMarshallingField;
-import org.jvnet.jaxb2_commons.util.OutlineUtils;
+import org.jvnet.jaxb.util.OutlineUtils;
 
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
 import com.sun.tools.xjc.model.CPropertyInfo;

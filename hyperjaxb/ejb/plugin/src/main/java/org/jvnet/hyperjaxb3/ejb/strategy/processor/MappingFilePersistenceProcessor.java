@@ -10,7 +10,7 @@ import org.jvnet.hyperjaxb3.ejb.plugin.EjbPlugin;
 import org.jvnet.hyperjaxb3.ejb.strategy.naming.Naming;
 import org.jvnet.hyperjaxb3.ejb.strategy.outline.OutlineProcessor;
 import org.jvnet.hyperjaxb3.persistence.util.PersistenceUtils;
-import org.jvnet.jaxb2_commons.lang.JAXBMergeCollectionsStrategy;
+import org.jvnet.jaxb.lang.JAXBMergeCollectionsStrategy;
 import org.springframework.beans.factory.annotation.Required;
 
 import jakarta.xml.ns.persistence.Persistence;
@@ -136,7 +136,7 @@ public class MappingFilePersistenceProcessor implements
 		}
 
 		targetPersistenceUnit.mergeFrom(null, null, persistenceUnit,
-				targetPersistenceUnit, JAXBMergeCollectionsStrategy.INSTANCE2);
+				targetPersistenceUnit, JAXBMergeCollectionsStrategy.INSTANCE);
 		targetPersistenceUnit.setName(persistenceUnitName);
 		Collections.sort(targetPersistenceUnit.getMappingFile());
 		Collections.sort(targetPersistenceUnit.getClazz());

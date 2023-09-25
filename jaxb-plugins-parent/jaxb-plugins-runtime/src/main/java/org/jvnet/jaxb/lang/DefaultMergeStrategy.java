@@ -2,8 +2,7 @@ package org.jvnet.jaxb.lang;
 
 import org.jvnet.jaxb.locator.ObjectLocator;
 
-@SuppressWarnings("deprecation")
-public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
+public class DefaultMergeStrategy implements MergeStrategy {
 
 	@Override
 	public Boolean shouldBeMergedAndSet(ObjectLocator leftLocator,
@@ -18,22 +17,10 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 		} else if (rightValue == null) {
 			return leftValue;
 		} else {
-			if (leftValue instanceof MergeFrom2) {
-				final Object newInstance = ((MergeFrom2) leftValue)
-						.createNewInstance();
-				((MergeFrom2) newInstance).mergeFrom(leftLocator, rightLocator,
-						leftValue, rightValue, this);
-				return newInstance;
-			} else if (leftValue instanceof MergeFrom) {
+			if (leftValue instanceof MergeFrom) {
 				final Object newInstance = ((MergeFrom) leftValue)
 						.createNewInstance();
 				((MergeFrom) newInstance).mergeFrom(leftLocator, rightLocator,
-						leftValue, rightValue, this);
-				return newInstance;
-			} else if (rightValue instanceof MergeFrom2) {
-				final Object newInstance = ((MergeFrom2) rightValue)
-						.createNewInstance();
-				((MergeFrom2) newInstance).mergeFrom(leftLocator, rightLocator,
 						leftValue, rightValue, this);
 				return newInstance;
 			} else if (rightValue instanceof MergeFrom) {
@@ -484,10 +471,9 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 		}
 	}
 
-	public static final DefaultMergeStrategy INSTANCE2 = new DefaultMergeStrategy();
-	public static final MergeStrategy INSTANCE = INSTANCE2;
+	public static final DefaultMergeStrategy INSTANCE = new DefaultMergeStrategy();
 
 	public static DefaultMergeStrategy getInstance() {
-		return INSTANCE2;
+		return INSTANCE;
 	}
 }

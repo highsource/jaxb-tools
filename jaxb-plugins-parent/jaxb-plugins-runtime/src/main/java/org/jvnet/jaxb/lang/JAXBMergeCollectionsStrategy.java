@@ -36,11 +36,9 @@ public class JAXBMergeCollectionsStrategy extends JAXBMergeStrategy {
 		}
 	}
 
-	public static final JAXBMergeCollectionsStrategy INSTANCE2 = new JAXBMergeCollectionsStrategy();
-	@SuppressWarnings("deprecation")
-	public static final MergeStrategy INSTANCE = INSTANCE2;
+	public static final JAXBMergeCollectionsStrategy INSTANCE = new JAXBMergeCollectionsStrategy();
 
 	public static JAXBMergeCollectionsStrategy getInstance() {
-		return INSTANCE2;
+		return INSTANCE;
 	}
 }

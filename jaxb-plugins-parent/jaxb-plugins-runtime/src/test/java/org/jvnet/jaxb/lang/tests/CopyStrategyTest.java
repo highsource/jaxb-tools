@@ -11,8 +11,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import junit.framework.TestCase;
 
 import org.apache.commons.io.IOUtils;
-import org.jvnet.jaxb.lang.CopyStrategy2;
-import org.jvnet.jaxb.lang.CopyTo2;
+import org.jvnet.jaxb.lang.CopyStrategy;
+import org.jvnet.jaxb.lang.CopyTo;
 import org.jvnet.jaxb.lang.JAXBCopyStrategy;
 import org.jvnet.jaxb.locator.ObjectLocator;
 
@@ -52,7 +52,7 @@ public class CopyStrategyTest extends TestCase {
 
 	@XmlRootElement(name = "a")
 	@XmlAccessorType(XmlAccessType.FIELD)
-	public static class A implements CopyTo2 {
+	public static class A implements CopyTo {
 		@XmlAnyElement(lax = true)
 		private Object any;
 
@@ -73,7 +73,7 @@ public class CopyStrategyTest extends TestCase {
 		}
 
 		public Object copyTo(ObjectLocator locator, Object target,
-				CopyStrategy2 copyStrategy) {
+				CopyStrategy copyStrategy) {
 			final A copy = ((target == null) ? ((A) createNewInstance())
 					: ((A) target));
 			{

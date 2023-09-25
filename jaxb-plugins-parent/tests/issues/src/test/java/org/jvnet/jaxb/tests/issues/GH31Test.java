@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.jvnet.jaxb.lang.EnumValue;
 import org.jvnet.jaxb.lang.JAXBToStringStrategy;
-import org.jvnet.jaxb.lang.ToStringStrategy2;
+import org.jvnet.jaxb.lang.ToStringStrategy;
 import org.jvnet.jaxb.locator.ObjectLocator;
 
 public class GH31Test {
@@ -13,7 +13,7 @@ public class GH31Test {
 	public void considersDefaultValuesInMerge() {
 		final IssueGH31ComplexType t = new IssueGH31ComplexType();
 
-		final ToStringStrategy2 s = new JAXBToStringStrategy() {
+		final ToStringStrategy s = new JAXBToStringStrategy() {
 			public boolean isUseIdentityHashCode() {
 				return false;
 			}

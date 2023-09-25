@@ -6,8 +6,8 @@ import java.util.Collection;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb.lang.JAXBToStringStrategy;
-import org.jvnet.jaxb.lang.ToString2;
-import org.jvnet.jaxb.lang.ToStringStrategy2;
+import org.jvnet.jaxb.lang.ToString;
+import org.jvnet.jaxb.lang.ToStringStrategy;
 import org.jvnet.jaxb.locator.ObjectLocator;
 import org.jvnet.jaxb.plugin.AbstractParameterizablePlugin;
 import org.jvnet.jaxb.plugin.Customizations;
@@ -70,7 +70,7 @@ public class SimpleToStringPlugin extends AbstractParameterizablePlugin {
 
 	public JExpression createToStringStrategy(JCodeModel codeModel) {
 		return StrategyClassUtils.createStrategyInstanceExpression(codeModel,
-				ToStringStrategy2.class, getToStringStrategyClass());
+				ToStringStrategy.class, getToStringStrategyClass());
 	}
 
 	private Ignoring ignoring = new CustomizedIgnoring(
@@ -105,7 +105,7 @@ public class SimpleToStringPlugin extends AbstractParameterizablePlugin {
 
 	protected void processClassOutline(ClassOutline classOutline) {
 		final JDefinedClass theClass = classOutline.implClass;
-		ClassUtils._implements(theClass, theClass.owner().ref(ToString2.class));
+		ClassUtils._implements(theClass, theClass.owner().ref(ToString.class));
 
 		@SuppressWarnings("unused")
 		final JMethod object$toString = generateObject$toString(classOutline,
@@ -129,7 +129,7 @@ public class SimpleToStringPlugin extends AbstractParameterizablePlugin {
 
 			final JVar toStringStrategy =
 
-			body.decl(JMod.FINAL, codeModel.ref(ToStringStrategy2.class),
+			body.decl(JMod.FINAL, codeModel.ref(ToStringStrategy.class),
 					"strategy", createToStringStrategy(codeModel));
 
 			final JVar buffer = body.decl(JMod.FINAL,
@@ -155,7 +155,7 @@ public class SimpleToStringPlugin extends AbstractParameterizablePlugin {
 			final JVar buffer = toString$append.param(StringBuilder.class,
 					"buffer");
 			final JVar toStringStrategy = toString$append.param(
-					ToStringStrategy2.class, "strategy");
+					ToStringStrategy.class, "strategy");
 
 			final JBlock body = toString$append.body();
 
@@ -183,12 +183,12 @@ public class SimpleToStringPlugin extends AbstractParameterizablePlugin {
 			final JVar buffer = toString$appendFields.param(
 					StringBuilder.class, "buffer");
 			final JVar toStringStrategy = toString$appendFields.param(
-					ToStringStrategy2.class, "strategy");
+					ToStringStrategy.class, "strategy");
 			final JBlock body = toString$appendFields.body();
 
 			final Boolean superClassImplementsToString = StrategyClassUtils
 					.superClassImplements(classOutline, ignoring,
-							ToString2.class);
+							ToString.class);
 
 			if (superClassImplementsToString == null) {
 				// No superclass

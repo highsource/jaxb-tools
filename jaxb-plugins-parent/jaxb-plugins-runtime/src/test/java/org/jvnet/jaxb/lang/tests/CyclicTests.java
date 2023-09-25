@@ -5,8 +5,8 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
-import org.jvnet.jaxb.lang.CopyStrategy2;
-import org.jvnet.jaxb.lang.CopyTo2;
+import org.jvnet.jaxb.lang.CopyStrategy;
+import org.jvnet.jaxb.lang.CopyTo;
 import org.jvnet.jaxb.lang.JAXBCopyStrategy;
 import org.jvnet.jaxb.locator.DefaultRootObjectLocator;
 import org.jvnet.jaxb.locator.ObjectLocator;
@@ -14,7 +14,7 @@ import org.jvnet.jaxb.locator.util.LocatorUtils;
 
 public class CyclicTests extends TestCase {
 
-	public interface CopyToInstance extends CopyTo2 {
+	public interface CopyToInstance extends CopyTo {
 	}
 
 	public static class A implements CopyToInstance {
@@ -29,7 +29,7 @@ public class CyclicTests extends TestCase {
 		}
 
 		public Object copyTo(ObjectLocator locator, Object target,
-				CopyStrategy2 copyStrategy) {
+				CopyStrategy copyStrategy) {
 			final A that = (A) target;
 			that.b = (B) copyStrategy.copy(
 					LocatorUtils.property(locator, "b", this.b), this.b,
@@ -51,7 +51,7 @@ public class CyclicTests extends TestCase {
 		}
 
 		public Object copyTo(ObjectLocator locator, Object target,
-				CopyStrategy2 copyStrategy) {
+				CopyStrategy copyStrategy) {
 			final B that = (B) target;
 			that.a = (A) copyStrategy.copy(
 					LocatorUtils.property(locator, "a", this.a), this.a,

@@ -4,8 +4,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.transform.dom.DOMSource;
 
 import org.custommonkey.xmlunit.Diff;
-import org.jvnet.jaxb.lang.EqualsStrategy;
-import org.jvnet.jaxb.lang.JAXBEqualsStrategy;
 import org.jvnet.jaxb.locator.ObjectLocator;
 import org.w3c.dom.Node;
 
@@ -63,12 +61,10 @@ public class ExtendedJAXBEqualsStrategy extends JAXBEqualsStrategy {
 				(Node) rhs));
 		return diff.identical();
 	}
-	public static JAXBEqualsStrategy INSTANCE2 = new ExtendedJAXBEqualsStrategy();
-	@SuppressWarnings("deprecation")
-	public static EqualsStrategy INSTANCE = INSTANCE2;
+	public static JAXBEqualsStrategy INSTANCE = new ExtendedJAXBEqualsStrategy();
 
 	public static JAXBEqualsStrategy getInstance() {
-		return INSTANCE2;
+		return INSTANCE;
 	}
 
 }

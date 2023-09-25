@@ -7,8 +7,7 @@ import java.lang.reflect.Modifier;
 
 import org.jvnet.jaxb.locator.ObjectLocator;
 
-@SuppressWarnings("deprecation")
-public class DefaultCopyStrategy implements CopyStrategy2, CopyStrategy {
+public class DefaultCopyStrategy implements CopyStrategy {
 
 	protected Object copyInternal(ObjectLocator locator, Object object) {
 		if (object == null) {
@@ -17,9 +16,6 @@ public class DefaultCopyStrategy implements CopyStrategy2, CopyStrategy {
 			return object;
 		} else if (object instanceof Number) {
 			return object;
-		} else if (object instanceof CopyTo2) {
-			return ((CopyTo2) object).copyTo(locator,
-					((CopyTo2) object).createNewInstance(), this);
 		} else if (object instanceof CopyTo) {
 			return ((CopyTo) object).copyTo(locator,
 					((CopyTo) object).createNewInstance(), this);
@@ -393,10 +389,9 @@ public class DefaultCopyStrategy implements CopyStrategy2, CopyStrategy {
 		return copy(locator, value);
 	}
 
-	public static final DefaultCopyStrategy INSTANCE2 = new DefaultCopyStrategy();
-	public static final CopyStrategy INSTANCE = INSTANCE2;
+	public static final DefaultCopyStrategy INSTANCE = new DefaultCopyStrategy();
 
 	public static DefaultCopyStrategy getInstance() {
-		return INSTANCE2;
+		return INSTANCE;
 	}
 }

@@ -3,7 +3,7 @@ package org.jvnet.jaxb.tests.issues;
 import org.junit.Assert;
 import org.junit.Test;
 import org.jvnet.jaxb.lang.JAXBToStringStrategy;
-import org.jvnet.jaxb.lang.ToStringStrategy2;
+import org.jvnet.jaxb.lang.ToStringStrategy;
 
 public class GH37Test {
 
@@ -27,7 +27,7 @@ public class GH37Test {
 
 	@Test
 	public void considersDefaultValuesInToString() {
-		final ToStringStrategy2 strategy = new JAXBToStringStrategy() {
+		final ToStringStrategy strategy = new JAXBToStringStrategy() {
 			@Override
 			public boolean isUseIdentityHashCode() {
 				return false;

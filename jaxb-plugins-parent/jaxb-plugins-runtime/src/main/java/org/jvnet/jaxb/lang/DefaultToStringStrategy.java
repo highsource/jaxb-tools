@@ -7,9 +7,7 @@ import java.util.Collection;
 
 import org.jvnet.jaxb.locator.ObjectLocator;
 
-@SuppressWarnings("deprecation")
-public class DefaultToStringStrategy implements ToStringStrategy2,
-		ToStringStrategy {
+public class DefaultToStringStrategy implements ToStringStrategy {
 
 	/**
 	 * Whether to use the field names, the default is <code>true</code>.
@@ -534,9 +532,6 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 			@SuppressWarnings("rawtypes")
 			final Collection collection = (Collection) value;
 			append(locator, buffer, collection);
-		} else if (value instanceof ToString2) {
-			final ToString2 toString2 = (ToString2) value;
-			toString2.append(locator, buffer, this);
 		} else if (value instanceof ToString) {
 			final ToString toString = (ToString) value;
 			toString.append(locator, buffer, this);
@@ -1210,10 +1205,9 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 		return stringBuilder;
 	}
 
-	public static final DefaultToStringStrategy INSTANCE2 = new DefaultToStringStrategy();
-	public static final ToStringStrategy INSTANCE = INSTANCE2;
+	public static final DefaultToStringStrategy INSTANCE = new DefaultToStringStrategy();
 
 	public static DefaultToStringStrategy getInstance() {
-		return INSTANCE2;
+		return INSTANCE;
 	}
 }

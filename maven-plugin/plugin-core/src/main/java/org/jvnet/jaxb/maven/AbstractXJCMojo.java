@@ -859,26 +859,12 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 		this.produces = produces;
 	}
 
-	/**
-	 * A list of of input files or URLs to consider during the up-to-date. By
-	 * default it always considers: 1. schema files, 2. binding files, 3.
-	 * catalog file, and 4. the pom.xml file of the project executing this
-	 * plugin. Deprecated, use {@link #otherDependsIncludes} and {@link #otherDependsExcludes} instead.
-	 */
-	@Deprecated
-	@Parameter
-	private File[] otherDepends;
-
-	@Deprecated
-	public File[] getOtherDepends() {
-		return otherDepends;
-	}
-
-	@Deprecated
-	public void setOtherDepends(File[] otherDepends) {
-		this.otherDepends = otherDepends;
-	}
-
+    /**
+     * A list of of input files or URLs to consider during the up-to-date. By
+     * default it always considers: 1. schema files, 2. binding files, 3.
+     * catalog file, and 4. the pom.xml file of the project executing this
+     * plugin.
+     */
 	@Parameter
 	private String[] otherDependsIncludes;
 
@@ -1108,7 +1094,6 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 		getLog().info("forceRegenerate:" + getForceRegenerate());
 		getLog().info("removeOldOutput:" + getRemoveOldOutput());
 		getLog().info("produces:" + Arrays.toString(getProduces()));
-		getLog().info("otherDepends:" + getOtherDepends());
 		getLog().info("otherDependIncludes:" + getOtherDependsIncludes());
 		getLog().info("otherDependExcludes:" + getOtherDependsExcludes());
 		getLog().info("episodeFile:" + getEpisodeFile());

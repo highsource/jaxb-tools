@@ -2,43 +2,44 @@ package org.jvnet.jaxb.lang;
 
 import org.jvnet.jaxb.locator.ObjectLocator;
 
-@Deprecated
 public interface CopyStrategy {
 
-	public boolean copy(ObjectLocator locator, boolean value);
+	public Boolean shouldBeCopiedAndSet(ObjectLocator locator, boolean valueSet);
 
-	public byte copy(ObjectLocator locator, byte value);
+	public boolean copy(ObjectLocator locator, boolean value, boolean valueSet);
 
-	public char copy(ObjectLocator locator, char value);
+	public byte copy(ObjectLocator locator, byte value, boolean valueSet);
 
-	public double copy(ObjectLocator locator, double value);
+	public char copy(ObjectLocator locator, char value, boolean valueSet);
 
-	public float copy(ObjectLocator locator, float value);
+	public double copy(ObjectLocator locator, double value, boolean valueSet);
 
-	public int copy(ObjectLocator locator, int value);
+	public float copy(ObjectLocator locator, float value, boolean valueSet);
 
-	public long copy(ObjectLocator locator, long value);
+	public int copy(ObjectLocator locator, int value, boolean valueSet);
 
-	public short copy(ObjectLocator locator, short value);
+	public long copy(ObjectLocator locator, long value, boolean valueSet);
 
-	public Object copy(ObjectLocator locator, Object value);
+	public short copy(ObjectLocator locator, short value, boolean valueSet);
 
-	public boolean[] copy(ObjectLocator locator, boolean[] value);
+	public Object copy(ObjectLocator locator, Object value, boolean valueSet);
 
-	public byte[] copy(ObjectLocator locator, byte[] value);
+	public boolean[] copy(ObjectLocator locator, boolean[] value, boolean valueSet);
 
-	public char[] copy(ObjectLocator locator, char[] value);
+	public byte[] copy(ObjectLocator locator, byte[] value, boolean valueSet);
 
-	public double[] copy(ObjectLocator locator, double[] value);
+	public char[] copy(ObjectLocator locator, char[] value, boolean valueSet);
 
-	public float[] copy(ObjectLocator locator, float[] value);
+	public double[] copy(ObjectLocator locator, double[] value, boolean valueSet);
 
-	public int[] copy(ObjectLocator locator, int[] value);
+	public float[] copy(ObjectLocator locator, float[] value, boolean valueSet);
 
-	public long[] copy(ObjectLocator locator, long[] value);
+	public int[] copy(ObjectLocator locator, int[] value, boolean valueSet);
 
-	public short[] copy(ObjectLocator locator, short[] value);
+	public long[] copy(ObjectLocator locator, long[] value, boolean valueSet);
 
-	public Object[] copy(ObjectLocator locator, Object[] value);
+	public short[] copy(ObjectLocator locator, short[] value, boolean valueSet);
+
+	public Object[] copy(ObjectLocator locator, Object[] value, boolean valueSet);
 
 }

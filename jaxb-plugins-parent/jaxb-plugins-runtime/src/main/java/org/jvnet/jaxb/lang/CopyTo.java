@@ -2,7 +2,6 @@ package org.jvnet.jaxb.lang;
 
 import org.jvnet.jaxb.locator.ObjectLocator;
 
-@Deprecated
 public interface CopyTo {
 
 	public Object createNewInstance();

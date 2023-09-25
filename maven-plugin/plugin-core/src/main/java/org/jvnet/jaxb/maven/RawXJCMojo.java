@@ -721,16 +721,6 @@ public abstract class RawXJCMojo<O> extends AbstractXJCMojo<O> {
 		if (projectFile != null) {
 			dependsURIs.add(projectFile.toURI());
 		}
-		if (getOtherDepends() != null) {
-			getLog().warn(
-					"Configuration element [otherDepends] is deprecated, please use [otherDependsIncludes] and [otherDependsExcludes] instead.");
-
-			for (File file : getOtherDepends()) {
-				if (file != null) {
-					dependsURIs.add(file.toURI());
-				}
-			}
-		}
 		if (getOtherDependsIncludes() != null) {
 			try {
 				List<File> otherDependsFiles = IOUtils.scanDirectoryForFiles(getBuildContext(),

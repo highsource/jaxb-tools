@@ -2,60 +2,65 @@ package org.jvnet.jaxb.lang;
 
 import org.jvnet.jaxb.locator.ObjectLocator;
 
-@Deprecated
 public interface MergeStrategy {
 
+	public Boolean shouldBeMergedAndSet(ObjectLocator leftLocator,
+			ObjectLocator rightLocator, boolean leftSet, boolean rightSet);
+
 	public boolean merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			boolean left, boolean right);
+			boolean left, boolean right, boolean leftSet, boolean rightSet);
 
 	public byte merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			byte left, byte right);
+			byte left, byte right, boolean leftSet, boolean rightSet);
 
 	public char merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			char left, char right);
+			char left, char right, boolean leftSet, boolean rightSet);
 
 	public double merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			double left, double right);
+			double left, double right, boolean leftSet, boolean rightSet);
 
 	public float merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			float left, float right);
+			float left, float right, boolean leftSet, boolean rightSet);
 
 	public int merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			int left, int right);
+			int left, int right, boolean leftSet, boolean rightSet);
 
 	public long merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			long left, long right);
+			long left, long right, boolean leftSet, boolean rightSet);
 
 	public short merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			short left, short right);
+			short left, short right, boolean leftSet, boolean rightSet);
 
 	public Object merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			Object left, Object right);
+			Object left, Object right, boolean leftSet, boolean rightSet);
 
 	public boolean[] merge(ObjectLocator leftLocator,
-			ObjectLocator rightLocator, boolean[] left, boolean[] right);
+			ObjectLocator rightLocator, boolean[] left, boolean[] right,
+			boolean leftSet, boolean rightSet);
 
 	public byte[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			byte[] left, byte[] right);
+			byte[] left, byte[] right, boolean leftSet, boolean rightSet);
 
 	public char[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			char[] left, char[] right);
+			char[] left, char[] right, boolean leftSet, boolean rightSet);
 
 	public double[] merge(ObjectLocator leftLocator,
-			ObjectLocator rightLocator, double[] left, double[] right);
+			ObjectLocator rightLocator, double[] left, double[] right,
+			boolean leftSet, boolean rightSet);
 
 	public float[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			float[] left, float[] right);
+			float[] left, float[] right, boolean leftSet, boolean rightSet);
 
 	public int[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			int[] left, int[] right);
+			int[] left, int[] right, boolean leftSet, boolean rightSet);
 
 	public long[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			long[] left, long[] right);
+			long[] left, long[] right, boolean leftSet, boolean rightSet);
 
 	public short[] merge(ObjectLocator leftLocator, ObjectLocator rightLocator,
-			short[] left, short[] right);
+			short[] left, short[] right, boolean leftSet, boolean rightSet);
 
 	public Object[] merge(ObjectLocator leftLocator,
-			ObjectLocator rightLocator, Object[] left, Object[] right);
+			ObjectLocator rightLocator, Object[] left, Object[] right,
+			boolean leftSet, boolean rightSet);
 }

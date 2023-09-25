@@ -6,8 +6,8 @@ import java.util.Collection;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb.lang.JAXBMergeStrategy;
-import org.jvnet.jaxb.lang.MergeFrom2;
-import org.jvnet.jaxb.lang.MergeStrategy2;
+import org.jvnet.jaxb.lang.MergeFrom;
+import org.jvnet.jaxb.lang.MergeStrategy;
 import org.jvnet.jaxb.locator.ObjectLocator;
 import org.jvnet.jaxb.locator.util.LocatorUtils;
 import org.jvnet.jaxb.plugin.AbstractParameterizablePlugin;
@@ -73,7 +73,7 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 
 	public JExpression createMergeStrategy(JCodeModel codeModel) {
 		return StrategyClassUtils.createStrategyInstanceExpression(codeModel,
-				MergeStrategy2.class, getMergeStrategyClass());
+				MergeStrategy.class, getMergeStrategyClass());
 	}
 
 	private Ignoring ignoring = new CustomizedIgnoring(
@@ -109,7 +109,7 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 	protected void processClassOutline(ClassOutline classOutline) {
 		final JDefinedClass theClass = classOutline.implClass;
 		ClassUtils
-				._implements(theClass, theClass.owner().ref(MergeFrom2.class));
+				._implements(theClass, theClass.owner().ref(MergeFrom.class));
 
 		@SuppressWarnings("unused")
 		final JMethod mergeFrom$mergeFrom0 = generateMergeFrom$mergeFrom0(
@@ -139,7 +139,7 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 			final JBlock body = mergeFrom$mergeFrom.body();
 
 			final JVar mergeStrategy = body.decl(JMod.FINAL,
-					codeModel.ref(MergeStrategy2.class), "strategy",
+					codeModel.ref(MergeStrategy.class), "strategy",
 					createMergeStrategy(codeModel));
 
 			body.invoke("mergeFrom").arg(JExpr._null()).arg(JExpr._null())
@@ -163,14 +163,14 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 			final JVar left = mergeFrom.param(Object.class, "left");
 			final JVar right = mergeFrom.param(Object.class, "right");
 
-			final JVar mergeStrategy = mergeFrom.param(MergeStrategy2.class,
+			final JVar mergeStrategy = mergeFrom.param(MergeStrategy.class,
 					"strategy");
 
 			final JBlock methodBody = mergeFrom.body();
 
 			Boolean superClassImplementsMergeFrom = StrategyClassUtils
 					.superClassImplements(classOutline, getIgnoring(),
-							MergeFrom2.class);
+							MergeFrom.class);
 
 			if (superClassImplementsMergeFrom == null) {
 

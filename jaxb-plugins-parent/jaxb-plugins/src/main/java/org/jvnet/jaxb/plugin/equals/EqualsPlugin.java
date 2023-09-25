@@ -5,8 +5,8 @@ import java.util.Collection;
 
 import javax.xml.namespace.QName;
 
-import org.jvnet.jaxb.lang.Equals2;
-import org.jvnet.jaxb.lang.EqualsStrategy2;
+import org.jvnet.jaxb.lang.Equals;
+import org.jvnet.jaxb.lang.EqualsStrategy;
 import org.jvnet.jaxb.lang.JAXBEqualsStrategy;
 import org.jvnet.jaxb.locator.ObjectLocator;
 import org.jvnet.jaxb.locator.util.LocatorUtils;
@@ -71,7 +71,7 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 
 	public JExpression createEqualsStrategy(JCodeModel codeModel) {
 		return StrategyClassUtils.createStrategyInstanceExpression(codeModel,
-				EqualsStrategy2.class, getEqualsStrategyClass());
+				EqualsStrategy.class, getEqualsStrategyClass());
 	}
 
 	private Ignoring ignoring = new CustomizedIgnoring(
@@ -107,7 +107,7 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 
 	protected void processClassOutline(ClassOutline classOutline) {
 		final JDefinedClass theClass = classOutline.implClass;
-		ClassUtils._implements(theClass, theClass.owner().ref(Equals2.class));
+		ClassUtils._implements(theClass, theClass.owner().ref(Equals.class));
 
 		@SuppressWarnings("unused")
 		final JMethod equals = generateEquals$equals(classOutline, theClass);
@@ -126,7 +126,7 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 			final JVar object = objectEquals.param(Object.class, "object");
 			final JBlock body = objectEquals.body();
 			final JVar equalsStrategy = body.decl(JMod.FINAL,
-					codeModel.ref(EqualsStrategy2.class), "strategy",
+					codeModel.ref(EqualsStrategy.class), "strategy",
 					createEqualsStrategy(codeModel));
 			body._return(JExpr.invoke("equals").arg(JExpr._null())
 					.arg(JExpr._null()).arg(object).arg(equalsStrategy));
@@ -148,7 +148,7 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 			final JVar rightLocator = equals.param(ObjectLocator.class,
 					"thatLocator");
 			final JVar object = equals.param(Object.class, "object");
-			final JVar equalsStrategy = equals.param(EqualsStrategy2.class,
+			final JVar equalsStrategy = equals.param(EqualsStrategy.class,
 					"strategy");
 
 			JExpression objectIsNull = object.eq(JExpr._null());
@@ -161,7 +161,7 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 
 			final Boolean superClassImplementsEquals = StrategyClassUtils
 					.superClassImplements(classOutline, getIgnoring(),
-							Equals2.class);
+							Equals.class);
 
 			if (superClassImplementsEquals == null) {
 				// No superclass

@@ -14,8 +14,8 @@ import org.jvnet.hyperjaxb3.ejb.plugin.EjbPlugin;
 import org.jvnet.hyperjaxb3.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb3.ejb.strategy.outline.OutlineProcessor;
 import org.jvnet.hyperjaxb3.persistence.jpa3.JPA3Utils;
-import org.jvnet.jaxb2_commons.util.CodeModelUtils;
-import org.jvnet.jaxb2_commons.util.OutlineUtils;
+import org.jvnet.jaxb.util.CodeModelUtils;
+import org.jvnet.jaxb.util.OutlineUtils;
 
 import com.sun.codemodel.fmt.JTextFile;
 import jakarta.xml.ns.persistence.orm.Embeddable;

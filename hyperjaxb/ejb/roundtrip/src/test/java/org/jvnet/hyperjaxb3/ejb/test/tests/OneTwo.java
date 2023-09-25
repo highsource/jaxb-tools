@@ -13,10 +13,10 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.jvnet.jaxb2_commons.lang.Equals;
-import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
-import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
-import org.jvnet.jaxb2_commons.locator.ObjectLocator;
+import org.jvnet.jaxb.lang.Equals;
+import org.jvnet.jaxb.lang.EqualsStrategy;
+import org.jvnet.jaxb.lang.JAXBEqualsStrategy;
+import org.jvnet.jaxb.locator.ObjectLocator;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "OneTwo", propOrder = { "one", "two" })
@@ -83,8 +83,8 @@ public class OneTwo implements Equals {
 			return true;
 		}
 		final OneTwo that = (OneTwo) object;
-		return strategy.equals(null, null, this.getOne(), that.getOne())
-				&& strategy.equals(null, null, this.getTwo(), that.getTwo());
+		return strategy.equals(null, null, this.getOne(), that.getOne(), this.one != null, that.one != null)
+				&& strategy.equals(null, null, this.getTwo(), that.getTwo(), this.two != null, that.two != null);
 	}
 
 	@Override

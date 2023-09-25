@@ -6,7 +6,7 @@ import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JCodeModel;
 
 public class Annotator extends
-		org.jvnet.jaxb2_commons.plugin.annotate.Annotator {
+		org.jvnet.jaxb.plugin.annotate.Annotator {
 
 	@Override
 	protected XAnnotationFieldVisitor<?> createAnnotationFieldVisitor(

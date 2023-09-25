@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ClassInfoProcessor;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessModel;
-import org.jvnet.jaxb2_commons.util.CustomizationUtils;
+import org.jvnet.jaxb.util.CustomizationUtils;
 
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;

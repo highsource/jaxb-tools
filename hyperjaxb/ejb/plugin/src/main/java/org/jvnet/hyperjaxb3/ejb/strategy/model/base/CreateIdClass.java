@@ -7,7 +7,7 @@ import java.util.Collections;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessClassInfo;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessModel;
-import org.jvnet.jaxb2_commons.util.ClassUtils;
+import org.jvnet.jaxb.util.ClassUtils;
 import org.xml.sax.Locator;
 
 import jakarta.xml.ns.persistence.orm.Entity;
@@ -51,7 +51,7 @@ public class CreateIdClass implements ProcessClassInfo {
 
 					component, new CCustomizations());
 
-			org.jvnet.jaxb2_commons.plugin.inheritance.Customizations
+			org.jvnet.jaxb.plugin.inheritance.Customizations
 					._implements(idClassInfo, Serializable.class.getName());
 
 			Customizations.markIgnored(idClassInfo);

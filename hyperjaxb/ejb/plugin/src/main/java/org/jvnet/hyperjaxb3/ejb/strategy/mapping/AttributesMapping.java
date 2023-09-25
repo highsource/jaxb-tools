@@ -7,8 +7,8 @@ import org.apache.commons.logging.LogFactory;
 import org.jvnet.hyperjaxb3.codemodel.util.JTypeUtils;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.xjc.model.CTypeInfoUtils;
-import org.jvnet.jaxb2_commons.util.CustomizationUtils;
-import org.jvnet.jaxb2_commons.util.FieldAccessorUtils;
+import org.jvnet.jaxb.util.CustomizationUtils;
+import org.jvnet.jaxb.util.FieldAccessorUtils;
 
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JType;

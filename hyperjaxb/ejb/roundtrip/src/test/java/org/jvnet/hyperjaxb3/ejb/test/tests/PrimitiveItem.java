@@ -4,14 +4,14 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.MappedSuperclass;
 
 import org.jvnet.hyperjaxb3.item.Item;
-import org.jvnet.jaxb2_commons.lang.Equals;
-import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
-import org.jvnet.jaxb2_commons.lang.HashCode;
-import org.jvnet.jaxb2_commons.lang.HashCodeStrategy;
-import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
-import org.jvnet.jaxb2_commons.lang.JAXBHashCodeStrategy;
-import org.jvnet.jaxb2_commons.locator.ObjectLocator;
-import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
+import org.jvnet.jaxb.lang.Equals;
+import org.jvnet.jaxb.lang.EqualsStrategy;
+import org.jvnet.jaxb.lang.HashCode;
+import org.jvnet.jaxb.lang.HashCodeStrategy;
+import org.jvnet.jaxb.lang.JAXBEqualsStrategy;
+import org.jvnet.jaxb.lang.JAXBHashCodeStrategy;
+import org.jvnet.jaxb.locator.ObjectLocator;
+import org.jvnet.jaxb.locator.util.LocatorUtils;
 
 @MappedSuperclass
 public abstract class PrimitiveItem<T, V> implements Equals, HashCode, Item<V> {
@@ -43,7 +43,7 @@ public abstract class PrimitiveItem<T, V> implements Equals, HashCode, Item<V> {
 			rhsValue = that.getValue();
 			if (!strategy.equals(LocatorUtils.property(thisLocator, "value",
 					lhsValue), LocatorUtils.property(thatLocator, "value",
-					rhsValue), lhsValue, rhsValue)) {
+					rhsValue), lhsValue, rhsValue, this.value != null, that.value != null)) {
 				return false;
 			}
 		}
@@ -60,7 +60,7 @@ public abstract class PrimitiveItem<T, V> implements Equals, HashCode, Item<V> {
 		final T theValue;
 		theValue = this.getValue();
 		return hashCodeStrategy.hashCode(LocatorUtils.property(locator, "value",
-				theValue), 0, theValue);
+				theValue), 0, theValue, this.value != null);
 	}
 
 	public int hashCode() {

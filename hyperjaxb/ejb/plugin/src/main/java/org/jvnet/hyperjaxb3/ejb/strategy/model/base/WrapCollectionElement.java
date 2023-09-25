@@ -16,8 +16,8 @@ import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb3.item.Item;
 import org.jvnet.hyperjaxb3.xjc.generator.bean.field.WrappedCollectionField;
 import org.jvnet.hyperjaxb3.xjc.generator.bean.field.WrappingCollectionField;
-import org.jvnet.jaxb2_commons.util.CustomizationUtils;
-import org.jvnet.jaxb2_commons.util.FieldAccessorUtils;
+import org.jvnet.jaxb.util.CustomizationUtils;
+import org.jvnet.jaxb.util.FieldAccessorUtils;
 import org.w3c.dom.Element;
 
 import com.sun.codemodel.JClass;
@@ -101,7 +101,7 @@ public class WrapCollectionElement implements CreatePropertyInfos {
 				wrappedPropertyInfo.getLocator(), false);
 
 		itemPropertyInfo.getTypes().addAll(
-				context.getGetTypes().getTypes(context, wrappedPropertyInfo)				
+				context.getGetTypes().getTypes(context, wrappedPropertyInfo)
 				);
 		if (wrappedPropertyInfo.getAdapter() != null) {
 			itemPropertyInfo.setAdapter(wrappedPropertyInfo.getAdapter());

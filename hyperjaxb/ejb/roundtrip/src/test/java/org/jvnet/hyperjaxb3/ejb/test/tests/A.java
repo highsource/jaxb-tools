@@ -39,10 +39,10 @@ import org.jvnet.hyperjaxb3.xml.bind.JAXBContextUtils;
 import org.jvnet.hyperjaxb3.xml.bind.JAXBElementUtils;
 import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.XMLGregorianCalendarAsDateTime;
 import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.XmlAdapterUtils;
-import org.jvnet.jaxb2_commons.lang.Equals;
-import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
-import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
-import org.jvnet.jaxb2_commons.locator.ObjectLocator;
+import org.jvnet.jaxb.lang.Equals;
+import org.jvnet.jaxb.lang.EqualsStrategy;
+import org.jvnet.jaxb.lang.JAXBEqualsStrategy;
+import org.jvnet.jaxb.locator.ObjectLocator;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "A", propOrder = { "id", "b", "b1", "b2", "d", "e",
@@ -257,18 +257,16 @@ public class A implements Equals {
 			return true;
 		}
 		final A that = (A) object;
-		return strategy.equals(null, null, this.getId(), that.getId())
-				&& strategy.equals(null, null, this.getB(), that.getB())
-				&& strategy.equals(null, null, this.getB1(), that.getB1())
-				&& strategy.equals(null, null, this.getB2(), that.getB2())
-				&& strategy.equals(null, null, this.getD(), that.getD())
-				&& strategy.equals(null, null, this.getE(), that.getE())
-				&& strategy.equals(null, null, this.getENillable(), that
-						.getENillable())
-				&& strategy.equals(null, null, this.getF(), that.getF())
-				&& strategy.equals(null, null, this.getFNillable(), that
-						.getFNillable())
-				&& strategy.equals(null, null, this.getG(), that.getG());
+		return strategy.equals(null, null, this.getId(), that.getId(), this.id != null, that.id != null)
+				&& strategy.equals(null, null, this.getB(), that.getB(), this.b != null, that.b != null)
+				&& strategy.equals(null, null, this.getB1(), that.getB1(), this.b1 != null, that.b1 != null)
+				&& strategy.equals(null, null, this.getB2(), that.getB2(), this.b2 != null, that.b2 != null)
+				&& strategy.equals(null, null, this.getD(), that.getD(), this.d != null, that.d != null)
+				&& strategy.equals(null, null, this.getE(), that.getE(), this.e != null, that.e != null)
+				&& strategy.equals(null, null, this.getENillable(), that.getENillable(), this.eNillable != null, that.eNillable != null)
+				&& strategy.equals(null, null, this.getF(), that.getF(), this.f != null, that.f != null)
+				&& strategy.equals(null, null, this.getFNillable(), that.getFNillable(), this.fNillable != null, that.fNillable != null)
+				&& strategy.equals(null, null, this.getG(), that.getG(), this.g != null, that.g != null);
 	}
 
 	@Override
@@ -478,7 +476,7 @@ public class A implements Equals {
 				return true;
 			}
 			final G that = (G) object;
-			return strategy.equals(null, null, this.getH(), that.getH());
+			return strategy.equals(null, null, this.getH(), that.getH(), this.h != null, that.h != null);
 		}
 
 	}
@@ -516,7 +514,7 @@ public class A implements Equals {
 			}
 			final G1 that = (G1) object;
 			return super.equals(null, null, object, strategy)
-					&& strategy.equals(null, null, this.getH1(), that.getH1());
+					&& strategy.equals(null, null, this.getH1(), that.getH1(), this.h1 != null, that.h1 != null);
 		}
 
 	}
@@ -554,7 +552,7 @@ public class A implements Equals {
 			}
 			final G2 that = (G2) object;
 			return super.equals(null, null, object, strategy)
-					&& strategy.equals(null, null, this.getH2(), that.getH2());
+					&& strategy.equals(null, null, this.getH2(), that.getH2(), this.h2 != null, that.h2 != null);
 		}
 	}
 
@@ -637,7 +635,7 @@ public class A implements Equals {
 				return true;
 			}
 			final GItem that = (GItem) object;
-			return strategy.equals(null, null, this.getItemValue(), that.getItemValue());
+			return strategy.equals(null, null, this.getItemValue(), that.getItemValue(), this.itemValue != null, that.itemValue != null);
 		}
 	}
 

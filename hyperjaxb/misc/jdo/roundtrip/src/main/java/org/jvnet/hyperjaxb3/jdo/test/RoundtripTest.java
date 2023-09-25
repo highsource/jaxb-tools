@@ -11,8 +11,8 @@ import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.Unmarshaller;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.jvnet.jaxb2_commons.lang.builder.ExtendedJAXBEqualsBuilder;
-import org.jvnet.jaxb2_commons.util.ContextUtils;
+import org.jvnet.jaxb.lang.builder.ExtendedJAXBEqualsBuilder;
+import org.jvnet.jaxb.util.ContextUtils;
 
 public class RoundtripTest extends AbstractJDOSamplesTest {
 
@@ -39,7 +39,7 @@ public class RoundtripTest extends AbstractJDOSamplesTest {
 		// saveSession.get
 		// final Serializable id =
 		final Object mergedObject = saveManager.makePersistent(object);
-		
+
 //		final Object asd = saveManager.detachCopy(object);
 		saveTransaction.commit();
 //		final Object id = saveManager.getObjectId(mergedObject);

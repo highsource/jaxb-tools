@@ -18,7 +18,7 @@ import org.apache.commons.logging.LogFactory;
 import org.jvnet.hyperjaxb3.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb3.ejb.strategy.mapping.Mapping;
 import org.jvnet.hyperjaxb3.ejb.strategy.naming.Naming;
-import org.jvnet.jaxb2_commons.util.CodeModelUtils;
+import org.jvnet.jaxb.util.CodeModelUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Required;
 

@@ -1,6 +1,6 @@
 package org.jvnet.hyperjaxb3.ejb.strategy.mapping;
 
-import org.jvnet.jaxb2_commons.util.OutlineUtils;
+import org.jvnet.jaxb.util.OutlineUtils;
 
 import jakarta.xml.ns.persistence.orm.Embeddable;
 import jakarta.xml.ns.persistence.orm.EmbeddableAttributes;

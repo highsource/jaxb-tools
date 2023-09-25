@@ -15,10 +15,10 @@ import jakarta.xml.bind.annotation.XmlTransient;
 import jakarta.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.jvnet.jaxb2_commons.lang.Equals;
-import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
-import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
-import org.jvnet.jaxb2_commons.locator.ObjectLocator;
+import org.jvnet.jaxb.lang.Equals;
+import org.jvnet.jaxb.lang.EqualsStrategy;
+import org.jvnet.jaxb.lang.JAXBEqualsStrategy;
+import org.jvnet.jaxb.locator.ObjectLocator;
 
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlRootElement(name = "M", namespace = "")
@@ -107,11 +107,10 @@ public class M implements Equals {
 			return true;
 		}
 		final M that = (M) object;
-		return strategy.equals(null, null, this.getId(), that.getId())
-				&& strategy.equals(null, null, this.getOne(), that.getOne())
-				&& strategy.equals(null, null, this.getTwo(), that.getTwo())
-				&& strategy.equals(null, null, this.getMthree(),
-						that.getMthree());
+		return strategy.equals(null, null, this.getId(), that.getId(), this.id != null, that.id != null)
+				&& strategy.equals(null, null, this.getOne(), that.getOne(), true, true)
+				&& strategy.equals(null, null, this.getTwo(), that.getTwo(), true, true)
+				&& strategy.equals(null, null, this.getMthree(), that.getMthree(), this.mthree != null, that.mthree != null);
 	}
 
 	@Override

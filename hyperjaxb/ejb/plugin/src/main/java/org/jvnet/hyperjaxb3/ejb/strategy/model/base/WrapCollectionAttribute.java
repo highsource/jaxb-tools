@@ -15,8 +15,8 @@ import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb3.item.Item;
 import org.jvnet.hyperjaxb3.xjc.generator.bean.field.WrappedCollectionField;
 import org.jvnet.hyperjaxb3.xjc.generator.bean.field.WrappingCollectionField;
-import org.jvnet.jaxb2_commons.util.CustomizationUtils;
-import org.jvnet.jaxb2_commons.util.FieldAccessorUtils;
+import org.jvnet.jaxb.util.CustomizationUtils;
+import org.jvnet.jaxb.util.FieldAccessorUtils;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JExpr;

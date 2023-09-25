@@ -15,8 +15,8 @@ import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb3.item.Item;
 import org.jvnet.hyperjaxb3.xjc.generator.bean.field.WrappedCollectionField;
 import org.jvnet.hyperjaxb3.xjc.generator.bean.field.WrappingCollectionField;
-import org.jvnet.jaxb2_commons.util.CustomizationUtils;
-import org.jvnet.jaxb2_commons.util.FieldAccessorUtils;
+import org.jvnet.jaxb.util.CustomizationUtils;
+import org.jvnet.jaxb.util.FieldAccessorUtils;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JExpr;
@@ -58,7 +58,7 @@ public class WrapCollectionValue implements CreatePropertyInfos {
 
 		logger.debug("Property [" + propertyName
 				+ "] is a simple homogeneous collection property.");
-		
+
 		final CClassInfoParent parent = Ring.get(BGMBuilder.class).getGlobalBinding().getFlattenClasses() == LocalScoping.NESTED ? classInfo : classInfo.parent();
 
 		final CClassInfo itemClassInfo = new CClassInfo(classInfo.model,
@@ -74,7 +74,7 @@ public class WrapCollectionValue implements CreatePropertyInfos {
 						CustomizationUtils
 								.getCustomizations(wrappedPropertyInfo)),
 				wrappedPropertyInfo.getLocator(), false);
-		
+
 		final CTypeRef typeRef = new CTypeRef(
 				context
 				.getGetTypes().getTarget(

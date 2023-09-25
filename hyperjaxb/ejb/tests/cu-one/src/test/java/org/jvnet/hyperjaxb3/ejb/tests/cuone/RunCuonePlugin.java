@@ -1,7 +1,7 @@
 package org.jvnet.hyperjaxb3.ejb.tests.cuone;
 
-import org.jvnet.hyperjaxb3.maven2.Hyperjaxb3Mojo;
-import org.jvnet.hyperjaxb3.maven2.ejb.test.RunEjbHyperjaxb3Mojo;
+import org.jvnet.hyperjaxb3.maven.Hyperjaxb3Mojo;
+import org.jvnet.hyperjaxb3.maven.ejb.test.RunEjbHyperjaxb3Mojo;
 
 public class RunCuonePlugin extends RunEjbHyperjaxb3Mojo {
 

@@ -14,7 +14,7 @@ public class HsqlBigDecimalTest {
 
 	@Test
 	public void test() throws Exception {
-		Class.forName("org.hsqldb.jdbcDriver");
+		Class.forName("org.hsqldb.jdbc.JDBCDriver");
 		String url = "jdbc:hsqldb:mem:data/test";
 		Connection conn = DriverManager.getConnection(url, "sa", "");
 		Statement stmt = conn.createStatement();

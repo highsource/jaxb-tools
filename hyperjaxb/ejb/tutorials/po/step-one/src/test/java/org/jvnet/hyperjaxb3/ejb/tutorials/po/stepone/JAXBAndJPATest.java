@@ -79,7 +79,7 @@ public class JAXBAndJPATest extends TestCase {
 		final PurchaseOrderType beta = loadManager.find(
 				PurchaseOrderType.class, id);
 		// Using not default equals strategy since BigDecimal has errors in equals strict equality
-		Assert.assertTrue("Objects are not equal.", alpha.equals(null, null, beta, ExtendedJAXBEqualsStrategy.INSTANCE2));
+		Assert.assertTrue("Objects are not equal.", alpha.equals(null, null, beta, ExtendedJAXBEqualsStrategy.INSTANCE));
 
 		final Marshaller marshaller = context.createMarshaller();
 		marshaller.marshal(objectFactory.createPurchaseOrder(beta), System.out);

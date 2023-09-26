@@ -17,12 +17,15 @@
 		<module>po-maven-jaxb2-plugin</module>
 	</modules>
 	<profiles>
-		<profile>
-			<id>all</id>
-			<modules>
-				<module>customerservice-cxf</module>
-			</modules>
-		</profile>
+    <profile>
+      <id>jdk-11+</id>
+      <activation>
+        <jdk>[11,)</jdk>
+      </activation>
+      <modules>
+        <module>customerservice-cxf</module>
+      </modules>
+    </profile>
 	</profiles>
 	<dependencies>
 		<dependency>

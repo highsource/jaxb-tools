@@ -24,10 +24,10 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.jvnet.jaxb.lang.Equals2;
-import org.jvnet.jaxb.lang.EqualsStrategy2;
-import org.jvnet.jaxb.lang.HashCode2;
-import org.jvnet.jaxb.lang.HashCodeStrategy2;
+import org.jvnet.jaxb.lang.Equals;
+import org.jvnet.jaxb.lang.EqualsStrategy;
+import org.jvnet.jaxb.lang.HashCode;
+import org.jvnet.jaxb.lang.HashCodeStrategy;
 import org.jvnet.jaxb.lang.JAXBEqualsStrategy;
 import org.jvnet.jaxb.lang.JAXBHashCodeStrategy;
 import org.jvnet.jaxb.locator.ObjectLocator;
@@ -58,7 +58,7 @@ import org.jvnet.jaxb.locator.util.LocatorUtils;
 @Entity(name = "org.jvnet.hyperjaxb3.ejb.tests.issues.MyIssueXXXType")
 @Table(name = "MYISSUEXXXTYPE")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class MyIssueXXXType implements Serializable, Equals2, HashCode2 {
+public class MyIssueXXXType implements Serializable, Equals, HashCode {
 
 	@XmlAttribute
 	protected String value;
@@ -113,7 +113,7 @@ public class MyIssueXXXType implements Serializable, Equals2, HashCode2 {
 	}
 
 	public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator,
-			Object object, EqualsStrategy2 strategy) {
+			Object object, EqualsStrategy strategy) {
 		if (!(object instanceof MyIssueXXXType)) {
 			return false;
 		}
@@ -137,7 +137,7 @@ public class MyIssueXXXType implements Serializable, Equals2, HashCode2 {
 	}
 
 	public boolean equals(Object object) {
-		final EqualsStrategy2 strategy = JAXBEqualsStrategy.INSTANCE2;
+		final EqualsStrategy strategy = JAXBEqualsStrategy.INSTANCE;
 		return equals(null, null, object, strategy);
 	}
 
@@ -145,7 +145,7 @@ public class MyIssueXXXType implements Serializable, Equals2, HashCode2 {
 		hashCodeBuilder.append(this.getValue());
 	}
 
-	public int hashCode(ObjectLocator locator, HashCodeStrategy2 strategy) {
+	public int hashCode(ObjectLocator locator, HashCodeStrategy strategy) {
 		int currentHashCode = 1;
 		{
 			String theValue;
@@ -158,7 +158,7 @@ public class MyIssueXXXType implements Serializable, Equals2, HashCode2 {
 	}
 
 	public int hashCode() {
-		final HashCodeStrategy2 strategy = JAXBHashCodeStrategy.INSTANCE2;
+		final HashCodeStrategy strategy = JAXBHashCodeStrategy.INSTANCE;
 		return this.hashCode(null, strategy);
 	}
 

@@ -3,12 +3,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
 			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-			
+
 	<import resource="classpath*:com/example/customerservice/service/applicationContext.xml"/>
 
 	<bean name="javax.sql.DataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+		<property name="driverClassName" value="org.hsqldb.jdbc.JDBCDriver" />
 		<property name="url"
 			value="jdbc:hsqldb:mem:WEB-INF/database/database" />
 		<property name="username" value="sa" />

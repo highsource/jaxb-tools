@@ -153,6 +153,9 @@ public class DefaultValuePlugin
                 // Get handle to JModel representing the field
                 Map<String, JFieldVar> fields = co.implClass.fields();
                 JFieldVar var = fields.get(fieldInfo.getName(false));
+                if (var == null) {
+                    continue;
+                }
 
                 // Handle primitive types via boxed representation (treat boolean as java.lang.Boolean)
                 JType type = f.getRawType();

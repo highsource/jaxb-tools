@@ -7,20 +7,20 @@ import jakarta.xml.bind.annotation.XmlValue;
 import jakarta.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-@XmlRootElement(namespace = "urn:jaxb.jvnet.org:plugin:inheritance", name = "implements")
-@XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
-public class ImplementsInterface {
+@XmlRootElement(namespace = "http://jaxb2-commons.dev.java.net/basic/inheritance", name = "extends")
+@XmlAccessorType(XmlAccessType.PROPERTY)
+public class LegacyExtendsClass {
 
-	private String interfaceName;
+	private String className;
 
 	@XmlValue
 	@XmlJavaTypeAdapter(value = CollapsedStringAdapter.class)
-	public String getInterfaceName() {
-		return interfaceName;
+	String getClassName() {
+		return className;
 	}
 
-	public void setInterfaceName(String interfaceName) {
-		this.interfaceName = interfaceName;
+	public void setClassName(String className) {
+		this.className = className;
 	}
 
 }

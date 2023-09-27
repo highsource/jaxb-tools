@@ -7,9 +7,9 @@ import jakarta.xml.bind.annotation.XmlValue;
 import jakarta.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-@XmlRootElement(namespace = "urn:jaxb.jvnet.org:plugin:inheritance", name = "implements")
+@XmlRootElement(namespace = "http://jaxb2-commons.dev.java.net/basic/inheritance", name = "implements")
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
-public class ImplementsInterface {
+public class LegacyImplementsInterface {
 
 	private String interfaceName;
 

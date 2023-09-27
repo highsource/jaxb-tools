@@ -48,8 +48,11 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 	@Override
 	public Collection<QName> getCustomizationElementNames() {
 		return Arrays.asList(Customizations.EXTENDS_ELEMENT_NAME,
-				Customizations.IMPLEMENTS_ELEMENT_NAME,
-				Customizations.OBJECT_FACTORY_ELEMENT_NAME);
+                Customizations.IMPLEMENTS_ELEMENT_NAME,
+                Customizations.OBJECT_FACTORY_ELEMENT_NAME,
+                LegacyCustomizations.LEGACY_EXTENDS_ELEMENT_NAME,
+		        LegacyCustomizations.LEGACY_IMPLEMENTS_ELEMENT_NAME,
+		        LegacyCustomizations.LEGACY_OBJECT_FACTORY_ELEMENT_NAME);
 	}
 
 	@Override
@@ -84,8 +87,12 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 			Map<String, JClass> knownClasses,
 			Map<JClass, CClassInfo> knownClassInfos) {
 
-		generateExtends(classOutline, knownClasses, knownClassInfos);
-		generateImplements(classOutline, knownClasses);
+	    generateExtends(classOutline, knownClasses, knownClassInfos);
+	    generateImplements(classOutline, knownClasses);
+
+        // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+		generateLegacyExtends(classOutline, knownClasses, knownClassInfos);
+		generateLegacyImplements(classOutline, knownClasses);
 		ignoreCustomzationsOnProperties(classOutline);
 	}
 
@@ -94,6 +101,10 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 		{
 			CustomizationUtils.findCustomization(propertyInfo, Customizations.EXTENDS_ELEMENT_NAME);
 			CustomizationUtils.findCustomization(propertyInfo, Customizations.IMPLEMENTS_ELEMENT_NAME);
+
+		    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+	        CustomizationUtils.findCustomization(propertyInfo, LegacyCustomizations.LEGACY_EXTENDS_ELEMENT_NAME);
+	        CustomizationUtils.findCustomization(propertyInfo, LegacyCustomizations.LEGACY_IMPLEMENTS_ELEMENT_NAME);
 		}
 	}
 
@@ -103,6 +114,9 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 		generateExtends(enumOutline, knownClasses);
 		generateImplements(enumOutline, knownClasses);
 
+		  // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+        generateLegacyExtends(enumOutline, knownClasses);
+        generateLegacyImplements(enumOutline, knownClasses);
 	}
 
 	private void processElementOutline(ElementOutline elementOutline,
@@ -111,57 +125,203 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 		generateExtends(elementOutline, knownClasses);
 		generateImplements(elementOutline, knownClasses);
 
+		  // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+        generateLegacyExtends(elementOutline, knownClasses);
+        generateLegacyImplements(elementOutline, knownClasses);
 	}
 
-	private void processPackageOutlines(Outline outline,
-			Map<String, JClass> knownClasses) {
-		List<CPluginCustomization> customizations = CustomizationUtils
-				.findCustomizations(outline,
-						Customizations.OBJECT_FACTORY_ELEMENT_NAME);
+	private void processPackageOutlines(Outline outline, Map<String, JClass> knownClasses) {
+		List<CPluginCustomization> customizations = CustomizationUtils.findCustomizations(outline, Arrays.asList(Customizations.OBJECT_FACTORY_ELEMENT_NAME, LegacyCustomizations.LEGACY_OBJECT_FACTORY_ELEMENT_NAME));
 
 		for (CPluginCustomization customization : customizations) {
-			final ObjectFactoryCustomization objectFactoryCustomization = (ObjectFactoryCustomization) CustomizationUtils
-					.unmarshall(Customizations.getContext(), customization);
+		    Object tmpObject = CustomizationUtils.unmarshall(Customizations.getContext(), customization);
 
-			final String packageName = objectFactoryCustomization
-					.getPackageName();
+		    // !! JT-401 FIXME: add new check for new ObjectFactoryCustomization
+		    if(tmpObject instanceof ObjectFactoryCustomization) {
+		        final ObjectFactoryCustomization objectFactoryCustomization = (ObjectFactoryCustomization)tmpObject; 
 
-			if (packageName != null) {
-				for (PackageOutline packageOutline : outline
-						.getAllPackageContexts()) {
-					final JDefinedClass theClass = packageOutline
-							.objectFactory();
-					if (packageName.equals(packageOutline._package().name())) {
-						ExtendsClass extendsClass = objectFactoryCustomization
-								.getExtendsClass();
-						if (extendsClass != null) {
-							generateExtends(theClass, extendsClass,
-									knownClasses);
-						}
-						List<ImplementsInterface> implementsInterfaces = objectFactoryCustomization
-								.getImplementsInterface();
-						if (implementsInterfaces != null) {
-							for (ImplementsInterface implementsInterface : implementsInterfaces) {
-								if (implementsInterface != null) {
-									generateImplements(theClass,
-											implementsInterface, knownClasses);
-								}
-							}
-						}
-					}
-				}
-			}
+                final String packageName = objectFactoryCustomization.getPackageName();
+
+                if (packageName != null) {
+                    for (PackageOutline packageOutline : outline.getAllPackageContexts()) {
+                        final JDefinedClass theClass = packageOutline.objectFactory();
+                        if (packageName.equals(packageOutline._package().name())) {
+                            ExtendsClass extendsClass = objectFactoryCustomization.getExtendsClass();
+                            if (extendsClass != null) {
+                                generateExtends(theClass, extendsClass, knownClasses);
+                            }
+                            List<ImplementsInterface> implementsInterfaces = objectFactoryCustomization.getImplementsInterface();
+                            if (implementsInterfaces != null) {
+                                for (ImplementsInterface implementsInterface : implementsInterfaces) {
+                                    if (implementsInterface != null) {
+                                        generateImplements(theClass, implementsInterface, knownClasses);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+		    } else if(tmpObject instanceof LegacyObjectFactoryCustomization) {
+		        // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+		        final LegacyObjectFactoryCustomization legacyObjectFactoryCustomization = (LegacyObjectFactoryCustomization)tmpObject; 
+
+	            final String packageName = legacyObjectFactoryCustomization.getPackageName();
+
+	            if (packageName != null) {
+	                for (PackageOutline packageOutline : outline.getAllPackageContexts()) {
+	                    final JDefinedClass theClass = packageOutline.objectFactory();
+	                    if (packageName.equals(packageOutline._package().name())) {
+	                        LegacyExtendsClass extendsClass = legacyObjectFactoryCustomization.getExtendsClass();
+	                        if (extendsClass != null) {
+	                            generateLegacyExtends(theClass, extendsClass, knownClasses);
+	                        }
+	                        List<LegacyImplementsInterface> implementsInterfaces = legacyObjectFactoryCustomization.getImplementsInterface();
+	                        if (implementsInterfaces != null) {
+	                            for (LegacyImplementsInterface implementsInterface : implementsInterfaces) {
+	                                if (implementsInterface != null) {
+	                                    generateLegacyImplements(theClass, implementsInterface, knownClasses);
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+		    }
 		}
 	}
 
-	private JClass generateExtends(ClassOutline classOutline,
+   private JClass generateExtends(ClassOutline classOutline,
+            Map<String, JClass> knownClasses,
+            Map<JClass, CClassInfo> knownClassInfos) {
+        final JDefinedClass theClass = classOutline.implClass;
+        final CPluginCustomization extendsClassCustomization = CustomizationUtils
+                .findCustomization(classOutline, Customizations.EXTENDS_ELEMENT_NAME);
+        JClass targetClass = generateExtends(theClass,
+                extendsClassCustomization, knownClasses);
+
+        final CClassInfo classInfo = classOutline.target;
+        if (targetClass != null && classInfo.getBaseClass() == null
+                && classInfo.getRefBaseClass() == null) {
+            final CClassInfo targetClassInfo = knownClassInfos.get(targetClass);
+            if (targetClassInfo == null && classInfo.getRefBaseClass() == null) {
+                final Model model = classInfo.model;
+                // BIEnum as BIClass is protected too much
+                final BIEnum decl = new BIEnum();
+                decl.ref = targetClass.fullName();
+                final CClassRef baseClass = new CClassRef(model,
+                        classInfo.getSchemaComponent(), decl,
+                        new CCustomizations());
+                classInfo.setBaseClass(baseClass);
+            } else if (targetClassInfo != null
+                    && classInfo.getBaseClass() == null) {
+                classInfo.setBaseClass(targetClassInfo);
+            }
+        }
+        return targetClass;
+    }
+
+    private JClass generateExtends(EnumOutline enumOutline, Map<String, JClass> knownClasses) {
+        final JDefinedClass theClass = enumOutline.clazz;
+        final CPluginCustomization extendsClassCustomization = CustomizationUtils
+                .findCustomization(enumOutline, Customizations.EXTENDS_ELEMENT_NAME);
+        return generateExtends(theClass, extendsClassCustomization, knownClasses);
+    }
+
+    private JClass generateExtends(ElementOutline elementOutline, Map<String, JClass> knownClasses) {
+        final JDefinedClass theClass = elementOutline.implClass;
+        final CPluginCustomization extendsClassCustomization = CustomizationUtils
+                .findCustomization(elementOutline, Customizations.EXTENDS_ELEMENT_NAME);
+        return generateExtends(theClass, extendsClassCustomization,
+                knownClasses);
+    }
+
+    private JClass generateExtends(final JDefinedClass theClass, final CPluginCustomization extendsClassCustomization, Map<String, JClass> knownClasses) throws AssertionError {
+        if (extendsClassCustomization != null) {
+
+            final ExtendsClass extendsClass = (ExtendsClass) CustomizationUtils
+                    .unmarshall(Customizations.getContext(), extendsClassCustomization);
+
+            return generateExtends(theClass, extendsClass, knownClasses);
+        } else {
+            return null;
+        }
+    }
+
+    private JClass generateExtends(final JDefinedClass theClass, final ExtendsClass extendsClass, Map<String, JClass> knownClasses) {
+        if (extendsClass.getClassName() != null) {
+            final String _class = extendsClass.getClassName();
+            final JClass targetClass = parseClass(_class, theClass.owner(), knownClasses);
+            theClass._extends(targetClass);
+            return targetClass;
+        } else {
+            return null;
+        }
+    }
+
+    private List<JClass> generateImplements(ClassOutline classOutline, Map<String, JClass> knownClasses) {
+        final JDefinedClass theClass = classOutline.implClass;
+        final List<CPluginCustomization> implementsInterfaceCustomizations = CustomizationUtils
+                .findCustomizations(classOutline, Customizations.IMPLEMENTS_ELEMENT_NAME);
+        return generateImplements(theClass, implementsInterfaceCustomizations, knownClasses);
+    }
+
+    private List<JClass> generateImplements(EnumOutline enumOutline, Map<String, JClass> knownClasses) {
+        final JDefinedClass theClass = enumOutline.clazz;
+        final List<CPluginCustomization> implementsInterfaceCustomizations = CustomizationUtils
+                .findCustomizations(enumOutline, Customizations.IMPLEMENTS_ELEMENT_NAME);
+        return generateImplements(theClass, implementsInterfaceCustomizations, knownClasses);
+    }
+
+    private List<JClass> generateImplements(ElementOutline elementOutline, Map<String, JClass> knownClasses) {
+        final JDefinedClass theClass = elementOutline.implClass;
+        final List<CPluginCustomization> implementsInterfaceCustomizations = CustomizationUtils
+                .findCustomizations(elementOutline, Customizations.IMPLEMENTS_ELEMENT_NAME);
+        return generateImplements(theClass, implementsInterfaceCustomizations, knownClasses);
+    }
+
+    private List<JClass> generateImplements(final JDefinedClass theClass,
+            final List<CPluginCustomization> implementsInterfaceCustomizations,
+            Map<String, JClass> knownClasses) throws AssertionError {
+        final List<JClass> implementedInterfaces = new ArrayList<JClass>(
+                implementsInterfaceCustomizations.size());
+        for (final CPluginCustomization implementsInterfaceCustomization : implementsInterfaceCustomizations) {
+            if (implementsInterfaceCustomization != null) {
+
+                final ImplementsInterface implementsInterface = (ImplementsInterface) org.jvnet.jaxb.util.CustomizationUtils
+                        .unmarshall(Customizations.getContext(), implementsInterfaceCustomization);
+
+                final JClass implementedInterface = generateImplements(
+                        theClass, implementsInterface, knownClasses);
+                if (implementedInterface != null) {
+                    implementedInterfaces.add(implementedInterface);
+                }
+            }
+        }
+        return implementedInterfaces;
+    }
+
+    private JClass generateImplements(final JDefinedClass theClass, final ImplementsInterface implementsInterface, Map<String, JClass> knownClasses) {
+
+        String _interface = implementsInterface.getInterfaceName();
+        if (_interface != null) {
+            final JClass targetClass = parseClass(_interface, theClass.owner(),
+                    knownClasses);
+            theClass._implements(targetClass);
+            return targetClass;
+        } else {
+            return null;
+        }
+    }
+
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace
+	private JClass generateLegacyExtends(ClassOutline classOutline,
 			Map<String, JClass> knownClasses,
 			Map<JClass, CClassInfo> knownClassInfos) {
 		final JDefinedClass theClass = classOutline.implClass;
 		final CPluginCustomization extendsClassCustomization = CustomizationUtils
 				.findCustomization(classOutline,
-						Customizations.EXTENDS_ELEMENT_NAME);
-		JClass targetClass = generateExtends(theClass,
+				        LegacyCustomizations.LEGACY_EXTENDS_ELEMENT_NAME);
+		JClass targetClass = generateLegacyExtends(theClass,
 				extendsClassCustomization, knownClasses);
 
 		final CClassInfo classInfo = classOutline.target;
@@ -185,43 +345,47 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 		return targetClass;
 	}
 
-	private JClass generateExtends(EnumOutline enumOutline,
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+	private JClass generateLegacyExtends(EnumOutline enumOutline,
 			Map<String, JClass> knownClasses) {
 		final JDefinedClass theClass = enumOutline.clazz;
 		final CPluginCustomization extendsClassCustomization = CustomizationUtils
 				.findCustomization(enumOutline,
-						Customizations.EXTENDS_ELEMENT_NAME);
-		return generateExtends(theClass, extendsClassCustomization,
+				        LegacyCustomizations.LEGACY_EXTENDS_ELEMENT_NAME);
+		return generateLegacyExtends(theClass, extendsClassCustomization,
 				knownClasses);
 	}
 
-	private JClass generateExtends(ElementOutline elementOutline,
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+	private JClass generateLegacyExtends(ElementOutline elementOutline,
 			Map<String, JClass> knownClasses) {
 		final JDefinedClass theClass = elementOutline.implClass;
 		final CPluginCustomization extendsClassCustomization = CustomizationUtils
 				.findCustomization(elementOutline,
-						Customizations.EXTENDS_ELEMENT_NAME);
-		return generateExtends(theClass, extendsClassCustomization,
+				        LegacyCustomizations.LEGACY_EXTENDS_ELEMENT_NAME);
+		return generateLegacyExtends(theClass, extendsClassCustomization,
 				knownClasses);
 	}
 
-	private JClass generateExtends(final JDefinedClass theClass,
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+	private JClass generateLegacyExtends(final JDefinedClass theClass,
 			final CPluginCustomization extendsClassCustomization,
 			Map<String, JClass> knownClasses) throws AssertionError {
 		if (extendsClassCustomization != null) {
 
-			final ExtendsClass extendsClass = (ExtendsClass) CustomizationUtils
-					.unmarshall(Customizations.getContext(),
+			final LegacyExtendsClass extendsClass = (LegacyExtendsClass) CustomizationUtils
+					.unmarshall(LegacyCustomizations.getContext(),
 							extendsClassCustomization);
 
-			return generateExtends(theClass, extendsClass, knownClasses);
+			return generateLegacyExtends(theClass, extendsClass, knownClasses);
 		} else {
 			return null;
 		}
 	}
 
-	private JClass generateExtends(final JDefinedClass theClass,
-			final ExtendsClass extendsClass, Map<String, JClass> knownClasses) {
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+	private JClass generateLegacyExtends(final JDefinedClass theClass,
+			final LegacyExtendsClass extendsClass, Map<String, JClass> knownClasses) {
 		if (extendsClass.getClassName() != null) {
 			final String _class = extendsClass.getClassName();
 			final JClass targetClass = parseClass(_class, theClass.owner(),
@@ -233,37 +397,40 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 		}
 	}
 
-	private List<JClass> generateImplements(ClassOutline classOutline,
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+	private List<JClass> generateLegacyImplements(ClassOutline classOutline,
 			Map<String, JClass> knownClasses) {
 		final JDefinedClass theClass = classOutline.implClass;
 		final List<CPluginCustomization> implementsInterfaceCustomizations = CustomizationUtils
 				.findCustomizations(classOutline,
-						Customizations.IMPLEMENTS_ELEMENT_NAME);
-		return generateImplements(theClass, implementsInterfaceCustomizations,
+				        LegacyCustomizations.LEGACY_IMPLEMENTS_ELEMENT_NAME);
+		return generateLegacyImplements(theClass, implementsInterfaceCustomizations,
 				knownClasses);
 	}
 
-	private List<JClass> generateImplements(EnumOutline enumOutline,
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+	private List<JClass> generateLegacyImplements(EnumOutline enumOutline,
 			Map<String, JClass> knownClasses) {
 		final JDefinedClass theClass = enumOutline.clazz;
 		final List<CPluginCustomization> implementsInterfaceCustomizations = CustomizationUtils
 				.findCustomizations(enumOutline,
-						Customizations.IMPLEMENTS_ELEMENT_NAME);
-		return generateImplements(theClass, implementsInterfaceCustomizations,
+				        LegacyCustomizations.LEGACY_IMPLEMENTS_ELEMENT_NAME);
+		return generateLegacyImplements(theClass, implementsInterfaceCustomizations,
 				knownClasses);
 	}
 
-	private List<JClass> generateImplements(ElementOutline elementOutline,
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+	private List<JClass> generateLegacyImplements(ElementOutline elementOutline,
 			Map<String, JClass> knownClasses) {
 		final JDefinedClass theClass = elementOutline.implClass;
 		final List<CPluginCustomization> implementsInterfaceCustomizations = CustomizationUtils
-				.findCustomizations(elementOutline,
-						Customizations.IMPLEMENTS_ELEMENT_NAME);
-		return generateImplements(theClass, implementsInterfaceCustomizations,
+				.findCustomizations(elementOutline, LegacyCustomizations.LEGACY_IMPLEMENTS_ELEMENT_NAME);
+		return generateLegacyImplements(theClass, implementsInterfaceCustomizations,
 				knownClasses);
 	}
 
-	private List<JClass> generateImplements(final JDefinedClass theClass,
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+	private List<JClass> generateLegacyImplements(final JDefinedClass theClass,
 			final List<CPluginCustomization> implementsInterfaceCustomizations,
 			Map<String, JClass> knownClasses) throws AssertionError {
 		final List<JClass> implementedInterfaces = new ArrayList<JClass>(
@@ -271,11 +438,11 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 		for (final CPluginCustomization implementsInterfaceCustomization : implementsInterfaceCustomizations) {
 			if (implementsInterfaceCustomization != null) {
 
-				final ImplementsInterface implementsInterface = (ImplementsInterface) org.jvnet.jaxb.util.CustomizationUtils
-						.unmarshall(Customizations.getContext(),
+				final LegacyImplementsInterface implementsInterface = (LegacyImplementsInterface) org.jvnet.jaxb.util.CustomizationUtils
+						.unmarshall(LegacyCustomizations.getContext(),
 								implementsInterfaceCustomization);
 
-				final JClass implementedInterface = generateImplements(
+				final JClass implementedInterface = generateLegacyImplements(
 						theClass, implementsInterface, knownClasses);
 				if (implementedInterface != null) {
 					implementedInterfaces.add(implementedInterface);
@@ -285,8 +452,9 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 		return implementedInterfaces;
 	}
 
-	private JClass generateImplements(final JDefinedClass theClass,
-			final ImplementsInterface implementsInterface,
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace 
+	private JClass generateLegacyImplements(final JDefinedClass theClass,
+			final LegacyImplementsInterface implementsInterface,
 			Map<String, JClass> knownClasses) {
 
 		String _interface = implementsInterface.getInterfaceName();

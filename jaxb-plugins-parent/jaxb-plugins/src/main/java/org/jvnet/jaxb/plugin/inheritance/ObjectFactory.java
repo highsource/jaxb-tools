@@ -5,16 +5,19 @@ import jakarta.xml.bind.annotation.XmlRegistry;
 @XmlRegistry
 public class ObjectFactory {
 
-	public ExtendsClass createExtendsClass() {
-		return new ExtendsClass();
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+	public LegacyExtendsClass createLegacyExtendsClass() {
+		return new LegacyExtendsClass();
 	}
 
-	public ImplementsInterface createImplementsInterface() {
-		return new ImplementsInterface();
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+	public LegacyImplementsInterface createLegacyImplementsInterface() {
+		return new LegacyImplementsInterface();
 	}
 
-	public ObjectFactoryCustomization createObjectFactoryCustomization() {
-		return new ObjectFactoryCustomization();
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+	public LegacyObjectFactoryCustomization createLegacyObjectFactoryCustomization() {
+		return new LegacyObjectFactoryCustomization();
 	}
 
 }

@@ -157,6 +157,11 @@ public class CustomizationUtils {
 		return findCustomizations(elementOutline.target, name);
 	}
 
+	// jaxb-tools #401 support looking for multiple elements to support legacy jaxb-ns conversion
+    public static List<CPluginCustomization> findCustomizations(ElementOutline elementOutline, List<QName> names) {
+        return findCustomizations(elementOutline.target, names);
+    }
+
 	public static List<CPluginCustomization> findCustomizations(CClassInfo classInfo, QName name) {
 		final CCustomizations customizations = CustomizationUtils.getCustomizations(classInfo);
 
@@ -306,9 +311,37 @@ public class CustomizationUtils {
 		return pluginCustomizations;
 	}
 
+    public static List<CPluginCustomization> findCustomizations(CElementInfo elementInfo, List<QName> names) {
+        final CCustomizations customizations = CustomizationUtils.getCustomizations(elementInfo);
+
+        final List<CPluginCustomization> pluginCustomizations = new LinkedList<CPluginCustomization>();
+
+        for (CPluginCustomization pluginCustomization : customizations) {
+            for(QName name : names) {
+                if (fixNull(pluginCustomization.element.getNamespaceURI()).equals(name.getNamespaceURI())
+                    && fixNull(pluginCustomization.element.getLocalName()).equals(name.getLocalPart())) {
+                    pluginCustomization.markAsAcknowledged();
+                    pluginCustomizations.add(pluginCustomization);
+                }
+            }
+        }
+
+        return pluginCustomizations;
+    }
+
 	public static List<CPluginCustomization> findCustomizations(Outline outline, QName name) {
 		return findCustomizations(outline.getModel(), name);
 	}
+
+   public static List<CPluginCustomization> findCustomizations(Outline outline, List<QName> qnames) {
+       List<CPluginCustomization> tmpCPluginCustomizations = new ArrayList<>();
+
+       for(QName qname : qnames) {
+           tmpCPluginCustomizations.addAll(findCustomizations(outline.getModel(), qname));
+       }
+
+       return tmpCPluginCustomizations;
+    }
 
 	public static List<CPluginCustomization> findCustomizations(Model model, QName name) {
 		final CCustomizations customizations = CustomizationUtils.getCustomizations(model);

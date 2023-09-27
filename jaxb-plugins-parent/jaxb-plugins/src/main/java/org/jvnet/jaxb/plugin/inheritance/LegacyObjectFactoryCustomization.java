@@ -10,10 +10,10 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
 
-@XmlRootElement(namespace = "urn:jaxb.jvnet.org:plugin:inheritance", name = "objectFactory")
+@XmlRootElement(namespace = "http://jaxb2-commons.dev.java.net/basic/inheritance", name = "objectFactory")
 @XmlType(propOrder = { "extendsClass", "implementsInterface" })
 @XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
-public class ObjectFactoryCustomization {
+public class LegacyObjectFactoryCustomization {
 
 	private String packageName;
 
@@ -26,25 +26,26 @@ public class ObjectFactoryCustomization {
 		this.packageName = packageName;
 	}
 
-	private ExtendsClass extendsClass;
+	private LegacyExtendsClass extendsClass;
 
-	@XmlElement(namespace = "urn:jaxb.jvnet.org:plugin:inheritance", name = "extends")
-	public ExtendsClass getExtendsClass() {
+	@XmlElement(namespace = "http://jaxb2-commons.dev.java.net/basic/inheritance", name = "extends")
+	public LegacyExtendsClass getExtendsClass() {
 		return extendsClass;
 	}
 
-	public void setExtendsClass(ExtendsClass extendsClass) {
+	public void setExtendsClass(LegacyExtendsClass extendsClass) {
 		this.extendsClass = extendsClass;
 	}
 
-	private List<ImplementsInterface> implementsInterface = new ArrayList<>();
+	private List<LegacyImplementsInterface> implementsInterface = new ArrayList<LegacyImplementsInterface>();
 
-	@XmlElement(namespace = "urn:jaxb.jvnet.org:plugin:inheritance", name = "implements")
-	public List<ImplementsInterface> getImplementsInterface() {
+	@XmlElement(namespace = "http://jaxb2-commons.dev.java.net/basic/inheritance", name = "implements")
+	public List<LegacyImplementsInterface> getImplementsInterface() {
 		return implementsInterface;
 	}
 
-	public void setImplementsInterface(List<ImplementsInterface> implementsInterface) {
+	public void setImplementsInterface(
+			List<LegacyImplementsInterface> implementsInterface) {
 		this.implementsInterface = implementsInterface;
 	}
 

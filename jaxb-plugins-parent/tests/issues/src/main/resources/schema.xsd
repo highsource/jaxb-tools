@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-	xmlns:basic="http://jaxb2-commons.dev.java.net/basic"
+	xmlns:jaxb-plugin="urn:jaxb.jvnet.org:plugin"
 	xmlns:copyable="urn:jaxb.jvnet.org:plugin:copyable"
 	xmlns:equals="urn:jaxb.jvnet.org:plugin:equals"
 	xmlns:hashCode="urn:jaxb.jvnet.org:plugin:hashCode"
@@ -10,7 +10,7 @@
 	xmlns:inheritance="urn:jaxb.jvnet.org:plugin:inheritance"
 	xmlns:wildcard="http://jaxb2-commons.dev.java.net/basic/wildcard"
 	jaxb:version="3.0"
-	jaxb:extensionBindingPrefixes="basic copyable equals hashCode mergeable toString inheritance wildcard">
+	jaxb:extensionBindingPrefixes="jaxb-plugin copyable equals hashCode mergeable toString inheritance wildcard">
 
 	<xs:annotation>
 		<xs:appinfo>
@@ -51,7 +51,7 @@
 			<xs:element name="ignored" type="xs:string">
 				<xs:annotation>
 					<xs:appinfo>
-						<basic:ignored />
+						<jaxb-plugin:ignored />
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:element>
@@ -145,7 +145,7 @@
 			<xs:any>
 				<xs:annotation>
 					<xs:appinfo>
-						<!--basic:ignored /-->
+						<!--jaxb-plugin:ignored /-->
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:any>
@@ -157,7 +157,7 @@
 			<xs:element name="any" type="xs:anyType">
 				<xs:annotation>
 					<xs:appinfo>
-						<basic:ignored />
+						<jaxb-plugin:ignored />
 					</xs:appinfo>
 				</xs:annotation>
 			</xs:element>

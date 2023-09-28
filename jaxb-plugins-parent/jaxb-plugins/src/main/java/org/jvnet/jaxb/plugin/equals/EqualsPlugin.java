@@ -11,7 +11,6 @@ import org.jvnet.jaxb.lang.JAXBEqualsStrategy;
 import org.jvnet.jaxb.locator.ObjectLocator;
 import org.jvnet.jaxb.locator.util.LocatorUtils;
 import org.jvnet.jaxb.plugin.AbstractParameterizablePlugin;
-import org.jvnet.jaxb.plugin.Customizations;
 import org.jvnet.jaxb.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb.plugin.Ignoring;
 import org.jvnet.jaxb.plugin.util.FieldOutlineUtils;
@@ -77,8 +76,10 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 	private Ignoring ignoring = new CustomizedIgnoring(
 	        org.jvnet.jaxb.plugin.equals.Customizations.IGNORED_ELEMENT_NAME,
 			org.jvnet.jaxb.plugin.equals.LegacyCustomizations.IGNORED_ELEMENT_NAME,
-			Customizations.IGNORED_ELEMENT_NAME,
-			Customizations.GENERATED_ELEMENT_NAME);
+			org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME,
+			org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+			org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME);
 
 	public Ignoring getIgnoring() {
 		return ignoring;
@@ -93,8 +94,10 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 		return Arrays
 				.asList(org.jvnet.jaxb.plugin.equals.Customizations.IGNORED_ELEMENT_NAME,
 				        org.jvnet.jaxb.plugin.equals.LegacyCustomizations.IGNORED_ELEMENT_NAME,
-						Customizations.IGNORED_ELEMENT_NAME,
-						Customizations.GENERATED_ELEMENT_NAME);
+				        org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
+			            org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME,
+				        org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+				        org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME);
 	}
 
 	@Override

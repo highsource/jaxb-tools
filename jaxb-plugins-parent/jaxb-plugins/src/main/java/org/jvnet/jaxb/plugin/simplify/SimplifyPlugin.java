@@ -9,7 +9,6 @@ import java.util.List;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb.plugin.AbstractParameterizablePlugin;
-import org.jvnet.jaxb.plugin.Customizations;
 import org.jvnet.jaxb.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb.plugin.Ignoring;
 import org.jvnet.jaxb.util.CustomizationUtils;
@@ -60,8 +59,10 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 
 	private Ignoring ignoring = new CustomizedIgnoring(
 			org.jvnet.jaxb.plugin.simplify.Customizations.IGNORED_ELEMENT_NAME,
-			Customizations.IGNORED_ELEMENT_NAME,
-			Customizations.GENERATED_ELEMENT_NAME);
+			org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME);
 
 	public Ignoring getIgnoring() {
 		return ignoring;
@@ -78,8 +79,10 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 						org.jvnet.jaxb.plugin.simplify.Customizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME,
 						org.jvnet.jaxb.plugin.simplify.Customizations.AS_REFERENCE_PROPERTY_ELEMENT_NAME,
 						org.jvnet.jaxb.plugin.simplify.Customizations.IGNORED_ELEMENT_NAME,
-						Customizations.IGNORED_ELEMENT_NAME,
-						Customizations.GENERATED_ELEMENT_NAME);
+						org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
+			            org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME,
+			            org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+			            org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME);
 	}
 
 	@Override

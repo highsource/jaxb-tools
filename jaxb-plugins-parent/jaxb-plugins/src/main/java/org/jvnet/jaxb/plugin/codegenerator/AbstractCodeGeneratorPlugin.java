@@ -6,7 +6,6 @@ import java.util.Collection;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb.plugin.AbstractParameterizablePlugin;
-import org.jvnet.jaxb.plugin.Customizations;
 import org.jvnet.jaxb.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb.plugin.Ignoring;
 import org.jvnet.jaxb.util.FieldAccessorFactory;
@@ -35,8 +34,10 @@ public abstract class AbstractCodeGeneratorPlugin<A extends Arguments<A>> extend
 
 	private Ignoring ignoring = new CustomizedIgnoring(
 			getSpecialIgnoredElementName(),
-			Customizations.IGNORED_ELEMENT_NAME,
-			Customizations.GENERATED_ELEMENT_NAME);
+			org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
+			org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME,
+			org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+			org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME);
 
 	protected abstract QName getSpecialIgnoredElementName();
 
@@ -51,8 +52,10 @@ public abstract class AbstractCodeGeneratorPlugin<A extends Arguments<A>> extend
 	@Override
 	public Collection<QName> getCustomizationElementNames() {
 		return Arrays.asList(getSpecialIgnoredElementName(),
-				Customizations.IGNORED_ELEMENT_NAME,
-				Customizations.GENERATED_ELEMENT_NAME);
+		        org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
+		        org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME,
+		        org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+		        org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME);
 	}
 
 	private CodeGenerator<A> codeGenerator;

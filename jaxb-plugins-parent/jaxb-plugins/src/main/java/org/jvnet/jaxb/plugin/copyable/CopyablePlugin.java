@@ -78,7 +78,8 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 	}
 
 	private Ignoring ignoring = new CustomizedIgnoring(
-			org.jvnet.jaxb.plugin.copyable.Customizations.IGNORED_ELEMENT_NAME,
+	        org.jvnet.jaxb.plugin.copyable.Customizations.IGNORED_ELEMENT_NAME,
+			org.jvnet.jaxb.plugin.copyable.LegacyCustomizations.IGNORED_ELEMENT_NAME,
 			Customizations.IGNORED_ELEMENT_NAME,
 			Customizations.GENERATED_ELEMENT_NAME);
 
@@ -94,6 +95,7 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 	public Collection<QName> getCustomizationElementNames() {
 		return Arrays
 				.asList(org.jvnet.jaxb.plugin.copyable.Customizations.IGNORED_ELEMENT_NAME,
+				        org.jvnet.jaxb.plugin.copyable.LegacyCustomizations.IGNORED_ELEMENT_NAME,
 						Customizations.IGNORED_ELEMENT_NAME,
 						Customizations.GENERATED_ELEMENT_NAME);
 	}

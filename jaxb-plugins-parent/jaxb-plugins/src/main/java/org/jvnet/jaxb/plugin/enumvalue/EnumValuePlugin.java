@@ -37,7 +37,9 @@ public class EnumValuePlugin extends AbstractParameterizablePlugin {
 	}
 
 	private Ignoring ignoring = new CustomizedIgnoring(
-			org.jvnet.jaxb.plugin.equals.Customizations.IGNORED_ELEMENT_NAME,
+	        org.jvnet.jaxb.plugin.enumvalue.Customizations.IGNORED_ELEMENT_NAME,
+	        org.jvnet.jaxb.plugin.enumvalue.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+			org.jvnet.jaxb.plugin.equals.LegacyCustomizations.IGNORED_ELEMENT_NAME, // FIXME: [#403] reference to equals.Customization in enumvalue should be removed
 			Customizations.IGNORED_ELEMENT_NAME,
 			Customizations.GENERATED_ELEMENT_NAME);
 
@@ -52,7 +54,9 @@ public class EnumValuePlugin extends AbstractParameterizablePlugin {
 	@Override
 	public Collection<QName> getCustomizationElementNames() {
 		return Arrays
-				.asList(org.jvnet.jaxb.plugin.equals.Customizations.IGNORED_ELEMENT_NAME,
+				.asList(org.jvnet.jaxb.plugin.enumvalue.Customizations.IGNORED_ELEMENT_NAME,
+				        org.jvnet.jaxb.plugin.enumvalue.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+				        org.jvnet.jaxb.plugin.equals.LegacyCustomizations.IGNORED_ELEMENT_NAME, // FIXME: [#403] reference to equals.Customization in enumvalue should be removed
 						Customizations.IGNORED_ELEMENT_NAME,
 						Customizations.GENERATED_ELEMENT_NAME);
 	}

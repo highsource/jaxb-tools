@@ -75,7 +75,8 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 	}
 
 	private Ignoring ignoring = new CustomizedIgnoring(
-			org.jvnet.jaxb.plugin.equals.Customizations.IGNORED_ELEMENT_NAME,
+	        org.jvnet.jaxb.plugin.equals.Customizations.IGNORED_ELEMENT_NAME,
+			org.jvnet.jaxb.plugin.equals.LegacyCustomizations.IGNORED_ELEMENT_NAME,
 			Customizations.IGNORED_ELEMENT_NAME,
 			Customizations.GENERATED_ELEMENT_NAME);
 
@@ -91,6 +92,7 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 	public Collection<QName> getCustomizationElementNames() {
 		return Arrays
 				.asList(org.jvnet.jaxb.plugin.equals.Customizations.IGNORED_ELEMENT_NAME,
+				        org.jvnet.jaxb.plugin.equals.LegacyCustomizations.IGNORED_ELEMENT_NAME,
 						Customizations.IGNORED_ELEMENT_NAME,
 						Customizations.GENERATED_ELEMENT_NAME);
 	}

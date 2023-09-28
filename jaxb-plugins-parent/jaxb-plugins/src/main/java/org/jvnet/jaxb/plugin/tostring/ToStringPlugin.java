@@ -73,7 +73,8 @@ public class ToStringPlugin extends AbstractParameterizablePlugin {
 	}
 
 	private Ignoring ignoring = new CustomizedIgnoring(
-			org.jvnet.jaxb.plugin.tostring.Customizations.IGNORED_ELEMENT_NAME,
+	        org.jvnet.jaxb.plugin.tostring.Customizations.IGNORED_ELEMENT_NAME,
+			org.jvnet.jaxb.plugin.tostring.LegacyCustomizations.IGNORED_ELEMENT_NAME,
 			Customizations.IGNORED_ELEMENT_NAME,
 			Customizations.GENERATED_ELEMENT_NAME);
 
@@ -89,6 +90,7 @@ public class ToStringPlugin extends AbstractParameterizablePlugin {
 	public Collection<QName> getCustomizationElementNames() {
 		return Arrays
 				.asList(org.jvnet.jaxb.plugin.tostring.Customizations.IGNORED_ELEMENT_NAME,
+				        org.jvnet.jaxb.plugin.tostring.LegacyCustomizations.IGNORED_ELEMENT_NAME,
 						Customizations.IGNORED_ELEMENT_NAME,
 						Customizations.GENERATED_ELEMENT_NAME);
 	}

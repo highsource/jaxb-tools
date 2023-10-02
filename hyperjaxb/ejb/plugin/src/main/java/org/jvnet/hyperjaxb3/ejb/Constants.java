@@ -5,7 +5,7 @@ import org.xml.sax.helpers.LocatorImpl;
 
 public class Constants {
 
-	public static final String NAMESPACE = "http://hyperjaxb3.jvnet.org";
+    public static final String NAMESPACE = "urn:hyperjaxb3.jvnet.org";
 
 	public static final Locator EMPTY_LOCATOR;
 

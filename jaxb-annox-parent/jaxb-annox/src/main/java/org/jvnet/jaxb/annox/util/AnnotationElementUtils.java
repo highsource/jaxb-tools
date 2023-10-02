@@ -3,6 +3,8 @@ package org.jvnet.jaxb.annox.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jvnet.jaxb.annox.Constants;
@@ -11,6 +13,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class AnnotationElementUtils {
+
+    private static final Logger LOGGER = Logger.getLogger(AnnotationElementUtils.class.getName());
 
 	private AnnotationElementUtils() {
 	}
@@ -45,6 +49,7 @@ public class AnnotationElementUtils {
 							Constants.NAMESPACE_URI, "field"))) {
 				return true;
 			} else if (name.equals(element.getAttributeNS(Constants.LEGACY_NAMESPACE_URI, "field"))) {
+                LOGGER.log(Level.WARNING, "Please migrate your namespace in xsd / xjb from " + Constants.LEGACY_NAMESPACE_URI + " to " + Constants.NAMESPACE_URI);
                 return true;
             }
 		}

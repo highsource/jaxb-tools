@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -39,6 +41,7 @@ public class XAnnotationParser {
 	public static final XAnnotationParser INSTANCE = new XAnnotationParser();
 
 	private final ClassLoader classLoader;
+    private final Logger logger = Logger.getLogger(getClass().getName());
 
 	/**
 	 * Default constructor.
@@ -103,6 +106,7 @@ public class XAnnotationParser {
 		if (!StringUtils.isEmpty(classAttribute)) {
 			className = classAttribute;
 		} else if (!StringUtils.isEmpty(legacyClassAttribute)) {
+            logger.log(Level.WARNING, "Please migrate your namespace in xsd / xjb from " + Constants.LEGACY_NAMESPACE_URI + " to " + Constants.NAMESPACE_URI);
             className = legacyClassAttribute;
         } else {
 			final String namespaceURI = annotationElement.getNamespaceURI();
@@ -114,6 +118,7 @@ public class XAnnotationParser {
 				className = containerPrefix + "." + name.replace('.', '$');
 			} else if (namespaceURI != null
                 && namespaceURI.startsWith(Constants.LEGACY_NAMESPACE_URI_PREFIX)) {
+                logger.log(Level.WARNING, "Please migrate your namespace in xsd / xjb from " + Constants.LEGACY_NAMESPACE_URI_PREFIX + " to " + Constants.NAMESPACE_URI_PREFIX);
                 final String containerPrefix = namespaceURI
                     .substring(Constants.LEGACY_NAMESPACE_URI_PREFIX.length());
                 className = containerPrefix + "." + name.replace('.', '$');

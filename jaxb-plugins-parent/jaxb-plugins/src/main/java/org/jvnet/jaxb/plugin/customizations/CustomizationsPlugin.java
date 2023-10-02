@@ -167,7 +167,16 @@ public class CustomizationsPlugin extends AbstractParameterizablePlugin {
 							customizations.add(new CPluginCustomization(childElement, null));
 						}
 					}
-				} else {
+				} else if (LegacyCustomizations.CUSTOMIZATIONS_ELEMENT_NAME.equals(documentElementName)) {
+                    final NodeList childNodes = documentElement.getChildNodes();
+                    for (int index = 0; index < childNodes.getLength(); index++) {
+                        final Node childNode = childNodes.item(index);
+                        if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+                            final Element childElement = (Element) childNode;
+                            customizations.add(new CPluginCustomization(childElement, null));
+                        }
+                    }
+                }  {
 					customizations.add(new CPluginCustomization(documentElement, null));
 				}
 

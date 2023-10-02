@@ -148,21 +148,23 @@ public class SettersPlugin extends AbstractParameterizablePlugin {
 		}
 	}
 
-	private Ignoring ignoring = new CustomizedIgnoring(
-			org.jvnet.jaxb.plugin.setters.Customizations.IGNORED_ELEMENT_NAME);
+    private Ignoring ignoring = new CustomizedIgnoring(
+        org.jvnet.jaxb.plugin.setters.Customizations.IGNORED_ELEMENT_NAME,
+        org.jvnet.jaxb.plugin.setters.LegacyCustomizations.IGNORED_ELEMENT_NAME);
 
-	public Ignoring getIgnoring() {
-		return ignoring;
-	}
+    public Ignoring getIgnoring() {
+        return ignoring;
+    }
 
-	public void setIgnoring(Ignoring ignoring) {
-		this.ignoring = ignoring;
-	}
+    public void setIgnoring(Ignoring ignoring) {
+        this.ignoring = ignoring;
+    }
 
-	@Override
-	public Collection<QName> getCustomizationElementNames() {
-		return Arrays
-				.asList(org.jvnet.jaxb.plugin.setters.Customizations.IGNORED_ELEMENT_NAME);
-	}
+    @Override
+    public Collection<QName> getCustomizationElementNames() {
+        return Arrays.asList(
+            org.jvnet.jaxb.plugin.setters.Customizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.setters.LegacyCustomizations.IGNORED_ELEMENT_NAME);
+    }
 
 }

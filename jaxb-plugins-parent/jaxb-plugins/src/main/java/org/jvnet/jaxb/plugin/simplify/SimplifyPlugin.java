@@ -58,11 +58,12 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 	}
 
 	private Ignoring ignoring = new CustomizedIgnoring(
-			org.jvnet.jaxb.plugin.simplify.Customizations.IGNORED_ELEMENT_NAME,
-			org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
-            org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME,
-            org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
-            org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME);
+        org.jvnet.jaxb.plugin.simplify.Customizations.IGNORED_ELEMENT_NAME,
+        org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+        org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
+        org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME,
+        org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+        org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME);
 
 	public Ignoring getIgnoring() {
 		return ignoring;
@@ -72,17 +73,21 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 		this.ignoring = ignoring;
 	}
 
-	@Override
-	public Collection<QName> getCustomizationElementNames() {
-		return Arrays
-				.asList(org.jvnet.jaxb.plugin.simplify.Customizations.PROPERTY_ELEMENT_NAME,
-						org.jvnet.jaxb.plugin.simplify.Customizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME,
-						org.jvnet.jaxb.plugin.simplify.Customizations.AS_REFERENCE_PROPERTY_ELEMENT_NAME,
-						org.jvnet.jaxb.plugin.simplify.Customizations.IGNORED_ELEMENT_NAME,
-						org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
-			            org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME,
-			            org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
-			            org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME);
+    @Override
+    public Collection<QName> getCustomizationElementNames() {
+        return Arrays.asList(
+            org.jvnet.jaxb.plugin.simplify.Customizations.PROPERTY_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.simplify.Customizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.simplify.Customizations.AS_REFERENCE_PROPERTY_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.simplify.Customizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.PROPERTY_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.AS_REFERENCE_PROPERTY_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME);
 	}
 
 	@Override
@@ -127,32 +132,41 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 
 	private void postProcessElementPropertyInfo(final Model model,
 			final CClassInfo classInfo, CElementPropertyInfo property) {
-		if (CustomizationUtils
-				.containsPropertyCustomizationInPropertyOrClass(
+        if (CustomizationUtils.containsPropertyCustomizationInPropertyOrClass(
+            property,
+            org.jvnet.jaxb.plugin.simplify.Customizations.PROPERTY_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.simplify.Customizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME)) {
+            simplifyElementPropertyInfoAsElementPropertyInfo(model, classInfo, property);
+        } else if (CustomizationUtils.containsPropertyCustomizationInPropertyOrClass(
 						property,
-						org.jvnet.jaxb.plugin.simplify.Customizations.PROPERTY_ELEMENT_NAME,
-						org.jvnet.jaxb.plugin.simplify.Customizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME)) {
-			simplifyElementPropertyInfoAsElementPropertyInfo(model, classInfo,
-					property);
+						org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.PROPERTY_ELEMENT_NAME,
+						org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME)) {
+			simplifyElementPropertyInfoAsElementPropertyInfo(model, classInfo, property);
 		}
 	}
 
 	private void postProcessReferencePropertyInfo(final Model model,
 			final CClassInfo classInfo, CReferencePropertyInfo property) {
-		if (CustomizationUtils
-				.containsPropertyCustomizationInPropertyOrClass(
+        if (CustomizationUtils.containsPropertyCustomizationInPropertyOrClass(
+            property,
+            org.jvnet.jaxb.plugin.simplify.Customizations.PROPERTY_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.simplify.Customizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME)) {
+            simplifyReferencePropertyInfoAsElementPropertyInfo(model, classInfo, property);
+        } else if (CustomizationUtils.containsPropertyCustomizationInPropertyOrClass(
 						property,
-						org.jvnet.jaxb.plugin.simplify.Customizations.PROPERTY_ELEMENT_NAME,
-						org.jvnet.jaxb.plugin.simplify.Customizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME)) {
-			simplifyReferencePropertyInfoAsElementPropertyInfo(model,
-					classInfo, property);
-		} else if (CustomizationUtils
-				.containsPropertyCustomizationInPropertyOrClass(
+						org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.PROPERTY_ELEMENT_NAME,
+						org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME)) {
+			simplifyReferencePropertyInfoAsElementPropertyInfo(model, classInfo, property);
+		} else if (CustomizationUtils.containsPropertyCustomizationInPropertyOrClass(
+            property,
+            org.jvnet.jaxb.plugin.simplify.Customizations.PROPERTY_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.simplify.Customizations.AS_REFERENCE_PROPERTY_ELEMENT_NAME)) {
+            simplifyReferencePropertyInfoAsReferencePropertyInfo(model, classInfo, property);
+        } else if (CustomizationUtils.containsPropertyCustomizationInPropertyOrClass(
 						property,
-						org.jvnet.jaxb.plugin.simplify.Customizations.PROPERTY_ELEMENT_NAME,
-						org.jvnet.jaxb.plugin.simplify.Customizations.AS_REFERENCE_PROPERTY_ELEMENT_NAME)) {
-			simplifyReferencePropertyInfoAsReferencePropertyInfo(model,
-					classInfo, property);
+						org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.PROPERTY_ELEMENT_NAME,
+						org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.AS_REFERENCE_PROPERTY_ELEMENT_NAME)) {
+			simplifyReferencePropertyInfoAsReferencePropertyInfo(model, classInfo, property);
 		}
 	}
 

@@ -43,7 +43,7 @@ import org.xml.sax.ErrorHandler;
  *  &lt;jaxb:bindings version=&quot;3.0&quot;
  *      xmlns:jaxb=&quot;https://jakarta.ee/xml/ns/jaxb&quot;
  *      xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
- *      xmlns:namespace=&quot;http://jaxb2-commons.dev.java.net/basic/namespace-prefix&quot;&gt;
+ *      xmlns:namespace=&quot;urn:jaxb.jvnet.org:plugin:namespace-prefix&quot;&gt;
  *
  *      &lt;jaxb:bindings schemaLocation=&quot;unireg-common-1.xsd&quot;&gt;
  *          &lt;jaxb:schemaBindings&gt;
@@ -62,8 +62,6 @@ import org.xml.sax.ErrorHandler;
 @SuppressWarnings("UnusedDeclaration")
 public class NamespacePrefixPlugin extends Plugin {
 
-    private static final String NAMESPACE_URI = "http://jaxb2-commons.dev.java.net/basic/namespace-prefix";
-
     @Override
     public String getOptionName() {
         return "Xnamespace-prefix";
@@ -76,12 +74,13 @@ public class NamespacePrefixPlugin extends Plugin {
 
     @Override
     public List<String> getCustomizationURIs() {
-        return Arrays.asList(NAMESPACE_URI);
+        return Arrays.asList(Customizations.NAMESPACE_URI, LegacyCustomizations.NAMESPACE_URI);
     }
 
     @Override
     public boolean isCustomizationTagName(String nsUri, String localName) {
-        return NAMESPACE_URI.equals(nsUri) && "prefix".equals(localName);
+        return (Customizations.NAMESPACE_URI.equals(nsUri) && Customizations.PREFIX_NAME.equals(localName)) ||
+            (LegacyCustomizations.NAMESPACE_URI.equals(nsUri) && LegacyCustomizations.PREFIX_NAME.equals(localName));
     }
 
     @Override
@@ -135,8 +134,13 @@ public class NamespacePrefixPlugin extends Plugin {
         final CCustomizations customizations = packageModel.getCustomizations();
         if (customizations != null) {
             for (CPluginCustomization customization : customizations) {
-                if (customization.element.getNamespaceURI().equals(NAMESPACE_URI)) {
-                    if (!customization.element.getLocalName().equals("prefix")) {
+                if (customization.element.getNamespaceURI().equals(Customizations.NAMESPACE_URI)) {
+                    if (!customization.element.getLocalName().equals(Customizations.PREFIX_NAME)) {
+                        throw new RuntimeException("Unrecognized element [" + customization.element.getLocalName() + "]");
+                    }
+                    customization.markAsAcknowledged();
+                } else if (customization.element.getNamespaceURI().equals(LegacyCustomizations.NAMESPACE_URI)) {
+                    if (!customization.element.getLocalName().equals(LegacyCustomizations.PREFIX_NAME)) {
                         throw new RuntimeException("Unrecognized element [" + customization.element.getLocalName() + "]");
                     }
                     customization.markAsAcknowledged();
@@ -182,8 +186,15 @@ public class NamespacePrefixPlugin extends Plugin {
             for (BIDeclaration declaration : b.getDecls()) {
                 if (declaration instanceof BIXPluginCustomization) {
                     final BIXPluginCustomization customization = (BIXPluginCustomization) declaration;
-                    if (customization.element.getNamespaceURI().equals(NAMESPACE_URI)) {
-                        if (!customization.element.getLocalName().equals("prefix")) {
+                    if (customization.element.getNamespaceURI().equals(Customizations.NAMESPACE_URI)) {
+                        if (!customization.element.getLocalName().equals(Customizations.PREFIX_NAME)) {
+                            throw new RuntimeException("Unrecognized element [" + customization.element.getLocalName() + "]");
+                        }
+                        prefix = customization.element.getAttribute("name");
+                        customization.markAsAcknowledged();
+                        break;
+                    } else if (customization.element.getNamespaceURI().equals(LegacyCustomizations.NAMESPACE_URI)) {
+                        if (!customization.element.getLocalName().equals(LegacyCustomizations.PREFIX_NAME)) {
                             throw new RuntimeException("Unrecognized element [" + customization.element.getLocalName() + "]");
                         }
                         prefix = customization.element.getAttribute("name");

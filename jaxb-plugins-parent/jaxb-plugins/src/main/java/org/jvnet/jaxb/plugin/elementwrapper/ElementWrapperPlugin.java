@@ -75,8 +75,9 @@ public class ElementWrapperPlugin extends AbstractModelPlugin {
 
 	}
 
-	private Ignoring ignoring = new CustomizedIgnoring(
-			org.jvnet.jaxb.plugin.elementwrapper.Customizations.IGNORED_ELEMENT_NAME);
+    private Ignoring ignoring = new CustomizedIgnoring(
+        org.jvnet.jaxb.plugin.elementwrapper.Customizations.IGNORED_ELEMENT_NAME,
+        org.jvnet.jaxb.plugin.elementwrapper.LegacyCustomizations.IGNORED_ELEMENT_NAME);
 
 	public Ignoring getIgnoring() {
 		return ignoring;
@@ -88,8 +89,9 @@ public class ElementWrapperPlugin extends AbstractModelPlugin {
 
 	@Override
 	public Collection<QName> getCustomizationElementNames() {
-		return Arrays
-				.asList(org.jvnet.jaxb.plugin.elementwrapper.Customizations.IGNORED_ELEMENT_NAME);
+		return Arrays.asList(
+            org.jvnet.jaxb.plugin.elementwrapper.Customizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.elementwrapper.LegacyCustomizations.IGNORED_ELEMENT_NAME);
 	}
 
 	protected void processWrapperElementPropertyInfo(

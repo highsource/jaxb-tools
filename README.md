@@ -13,6 +13,9 @@ The project is currently containing the following tools :
 * [JAXB Annotate Plugin](#jaxb-annotate-plugin)
 * [JAXB Hyperjaxb3](#jaxb-hyperjaxb) (Preview)
 
+Please check our [Migration Guide](https://github.com/highsource/jaxb-tools/wiki/JAXB-Tools-Migration-Guide) for any questions about migrating
+from previous releases to newers one.
+
 ## Java versions
 
 This project supports Java 8 and higher.
@@ -62,7 +65,7 @@ It wraps and enhances the [JAXB Schema Compiler (XJC)](https://docs.oracle.com/j
       <plugin>
         <groupId>org.jvnet.jaxb</groupId>
         <artifactId>jaxb-maven-plugin</artifactId>
-        <version>2.0.5</version>
+        <version>3.0.0</version>
         <executions>
           <execution>
             <goals>
@@ -79,12 +82,11 @@ It wraps and enhances the [JAXB Schema Compiler (XJC)](https://docs.oracle.com/j
 
 ### JAXB Versions
 
-The current version 2.X of this plugin supports only JAXB 2.3.
-
-A version of this plugin that supports JAXB >= 3.x is [currently being worked on](https://github.com/highsource/jaxb-tools/issues/233).
+The current version 3.X of this plugin supports only JAXB 3.X (Jakarta based).
 
 If you need an older JAXB version, you can use one of the following variants, which are no longer supported:
 
+* [`org.jvnet.jaxb:jaxb-maven-plugin:2.0.9`](https://github.com/highsource/jaxb-tools/tree/jaxb-tools-2.x) - JAXB 2.3.
 * `org.jvnet.jaxb2.maven2:maven-jaxb22-plugin:0.15.1` - JAXB 2.2.
 * `org.jvnet.jaxb2.maven2:maven-jaxb21-plugin:0.15.2` - JAXB 2.1.
 * `org.jvnet.jaxb2.maven2:maven-jaxb20-plugin:0.15.2` - JAXB 2.0.
@@ -94,9 +96,9 @@ If you need an older JAXB version, you can use one of the following variants, wh
 If you experience issues with the Mojohaus JAXB2 Maven Plugin (`org.codehaus.mojo:jaxb2-maven-plugin`),
 please file it [on their project page](https://github.com/mojohaus/jaxb2-maven-plugin).
 
-# JAXB Basics
+# JAXB Plugins
 
-JAXB Basics is an [open source](https://github.com/highsource/jaxb-tools/blob/master/LICENSE) project
+JAXB Plugins (former JAXB Basics) is an [open source](https://github.com/highsource/jaxb-tools/blob/master/LICENSE) project
 which provides useful plugins and tools for [JAXB 3.x reference implementation](https://github.com/eclipse-ee4j/jaxb-ri/tree/3.0.2-RI).
 
 ## Documentation
@@ -133,7 +135,7 @@ JAXB Basics can only be used with JAXB/XJC 3.x.
 
 ## Credits
 
-* Many thanks to **James Annesley** for his ideas and help with the [SimpleEquals Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-SimpleEquals-Plugin) and the [SimpleHashCode Plugin](https://github.com/highsource/jaxb2-tools/wiki/JAXB2-SimpleHashCode-Plugin).
+* Many thanks to **James Annesley** for his ideas and help with the [SimpleEquals Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-SimpleEquals-Plugin) and the [SimpleHashCode Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-SimpleHashCode-Plugin).
 
 # Annox
 
@@ -190,7 +192,7 @@ You can put your annotations directly in schema:
         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
         xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
         jaxb:version="3.0"
-        xmlns:annox="http://annox.dev.java.net"
+        xmlns:annox="urn:jaxb.jvnet.org:annox"
         jaxb:extensionBindingPrefixes="annox">
 
 
@@ -242,10 +244,10 @@ Or in binding files:
         xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema"
         xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:annox="http://annox.dev.java.net"
-        xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+        xmlns:annox="urn:jaxb.jvnet.org:annox"
+        xsi:schemaLocation="https://jakarta.ee/xml/ns/jaxb https://jakarta.ee/xml/ns/jaxb/bindingschema_3_0.xsd"
         jaxb:extensionBindingPrefixes="xjc annox"
-        version="2.1">
+        version="3.0">
 
     <jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
         <jaxb:bindings node="xs:complexType[@name='issueJIIB39CType']">
@@ -259,7 +261,7 @@ Or in binding files:
 </jaxb:bindings>
 ````
 
-You can use the following customization elements in the `http://annox.dev.java.net` namespace:
+You can use the following customization elements in the `urn:jaxb.jvnet.org:annox` namespace:
 * `annotate` with the optional `target` attribute
  * `package`
  * `class`
@@ -278,15 +280,15 @@ You can use the following customization elements in the `http://annox.dev.java.n
 * `annotateEnumValueMethod` - annotate the `value()` method of the enum
 * `annotateEnumFromValueMethod` - annotate the `fromValue(String)` method of the enum
 
-The `http://annox.dev.java.net` namespace must be declared in the `jaxb:extensionBindingPrefixes` attribute via prefix, ex.:
+The `urn:jaxb.jvnet.org:annox` namespace must be declared in the `jaxb:extensionBindingPrefixes` attribute via prefix, ex.:
 
 ````
-xmlns:annox="http://annox.dev.java.net"
+xmlns:annox="urn:jaxb.jvnet.org:annox"
 jaxb:extensionBindingPrefixes="xjc annox"
 ````
 
-Note: yes, I know that `http://annox.dev.java.net` no longer exists. Changing this namespace would break old builds.
-This is just a namespace, there must not necessarily be content there. Treat it as a logical identifier, nothing else.
+Note: the previous `http://annox.dev.java.net` namespace is still supported but no longer exists. We decided to change this namespace
+but keep older one too to avoid breaking older builds. Please migrate to new namespace of the plugin `urn:jaxb.jvnet.org:annox`.
 
 ## Removing annotations
 
@@ -301,7 +303,7 @@ You can remove annotations using customizations directly in schema:
         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
         xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
         jaxb:version="3.0"
-        xmlns:annox="http://annox.dev.java.net"
+        xmlns:annox="urn:jaxb.jvnet.org:annox"
         jaxb:extensionBindingPrefixes="annox">
 
     <xsd:complexType name="FooType">
@@ -333,10 +335,10 @@ Or in binding files:
         xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema"
         xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:annox="http://annox.dev.java.net"
-        xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+        xmlns:annox="urn:jaxb.jvnet.org:annox"
+        xsi:schemaLocation="https://jakarta.ee/xml/ns/jaxb https://jakarta.ee/xml/ns/jaxb/bindingschema_3_0.xsd"
         jaxb:extensionBindingPrefixes="xjc annox"
-        version="2.1">
+        version="3.0">
 
     <jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
         <jaxb:bindings node="xs:complexType[@name='FooType']">
@@ -350,7 +352,7 @@ Or in binding files:
 </jaxb:bindings>
 ````
 
-You can use the following customization elements in the `http://annox.dev.java.net` namespace:
+You can use the following customization elements in the `urn:jaxb.jvnet.org:annox` namespace:
 * `removeAnnotation` with the optional `target` attribute:
  * `package`
  * `class`
@@ -369,15 +371,15 @@ You can use the following customization elements in the `http://annox.dev.java.n
 * `removeAnnotationFromEnumValueMethod` - removes annotation from the `value()` method of the enum
 * `removeAnnotationFromEnumFromValueMethod` - removes annotation from the `fromValue(String)` method of the enum
 
-The `http://annox.dev.java.net` namespace must be declared in the `jaxb:extensionBindingPrefixes` attribute via prefix, ex.:
+The `urn:jaxb.jvnet.org:annox` namespace must be declared in the `jaxb:extensionBindingPrefixes` attribute via prefix, ex.:
 
 ````
-xmlns:annox="http://annox.dev.java.net"
+xmlns:annox="urn:jaxb.jvnet.org:annox"
 jaxb:extensionBindingPrefixes="xjc annox"
 ````
 
-Note: yes, I know that `http://annox.dev.java.net` no longer exists. Changing this namespace would break old builds.
-This is just a namespace, there must not necessarily be content there. Treat it as a logical identifier, nothing else.
+Note: the previous `http://annox.dev.java.net` namespace is still supported but no longer exists. We decided to change this namespace
+but keep older one too to avoid breaking older builds. Please migrate to new namespace of the plugin `urn:jaxb.jvnet.org:annox`.
 
 
 ## Using JAXB Annotate Plugin with Maven

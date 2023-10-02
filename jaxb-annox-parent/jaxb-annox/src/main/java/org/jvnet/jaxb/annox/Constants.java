@@ -8,6 +8,6 @@ public class Constants {
 
 	public static final String NAMESPACE_URI_PREFIX = NAMESPACE_URI + ":";
 
-    public static final String LEGACY_NAMESPACE_URI_PREFIX = LEGACY_NAMESPACE_URI + ":";
+    public static final String LEGACY_NAMESPACE_URI_PREFIX = LEGACY_NAMESPACE_URI + "/";
 
 }

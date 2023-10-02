@@ -44,7 +44,9 @@ public class AnnotationElementUtils {
 					|| name.equals(element.getAttributeNS(
 							Constants.NAMESPACE_URI, "field"))) {
 				return true;
-			}
+			} else if (name.equals(element.getAttributeNS(Constants.LEGACY_NAMESPACE_URI, "field"))) {
+                return true;
+            }
 		}
 		return false;
 	}

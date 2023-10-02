@@ -96,11 +96,15 @@ public class XAnnotationParser {
 
 		final String classAttribute = annotationElement.getAttributeNS(
 				Constants.NAMESPACE_URI, "class");
+        final String legacyClassAttribute = annotationElement.getAttributeNS(
+            Constants.LEGACY_NAMESPACE_URI, "class");
 
 		final String className;
 		if (!StringUtils.isEmpty(classAttribute)) {
 			className = classAttribute;
-		} else {
+		} else if (!StringUtils.isEmpty(legacyClassAttribute)) {
+            className = legacyClassAttribute;
+        } else {
 			final String namespaceURI = annotationElement.getNamespaceURI();
 
 			if (namespaceURI != null
@@ -108,7 +112,12 @@ public class XAnnotationParser {
 				final String containerPrefix = namespaceURI
 						.substring(Constants.NAMESPACE_URI_PREFIX.length());
 				className = containerPrefix + "." + name.replace('.', '$');
-			} else {
+			} else if (namespaceURI != null
+                && namespaceURI.startsWith(Constants.LEGACY_NAMESPACE_URI_PREFIX)) {
+                final String containerPrefix = namespaceURI
+                    .substring(Constants.LEGACY_NAMESPACE_URI_PREFIX.length());
+                className = containerPrefix + "." + name.replace('.', '$');
+            } else {
 				className = name;
 			}
 		}

@@ -93,22 +93,61 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 	public static final QName ANNOTATE_QNAME = new QName(
 			Constants.NAMESPACE_URI, "annotate");
 
-	public static final Set<QName> CUSTOMIZATION_ELEMENT_QNAMES = Collections.unmodifiableSet(
-			new HashSet<QName>(Arrays.asList(
-					ANNOTATE_QNAME,
-					ANNOTATE_PACKAGE_QNAME,
-					ANNOTATE_CLASS_QNAME,
-					ANNOTATE_ELEMENT_QNAME,
-					ANNOTATE_PROPERTY_QNAME,
-					ANNOTATE_PROPERTY_FIELD_QNAME,
-					ANNOTATE_PROPERTY_GETTER_QNAME,
-					ANNOTATE_PROPERTY_SETTER_QNAME,
-					ANNOTATE_PROPERTY_SETTER_PARAMETER_QNAME,
-					ANNOTATE_ENUM_QNAME,
-					ANNOTATE_ENUM_CONSTANT_QNAME,
-					ANNOTATE_ENUM_VALUE_METHOD_QNAME,
-					ANNOTATE_ENUM_FROM_VALUE_METHOD_QNAME)));
+    public static final QName LEGACY_ANNOTATE_PROPERTY_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "annotateProperty");
+    public static final QName LEGACY_ANNOTATE_PROPERTY_GETTER_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "annotatePropertyGetter");
+    public static final QName LEGACY_ANNOTATE_PROPERTY_SETTER_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "annotatePropertySetter");
+    public static final QName LEGACY_ANNOTATE_PROPERTY_FIELD_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "annotatePropertyField");
+    public static final QName LEGACY_ANNOTATE_PROPERTY_SETTER_PARAMETER_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "annotatePropertySetterParameter");
+    public static final QName LEGACY_ANNOTATE_PACKAGE_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "annotatePackage");
+    public static final QName LEGACY_ANNOTATE_CLASS_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "annotateClass");
+    public static final QName LEGACY_ANNOTATE_ELEMENT_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "annotateElement");
+    public static final QName LEGACY_ANNOTATE_ENUM_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "annotateEnum");
+    public static final QName LEGACY_ANNOTATE_ENUM_CONSTANT_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "annotateEnumConstant");
+    public static final QName LEGACY_ANNOTATE_ENUM_VALUE_METHOD_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "annotateEnumValueMethod");
+    public static final QName LEGACY_ANNOTATE_ENUM_FROM_VALUE_METHOD_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "annotateEnumFromValueMethod");
+    public static final QName LEGACY_ANNOTATE_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "annotate");
 
+    public static final Set<QName> CUSTOMIZATION_ELEMENT_QNAMES = Collections.unmodifiableSet(
+        new HashSet<QName>(Arrays.asList(
+            ANNOTATE_QNAME,
+            ANNOTATE_PACKAGE_QNAME,
+            ANNOTATE_CLASS_QNAME,
+            ANNOTATE_ELEMENT_QNAME,
+            ANNOTATE_PROPERTY_QNAME,
+            ANNOTATE_PROPERTY_FIELD_QNAME,
+            ANNOTATE_PROPERTY_GETTER_QNAME,
+            ANNOTATE_PROPERTY_SETTER_QNAME,
+            ANNOTATE_PROPERTY_SETTER_PARAMETER_QNAME,
+            ANNOTATE_ENUM_QNAME,
+            ANNOTATE_ENUM_CONSTANT_QNAME,
+            ANNOTATE_ENUM_VALUE_METHOD_QNAME,
+            ANNOTATE_ENUM_FROM_VALUE_METHOD_QNAME,
+            LEGACY_ANNOTATE_QNAME,
+            LEGACY_ANNOTATE_PACKAGE_QNAME,
+            LEGACY_ANNOTATE_CLASS_QNAME,
+            LEGACY_ANNOTATE_ELEMENT_QNAME,
+            LEGACY_ANNOTATE_PROPERTY_QNAME,
+            LEGACY_ANNOTATE_PROPERTY_FIELD_QNAME,
+            LEGACY_ANNOTATE_PROPERTY_GETTER_QNAME,
+            LEGACY_ANNOTATE_PROPERTY_SETTER_QNAME,
+            LEGACY_ANNOTATE_PROPERTY_SETTER_PARAMETER_QNAME,
+            LEGACY_ANNOTATE_ENUM_QNAME,
+            LEGACY_ANNOTATE_ENUM_CONSTANT_QNAME,
+            LEGACY_ANNOTATE_ENUM_VALUE_METHOD_QNAME,
+            LEGACY_ANNOTATE_ENUM_FROM_VALUE_METHOD_QNAME)));
 
 	@Override
 	public String getOptionName() {
@@ -415,8 +454,10 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 
 	private boolean isCustomizationElementName(final QName name) {
 		return name != null &&
-				Constants.NAMESPACE_URI.equals(name.getNamespaceURI()) &&
-				!RemoveAnnotationPlugin.CUSTOMIZATION_ELEMENT_QNAMES.contains(name);
+            ((Constants.NAMESPACE_URI.equals(name.getNamespaceURI()) &&
+				!RemoveAnnotationPlugin.CUSTOMIZATION_ELEMENT_QNAMES.contains(name))
+            || (Constants.LEGACY_NAMESPACE_URI.equals(name.getNamespaceURI()) &&
+                !RemoveAnnotationPlugin.LEGACY_CUSTOMIZATION_ELEMENT_QNAMES.contains(name)));
 	}
 
 	@Override

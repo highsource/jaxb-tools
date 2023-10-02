@@ -90,6 +90,32 @@ public class RemoveAnnotationPlugin extends AbstractParameterizablePlugin {
 			Constants.NAMESPACE_URI, "removeAnnotationFromEnumFromValueMethod");
 	public static final QName REMOVE_ANNOTATION_QNAME = new QName(
 			Constants.NAMESPACE_URI, "removeAnnotation");
+    public static final QName LEGACY_REMOVE_ANNOTATION_FROM_PROPERTY_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "removeAnnotationFromProperty");
+    public static final QName LEGACY_REMOVE_ANNOTATION_FROM_PROPERTY_GETTER_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "removeAnnotationFromPropertyGetter");
+    public static final QName LEGACY_REMOVE_ANNOTATION_FROM_PROPERTY_SETTER_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "removeAnnotationFromPropertySetter");
+    public static final QName LEGACY_REMOVE_ANNOTATION_FROM_PROPERTY_FIELD_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "removeAnnotationFromPropertyField");
+    public static final QName LEGACY_REMOVE_ANNOTATION_FROM_PROPERTY_SETTER_PARAMETER_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "removeAnnotationFromPropertySetterParameter");
+    public static final QName LEGACY_REMOVE_ANNOTATION_FROM_PACKAGE_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "removeAnnotationFromPackage");
+    public static final QName LEGACY_REMOVE_ANNOTATION_FROM_CLASS_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "removeAnnotationFromClass");
+    public static final QName LEGACY_REMOVE_ANNOTATION_FROM_ELEMENT_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "removeAnnotationFromElement");
+    public static final QName LEGACY_REMOVE_ANNOTATION_FROM_ENUM_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "removeAnnotationFromEnum");
+    public static final QName LEGACY_REMOVE_ANNOTATION_FROM_ENUM_CONSTANT_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "removeAnnotationFromEnumConstant");
+    public static final QName LEGACY_REMOVE_ANNOTATION_FROM_ENUM_VALUE_METHOD_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "removeAnnotationFromEnumValueMethod");
+    public static final QName LEGACY_REMOVE_ANNOTATION_FROM_ENUM_FROM_VALUE_METHOD_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "removeAnnotationFromEnumFromValueMethod");
+    public static final QName LEGACY_REMOVE_ANNOTATION_QNAME = new QName(
+        Constants.LEGACY_NAMESPACE_URI, "removeAnnotation");
 
 	public static final Set<QName> CUSTOMIZATION_ELEMENT_QNAMES = Collections.unmodifiableSet(
 			new HashSet<QName>(Arrays.asList(
@@ -106,6 +132,51 @@ public class RemoveAnnotationPlugin extends AbstractParameterizablePlugin {
 					REMOVE_ANNOTATION_FROM_ENUM_CONSTANT_QNAME,
 					REMOVE_ANNOTATION_FROM_ENUM_VALUE_METHOD_QNAME,
 					REMOVE_ANNOTATION_FROM_ENUM_FROM_VALUE_METHOD_QNAME)));
+
+    public static final Set<QName> LEGACY_CUSTOMIZATION_ELEMENT_QNAMES = Collections.unmodifiableSet(
+        new HashSet<QName>(Arrays.asList(
+            LEGACY_REMOVE_ANNOTATION_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_PACKAGE_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_CLASS_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_ELEMENT_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_PROPERTY_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_PROPERTY_FIELD_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_PROPERTY_GETTER_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_PROPERTY_SETTER_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_PROPERTY_SETTER_PARAMETER_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_ENUM_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_ENUM_CONSTANT_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_ENUM_VALUE_METHOD_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_ENUM_FROM_VALUE_METHOD_QNAME)));
+
+    public static final Set<QName> ALL_CUSTOMIZATION_ELEMENT_QNAMES = Collections.unmodifiableSet(
+        new HashSet<QName>(Arrays.asList(
+            REMOVE_ANNOTATION_QNAME,
+            REMOVE_ANNOTATION_FROM_PACKAGE_QNAME,
+            REMOVE_ANNOTATION_FROM_CLASS_QNAME,
+            REMOVE_ANNOTATION_FROM_ELEMENT_QNAME,
+            REMOVE_ANNOTATION_FROM_PROPERTY_QNAME,
+            REMOVE_ANNOTATION_FROM_PROPERTY_FIELD_QNAME,
+            REMOVE_ANNOTATION_FROM_PROPERTY_GETTER_QNAME,
+            REMOVE_ANNOTATION_FROM_PROPERTY_SETTER_QNAME,
+            REMOVE_ANNOTATION_FROM_PROPERTY_SETTER_PARAMETER_QNAME,
+            REMOVE_ANNOTATION_FROM_ENUM_QNAME,
+            REMOVE_ANNOTATION_FROM_ENUM_CONSTANT_QNAME,
+            REMOVE_ANNOTATION_FROM_ENUM_VALUE_METHOD_QNAME,
+            REMOVE_ANNOTATION_FROM_ENUM_FROM_VALUE_METHOD_QNAME,
+            LEGACY_REMOVE_ANNOTATION_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_PACKAGE_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_CLASS_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_ELEMENT_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_PROPERTY_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_PROPERTY_FIELD_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_PROPERTY_GETTER_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_PROPERTY_SETTER_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_PROPERTY_SETTER_PARAMETER_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_ENUM_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_ENUM_CONSTANT_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_ENUM_VALUE_METHOD_QNAME,
+            LEGACY_REMOVE_ANNOTATION_FROM_ENUM_FROM_VALUE_METHOD_QNAME)));
 
 	public static final String CLASS_ATTRIBUTE_NAME = "class";
 
@@ -390,12 +461,12 @@ public class RemoveAnnotationPlugin extends AbstractParameterizablePlugin {
 	}
 
 	private boolean isCustomizationElementName(final QName name) {
-		return RemoveAnnotationPlugin.CUSTOMIZATION_ELEMENT_QNAMES.contains(name);
-	}
+		return RemoveAnnotationPlugin.ALL_CUSTOMIZATION_ELEMENT_QNAMES.contains(name);
+    }
 
 	@Override
 	public Collection<QName> getCustomizationElementNames() {
-		return CUSTOMIZATION_ELEMENT_QNAMES;
+		return ALL_CUSTOMIZATION_ELEMENT_QNAMES;
 	}
 
 }

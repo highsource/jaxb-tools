@@ -7,6 +7,8 @@ import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.EnumOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
 
+import javax.xml.namespace.QName;
+
 public interface Ignoring {
 
 	public boolean isIgnored(ClassOutline classOutline);
@@ -20,5 +22,7 @@ public interface Ignoring {
 	public boolean isIgnored(CEnumLeafInfo enumLeafInfo);
 
 	public boolean isIgnored(CPropertyInfo propertyInfo);
+
+    QName[] getIgnoredCustomizationElementNames();
 
 }

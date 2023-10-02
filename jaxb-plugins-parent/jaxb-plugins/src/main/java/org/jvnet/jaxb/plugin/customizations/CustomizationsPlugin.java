@@ -168,6 +168,7 @@ public class CustomizationsPlugin extends AbstractParameterizablePlugin {
 						}
 					}
 				} else if (LegacyCustomizations.CUSTOMIZATIONS_ELEMENT_NAME.equals(documentElementName)) {
+                    logger.warn("Please migrate your namespace in xsd / xjb from " + LegacyCustomizations.NAMESPACE_URI + " to " + Customizations.NAMESPACE_URI);
                     final NodeList childNodes = documentElement.getChildNodes();
                     for (int index = 0; index < childNodes.getLength(); index++) {
                         final Node childNode = childNodes.item(index);

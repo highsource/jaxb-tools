@@ -11,6 +11,7 @@ import org.jvnet.jaxb.lang.JAXBCopyStrategy;
 import org.jvnet.jaxb.locator.ObjectLocator;
 import org.jvnet.jaxb.locator.util.LocatorUtils;
 import org.jvnet.jaxb.plugin.AbstractParameterizablePlugin;
+import org.jvnet.jaxb.plugin.ComposedIgnoring;
 import org.jvnet.jaxb.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb.plugin.Ignoring;
 import org.jvnet.jaxb.plugin.util.FieldOutlineUtils;
@@ -76,13 +77,16 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 				CopyStrategy.class, getCopyStrategyClass());
 	}
 
-	private Ignoring ignoring = new CustomizedIgnoring(
-	        org.jvnet.jaxb.plugin.copyable.Customizations.IGNORED_ELEMENT_NAME,
-			org.jvnet.jaxb.plugin.copyable.LegacyCustomizations.IGNORED_ELEMENT_NAME,
-			org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
-			org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME,
-			org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
-			org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME);
+    private Ignoring ignoring = new ComposedIgnoring(
+        logger,
+        new CustomizedIgnoring(
+            org.jvnet.jaxb.plugin.copyable.Customizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME),
+        new CustomizedIgnoring(
+            org.jvnet.jaxb.plugin.copyable.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME));
 
 	public Ignoring getIgnoring() {
 		return ignoring;
@@ -103,15 +107,15 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 				        org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME);
 	}
 
-	@Override
-	public boolean run(Outline outline, Options opt, ErrorHandler errorHandler) {
-		for (final ClassOutline classOutline : outline.getClasses())
-			if (!getIgnoring().isIgnored(classOutline)) {
-
-				processClassOutline(classOutline);
-			}
-		return true;
-	}
+    @Override
+    public boolean run(Outline outline, Options opt, ErrorHandler errorHandler) {
+        for (final ClassOutline classOutline : outline.getClasses()) {
+            if (!getIgnoring().isIgnored(classOutline)) {
+                processClassOutline(classOutline);
+            }
+        }
+        return true;
+    }
 
 	protected void processClassOutline(ClassOutline classOutline) {
 		final JDefinedClass theClass = classOutline.implClass;

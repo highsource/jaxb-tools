@@ -7,6 +7,7 @@ import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb.lang.EnumValue;
 import org.jvnet.jaxb.plugin.AbstractParameterizablePlugin;
+import org.jvnet.jaxb.plugin.ComposedIgnoring;
 import org.jvnet.jaxb.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb.plugin.Ignoring;
 import org.jvnet.jaxb.util.ClassUtils;
@@ -35,14 +36,17 @@ public class EnumValuePlugin extends AbstractParameterizablePlugin {
 		return "Forces generated @XmlEnums implement the org.jvnet.jaxb.lang.EnumValue<T> interface.";
 	}
 
-	private Ignoring ignoring = new CustomizedIgnoring(
-	        org.jvnet.jaxb.plugin.enumvalue.Customizations.IGNORED_ELEMENT_NAME,
-	        org.jvnet.jaxb.plugin.enumvalue.LegacyCustomizations.IGNORED_ELEMENT_NAME,
-			org.jvnet.jaxb.plugin.equals.LegacyCustomizations.IGNORED_ELEMENT_NAME, // FIXME: [#403] reference to equals.Customization in enumvalue should be removed
-			org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
-            org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME,
-			org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
-			org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME);
+    private Ignoring ignoring = new ComposedIgnoring(
+        logger,
+        new CustomizedIgnoring(
+            org.jvnet.jaxb.plugin.enumvalue.Customizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME),
+        new CustomizedIgnoring(
+            org.jvnet.jaxb.plugin.enumvalue.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.equals.LegacyCustomizations.IGNORED_ELEMENT_NAME, // FIXME: [#403] reference to equals.Customization in enumvalue should be removed
+            org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME));
 
 	public Ignoring getIgnoring() {
 		return ignoring;

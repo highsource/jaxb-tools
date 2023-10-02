@@ -10,6 +10,7 @@ import org.jvnet.jaxb.lang.ToString;
 import org.jvnet.jaxb.lang.ToStringStrategy;
 import org.jvnet.jaxb.locator.ObjectLocator;
 import org.jvnet.jaxb.plugin.AbstractParameterizablePlugin;
+import org.jvnet.jaxb.plugin.ComposedIgnoring;
 import org.jvnet.jaxb.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb.plugin.Ignoring;
 import org.jvnet.jaxb.plugin.util.FieldOutlineUtils;
@@ -71,13 +72,16 @@ public class ToStringPlugin extends AbstractParameterizablePlugin {
 				ToStringStrategy.class, getToStringStrategyClass());
 	}
 
-	private Ignoring ignoring = new CustomizedIgnoring(
-	        org.jvnet.jaxb.plugin.tostring.Customizations.IGNORED_ELEMENT_NAME,
-			org.jvnet.jaxb.plugin.tostring.LegacyCustomizations.IGNORED_ELEMENT_NAME,
-			org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
-            org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME,
+    private Ignoring ignoring = new ComposedIgnoring(
+        logger,
+        new CustomizedIgnoring(
+            org.jvnet.jaxb.plugin.tostring.Customizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME),
+        new CustomizedIgnoring(
+            org.jvnet.jaxb.plugin.tostring.LegacyCustomizations.IGNORED_ELEMENT_NAME,
             org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
-            org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME);
+            org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME));
 
 	public Ignoring getIgnoring() {
 		return ignoring;

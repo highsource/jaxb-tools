@@ -60,7 +60,7 @@ import com.sun.tools.xjc.outline.Outline;
 public enum AnnotationTarget {
 
 	//
-	PACKAGE("package", AnnotatePlugin.ANNOTATE_PACKAGE_QNAME) {
+	PACKAGE("package", AnnotatePlugin.ANNOTATE_PACKAGE_QNAME, AnnotatePlugin.LEGACY_ANNOTATE_PACKAGE_QNAME) {
 		@Override
 		public JAnnotatable getAnnotatable(Outline outline,
 				FieldOutline fieldOutline) {
@@ -98,7 +98,7 @@ public enum AnnotationTarget {
 		}
 	},
 	//
-	CLASS("class", AnnotatePlugin.ANNOTATE_CLASS_QNAME) {
+	CLASS("class", AnnotatePlugin.ANNOTATE_CLASS_QNAME, AnnotatePlugin.LEGACY_ANNOTATE_CLASS_QNAME) {
 		@Override
 		public JAnnotatable getAnnotatable(Outline outline,
 				FieldOutline fieldOutline) {
@@ -114,7 +114,7 @@ public enum AnnotationTarget {
 
 	},
 	//
-	PROPERTY_GETTER("getter", AnnotatePlugin.ANNOTATE_PROPERTY_GETTER_QNAME) {
+	PROPERTY_GETTER("getter", AnnotatePlugin.ANNOTATE_PROPERTY_GETTER_QNAME, AnnotatePlugin.LEGACY_ANNOTATE_PROPERTY_GETTER_QNAME) {
 		@Override
 		public JAnnotatable getAnnotatable(Outline outline,
 				FieldOutline fieldOutline) {
@@ -129,7 +129,7 @@ public enum AnnotationTarget {
 		}
 	},
 	//
-	PROPERTY_SETTER("setter", AnnotatePlugin.ANNOTATE_PROPERTY_SETTER_QNAME) {
+	PROPERTY_SETTER("setter", AnnotatePlugin.ANNOTATE_PROPERTY_SETTER_QNAME, AnnotatePlugin.LEGACY_ANNOTATE_PROPERTY_SETTER_QNAME) {
 		@Override
 		public JAnnotatable getAnnotatable(Outline outline,
 				FieldOutline fieldOutline) {
@@ -145,7 +145,7 @@ public enum AnnotationTarget {
 		}
 	},
 	//
-	PROPERTY_FIELD("field", AnnotatePlugin.ANNOTATE_PROPERTY_FIELD_QNAME) {
+	PROPERTY_FIELD("field", AnnotatePlugin.ANNOTATE_PROPERTY_FIELD_QNAME, AnnotatePlugin.LEGACY_ANNOTATE_PROPERTY_FIELD_QNAME) {
 		@Override
 		public JAnnotatable getAnnotatable(Outline outline,
 				FieldOutline fieldOutline) {
@@ -164,7 +164,8 @@ public enum AnnotationTarget {
 	},
 	//
 	PROPERTY_SETTER_PARAMETER("setter-parameter",
-			AnnotatePlugin.ANNOTATE_PROPERTY_SETTER_PARAMETER_QNAME) {
+        AnnotatePlugin.ANNOTATE_PROPERTY_SETTER_PARAMETER_QNAME,
+        AnnotatePlugin.LEGACY_ANNOTATE_PROPERTY_SETTER_PARAMETER_QNAME) {
 		@Override
 		public JAnnotatable getAnnotatable(Outline outline,
 				FieldOutline fieldOutline) {
@@ -192,7 +193,7 @@ public enum AnnotationTarget {
 		}
 	},
 	//
-	ENUM("enum", AnnotatePlugin.ANNOTATE_ENUM_QNAME) {
+	ENUM("enum", AnnotatePlugin.ANNOTATE_ENUM_QNAME, AnnotatePlugin.LEGACY_ANNOTATE_ENUM_QNAME) {
 		@Override
 		public JAnnotatable getAnnotatable(Outline outline,
 				EnumConstantOutline enumConstantOutline)
@@ -210,7 +211,7 @@ public enum AnnotationTarget {
 		}
 	},
 	//
-	ENUM_CONSTANT("enum-constant", AnnotatePlugin.ANNOTATE_ENUM_CONSTANT_QNAME) {
+	ENUM_CONSTANT("enum-constant", AnnotatePlugin.ANNOTATE_ENUM_CONSTANT_QNAME, AnnotatePlugin.LEGACY_ANNOTATE_ENUM_CONSTANT_QNAME) {
 		@Override
 		public JAnnotatable getAnnotatable(Outline outline,
 				EnumConstantOutline enumConstantOutline)
@@ -219,7 +220,7 @@ public enum AnnotationTarget {
 		}
 	},
 	//
-	ENUM_VALUE_METHOD("enum-value-method", AnnotatePlugin.ANNOTATE_ENUM_VALUE_METHOD_QNAME) {
+	ENUM_VALUE_METHOD("enum-value-method", AnnotatePlugin.ANNOTATE_ENUM_VALUE_METHOD_QNAME, AnnotatePlugin.LEGACY_ANNOTATE_ENUM_VALUE_METHOD_QNAME) {
 		@Override
 		public JAnnotatable getAnnotatable(Outline outline,
 										   EnumOutline enumOutline)
@@ -235,7 +236,7 @@ public enum AnnotationTarget {
 		}
 	},
 	//
-	ENUM_FROM_VALUE_METHOD("enum-fromValue-method", AnnotatePlugin.ANNOTATE_ENUM_FROM_VALUE_METHOD_QNAME) {
+	ENUM_FROM_VALUE_METHOD("enum-fromValue-method", AnnotatePlugin.ANNOTATE_ENUM_FROM_VALUE_METHOD_QNAME, AnnotatePlugin.LEGACY_ANNOTATE_ENUM_FROM_VALUE_METHOD_QNAME) {
 		@Override
 		public JAnnotatable getAnnotatable(Outline outline,
 										   EnumOutline enumOutline)
@@ -254,7 +255,7 @@ public enum AnnotationTarget {
 		}
 	},
 	//
-	ELEMENT("element", AnnotatePlugin.ANNOTATE_ELEMENT_QNAME) {
+	ELEMENT("element", AnnotatePlugin.ANNOTATE_ELEMENT_QNAME, AnnotatePlugin.LEGACY_ANNOTATE_ELEMENT_QNAME) {
 		@Override
 		public JAnnotatable getAnnotatable(Outline outline,
 				ElementOutline elementOutline) throws IllegalArgumentException,
@@ -337,7 +338,17 @@ public enum AnnotationTarget {
 			} else {
 				return AnnotationTarget.getAnnotationTarget(target);
 			}
-		} else {
+		} else if (AnnotatePlugin.LEGACY_ANNOTATE_QNAME.equals(name)
+            || AnnotatePlugin.LEGACY_ANNOTATE_PROPERTY_QNAME.equals(name)
+            || RemoveAnnotationPlugin.LEGACY_REMOVE_ANNOTATION_QNAME.equals(name)
+            || RemoveAnnotationPlugin.LEGACY_REMOVE_ANNOTATION_FROM_PROPERTY_QNAME.equals(name)) {
+            final String target = element.getAttribute("target");
+            if (target == null || "".equals(target)) {
+                return defaultAnnotationTarget;
+            } else {
+                return AnnotationTarget.getAnnotationTarget(target);
+            }
+        } else {
 			for (AnnotationTarget possibleAnnotationTarget : AnnotationTarget
 					.values()) {
 				if (possibleAnnotationTarget.names.contains(name)) {

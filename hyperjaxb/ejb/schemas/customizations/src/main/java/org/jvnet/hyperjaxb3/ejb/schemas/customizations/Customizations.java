@@ -24,8 +24,7 @@ import com.sun.tools.xjc.model.CPropertyInfo;
 
 public class Customizations {
 
-	public static final String NAMESPACE_URI = "http://hyperjaxb3.jvnet.org/ejb/schemas/customizations";
-
+    public static final String NAMESPACE_URI = "urn:hyperjaxb3.jvnet.org:ejb:schemas:customizations";
 	public static final String ORM_NAMESPACE_URI = "https://jakarta.ee/xml/ns/persistence/orm";
 
 	public static final Set<String> NAMESPACES;

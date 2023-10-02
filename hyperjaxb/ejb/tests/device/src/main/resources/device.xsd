@@ -2,16 +2,16 @@
 
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" jaxb:version="3.0"
-            xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
+            xmlns:hj="urn:hyperjaxb3.jvnet.org:ejb:schemas:customizations"
             xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-            
+
             jaxb:extensionBindingPrefixes="xjc hj"
-            
+
             xmlns:ns="http://www.sun.com/crae/generatedcomponents"
             targetNamespace="http://www.sun.com/crae/generatedcomponents"
             xmlns="http://www.sun.com/crae/generatedcomponents"
             elementFormDefault="qualified">
-                   
+
     <xsd:annotation>
         <xsd:appinfo>
             <jaxb:globalBindings generateIsSetMethod="true">
@@ -22,114 +22,114 @@
             </jaxb:schemaBindings>
         </xsd:appinfo>
     </xsd:annotation>
-    
+
     <!--    <xsd:element name="device" type="deviceType" />
-    
+
         <xsd:complexType name="deviceType">
             <xsd:choice>
                 <xsd:element name="server" type="ns:serverType"/>
-                <xsd:element name="diskArray" type="ns:diskArrayType"/> 
+                <xsd:element name="diskArray" type="ns:diskArrayType"/>
             </xsd:choice>
         </xsd:complexType> -->
-        
-        
-    
+
+
+
     <xsd:element name="server" type="ns:serverType"/>
-    
+
     <!--<xsd:complexType name="craeServerType">
         <xsd:complexContent>
             <xsd:extension base="ns:serverType">
                 <xsd:sequence>
-                    <xsd:element name="configuration" type="ns:deviceConfigurationType"/>                
+                    <xsd:element name="configuration" type="ns:deviceConfigurationType"/>
                 </xsd:sequence>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>   -->
-    
+
     <xsd:complexType name="deviceConfigurationType">
         <xsd:sequence>
             <xsd:element name="identifier" type="xsd:string"/>
             <xsd:element name="chassisId" type="xsd:integer"/>
         </xsd:sequence>
     </xsd:complexType>
-    
+
     <xsd:complexType name="projectType">
         <xsd:sequence>
             <xsd:element name="identifier" type="xsd:string"/>
             <xsd:element name="pname" type="xsd:string"/>
             <xsd:element name="pusage" type="xsd:string"/>
-            <xsd:element name="comments" type="xsd:string" minOccurs="0"/>            
+            <xsd:element name="comments" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
     </xsd:complexType>
-    
+
     <xsd:complexType name="serverType">
         <xsd:sequence>
-            <xsd:element name="identifier" type="xsd:string"/>            
+            <xsd:element name="identifier" type="xsd:string"/>
             <xsd:element name="hostname" type="xsd:string"/>
             <!--xsd:element name="chassisType" type="xsd:string"/-->
             <xsd:element name="platform" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="dnsDomain" type="xsd:string" minOccurs="0"/>             
+            <xsd:element name="dnsDomain" type="xsd:string" minOccurs="0"/>
             <xsd:element name="chassisType" type="xsd:string" minOccurs="0"/>
             <xsd:element name="prom" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="cpuAsString" type="xsd:string" minOccurs="0"/>              
+            <xsd:element name="cpuAsString" type="xsd:string" minOccurs="0"/>
             <xsd:element name="osAsString" type="xsd:string" minOccurs="0"/>
             <xsd:element name="diskAsString" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="memorySize" type="xsd:integer" minOccurs="0"/>                
+            <xsd:element name="memorySize" type="xsd:integer" minOccurs="0"/>
             <xsd:element name="zfsUsed" type="xsd:boolean" minOccurs="0"/>
             <xsd:element name="svmUsed" type="xsd:boolean" minOccurs="0"/>
             <xsd:element name="vxvmUsed" type="xsd:boolean" minOccurs="0"/>
-            <xsd:element name="sdcErrors" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>                
-            
+            <xsd:element name="sdcErrors" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+
             <!-- complex elements -->
-                
+
             <xsd:element name="os" type="ns:osType"/>
             <xsd:element name="systemBoard" type="ns:systemBoardType" minOccurs="0" maxOccurs="unbounded"/>
-            
+
             <xsd:element name="cpu" type="ns:cpuType" minOccurs="0" maxOccurs="unbounded"/>
-            <xsd:element name="dimm" type="ns:dimmType" minOccurs="0" maxOccurs="unbounded"/>          
+            <xsd:element name="dimm" type="ns:dimmType" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="disk" type="ns:diskType" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="application" type="ns:applicationType" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="patch" type="ns:patchType" minOccurs="0" maxOccurs="unbounded"/>
-            
+
             <xsd:element name="fcalBus" type="ns:fcalBusType" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="pciBus" type="ns:pciBusType" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="alom" type="ns:alomType" minOccurs="0"/>
             <xsd:element name="networkInterface" type="ns:networkInterfaceType" minOccurs="0" maxOccurs="unbounded"/>
-            
+
             <!-- serengeti elements -->
-                
+
             <xsd:element name="systemController" type="ns:systemControllerType" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="ioBoard" type="ns:ioBoardType" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="repeaterBoard" type="ns:repeaterBoardType" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="fanTray" type="ns:fanTrayType" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="powerSupply" type="ns:powerSupplyType" minOccurs="0" maxOccurs="unbounded"/>
-            
+
             <!-- temporary storage of data gathered by perl scripts -->
-                
+
             <xsd:element name="memorySummary" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="diskSummary" type="xsd:string" minOccurs="0"/>                                                
-            
-            <!-- temporary (hopefully) storage of data gathered and examined by perl scripts -->                                
-                
+            <xsd:element name="diskSummary" type="xsd:string" minOccurs="0"/>
+
+            <!-- temporary (hopefully) storage of data gathered and examined by perl scripts -->
+
             <xsd:element name="zfsConfigCheckResults" type="xsd:string" minOccurs="0"/>
             <xsd:element name="svmConfigCheckResults" type="xsd:string" minOccurs="0"/>
             <xsd:element name="vxvmConfigCheckResults" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="mirroredDiskCheckResults" type="xsd:string" minOccurs="0"/>                
+            <xsd:element name="mirroredDiskCheckResults" type="xsd:string" minOccurs="0"/>
             <xsd:element name="patchCheckResults" type="xsd:string" minOccurs="0"/>
-            
+
             <!-- information gathered by dream command -->
-                
+
             <xsd:element name="dreamDisabledResults" type="xsd:string" minOccurs="0"/>
             <xsd:element name="clearcase" minOccurs="0" type="ns:clearcaseType"/>
-            
+
             <!-- other -->
-                
-            <xsd:element name="javaTimeZoneVersion" type="xsd:string" minOccurs="0"/>                
+
+            <xsd:element name="javaTimeZoneVersion" type="xsd:string" minOccurs="0"/>
             <xsd:element name="ufsDelq" type="ns:ufsDelqType" minOccurs="0"/>
-            
+
         </xsd:sequence>
-    </xsd:complexType>              
-    
+    </xsd:complexType>
+
     <xsd:complexType name="diskArrayType">
         <xsd:sequence>
             <xsd:element name="identifier" type="xsd:string"/>
@@ -148,29 +148,29 @@
             <xsd:element name="volume" type="ns:diskArrayVolumeType" maxOccurs="unbounded" />
             <xsd:element name="sfp" type="ns:diskArraySfpType" maxOccurs="unbounded" />
             <xsd:element name="license" type="ns:diskArrayLicenseType" maxOccurs="unbounded"/>
-            
+
         </xsd:sequence>
     </xsd:complexType>
-    
+
     <xsd:complexType name="clearcaseType">
         <xsd:sequence>
             <xsd:element name="version" type="xsd:string"/>
         </xsd:sequence>
     </xsd:complexType>
-    
+
     <xsd:complexType name="ufsDelqType">
         <xsd:sequence>
-            <xsd:element name="ufsDelqEntry" type="ns:ufsDelqEntryType" maxOccurs="unbounded" minOccurs="0" />          
+            <xsd:element name="ufsDelqEntry" type="ns:ufsDelqEntryType" maxOccurs="unbounded" minOccurs="0" />
         </xsd:sequence>
     </xsd:complexType>
-    
+
     <xsd:complexType name="ufsDelqEntryType" >
         <xsd:sequence>
             <xsd:element name="fsName" type="xsd:string"/>
             <xsd:element name="size" type="xsd:integer"/>
         </xsd:sequence>
-    </xsd:complexType>        
-    
+    </xsd:complexType>
+
     <xsd:complexType name="diskArrayBatteryType">
         <xsd:sequence>
             <xsd:element name="availability" type="xsd:string" minOccurs="0"/>
@@ -194,8 +194,8 @@
             <xsd:element name="serialNumber" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
         <xsd:attribute name="label" type="xsd:string" use="required" />
-    </xsd:complexType>        
-    
+    </xsd:complexType>
+
     <xsd:complexType name="diskArrayCtrlType">
         <xsd:sequence>
             <xsd:element name="availability" type="xsd:string" minOccurs="0"/>
@@ -232,8 +232,8 @@
             <xsd:element name="serialNumber" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
         <xsd:attribute name="label" type="xsd:string" use="required" />
-    </xsd:complexType>                
-    
+    </xsd:complexType>
+
     <xsd:complexType name="diskArrayFanType">
         <xsd:sequence>
             <xsd:element name="availability" type="xsd:string" minOccurs="0"/>
@@ -250,7 +250,7 @@
         </xsd:sequence>
         <xsd:attribute name="label" type="xsd:string" use="required" />
     </xsd:complexType>
-    
+
     <xsd:complexType name="diskArrayFcportType">
         <xsd:sequence>
             <xsd:element name="nodeWWN" type="xsd:string" minOccurs="0"/>
@@ -284,7 +284,7 @@
         </xsd:sequence>
         <xsd:attribute name="label" type="xsd:string" use="required" />
     </xsd:complexType>
-    
+
     <xsd:complexType name="diskArrayFruType">
         <xsd:choice>
             <xsd:element name="canBeFRUed" type="xsd:string" minOccurs="0"/>
@@ -304,8 +304,8 @@
             <xsd:element name="vendor" type="xsd:string" minOccurs="0"/>
         </xsd:choice>
         <xsd:attribute name="label" type="xsd:string" use="required" />
-    </xsd:complexType>        
-    
+    </xsd:complexType>
+
     <xsd:complexType name="diskArrayIomType">
         <xsd:sequence>
             <xsd:element name="availability" type="xsd:string" minOccurs="0"/>
@@ -329,8 +329,8 @@
             <xsd:element name="workingChannel" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
         <xsd:attribute name="label" type="xsd:string" use="required" />
-    </xsd:complexType>  
-    
+    </xsd:complexType>
+
     <xsd:complexType name="diskArrayLicenseType">
         <xsd:sequence>
             <xsd:element name="amountInUse" type="xsd:string" minOccurs="0"/>
@@ -347,8 +347,8 @@
             <xsd:element name="withinLimits" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
         <xsd:attribute name="label" type="xsd:string" use="required" />
-    </xsd:complexType>        
-    
+    </xsd:complexType>
+
     <xsd:complexType name="diskArrayMidplaneType">
         <xsd:sequence>
             <xsd:element name="availability" type="xsd:string" minOccurs="0"/>
@@ -380,8 +380,8 @@
             <xsd:element name="serialNumber" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
         <xsd:attribute name="label" type="xsd:string" use="required" />
-    </xsd:complexType>      
-    
+    </xsd:complexType>
+
     <xsd:complexType name="diskArrayPcuType">
         <xsd:sequence>
             <xsd:element name="availability" type="xsd:string" minOccurs="0"/>
@@ -404,7 +404,7 @@
         </xsd:sequence>
         <xsd:attribute name="label" type="xsd:string" use="required" />
     </xsd:complexType>
-    
+
     <xsd:complexType name="diskArraySfpType">
         <xsd:choice>
             <xsd:element name="availability" type="xsd:string" minOccurs="0"/>
@@ -432,8 +432,8 @@
             <xsd:element name="type" type="xsd:string" minOccurs="0"/>
         </xsd:choice>
         <xsd:attribute name="label" type="xsd:string" use="required" />
-    </xsd:complexType>               
-    
+    </xsd:complexType>
+
     <xsd:complexType name="diskArraySystemType">
         <xsd:sequence>
             <xsd:element name="dedicated" type="xsd:string" minOccurs="0"/>
@@ -470,9 +470,9 @@
             <xsd:element name="sfpCount" type="xsd:string" minOccurs="0"/>
             <xsd:element name="fruCount" type="xsd:string" minOccurs="0"/>
             <xsd:element name="controller" type="xsd:string" minOccurs="0"/>
-            
+
             <!-- T3/6120 information -->
-                
+
             <xsd:element name="blocksize" type="xsd:string" minOccurs="0"/>
             <xsd:element name="cache" type="xsd:string" minOccurs="0"/>
             <xsd:element name="mirror" type="xsd:string" minOccurs="0"/>
@@ -502,10 +502,10 @@
             <xsd:element name="mac" type="xsd:string" minOccurs="0"/>
             <xsd:element name="ntp_server" type="xsd:string" minOccurs="0"/>
             <xsd:element name="ntp_poll" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="ntp_interval" type="xsd:string" minOccurs="0"/>  
+            <xsd:element name="ntp_interval" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
     </xsd:complexType>
-    
+
     <xsd:complexType name="diskArrayTempsensorType">
         <xsd:sequence>
             <xsd:element name="availability" type="xsd:string" minOccurs="0"/>
@@ -521,8 +521,8 @@
             <xsd:element name="status" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
         <xsd:attribute name="label" type="xsd:string" use="required" />
-    </xsd:complexType>        
-    
+    </xsd:complexType>
+
     <xsd:complexType name="diskArrayVdiskType">
         <xsd:sequence>
             <xsd:element name="wwn" type="xsd:string" minOccurs="0"/>
@@ -547,8 +547,8 @@
             <xsd:element name="sequenceNum" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
         <xsd:attribute name="label" type="xsd:string" use="required" />
-    </xsd:complexType>        
-    
+    </xsd:complexType>
+
     <xsd:complexType name="diskArrayVolumeType">
         <xsd:sequence>
             <xsd:element name="wwn" type="xsd:string" minOccurs="0"/>
@@ -589,8 +589,8 @@
             <xsd:element name="writable" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
         <xsd:attribute name="label" type="xsd:string" use="required" />
-    </xsd:complexType>           
-    
+    </xsd:complexType>
+
     <xsd:complexType name="diskArrayLoopCardType">
         <xsd:sequence>
             <xsd:element name="label" type="xsd:string"/>
@@ -598,22 +598,22 @@
             <xsd:element name="product" type="xsd:string" minOccurs="0"/>
             <xsd:element name="firmware" type="xsd:string" minOccurs="0"/>
             <xsd:element name="serialNumber" type="xsd:string" minOccurs="0"/>
-        </xsd:sequence>        
-    </xsd:complexType>         
-    
+        </xsd:sequence>
+    </xsd:complexType>
+
     <!-- OS -->
-    
+
     <xsd:complexType name="osType">
         <xsd:sequence>
             <xsd:element name="name" type="xsd:string"/>
             <xsd:element name="vendor" type="xsd:string" minOccurs="0"/>
             <xsd:element name="version" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="release" type="xsd:string" minOccurs="0"/> 
+            <xsd:element name="release" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
     </xsd:complexType>
-    
+
     <!-- cpu -->
-    
+
     <xsd:simpleType name="cpuStatusType">
         <xsd:restriction base="xsd:string">
             <xsd:enumeration value="off-line"/>
@@ -621,7 +621,7 @@
             <xsd:enumeration value="faulted"/>
         </xsd:restriction>
     </xsd:simpleType>
-    
+
     <xsd:complexType name="cpuType">
         <xsd:sequence>
             <xsd:element name="label" type="xsd:string"/>
@@ -632,22 +632,22 @@
             <xsd:element name="mask" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
     </xsd:complexType>
-    
+
     <!-- memory -->
-    
+
     <xsd:complexType name="dimmType">
         <xsd:sequence>
             <xsd:element name="label" type="xsd:string"/>
             <xsd:element name="size" type="xsd:integer" minOccurs="0"/>
-            <xsd:element name="bank" type="xsd:string" minOccurs="0"/>            
-            <xsd:element name="brand" type="xsd:string" minOccurs="0"/>   
+            <xsd:element name="bank" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="brand" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
     </xsd:complexType>
-    
+
     <!-- systemboard -->
-    
+
     <xsd:element name="systemBoard" type="ns:systemBoardType"/>
-    
+
     <xsd:complexType name="systemBoardType">
         <xsd:sequence>
             <xsd:element name="label" type="xsd:string"/>
@@ -660,10 +660,10 @@
             <xsd:element name="dimmLabel" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="busLabel" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/> -->
         </xsd:sequence>
-    </xsd:complexType>  
-    
+    </xsd:complexType>
+
     <!-- systemController -->
-    
+
     <xsd:complexType name="systemControllerType">
         <xsd:sequence>
             <xsd:element name="label" type="xsd:string"/>
@@ -673,12 +673,12 @@
             <xsd:element name="power" type="xsd:string" minOccurs="0"/>
             <xsd:element name="state" type="xsd:string" minOccurs="0"/>
             <xsd:element name="status" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="firmware" type="xsd:string" minOccurs="0"/>            
+            <xsd:element name="firmware" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
-    </xsd:complexType>  
-    
+    </xsd:complexType>
+
     <!-- ioBoard -->
-    
+
     <xsd:complexType name="ioBoardType">
         <xsd:sequence>
             <xsd:element name="label" type="xsd:string"/>
@@ -686,12 +686,12 @@
             <xsd:element name="type" type="xsd:string" minOccurs="0"/>
             <xsd:element name="power" type="xsd:string" minOccurs="0"/>
             <xsd:element name="state" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="status" type="xsd:string" minOccurs="0"/>            
+            <xsd:element name="status" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
-    </xsd:complexType>  
-    
+    </xsd:complexType>
+
     <!-- repeaterBoard -->
-    
+
     <xsd:complexType name="repeaterBoardType">
         <xsd:sequence>
             <xsd:element name="label" type="xsd:string"/>
@@ -700,10 +700,10 @@
             <xsd:element name="state" type="xsd:string" minOccurs="0"/>
             <xsd:element name="status" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
-    </xsd:complexType>  
-    
+    </xsd:complexType>
+
     <!-- powerSupply -->
-    
+
     <xsd:complexType name="powerSupplyType">
         <xsd:sequence>
             <xsd:element name="label" type="xsd:string"/>
@@ -712,10 +712,10 @@
             <xsd:element name="state" type="xsd:string" minOccurs="0"/>
             <xsd:element name="status" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
-    </xsd:complexType>   
-    
+    </xsd:complexType>
+
     <!-- fanTray -->
-    
+
     <xsd:complexType name="fanTrayType">
         <xsd:sequence>
             <xsd:element name="label" type="xsd:string"/>
@@ -724,30 +724,30 @@
             <xsd:element name="state" type="xsd:string" minOccurs="0"/>
             <xsd:element name="status" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
-    </xsd:complexType>  
-    
+    </xsd:complexType>
+
     <!-- packages -->
-    
+
     <xsd:complexType name="applicationType">
         <xsd:sequence>
             <xsd:element name="name" type="xsd:string"/>
             <xsd:element name="longName" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="category" type="xsd:string" minOccurs="0"/>            
-            <xsd:element name="arch" type="xsd:string" minOccurs="0"/>             
-            <xsd:element name="version" type="xsd:string" minOccurs="0"/>  
-            <xsd:element name="basedir" type="xsd:string" minOccurs="0"/>    
-            <xsd:element name="vendor" type="xsd:string" minOccurs="0"/>    
+            <xsd:element name="category" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="arch" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="version" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="basedir" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="vendor" type="xsd:string" minOccurs="0"/>
             <xsd:element name="description" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="pstamp" type="xsd:string" minOccurs="0"/>    
-            <xsd:element name="instdate" type="xsd:string" minOccurs="0"/>    
-            <xsd:element name="hotline" type="xsd:string" minOccurs="0"/>    
-            <xsd:element name="status" type="xsd:string" minOccurs="0"/>    
+            <xsd:element name="pstamp" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="instdate" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="hotline" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="status" type="xsd:string" minOccurs="0"/>
             <xsd:element name="instance" type="xsd:integer" default="1"/>
         </xsd:sequence>
-    </xsd:complexType>          
-    
-    <!-- patches -->   
-    
+    </xsd:complexType>
+
+    <!-- patches -->
+
     <xsd:complexType name="patchType">
         <xsd:sequence>
             <xsd:element name="number" type="xsd:string"/>
@@ -762,31 +762,31 @@
                     </xsd:appinfo>
                 </xsd:annotation>
             </xsd:element> -->
-        </xsd:sequence>        
-    </xsd:complexType>           
-    
+        </xsd:sequence>
+    </xsd:complexType>
+
     <xsd:complexType name="fcalBusType">
         <xsd:sequence>
             <xsd:element name="label" type="xsd:string"/>
             <xsd:element name="chipset" type="xsd:string" minOccurs="0"/>
             <xsd:element name="version" type="xsd:string" minOccurs="0"/>
-        </xsd:sequence> 
+        </xsd:sequence>
     </xsd:complexType>
-    
+
     <xsd:complexType name="pciBusType">
         <xsd:sequence>
             <xsd:element name="label" type="xsd:string"/>
             <xsd:element name="chipset" type="xsd:string" minOccurs="0"/>
             <xsd:element name="version" type="xsd:string" minOccurs="0"/>
-        </xsd:sequence>        
+        </xsd:sequence>
     </xsd:complexType>
-    
+
     <xsd:complexType name="alomType">
         <xsd:sequence>
             <xsd:element name="version" type="xsd:string"/>
-        </xsd:sequence>       
+        </xsd:sequence>
     </xsd:complexType>
-    
+
     <xsd:complexType name="networkInterfaceType">
         <xsd:sequence>
             <xsd:element name="name" type="xsd:string"/>
@@ -795,9 +795,9 @@
             <xsd:element name="speed" type="xsd:string" minOccurs="0"/>
             <xsd:element name="autoNegotiation" type="xsd:boolean" minOccurs="0"/>
             <xsd:element name="maxSpeed" type="xsd:boolean" minOccurs="0"/>
-        </xsd:sequence>        
-    </xsd:complexType>   
-    
+        </xsd:sequence>
+    </xsd:complexType>
+
     <xsd:complexType name="diskType">
         <xsd:sequence>
             <xsd:element name="label" type="xsd:string"/>
@@ -807,9 +807,9 @@
             <xsd:element name="firmware" type="xsd:string" minOccurs="0"/>
             <xsd:element name="serialNumber" type="xsd:string" minOccurs="0"/>
             <xsd:element name="size" type="xsd:integer" minOccurs="0"/>
-        </xsd:sequence>            
+        </xsd:sequence>
     </xsd:complexType>
-    
+
     <xsd:complexType name="ss6130DiskType">
         <xsd:complexContent>
             <xsd:extension base="ns:diskType">
@@ -844,9 +844,9 @@
                     <xsd:element name="statusCause" type="xsd:string" minOccurs="0"/>
                     <xsd:element name="uncertified" type="xsd:string" minOccurs="0"/>
                     <xsd:element name="vdiskAssignment" type="xsd:string" minOccurs="0"/>
-                </xsd:sequence>                                
+                </xsd:sequence>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
-    
+
 </xsd:schema>

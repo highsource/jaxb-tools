@@ -31,6 +31,8 @@ import com.sun.tools.xjc.reader.xmlschema.bindinfo.BindInfo;
 import com.sun.xml.xsom.XSAnnotation;
 import com.sun.xml.xsom.XSSchema;
 import com.sun.xml.xsom.impl.SchemaImpl;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.xml.sax.ErrorHandler;
 
 /**
@@ -61,6 +63,8 @@ import org.xml.sax.ErrorHandler;
  */
 @SuppressWarnings("UnusedDeclaration")
 public class NamespacePrefixPlugin extends Plugin {
+
+    private static Log logger = LogFactory.getLog(NamespacePrefixPlugin.class);
 
     @Override
     public String getOptionName() {
@@ -143,6 +147,7 @@ public class NamespacePrefixPlugin extends Plugin {
                     if (!customization.element.getLocalName().equals(LegacyCustomizations.PREFIX_NAME)) {
                         throw new RuntimeException("Unrecognized element [" + customization.element.getLocalName() + "]");
                     }
+                    logger.warn("Please migrate your namespace in xsd / xjb from " + LegacyCustomizations.NAMESPACE_URI + " to " + Customizations.NAMESPACE_URI);
                     customization.markAsAcknowledged();
                 }
             }
@@ -197,6 +202,7 @@ public class NamespacePrefixPlugin extends Plugin {
                         if (!customization.element.getLocalName().equals(LegacyCustomizations.PREFIX_NAME)) {
                             throw new RuntimeException("Unrecognized element [" + customization.element.getLocalName() + "]");
                         }
+                        logger.warn("Please migrate your namespace in xsd / xjb from " + LegacyCustomizations.NAMESPACE_URI + " to " + Customizations.NAMESPACE_URI);
                         prefix = customization.element.getAttribute("name");
                         customization.markAsAcknowledged();
                         break;

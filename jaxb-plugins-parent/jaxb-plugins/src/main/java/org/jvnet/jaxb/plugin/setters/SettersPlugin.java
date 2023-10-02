@@ -7,6 +7,7 @@ import javax.xml.namespace.QName;
 
 import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.plugin.AbstractParameterizablePlugin;
+import org.jvnet.jaxb.plugin.ComposedIgnoring;
 import org.jvnet.jaxb.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb.plugin.Ignoring;
 import org.jvnet.jaxb.plugin.util.FieldOutlineUtils;
@@ -148,9 +149,12 @@ public class SettersPlugin extends AbstractParameterizablePlugin {
 		}
 	}
 
-    private Ignoring ignoring = new CustomizedIgnoring(
-        org.jvnet.jaxb.plugin.setters.Customizations.IGNORED_ELEMENT_NAME,
-        org.jvnet.jaxb.plugin.setters.LegacyCustomizations.IGNORED_ELEMENT_NAME);
+    private Ignoring ignoring = new ComposedIgnoring(
+        logger,
+        new CustomizedIgnoring(
+            org.jvnet.jaxb.plugin.setters.Customizations.IGNORED_ELEMENT_NAME),
+        new CustomizedIgnoring(
+            org.jvnet.jaxb.plugin.setters.LegacyCustomizations.IGNORED_ELEMENT_NAME));
 
     public Ignoring getIgnoring() {
         return ignoring;

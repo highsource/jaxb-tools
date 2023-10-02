@@ -11,6 +11,7 @@ import org.jvnet.jaxb.lang.MergeStrategy;
 import org.jvnet.jaxb.locator.ObjectLocator;
 import org.jvnet.jaxb.locator.util.LocatorUtils;
 import org.jvnet.jaxb.plugin.AbstractParameterizablePlugin;
+import org.jvnet.jaxb.plugin.ComposedIgnoring;
 import org.jvnet.jaxb.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb.plugin.Ignoring;
 import org.jvnet.jaxb.plugin.util.FieldOutlineUtils;
@@ -75,13 +76,16 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 				MergeStrategy.class, getMergeStrategyClass());
 	}
 
-	private Ignoring ignoring = new CustomizedIgnoring(
-	        org.jvnet.jaxb.plugin.mergeable.Customizations.IGNORED_ELEMENT_NAME,
-			org.jvnet.jaxb.plugin.mergeable.LegacyCustomizations.IGNORED_ELEMENT_NAME,
-			org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
-            org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME,
-			org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
-			org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME);
+    private Ignoring ignoring = new ComposedIgnoring(
+        logger,
+        new CustomizedIgnoring(
+            org.jvnet.jaxb.plugin.mergeable.Customizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME),
+        new CustomizedIgnoring(
+            org.jvnet.jaxb.plugin.mergeable.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME));
 
 	public Ignoring getIgnoring() {
 		return ignoring;

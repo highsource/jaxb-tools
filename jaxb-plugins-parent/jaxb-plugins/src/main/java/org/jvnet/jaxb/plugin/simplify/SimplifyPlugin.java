@@ -9,6 +9,7 @@ import java.util.List;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb.plugin.AbstractParameterizablePlugin;
+import org.jvnet.jaxb.plugin.ComposedIgnoring;
 import org.jvnet.jaxb.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb.plugin.Ignoring;
 import org.jvnet.jaxb.util.CustomizationUtils;
@@ -57,13 +58,16 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 				+ " for plugin documentation.";
 	}
 
-	private Ignoring ignoring = new CustomizedIgnoring(
-        org.jvnet.jaxb.plugin.simplify.Customizations.IGNORED_ELEMENT_NAME,
-        org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.IGNORED_ELEMENT_NAME,
-        org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
-        org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME,
-        org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
-        org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME);
+    private Ignoring ignoring = new ComposedIgnoring(
+        logger,
+        new CustomizedIgnoring(
+            org.jvnet.jaxb.plugin.simplify.Customizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.Customizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.Customizations.GENERATED_ELEMENT_NAME),
+        new CustomizedIgnoring(
+            org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.LegacyCustomizations.IGNORED_ELEMENT_NAME,
+            org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME));
 
 	public Ignoring getIgnoring() {
 		return ignoring;
@@ -141,7 +145,8 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 						property,
 						org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.PROPERTY_ELEMENT_NAME,
 						org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME)) {
-			simplifyElementPropertyInfoAsElementPropertyInfo(model, classInfo, property);
+            logger.warn("Please migrate your namespace in xsd / xjb from " + LegacyCustomizations.NAMESPACE_URI + " to " + Customizations.NAMESPACE_URI);
+            simplifyElementPropertyInfoAsElementPropertyInfo(model, classInfo, property);
 		}
 	}
 
@@ -156,6 +161,7 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 						property,
 						org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.PROPERTY_ELEMENT_NAME,
 						org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.AS_ELEMENT_PROPERTY_ELEMENT_NAME)) {
+            logger.warn("Please migrate your namespace in xsd / xjb from " + LegacyCustomizations.NAMESPACE_URI + " to " + Customizations.NAMESPACE_URI);
 			simplifyReferencePropertyInfoAsElementPropertyInfo(model, classInfo, property);
 		} else if (CustomizationUtils.containsPropertyCustomizationInPropertyOrClass(
             property,
@@ -166,6 +172,7 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 						property,
 						org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.PROPERTY_ELEMENT_NAME,
 						org.jvnet.jaxb.plugin.simplify.LegacyCustomizations.AS_REFERENCE_PROPERTY_ELEMENT_NAME)) {
+            logger.warn("Please migrate your namespace in xsd / xjb from " + LegacyCustomizations.NAMESPACE_URI + " to " + Customizations.NAMESPACE_URI);
 			simplifyReferencePropertyInfoAsReferencePropertyInfo(model, classInfo, property);
 		}
 	}

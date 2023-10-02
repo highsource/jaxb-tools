@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
+import org.jvnet.jaxb.plugin.ComposedIgnoring;
 import org.jvnet.jaxb.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb.plugin.Ignoring;
 import org.jvnet.jaxb.plugin.model.AbstractModelPlugin;
@@ -75,9 +76,13 @@ public class ElementWrapperPlugin extends AbstractModelPlugin {
 
 	}
 
-    private Ignoring ignoring = new CustomizedIgnoring(
-        org.jvnet.jaxb.plugin.elementwrapper.Customizations.IGNORED_ELEMENT_NAME,
-        org.jvnet.jaxb.plugin.elementwrapper.LegacyCustomizations.IGNORED_ELEMENT_NAME);
+
+    private Ignoring ignoring = new ComposedIgnoring(
+        logger,
+        new CustomizedIgnoring(
+            org.jvnet.jaxb.plugin.elementwrapper.Customizations.IGNORED_ELEMENT_NAME),
+        new CustomizedIgnoring(
+            org.jvnet.jaxb.plugin.elementwrapper.LegacyCustomizations.IGNORED_ELEMENT_NAME));
 
 	public Ignoring getIgnoring() {
 		return ignoring;

@@ -90,7 +90,7 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 	    generateExtends(classOutline, knownClasses, knownClassInfos);
 	    generateImplements(classOutline, knownClasses);
 
-        // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+        // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace
 		generateLegacyExtends(classOutline, knownClasses, knownClassInfos);
 		generateLegacyImplements(classOutline, knownClasses);
 		ignoreCustomzationsOnProperties(classOutline);
@@ -102,7 +102,7 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 			CustomizationUtils.findCustomization(propertyInfo, Customizations.EXTENDS_ELEMENT_NAME);
 			CustomizationUtils.findCustomization(propertyInfo, Customizations.IMPLEMENTS_ELEMENT_NAME);
 
-		    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+		    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace
 	        CustomizationUtils.findCustomization(propertyInfo, LegacyCustomizations.LEGACY_EXTENDS_ELEMENT_NAME);
 	        CustomizationUtils.findCustomization(propertyInfo, LegacyCustomizations.LEGACY_IMPLEMENTS_ELEMENT_NAME);
 		}
@@ -114,7 +114,7 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 		generateExtends(enumOutline, knownClasses);
 		generateImplements(enumOutline, knownClasses);
 
-		  // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+		  // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace
         generateLegacyExtends(enumOutline, knownClasses);
         generateLegacyImplements(enumOutline, knownClasses);
 	}
@@ -125,7 +125,7 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 		generateExtends(elementOutline, knownClasses);
 		generateImplements(elementOutline, knownClasses);
 
-		  // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+		  // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace
         generateLegacyExtends(elementOutline, knownClasses);
         generateLegacyImplements(elementOutline, knownClasses);
 	}
@@ -138,7 +138,7 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 
 		    // !! JT-401 FIXME: add new check for new ObjectFactoryCustomization
 		    if(tmpObject instanceof ObjectFactoryCustomization) {
-		        final ObjectFactoryCustomization objectFactoryCustomization = (ObjectFactoryCustomization)tmpObject; 
+		        final ObjectFactoryCustomization objectFactoryCustomization = (ObjectFactoryCustomization)tmpObject;
 
                 final String packageName = objectFactoryCustomization.getPackageName();
 
@@ -162,8 +162,9 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
                     }
                 }
 		    } else if(tmpObject instanceof LegacyObjectFactoryCustomization) {
-		        // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
-		        final LegacyObjectFactoryCustomization legacyObjectFactoryCustomization = (LegacyObjectFactoryCustomization)tmpObject; 
+                logger.warn("Please migrate your namespace in xsd / xjb from " + LegacyCustomizations.LEGACY_OBJECT_FACTORY_ELEMENT_NAME + " to " + Customizations.OBJECT_FACTORY_ELEMENT_NAME);
+                // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace
+		        final LegacyObjectFactoryCustomization legacyObjectFactoryCustomization = (LegacyObjectFactoryCustomization)tmpObject;
 
 	            final String packageName = legacyObjectFactoryCustomization.getPackageName();
 
@@ -345,7 +346,7 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 		return targetClass;
 	}
 
-    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace
 	private JClass generateLegacyExtends(EnumOutline enumOutline,
 			Map<String, JClass> knownClasses) {
 		final JDefinedClass theClass = enumOutline.clazz;
@@ -356,7 +357,7 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 				knownClasses);
 	}
 
-    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace
 	private JClass generateLegacyExtends(ElementOutline elementOutline,
 			Map<String, JClass> knownClasses) {
 		final JDefinedClass theClass = elementOutline.implClass;
@@ -367,11 +368,12 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 				knownClasses);
 	}
 
-    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace
 	private JClass generateLegacyExtends(final JDefinedClass theClass,
 			final CPluginCustomization extendsClassCustomization,
 			Map<String, JClass> knownClasses) throws AssertionError {
 		if (extendsClassCustomization != null) {
+            logger.warn("Please migrate your namespace in xsd / xjb from " + LegacyCustomizations.LEGACY_EXTENDS_ELEMENT_NAME + " to " + Customizations.EXTENDS_ELEMENT_NAME);
 
 			final LegacyExtendsClass extendsClass = (LegacyExtendsClass) CustomizationUtils
 					.unmarshall(LegacyCustomizations.getContext(),
@@ -383,7 +385,7 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 		}
 	}
 
-    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace
 	private JClass generateLegacyExtends(final JDefinedClass theClass,
 			final LegacyExtendsClass extendsClass, Map<String, JClass> knownClasses) {
 		if (extendsClass.getClassName() != null) {
@@ -397,7 +399,7 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 		}
 	}
 
-    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace
 	private List<JClass> generateLegacyImplements(ClassOutline classOutline,
 			Map<String, JClass> knownClasses) {
 		final JDefinedClass theClass = classOutline.implClass;
@@ -408,7 +410,7 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 				knownClasses);
 	}
 
-    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace
 	private List<JClass> generateLegacyImplements(EnumOutline enumOutline,
 			Map<String, JClass> knownClasses) {
 		final JDefinedClass theClass = enumOutline.clazz;
@@ -419,7 +421,7 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 				knownClasses);
 	}
 
-    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace
 	private List<JClass> generateLegacyImplements(ElementOutline elementOutline,
 			Map<String, JClass> knownClasses) {
 		final JDefinedClass theClass = elementOutline.implClass;
@@ -429,12 +431,15 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 				knownClasses);
 	}
 
-    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace  
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace
 	private List<JClass> generateLegacyImplements(final JDefinedClass theClass,
 			final List<CPluginCustomization> implementsInterfaceCustomizations,
 			Map<String, JClass> knownClasses) throws AssertionError {
 		final List<JClass> implementedInterfaces = new ArrayList<JClass>(
 				implementsInterfaceCustomizations.size());
+        if (implementsInterfaceCustomizations.size() > 0) {
+            logger.warn("Please migrate your namespace in xsd / xjb from " + LegacyCustomizations.LEGACY_IMPLEMENTS_ELEMENT_NAME + " to " + Customizations.IMPLEMENTS_ELEMENT_NAME);
+        }
 		for (final CPluginCustomization implementsInterfaceCustomization : implementsInterfaceCustomizations) {
 			if (implementsInterfaceCustomization != null) {
 
@@ -452,7 +457,7 @@ public class InheritancePlugin extends AbstractParameterizablePlugin {
 		return implementedInterfaces;
 	}
 
-    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace 
+    // TODO: [#403] jt-403 Remove support for deprecated legacy jaxb2-commons xml namespace
 	private JClass generateLegacyImplements(final JDefinedClass theClass,
 			final LegacyImplementsInterface implementsInterface,
 			Map<String, JClass> knownClasses) {

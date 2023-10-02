@@ -9,6 +9,12 @@ import org.jvnet.jaxb.util.CustomizationUtils;
 import com.sun.tools.xjc.model.CClassInfo;
 import com.sun.tools.xjc.model.CPluginCustomization;
 
+/**
+ * Customizations previous namespace handling
+ *
+ * @deprecated since 3.0, for removal
+ */
+@Deprecated
 public class LegacyCustomizations {
 
 	public static String LEGACY_NAMESPACE_URI = "http://jaxb2-commons.dev.java.net/basic/inheritance";

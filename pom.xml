@@ -64,7 +64,7 @@
 
     <!-- Dependencies versions -->
     <ant.version>1.10.12</ant.version>
-    <jaxb.version>3.0.2</jaxb.version>
+    <jaxb.version>4.0.2</jaxb.version>
 
     <commons-beanutils.version>1.9.4</commons-beanutils.version>
     <commons-io.version>2.11.0</commons-io.version>
@@ -78,7 +78,7 @@
     <plexus-build-api.version>1.2.0</plexus-build-api.version>
     <plexus-utils.version>3.5.1</plexus-utils.version>
 
-                <!-- Maven plugin versions -->
+    <!-- Maven plugin versions -->
     <maven.plugin.testing.version>2.1</maven.plugin.testing.version>
     <maven.plugin.plugin.version>3.7.1</maven.plugin.plugin.version>
     <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
@@ -230,6 +230,13 @@
   </dependencies>
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.glassfish.jaxb</groupId>
+        <artifactId>jaxb-bom</artifactId>
+        <version>${jaxb.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <dependency>
         <groupId>com.sun.xml.bind</groupId>
         <artifactId>jaxb-bom-ext</artifactId>

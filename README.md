@@ -382,9 +382,9 @@ Note: the previous `http://annox.dev.java.net` namespace is still supported but 
 but keep older one too to avoid breaking older builds. Please migrate to new namespace of the plugin `urn:jaxb.jvnet.org:annox`.
 
 
-## Using JAXB Annotate Plugin with Maven
+## Using Annotate JAXB Plugin with Maven
 
-* Add `org.jvnet.jaxb:jaxb-basics-annotate` as XJC plugin
+* Add `org.jvnet.jaxb:jaxb-plugin-annotate` as XJC plugin
 * Turn on the plugin using `-Xannotate` or `-XremoveAnnotation`switch
 * Add artifact with your annotations as another XJC plugin
 
@@ -403,7 +403,7 @@ Example:
         <plugins>
             <plugin>
                 <groupId>org.jvnet.jaxb</groupId>
-                <artifactId>jaxb-basics-annotate</artifactId>
+                <artifactId>jaxb-plugin-annotate</artifactId>
             </plugin>
             <!-- Artifact with custom annotations -->
             <plugin>

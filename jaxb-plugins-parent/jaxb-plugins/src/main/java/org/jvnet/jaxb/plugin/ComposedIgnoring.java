@@ -9,7 +9,6 @@ import com.sun.tools.xjc.outline.FieldOutline;
 import org.apache.commons.logging.Log;
 import org.jvnet.jaxb.plugin.customizations.Customizations;
 import org.jvnet.jaxb.plugin.customizations.LegacyCustomizations;
-import org.jvnet.jaxb.util.CustomizationUtils;
 
 import javax.xml.namespace.QName;
 
@@ -39,7 +38,7 @@ public class ComposedIgnoring implements Ignoring {
             return true;
         }
         if (legacyIgnoring != null && legacyIgnoring.isIgnored(classOutline)) {
-            logger.warn("Please migrate your namespace in xsd / xjb from " + legacyIgnoring.getIgnoredCustomizationElementNames() + " to " + ignoring.getIgnoredCustomizationElementNames());
+            logger.warn("Please migrate your namespace in xsd / xjb from " + LegacyCustomizations.NAMESPACE_URI + " to " + Customizations.NAMESPACE_URI);
             return true;
         }
         return false;
@@ -50,7 +49,7 @@ public class ComposedIgnoring implements Ignoring {
             return true;
         }
         if (legacyIgnoring != null && legacyIgnoring.isIgnored(enumOutline)) {
-            logger.warn("Please migrate your namespace in xsd / xjb from " + legacyIgnoring.getIgnoredCustomizationElementNames() + " to " + ignoring.getIgnoredCustomizationElementNames());
+            logger.warn("Please migrate your namespace in xsd / xjb from " + LegacyCustomizations.NAMESPACE_URI + " to " + Customizations.NAMESPACE_URI);
             return true;
         }
         return false;
@@ -61,7 +60,7 @@ public class ComposedIgnoring implements Ignoring {
             return true;
         }
         if (legacyIgnoring != null && legacyIgnoring.isIgnored(fieldOutline)) {
-            logger.warn("Please migrate your namespace in xsd / xjb from " + legacyIgnoring.getIgnoredCustomizationElementNames() + " to " + ignoring.getIgnoredCustomizationElementNames());
+            logger.warn("Please migrate your namespace in xsd / xjb from " + LegacyCustomizations.NAMESPACE_URI + " to " + Customizations.NAMESPACE_URI);
             return true;
         }
         return false;
@@ -72,7 +71,7 @@ public class ComposedIgnoring implements Ignoring {
             return true;
         }
         if (legacyIgnoring != null && legacyIgnoring.isIgnored(classInfo)) {
-            logger.warn("Please migrate your namespace in xsd / xjb from " + legacyIgnoring.getIgnoredCustomizationElementNames() + " to " + ignoring.getIgnoredCustomizationElementNames());
+            logger.warn("Please migrate your namespace in xsd / xjb from " + LegacyCustomizations.NAMESPACE_URI + " to " + Customizations.NAMESPACE_URI);
             return true;
         }
         return false;
@@ -83,7 +82,7 @@ public class ComposedIgnoring implements Ignoring {
             return true;
         }
         if (legacyIgnoring != null && legacyIgnoring.isIgnored(enumLeafInfo)) {
-            logger.warn("Please migrate your namespace in xsd / xjb from " + legacyIgnoring.getIgnoredCustomizationElementNames() + " to " + ignoring.getIgnoredCustomizationElementNames());
+            logger.warn("Please migrate your namespace in xsd / xjb from " + LegacyCustomizations.NAMESPACE_URI + " to " + Customizations.NAMESPACE_URI);
             return true;
         }
         return false;
@@ -94,7 +93,7 @@ public class ComposedIgnoring implements Ignoring {
             return true;
         }
         if (legacyIgnoring != null && legacyIgnoring.isIgnored(propertyInfo)) {
-            logger.warn("Please migrate your namespace in xsd / xjb from " + legacyIgnoring.getIgnoredCustomizationElementNames() + " to " + ignoring.getIgnoredCustomizationElementNames());
+            logger.warn("Please migrate your namespace in xsd / xjb from " + LegacyCustomizations.NAMESPACE_URI + " to " + Customizations.NAMESPACE_URI);
             return true;
         }
         return false;

@@ -10,6 +10,8 @@ import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.SchemaOutputResolver;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlRootElement;
+
+import javax.xml.XMLConstants;
 import javax.xml.transform.Result;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
@@ -18,8 +20,6 @@ import javax.xml.validation.SchemaFactory;
 
 import org.junit.Test;
 import org.xml.sax.SAXException;
-
-import org.glassfish.jaxb.core.v2.WellKnownNamespace;
 
 public class DynamicSchemaTest {
 
@@ -52,7 +52,7 @@ public class DynamicSchemaTest {
 
 		@SuppressWarnings("deprecation")
 		final SchemaFactory schemaFactory = SchemaFactory
-				.newInstance(WellKnownNamespace.XML_SCHEMA);
+				.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 		final Schema schema = schemaFactory.newSchema(new DOMSource(result
 				.getNode()));
 

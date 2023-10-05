@@ -1,9 +1,11 @@
 package org.jvnet.jaxb.plugin.inheritance;
 
 import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBContextFactory;
 import jakarta.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
 
+import org.glassfish.jaxb.runtime.v2.ContextFactory;
 import org.jvnet.jaxb.util.CustomizationUtils;
 
 import com.sun.tools.xjc.model.CClassInfo;
@@ -22,8 +24,10 @@ public class Customizations {
 	private static final JAXBContext context;
 	static {
 		try {
-			context = JAXBContext.newInstance(ObjectFactory.class.getPackage()
-					.getName(), ObjectFactory.class.getClassLoader());
+            context = ContextFactory.createContext(
+                ObjectFactory.class.getPackage().getName(),
+                ObjectFactory.class.getClassLoader(),
+                null);
 		} catch (JAXBException e) {
 			throw new ExceptionInInitializerError(e);
 		}

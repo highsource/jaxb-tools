@@ -11,6 +11,8 @@ import com.sun.xml.xsom.XSSchemaSet;
 import com.sun.xml.xsom.XSSimpleType;
 import com.sun.xml.xsom.parser.XSOMParser;
 
+import javax.xml.parsers.SAXParserFactory;
+
 public class SimpleTypesAnalyzerTest extends TestCase {
 
 	public static final String NS = "urn:org.jvnet.hyperjaxb3.xsom.tests";
@@ -20,14 +22,14 @@ public class SimpleTypesAnalyzerTest extends TestCase {
 			+ "/" + "SimpleTypesAnalyze.xsd";
 
 	public XSSchemaSet parse(String resource) throws Exception {
-		final XSOMParser parser = new XSOMParser();
+		final XSOMParser parser = new XSOMParser(SAXParserFactory.newInstance());
 		parser.setErrorHandler(null);
 		parser.setEntityResolver(null);
 
 		final URL resourceUrl = getClass().getClassLoader().getResource(
 				resource);
 		// parser.parseSchema(
-		//				
+		//
 		// new File("myschema.xsd"));
 		// parser.parseSchema( new File("XHTML.xsd"));
 		parser.parse(resourceUrl);
@@ -82,12 +84,12 @@ public class SimpleTypesAnalyzerTest extends TestCase {
 				.getMaxLength(length));
 		Assert.assertEquals(Long.valueOf(8), SimpleTypeAnalyzer
 				.getLength(length));
-		
+
 		Assert.assertEquals(Long.valueOf(5), SimpleTypeAnalyzer
 				.getTotalDigits(digits));
 		Assert.assertEquals(Long.valueOf(2), SimpleTypeAnalyzer
 				.getFractionDigits(digits));
-		
+
 		Assert.assertEquals(Long.valueOf(3), SimpleTypeAnalyzer
 				.getTotalDigits(totalDigits));
 		Assert.assertEquals(null, SimpleTypeAnalyzer

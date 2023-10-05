@@ -26,4 +26,27 @@
  		<xsd:attribute name="value" type="xsd:string" use="required"/>
 	</xsd:complexType>
 
+  <xsd:element name = "issue112">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:choice minOccurs = "0" maxOccurs = "unbounded">
+          <xsd:element ref = "test:issue112A"/>
+          <xsd:element ref = "test:issue112Ext"/>
+        </xsd:choice>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+
+  <xsd:element name = "issue112A">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="b" type="xsd:string"/>
+        <xsd:element name="c" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name = "issue112Ext"/>
+
 </xsd:schema>

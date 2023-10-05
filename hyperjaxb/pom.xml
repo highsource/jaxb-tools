@@ -21,9 +21,9 @@
 	<properties>
 		<hsqldb.version>2.7.2</hsqldb.version>
 		<derby.version>10.14.2.0</derby.version>
-		<jpa-api.version>3.0.0</jpa-api.version>
-		<hibernate-entitymanager.version>5.5.9.Final</hibernate-entitymanager.version>
-    <eclipselink.version>3.0.3</eclipselink.version>
+		<jpa-api.version>3.1.0</jpa-api.version>
+		<hibernate-core.version>6.3.1.Final</hibernate-core.version>
+    <eclipselink.version>4.0.2</eclipselink.version>
 	</properties>
 	<build>
 		<defaultGoal>install</defaultGoal>
@@ -72,9 +72,9 @@
       </dependency>
       <!-- Hibernate -->
       <dependency>
-        <groupId>org.hibernate</groupId>
-        <artifactId>hibernate-core-jakarta</artifactId>
-        <version>${hibernate-entitymanager.version}</version>
+        <groupId>org.hibernate.orm</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>${hibernate-core.version}</version>
       </dependency>
       <!-- Java Persistence API -->
 			<dependency>
@@ -93,7 +93,6 @@
 				<groupId>org.hsqldb</groupId>
 				<artifactId>hsqldb</artifactId>
 				<version>${hsqldb.version}</version>
-        <classifier>jdk8</classifier>
 			</dependency>
 			<!-- Derby -->
 			<dependency>

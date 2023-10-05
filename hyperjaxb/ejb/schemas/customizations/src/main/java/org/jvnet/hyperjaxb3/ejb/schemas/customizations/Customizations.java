@@ -109,7 +109,7 @@ public class Customizations {
 	public static final QName EMBEDDED_ELEMENT_NAME = hj("embedded");
 
 	public static QName GENERATED_ELEMENT_NAME = new QName(
-			"http://jaxb2-commons.dev.java.net/basic", "generated");
+			"urn:jaxb.jvnet.org:plugin", "generated");
 
 
 

@@ -18,9 +18,9 @@ from previous releases to newers one.
 
 ## Java versions
 
-This project supports Java 8 and higher.
+This project supports Java 11 and higher.
 
-The build is tested against JDK8, JDK11 and JDK17.
+The build is tested against JDK11 and JDK17.
 
 ## [Documentation](https://github.com/highsource/jaxb-tools/wiki)
 
@@ -65,7 +65,7 @@ It wraps and enhances the [JAXB Schema Compiler (XJC)](https://docs.oracle.com/j
       <plugin>
         <groupId>org.jvnet.jaxb</groupId>
         <artifactId>jaxb-maven-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>4.0.0</version>
         <executions>
           <execution>
             <goals>
@@ -82,11 +82,13 @@ It wraps and enhances the [JAXB Schema Compiler (XJC)](https://docs.oracle.com/j
 
 ### JAXB Versions
 
-The current version 3.X of this plugin supports only JAXB 3.X (Jakarta based).
+The current version 4.X of this plugin supports only JAXB 4.X (Jakarta based).
 
-If you need an older JAXB version, you can use one of the following variants, which are no longer supported:
+Versions 2.X and 3.X supports JAXB 2.3 and JAXB 3.0 with JDK8 support and baseline :
+* [`org.jvnet.jaxb:jaxb-maven-plugin:3.0.1`](https://github.com/highsource/jaxb-tools/tree/jaxb-tools-3.x) - JAXB 3.0
+* [`org.jvnet.jaxb:jaxb-maven-plugin:2.0.9`](https://github.com/highsource/jaxb-tools/tree/jaxb-tools-2.x) - JAXB 2.3
 
-* [`org.jvnet.jaxb:jaxb-maven-plugin:2.0.9`](https://github.com/highsource/jaxb-tools/tree/jaxb-tools-2.x) - JAXB 2.3.
+If you need an older JAXB version, you can use one of the following variants, which are no longer supported :
 * `org.jvnet.jaxb2.maven2:maven-jaxb22-plugin:0.15.1` - JAXB 2.2.
 * `org.jvnet.jaxb2.maven2:maven-jaxb21-plugin:0.15.2` - JAXB 2.1.
 * `org.jvnet.jaxb2.maven2:maven-jaxb20-plugin:0.15.2` - JAXB 2.0.
@@ -99,13 +101,13 @@ please file it [on their project page](https://github.com/mojohaus/jaxb2-maven-p
 # JAXB Plugins
 
 JAXB Plugins (former JAXB Basics) is an [open source](https://github.com/highsource/jaxb-tools/blob/master/LICENSE) project
-which provides useful plugins and tools for [JAXB 3.x reference implementation](https://github.com/eclipse-ee4j/jaxb-ri/tree/3.0.2-RI).
+which provides useful plugins and tools for [JAXB 4.x reference implementation](https://github.com/eclipse-ee4j/jaxb-ri/tree/4.0.2-RI).
 
 ## Documentation
 
 Please refer to the [wiki](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Basic) for documentation.
 
-JAXB Basics can only be used with JAXB/XJC 3.x.
+JAXB Basics can only be used with JAXB/XJC 4.x.
 
 ## Using JAXB Basics
 

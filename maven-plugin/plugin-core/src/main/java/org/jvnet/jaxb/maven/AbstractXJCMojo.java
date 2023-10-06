@@ -1122,7 +1122,7 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 		this.project = project;
 	}
 
-	private static final String XML_SCHEMA_CLASS_QNAME = "javax.xml.bind.annotation."
+	private static final String XML_SCHEMA_CLASS_QNAME = "jakarta.xml.bind.annotation."
 			+ XML_SCHEMA_CLASS_NAME;
 
 	public ArtifactResolver getArtifactResolver() {
@@ -1145,7 +1145,7 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 		this.artifactMetadataSource = artifactMetadataSource;
 	}
 
-	private static final String XML_SCHEMA_RESOURCE_QNAME = "/javax/xml/bind/annotation/"
+	private static final String XML_SCHEMA_RESOURCE_QNAME = "/jakarta/xml/bind/annotation/"
 			+ XML_SCHEMA_RESOURCE_NAME;
 
 	public ArtifactFactory getArtifactFactory() {
@@ -1166,7 +1166,7 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 		this.localRepository = localRepository;
 	}
 
-	private static final String XML_ELEMENT_REF_CLASS_QNAME = "javax.xml.bind.annotation."
+	private static final String XML_ELEMENT_REF_CLASS_QNAME = "jakarta.xml.bind.annotation."
 			+ XML_ELEMENT_REF_CLASS_NAME;
 
 	public MavenProjectBuilder getMavenProjectBuilder() {
@@ -1203,26 +1203,9 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 				location = draftLocation;
 			}
 			getLog().info("JAXB API is loaded from the [" + location + "].");
-
-			try {
-				xmlSchemaClass.getMethod("location");
-
-				final Class<?> xmlElementRefClass = Class
-						.forName(XML_ELEMENT_REF_CLASS_QNAME);
-
-				try {
-					xmlElementRefClass.getMethod("required");
-					getLog().info("Detected JAXB API version [2.2].");
-				} catch (NoSuchMethodException nsmex2) {
-					getLog().info("Detected JAXB API version [2.1].");
-				}
-			} catch (NoSuchMethodException nsmex1) {
-				getLog().info("Detected JAXB API version [2.0].");
-
-			}
 		} catch (ClassNotFoundException cnfex) {
 			getLog().error(
-					"Could not find JAXB 2.x API classes. Make sure JAXB 2.x API is on the classpath.");
+					"Could not find JAXB Jakarta API classes. Make sure JAXB Jakarta API is on the classpath.");
 		}
 	}
 

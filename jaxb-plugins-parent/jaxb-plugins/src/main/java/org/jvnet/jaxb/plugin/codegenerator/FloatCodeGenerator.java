@@ -16,7 +16,7 @@ public class FloatCodeGenerator<A extends Arguments<A>> extends
 	@Override
 	public void generate(JBlock block, JType type,
 			Collection<JType> possibleTypes, boolean isAlwaysSet, A arguments) {
-		getImplementor().onShort(arguments, block, isAlwaysSet);
+		getImplementor().onFloat(arguments, block, isAlwaysSet);
 	}
 
 }

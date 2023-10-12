@@ -41,6 +41,14 @@ import org.sonatype.plexus.build.incremental.DefaultBuildContext;
 public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 		DependencyResourceResolver {
 
+    /**
+     * This method should be overriden in extending classes to get real value
+     * @return currently running XJC version
+     */
+    public XJCVersion getVersion() {
+        return XJCVersion.UNDEFINED;
+    }
+
 	@Parameter(defaultValue = "${settings}", readonly = true)
 	private Settings settings;
 

@@ -95,13 +95,23 @@ public abstract class RawXJCMojo<O> extends AbstractXJCMojo<O> {
 	public static final String ADD_IF_EXISTS_TO_EPISODE_SCHEMA_BINDINGS_TRANSFORMATION_RESOURCE_NAME = "/"
 			+ RawXJCMojo.class.getPackage().getName().replace('.', '/') + "/addIfExistsToEpisodeSchemaBindings.xslt";
 
+    private final XJCVersion version;
+
 	private Collection<Artifact> xjcPluginArtifacts;
 
 	private Collection<File> xjcPluginFiles;
 
 	private List<URL> xjcPluginURLs;
 
-	public Collection<Artifact> getXjcPluginArtifacts() {
+    public RawXJCMojo(XJCVersion version) {
+        this.version = version;
+    }
+
+    public XJCVersion getVersion() {
+        return version;
+    }
+
+    public Collection<Artifact> getXjcPluginArtifacts() {
 		return xjcPluginArtifacts;
 	}
 
@@ -469,9 +479,9 @@ public abstract class RawXJCMojo<O> extends AbstractXJCMojo<O> {
 			} else {
 				final boolean isUpToDate = isUpToDate();
 				if (!isUpToDate) {
-					getLog().info("Sources are not up-to-date, XJC will be executed.");
+					getLog().info("Sources are not up-to-date, XJC (version " + getVersion().getRaw() + ") will be executed.");
 				} else {
-					getLog().info("Sources are up-to-date, XJC will be skipped.");
+					getLog().info("Sources are up-to-date, XJC (version " + getVersion().getRaw() + ") will be skipped.");
 					return;
 				}
 			}

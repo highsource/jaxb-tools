@@ -67,8 +67,8 @@
               <outputDirectory>${project.build.directory}/generated-docs</outputDirectory>
               <backend>html5</backend>
               <preserveDirectories>true</preserveDirectories>
-              <sourceHighlighter>coderay</sourceHighlighter>
               <attributes>
+                <source-highlighter>coderay</source-highlighter>
                 <release-version>${project.version}</release-version>
                 <linkcss>true</linkcss>
                 <imagesdir>./</imagesdir>
@@ -93,7 +93,9 @@
               <outputDirectory>${project.build.directory}/generated-docs-pdf</outputDirectory>
               <preserveDirectories>true</preserveDirectories>
               <sourceDirectory>src/main/docs/jaxb-tools-docs</sourceDirectory>
-              <sourceHighlighter>coderay</sourceHighlighter>
+              <attributes>
+                <source-highlighter>coderay</source-highlighter>
+              </attributes>
             </configuration>
           </execution>
         </executions>

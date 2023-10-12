@@ -1059,10 +1059,10 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 	}
 
 	/**
-	 * Version of the JAXB specification (ex. 2.0, 2.1 or 2.2).
+	 * Version of the JAXB specification (ex. 2.3, 3.0, LATEST).
 	 */
-	@Parameter(defaultValue = "2.2")
-	private String specVersion = "2.2";
+	@Parameter(defaultValue = "LATEST")
+	private String specVersion = "LATEST";
 
 	public String getSpecVersion() {
 		return specVersion;

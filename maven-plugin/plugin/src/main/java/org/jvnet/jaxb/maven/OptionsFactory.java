@@ -28,7 +28,7 @@ public class OptionsFactory implements IOptionsFactory<Options> {
 
 		options.classpaths.addAll(optionsConfiguration.getPlugins());
 
-		options.target = SpecVersion.V3_0;
+        computeTarget(options, optionsConfiguration.getSpecVersion());
 
 		final String encoding = optionsConfiguration.getEncoding();
 
@@ -95,7 +95,18 @@ public class OptionsFactory implements IOptionsFactory<Options> {
 		return options;
 	}
 
-	private String createEncoding(String encoding)
+    private void computeTarget(Options options, String specVersion) throws MojoExecutionException {
+        if ("LATEST".equals(specVersion)) {
+            specVersion = SpecVersion.LATEST.getVersion();
+        }
+        try {
+            options.parseArgument(new String[]{ "-target", specVersion }, 0);
+        } catch (BadCommandLineException e) {
+            throw new MojoExecutionException(MessageFormat.format("Unsupported specVersion [{0}].", specVersion), e);
+        }
+    }
+
+    private String createEncoding(String encoding)
 			throws MojoExecutionException {
 		if (encoding == null) {
 			return null;

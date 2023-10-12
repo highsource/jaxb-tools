@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Iterator;
+import java.util.Map;
 
 import com.sun.tools.xjc.Messages;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -58,6 +59,10 @@ public class XJCMojo extends RawXJCMojo<Options> {
 		final Model model = ModelLoader.load(options, new JCodeModel(),
 				new LoggingErrorReceiver("Error while parsing schema(s).",
 						getLog(), getVerbose()));
+
+        for (Map.Entry<String, String> pair : options.classNameReplacer.entrySet()) {
+            model.codeModel.addClassNameReplacer(pair.getKey(), pair.getValue());
+        }
 
 		if (model == null)
 			throw new MojoExecutionException(

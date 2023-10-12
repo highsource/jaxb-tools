@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Iterator;
 
+import com.sun.tools.xjc.Messages;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -29,7 +30,15 @@ public class XJC2Mojo extends RawXJC2Mojo<Options> {
 
 	private final IOptionsFactory<Options> optionsFactory = new OptionsFactory();
 
-	@Override
+    public XJCMojo() {
+        super(parseXJCVersion());
+    }
+
+    private static XJCVersion parseXJCVersion() {
+        return new XJCVersion(Messages.format("Driver.BuildID"));
+    }
+
+    @Override
 	protected IOptionsFactory<Options> getOptionsFactory() {
 		return optionsFactory;
 	}

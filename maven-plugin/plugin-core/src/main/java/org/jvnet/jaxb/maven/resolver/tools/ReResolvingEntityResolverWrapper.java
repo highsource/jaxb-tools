@@ -5,6 +5,7 @@ import java.text.MessageFormat;
 import java.util.Optional;
 
 import org.apache.maven.plugin.logging.Log;
+import org.jvnet.jaxb.maven.XJCVersion;
 import org.jvnet.jaxb.maven.plugin.logging.NullLog;
 import org.jvnet.jaxb.maven.util.StringUtils;
 import org.xml.sax.EntityResolver;
@@ -17,21 +18,41 @@ public class ReResolvingEntityResolverWrapper implements EntityResolver {
     private final Log log;
     private final boolean disableSystemIdResolution;
 
-	public ReResolvingEntityResolverWrapper(EntityResolver entityResolver, Log log, boolean disableSystemIdResolution) {
+	public ReResolvingEntityResolverWrapper(EntityResolver entityResolver, Log log, boolean disableSystemIdResolution, XJCVersion version) {
 		if (entityResolver == null) {
 			throw new IllegalArgumentException("Provided entity resolver must not be null.");
 		}
 		this.entityResolver = entityResolver;
 		this.log = Optional.ofNullable(log).orElse(NullLog.INSTANCE);
-        this.disableSystemIdResolution = disableSystemIdResolution;
-        if (disableSystemIdResolution) {
-            log.warn("ReResolvingEntityResolverWrapper : systemIdResolution fix is disable, you may have problems with schema resolution.");
+        this.disableSystemIdResolution = computeDisableSystemIdResolution(disableSystemIdResolution, version);
+	}
+
+    private boolean computeDisableSystemIdResolution(boolean disableSystemIdResolution, XJCVersion version) {
+        boolean finalDisableSystemIdResolution = disableSystemIdResolution;
+        boolean versionCheck = false;
+        if (version.isKnown()) {
+            versionCheck = true;
+            if (version.gte(4, 0, 4) && !disableSystemIdResolution) {
+                log.info("ReResolvingEntityResolverWrapper : systemIdResolution fix has been auto-disabled (current running XJC is " + version.getRaw() + ").");
+                finalDisableSystemIdResolution = true;
+            } else if (version.gte(4, 0, 0) && version.lt(4, 0, 4) && disableSystemIdResolution) {
+                log.info("ReResolvingEntityResolverWrapper : systemIdResolution fix has been auto-enabled (current running XJC is " + version.getRaw() + ").");
+                finalDisableSystemIdResolution = false;
+            }
+        }
+        if (finalDisableSystemIdResolution) {
+            if (!versionCheck) {
+                log.warn("ReResolvingEntityResolverWrapper : systemIdResolution fix is disable, you may have problems with schema resolution.");
+            } else {
+                log.debug("ReResolvingEntityResolverWrapper : systemIdResolution fix is disabled");
+            }
         } else {
             log.debug("ReResolvingEntityResolverWrapper : systemIdResolution fix is enabled");
         }
-	}
+        return finalDisableSystemIdResolution;
+    }
 
-	@Override
+    @Override
 	public InputSource resolveEntity(String publicId, String systemId)
 			throws SAXException, IOException {
 		log.debug(MessageFormat.format("ReResolvingEntityResolverWrapper : Resolving publicId [{0}], systemId [{1}].", publicId, systemId));

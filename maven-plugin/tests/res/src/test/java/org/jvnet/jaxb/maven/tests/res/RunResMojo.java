@@ -21,7 +21,7 @@ public class RunResMojo extends RunXJCMojo {
 		final DependencyResource purchaseorder_xsd_dependencyResource = new DependencyResource();
 		purchaseorder_xsd.setDependencyResource(purchaseorder_xsd_dependencyResource);
 		purchaseorder_xsd.getDependencyResource().setGroupId("org.jvnet.jaxb");
-		purchaseorder_xsd.getDependencyResource().setArtifactId("jaxb-maven-plugin-tests-po-2.3");
+		purchaseorder_xsd.getDependencyResource().setArtifactId("jaxb-maven-plugin-tests-p_o");
 		purchaseorder_xsd.getDependencyResource().setResource("purchaseorder.xsd");
 		mojo.setSchemas(new ResourceEntry[]{
 				purchaseorder_xsd

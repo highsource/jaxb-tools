@@ -903,7 +903,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	}
 
 	protected EntityResolver createEntityResolver(CatalogResolver catalogResolver) {
-		final EntityResolver entityResolver = new ReResolvingEntityResolverWrapper(catalogResolver, getLog(), getDisableSystemIdResolution());
+		final EntityResolver entityResolver = new ReResolvingEntityResolverWrapper(catalogResolver, getLog(), getDisableSystemIdResolution(), getVersion());
 		return entityResolver;
 	}
 

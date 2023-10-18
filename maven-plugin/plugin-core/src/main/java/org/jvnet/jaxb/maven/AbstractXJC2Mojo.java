@@ -443,8 +443,11 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 
     /**
      * If 'true', the fix for issue #306 will no more be applied.
+     *
+     * @deprecated (forRemoval = true, since = "2.0.10")
      */
-    @Parameter(defaultValue = "false", property = "maven.xjc2.disableSystemIdResolution")
+    @Parameter(defaultValue = "true", property = "maven.xjc2.disableSystemIdResolution")
+    @Deprecated
     private boolean disableSystemIdResolution;
 
     public boolean getDisableSystemIdResolution() {

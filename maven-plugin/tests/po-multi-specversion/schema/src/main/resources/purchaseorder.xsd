@@ -1,9 +1,10 @@
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb" jaxb:version="3.0">
 
   <xsd:annotation>
     <xsd:documentation xml:lang="en">
-     Purchase order schema for Example.com.
-     Copyright 2000 Example.com. All rights reserved.
+      Purchase order schema for Example.com.
+      Copyright 2000 Example.com. All rights reserved.
     </xsd:documentation>
   </xsd:annotation>
 
@@ -16,21 +17,20 @@
       <xsd:element name="shipTo" type="USAddress"/>
       <xsd:element name="billTo" type="USAddress"/>
       <xsd:element ref="comment" minOccurs="0"/>
-      <xsd:element name="items"  type="Items"/>
+      <xsd:element name="items" type="Items"/>
     </xsd:sequence>
     <xsd:attribute name="orderDate" type="xsd:date"/>
   </xsd:complexType>
 
   <xsd:complexType name="USAddress">
     <xsd:sequence>
-      <xsd:element name="name"   type="xsd:string"/>
+      <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="street" type="xsd:string"/>
-      <xsd:element name="city"   type="xsd:string"/>
-      <xsd:element name="state"  type="xsd:string"/>
-      <xsd:element name="zip"    type="xsd:decimal"/>
+      <xsd:element name="city" type="xsd:string"/>
+      <xsd:element name="state" type="xsd:string"/>
+      <xsd:element name="zip" type="xsd:decimal"/>
     </xsd:sequence>
-    <xsd:attribute name="country" type="xsd:NMTOKEN"
-                   fixed="US"/>
+    <xsd:attribute name="country" type="xsd:NMTOKEN" fixed="US"/>
   </xsd:complexType>
 
   <xsd:complexType name="Items">
@@ -46,8 +46,8 @@
                 </xsd:restriction>
               </xsd:simpleType>
             </xsd:element>
-            <xsd:element name="USPrice"  type="xsd:decimal"/>
-            <xsd:element ref="comment"   minOccurs="0"/>
+            <xsd:element name="USPrice" type="xsd:decimal"/>
+            <xsd:element ref="comment" minOccurs="0"/>
             <xsd:element name="shipDate" type="xsd:date" minOccurs="0"/>
           </xsd:sequence>
           <xsd:attribute name="partNum" type="SKU" use="required"/>

@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>jaxb-maven-plugin-tests-po-multi-specversion-javax</artifactId>
+  <parent>
+    <groupId>org.jvnet.jaxb</groupId>
+    <artifactId>jaxb-maven-plugin-tests-po-multi-specversion</artifactId>
+    <version>4.0.1-SNAPSHOT</version>
+  </parent>
+  <packaging>jar</packaging>
+  <name>JAXB Tools :: Maven Plugin :: Test [po-multi-specversion:javax]</name>
+  <dependencies>
+    <dependency>
+      <groupId>org.jvnet.jaxb</groupId>
+      <artifactId>jaxb-maven-plugin-tests-po-multi-specversion-schema</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>2.3.8</version>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+      <version>2.3.3</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jvnet.jaxb</groupId>
+        <artifactId>jaxb-maven-plugin</artifactId>
+        <configuration>
+          <specVersion>2.3</specVersion>
+          <schemas>
+            <schema>
+              <url>maven:org.jvnet.jaxb:jaxb-maven-plugin-tests-po-multi-specversion-schema!/purchaseorder.xsd</url>
+            </schema>
+          </schemas>
+          <scanDependenciesForBindings>true</scanDependenciesForBindings>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

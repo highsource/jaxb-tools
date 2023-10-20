@@ -191,8 +191,7 @@ public class SimpleToStringPlugin extends
         // eg. -XsimpleToString:DefaultDateStyle=SIMPLE_STYLE
         String arg = args[i].trim();
 
-        if (arg.startsWith(TOSTRING_STYLE_PARAM))
-        {
+        if (arg.startsWith(TOSTRING_STYLE_PARAM)) {
             defaultDateFormatterRef = arg.substring(TOSTRING_STYLE_PARAM.length());
             try {
                 DateTimeFormatter.class.getField(defaultDateFormatterRef);
@@ -204,6 +203,7 @@ public class SimpleToStringPlugin extends
             try {
                 DateTimeFormatter.ofPattern(defaultDateFormatterRef);
                 defaultDateFormatterPattern = defaultDateFormatterRef;
+                defaultDateFormatterRef = null;
             } catch (IllegalArgumentException e) {
                 throw new BadCommandLineException(e.getMessage());
             }

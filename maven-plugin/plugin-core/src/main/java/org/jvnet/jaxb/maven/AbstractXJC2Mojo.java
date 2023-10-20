@@ -939,9 +939,13 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * (via <code>scd="x-schema::..."</code>) in the generated episode files.
 	 * This is necessary to avoid the annoying `SCD "x-schema::tns" didn't
 	 * match any schema component` errors.
+     *
+     * @deprecated since 2.0.10 - this is kept for retro-compatibility but will be removed since
+     * original bug has been resolved in 2.3.9 JAXB-RI
 	 */
-	@Parameter(property = "maven.xjc2.addIfExistsToEpisodeSchemaBindings", defaultValue = "true")
-	private boolean addIfExistsToEpisodeSchemaBindings = true;
+    @Deprecated
+	@Parameter(property = "maven.xjc2.addIfExistsToEpisodeSchemaBindings", defaultValue = "false")
+	private boolean addIfExistsToEpisodeSchemaBindings = false;
 
 	public boolean isAddIfExistsToEpisodeSchemaBindings() {
 		return this.addIfExistsToEpisodeSchemaBindings;

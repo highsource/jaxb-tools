@@ -103,6 +103,8 @@ please file it [on their project page](https://github.com/mojohaus/jaxb2-maven-p
 JAXB Plugins (former JAXB Basics) is an [open source](https://github.com/highsource/jaxb-tools/blob/master/LICENSE) project
 which provides useful plugins and tools for [JAXB 4.x reference implementation](https://github.com/eclipse-ee4j/jaxb-ri/tree/4.0.2-RI).
 
+For the current version 4.X and the previous version 3.X, its artifacts are named `org.jvnet.jaxb:jaxb-plugins`, while the previous verions 2.X were named `org.jvnet.jaxb:jaxb2-basics`. So, please replace all "jaxb2-basics" with "jaxb-plugins" in the following documentations (also in wiki) if you use versions 3.X and 4.X.
+
 ## Documentation
 
 Please refer to the [wiki](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Basic) for documentation.

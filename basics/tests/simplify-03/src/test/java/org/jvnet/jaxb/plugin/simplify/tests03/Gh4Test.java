@@ -1,4 +1,4 @@
-package org.jvnet.jaxb2_commons.plugin.simplify.tests01;
+package org.jvnet.jaxb.plugin.simplify.tests03;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -20,9 +20,9 @@ public class Gh4Test {
 	public void compiles() {
 		final SimplifyReferencesPropertyAsElementPropertyType item = new SimplifyReferencesPropertyAsElementPropertyType();
 		item.getBases();
-        item.isSetBases();
+        item.getBasesLength();
 		item.getBaseElements();
-        item.isSetBaseElements();
+        item.getBaseElementsLength();
 	}
 
 	@Test
@@ -37,7 +37,7 @@ public class Gh4Test {
 										"simplifyReferencesPropertyAsElementProperty.xml")))
 				.getValue();
 
-		Assert.assertEquals(3, value.getBases().size());
-		Assert.assertEquals(3, value.getBaseElements().size());
+		Assert.assertEquals(3, value.getBasesLength());
+		Assert.assertEquals(3, value.getBaseElementsLength());
 	}
 }

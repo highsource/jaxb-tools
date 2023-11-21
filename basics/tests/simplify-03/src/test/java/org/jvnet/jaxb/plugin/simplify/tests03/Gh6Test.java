@@ -1,4 +1,4 @@
-package org.jvnet.jaxb2_commons.plugin.simplify.tests01;
+package org.jvnet.jaxb.plugin.simplify.tests03;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -20,9 +20,9 @@ public class Gh6Test {
 	public void compiles() {
 		final SimplifyElementsPropertyAsElementPropertyType item = new SimplifyElementsPropertyAsElementPropertyType();
 		item.getInts();
-        item.isSetInts();
+        item.getIntsLength();
 		item.getStrings();
-        item.isSetStrings();
+        item.getStringsLength();
 	}
 
 	public void testElementsPropertyAsElementPropertyType() throws Exception {
@@ -33,7 +33,7 @@ public class Gh6Test {
 						getClass().getResourceAsStream("simplifyElementsPropertyAsElementProperty.xml")))
 				.getValue();
 
-		Assert.assertEquals(3, value.getStrings().size());
-		Assert.assertEquals(3, value.getInts().size());
+		Assert.assertEquals(3, value.getStringsLength());
+		Assert.assertEquals(3, value.getIntsLength());
 	}
 }

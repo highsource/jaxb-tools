@@ -1,4 +1,4 @@
-package org.jvnet.jaxb2_commons.plugin.simplify.tests01;
+package org.jvnet.jaxb.plugin.simplify.tests03;
 
 import java.io.StringWriter;
 
@@ -17,22 +17,20 @@ public class Gh1Test {
 	{
 		final Gh1 item = new Gh1();
 		item.getAs();
-        item.isSetAs();
-        item.unsetAs();
+        item.getAsLength();
 		item.getBs();
-        item.isSetBs();
-        item.unsetBs();
+        item.getBsLength();
 		item.getMixedContent();
-
+        item.getMixedContentLength();
 	}
 
 	@Test
 	public void contextIsSuccessfullyCreated() throws JAXBException {
 		final JAXBContext context = JAXBContext.newInstance(Gh1.class);
 		final Gh1 value = new Gh1();
-		value.getAs().add("a");
-		value.getBs().add(2);
-		value.getMixedContent().add("Test");
+		value.setAs(new String[]{ "a" });
+		value.setBs(new int[]{ 2 });
+		value.setMixedContent(new String[]{ "Test" });
 
 		final StringWriter sw = new StringWriter();
 		context.createMarshaller().marshal(

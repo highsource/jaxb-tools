@@ -252,8 +252,8 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 			final CElementInfo elementInfo) {
 		final CElementPropertyInfo elementPropertyInfo;
 		final String propertyName = createPropertyName(model, property, element);
-		final CElementPropertyInfo originalPropertyInfo = elementInfo
-				.getProperty();
+		final CElementPropertyInfo originalPropertyInfo = elementInfo.getProperty();
+
 		elementPropertyInfo = new CElementPropertyInfo(propertyName,
 				property.isCollection() ? CollectionMode.REPEATED_ELEMENT
 						: CollectionMode.NOT_REPEATED, ID.NONE, null,
@@ -264,6 +264,9 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 		if (adapter != null) {
 			elementPropertyInfo.setAdapter(adapter);
 		}
+        if (property.realization != null) {
+            elementPropertyInfo.realization = property.realization;
+        }
 
 		elementPropertyInfo.getTypes().add(
 				new CTypeRef(elementInfo.getContentType(), element
@@ -282,6 +285,9 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 						: CollectionMode.NOT_REPEATED, ID.NONE, null,
 				element.getSchemaComponent(), element.getCustomizations(),
 				element.getLocator(), false);
+        if (property.realization != null) {
+            elementPropertyInfo.realization = property.realization;
+        }
 		elementPropertyInfo.getTypes().add(
 				new CTypeRef(classInfo, element.getElementName(), classInfo
 						.getTypeName(), false, null));
@@ -313,6 +319,9 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 				element.getCustomizations(), element.getLocator(),
 				property.isDummy(), property.isContent(),
 				property.isMixedExtendedCust());
+        if (property.realization != null) {
+            referencePropertyInfo.realization = property.realization;
+        }
 		referencePropertyInfo.getElements().add(element);
 		return referencePropertyInfo;
 	}
@@ -325,6 +334,9 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 				true, property.getSchemaComponent(),
 				property.getCustomizations(), property.getLocator(), false,
 				true, property.isMixedExtendedCust());
+        if (property.realization != null) {
+            referencePropertyInfo.realization = property.realization;
+        }
 		return referencePropertyInfo;
 	}
 
@@ -343,6 +355,9 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 		if (adapter != null) {
 			elementPropertyInfo.setAdapter(adapter);
 		}
+        if (property.realization != null) {
+            elementPropertyInfo.realization = property.realization;
+        }
 		elementPropertyInfo.getTypes().add(typeRef);
 		return elementPropertyInfo;
 	}

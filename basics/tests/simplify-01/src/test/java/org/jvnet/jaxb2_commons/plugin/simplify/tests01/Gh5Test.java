@@ -20,7 +20,9 @@ public class Gh5Test {
 	public void compiles() {
 		final SimplifyReferencesPropertyAsReferencePropertyType item = new SimplifyReferencesPropertyAsReferencePropertyType();
 		item.getBases();
+        item.isSetBases();
 		item.getBaseElements();
+        item.isSetBaseElements();
 	}
 
 	@Test

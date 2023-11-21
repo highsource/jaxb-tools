@@ -1,4 +1,4 @@
-package org.jvnet.jaxb2_commons.plugin.simplify.tests01;
+package org.jvnet.jaxb.plugin.simplify.tests03;
 
 import java.util.Date;
 
@@ -13,12 +13,9 @@ public class Gh2Test {
 		final Gh2 item = new Gh2();
 		@SuppressWarnings("unused")
 		final String a = item.getA();
-        item.isSetA();
 		@SuppressWarnings("unused")
 		final Date b = item.getB();
-        item.isSetB();
 		@SuppressWarnings("unused")
 		final Duration c = item.getC();
-        item.isSetC();
 	}
 }

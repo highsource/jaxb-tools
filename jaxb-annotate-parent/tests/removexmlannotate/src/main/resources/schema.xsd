@@ -1,0 +1,84 @@
+<xsd:schema
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+	jaxb:version="3.0"
+	xmlns:annox="urn:jaxb.jvnet.org:annox"
+	jaxb:extensionBindingPrefixes="annox"
+	xmlns:jl="urn:jaxb.jvnet.org:annox:java.lang">
+
+	<xsd:complexType name="FooType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<annox:annotate>@java.lang.SuppressWarnings({"unchecked","rawtypes"})</annox:annotate>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="bar" type="xsd:string"/>
+			<xsd:element name="foobar" type="xsd:string">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<annox:annotate>@java.lang.SuppressWarnings({"unchecked","rawtypes"})</annox:annotate>
+						<annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+						<annox:annotate target="setter-parameter">@java.lang.Deprecated</annox:annotate>
+						<annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+						<annox:annotate target="field">@java.lang.Deprecated</annox:annotate>
+						<annox:annotate target="class">@java.lang.Deprecated</annox:annotate>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:simpleType name="two">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<annox:annotate>
+					<jl:SuppressWarnings/>
+				</annox:annotate>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="alpha">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<annox:annotate>
+							<jl:SuppressWarnings/>
+						</annox:annotate>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="issueJIIB39AType">
+		<xsd:sequence>
+			<xsd:element name="a" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="issueJIIB39A" type="issueJIIB39AType"/>
+
+	<xsd:complexType name="issueJIIB39BType">
+		<xsd:sequence>
+			<xsd:element name="b" type="issueJIIB39AType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="issueJIIB39B" type="issueJIIB39BType"/>
+
+	<xsd:complexType name="issueJIIB39CType" mixed="true">
+		<xsd:sequence>
+			<xsd:any namespace="##any" processContents="lax"/>
+		</xsd:sequence>
+		<xsd:attribute name="test" type="xsd:string" use="required"/>
+	</xsd:complexType>
+
+  <xsd:complexType name="issueJAP9Type">
+    <xsd:sequence>
+      <xsd:element name="a" type="xsd:string" />
+      <xsd:element name="b" type="xsd:string" />
+      <xsd:element name="c" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

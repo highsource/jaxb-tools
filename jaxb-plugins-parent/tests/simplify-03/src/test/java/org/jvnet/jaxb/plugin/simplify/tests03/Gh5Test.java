@@ -1,4 +1,4 @@
-package org.jvnet.jaxb.plugin.simplify.tests01;
+package org.jvnet.jaxb.plugin.simplify.tests03;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class Gh4Test {
+public class Gh5Test {
 
 	private JAXBContext context;
 
@@ -18,26 +18,26 @@ public class Gh4Test {
 
 	@Test
 	public void compiles() {
-		final SimplifyReferencesPropertyAsElementPropertyType item = new SimplifyReferencesPropertyAsElementPropertyType();
+		final SimplifyReferencesPropertyAsReferencePropertyType item = new SimplifyReferencesPropertyAsReferencePropertyType();
 		item.getBases();
-        item.isSetBases();
+        item.getBasesLength();
 		item.getBaseElements();
-        item.isSetBaseElements();
+        item.getBaseElementsLength();
 	}
 
 	@Test
 	public void unmarshalls() throws Exception {
 
 		@SuppressWarnings("unchecked")
-		SimplifyReferencesPropertyAsElementPropertyType value = ((JAXBElement<SimplifyReferencesPropertyAsElementPropertyType>) context
+		SimplifyReferencesPropertyAsReferencePropertyType value = ((JAXBElement<SimplifyReferencesPropertyAsReferencePropertyType>) context
 				.createUnmarshaller()
 				.unmarshal(
 						getClass()
 								.getResourceAsStream(
-										"simplifyReferencesPropertyAsElementProperty.xml")))
+										"simplifyReferencesPropertyAsReferenceProperty.xml")))
 				.getValue();
 
-		Assert.assertEquals(3, value.getBases().size());
-		Assert.assertEquals(3, value.getBaseElements().size());
+		Assert.assertEquals(3, value.getBasesLength());
+		Assert.assertEquals(3, value.getBaseElementsLength());
 	}
 }

@@ -3,14 +3,14 @@
 	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
 	jaxb:extensionBindingPrefixes="xjc simplify" jaxb:version="3.0">
 
-	<jaxb:globalBindings choiceContentProperty="true" generateIsSetMethod="true">
+	<jaxb:globalBindings choiceContentProperty="true" collectionType="indexed">
 		<xjc:javaType name="java.util.Date" xmlType="xs:dateTime"
-			adapter="org.jvnet.jaxb.plugin.simplify.tests01.DateAdapter" />
+			adapter="org.jvnet.jaxb.plugin.simplify.tests03.DateAdapter" />
 	</jaxb:globalBindings>
 
 	<jaxb:bindings schemaLocation="schema.xsd" node="/xs:schema">
 		<jaxb:schemaBindings>
-			<jaxb:package name="org.jvnet.jaxb.plugin.simplify.tests01" />
+			<jaxb:package name="org.jvnet.jaxb.plugin.simplify.tests03" />
 		</jaxb:schemaBindings>
 		<jaxb:bindings node="xs:complexType[@name='gh2']">
 			<simplify:property name="bOrC">

@@ -1,4 +1,4 @@
-package org.jvnet.jaxb.plugin.simplify.tests01;
+package org.jvnet.jaxb.plugin.simplify.tests03;
 
 import org.junit.Test;
 
@@ -8,12 +8,11 @@ public class Gh18Test {
 	public void compiles() {
 		final Gh18 item = new Gh18();
 		item.getA();
-        item.isSetA();
 		item.getChildren();
-        item.isSetChildren();
+        item.getChildrenLength();
 		item.getFeet();
-        item.isSetFeet();
+        item.getFeetLength();
 		item.getFoos();
-        item.isSetFoos();
+        item.getFoosLength();
 	}
 }

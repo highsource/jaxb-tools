@@ -167,6 +167,8 @@ assertEquals("##default", xannotation.getFieldsMap().get("namespace").getResult(
 
 JAXB Annotate Plugin is capable of adding or removing arbitrary annotations to/from the generated sources.
 
+It is also capable of removing all XML related annotations from the generated sources and also the `ObjectFactory`. This new capability can be used in order to generate plain Java POJO from XSD without depending on JAXB artifacts.
+
 Please refer to the [wiki](https://github.com/highsource/jaxb-tools/wiki/JAXB-Annotate-Home) for documentation.
 
 ## Usage overview

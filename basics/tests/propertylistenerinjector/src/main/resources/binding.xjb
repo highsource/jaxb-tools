@@ -1,0 +1,15 @@
+<jaxb:bindings
+  version="2.1"
+  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+  xmlns:li="urn:jaxb.jvnet.org:plugin:propertyListenerInjector"
+	jaxb:extensionBindingPrefixes="xjc li"
+	xmlns:a="a">
+
+	<jaxb:bindings schemaLocation="Person.xsd">
+    <jaxb:bindings node="/xsd:schema">
+      <li:listener>java.beans.PropertyChangeListener</li:listener>
+    </jaxb:bindings>
+	</jaxb:bindings>
+</jaxb:bindings>

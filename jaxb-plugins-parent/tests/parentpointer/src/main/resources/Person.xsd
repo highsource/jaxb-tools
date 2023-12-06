@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:element name="Person">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="firstName" type="xs:string"/>
+      <xs:element name="middleName" type="xs:string"/>
+      <xs:element name="lastName" type="xs:string"/>
+
+      <xs:element name="residentialAddress" type="Address" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="mailingAddress" type="Address" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="mailingAddressIdentical" type="xs:boolean" default="true"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:complexType name="Address">
+  <xs:sequence>
+    <xs:element name="careOf" type="xs:string" default="none" />
+    <xs:element name="street" type="xs:string"/>
+    <xs:element name="number" type="xs:int" default="42"/>
+    <xs:element name="apt" type="xs:string"/>
+    <xs:element name="city" type="xs:string"/>
+    <xs:element name="state" type="xs:string"/>
+    <xs:element name="ZIPCode" type="xs:string"/>
+  </xs:sequence>
+</xs:complexType>
+</xs:schema>

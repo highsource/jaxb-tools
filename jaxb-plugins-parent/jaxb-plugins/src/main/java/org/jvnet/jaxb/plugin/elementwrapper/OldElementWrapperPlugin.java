@@ -31,7 +31,7 @@ import com.sun.tools.xjc.model.Model;
 import com.sun.tools.xjc.model.nav.NClass;
 import com.sun.tools.xjc.model.nav.NType;
 
-public class ElementWrapperPlugin extends AbstractModelPlugin {
+public class OldElementWrapperPlugin extends AbstractModelPlugin {
 
 	@Override
 	public String getOptionName() {

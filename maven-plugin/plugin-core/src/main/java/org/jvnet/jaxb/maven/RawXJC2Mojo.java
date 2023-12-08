@@ -49,10 +49,8 @@ import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.DefaultArtifact;
 import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
 import org.apache.maven.artifact.resolver.ArtifactResolutionException;
-import org.apache.maven.artifact.resolver.filter.AndArtifactFilter;
 import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
 import org.apache.maven.artifact.resolver.filter.ScopeArtifactFilter;
-import org.apache.maven.artifact.resolver.filter.TypeArtifactFilter;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.DependencyManagement;
 import org.apache.maven.model.Resource;
@@ -396,8 +394,8 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	protected void resolveXJCPluginArtifacts()
 			throws ArtifactResolutionException, ArtifactNotFoundException, InvalidDependencyVersionException {
 
-		this.xjcPluginArtifacts = ArtifactUtils.resolveTransitively(getArtifactFactory(), getArtifactResolver(),
-				getLocalRepository(), getArtifactMetadataSource(), getPlugins(), getProject());
+		this.xjcPluginArtifacts = ArtifactUtils.resolveTransitively(getArtifactFactory(), getRepositorySystem(),
+				getMavenSession().getLocalRepository(), getArtifactMetadataSource(), getPlugins(), getProject());
 		this.xjcPluginFiles = ArtifactUtils.getFiles(this.xjcPluginArtifacts);
 		this.xjcPluginURLs = CollectionUtils.apply(this.xjcPluginFiles, IOUtils.GET_URL);
 	}
@@ -407,7 +405,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		this.episodeArtifacts = new LinkedHashSet<Artifact>();
 		{
 			final Collection<Artifact> episodeArtifacts = ArtifactUtils.resolve(getArtifactFactory(),
-					getArtifactResolver(), getLocalRepository(), getArtifactMetadataSource(), getEpisodes(),
+					getRepositorySystem(), getMavenSession().getLocalRepository(), getArtifactMetadataSource(), getEpisodes(),
 					getProject());
 			this.episodeArtifacts.addAll(episodeArtifacts);
 		}
@@ -415,11 +413,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			if (getUseDependenciesAsEpisodes()) {
 				@SuppressWarnings("unchecked")
 				final Collection<Artifact> projectArtifacts = getProject().getArtifacts();
-				final AndArtifactFilter filter = new AndArtifactFilter();
-				filter.add(new ScopeArtifactFilter(DefaultArtifact.SCOPE_COMPILE));
-				filter.add(new TypeArtifactFilter("jar"));
+				final ArtifactFilter filter = new ScopeArtifactFilter(DefaultArtifact.SCOPE_COMPILE);
 				for (Artifact artifact : projectArtifacts) {
-					if (filter.include(artifact)) {
+					if (filter.include(artifact) && "jar".equals(artifact.getType())) {
 						this.episodeArtifacts.add(artifact);
 					}
 				}
@@ -816,9 +812,8 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		final Collection<Artifact> projectArtifacts = getProject().getArtifacts();
 		final List<Artifact> compileScopeArtifacts = new ArrayList<Artifact>(projectArtifacts.size());
 		final ArtifactFilter scopeFilter = new ScopeArtifactFilter(DefaultArtifact.SCOPE_COMPILE);
-		final ArtifactFilter typeFilter = new TypeArtifactFilter("pom");
 		for (Artifact artifact : projectArtifacts) {
-			if (scopeFilter.include(artifact) && !typeFilter.include(artifact)) {
+			if (scopeFilter.include(artifact) && !"pom".equals(artifact.getType())) {
 				compileScopeArtifacts.add(artifact);
 			}
 		}

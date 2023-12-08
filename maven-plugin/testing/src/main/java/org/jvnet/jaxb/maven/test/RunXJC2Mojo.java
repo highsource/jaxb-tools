@@ -6,6 +6,9 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import org.apache.maven.execution.DefaultMavenExecutionRequest;
+import org.apache.maven.execution.MavenExecutionRequest;
+import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.Mojo;
 import org.apache.maven.project.MavenProject;
 import org.jvnet.jaxb.maven.AbstractXJC2Mojo;
@@ -77,6 +80,9 @@ public class RunXJC2Mojo extends TestCase {
 
 	protected void configureMojo(final AbstractXJC2Mojo<Options> mojo) {
 		mojo.setProject(new MavenProject());
+        MavenExecutionRequest request = new DefaultMavenExecutionRequest();
+        MavenSession mavenSession = new MavenSession(null, null, request, null);
+        mojo.setMavenSession(mavenSession);
 		mojo.setSchemaDirectory(getSchemaDirectory());
 		mojo.setGenerateDirectory(getGeneratedDirectory());
 		mojo.setGeneratePackage(getGeneratePackage());

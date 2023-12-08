@@ -13,12 +13,13 @@ import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
 import org.apache.maven.artifact.resolver.ArtifactResolutionException;
+import org.apache.maven.artifact.resolver.ArtifactResolutionRequest;
 import org.apache.maven.artifact.resolver.ArtifactResolutionResult;
-import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.artifact.InvalidDependencyVersionException;
 import org.apache.maven.project.artifact.MavenMetadataSource;
+import org.apache.maven.repository.RepositorySystem;
 import org.jvnet.jaxb.maven.util.CollectionUtils.Function;
 
 public class ArtifactUtils {
@@ -29,7 +30,7 @@ public class ArtifactUtils {
 
 	public static Collection<Artifact> resolveTransitively(
 			final ArtifactFactory artifactFactory,
-			final ArtifactResolver artifactResolver,
+			final RepositorySystem artifactResolver,
 			final ArtifactRepository localRepository,
 			final ArtifactMetadataSource artifactMetadataSource,
 			final Dependency[] dependencies, final MavenProject project)
@@ -39,29 +40,28 @@ public class ArtifactUtils {
 			return Collections.emptyList();
 		}
 
-		@SuppressWarnings("unchecked")
 		final Set<Artifact> artifacts = MavenMetadataSource.createArtifacts(
 				artifactFactory, Arrays.asList(dependencies), "runtime", null,
 				project);
 
-		final ArtifactResolutionResult artifactResolutionResult = artifactResolver
-				.resolveTransitively(artifacts,
+        ArtifactResolutionRequest request = new ArtifactResolutionRequest();
+        request.setResolveTransitively(true);
+        request.setResolveRoot(false);
+        request.setArtifact(project.getArtifact());
+        request.setArtifactDependencies(artifacts);
+        request.setRemoteRepositories(project.getRemoteArtifactRepositories());
+        request.setLocalRepository(localRepository);
 
-				project.getArtifact(),
+        final ArtifactResolutionResult artifactResolutionResult = artifactResolver.resolve(request);
 
-				project.getRemoteArtifactRepositories(), localRepository,
-						artifactMetadataSource);
-
-		@SuppressWarnings("unchecked")
-		final Set<Artifact> resolvedArtifacts = artifactResolutionResult
-				.getArtifacts();
+		final Set<Artifact> resolvedArtifacts = artifactResolutionResult.getArtifacts();
 
 		return resolvedArtifacts;
 	}
 
 	public static Collection<Artifact> resolve(
 			final ArtifactFactory artifactFactory,
-			final ArtifactResolver artifactResolver,
+			final RepositorySystem artifactResolver,
 			final ArtifactRepository localRepository,
 			final ArtifactMetadataSource artifactMetadataSource,
 			final Dependency[] dependencies, final MavenProject project)
@@ -77,9 +77,11 @@ public class ArtifactUtils {
 				project);
 
 		for (Artifact artifact : artifacts) {
-			artifactResolver.resolve(artifact,
-
-			project.getRemoteArtifactRepositories(), localRepository);
+            ArtifactResolutionRequest request = new ArtifactResolutionRequest();
+            request.setArtifact(artifact);
+            request.setRemoteRepositories(project.getRemoteArtifactRepositories());
+            request.setLocalRepository(localRepository);
+			artifactResolver.resolve(request);
 		}
 
 		final Set<Artifact> resolvedArtifacts = artifacts;

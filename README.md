@@ -13,6 +13,15 @@ The project is currently containing the following tools :
 * [JAXB Annotate Plugin](#jaxb-annotate-plugin)
 * [JAXB Hyperjaxb3](#jaxb-hyperjaxb) (Preview)
 
+Please check our [Migration Guide](https://github.com/highsource/jaxb-tools/wiki/JAXB-Tools-Migration-Guide) for any questions about migrating
+from previous releases to newers one.
+
+## Maven versions
+Starting from 2.0.10, this plugin requires maven 3.1.0 as minimal version.
+
+If you still need maven 2.x or maven 3.0.x, you can still use the previous released versions
+but you should consider upgrading maven to at least 3.1.0.
+
 ## Java versions
 
 This project supports Java 8 and higher.

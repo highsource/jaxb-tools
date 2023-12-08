@@ -17,12 +17,16 @@ package org.jvnet.jaxb.maven;
 import java.io.File;
 
 import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.artifact.repository.DefaultArtifactRepository;
+import org.apache.maven.artifact.repository.ArtifactRepositoryPolicy;
+import org.apache.maven.artifact.repository.MavenArtifactRepository;
 import org.apache.maven.artifact.repository.layout.DefaultRepositoryLayout;
+import org.apache.maven.execution.DefaultMavenExecutionRequest;
+import org.apache.maven.execution.MavenExecutionRequest;
+import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
-import org.apache.maven.project.MavenProject;
-import org.apache.maven.project.MavenProjectBuilder;
+import org.apache.maven.project.ProjectBuilder;
+import org.apache.maven.project.ProjectBuildingResult;
 
 public abstract class JAXBGenerateTest extends AbstractMojoTestCase {
 
@@ -30,13 +34,13 @@ public abstract class JAXBGenerateTest extends AbstractMojoTestCase {
 		System.setProperty("basedir", getBaseDir().getAbsolutePath());
 	}
 
-	protected MavenProjectBuilder mavenProjectBuilder;
+	protected ProjectBuilder mavenProjectBuilder;
 
 	protected void setUp() throws Exception {
 		super.setUp();
 
-		mavenProjectBuilder = (MavenProjectBuilder) getContainer().lookup(
-				MavenProjectBuilder.ROLE);
+		mavenProjectBuilder = (ProjectBuilder) getContainer().lookup(
+            ProjectBuilder.class);
 	}
 
 	protected static File getBaseDir() {
@@ -59,17 +63,22 @@ public abstract class JAXBGenerateTest extends AbstractMojoTestCase {
 		final File pom = new File(getBaseDir(),
 		"src/test/resources/test-pom.xml");
 
-        final ArtifactRepository localRepository = new DefaultArtifactRepository( "local",
+        final ArtifactRepository localRepository = new MavenArtifactRepository( "local",
+            new File(getBaseDir(), "target/test-repository").toURI().toURL().toString(),
+            new DefaultRepositoryLayout(),
+            new ArtifactRepositoryPolicy(),
+            new ArtifactRepositoryPolicy());
 
-        		new File(getBaseDir(), "target/test-repository").toURI().toURL().toString()        		, new DefaultRepositoryLayout());
+        MavenExecutionRequest request = new DefaultMavenExecutionRequest();
+        request.setLocalRepository(localRepository);
+        final MavenSession mavenSession = new MavenSession(null, null, request, null);
 
-
-		final MavenProject mavenProject = mavenProjectBuilder.build(pom, localRepository, null);
+		final ProjectBuildingResult mavenProject = mavenProjectBuilder.build(pom, null);
 
 
 		final XJC2Mojo generator = (XJC2Mojo) lookupMojo("generate", pom);
-		generator.setProject(mavenProject);
-		generator.setLocalRepository(localRepository);
+        generator.setMavenSession(mavenSession);
+        generator.setProject(mavenProject.getProject());
 		generator.setSchemaDirectory(new File(getBaseDir(),"src/test/resources/"));
 		generator.setSchemaIncludes(new String[] { "*.xsd" });
 		generator.setBindingIncludes(new String[] { "*.xjb" });

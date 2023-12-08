@@ -10,6 +10,9 @@
 	<packaging>maven-plugin</packaging>
 	<name>JAXB Tools :: Hyperjaxb3 :: Maven :: Plugin</name>
 
+  <prerequisites>
+    <maven>${maven.minimal.version}</maven>
+  </prerequisites>
 	<dependencies>
 		<dependency>
 			<groupId>org.jvnet.jaxb</groupId>
@@ -19,10 +22,20 @@
 			<groupId>org.jvnet.jaxb</groupId>
 			<artifactId>jaxb-maven-plugin</artifactId>
 		</dependency>
+    <!-- Maven plugin and api classes -->
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-plugin-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-core</artifactId>
+      <scope>provided</scope>
+    </dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-artifact</artifactId>
-			<version>${maven.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

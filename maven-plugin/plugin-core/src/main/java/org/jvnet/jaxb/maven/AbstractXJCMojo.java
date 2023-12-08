@@ -18,10 +18,8 @@ import java.util.Set;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
-import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
-import org.apache.maven.artifact.resolver.ArtifactResolutionException;
-import org.apache.maven.artifact.resolver.ArtifactResolver;
+import org.apache.maven.artifact.resolver.ArtifactResolutionRequest;
+import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.FileSet;
 import org.apache.maven.plugin.AbstractMojo;
@@ -29,9 +27,10 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
-import org.apache.maven.project.MavenProjectBuilder;
+import org.apache.maven.project.ProjectBuilder;
 import org.apache.maven.project.artifact.InvalidDependencyVersionException;
 import org.apache.maven.project.artifact.MavenMetadataSource;
+import org.apache.maven.repository.RepositorySystem;
 import org.apache.maven.settings.Settings;
 import org.jvnet.jaxb.maven.util.ArtifactUtils;
 import org.jvnet.jaxb.maven.util.IOUtils;
@@ -982,7 +981,7 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 	}
 
 	@Component
-	private ArtifactResolver artifactResolver;
+	private RepositorySystem repositorySystem;
 
 	@Component
 	private ArtifactMetadataSource artifactMetadataSource;
@@ -991,16 +990,16 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 	private ArtifactFactory artifactFactory;
 
 	/**
-	 * Location of the local repository.
+	 * Maven current session.
 	 */
-	@Parameter(defaultValue = "${localRepository}", required = true)
-	private ArtifactRepository localRepository;
+	@Parameter(defaultValue = "${session}", required = true)
+	private MavenSession mavenSession;
 
 	/**
 	 * Artifact factory, needed to download source jars.
 	 */
-	@Component(role = org.apache.maven.project.MavenProjectBuilder.class)
-	private MavenProjectBuilder mavenProjectBuilder;
+	@Component(role = ProjectBuilder.class)
+	private ProjectBuilder mavenProjectBuilder;
 
 	@Component
 	private BuildContext buildContext = new DefaultBuildContext();
@@ -1138,13 +1137,13 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 	private static final String XML_SCHEMA_CLASS_QNAME = "jakarta.xml.bind.annotation."
 			+ XML_SCHEMA_CLASS_NAME;
 
-	public ArtifactResolver getArtifactResolver() {
-		return artifactResolver;
-	}
+    public RepositorySystem getRepositorySystem() {
+        return repositorySystem;
+    }
 
-	public void setArtifactResolver(ArtifactResolver artifactResolver) {
-		this.artifactResolver = artifactResolver;
-	}
+    public void setRepositorySystem(RepositorySystem repositorySystem) {
+        this.repositorySystem = repositorySystem;
+    }
 
 	private static final String XML_SCHEMA_RESOURCE_NAME = XML_SCHEMA_CLASS_NAME
 			+ ".class";
@@ -1171,22 +1170,22 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 
 	private static final String XML_ELEMENT_REF_CLASS_NAME = "XmlElementRef";
 
-	public ArtifactRepository getLocalRepository() {
-		return localRepository;
+	public MavenSession getMavenSession() {
+		return mavenSession;
 	}
 
-	public void setLocalRepository(ArtifactRepository localRepository) {
-		this.localRepository = localRepository;
+	public void setMavenSession(MavenSession mavenSession) {
+		this.mavenSession = mavenSession;
 	}
 
 	private static final String XML_ELEMENT_REF_CLASS_QNAME = "jakarta.xml.bind.annotation."
 			+ XML_ELEMENT_REF_CLASS_NAME;
 
-	public MavenProjectBuilder getMavenProjectBuilder() {
+	public ProjectBuilder getMavenProjectBuilder() {
 		return mavenProjectBuilder;
 	}
 
-	public void setMavenProjectBuilder(MavenProjectBuilder mavenProjectBuilder) {
+	public void setMavenProjectBuilder(ProjectBuilder mavenProjectBuilder) {
 		this.mavenProjectBuilder = mavenProjectBuilder;
 	}
 
@@ -1346,9 +1345,11 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 
 			final Artifact artifact = artifacts.iterator().next();
 
-			getArtifactResolver().resolve(artifact,
-					getProject().getRemoteArtifactRepositories(),
-					getLocalRepository());
+            ArtifactResolutionRequest artifactResolutionRequest = new ArtifactResolutionRequest();
+            artifactResolutionRequest.setArtifact(artifact);
+            artifactResolutionRequest.setRemoteRepositories(getProject().getRemoteArtifactRepositories());
+            artifactResolutionRequest.setLocalRepository(getMavenSession().getLocalRepository());
+			getRepositorySystem().resolve(artifactResolutionRequest);
 
 			final String resource = dependencyResource.getResource();
 			if (resource == null) {
@@ -1364,18 +1365,9 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 							.format("Resolved dependency resource [{0}] to resource URL [{1}].",
 									dependencyResource, resourceURL));
 			return resourceURL;
-		} catch (ArtifactNotFoundException anfex) {
-			throw new MojoExecutionException(MessageFormat.format(
-					"Could not find artifact for dependency [{0}].",
-					dependencyResource));
-
 		} catch (InvalidDependencyVersionException e) {
 			throw new MojoExecutionException(MessageFormat.format(
 					"Invalid version of dependency [{0}].", dependencyResource));
-		} catch (ArtifactResolutionException e) {
-			throw new MojoExecutionException(MessageFormat.format(
-					"Could not resolver artifact for dependency [{0}].",
-					dependencyResource));
 		}
 	}
 

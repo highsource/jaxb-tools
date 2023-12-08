@@ -46,9 +46,6 @@
       </roles>
     </developer>
   </developers>
-  <prerequisites>
-    <maven>3.1</maven>
-  </prerequisites>
   <modules>
     <module>jaxb-bom-parent</module>
     <module>jaxb-annotate-parent</module>
@@ -59,8 +56,14 @@
   </modules>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.version>2.0.9</maven.version>
     <jdk.version>11</jdk.version>
+
+    <!-- used by maven-plugin prerequisites -->
+    <maven.minimal.version>3.1.0</maven.minimal.version>
+    <!-- maven api properties (overriden in check-maven-prerequisites profile -->
+    <maven.version>3.8.8</maven.version>
+    <maven-plugin-annotations.version>3.8.2</maven-plugin-annotations.version>
+    <maven.plugin.testing.version>3.3.0</maven.plugin.testing.version>
 
     <!-- Dependencies versions -->
     <ant.version>1.10.12</ant.version>
@@ -79,8 +82,7 @@
     <plexus-utils.version>3.5.1</plexus-utils.version>
 
     <!-- Maven plugin versions -->
-    <maven.plugin.testing.version>2.1</maven.plugin.testing.version>
-    <maven.plugin.plugin.version>3.7.1</maven.plugin.plugin.version>
+    <maven.plugin.plugin.version>3.10.2</maven.plugin.plugin.version>
     <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
     <maven-assembly-plugin.version>3.4.2</maven-assembly-plugin.version>
     <maven-clean-plugin.version>3.3.1</maven-clean-plugin.version>
@@ -209,6 +211,14 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>check-maven-prerequisites</id>
+      <properties>
+        <maven.version>3.1.0</maven.version>
+        <maven-plugin-annotations.version>3.1</maven-plugin-annotations.version>
+        <maven.plugin.testing.version>3.1.0</maven.plugin.testing.version>
+      </properties>
+    </profile>
   </profiles>
   <distributionManagement>
     <snapshotRepository>
@@ -263,22 +273,12 @@
       </dependency>
       <dependency>
         <groupId>org.apache.maven</groupId>
-        <artifactId>maven-project</artifactId>
-        <version>${maven.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.maven</groupId>
         <artifactId>maven-model</artifactId>
         <version>${maven.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.maven</groupId>
         <artifactId>maven-core</artifactId>
-        <version>${maven.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.maven</groupId>
-        <artifactId>maven-artifact-manager</artifactId>
         <version>${maven.version}</version>
       </dependency>
       <dependency>
@@ -290,7 +290,7 @@
       <dependency>
         <groupId>org.apache.maven.plugin-tools</groupId>
         <artifactId>maven-plugin-annotations</artifactId>
-        <version>${maven.plugin.plugin.version}</version>
+        <version>${maven-plugin-annotations.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.maven.plugin-testing</groupId>

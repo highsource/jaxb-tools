@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-	jaxb:version="1.0">
+	jaxb:version="3.0">
 
 	<xs:annotation>
 		<xs:appinfo>
@@ -10,7 +10,7 @@
 				<xjc:noValidatingUnmarshaller /-->
 			</jaxb:globalBindings>
 			<jaxb:schemaBindings>
-				<jaxb:package name="org.jvnet.jaxb2_commons.tests.one"/>
+				<jaxb:package name="org.jvnet.jaxb2_commons.tests.two"/>
 			</jaxb:schemaBindings>
 		</xs:appinfo>
 	</xs:annotation>

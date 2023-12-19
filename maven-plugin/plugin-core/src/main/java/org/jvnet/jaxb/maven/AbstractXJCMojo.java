@@ -11,9 +11,13 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.stream.Collectors;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.factory.ArtifactFactory;
@@ -1270,23 +1274,36 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 				uris.add(createUri(urlDraft));
 			}
 			if (resourceEntry.getDependencyResource() != null) {
-				final String systemId = resourceEntry.getDependencyResource()
-						.getSystemId();
-				try {
-					URI uri = new URI(systemId);
-					uris.add(uri);
-				} catch (URISyntaxException e) {
-					throw new MojoExecutionException(
-							MessageFormat.format(
-									"Could not create the resource entry URI from the following system id: [{0}].",
-									systemId), e);
-				}
+                final String systemId = resourceEntry.getDependencyResource().getSystemId();
+                if (systemId.contains("*")) {
+                    uris.addAll(resolveDependencyResources(resourceEntry.getDependencyResource()));
+                } else {
+                    try {
+                        URI uri = new URI(systemId);
+                        uris.add(uri);
+                    } catch (URISyntaxException e) {
+                        throw new MojoExecutionException(MessageFormat.format(
+                            "Could not create the resource entry URI from the following system id: [{0}].",
+                            systemId), e);
+                    }
+                }
 			}
 			return uris;
 		}
 	}
-
-	public URL resolveDependencyResource(DependencyResource dependencyResource)
+    public URL resolveDependencyResource(DependencyResource dependencyResource) throws MojoExecutionException {
+        URI uri = null;
+        try {
+            uri = resolveDependencyResources(dependencyResource).get(0);
+            return uri.toURL();
+        } catch (MalformedURLException murlex) {
+            throw new MojoExecutionException(
+                MessageFormat
+                    .format("Could not create an URL for dependency dependencyResource [{0}] and uri [{1}].",
+                        dependencyResource, uri));
+        }
+    }
+	public List<URI> resolveDependencyResources(DependencyResource dependencyResource)
 			throws MojoExecutionException {
 
 		if (dependencyResource.getGroupId() == null) {
@@ -1358,46 +1375,69 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 								.format("Dependency resource [{0}] does not define the resource.",
 										dependencyResource));
 			}
-			final URL resourceURL = createArtifactResourceUrl(artifact,
-					resource);
-			getLog().debug(
-					MessageFormat
-							.format("Resolved dependency resource [{0}] to resource URL [{1}].",
-									dependencyResource, resourceURL));
-			return resourceURL;
+            if (resource.contains("*")) {
+                final File artifactFile = artifact.getFile();
+                List<URI> uris = getResourceUris(artifactFile, resource);
+                getLog().debug(
+                    MessageFormat
+                        .format("Resolved dependency resource [{0}] to resources URI [{1}].",
+                            dependencyResource, uris));
+                return uris;
+            } else {
+                final URI resourceURI = createArtifactResourceUri(artifact, resource);
+                getLog().debug(
+                    MessageFormat
+                        .format("Resolved dependency resource [{0}] to resource URI [{1}].",
+                            dependencyResource, resourceURI));
+                return Arrays.asList(resourceURI);
+            }
 		} catch (InvalidDependencyVersionException e) {
 			throw new MojoExecutionException(MessageFormat.format(
 					"Invalid version of dependency [{0}].", dependencyResource));
 		}
 	}
 
-	private URL createArtifactResourceUrl(final Artifact artifact,
+    List<URI> getResourceUris(File artifactFile, String pattern) throws MojoExecutionException {
+        List<URI> uris = new ArrayList<>();
+        if (artifactFile.isDirectory()) {
+            try {
+                List<File> files = IOUtils.scanDirectoryForFiles(
+                    null, artifactFile, new String[]{pattern}, null, false);
+                for (File bindingFile : files) {
+                    uris.add(bindingFile.toURI());
+                }
+            } catch (IOException ioex) {
+                throw new MojoExecutionException(
+                    "Unable to read the artifact directory [" + artifactFile.getAbsolutePath() + "].", ioex);
+            }
+        } else {
+            List<URI> files = IOUtils.scanJarForFiles(
+                null, artifactFile, new String[]{pattern}, null, false);
+            uris.addAll(files);
+        }
+        return uris;
+    }
+
+    private URI createArtifactResourceUri(final Artifact artifact,
 			String resource) throws MojoExecutionException {
 		final File artifactFile = artifact.getFile();
 
 		if (artifactFile.isDirectory()) {
 			final File resourceFile = new File(artifactFile, resource);
-			try {
-				return resourceFile.toURI().toURL();
-			} catch (MalformedURLException murlex) {
-				throw new MojoExecutionException(
-						MessageFormat
-								.format("Could not create an URL for dependency directory [{0}] and resource [{1}].",
-										artifactFile, resource));
-			}
+            return resourceFile.toURI();
 		} else {
 			try {
 				return new URL("jar:"
 						+ artifactFile.toURI().toURL().toExternalForm() + "!/"
-						+ resource);
-			} catch (MalformedURLException murlex) {
+						+ resource).toURI();
+			} catch (URISyntaxException | MalformedURLException murlex) {
 				throw new MojoExecutionException(
 						MessageFormat
-								.format("Could not create an URL for dependency file [{0}] and resource [{1}].",
+								.format("Could not create an URI for dependency file [{0}] and resource [{1}].",
 										artifactFile, resource));
 
 			}
-		}
+        }
 	}
 
 	private URI createUri(String uriString) throws MojoExecutionException {
@@ -1410,6 +1450,17 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 					urisex);
 		}
 	}
+
+    private List<URI> createUris(String uriString, String[] defaultIncludes, String[] defaultExcludes) throws MojoExecutionException {
+        try {
+            final URI uri = new URI(uriString);
+            return Arrays.asList(uri);
+        } catch (URISyntaxException urisex) {
+            throw new MojoExecutionException(MessageFormat.format(
+                "Could not create the URI from string [{0}].", uriString),
+                urisex);
+        }
+    }
 
 	private List<URI> createFileSetUris(final FileSet fileset,
 			String defaultDirectory, String[] defaultIncludes,

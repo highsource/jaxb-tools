@@ -47,8 +47,7 @@ public class DependencyResource extends Dependency {
 			sb.append(getGroupId()).append(':');
 			sb.append(getArtifactId()).append(':');
 			sb.append(getType() == null ? "" : getType()).append(':');
-			sb.append(getClassifier() == null ? "" : getClassifier()).append(
-					':');
+			sb.append(getClassifier() == null ? "" : getClassifier()).append(':');
 			sb.append(getVersion() == null ? "" : getVersion());
 			sb.append("!/");
 			sb.append(getResource());

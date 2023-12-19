@@ -4,13 +4,19 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
+import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.MatchPatterns;
 import org.codehaus.plexus.util.Scanner;
@@ -109,6 +115,27 @@ public class IOUtils {
 
 		return files;
 	}
+
+    public static List<URI> scanJarForFiles(
+        BuildContext buildContext, final File artifactFile,
+        final String[] includes, final String[] excludes, boolean defaultExcludes) throws MojoExecutionException {
+        final JarScanner jarScanner = new JarScanner();
+        jarScanner.setFile(artifactFile);
+        jarScanner.setIncludes(includes);
+        jarScanner.setExcludes(excludes);
+
+        if (defaultExcludes) {
+            jarScanner.addDefaultExcludes();
+        }
+
+        try {
+            jarScanner.scan();
+            return jarScanner.getIncludedURIs();
+        } catch (URISyntaxException ioex) {
+            throw new MojoExecutionException(
+                "Unable to read the artifact JAR file [" + artifactFile.getAbsolutePath() + "].", ioex);
+        }
+    }
 
 	private static boolean isWildcard (final String s) {
 		return s.indexOf ('*') >= 0 || s.indexOf ('?') >= 0;

@@ -22,6 +22,18 @@
 		</jaxb:schemaBindings>
 		<jaxb:bindings>
 			<namespace:prefix name="b" />
+      <namespace:prefix name="aprefix" namespaceURI="a" />
 		</jaxb:bindings>
 	</jaxb:bindings>
+  <jaxb:bindings schemaLocation="c.xsd">
+    <jaxb:schemaBindings>
+      <jaxb:package name="org.jvnet.jaxb.test.namespace.c" />
+    </jaxb:schemaBindings>
+    <jaxb:bindings>
+      <namespace:prefix name="creal" />
+      <namespace:prefix name="otherfake" />
+      <namespace:prefix name="aprefix" namespaceURI="a" />
+      <namespace:prefix name="bprefix" namespaceURI="b" />
+    </jaxb:bindings>
+  </jaxb:bindings>
 </jaxb:bindings>

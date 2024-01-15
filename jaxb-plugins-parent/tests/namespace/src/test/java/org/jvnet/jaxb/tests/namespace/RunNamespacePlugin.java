@@ -1,4 +1,4 @@
-package org.jvnet.jaxb2_commons.tests.namespace;
+package org.jvnet.jaxb.tests.namespace;
 
 import java.util.ArrayList;
 import java.util.List;

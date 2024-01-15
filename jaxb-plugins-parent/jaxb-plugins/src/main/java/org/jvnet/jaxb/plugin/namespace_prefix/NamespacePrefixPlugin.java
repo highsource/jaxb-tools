@@ -186,26 +186,39 @@ public class NamespacePrefixPlugin extends Plugin {
                 continue;
             }
 
+
             // get the prefix's name
             String prefix = "";
             for (BIDeclaration declaration : b.getDecls()) {
+                // get targeted prefix and targeted NS
+                String targetedPrefix = "";
+                String targetedNS = "";
                 if (declaration instanceof BIXPluginCustomization) {
                     final BIXPluginCustomization customization = (BIXPluginCustomization) declaration;
                     if (customization.element.getNamespaceURI().equals(Customizations.NAMESPACE_URI)) {
                         if (!customization.element.getLocalName().equals(Customizations.PREFIX_NAME)) {
                             throw new RuntimeException("Unrecognized element [" + customization.element.getLocalName() + "]");
                         }
-                        prefix = customization.element.getAttribute("name");
+                        targetedPrefix = customization.element.getAttribute("name");
+                        targetedNS = customization.element.getAttribute("namespaceURI");
                         customization.markAsAcknowledged();
-                        break;
                     } else if (customization.element.getNamespaceURI().equals(LegacyCustomizations.NAMESPACE_URI)) {
                         if (!customization.element.getLocalName().equals(LegacyCustomizations.PREFIX_NAME)) {
                             throw new RuntimeException("Unrecognized element [" + customization.element.getLocalName() + "]");
                         }
                         logger.warn("Please migrate your namespace in xsd / xjb from " + LegacyCustomizations.NAMESPACE_URI + " to " + Customizations.NAMESPACE_URI);
-                        prefix = customization.element.getAttribute("name");
+                        targetedPrefix = customization.element.getAttribute("name");
+                        targetedNS = customization.element.getAttribute("namespaceURI");
                         customization.markAsAcknowledged();
-                        break;
+                    }
+                }
+
+                if (targetedPrefix != null && !"".equals(targetedPrefix)) {
+                    if (targetedNS != null && !"".equals(targetedNS) && !targetedNS.equals(targetNS)) {
+                        list.add(new Pair(targetedNS, targetedPrefix));
+                    } else if ("".equals(prefix)) {
+                        // only take first binding as actual true binding for current targetNS (break condition used before in for loop)
+                        prefix = targetedPrefix;
                     }
                 }
             }

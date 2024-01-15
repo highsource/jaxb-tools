@@ -1,0 +1,47 @@
+<xsd:schema
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="c"
+	xmlns:a="a"
+	xmlns:c="c"
+	elementFormDefault="qualified">
+
+	<xsd:import namespace="a" schemaLocation="a.xsd"/>
+
+	<xsd:element name="c" type="c:CType"/>
+
+	<xsd:complexType name="CType">
+		<xsd:complexContent>
+		    <xsd:extension base="a:AType">
+				<xsd:sequence>
+					<xsd:element name="c" type="c:C1Type"/>
+					<xsd:element name="ca" type="a:AType" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+		    </xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="C1Type">
+		<xsd:complexContent>
+		    <xsd:extension base="a:A1Type">
+				<xsd:sequence>
+					<xsd:element name="c1" type="xsd:string"/>
+				</xsd:sequence>
+		    </xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="issueHJIII24Mammal">
+		<xsd:complexContent>
+		    <xsd:extension base="a:issueHJIII24Animal">
+		    </xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="issueHJIII24Dog">
+		<xsd:complexContent>
+		    <xsd:extension base="c:issueHJIII24Mammal">
+		    </xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+</xsd:schema>

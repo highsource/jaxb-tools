@@ -121,8 +121,8 @@ JAXB2 Basics can only be used with JAXB/XJC 2.3.x. JAXB/XJC versions 2.2.x and e
 * [Wildcard Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Wildcard-Plugin) - allows you to specify the wildcard mode for the wildcard properties.
 * [AutoInheritance Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-AutoInheritance-Plugin) - makes classes derived from global elements or complex types extend or implement certain classes or interfaces automatically.
 * [Setters Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Setters-Plugin) - generates setters for collections.
-* [Simplify Plugin](https://github.com/highsource/jaxb2-tools/wiki/JAXB2-Simplify-Plugin) - simplifies weird properties like `aOrBOrC`.
-* [EnumValue Plugin](https://github.com/highsource/jaxb2-tools/wiki/JAXB2-EnumValue-Plugin) - makes all the generated enums implement the `EnumValue<T>` interface.
+* [Simplify Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Simplify-Plugin) - simplifies weird properties like `aOrBOrC`.
+* [EnumValue Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-EnumValue-Plugin) - makes all the generated enums implement the `EnumValue<T>` interface.
 * [JAXBIndex Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-JAXBIndex-Plugin) - generated `jaxb.index` files listing schema-derived classes.
 * [FixJAXB1058 Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-FixJAXB1058-Plugin) - fixes [JAXB-1058](https://github.com/eclipse-ee4j/jaxb-ri/issues/1058).
 * [Commons Lang Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB2-Commons-Lang-Plugin) - generates the `toString()`, `hashCode()` and `equals()` methods using Apache commons-lang3.

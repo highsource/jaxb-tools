@@ -133,8 +133,6 @@ pipeline {
                             sh 'mvn -Prelease,helm-deploy -B -Darguments="-DskipTests=true -Dmpir.skip=true" -DignoreSnapshots=true -DskipTests=true -Dmpir.skip=true validate release:clean release:prepare release:perform'
                         }
                     }
-
-                    }
                 }
             }
         }

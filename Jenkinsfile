@@ -69,14 +69,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building'
-                sh 'mvn -U -B -e clean install -DskipTests'
+                sh 'mvn -Pall -U -B -e clean install -DskipTests'
             }
         }
 
         stage('Tests') {
             steps {
                 echo 'Running tests [SKIPPED]'
-                sh 'mvn -Prelease -B -e -fae test'
+                sh 'mvn -Pall -B -e -fae test'
             }
             post {
                 always {
@@ -105,9 +105,9 @@ pipeline {
             steps {
                 script {
                     if (!params.ReleaseVersion.isEmpty() && !params.NextSnapshotVersion.isEmpty()) {
-                        sh "mvn -Prelease -B -Darguments=\"-DskipTests=true -Dmpir.skip=true\" -DignoreSnapshots=true -DdryRun=true -DskipTests=true -Dmpir.skip=true -DreleaseVersion=${params.ReleaseVersion} -DdevelopmentVersion=${params.NextSnapshotVersion} validate release:prepare release:perform"
+                        sh "mvn -Pall,release-dry-run -B -Darguments=\"-DskipTests=true -Dmpir.skip=true\" -DignoreSnapshots=true -DdryRun=true -DskipTests=true -Dmpir.skip=true -DreleaseVersion=${params.ReleaseVersion} -DdevelopmentVersion=${params.NextSnapshotVersion} validate release:prepare release:perform"
                     } else {
-                        sh "mvn -Prelease -B -Darguments=\"-DskipTests=true -Dmpir.skip=true\" -DignoreSnapshots=true -DdryRun=true -DskipTests=true -Dmpir.skip=true validate release:prepare release:perform"
+                        sh "mvn -Pall,release-dry-run -B -Darguments=\"-DskipTests=true -Dmpir.skip=true\" -DignoreSnapshots=true -DdryRun=true -DskipTests=true -Dmpir.skip=true validate release:prepare release:perform"
                     }
                 }
             }
@@ -122,15 +122,15 @@ pipeline {
                 script {
                     if (params.mavenDebug) {
                         if (!params.ReleaseVersion.isEmpty() && !params.NextSnapshotVersion.isEmpty()) {
-                            sh "mvn -Prelease -X -B -Darguments=\"-DskipTests=true -Dmpir.skip=true\" -DignoreSnapshots=true -DskipTests=true -Dmpir.skip=true -DreleaseVersion=${params.ReleaseVersion} -DdevelopmentVersion=${params.NextSnapshotVersion} validate release:clean release:prepare release:perform"
+                            sh "mvn -Psonatype-oss-release -X -B -Darguments=\"-DskipTests=true -Dmpir.skip=true\" -DignoreSnapshots=true -DskipTests=true -Dmpir.skip=true -DreleaseVersion=${params.ReleaseVersion} -DdevelopmentVersion=${params.NextSnapshotVersion} validate release:clean release:prepare release:perform"
                         } else {
-                            sh "mvn -Prelease -X -B -Darguments=\"-DskipTests=true -Dmpir.skip=true\" -DignoreSnapshots=true -DskipTests=true -Dmpir.skip=true validate release:clean release:prepare release:perform"
+                            sh "mvn -Psonatype-oss-release -X -B -Darguments=\"-DskipTests=true -Dmpir.skip=true\" -DignoreSnapshots=true -DskipTests=true -Dmpir.skip=true validate release:clean release:prepare release:perform"
                         }
                     }  else {
                         if (!params.ReleaseVersion.isEmpty() && !params.NextSnapshotVersion.isEmpty()) {
-                            sh "mvn -Prelease -B -Darguments=\"-DskipTests=true -Dmpir.skip=true\" -DignoreSnapshots=true -DskipTests=true -Dmpir.skip=true -DreleaseVersion=${params.ReleaseVersion} -DdevelopmentVersion=${params.NextSnapshotVersion} validate release:clean release:prepare release:perform"
+                            sh "mvn -Psonatype-oss-release -B -Darguments=\"-DskipTests=true -Dmpir.skip=true\" -DignoreSnapshots=true -DskipTests=true -Dmpir.skip=true -DreleaseVersion=${params.ReleaseVersion} -DdevelopmentVersion=${params.NextSnapshotVersion} validate release:clean release:prepare release:perform"
                         } else {
-                            sh 'mvn -Prelease -B -Darguments="-DskipTests=true -Dmpir.skip=true" -DignoreSnapshots=true -DskipTests=true -Dmpir.skip=true validate release:clean release:prepare release:perform'
+                            sh 'mvn -Psonatype-oss-release -B -Darguments="-DskipTests=true -Dmpir.skip=true" -DignoreSnapshots=true -DskipTests=true -Dmpir.skip=true validate release:clean release:prepare release:perform'
                         }
                     }
                 }

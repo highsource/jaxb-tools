@@ -147,5 +147,4 @@ pipeline {
                 deleteDir()
             } 
         }
-    }
 }

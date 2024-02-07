@@ -17,7 +17,7 @@ Please check our [Migration Guide](https://github.com/highsource/jaxb-tools/wiki
 from previous releases to newers one.
 
 ## Maven versions
-Starting from 4.0.3-SNAPSHOT, this plugin requires maven 3.1.0 as minimal version.
+Starting from 4.0.2, this plugin requires maven 3.1.0 as minimal version.
 
 If you still need maven 2.x or maven 3.0.x, you can still use the previous released versions
 but you should consider upgrading maven to at least 3.1.0.
@@ -26,7 +26,7 @@ but you should consider upgrading maven to at least 3.1.0.
 
 This project supports Java 11 and higher.
 
-The build is tested against JDK11 and JDK17.
+The build is tested against JDK11, JDK17 and JDK21.
 
 ## [Documentation](https://github.com/highsource/jaxb-tools/wiki)
 

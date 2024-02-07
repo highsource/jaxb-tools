@@ -105,9 +105,9 @@ pipeline {
             steps {
                 script {
                     if (!params.ReleaseVersion.isEmpty() && !params.NextSnapshotVersion.isEmpty()) {
-                        sh "mvn -Pall,release-dry-run -B -Darguments=\"-DskipTests=true -Dmpir.skip=true\" -DignoreSnapshots=true -DdryRun=true -DskipTests=true -Dmpir.skip=true -DreleaseVersion=${params.ReleaseVersion} -DdevelopmentVersion=${params.NextSnapshotVersion} validate release:prepare release:perform"
+                        sh "mvn -Pall,release-dry-run -B -DdryRun=true -DreleaseVersion=${params.ReleaseVersion} -DdevelopmentVersion=${params.NextSnapshotVersion} release:prepare release:perform"
                     } else {
-                        sh "mvn -Pall,release-dry-run -B -Darguments=\"-DskipTests=true -Dmpir.skip=true\" -DignoreSnapshots=true -DdryRun=true -DskipTests=true -Dmpir.skip=true validate release:prepare release:perform"
+                        sh "mvn -Pall,release-dry-run -B -DdryRun=true release:prepare release:perform"
                     }
                 }
             }
@@ -122,15 +122,15 @@ pipeline {
                 script {
                     if (params.mavenDebug) {
                         if (!params.ReleaseVersion.isEmpty() && !params.NextSnapshotVersion.isEmpty()) {
-                            sh "mvn -Psonatype-oss-release,release -X -B -Darguments=\"-DskipTests=true -Dmpir.skip=true\" -DperformRelease -DignoreSnapshots=true -DskipTests=true -Dmpir.skip=true -DreleaseVersion=${params.ReleaseVersion} -DdevelopmentVersion=${params.NextSnapshotVersion} validate release:clean release:prepare release:perform clean install"
+                            sh "mvn -Psonatype-oss-release,release -X -B -DperformRelease -DreleaseVersion=${params.ReleaseVersion} -DdevelopmentVersion=${params.NextSnapshotVersion} release:clean release:prepare release:perform"
                         } else {
-                            sh "mvn -Psonatype-oss-release,release -X -B -Darguments=\"-DskipTests=true -Dmpir.skip=true\" -DperformRelease -DignoreSnapshots=true -DskipTests=true -Dmpir.skip=true validate release:clean release:prepare release:perform clean install"
+                            sh "mvn -Psonatype-oss-release,release -X -B -DperformRelease release:clean release:prepare release:perform"
                         }
                     }  else {
                         if (!params.ReleaseVersion.isEmpty() && !params.NextSnapshotVersion.isEmpty()) {
-                            sh "mvn -Psonatype-oss-release,release -B -Darguments=\"-DskipTests=true -Dmpir.skip=true\" -DperformRelease -DignoreSnapshots=true -DskipTests=true -Dmpir.skip=true -DreleaseVersion=${params.ReleaseVersion} -DdevelopmentVersion=${params.NextSnapshotVersion} validate release:clean release:prepare release:perform clean install"
+                            sh "mvn -Psonatype-oss-release,release -B -DperformRelease -DreleaseVersion=${params.ReleaseVersion} -DdevelopmentVersion=${params.NextSnapshotVersion} release:clean release:prepare release:perform"
                         } else {
-                            sh 'mvn -Psonatype-oss-release,release -B -Darguments="-DskipTests=true -Dmpir.skip=true" -DperformRelease -DignoreSnapshots=true -DskipTests=true -Dmpir.skip=true validate release:clean release:prepare release:perform clean install'
+                            sh 'mvn -Psonatype-oss-release,release -B -DperformRelease release:clean release:prepare release:perform'
                         }
                     }
                 }

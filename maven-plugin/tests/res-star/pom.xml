@@ -20,17 +20,13 @@
       <artifactId>jaxb-maven-plugin-testing</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.jvnet.jaxb</groupId>
+      <artifactId>jaxb-maven-plugin-tests-res-resources</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.jvnet.jaxb</groupId>
-        <artifactId>jaxb-maven-plugin-tests-res</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
   <build>
     <plugins>
       <plugin>
@@ -48,7 +44,7 @@
                 <schema>
                   <dependencyResource>
                     <groupId>org.jvnet.jaxb</groupId>
-                    <artifactId>jaxb-maven-plugin-tests-res</artifactId>
+                    <artifactId>jaxb-maven-plugin-tests-res-resources</artifactId>
                     <resource>**/schema*.xsd</resource>
                   </dependencyResource>
                 </schema>

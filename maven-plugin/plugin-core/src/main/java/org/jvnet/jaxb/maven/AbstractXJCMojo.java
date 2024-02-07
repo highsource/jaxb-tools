@@ -448,7 +448,7 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
      * If 'true', the fix for issue #306 will no more be applied.
      */
     @Parameter(defaultValue = "true", property = "maven.xjc2.disableSystemIdResolution")
-    @Deprecated(forRemoval = true, since = "4.0.3-SNAPSHOT")
+    @Deprecated(forRemoval = true, since = "4.0.4-SNAPSHOT")
     private boolean disableSystemIdResolution;
 
     public boolean getDisableSystemIdResolution() {
@@ -941,7 +941,7 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
      * @deprecated this is kept for retro-compatibility but will be removed since
      * original bug has been resolved in 4.0.4 JAXB-RI
 	 */
-    @Deprecated(since = "4.0.3-SNAPSHOT", forRemoval = true)
+    @Deprecated(since = "4.0.4-SNAPSHOT", forRemoval = true)
 	@Parameter(property = "maven.xjc2.addIfExistsToEpisodeSchemaBindings", defaultValue = "false")
 	private boolean addIfExistsToEpisodeSchemaBindings = false;
 

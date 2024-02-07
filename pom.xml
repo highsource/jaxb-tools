@@ -80,6 +80,7 @@
     <joda-time.version>2.5</joda-time.version>
     <junit4.version>4.13.2</junit4.version>
     <slf4j.version>1.7.36</slf4j.version>
+    <spring.version>5.3.33</spring.version>
     <stax-ex.version>1.8.3</stax-ex.version>
     <plexus-build-api.version>1.2.0</plexus-build-api.version>
     <plexus-utils.version>3.5.1</plexus-utils.version>
@@ -397,13 +398,17 @@
         <version>${slf4j.version}</version>
       </dependency>
 
-      <!-- Spring -->
+      <!-- Spring in Hibernate -->
       <dependency>
         <groupId>org.springframework</groupId>
-        <artifactId>spring</artifactId>
-        <version>2.0.7</version>
+        <artifactId>spring-context</artifactId>
+        <version>${spring.version}</version>
       </dependency>
-
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-beans</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
       <!-- Hibernate -->
       <dependency>
         <groupId>org.hibernate</groupId>

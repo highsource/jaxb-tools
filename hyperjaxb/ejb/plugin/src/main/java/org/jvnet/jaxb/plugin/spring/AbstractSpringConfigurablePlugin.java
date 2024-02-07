@@ -1,5 +1,8 @@
 package org.jvnet.jaxb2_commons.plugin.spring;
 
+import com.sun.tools.xjc.BadCommandLineException;
+import com.sun.tools.xjc.Options;
+import com.sun.tools.xjc.outline.Outline;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -7,10 +10,6 @@ import org.jvnet.jaxb2_commons.plugin.AbstractParameterizablePlugin;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.support.AbstractXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
-
-import com.sun.tools.xjc.BadCommandLineException;
-import com.sun.tools.xjc.Options;
-import com.sun.tools.xjc.outline.Outline;
 
 public abstract class AbstractSpringConfigurablePlugin extends
 		AbstractParameterizablePlugin {

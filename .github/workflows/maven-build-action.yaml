@@ -20,7 +20,10 @@ jobs:
         distribution: 'temurin'
 
     - name: Maven with JDK 11
-      run: mvn -Pall -no-transfer-progress  clean install
+      run: mvn -Pall -no-transfer-progress clean install
+
+    - name: Maven with JDK 11 - Parallel
+      run: mvn -T4 -Pall -no-transfer-progress clean install
 
     - name: Maven with JDK 11 - Release dry run
       run: mvn -Prelease-dry-run,sonatype-oss-release,release -DperformRelease -DdryRun=true -Darguments="-Dgpg.skip=true" -B release:clean release:prepare clean install
@@ -32,7 +35,10 @@ jobs:
         distribution: 'temurin'
 
     - name: Maven with JDK 17
-      run: mvn -Pall -no-transfer-progress  clean install
+      run: mvn -Pall -no-transfer-progress clean install
+
+    - name: Maven with JDK 17 - Parallel
+      run: mvn -T4 -Pall -no-transfer-progress clean install
 
     - name: Maven with JDK 17 - Release dry run
       run: mvn -Prelease-dry-run,sonatype-oss-release,release -DperformRelease -DdryRun=true -Darguments="-Dgpg.skip=true" -B release:clean release:prepare clean install
@@ -45,6 +51,9 @@ jobs:
 
     - name: Maven with JDK 21 
       run: mvn -Pall -no-transfer-progress  clean install
+
+    - name: Maven with JDK 21 - Parallel
+      run: mvn -T4 -Pall -no-transfer-progress  clean install
 
     - name: Maven with JDK 21 - Release dry run
       run: mvn -Prelease-dry-run,sonatype-oss-release,release -DperformRelease -DdryRun=true -Darguments="-Dgpg.skip=true" -B release:clean release:prepare clean install

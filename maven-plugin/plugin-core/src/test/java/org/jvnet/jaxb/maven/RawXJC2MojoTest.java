@@ -50,7 +50,7 @@ public class RawXJC2MojoTest {
     public void collectBindingUrisFromDependencies() throws Exception {
         List<URI> bindings = new ArrayList<>();
 
-        final RawXJCMojo<Void> mojo = new RawXJCMojo<>(XJCVersion.UNDEFINED) {
+        final RawXJC2Mojo<Void> mojo = new RawXJC2Mojo<Void>(XJCVersion.UNDEFINED) {
 
             @Override
             public MavenProject getProject() {
@@ -106,7 +106,7 @@ public class RawXJC2MojoTest {
     public void collectsBindingUrisFromArtifact() throws Exception {
         List<URI> bindings = new ArrayList<>();
 
-        final RawXJCMojo<Void> mojo = new RawXJCMojo<Void>(XJCVersion.UNDEFINED) {
+        final RawXJC2Mojo<Void> mojo = new RawXJC2Mojo<Void>(XJCVersion.UNDEFINED) {
 
 			@Override
 			protected IOptionsFactory<Void> getOptionsFactory() {

@@ -103,7 +103,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 
 	private List<URL> xjcPluginURLs;
 
-    public RawXJCMojo(XJCVersion version) {
+    public RawXJC2Mojo(XJCVersion version) {
         this.version = version;
     }
 

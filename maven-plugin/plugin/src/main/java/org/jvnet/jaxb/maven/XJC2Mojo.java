@@ -30,7 +30,7 @@ public class XJC2Mojo extends RawXJC2Mojo<Options> {
 
 	private final IOptionsFactory<Options> optionsFactory = new OptionsFactory();
 
-    public XJCMojo() {
+    public XJC2Mojo() {
         super(parseXJCVersion());
     }
 

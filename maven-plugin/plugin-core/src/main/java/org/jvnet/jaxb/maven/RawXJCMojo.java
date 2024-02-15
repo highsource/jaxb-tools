@@ -75,6 +75,7 @@ import org.jvnet.jaxb.maven.util.IOUtils;
 import org.jvnet.jaxb.maven.util.LocaleUtils;
 import org.jvnet.jaxb.maven.util.CollectionUtils.Function;
 import org.sonatype.plexus.build.incremental.BuildContext;
+import org.sonatype.plexus.build.incremental.ThreadBuildContext;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -465,30 +466,37 @@ public abstract class RawXJCMojo<O> extends AbstractXJCMojo<O> {
 		if (getGrammars().isEmpty()) {
 			getLog().warn("No schemas to compile. Skipping XJC execution. ");
 		} else {
-
+            final boolean configurationPhase = this.getBuildContext() instanceof ThreadBuildContext
+                && ThreadBuildContext.getContext().getClass().getName().endsWith("EclipseEmptyBuildContext");
 			final O options = getOptionsFactory().createOptions(optionsConfiguration);
 
-			if (getForceRegenerate()) {
-				getLog().warn("You are using forceRegenerate=true in your configuration.\n"
-						+ "This configuration setting is deprecated and not recommended "
-						+ "as it causes problems with incremental builds in IDEs.\n"
-						+ "Please refer to the following link for more information:\n"
-						+ "https://github.com/highsource/jaxb-tools/wiki/Do-Not-Use-forceRegenerate\n"
-						+ "Consider removing this setting from your plugin configuration.\n");
-				getLog().info("The [forceRegenerate] switch is turned on, XJC will be executed.");
-			} else {
-				final boolean isUpToDate = isUpToDate();
-				if (!isUpToDate) {
-					getLog().info("Sources are not up-to-date, XJC (version " + getVersion().getRaw() + ") will be executed.");
-				} else {
-					getLog().info("Sources are up-to-date, XJC (version " + getVersion().getRaw() + ") will be skipped.");
-					return;
-				}
-			}
+            if (!configurationPhase) {
+                if (getForceRegenerate()) {
+                    getLog().warn("You are using forceRegenerate=true in your configuration.\n"
+                        + "This configuration setting is deprecated and not recommended "
+                        + "as it causes problems with incremental builds in IDEs.\n"
+                        + "Please refer to the following link for more information:\n"
+                        + "https://github.com/highsource/jaxb-tools/wiki/Do-Not-Use-forceRegenerate\n"
+                        + "Consider removing this setting from your plugin configuration.\n");
+                    getLog().info("The [forceRegenerate] switch is turned on, XJC will be executed.");
+                } else {
+                    final boolean isUpToDate = isUpToDate();
+                    if (!isUpToDate) {
+                        getLog().info("Sources are not up-to-date, XJC (version " + getVersion().getRaw() + ") will be executed.");
+                    } else {
+                        getLog().info("Sources are up-to-date, XJC (version " + getVersion().getRaw() + ") will be skipped.");
+                        return;
+                    }
+                }
+            }
 
 			setupDirectories();
-			doExecute(options);
-			addIfExistsToEpisodeSchemaBindings();
+            if (!configurationPhase) {
+                doExecute(options);
+                addIfExistsToEpisodeSchemaBindings();
+            } else {
+                getLog().info("Sources will not be generated since running in EclipseEmptyBuildContext, XJC will be skipped.");
+            }
 			final BuildContext buildContext = getBuildContext();
 			getLog().debug(MessageFormat.format("Refreshing the generated directory [{0}].",
 					getGenerateDirectory().getAbsolutePath()));

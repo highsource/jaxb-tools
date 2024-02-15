@@ -60,6 +60,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.artifact.InvalidDependencyVersionException;
 import org.apache.maven.settings.Proxy;
 import org.apache.maven.settings.Settings;
+import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
 import org.jvnet.jaxb.maven.net.CompositeURILastModifiedResolver;
@@ -75,6 +76,7 @@ import org.jvnet.jaxb.maven.util.IOUtils;
 import org.jvnet.jaxb.maven.util.LocaleUtils;
 import org.jvnet.jaxb.maven.util.CollectionUtils.Function;
 import org.sonatype.plexus.build.incremental.BuildContext;
+import org.sonatype.plexus.build.incremental.EmptyScanner;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -479,6 +481,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			setupDirectories();
 			doExecute(options);
 			addIfExistsToEpisodeSchemaBindings();
+            deleteEpisodeIfOnlyFileOnEmptyContext();
 			final BuildContext buildContext = getBuildContext();
 			getLog().debug(MessageFormat.format("Refreshing the generated directory [{0}].",
 					getGenerateDirectory().getAbsolutePath()));
@@ -576,6 +579,33 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			IOUtil.close(is);
 		}
 	}
+
+    private void deleteEpisodeIfOnlyFileOnEmptyContext() {
+        if (!getEpisode() || getBuildContext() == null) {
+            return;
+        }
+        final File episodeFile = getEpisodeFile();
+        if (getBuildContext().isIncremental() && getBuildContext().newScanner(getGenerateDirectory()) instanceof EmptyScanner) {
+            if (!episodeFile.canWrite()) {
+                getLog().warn(MessageFormat
+                    .format("Episode file [{0}] is not writable, could not delete on incremental empty build.", episodeFile));
+                return;
+            }
+            DirectoryScanner directoryScanner = new DirectoryScanner();
+            directoryScanner.setBasedir(getGenerateDirectory());
+            directoryScanner.setIncludes(getProduces());
+            directoryScanner.scan();
+
+            if (directoryScanner.getIncludedFiles() != null && directoryScanner.getIncludedFiles().length == 1) {
+                String fileFound = directoryScanner.getIncludedFiles()[0];
+                if (new File(directoryScanner.getBasedir(), fileFound).equals(episodeFile)) {
+                    getLog().info(MessageFormat
+                        .format("directoryScanner got only one file [{0}] which is episodeFile - deleting since running in m2e context.", fileFound, episodeFile));
+                    episodeFile.delete();
+                }
+            }
+        }
+    }
 
 	private URILastModifiedResolver uriLastModifiedResolver;
 

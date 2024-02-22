@@ -41,6 +41,14 @@ import org.sonatype.plexus.build.incremental.DefaultBuildContext;
 public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 		DependencyResourceResolver {
 
+    /**
+     * This method should be overriden in extending classes to get real value
+     * @return currently running XJC version
+     */
+    public XJCVersion getVersion() {
+        return XJCVersion.UNDEFINED;
+    }
+
 	@Parameter(defaultValue = "${settings}", readonly = true)
 	private Settings settings;
 
@@ -435,8 +443,11 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 
     /**
      * If 'true', the fix for issue #306 will no more be applied.
+     *
+     * @deprecated (forRemoval = true, since = "2.0.10")
      */
-    @Parameter(defaultValue = "false", property = "maven.xjc2.disableSystemIdResolution")
+    @Parameter(defaultValue = "true", property = "maven.xjc2.disableSystemIdResolution")
+    @Deprecated
     private boolean disableSystemIdResolution;
 
     public boolean getDisableSystemIdResolution() {
@@ -939,9 +950,13 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	 * (via <code>scd="x-schema::..."</code>) in the generated episode files.
 	 * This is necessary to avoid the annoying `SCD "x-schema::tns" didn't
 	 * match any schema component` errors.
+     *
+     * @deprecated since 2.0.10 - this is kept for retro-compatibility but will be removed since
+     * original bug has been resolved in 2.3.9 JAXB-RI
 	 */
-	@Parameter(property = "maven.xjc2.addIfExistsToEpisodeSchemaBindings", defaultValue = "true")
-	private boolean addIfExistsToEpisodeSchemaBindings = true;
+    @Deprecated
+	@Parameter(property = "maven.xjc2.addIfExistsToEpisodeSchemaBindings", defaultValue = "false")
+	private boolean addIfExistsToEpisodeSchemaBindings = false;
 
 	public boolean isAddIfExistsToEpisodeSchemaBindings() {
 		return this.addIfExistsToEpisodeSchemaBindings;

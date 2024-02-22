@@ -95,13 +95,23 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	public static final String ADD_IF_EXISTS_TO_EPISODE_SCHEMA_BINDINGS_TRANSFORMATION_RESOURCE_NAME = "/"
 			+ RawXJC2Mojo.class.getPackage().getName().replace('.', '/') + "/addIfExistsToEpisodeSchemaBindings.xslt";
 
+    private final XJCVersion version;
+
 	private Collection<Artifact> xjcPluginArtifacts;
 
 	private Collection<File> xjcPluginFiles;
 
 	private List<URL> xjcPluginURLs;
 
-	public Collection<Artifact> getXjcPluginArtifacts() {
+    public RawXJC2Mojo(XJCVersion version) {
+        this.version = version;
+    }
+
+    public XJCVersion getVersion() {
+        return version;
+    }
+
+    public Collection<Artifact> getXjcPluginArtifacts() {
 		return xjcPluginArtifacts;
 	}
 
@@ -469,9 +479,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			} else {
 				final boolean isUpToDate = isUpToDate();
 				if (!isUpToDate) {
-					getLog().info("Sources are not up-to-date, XJC will be executed.");
+					getLog().info("Sources are not up-to-date, XJC (version " + getVersion().getRaw() + ") will be executed.");
 				} else {
-					getLog().info("Sources are up-to-date, XJC will be skipped.");
+					getLog().info("Sources are up-to-date, XJC (version " + getVersion().getRaw() + ") will be skipped.");
 					return;
 				}
 			}
@@ -893,7 +903,7 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	}
 
 	protected EntityResolver createEntityResolver(CatalogResolver catalogResolver) {
-		final EntityResolver entityResolver = new ReResolvingEntityResolverWrapper(catalogResolver, getLog(), getDisableSystemIdResolution());
+		final EntityResolver entityResolver = new ReResolvingEntityResolverWrapper(catalogResolver, getLog(), getDisableSystemIdResolution(), getVersion());
 		return entityResolver;
 	}
 

@@ -52,6 +52,10 @@ public class JarScanner extends AbstractScanner {
             while (jarFileEntries.hasMoreElements()) {
                 JarEntry entry = jarFileEntries.nextElement();
                 String name = entry.getName();
+                if (name.startsWith("..") || name.startsWith("/")) {
+                    // ignore "zip slip" file pattern attack
+                    continue;
+                }
                 char[][] tokenizedName = tokenizePathToCharArray(name, File.separator);
                 if (name.endsWith("/")) {
                     // entry is a directory -> skip

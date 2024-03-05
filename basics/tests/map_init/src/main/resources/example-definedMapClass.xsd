@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+  xmlns:mapinit="urn:jaxb.jvnet.org:plugin:mapinit"
+  jaxb:version="2.1"
+  jaxb:extensionBindingPrefixes="mapinit"
+  targetNamespace="http://jaxb.jvnet.org/example/defined"
+  elementFormDefault="qualified">
+
+  <xsd:complexType name="employee">
+    <xsd:sequence>
+      <xsd:element name="dataMap">
+        <xsd:annotation>
+          <xsd:appinfo>
+            <jaxb:property>
+              <jaxb:baseType name="java.util.Map&lt;String,Object&gt;" />
+            </jaxb:property>
+          </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="entry" minOccurs="0" maxOccurs="unbounded">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="key" minOccurs="0" type="xsd:string"/>
+                  <xsd:element name="value" minOccurs="0" type="xsd:anyType"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ignoredDataMap">
+        <xsd:annotation>
+          <xsd:appinfo>
+            <mapinit:ignored/>
+            <jaxb:property>
+              <jaxb:baseType name="java.util.Map&lt;String,Object&gt;" />
+            </jaxb:property>
+          </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="entry" minOccurs="0" maxOccurs="unbounded">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="key" minOccurs="0" type="xsd:string"/>
+                  <xsd:element name="value" minOccurs="0" type="xsd:anyType"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="listValue" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

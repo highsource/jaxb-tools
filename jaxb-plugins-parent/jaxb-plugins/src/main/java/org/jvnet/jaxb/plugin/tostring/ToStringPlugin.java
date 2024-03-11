@@ -2,9 +2,12 @@ package org.jvnet.jaxb.plugin.tostring;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
 
 import javax.xml.namespace.QName;
 
+import com.sun.codemodel.JFieldVar;
+import com.sun.tools.xjc.outline.EnumOutline;
 import org.jvnet.jaxb.lang.JAXBToStringStrategy;
 import org.jvnet.jaxb.lang.ToString;
 import org.jvnet.jaxb.lang.ToStringStrategy;
@@ -57,7 +60,7 @@ public class ToStringPlugin extends AbstractParameterizablePlugin {
 		this.fieldAccessorFactory = fieldAccessorFactory;
 	}
 
-	private String toStringStrategyClass = JAXBToStringStrategy.class.getName();
+	private String toStringStrategyClass = JAXBToStringStrategy.class.getName();;
 
 	public void setToStringStrategyClass(String toStringStrategy) {
 		this.toStringStrategyClass = toStringStrategy;
@@ -67,7 +70,17 @@ public class ToStringPlugin extends AbstractParameterizablePlugin {
 		return toStringStrategyClass;
 	}
 
-	public JExpression createToStringStrategy(JCodeModel codeModel) {
+    private boolean toStringEnums = false;
+
+    public void setToStringEnums(boolean toStringEnums) {
+        this.toStringEnums = toStringEnums;
+    }
+
+    public boolean isToStringEnums() {
+        return toStringEnums;
+    }
+
+    public JExpression createToStringStrategy(JCodeModel codeModel) {
 		return StrategyClassUtils.createStrategyInstanceExpression(codeModel,
 				ToStringStrategy.class, getToStringStrategyClass());
 	}
@@ -102,32 +115,48 @@ public class ToStringPlugin extends AbstractParameterizablePlugin {
 			            org.jvnet.jaxb.plugin.LegacyCustomizations.GENERATED_ELEMENT_NAME);
 	}
 
-	@Override
-	public boolean run(Outline outline, Options opt, ErrorHandler errorHandler) {
-		for (final ClassOutline classOutline : outline.getClasses())
-			if (!getIgnoring().isIgnored(classOutline)) {
-				processClassOutline(classOutline);
-			}
-		return true;
-	}
+    @Override
+    public boolean run(Outline outline, Options opt, ErrorHandler errorHandler) {
+        for (final ClassOutline classOutline : outline.getClasses()) {
+            if (!getIgnoring().isIgnored(classOutline)) {
+                processClassOutline(classOutline);
+            }
+        }
+        if (isToStringEnums()) {
+            for (final EnumOutline enumOutline : outline.getEnums()) {
+                if (!getIgnoring().isIgnored(enumOutline)) {
+                    processEnumOutline(enumOutline);
+                }
+            }
+        }
+        return true;
+    }
 
 	protected void processClassOutline(ClassOutline classOutline) {
 		final JDefinedClass theClass = classOutline.implClass;
 		ClassUtils._implements(theClass, theClass.owner().ref(ToString.class));
 
 		@SuppressWarnings("unused")
-		final JMethod object$toString = generateObject$toString(classOutline,
-				theClass);
+		final JMethod object$toString = generateObject$toString(theClass);
 		@SuppressWarnings("unused")
-		final JMethod toString$append = generateToString$append(classOutline,
-				theClass);
+		final JMethod toString$append = generateToString$append(theClass);
 		@SuppressWarnings("unused")
-		final JMethod toString$appendFields = generateToString$appendFields(
-				classOutline, theClass);
+		final JMethod toString$appendFields = generateToString$appendFields(classOutline, theClass);
 	}
 
-	protected JMethod generateObject$toString(final ClassOutline classOutline,
-			final JDefinedClass theClass) {
+    protected void processEnumOutline(EnumOutline enumOutline) {
+        final JDefinedClass theClass = enumOutline.clazz;
+        ClassUtils._implements(theClass, theClass.owner().ref(ToString.class));
+
+        @SuppressWarnings("unused")
+        final JMethod object$toString = generateObject$toString(theClass);
+        @SuppressWarnings("unused")
+        final JMethod toString$append = generateToString$append(theClass);
+        @SuppressWarnings("unused")
+        final JMethod toString$appendFields = generateToString$appendFields(enumOutline, theClass);
+    }
+
+	protected JMethod generateObject$toString(final JDefinedClass theClass) {
 		final JCodeModel codeModel = theClass.owner();
 		final JMethod object$toString = theClass.method(JMod.PUBLIC,
 				codeModel.ref(String.class), "toString");
@@ -150,8 +179,7 @@ public class ToStringPlugin extends AbstractParameterizablePlugin {
 		return object$toString;
 	}
 
-	protected JMethod generateToString$append(final ClassOutline classOutline,
-			final JDefinedClass theClass) {
+	protected JMethod generateToString$append(final JDefinedClass theClass) {
 		final JCodeModel codeModel = theClass.owner();
 		final JMethod toString$append = theClass.method(JMod.PUBLIC,
 				codeModel.ref(StringBuilder.class), "append");
@@ -241,4 +269,23 @@ public class ToStringPlugin extends AbstractParameterizablePlugin {
 		return toString$appendFields;
 	}
 
+    protected JMethod generateToString$appendFields(EnumOutline enumOutline,
+                                                    final JDefinedClass theClass) {
+        final JCodeModel codeModel = theClass.owner();
+
+        final JMethod toString$appendFields = theClass.method(JMod.PUBLIC,
+            codeModel.ref(StringBuilder.class), "appendFields");
+        {
+            final JVar locator = toString$appendFields.param(
+                ObjectLocator.class, "locator");
+            final JVar buffer = toString$appendFields.param(
+                StringBuilder.class, "buffer");
+            final JVar toStringStrategy = toString$appendFields.param(
+                ToStringStrategy.class, "strategy");
+            final JBlock body = toString$appendFields.body();
+
+            body._return(buffer);
+        }
+        return toString$appendFields;
+    }
 }

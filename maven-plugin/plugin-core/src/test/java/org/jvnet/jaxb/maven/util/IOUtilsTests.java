@@ -3,6 +3,7 @@ package org.jvnet.jaxb.maven.util;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.List;
 
 public class IOUtilsTests {
@@ -65,7 +66,7 @@ public class IOUtilsTests {
 
     @Test
     public void reorderFilesIncludesWithWildcardFirst() {
-        String[] files = {"a.xsd", "common/c1.xsd", "b.xsd", "common/c2.xsd", "common/a.xsd", "common/b.xsd" };
+        String[] files = {"a.xsd", "common" + File.separatorChar + "c1.xsd", "b.xsd", "common" + File.separatorChar + "c2.xsd", "common" + File.separatorChar + "a.xsd", "common" + File.separatorChar + "b.xsd" };
         List<String> orderedFiles = IOUtils.reorderFiles(files, new String[] { "common/*.xsd", "a.xsd", "b.xsd" });
 
         Assert.assertNotNull("Ordered files list should not be null",
@@ -85,7 +86,7 @@ public class IOUtilsTests {
 
     @Test
     public void reorderFilesIncludesWithWildcardMiddle() {
-        String[] files = {"a.xsd", "common/c1.xsd", "b.xsd", "common/c2.xsd", "common/a.xsd", "common/b.xsd" };
+        String[] files = {"a.xsd", "common" + File.separatorChar + "c1.xsd", "b.xsd", "common" + File.separatorChar + "c2.xsd", "common" + File.separatorChar + "a.xsd", "common" + File.separatorChar + "b.xsd" };
         List<String> orderedFiles = IOUtils.reorderFiles(files, new String[] { "a.xsd", "common/*.xsd", "b.xsd" });
 
         Assert.assertNotNull("Ordered files list should not be null",
@@ -106,7 +107,7 @@ public class IOUtilsTests {
 
     @Test
     public void reorderFilesIncludesWithWildcardLast() {
-        String[] files = {"a.xsd", "common/c1.xsd", "b.xsd", "common/c2.xsd", "common/a.xsd", "common/b.xsd" };
+        String[] files = {"a.xsd", "common" + File.separatorChar + "c1.xsd", "b.xsd", "common" + File.separatorChar + "c2.xsd", "common" + File.separatorChar + "a.xsd", "common" + File.separatorChar + "b.xsd" };
         List<String> orderedFiles = IOUtils.reorderFiles(files, new String[] { "a.xsd", "b.xsd", "common/*.xsd" });
 
         Assert.assertNotNull("Ordered files list should not be null",

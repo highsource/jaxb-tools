@@ -1,13 +1,13 @@
 package org.jvnet.jaxb.annox.parser;
 
-import japa.parser.ast.Node;
-import japa.parser.ast.expr.AnnotationExpr;
-import japa.parser.ast.expr.Expression;
+import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.expr.AnnotationExpr;
+import com.github.javaparser.ast.expr.Expression;
 
 import java.lang.annotation.Annotation;
 
 import org.jvnet.jaxb.annox.annotation.NoSuchAnnotationFieldException;
-import org.jvnet.jaxb.annox.japa.parser.ast.visitor.AbstractGenericExpressionVisitor;
+import org.jvnet.jaxb.annox.javaparser.ast.visitor.AbstractGenericExpressionVisitor;
 import org.jvnet.jaxb.annox.model.XAnnotation;
 import org.jvnet.jaxb.annox.model.annotation.field.XAnnotationField;
 import org.jvnet.jaxb.annox.model.annotation.field.XSingleAnnotationField;

@@ -3,9 +3,9 @@ package org.jvnet.jaxb.annox.parser.java.visitor;
 import org.jvnet.jaxb.annox.model.annotation.value.XAnnotationValue;
 import org.jvnet.jaxb.annox.model.annotation.value.XLongAnnotationValue;
 
-import japa.parser.ast.expr.LongLiteralExpr;
-import japa.parser.ast.expr.LongLiteralMinValueExpr;
-import japa.parser.ast.expr.StringLiteralExpr;
+import com.github.javaparser.ast.expr.LongLiteralExpr;
+import com.github.javaparser.ast.expr.LongLiteralMinValueExpr;
+import com.github.javaparser.ast.expr.StringLiteralExpr;
 
 public final class LongExpressionVisitor extends
 		ExpressionVisitor<XAnnotationValue<Long>> {

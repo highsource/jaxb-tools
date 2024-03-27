@@ -1,11 +1,11 @@
 package org.jvnet.jaxb2_commons.plugin.inheritance.util;
 
-import japa.parser.JavaParser;
-import japa.parser.ParseException;
-import japa.parser.ast.CompilationUnit;
-import japa.parser.ast.body.ClassOrInterfaceDeclaration;
-import japa.parser.ast.body.TypeDeclaration;
-import japa.parser.ast.type.ClassOrInterfaceType;
+import com.github.javaparser.JavaParser;
+import com.github.javaparser.ParseException;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.TypeDeclaration;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;

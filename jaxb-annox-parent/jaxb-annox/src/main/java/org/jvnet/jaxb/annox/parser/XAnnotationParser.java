@@ -1,13 +1,13 @@
 package org.jvnet.jaxb.annox.parser;
 
-import japa.parser.ParseException;
-import japa.parser.ast.Node;
-import japa.parser.ast.expr.AnnotationExpr;
-import japa.parser.ast.expr.Expression;
-import japa.parser.ast.expr.MarkerAnnotationExpr;
-import japa.parser.ast.expr.MemberValuePair;
-import japa.parser.ast.expr.NormalAnnotationExpr;
-import japa.parser.ast.expr.SingleMemberAnnotationExpr;
+import com.github.javaparser.ParseException;
+import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.expr.AnnotationExpr;
+import com.github.javaparser.ast.expr.Expression;
+import com.github.javaparser.ast.expr.MarkerAnnotationExpr;
+import com.github.javaparser.ast.expr.MemberValuePair;
+import com.github.javaparser.ast.expr.NormalAnnotationExpr;
+import com.github.javaparser.ast.expr.SingleMemberAnnotationExpr;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -25,8 +25,8 @@ import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.annox.Constants;
 import org.jvnet.jaxb.annox.annotation.AnnotationClassNotFoundException;
 import org.jvnet.jaxb.annox.annotation.NoSuchAnnotationFieldException;
-import org.jvnet.jaxb.annox.japa.parser.AnnotationExprParser;
-import org.jvnet.jaxb.annox.japa.parser.ast.visitor.AbstractGenericExpressionVisitor;
+import org.jvnet.jaxb.annox.javaparser.AnnotationExprParser;
+import org.jvnet.jaxb.annox.javaparser.ast.visitor.AbstractGenericExpressionVisitor;
 import org.jvnet.jaxb.annox.model.XAnnotation;
 import org.jvnet.jaxb.annox.model.annotation.field.XAnnotationField;
 import org.jvnet.jaxb.annox.parser.exception.AnnotationElementParseException;

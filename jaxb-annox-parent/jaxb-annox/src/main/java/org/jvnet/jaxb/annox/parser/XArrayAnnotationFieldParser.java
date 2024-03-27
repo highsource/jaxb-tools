@@ -1,7 +1,7 @@
 package org.jvnet.jaxb.annox.parser;
 
-import japa.parser.ast.expr.ArrayInitializerExpr;
-import japa.parser.ast.expr.Expression;
+import com.github.javaparser.ast.expr.ArrayInitializerExpr;
+import com.github.javaparser.ast.expr.Expression;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;

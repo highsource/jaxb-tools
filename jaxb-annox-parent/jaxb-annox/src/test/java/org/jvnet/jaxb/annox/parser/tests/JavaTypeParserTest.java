@@ -1,10 +1,10 @@
 package org.jvnet.jaxb.annox.parser.tests;
 
-import japa.parser.ast.expr.AnnotationExpr;
+import com.github.javaparser.ast.expr.AnnotationExpr;
 
 import java.util.List;
 
-import org.jvnet.jaxb.annox.japa.parser.AnnotationExprParser;
+import org.jvnet.jaxb.annox.javaparser.AnnotationExprParser;
 import org.jvnet.jaxb.annox.model.XAnnotation;
 import org.jvnet.jaxb.annox.parser.XAnnotationParser;
 

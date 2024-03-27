@@ -2,7 +2,7 @@ package org.jvnet.jaxb.annox.parser.exception;
 
 import java.text.MessageFormat;
 
-import japa.parser.ast.Node;
+import com.github.javaparser.ast.Node;
 
 public class AnnotationExpressionParseException extends Exception {
 

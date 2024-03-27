@@ -3,7 +3,7 @@ package org.jvnet.jaxb.annox.parser.java.visitor;
 import org.jvnet.jaxb.annox.model.annotation.value.XAnnotationValue;
 import org.jvnet.jaxb.annox.model.annotation.value.XEnumAnnotationValue;
 
-import japa.parser.ast.expr.FieldAccessExpr;
+import com.github.javaparser.ast.expr.FieldAccessExpr;
 
 public final class EnumExpressionVisitor extends
 		ExpressionVisitor<XAnnotationValue<Enum<?>>> {

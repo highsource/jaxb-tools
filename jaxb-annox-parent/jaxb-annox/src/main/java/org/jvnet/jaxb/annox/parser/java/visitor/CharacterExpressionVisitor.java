@@ -4,7 +4,7 @@ import org.jvnet.jaxb.annox.model.annotation.value.XAnnotationValue;
 import org.jvnet.jaxb.annox.model.annotation.value.XCharAnnotationValue;
 import org.jvnet.jaxb.annox.parser.exception.ValueParseException;
 
-import japa.parser.ast.expr.StringLiteralExpr;
+import com.github.javaparser.ast.expr.StringLiteralExpr;
 
 public final class CharacterExpressionVisitor extends
 		ExpressionVisitor<XAnnotationValue<Character>> {

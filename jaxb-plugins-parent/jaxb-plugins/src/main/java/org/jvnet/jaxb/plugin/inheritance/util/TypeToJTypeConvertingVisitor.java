@@ -1,12 +1,12 @@
 package org.jvnet.jaxb.plugin.inheritance.util;
 
-import japa.parser.ast.type.ClassOrInterfaceType;
-import japa.parser.ast.type.PrimitiveType;
-import japa.parser.ast.type.ReferenceType;
-import japa.parser.ast.type.Type;
-import japa.parser.ast.type.VoidType;
-import japa.parser.ast.type.WildcardType;
-import japa.parser.ast.visitor.GenericVisitorAdapter;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
+import com.github.javaparser.ast.type.PrimitiveType;
+import com.github.javaparser.ast.type.ReferenceType;
+import com.github.javaparser.ast.type.Type;
+import com.github.javaparser.ast.type.VoidType;
+import com.github.javaparser.ast.type.WildcardType;
+import com.github.javaparser.ast.visitor.GenericVisitorAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

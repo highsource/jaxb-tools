@@ -3,7 +3,7 @@ package org.jvnet.jaxb.annox.parser.java.visitor;
 import org.jvnet.jaxb.annox.model.annotation.value.XAnnotationValue;
 import org.jvnet.jaxb.annox.model.annotation.value.XShortAnnotationValue;
 
-import japa.parser.ast.expr.StringLiteralExpr;
+import com.github.javaparser.ast.expr.StringLiteralExpr;
 
 public final class ShortExpressionVisitor extends
 		ExpressionVisitor<XAnnotationValue<Short>> {

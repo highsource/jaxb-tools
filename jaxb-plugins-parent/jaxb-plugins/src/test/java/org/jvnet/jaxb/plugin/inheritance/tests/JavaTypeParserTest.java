@@ -1,12 +1,12 @@
 package org.jvnet.jaxb.plugin.inheritance.tests;
 
-import japa.parser.JavaParser;
-import japa.parser.ast.CompilationUnit;
-import japa.parser.ast.body.ClassOrInterfaceDeclaration;
-import japa.parser.ast.body.TypeDeclaration;
-import japa.parser.ast.type.ClassOrInterfaceType;
-import japa.parser.ast.type.ReferenceType;
-import japa.parser.ast.type.Type;
+import com.github.javaparser.JavaParser;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.TypeDeclaration;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
+import com.github.javaparser.ast.type.ReferenceType;
+import com.github.javaparser.ast.type.Type;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;

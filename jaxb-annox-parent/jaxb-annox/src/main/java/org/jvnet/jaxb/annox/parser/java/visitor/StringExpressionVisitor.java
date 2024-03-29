@@ -1,5 +1,6 @@
 package org.jvnet.jaxb.annox.parser.java.visitor;
 
+import com.github.javaparser.ast.expr.LiteralStringValueExpr;
 import org.jvnet.jaxb.annox.model.annotation.value.XAnnotationValue;
 import org.jvnet.jaxb.annox.model.annotation.value.XStringAnnotationValue;
 
@@ -12,7 +13,7 @@ public final class StringExpressionVisitor extends
 	}
 
 	@Override
-	public XAnnotationValue<String> visitDefault(StringLiteralExpr n, Void arg) {
+	public XAnnotationValue<String> visitDefault(LiteralStringValueExpr n, Void arg) {
 		return new XStringAnnotationValue(String.valueOf(n.getValue()));
 	}
 }

@@ -17,8 +17,7 @@ public final class EnumExpressionVisitor extends
 	public XAnnotationValue<Enum<?>> visit(FieldAccessExpr n, Void arg) {
 		try {
 			final Class<? extends Enum> enumClass = (Class<? extends Enum>) this.targetClass;
-			return new XEnumAnnotationValue(Enum.valueOf(enumClass,
-					n.getField()));
+			return new XEnumAnnotationValue(Enum.valueOf(enumClass, n.getNameAsString()));
 		} catch (Exception ex) {
 			// BUG
 			throw new RuntimeException(ex);

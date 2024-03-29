@@ -1,25 +1,26 @@
 package org.jvnet.jaxb.annox.javaparser.ast.visitor;
 
+import com.github.javaparser.ast.ArrayCreationLevel;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
+import com.github.javaparser.ast.Modifier;
 import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.PackageDeclaration;
-import com.github.javaparser.ast.TypeParameter;
 import com.github.javaparser.ast.body.AnnotationDeclaration;
 import com.github.javaparser.ast.body.AnnotationMemberDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.CompactConstructorDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
-import com.github.javaparser.ast.body.EmptyMemberDeclaration;
-import com.github.javaparser.ast.body.EmptyTypeDeclaration;
 import com.github.javaparser.ast.body.EnumConstantDeclaration;
 import com.github.javaparser.ast.body.EnumDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.InitializerDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.body.MultiTypeParameter;
 import com.github.javaparser.ast.body.Parameter;
+import com.github.javaparser.ast.body.ReceiverParameter;
+import com.github.javaparser.ast.body.RecordDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
-import com.github.javaparser.ast.body.VariableDeclaratorId;
 import com.github.javaparser.ast.comments.BlockComment;
 import com.github.javaparser.ast.comments.JavadocComment;
 import com.github.javaparser.ast.comments.LineComment;
@@ -40,27 +41,36 @@ import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.FieldAccessExpr;
 import com.github.javaparser.ast.expr.InstanceOfExpr;
 import com.github.javaparser.ast.expr.IntegerLiteralExpr;
-import com.github.javaparser.ast.expr.IntegerLiteralMinValueExpr;
 import com.github.javaparser.ast.expr.LambdaExpr;
 import com.github.javaparser.ast.expr.LiteralExpr;
+import com.github.javaparser.ast.expr.LiteralStringValueExpr;
 import com.github.javaparser.ast.expr.LongLiteralExpr;
-import com.github.javaparser.ast.expr.LongLiteralMinValueExpr;
 import com.github.javaparser.ast.expr.MarkerAnnotationExpr;
 import com.github.javaparser.ast.expr.MemberValuePair;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.expr.MethodReferenceExpr;
+import com.github.javaparser.ast.expr.Name;
 import com.github.javaparser.ast.expr.NameExpr;
 import com.github.javaparser.ast.expr.NormalAnnotationExpr;
 import com.github.javaparser.ast.expr.NullLiteralExpr;
 import com.github.javaparser.ast.expr.ObjectCreationExpr;
-import com.github.javaparser.ast.expr.QualifiedNameExpr;
+import com.github.javaparser.ast.expr.PatternExpr;
+import com.github.javaparser.ast.expr.SimpleName;
 import com.github.javaparser.ast.expr.SingleMemberAnnotationExpr;
 import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.expr.SuperExpr;
+import com.github.javaparser.ast.expr.SwitchExpr;
+import com.github.javaparser.ast.expr.TextBlockLiteralExpr;
 import com.github.javaparser.ast.expr.ThisExpr;
 import com.github.javaparser.ast.expr.TypeExpr;
 import com.github.javaparser.ast.expr.UnaryExpr;
 import com.github.javaparser.ast.expr.VariableDeclarationExpr;
+import com.github.javaparser.ast.modules.ModuleDeclaration;
+import com.github.javaparser.ast.modules.ModuleExportsDirective;
+import com.github.javaparser.ast.modules.ModuleOpensDirective;
+import com.github.javaparser.ast.modules.ModuleProvidesDirective;
+import com.github.javaparser.ast.modules.ModuleRequiresDirective;
+import com.github.javaparser.ast.modules.ModuleUsesDirective;
 import com.github.javaparser.ast.stmt.AssertStmt;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.BreakStmt;
@@ -70,24 +80,29 @@ import com.github.javaparser.ast.stmt.DoStmt;
 import com.github.javaparser.ast.stmt.EmptyStmt;
 import com.github.javaparser.ast.stmt.ExplicitConstructorInvocationStmt;
 import com.github.javaparser.ast.stmt.ExpressionStmt;
+import com.github.javaparser.ast.stmt.ForEachStmt;
 import com.github.javaparser.ast.stmt.ForStmt;
-import com.github.javaparser.ast.stmt.ForeachStmt;
 import com.github.javaparser.ast.stmt.IfStmt;
 import com.github.javaparser.ast.stmt.LabeledStmt;
+import com.github.javaparser.ast.stmt.LocalClassDeclarationStmt;
+import com.github.javaparser.ast.stmt.LocalRecordDeclarationStmt;
 import com.github.javaparser.ast.stmt.ReturnStmt;
-import com.github.javaparser.ast.stmt.SwitchEntryStmt;
+import com.github.javaparser.ast.stmt.SwitchEntry;
 import com.github.javaparser.ast.stmt.SwitchStmt;
 import com.github.javaparser.ast.stmt.SynchronizedStmt;
 import com.github.javaparser.ast.stmt.ThrowStmt;
 import com.github.javaparser.ast.stmt.TryStmt;
-import com.github.javaparser.ast.stmt.TypeDeclarationStmt;
+import com.github.javaparser.ast.stmt.UnparsableStmt;
 import com.github.javaparser.ast.stmt.WhileStmt;
+import com.github.javaparser.ast.stmt.YieldStmt;
+import com.github.javaparser.ast.type.ArrayType;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.IntersectionType;
 import com.github.javaparser.ast.type.PrimitiveType;
-import com.github.javaparser.ast.type.ReferenceType;
+import com.github.javaparser.ast.type.TypeParameter;
 import com.github.javaparser.ast.type.UnionType;
 import com.github.javaparser.ast.type.UnknownType;
+import com.github.javaparser.ast.type.VarType;
 import com.github.javaparser.ast.type.VoidType;
 import com.github.javaparser.ast.type.WildcardType;
 import com.github.javaparser.ast.visitor.GenericVisitor;
@@ -107,35 +122,24 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 		return visitDefault((Expression) n, arg);
 	}
 
-	public R visitDefault(StringLiteralExpr n, A arg)
+	public R visitDefault(LiteralStringValueExpr n, A arg)
 	{
 		return visitDefault((LiteralExpr) n, arg);
 	}
 
 	public R visitDefault(IntegerLiteralExpr n, A arg)
 	{
-		return visitDefault((StringLiteralExpr) n, arg);
-	}
-
-	public R visitDefault(IntegerLiteralMinValueExpr n, A arg)
-	{
-		return visitDefault((IntegerLiteralExpr) n, arg);
+		return visitDefault((LiteralStringValueExpr) n, arg);
 	}
 
 	public R visitDefault(LongLiteralExpr n, A arg)
 	{
-		return visitDefault((StringLiteralExpr) n, arg);
-	}
-
-	public R visitDefault(LongLiteralMinValueExpr n, A arg)
-	{
-		return visitDefault((LongLiteralExpr) n, arg);
+		return visitDefault((LiteralStringValueExpr) n, arg);
 	}
 
 	public R visitDefault(NameExpr n, A arg) {
 		return visitDefault((Expression) n, arg);
 	}
-
 
 	@Override
 	public R visit(CompilationUnit n, A arg) {
@@ -144,11 +148,6 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 
 	@Override
 	public R visit(PackageDeclaration n, A arg) {
-		return visitDefault(n, arg);
-	}
-
-	@Override
-	public R visit(ImportDeclaration n, A arg) {
 		return visitDefault(n, arg);
 	}
 
@@ -178,7 +177,12 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 	}
 
 	@Override
-	public R visit(EmptyTypeDeclaration n, A arg) {
+	public R visit(RecordDeclaration n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(CompactConstructorDeclaration n, A arg) {
 		return visitDefault(n, arg);
 	}
 
@@ -208,11 +212,6 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 	}
 
 	@Override
-	public R visit(VariableDeclaratorId n, A arg) {
-		return visitDefault(n, arg);
-	}
-
-	@Override
 	public R visit(ConstructorDeclaration n, A arg) {
 		return visitDefault(n, arg);
 	}
@@ -224,11 +223,6 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 
 	@Override
 	public R visit(Parameter n, A arg) {
-		return visitDefault(n, arg);
-	}
-
-	@Override
-	public R visit(EmptyMemberDeclaration n, A arg) {
 		return visitDefault(n, arg);
 	}
 
@@ -253,19 +247,24 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 	}
 
 	@Override
-	public R visit(ReferenceType n, A arg) {
+	public R visit(ArrayType n, A arg) {
 		return visitDefault(n, arg);
 	}
 
-    @Override
-    public R visit(IntersectionType n, A arg) {
-        return visitDefault(n, arg);
-    }
+	@Override
+	public R visit(ArrayCreationLevel n, A arg) {
+		return visitDefault(n, arg);
+	}
 
-    @Override
-    public R visit(UnionType n, A arg) {
-        return visitDefault(n, arg);
-    }
+	@Override
+	public R visit(IntersectionType n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(UnionType n, A arg) {
+		return visitDefault(n, arg);
+	}
 
 	@Override
 	public R visit(VoidType n, A arg) {
@@ -277,10 +276,10 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 		return visitDefault(n, arg);
 	}
 
-    @Override
-    public R visit(UnknownType n, A arg) {
-        return visitDefault(n, arg);
-    }
+	@Override
+	public R visit(UnknownType n, A arg) {
+		return visitDefault(n, arg);
+	}
 
 	@Override
 	public R visit(ArrayAccessExpr n, A arg) {
@@ -353,16 +352,6 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 	}
 
 	@Override
-	public R visit(IntegerLiteralMinValueExpr n, A arg) {
-		return visitDefault(n, arg);
-	}
-
-	@Override
-	public R visit(LongLiteralMinValueExpr n, A arg) {
-		return visitDefault(n, arg);
-	}
-
-	@Override
 	public R visit(CharLiteralExpr n, A arg) {
 		return visitDefault(n, arg);
 	}
@@ -394,11 +383,6 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 
 	@Override
 	public R visit(ObjectCreationExpr n, A arg) {
-		return visitDefault(n, arg);
-	}
-
-	@Override
-	public R visit(QualifiedNameExpr n, A arg) {
 		return visitDefault(n, arg);
 	}
 
@@ -438,7 +422,6 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 		return visitDefault((Expression) n, arg);
 	}
 
-
 	@Override
 	public R visit(NormalAnnotationExpr n, A arg) {
 		return visitDefault(n, arg);
@@ -455,7 +438,12 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 	}
 
 	@Override
-	public R visit(TypeDeclarationStmt n, A arg) {
+	public R visit(LocalClassDeclarationStmt n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(LocalRecordDeclarationStmt n, A arg) {
 		return visitDefault(n, arg);
 	}
 
@@ -490,7 +478,7 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 	}
 
 	@Override
-	public R visit(SwitchEntryStmt n, A arg) {
+	public R visit(SwitchEntry n, A arg) {
 		return visitDefault(n, arg);
 	}
 
@@ -525,7 +513,7 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 	}
 
 	@Override
-	public R visit(ForeachStmt n, A arg) {
+	public R visit(ForEachStmt n, A arg) {
 		return visitDefault(n, arg);
 	}
 
@@ -554,24 +542,113 @@ public abstract class AbstractGenericExpressionVisitor<R, A> implements
 		return visitDefault(n, arg);
 	}
 
-    @Override
-    public R visit(LambdaExpr n, A arg) {
-        return visitDefault(n, arg);
-    }
-
-    @Override
-    public R visit(MethodReferenceExpr n, A arg) {
-        return visitDefault(n, arg);
-    }
-
-    @Override
-    public R visit(TypeExpr n, A arg) {
-        return visitDefault(n, arg);
-    }
-
 	@Override
-	public R visit(MultiTypeParameter n, A arg) {
+	public R visit(LambdaExpr n, A arg) {
 		return visitDefault(n, arg);
 	}
 
+	@Override
+	public R visit(MethodReferenceExpr n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(TypeExpr n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(NodeList n, A arg) {
+		for (final Object v : n) {
+			R result = ((Node) v).accept(this, arg);
+			if (result != null) {
+				return result;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public R visit(Name n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(SimpleName n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(ImportDeclaration n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(ModuleDeclaration n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(ModuleRequiresDirective n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(ModuleExportsDirective n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(ModuleProvidesDirective n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(ModuleUsesDirective n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(ModuleOpensDirective n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(UnparsableStmt n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(ReceiverParameter n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(VarType n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(Modifier n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(SwitchExpr n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(YieldStmt n, A arg) {
+		return visitDefault(n, arg);
+	}
+	@Override
+	public R visit(TextBlockLiteralExpr n, A arg) {
+		return visitDefault(n, arg);
+	}
+
+	@Override
+	public R visit(PatternExpr n, A arg) {
+		return visitDefault(n, arg);
+	}
 }

@@ -1,6 +1,7 @@
 package org.jvnet.jaxb.annox.parser.java.visitor;
 
 import com.github.javaparser.ast.expr.ClassExpr;
+import com.github.javaparser.ast.type.ArrayType;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.PrimitiveType;
 import com.github.javaparser.ast.type.ReferenceType;
@@ -50,15 +51,15 @@ public final class ClassExpressionVisitor extends
 					}
 
 					@Override
-					public XAnnotationValue<Class<?>> visit(ReferenceType n,
-							Void arg) {
+					public XAnnotationValue<Class<?>> visit(ArrayType n,
+                                                            Void arg) {
 
 						// BUG arraycount is not yet considered
 						// TODO consider arrayCount
-						final Type type = n.getType();
+						final Type type = n.getElementType();
 						final XAnnotationValue<Class<?>> t = type.accept(this,
 								arg);
-						final int arrayCount = n.getArrayCount();
+						final int arrayCount = n.getArrayLevel();
 						if (arrayCount == 0) {
 							return t;
 						} else {
@@ -118,21 +119,21 @@ public final class ClassExpressionVisitor extends
 					public XAnnotationValue<Class<?>> visit(PrimitiveType n,
 							Void arg) {
 						switch (n.getType()) {
-						case Boolean:
+						case BOOLEAN:
 							return new XClassAnnotationValue(boolean.class);
-						case Char:
+						case CHAR:
 							return new XClassAnnotationValue(char.class);
-						case Byte:
+						case BYTE:
 							return new XClassAnnotationValue(byte.class);
-						case Short:
+						case SHORT:
 							return new XClassAnnotationValue(short.class);
-						case Int:
+						case INT:
 							return new XClassAnnotationValue(int.class);
-						case Long:
+						case LONG:
 							return new XClassAnnotationValue(long.class);
-						case Double:
+						case DOUBLE:
 							return new XClassAnnotationValue(double.class);
-						case Float:
+						case FLOAT:
 							return new XClassAnnotationValue(float.class);
 						default:
 							throw new IllegalArgumentException();

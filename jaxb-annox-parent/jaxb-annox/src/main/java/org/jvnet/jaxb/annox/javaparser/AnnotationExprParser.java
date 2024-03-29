@@ -1,8 +1,9 @@
 package org.jvnet.jaxb.annox.javaparser;
 
-import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParseException;
+import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.expr.AnnotationExpr;
@@ -19,9 +20,8 @@ public class AnnotationExprParser {
 		Validate.notNull(text);
 		final String classText = text + "\n" + "public class Dummy{}";
 		final StringReader reader = new StringReader(classText);
-		final CompilationUnit compilationUnit = JavaParser.parse(reader, true);
-		final List<TypeDeclaration> typeDeclarations = compilationUnit
-				.getTypes();
+		final CompilationUnit compilationUnit = StaticJavaParser.parse(reader);
+		final NodeList<TypeDeclaration<?>> typeDeclarations = compilationUnit.getTypes();
 		if (typeDeclarations.size() > 1) {
 			throw new ParseException(
 					MessageFormat
@@ -35,7 +35,7 @@ public class AnnotationExprParser {
 					ClassOrInterfaceDeclaration.class.getName()));
 		}
 		final ClassOrInterfaceDeclaration classDeclaration = (ClassOrInterfaceDeclaration) typeDeclaration;
-		if (!"Dummy".equals(classDeclaration.getName())) {
+		if (!"Dummy".equals(classDeclaration.getNameAsString())) {
 			throw new ParseException(MessageFormat.format(
 					"Expected [{0}] as type declaration.", "Dummy"));
 		}

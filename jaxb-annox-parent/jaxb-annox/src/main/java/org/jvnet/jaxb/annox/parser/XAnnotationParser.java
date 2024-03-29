@@ -372,7 +372,7 @@ public class XAnnotationParser {
 				fieldsMap.size());
 
 		for (MemberValuePair memberValuePair : pairs) {
-			final String name = memberValuePair.getName();
+			final String name = memberValuePair.getNameAsString();
 			final Expression value = memberValuePair.getValue();
 			final Class<?> type = fieldsMap.get(name);
 			if (type != null) {

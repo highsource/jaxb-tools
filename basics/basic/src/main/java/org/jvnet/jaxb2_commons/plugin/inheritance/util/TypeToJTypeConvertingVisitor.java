@@ -1,5 +1,6 @@
 package org.jvnet.jaxb2_commons.plugin.inheritance.util;
 
+import com.github.javaparser.ast.type.ArrayType;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.PrimitiveType;
 import com.github.javaparser.ast.type.ReferenceType;
@@ -36,21 +37,21 @@ public class TypeToJTypeConvertingVisitor extends
 	@Override
 	public JType visit(PrimitiveType type, JCodeModel codeModel) {
 		switch (type.getType()) {
-		case Boolean:
+		case BOOLEAN:
 			return codeModel.BOOLEAN;
-		case Char:
+		case CHAR:
 			return codeModel.CHAR;
-		case Byte:
+		case BYTE:
 			return codeModel.BYTE;
-		case Short:
+		case SHORT:
 			return codeModel.SHORT;
-		case Int:
+		case INT:
 			return codeModel.INT;
-		case Long:
+		case LONG:
 			return codeModel.LONG;
-		case Float:
+		case FLOAT:
 			return codeModel.FLOAT;
-		case Double:
+		case DOUBLE:
 			return codeModel.DOUBLE;
 		default:
 			throw new AssertionError("Unknown primitive type ["
@@ -59,11 +60,11 @@ public class TypeToJTypeConvertingVisitor extends
 	}
 
 	@Override
-	public JType visit(ReferenceType type, JCodeModel codeModel) {
-		final JType referencedType = type.getType().accept(this, codeModel);
+	public JType visit(ArrayType type, JCodeModel codeModel) {
+		final JType referencedType = type.getElementType().accept(this, codeModel);
 
 		JType referencedTypeArray = referencedType;
-		for (int index = 0; index < type.getArrayCount(); index++) {
+		for (int index = 0; index < type.getArrayLevel(); index++) {
 			referencedTypeArray = referencedTypeArray.array();
 		}
 		return referencedTypeArray;
@@ -72,8 +73,8 @@ public class TypeToJTypeConvertingVisitor extends
 	@Override
 	public JType visit(WildcardType type, JCodeModel codeModel) {
 
-		if (type.getExtends() != null) {
-			final ReferenceType _extends = type.getExtends();
+		if (type.getExtendedType().isPresent()) {
+			final ReferenceType _extends = type.getExtendedType().get();
 			final JType boundType = _extends.accept(this, codeModel);
 
 			if (!(boundType instanceof JClass)) {
@@ -83,7 +84,7 @@ public class TypeToJTypeConvertingVisitor extends
 
 			final JClass boundClass = (JClass) boundType;
 			return boundClass.wildcard();
-		} else if (type.getSuper() != null) {
+		} else if (type.getSuperType().isPresent()) {
 			// TODO
 			throw new IllegalArgumentException(
 					"Wildcard types with super clause are not supported at the moment.");
@@ -99,7 +100,7 @@ public class TypeToJTypeConvertingVisitor extends
 		final JClass knownClass = this.knownClasses.get(name);
 		final JClass jclass = knownClass != null ? knownClass : codeModel
 				.ref(name);
-		final List<Type> typeArgs = type.getTypeArgs();
+		final List<Type> typeArgs = type.getTypeArguments().orElse(null);
 		if (typeArgs == null || typeArgs.isEmpty()) {
 			return jclass;
 		} else {
@@ -119,8 +120,8 @@ public class TypeToJTypeConvertingVisitor extends
 	}
 
 	private String getName(ClassOrInterfaceType type) {
-		final String name = type.getName();
-		final ClassOrInterfaceType scope = type.getScope();
+		final String name = type.getNameAsString();
+		final ClassOrInterfaceType scope = type.getScope().orElse(null);
 		if (scope == null) {
 			return name;
 		} else {

@@ -1,5 +1,6 @@
 package org.jvnet.jaxb.annox.parser.java.visitor;
 
+import com.github.javaparser.ast.expr.UnaryExpr;
 import org.jvnet.jaxb.annox.model.annotation.value.XAnnotationValue;
 import org.jvnet.jaxb.annox.model.annotation.value.XLongAnnotationValue;
 
@@ -17,6 +18,14 @@ public final class LongExpressionVisitor extends
 	public XAnnotationValue<Long> visitDefault(StringLiteralExpr n, Void arg) {
 		return new XLongAnnotationValue(Long.valueOf(n.getValue()));
 	}
+
+    @Override
+    public XAnnotationValue<Long> visit(UnaryExpr n, Void arg) {
+        if (n.getExpr() instanceof StringLiteralExpr && n.getOperator() == UnaryExpr.Operator.negative) {
+            return visit(new LongLiteralExpr("-" + ((StringLiteralExpr) n.getExpr()).getValue()), arg);
+        }
+        return super.visit(n, arg);
+    }
 
 	@Override
 	public XAnnotationValue<Long> visit(LongLiteralMinValueExpr n, Void arg) {

@@ -16,6 +16,8 @@ import java.util.jar.JarFile;
 public class JarScanner extends AbstractScanner {
     private static final String[] EMPTY_STRING_ARRAY = new String[0];
 
+    private File destinationDir = new File("/tmp");
+
     /**
      * The jar artifact to be scanned.
      */
@@ -52,9 +54,9 @@ public class JarScanner extends AbstractScanner {
             while (jarFileEntries.hasMoreElements()) {
                 JarEntry entry = jarFileEntries.nextElement();
                 String name = entry.getName();
-                if (name.startsWith("..") || name.startsWith("/")) {
-                    // ignore "zip slip" file pattern attack
-                    continue;
+                File file = new File(destinationDir, entry.getName());
+                if (!file.toPath().normalize().startsWith(destinationDir.toPath())) {
+                    throw new IOException("Bad zip entry for " + entry.getName());
                 }
                 char[][] tokenizedName = tokenizePathToCharArray(name, File.separator);
                 if (name.endsWith("/")) {

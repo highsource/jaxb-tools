@@ -27,7 +27,7 @@
     <dependency>
       <groupId>org.eclipse.angus</groupId>
       <artifactId>angus-activation</artifactId>
-      <scope>provided</scope> 
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -54,6 +54,9 @@
         <configuration>
           <archive>
             <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+            <manifestEntries>
+              <Automatic-Module-Name>org.jvnet.jaxb.plugins.runtime</Automatic-Module-Name>
+            </manifestEntries>
           </archive>
         </configuration>
       </plugin>

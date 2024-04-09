@@ -54,8 +54,8 @@ public class JarScanner extends AbstractScanner {
             while (jarFileEntries.hasMoreElements()) {
                 JarEntry entry = jarFileEntries.nextElement();
                 String name = entry.getName();
-                File file = new File(destinationDir, entry.getName());
-                if (!file.toPath().normalize().startsWith(destinationDir.toPath())) {
+                File file = new File(destinationDir, name);
+                if ((name != null && name.startsWith("..")) || !file.toPath().normalize().startsWith(destinationDir.toPath())) {
                     throw new IOException("Bad zip entry for " + entry.getName());
                 }
                 char[][] tokenizedName = tokenizePathToCharArray(name, File.separator);

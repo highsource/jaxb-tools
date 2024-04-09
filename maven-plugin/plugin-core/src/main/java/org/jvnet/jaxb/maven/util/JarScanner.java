@@ -53,22 +53,25 @@ public class JarScanner extends AbstractScanner {
             final Enumeration<JarEntry> jarFileEntries = jarFile.entries();
             while (jarFileEntries.hasMoreElements()) {
                 JarEntry entry = jarFileEntries.nextElement();
-                String name = entry.getName();
                 File file = new File(destinationDir, entry.getName());
-                if (!file.toPath().normalize().startsWith(destinationDir.toPath())) {
+                String entryName = "";
+                if (!file.toPath().normalize().startsWith(destinationDir.toPath()) || 
+                		file.getName().contains("..")) {
                     throw new IOException("Bad zip entry for " + entry.getName());
+                } else {
+                	entryName = entry.getName();
                 }
-                char[][] tokenizedName = tokenizePathToCharArray(name, File.separator);
-                if (name.endsWith("/")) {
+                char[][] tokenizedName = tokenizePathToCharArray(entryName, File.separator);
+                if (entryName.endsWith("/")) {
                     // entry is a directory -> skip
-                } else if (isIncluded(name, tokenizedName)) {
-                    if (!isExcluded(name, tokenizedName)) {
-                        filesIncluded.add(name);
+                } else if (isIncluded(entryName, tokenizedName)) {
+                    if (!isExcluded(entryName, tokenizedName)) {
+                        filesIncluded.add(entryName);
                     } else {
-                        filesExcluded.add(name);
+                        filesExcluded.add(entryName);
                     }
                 } else {
-                    filesExcluded.add(name);
+                    filesExcluded.add(entryName);
                 }
             }
         } catch (IOException ioex) {

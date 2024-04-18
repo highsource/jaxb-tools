@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.jvnet.jaxb2_commons</groupId>
+  <artifactId>jaxb2-basics-runtime</artifactId>
+  <packaging>jar</packaging>
+  <name>JAXB Tools :: JAXB2 Basics :: Runtime [EMPTY]</name>
+  <description>
+    This is an empty jar to override
+    org.jvnet.jaxb2_commons:jaxb2-basics-runtime versions below v2
+    when you have both org.jvnet.jaxb2_commons:jaxb2-basics-runtime and
+    org.jvnet.jaxb:jaxb2-basics-runtime artifacts in the same application.
+    See https://github.com/highsource/jaxb-tools/issues/465
+  </description>
+  <parent>
+    <groupId>org.jvnet.jaxb</groupId>
+    <artifactId>jaxb-basics-project</artifactId>
+    <version>2.0.10-SNAPSHOT</version>
+  </parent>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>empty-javadoc</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <classifier>javadoc</classifier>
+              <skipIfEmpty>false</skipIfEmpty>
+              <classesDirectory>${basedir}/src/main/javadoc</classesDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

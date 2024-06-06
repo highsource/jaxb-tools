@@ -2,8 +2,6 @@ package org.jvnet.jaxb.annox.parser.value;
 
 import java.lang.reflect.Array;
 
-import org.apache.commons.lang3.ClassUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.jvnet.jaxb.annox.model.annotation.value.AbstractBasicXAnnotationValueVisitor;
 import org.jvnet.jaxb.annox.model.annotation.value.XAnnotationValue;
 import org.jvnet.jaxb.annox.model.annotation.value.XArrayClassAnnotationValue;
@@ -12,6 +10,8 @@ import org.jvnet.jaxb.annox.model.annotation.value.XClassByNameAnnotationValue;
 import org.jvnet.jaxb.annox.parser.exception.ValueParseException;
 import org.jvnet.jaxb.annox.parser.java.visitor.ClassExpressionVisitor;
 import org.jvnet.jaxb.annox.parser.java.visitor.ExpressionVisitor;
+import org.jvnet.jaxb.annox.util.ClassUtils;
+import org.jvnet.jaxb.annox.util.StringUtils;
 
 public class XClassAnnotationValueParser extends
 		XAnnotationValueParser<Class<?>, Class<?>> {

@@ -2,9 +2,9 @@ package org.jvnet.jaxb.annox.parser.java.visitor;
 
 import com.github.javaparser.ast.Node;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.annox.javaparser.ast.visitor.AbstractGenericExpressionVisitor;
 import org.jvnet.jaxb.annox.parser.exception.ValueParseException;
+import org.jvnet.jaxb.annox.util.Validate;
 
 public class ExpressionVisitor<V> extends
 		AbstractGenericExpressionVisitor<V, Void> {

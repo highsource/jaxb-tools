@@ -4,7 +4,6 @@ import com.github.javaparser.ast.expr.Expression;
 
 import java.lang.annotation.Annotation;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.annox.annotation.NoSuchAnnotationFieldException;
 import org.jvnet.jaxb.annox.model.annotation.field.XAnnotationField;
 import org.jvnet.jaxb.annox.model.annotation.field.XSingleAnnotationField;
@@ -15,6 +14,7 @@ import org.jvnet.jaxb.annox.parser.exception.ValueParseException;
 import org.jvnet.jaxb.annox.parser.java.visitor.ExpressionVisitor;
 import org.jvnet.jaxb.annox.parser.value.XAnnotationValueParser;
 import org.jvnet.jaxb.annox.util.AnnotationElementUtils;
+import org.jvnet.jaxb.annox.util.Validate;
 import org.w3c.dom.Element;
 
 public class XSingleAnnotationFieldParser<T, V> extends

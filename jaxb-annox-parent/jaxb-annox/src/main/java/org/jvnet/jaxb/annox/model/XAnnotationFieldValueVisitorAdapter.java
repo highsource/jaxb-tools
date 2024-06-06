@@ -1,6 +1,5 @@
 //package org.jvnet.jaxb.annox.model;
 //
-//import org.apache.commons.lang3.Validate;
 //import org.jvnet.jaxb.annox.model.annotation.field.XAnnotationField;
 //import org.jvnet.jaxb.annox.model.annotation.field.XArrayAnnotationField;
 //import org.jvnet.jaxb.annox.model.annotation.field.XSingleAnnotationField;

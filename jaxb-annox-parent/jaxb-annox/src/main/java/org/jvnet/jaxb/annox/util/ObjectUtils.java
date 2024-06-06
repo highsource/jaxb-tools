@@ -2,8 +2,6 @@ package org.jvnet.jaxb.annox.util;
 
 import java.lang.reflect.Array;
 
-import org.apache.commons.lang3.Validate;
-
 public class ObjectUtils {
 
 	@SuppressWarnings("unchecked")

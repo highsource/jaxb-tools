@@ -18,12 +18,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.lang3.ClassUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.annox.Constants;
 import org.jvnet.jaxb.annox.annotation.AnnotationClassNotFoundException;
 import org.jvnet.jaxb.annox.annotation.NoSuchAnnotationFieldException;
@@ -34,6 +32,9 @@ import org.jvnet.jaxb.annox.model.annotation.field.XAnnotationField;
 import org.jvnet.jaxb.annox.parser.exception.AnnotationElementParseException;
 import org.jvnet.jaxb.annox.parser.exception.AnnotationExpressionParseException;
 import org.jvnet.jaxb.annox.parser.exception.AnnotationStringParseException;
+import org.jvnet.jaxb.annox.util.ClassUtils;
+import org.jvnet.jaxb.annox.util.StringUtils;
+import org.jvnet.jaxb.annox.util.Validate;
 import org.w3c.dom.Element;
 
 public class XAnnotationParser {
@@ -63,7 +64,7 @@ public class XAnnotationParser {
 	}
 
 	public XAnnotation<?> parse(final Annotation annotation) {
-		Validate.notNull(annotation, "Annotation must not be null.");
+		Objects.requireNonNull(annotation, "Annotation must not be null.");
 
 		final Class<? extends Annotation> annotationClass = annotation
 				.annotationType();
@@ -92,7 +93,7 @@ public class XAnnotationParser {
 	@SuppressWarnings("unchecked")
 	public XAnnotation<?> parse(final Element annotationElement)
 			throws AnnotationElementParseException {
-		Validate.notNull(annotationElement,
+        Objects.requireNonNull(annotationElement,
 				"Annotation element must not be null.");
 
 		final String name = annotationElement.getLocalName();
@@ -233,14 +234,13 @@ public class XAnnotationParser {
 	@SuppressWarnings("unchecked")
 	public XAnnotation<?> parse(final AnnotationExpr annotationElement)
 			throws AnnotationExpressionParseException {
-		Validate.notNull(annotationElement,
+        Objects.requireNonNull(annotationElement,
 				"Annotation expression must not be null.");
 		final String className = annotationElement.getName().toString();
 
 		try {
 
-			final Class<?> draftClass = ClassUtils.getClass(classLoader,
-					className);
+			final Class<?> draftClass = ClassUtils.getClass(classLoader, className);
 
 			if (!Annotation.class.isAssignableFrom(draftClass))
 				throw new AnnotationExpressionParseException(annotationElement,

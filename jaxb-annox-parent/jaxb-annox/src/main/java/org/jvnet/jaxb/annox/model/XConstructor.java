@@ -3,8 +3,8 @@ package org.jvnet.jaxb.annox.model;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.annox.reflect.ParameterizedAnnotatedElement;
+import org.jvnet.jaxb.annox.util.Validate;
 
 /**
  * Defines an annotated constructor.

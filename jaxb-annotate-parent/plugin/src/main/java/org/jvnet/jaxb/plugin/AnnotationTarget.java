@@ -36,7 +36,8 @@ import java.util.Set;
 
 import javax.xml.namespace.QName;
 
-import org.apache.commons.lang3.Validate;
+import org.jvnet.jaxb.annox.util.StringUtils;
+import org.jvnet.jaxb.annox.util.Validate;
 import org.jvnet.jaxb.plugin.annotate.AnnotatePlugin;
 import org.jvnet.jaxb.plugin.removeannotation.RemoveAnnotationPlugin;
 import org.jvnet.jaxb.util.FieldAccessorUtils;
@@ -333,7 +334,7 @@ public enum AnnotationTarget {
 				|| RemoveAnnotationPlugin.REMOVE_ANNOTATION_QNAME.equals(name)
 				|| RemoveAnnotationPlugin.REMOVE_ANNOTATION_FROM_PROPERTY_QNAME.equals(name)) {
 			final String target = element.getAttribute("target");
-			if (target == null || "".equals(target)) {
+			if (StringUtils.isEmpty(target)) {
 				return defaultAnnotationTarget;
 			} else {
 				return AnnotationTarget.getAnnotationTarget(target);

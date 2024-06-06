@@ -4,8 +4,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import org.apache.commons.lang3.Validate;
-
 public class ReflectionUtils {
 
 	public static Constructor<?> getConstructor(Class<?> theClass,

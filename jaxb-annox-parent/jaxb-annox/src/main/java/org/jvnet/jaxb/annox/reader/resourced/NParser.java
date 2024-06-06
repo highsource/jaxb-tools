@@ -6,8 +6,8 @@ import java.io.InputStream;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.annox.io.NestedIOException;
+import org.jvnet.jaxb.annox.util.Validate;
 
 public class NParser {
 

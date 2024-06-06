@@ -2,9 +2,7 @@ package org.jvnet.jaxb.annox.model;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Member;
-
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import java.util.Objects;
 
 /**
  * Defines an annotated member.
@@ -48,8 +46,7 @@ public abstract class XMember<T extends Member & AnnotatedElement> extends
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getMember())
-				.append(getXAnnotations()).toHashCode();
+		return Objects.hash(getMember(), getXAnnotations());
 	}
 
 	@Override
@@ -63,7 +60,7 @@ public abstract class XMember<T extends Member & AnnotatedElement> extends
 			return true;
 		}
 		final XMember<?> rhs = (XMember<?>) obj;
-		return new EqualsBuilder().append(getMember(), rhs.getMember())
-				.append(getXAnnotations(), rhs.getXAnnotations()).isEquals();
+		return Objects.equals(getMember(), rhs.getMember())
+            && Objects.equals(getXAnnotations(), rhs.getXAnnotations());
 	}
 }

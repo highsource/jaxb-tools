@@ -2,8 +2,8 @@ package org.jvnet.jaxb.annox.model.annotation.value;
 
 import java.lang.annotation.Annotation;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.annox.model.XAnnotation;
+import org.jvnet.jaxb.annox.util.Validate;
 
 public class XXAnnotationAnnotationValue<A extends Annotation> extends
 		XDynamicAnnotationValue<A> {

@@ -1,9 +1,9 @@
 package org.jvnet.jaxb.annox.model;
 
+import org.jvnet.jaxb.annox.util.Validate;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
-
-import org.apache.commons.lang3.Validate;
 
 /**
  * Defines an annotated element.

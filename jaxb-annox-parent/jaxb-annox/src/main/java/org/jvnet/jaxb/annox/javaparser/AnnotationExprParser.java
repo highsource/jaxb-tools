@@ -7,12 +7,11 @@ import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.expr.AnnotationExpr;
+import org.jvnet.jaxb.annox.util.Validate;
 
 import java.io.StringReader;
 import java.text.MessageFormat;
 import java.util.List;
-
-import org.apache.commons.lang3.Validate;
 
 public class AnnotationExprParser {
 

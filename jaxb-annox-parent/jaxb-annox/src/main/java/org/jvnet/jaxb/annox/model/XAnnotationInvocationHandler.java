@@ -16,8 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.annox.model.annotation.field.XAnnotationField;
+import org.jvnet.jaxb.annox.util.Validate;
 
 public final class XAnnotationInvocationHandler implements InvocationHandler {
 

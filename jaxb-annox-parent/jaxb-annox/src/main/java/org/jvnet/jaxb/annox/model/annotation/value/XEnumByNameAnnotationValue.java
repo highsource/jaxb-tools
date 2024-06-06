@@ -1,6 +1,6 @@
 package org.jvnet.jaxb.annox.model.annotation.value;
 
-import org.apache.commons.lang3.Validate;
+import org.jvnet.jaxb.annox.util.Validate;
 
 public class XEnumByNameAnnotationValue<E extends Enum<E>> extends
 		XDynamicAnnotationValue<E> {

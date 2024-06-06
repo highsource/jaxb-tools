@@ -5,9 +5,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.annox.reader.XReader;
 import org.jvnet.jaxb.annox.reader.resourced.ResourcedXReader;
+import org.jvnet.jaxb.annox.util.Validate;
 
 public class ResourcedAnnotatedElementFactory implements
 		AnnotatedElementFactory {

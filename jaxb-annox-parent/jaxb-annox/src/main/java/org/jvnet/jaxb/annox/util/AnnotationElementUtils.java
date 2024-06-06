@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jvnet.jaxb.annox.Constants;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -82,7 +81,7 @@ public class AnnotationElementUtils {
 		final List<String> values = new ArrayList<String>();
 		final String attribute = annotationElement.getAttribute(name);
 		if (!StringUtils.isEmpty(attribute)) {
-			final String[] entries = StringUtils.split(attribute.trim(), ' ');
+			final String[] entries = attribute.trim().split(" ");
 			values.addAll(Arrays.asList(entries));
 		}
 
@@ -99,7 +98,7 @@ public class AnnotationElementUtils {
 		if ("value".equals(name) && values.isEmpty()) {
 			final String text = annotationElement.getTextContent();
 			if (!StringUtils.isEmpty(text)) {
-				final String[] entries = StringUtils.split(text.trim(), ' ');
+				final String[] entries = text.trim().split(" ");
 				values.addAll(Arrays.asList(entries));
 			}
 		}

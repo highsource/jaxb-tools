@@ -36,10 +36,10 @@ import java.util.Set;
 
 import javax.xml.namespace.QName;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jvnet.jaxb.annox.Constants;
 import org.jvnet.jaxb.annox.model.XAnnotation;
 import org.jvnet.jaxb.annox.parser.XAnnotationParser;
+import org.jvnet.jaxb.annox.util.StringUtils;
 import org.jvnet.jaxb2_commons.plugin.AbstractParameterizablePlugin;
 import org.jvnet.jaxb2_commons.plugin.AnnotationTarget;
 import org.jvnet.jaxb2_commons.plugin.removeannotation.RemoveAnnotationPlugin;
@@ -392,7 +392,7 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 				}
 			} else if (node.getNodeType() == Node.TEXT_NODE) {
 				final String nodeValue = node.getNodeValue();
-				if (nodeValue != null && StringUtils.isNotBlank(nodeValue)) {
+				if (nodeValue != null && !StringUtils.isBlank(nodeValue)) {
 					try {
 						final XAnnotation<?> annotation = getAnnotationParser()
 								.parse(nodeValue);

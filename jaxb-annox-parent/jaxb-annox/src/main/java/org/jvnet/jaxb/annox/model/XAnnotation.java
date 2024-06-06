@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.annox.model.annotation.field.XAnnotationField;
 import org.jvnet.jaxb.annox.parser.XGenericFieldParser;
+import org.jvnet.jaxb.annox.util.Validate;
 
 /**
  * Defines an xannotation.

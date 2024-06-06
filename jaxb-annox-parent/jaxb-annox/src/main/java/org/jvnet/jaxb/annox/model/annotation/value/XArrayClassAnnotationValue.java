@@ -1,9 +1,9 @@
 package org.jvnet.jaxb.annox.model.annotation.value;
 
+import org.jvnet.jaxb.annox.util.Validate;
+
 import java.lang.reflect.Array;
 import java.util.Arrays;
-
-import org.apache.commons.lang3.Validate;
 
 public class XArrayClassAnnotationValue<A, I> extends
 		XDynamicAnnotationValue<Class<A>> {
@@ -15,8 +15,7 @@ public class XArrayClassAnnotationValue<A, I> extends
 	public XArrayClassAnnotationValue(
 			XClassByNameAnnotationValue<I> itemClassByNameAnnotationValue,
 			int dimension) {
-		this.itemClassByNameAnnotationValue = Validate
-				.notNull(itemClassByNameAnnotationValue);
+		this.itemClassByNameAnnotationValue = Validate.notNull(itemClassByNameAnnotationValue);
 		Validate.isTrue(dimension > 0);
 		this.dimension = dimension;
 		String arrayClassName = itemClassByNameAnnotationValue.getClassName();

@@ -3,10 +3,10 @@ package org.jvnet.jaxb.annox.model.annotation.field;
 import java.lang.reflect.Array;
 import java.text.MessageFormat;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.annox.model.XAnnotationFieldVisitor;
 import org.jvnet.jaxb.annox.model.annotation.value.XAnnotationValue;
 import org.jvnet.jaxb.annox.util.ClassUtils;
+import org.jvnet.jaxb.annox.util.Validate;
 
 public class XArrayAnnotationField<T> extends XAnnotationField<T[]> {
 

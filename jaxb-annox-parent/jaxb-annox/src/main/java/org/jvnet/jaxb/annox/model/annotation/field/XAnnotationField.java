@@ -1,7 +1,7 @@
 package org.jvnet.jaxb.annox.model.annotation.field;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.annox.model.XAnnotationFieldVisitor;
+import org.jvnet.jaxb.annox.util.Validate;
 
 /**
  * Defines an annotation field.

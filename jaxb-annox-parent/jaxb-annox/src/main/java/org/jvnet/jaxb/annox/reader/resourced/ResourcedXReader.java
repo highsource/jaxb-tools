@@ -10,7 +10,6 @@ import java.util.WeakHashMap;
 
 import jakarta.xml.bind.JAXBContext;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.annox.model.XClass;
 import org.jvnet.jaxb.annox.model.XConstructor;
 import org.jvnet.jaxb.annox.model.XField;
@@ -20,6 +19,7 @@ import org.jvnet.jaxb.annox.parser.XAnnotationParser;
 import org.jvnet.jaxb.annox.parser.exception.AnnotationElementParseException;
 import org.jvnet.jaxb.annox.reader.XReader;
 import org.jvnet.jaxb.annox.reflect.AnnotatedElementException;
+import org.jvnet.jaxb.annox.util.Validate;
 
 public class ResourcedXReader implements XReader {
 

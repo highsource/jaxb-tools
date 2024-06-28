@@ -210,7 +210,7 @@ You can put your annotations directly in schema:
         <xsd:annotation>
             <xsd:appinfo>
                 <annox:annotate>@java.lang.SuppressWarnings({"unchecked","rawtypes"})</annox:annotate>
-                <annox:annotate target="package">@javax.annotation.Generated({"XJC","JAXB Annotate Plugin"})</annox:annotate>
+                <annox:annotate target="package">@jakarta.annotation.Generated({"XJC","JAXB Annotate Plugin"})</annox:annotate>
             </xsd:appinfo>
         </xsd:annotation>
         <xsd:sequence>

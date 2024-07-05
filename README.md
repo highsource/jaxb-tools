@@ -71,7 +71,7 @@ It wraps and enhances the [JAXB Schema Compiler (XJC)](https://docs.oracle.com/j
       <plugin>
         <groupId>org.jvnet.jaxb</groupId>
         <artifactId>jaxb-maven-plugin</artifactId>
-        <version>4.0.7</version>
+        <version>4.0.8</version>
         <executions>
           <execution>
             <goals>

@@ -15,6 +15,7 @@ import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
 import org.apache.maven.artifact.resolver.ArtifactResolutionException;
 import org.apache.maven.artifact.resolver.ArtifactResolutionRequest;
 import org.apache.maven.artifact.resolver.ArtifactResolutionResult;
+import org.apache.maven.artifact.resolver.filter.ExclusionSetFilter;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.artifact.InvalidDependencyVersionException;
@@ -27,13 +28,28 @@ public class ArtifactUtils {
 	private ArtifactUtils() {
 
 	}
+    public static Collection<Artifact> resolveTransitively(
+        final ArtifactFactory artifactFactory,
+        final RepositorySystem artifactResolver,
+        final ArtifactRepository localRepository,
+        final ArtifactMetadataSource artifactMetadataSource,
+        final Dependency[] dependencies, final MavenProject project)
+            throws InvalidDependencyVersionException,
+            ArtifactResolutionException, ArtifactNotFoundException {
+        return resolveTransitively(
+            artifactFactory, artifactResolver,
+            localRepository, artifactMetadataSource,
+            dependencies, project,
+            null);
+    }
 
 	public static Collection<Artifact> resolveTransitively(
 			final ArtifactFactory artifactFactory,
 			final RepositorySystem artifactResolver,
 			final ArtifactRepository localRepository,
 			final ArtifactMetadataSource artifactMetadataSource,
-			final Dependency[] dependencies, final MavenProject project)
+			final Dependency[] dependencies, final MavenProject project,
+            final String[] artifactExcludes)
 			throws InvalidDependencyVersionException,
 			ArtifactResolutionException, ArtifactNotFoundException {
 		if (dependencies == null) {
@@ -49,6 +65,10 @@ public class ArtifactUtils {
         request.setResolveRoot(false);
         request.setArtifact(project.getArtifact());
         request.setArtifactDependencies(artifacts);
+        if (artifactExcludes != null && artifactExcludes.length > 0) {
+            // remove dependencies from resolution
+            request.setCollectionFilter(new ExclusionSetFilter(artifactExcludes));
+        }
         request.setRemoteRepositories(project.getRemoteArtifactRepositories());
         request.setLocalRepository(localRepository);
 

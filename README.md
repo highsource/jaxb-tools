@@ -16,17 +16,17 @@ The project is currently containing the following tools :
 Please check our [Migration Guide](https://github.com/highsource/jaxb-tools/wiki/JAXB-Tools-Migration-Guide) for any questions about migrating
 from previous releases to newers one.
 
-## Maven versions
-Starting from 4.0.2, this plugin requires maven 3.1.0 as minimal version.
+## Compatibility and Java Versions
+| Version                 | Maven       | JDK  | JAXB | JPA (HyperJaxb3)  |
+|-------------------------|:------------|:----:|:----:|:-----------------:|
+| From 4.0.2              | 3.1.0       |  11  | 4.0  |        3.1        |
+| 4.0.0                   | 2.x and 3.x |  11  | 4.0  |        3.1        |
+| From 3.0.2 until 4.0.0  | 3.1.0       |  8   | 3.0  |        3.0        |
+| 3.0.0 and 3.0.1         | 2.x and 3.x |  8   | 3.0  |        3.0        |
+| From 2.0.10 until 3.0.0 | 3.1.0       |  8   | 2.3  |        2.2        |
+| From 2.0.0 until 2.0.10 | 2.x and 3.x |  8   | 2.3  |        2.2        |
 
-If you still need maven 2.x or maven 3.0.x, you can still use the previous released versions
-but you should consider upgrading maven to at least 3.1.0.
-
-## Java versions
-
-This project supports Java 11 and higher.
-
-The build is tested against JDK11, JDK17 and JDK21.
+The build is tested against JDK11, JDK17 and JDK21 (also JDK8 for versions before v4).
 
 ## [Documentation](https://github.com/highsource/jaxb-tools/wiki)
 

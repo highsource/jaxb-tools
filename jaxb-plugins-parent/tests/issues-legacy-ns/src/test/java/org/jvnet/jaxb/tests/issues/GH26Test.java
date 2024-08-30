@@ -3,9 +3,9 @@ package org.jvnet.jaxb.tests.issues;
 import java.io.File;
 import java.net.URL;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.jvnet.jaxb.xjc.model.concrete.XJCCMInfoFactory;
 import org.jvnet.jaxb.xml.bind.model.MAttributePropertyInfo;
 import org.jvnet.jaxb.xml.bind.model.MClassInfo;
@@ -24,7 +24,7 @@ import com.sun.tools.xjc.model.nav.NType;
 
 public class GH26Test {
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		System.setProperty("javax.xml.accessExternalSchema", "all");
 	}
@@ -55,33 +55,33 @@ public class GH26Test {
 
 		final MClassInfo<NType, NClass> classInfo = mmodel
 				.getClassInfo("org.jvnet.jaxb.tests.issues.IssueGH26Type");
-		Assert.assertNotNull(classInfo);
+		Assertions.assertNotNull(classInfo);
 
 		final MElementPropertyInfo<NType, NClass> a = (MElementPropertyInfo<NType, NClass>) classInfo
 				.getProperty("a");
-		Assert.assertEquals("a", a.getDefaultValue());
-		Assert.assertNotNull(a.getDefaultValueNamespaceContext());
+		Assertions.assertEquals("a", a.getDefaultValue());
+		Assertions.assertNotNull(a.getDefaultValueNamespaceContext());
 		final MElementsPropertyInfo<NType, NClass> bOrC = (MElementsPropertyInfo<NType, NClass>) classInfo
 				.getProperty("bOrC");
 
-//		Assert.assertEquals("b", bOrC.getElementTypeInfos().get(0).getDefaultValue());
-		Assert.assertNotNull(bOrC.getElementTypeInfos().get(0).getDefaultValueNamespaceContext());
+//		Assertions.assertEquals("b", bOrC.getElementTypeInfos().get(0).getDefaultValue());
+		Assertions.assertNotNull(bOrC.getElementTypeInfos().get(0).getDefaultValueNamespaceContext());
 
-//		Assert.assertEquals("3", bOrC.getElementTypeInfos().get(1).getDefaultValue());
-		Assert.assertNotNull(bOrC.getElementTypeInfos().get(1).getDefaultValueNamespaceContext());
+//		Assertions.assertEquals("3", bOrC.getElementTypeInfos().get(1).getDefaultValue());
+		Assertions.assertNotNull(bOrC.getElementTypeInfos().get(1).getDefaultValueNamespaceContext());
 
 		final MElementRefsPropertyInfo<NType, NClass> dOrE = (MElementRefsPropertyInfo<NType, NClass>) classInfo
 				.getProperty("dOrE");
-//		Assert.assertEquals("e", dOrE.getElementTypeInfos().get(0).getDefaultValue());
-		Assert.assertNotNull(dOrE.getElementTypeInfos().get(0).getDefaultValueNamespaceContext());
+//		Assertions.assertEquals("e", dOrE.getElementTypeInfos().get(0).getDefaultValue());
+		Assertions.assertNotNull(dOrE.getElementTypeInfos().get(0).getDefaultValueNamespaceContext());
 
-//		Assert.assertEquals("d", dOrE.getElementTypeInfos().get(1).getDefaultValue());
-		Assert.assertNotNull(dOrE.getElementTypeInfos().get(1).getDefaultValueNamespaceContext());
+//		Assertions.assertEquals("d", dOrE.getElementTypeInfos().get(1).getDefaultValue());
+		Assertions.assertNotNull(dOrE.getElementTypeInfos().get(1).getDefaultValueNamespaceContext());
 
 		final MAttributePropertyInfo<NType, NClass> z = (MAttributePropertyInfo<NType, NClass>) classInfo
 				.getProperty("z");
-		Assert.assertEquals("z", z.getDefaultValue());
-		Assert.assertNotNull(z.getDefaultValueNamespaceContext());
+		Assertions.assertEquals("z", z.getDefaultValue());
+		Assertions.assertNotNull(z.getDefaultValueNamespaceContext());
 		// model.generateCode(options, receiver);
 		// com.sun.codemodel.CodeWriter cw = options.createCodeWriter();
 		// model.codeModel.build(cw);

@@ -1,7 +1,6 @@
 package org.jvnet.hyperjaxb3.ejb.tests.componentjpa2.tests;
 
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hyperjaxb3.xml.bind.JAXBContextUtils;
 
 import jakarta.persistence.EntityManager;

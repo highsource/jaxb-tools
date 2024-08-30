@@ -66,16 +66,17 @@
     <maven.plugin.testing.version>3.3.0</maven.plugin.testing.version>
 
     <!-- Dependencies versions -->
-    <ant.version>1.10.12</ant.version>
+    <ant.version>1.10.14</ant.version>
     <jaxb.version>4.0.5</jaxb.version>
 
     <commons-beanutils.version>1.9.4</commons-beanutils.version>
     <commons-io.version>2.11.0</commons-io.version>
     <commons-lang3.version>3.12.0</commons-lang3.version>
     <commons-text.version>1.10.0</commons-text.version>
+    <hamcrest.version>3.0</hamcrest.version>
     <hibernate-search.version>4.1.1.Final</hibernate-search.version>
     <joda-time.version>2.5</joda-time.version>
-    <junit4.version>4.13.2</junit4.version>
+    <junit5.version>5.11.0</junit5.version>
     <slf4j.version>1.7.36</slf4j.version>
     <spring.version>5.3.31</spring.version>
     <stax-ex.version>1.8.3</stax-ex.version>
@@ -234,8 +235,13 @@
   <dependencies>
     <!-- JUnit -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -350,9 +356,19 @@
         <version>${commons-io.version}</version>
       </dependency>
       <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>${junit4.version}</version>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>${junit5.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-params</artifactId>
+        <version>${junit5.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest</artifactId>
+        <version>${hamcrest.version}</version>
       </dependency>
       <!-- Joda-Time -->
       <dependency>
@@ -577,20 +593,19 @@
           <version>${maven-antrun-plugin.version}</version>
           <dependencies>
             <dependency>
-              <groupId>junit</groupId>
-              <artifactId>junit</artifactId>
-              <version>${junit4.version}</version>
-              <scope>compile</scope>
-            </dependency>
-            <dependency>
               <groupId>org.apache.ant</groupId>
               <artifactId>ant</artifactId>
               <version>${ant.version}</version>
             </dependency>
             <dependency>
               <groupId>org.apache.ant</groupId>
-              <artifactId>ant-junit</artifactId>
+              <artifactId>ant-junitlauncher</artifactId>
               <version>${ant.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>org.junit.jupiter</groupId>
+              <artifactId>junit-jupiter-engine</artifactId>
+              <version>${junit5.version}</version>
             </dependency>
           </dependencies>
         </plugin>

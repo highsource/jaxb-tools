@@ -1,18 +1,17 @@
 package org.jvnet.jaxb2_commons.tests.defaultvalue;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import generated.Address;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class AddressTest {
 
     @Test
     public void testAddress() {
         Address a = new Address();
-        Assert.assertEquals(42, a.getNumber());
-        Assert.assertEquals("none", a.getCareOf());
+        Assertions.assertEquals(42, a.getNumber());
+        Assertions.assertEquals("none", a.getCareOf());
         // no default value for street
-        Assert.assertNull(a.getStreet());
+        Assertions.assertNull(a.getStreet());
     }
 }

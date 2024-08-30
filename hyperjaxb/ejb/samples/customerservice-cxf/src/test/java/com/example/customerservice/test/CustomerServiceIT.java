@@ -11,9 +11,6 @@ import org.apache.cxf.xjc.runtime.DataTypeAdapter;
 import org.hisrc.hifaces20.testing.webappenvironment.WebAppEnvironment;
 import org.hisrc.hifaces20.testing.webappenvironment.annotations.PropertiesWebAppEnvironmentConfig;
 import org.hisrc.hifaces20.testing.webappenvironment.testing.junit4.WebAppEnvironmentRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.MethodRule;
 
 import com.example.customerservice.model.Customer;
 import com.example.customerservice.model.CustomerType;

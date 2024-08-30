@@ -4,30 +4,31 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-import org.junit.Assert;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-public class ProxyTest extends TestCase {
+public class ProxyTest {
 
-  public void testProxy() throws Exception {
+    @Test
+    public void testProxy() throws Exception {
 
 
-    final InvocationHandler handler = new InvocationHandler() {
-      public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        return "a";
-      }
-    };
+        final InvocationHandler handler = new InvocationHandler() {
+            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                return "a";
+            }
+        };
 
-    final A a = (A) Proxy.newProxyInstance(
-        A.class.getClassLoader(),
-        new Class[]{ A.class },
-        handler);
+        final A a = (A) Proxy.newProxyInstance(
+            A.class.getClassLoader(),
+            new Class[]{A.class},
+            handler);
 
-    Assert.assertEquals("Wrong value.", "a", a.stringField());
-  }
+        Assertions.assertEquals("a", a.stringField(), "Wrong value.");
+    }
 
-  public static interface A {
-    public String stringField();
-  }
+    public static interface A {
+        public String stringField();
+    }
 
 }

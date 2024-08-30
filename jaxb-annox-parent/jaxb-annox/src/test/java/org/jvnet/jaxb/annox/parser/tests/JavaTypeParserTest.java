@@ -4,14 +4,15 @@ import com.github.javaparser.ast.expr.AnnotationExpr;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.jvnet.jaxb.annox.javaparser.AnnotationExprParser;
 import org.jvnet.jaxb.annox.model.XAnnotation;
 import org.jvnet.jaxb.annox.parser.XAnnotationParser;
 
-import junit.framework.TestCase;
+public class JavaTypeParserTest {
 
-public class JavaTypeParserTest extends TestCase {
-
+    @Test
 	public void testParse() throws Exception {
 
 		final String text = "@org.jvnet.jaxb.annox.parser.tests.A("
@@ -44,13 +45,13 @@ public class JavaTypeParserTest extends TestCase {
 
 		List<AnnotationExpr> annotations = parser.parse(text);
 
-		assertEquals(1, annotations.size());
+		Assertions.assertEquals(1, annotations.size());
 
 		final AnnotationExpr annotationExpr = annotations.get(0);
 
 		final XAnnotationParser xAnnotationParser = new XAnnotationParser();
 		XAnnotation<?> xannotation = xAnnotationParser.parse(annotationExpr);
-		assertNotNull(xannotation);
+        Assertions.assertNotNull(xannotation);
 
 	}
 }

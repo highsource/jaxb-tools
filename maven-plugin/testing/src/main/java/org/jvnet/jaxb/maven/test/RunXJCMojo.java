@@ -4,13 +4,12 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
-import junit.framework.TestCase;
-
 import org.apache.maven.execution.DefaultMavenExecutionRequest;
 import org.apache.maven.execution.MavenExecutionRequest;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.Mojo;
 import org.apache.maven.project.MavenProject;
+import org.junit.jupiter.api.Test;
 import org.jvnet.jaxb.maven.AbstractXJCMojo;
 import org.jvnet.jaxb.maven.XJCMojo;
 import org.slf4j.Logger;
@@ -24,12 +23,13 @@ import com.sun.tools.xjc.Options;
  * @author Aleksei Valikov
  */
 
-public class RunXJCMojo extends TestCase {
+public class RunXJCMojo {
 	/**
 	 * Logger.
 	 */
 	protected Logger log = LoggerFactory.getLogger(RunXJCMojo.class);
 
+    @Test
 	public void testExecute() throws Exception {
 		final Mojo mojo = initMojo();
 		mojo.execute();

@@ -5,10 +5,10 @@ import java.io.StringWriter;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
-import javax.xml.namespace.QName;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Assert;
-import org.junit.Test;
+import javax.xml.namespace.QName;
 
 public class Gh1Test {
 
@@ -37,6 +37,6 @@ public class Gh1Test {
 				new JAXBElement<Gh1>(new QName("test"), Gh1.class, value), System.out);
 		context.createMarshaller().marshal(
 				new JAXBElement<Gh1>(new QName("test"), Gh1.class, value), sw);
-		Assert.assertTrue(sw.toString().contains("Test"));
+		Assertions.assertTrue(sw.toString().contains("Test"));
 	}
 }

@@ -1,14 +1,14 @@
 package org.jvnet.hyperjaxb3.ejb.tutorials.po.stepone;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 public class HsqlBigDecimalTest {
 
@@ -32,8 +32,8 @@ public class HsqlBigDecimalTest {
 		ResultSet rs = stmt.executeQuery("SELECT * FROM test");
 		while (rs.next()) {
 			BigDecimal result = rs.getBigDecimal(1);
-			Assert.assertTrue(BigDecimal.ONE.compareTo(result) == 0);
-			Assert.assertEquals(BigDecimal.ONE, result.setScale(0));
+			Assertions.assertTrue(BigDecimal.ONE.compareTo(result) == 0);
+			Assertions.assertEquals(BigDecimal.ONE, result.setScale(0));
 		}
 
 		rs.close();

@@ -1,10 +1,9 @@
 package org.jvnet.jaxb.tests.parentpointer;
 
-import generated.Person;
-import org.junit.Assert;
-import org.junit.Test;
-
 import generated.Address;
+import generated.Person;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class AddressTest {
 
@@ -12,6 +11,6 @@ public class AddressTest {
     public void testAddress() {
         Address a = new Address();
         a.setParent(new Person());
-        Assert.assertNotNull(a.getParent());
+        Assertions.assertNotNull(a.getParent());
     }
 }

@@ -6,8 +6,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.apache.maven.plugin.logging.SystemStreamLog;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.jvnet.jaxb.maven.net.CompositeURILastModifiedResolver;
 import org.jvnet.jaxb.maven.net.JarURILastModifiedResolver;
 import org.jvnet.jaxb.maven.net.URILastModifiedResolver;
@@ -28,17 +28,17 @@ public class URILastModifiedResolverTest {
 		final URI fileURI = getClass().getResource(
 				getClass().getSimpleName() + ".class").toURI();
 
-		Assert.assertNotNull(resolver.getLastModified(jarURI));
-		Assert.assertNotNull(resolver.getLastModified(partJarURI));
-		Assert.assertNotNull(resolver.getLastModified(fileURI));
+		Assertions.assertNotNull(resolver.getLastModified(jarURI));
+		Assertions.assertNotNull(resolver.getLastModified(partJarURI));
+		Assertions.assertNotNull(resolver.getLastModified(fileURI));
 
 		// Switch to true to tests HTTP/HTTPs
 		boolean online = false;
 		if (online) {
 			final URI httpsURI = new URI("https://ya.ru/");
 			final URI httpURI = new URI("http://schemas.opengis.net/ogc_schema_updates.rss");
-			Assert.assertNotNull(resolver.getLastModified(httpsURI));
-			Assert.assertNotNull(resolver.getLastModified(httpURI));
+			Assertions.assertNotNull(resolver.getLastModified(httpsURI));
+			Assertions.assertNotNull(resolver.getLastModified(httpURI));
 		}
 	}
 }

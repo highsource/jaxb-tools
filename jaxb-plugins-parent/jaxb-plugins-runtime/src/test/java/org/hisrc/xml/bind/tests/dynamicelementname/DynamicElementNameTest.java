@@ -11,9 +11,9 @@ import jakarta.xml.bind.annotation.XmlElementRef;
 import jakarta.xml.bind.annotation.XmlRegistry;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlTransient;
-import javax.xml.namespace.QName;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
+import javax.xml.namespace.QName;
 
 public class DynamicElementNameTest {
 

@@ -3,8 +3,8 @@ package org.jvnet.hyperjaxb3.ejb.strategy.annotate.tests;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hyperjaxb3.ejb.strategy.annotate.CreateXAnnotations;
 
 import jakarta.xml.ns.persistence.orm.AttributeOverride;
@@ -26,6 +26,6 @@ public class CreateXAnnotationsTest {
 		ao1.setColumn(new Column());
 		ao1.getColumn().setName("column_b");
 		List<AttributeOverride> aos = Arrays.asList(ao0, ao1);
-		Assert.assertNotNull(createXAnnotations.createAttributeOverrides(aos));
+		Assertions.assertNotNull(createXAnnotations.createAttributeOverrides(aos));
 	}
 }

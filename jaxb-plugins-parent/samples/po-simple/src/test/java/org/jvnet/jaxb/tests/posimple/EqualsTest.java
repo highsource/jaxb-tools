@@ -4,6 +4,8 @@ import java.io.File;
 
 import jakarta.xml.bind.JAXBElement;
 
+import org.junit.jupiter.api.Assertions;
+
 import org.jvnet.jaxb.test.AbstractSamplesTest;
 
 public class EqualsTest extends AbstractSamplesTest {
@@ -15,7 +17,6 @@ public class EqualsTest extends AbstractSamplesTest {
 				.createUnmarshaller().unmarshal(sample);
 		final JAXBElement<?> rhs = (JAXBElement<?>) createContext()
 				.createUnmarshaller().unmarshal(sample);
-		assertTrue("Values must be equal.",
-				lhs.getValue().equals(rhs.getValue()));
+		Assertions.assertTrue(lhs.getValue().equals(rhs.getValue()), "Values must be equal.");
 	}
 }

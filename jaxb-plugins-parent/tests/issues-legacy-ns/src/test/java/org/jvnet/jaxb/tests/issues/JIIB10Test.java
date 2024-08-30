@@ -3,18 +3,17 @@ package org.jvnet.jaxb.tests.issues;
 import java.lang.reflect.Field;
 
 import jakarta.xml.bind.annotation.XmlAnyElement;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import junit.framework.TestCase;
+public class JIIB10Test {
 
-import org.junit.Assert;
-
-public class JIIB10Test extends TestCase {
-
+    @Test
 	public void testXmlAnyElementLax() throws Exception {
 
 		final Field contentField = IssueJIIB10Type.class.getDeclaredField("content");
 		final XmlAnyElement xmlAnyElementAnnotation = contentField
 				.getAnnotation(XmlAnyElement.class);
-		Assert.assertTrue(xmlAnyElementAnnotation.lax());
+		Assertions.assertTrue(xmlAnyElementAnnotation.lax());
 	}
 }

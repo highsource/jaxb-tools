@@ -1,18 +1,18 @@
 package org.jvnet.hyperjaxb3.ejb.tests.issues;
 
 import jakarta.persistence.NamedQuery;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
+public class IssueHJIII100Test {
 
-public class IssueHJIII100Test extends TestCase {
-
+    @Test
 	public void testEntityAnnotation() throws Exception {
 
-		Assert.assertNotNull(IssueHJIII100Type.class
+		Assertions.assertNotNull(IssueHJIII100Type.class
 				.getAnnotation(NamedQuery.class));
 
-		Assert.assertEquals(
+        Assertions.assertEquals(
 				1,
 				IssueHJIII100Type.class.getAnnotation(NamedQuery.class).hints().length);
 	}

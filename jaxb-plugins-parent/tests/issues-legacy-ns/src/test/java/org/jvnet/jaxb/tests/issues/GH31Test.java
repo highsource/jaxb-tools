@@ -1,7 +1,7 @@
 package org.jvnet.jaxb.tests.issues;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.jvnet.jaxb.lang.EnumValue;
 import org.jvnet.jaxb.lang.JAXBToStringStrategy;
 import org.jvnet.jaxb.lang.ToStringStrategy;
@@ -29,7 +29,7 @@ public class GH31Test {
 				}
 			};
 		};
-		Assert.assertEquals(
+		Assertions.assertEquals(
 				"org.jvnet.jaxb.tests.issues.IssueGH31ComplexType[testEnum=Male(default)]",
 				t.append(null, new StringBuilder(), s).toString());
 	}

@@ -1,10 +1,10 @@
 package org.jvnet.jaxb.plugin.simplify.tests03;
 
+import org.junit.jupiter.api.Test;
+
 import java.util.Date;
 
 import javax.xml.datatype.Duration;
-
-import org.junit.Test;
 
 public class Gh2Test {
 

@@ -16,13 +16,12 @@ import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
-import javax.xml.transform.dom.DOMResult;
-
-import junit.framework.TestCase;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.jvnet.jaxb.lang.ExtendedJAXBEqualsStrategy;
 
-public class JAXBAndJPATest extends TestCase {
+public class JAXBAndJPATest {
 
 	private ObjectFactory objectFactory;
 
@@ -30,6 +29,7 @@ public class JAXBAndJPATest extends TestCase {
 
 	private JAXBContext context;
 
+    @BeforeEach
 	public void setUp() throws Exception {
 
 		objectFactory = new ObjectFactory();
@@ -56,7 +56,7 @@ public class JAXBAndJPATest extends TestCase {
 		context = JAXBContext.newInstance("generated");
 	}
 
-	@SuppressWarnings("unchecked")
+	@Test
 	public void testRoundtrip() throws JAXBException {
 
 		final Unmarshaller unmarshaller = context.createUnmarshaller();
@@ -79,7 +79,9 @@ public class JAXBAndJPATest extends TestCase {
 		final PurchaseOrderType beta = loadManager.find(
 				PurchaseOrderType.class, id);
 		// Using not default equals strategy since BigDecimal has errors in equals strict equality
-		Assert.assertTrue("Objects are not equal.", alpha.equals(null, null, beta, ExtendedJAXBEqualsStrategy.INSTANCE));
+		Assertions.assertTrue(
+            alpha.equals(null, null, beta, ExtendedJAXBEqualsStrategy.INSTANCE),
+            "Objects are not equal.");
 
 		final Marshaller marshaller = context.createMarshaller();
 		marshaller.marshal(objectFactory.createPurchaseOrder(beta), System.out);

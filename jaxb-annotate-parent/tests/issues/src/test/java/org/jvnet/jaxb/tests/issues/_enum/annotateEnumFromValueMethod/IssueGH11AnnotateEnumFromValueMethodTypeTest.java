@@ -28,14 +28,10 @@
  */
 package org.jvnet.jaxb.tests.issues._enum.annotateEnumFromValueMethod;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-
 import java.lang.reflect.Method;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.jvnet.jaxb.plugin.annotate.tests.annotations.Marked;
 
 public class IssueGH11AnnotateEnumFromValueMethodTypeTest {
@@ -47,7 +43,7 @@ public class IssueGH11AnnotateEnumFromValueMethodTypeTest {
         Method fromValueMethod = IssueGH11AnnotateEnumFromValueMethodType.class.getDeclaredMethod("fromValue", String.class);
         Marked actualAnnotation = fromValueMethod.getAnnotation(Marked.class);
 
-        assertThat(actualAnnotation, is(notNullValue()));
-        assertThat(actualAnnotation.value(), is(equalTo(expectedValue)));
+        Assertions.assertNotNull(actualAnnotation);
+        Assertions.assertEquals(expectedValue, actualAnnotation.value());
     }
 }

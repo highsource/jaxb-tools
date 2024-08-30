@@ -3,8 +3,8 @@ package org.jvnet.jaxb.lang.tests;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.jvnet.jaxb.lang.CopyStrategy;
 import org.jvnet.jaxb.lang.CopyTo;
 import org.jvnet.jaxb.lang.JAXBCopyStrategy;
@@ -12,7 +12,7 @@ import org.jvnet.jaxb.locator.DefaultRootObjectLocator;
 import org.jvnet.jaxb.locator.ObjectLocator;
 import org.jvnet.jaxb.locator.util.LocatorUtils;
 
-public class CyclicTests extends TestCase {
+public class CyclicTests {
 
 	public interface CopyToInstance extends CopyTo {
 	}
@@ -60,6 +60,7 @@ public class CyclicTests extends TestCase {
 		}
 	}
 
+    @Test
 	public void testCycle() throws Exception {
 		final A a = new A();
 		final B b = new B();
@@ -91,7 +92,7 @@ public class CyclicTests extends TestCase {
 			}
 		}.copy(new DefaultRootObjectLocator(a), a);
 
-		assertSame(a1.b.a.b, a1.b);
+		Assertions.assertSame(a1.b.a.b, a1.b);
 		// BUG: See https://github.com/highsource/jaxb-tools/issues/92
 		// assertSame(a1.b.a, a1);
 	}

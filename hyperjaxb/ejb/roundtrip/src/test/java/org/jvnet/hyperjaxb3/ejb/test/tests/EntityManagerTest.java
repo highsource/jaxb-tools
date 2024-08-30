@@ -2,10 +2,13 @@ package org.jvnet.hyperjaxb3.ejb.test.tests;
 
 import jakarta.persistence.EntityManager;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hyperjaxb3.ejb.test.AbstractEntityManagerTest;
 
 public class EntityManagerTest extends AbstractEntityManagerTest {
 
+    @Test
 	public void testIt() throws Exception {
 		final A a1 = new A();
 		final B b1 = new B();
@@ -27,8 +30,8 @@ public class EntityManagerTest extends AbstractEntityManagerTest {
 
 		final A a3 = load("A");
 
-		assertEquals(a3.getD(), a2.getD());
-		assertEquals(a3.getB().getC(), a2.getB().getC());
+		Assertions.assertEquals(a3.getD(), a2.getD());
+        Assertions.assertEquals(a3.getB().getC(), a2.getB().getC());
 	}
 
 	public void save(A a) {

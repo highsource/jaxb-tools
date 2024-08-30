@@ -1,15 +1,14 @@
 package org.jvnet.jaxb.tests.booleangetter;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import generated.Person;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class PersonTest {
 
     @Test
     public void testPerson() {
         Person p = new Person();
-        Assert.assertEquals(false, p.getMailingAddressIdentical());
+        Assertions.assertEquals(false, p.getMailingAddressIdentical());
     }
 }

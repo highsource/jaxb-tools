@@ -10,15 +10,17 @@ import java.util.Properties;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import junit.framework.TestCase;
-
-public class JPATest extends TestCase {
+public class JPATest {
 
 	private ObjectFactory objectFactory;
 
 	private EntityManagerFactory entityManagerFactory;
 
+    @BeforeEach
 	public void setUp() throws Exception {
 
 		objectFactory = new ObjectFactory();
@@ -43,6 +45,7 @@ public class JPATest extends TestCase {
 				"generated", persistenceProperties);
 	}
 
+    @Test
 	public void testSaveAndLoad() {
 		final PurchaseOrderType alpha = objectFactory.createPurchaseOrderType();
 		alpha.setShipTo(objectFactory.createUSAddress());
@@ -63,7 +66,7 @@ public class JPATest extends TestCase {
 				PurchaseOrderType.class, id);
 		loadManager.close();
 		// Check that we're still shipping to Sacramento
-		assertEquals("Sacramento", beta.getShipTo().getCity());
+		Assertions.assertEquals("Sacramento", beta.getShipTo().getCity());
 
 	}
 

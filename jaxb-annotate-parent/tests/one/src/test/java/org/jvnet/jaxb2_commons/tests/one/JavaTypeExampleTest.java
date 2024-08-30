@@ -33,10 +33,10 @@ import java.io.StringWriter;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
-import javax.xml.namespace.QName;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Assert;
-import org.junit.Test;
+import javax.xml.namespace.QName;
 
 public class JavaTypeExampleTest {
 
@@ -51,7 +51,7 @@ public class JavaTypeExampleTest {
 		context.createMarshaller().marshal(
 				new JAXBElement<JavaTypeExample>(new QName("test"),
 						JavaTypeExample.class, value), sw);
-		Assert.assertTrue(sw.toString().contains(">true<"));
+		Assertions.assertTrue(sw.toString().contains(">true<"));
 //		System.out.println(sw.toString());
 	}
 }

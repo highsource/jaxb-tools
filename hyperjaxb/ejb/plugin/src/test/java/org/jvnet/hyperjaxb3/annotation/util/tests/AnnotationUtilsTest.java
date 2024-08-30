@@ -4,14 +4,14 @@ import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.Test;
 import org.jvnet.jaxb.annox.model.XAnnotation;
 import org.jvnet.jaxb.annox.model.annotation.field.XAnnotationField;
 import org.jvnet.hyperjaxb3.annotation.util.AnnotationUtils;
 
-public class AnnotationUtilsTest extends TestCase {
+public class AnnotationUtilsTest {
 
+    @Test
 	public void testA() throws Exception {
 
 		final Collection<XAnnotation<?>> a = new LinkedList<XAnnotation<?>>();
@@ -21,6 +21,7 @@ public class AnnotationUtilsTest extends TestCase {
 				a.toArray(new XAnnotation[a.size()]), Override.class);
 	}
 
+    @Test
 	public void testB() throws Exception {
 
 		final Collection<XAnnotation<?>> a = new LinkedList<XAnnotation<?>>();

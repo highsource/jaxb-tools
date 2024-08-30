@@ -1,12 +1,11 @@
 package org.jvnet.hyperjaxb3.ejb.test.tests;
 
-import junit.framework.TestCase;
-
 import org.hibernate.annotations.common.reflection.XClass;
 import org.hibernate.annotations.common.reflection.java.JavaReflectionManager;
 
-public class JavaReflectionManagerTest extends TestCase {
+public class JavaReflectionManagerTest {
 
+    @org.junit.jupiter.api.Test
 	public void testXClass() throws Exception {
 
 		final JavaReflectionManager manager = new JavaReflectionManager();

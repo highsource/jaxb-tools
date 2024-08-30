@@ -31,13 +31,12 @@ package org.jvnet.jaxb.tests.issues;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
 
 import java.lang.reflect.Method;
 
-import org.junit.Test;
-
 import com.fasterxml.jackson.annotation.JsonView;
+import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Test;
 
 public class Gh36Test {
 
@@ -47,7 +46,7 @@ public class Gh36Test {
 		Method getAttrMethod = Gh36Type.class.getDeclaredMethod("getAttr");
 		JsonView actualAnnotation = getAttrMethod.getAnnotation(JsonView.class);
 
-		assertThat(actualAnnotation, is(notNullValue()));
-		assertThat(actualAnnotation.value(), is(equalTo(new Class[]{Object.class})));
+        MatcherAssert.assertThat(actualAnnotation, is(notNullValue()));
+        MatcherAssert.assertThat(actualAnnotation.value(), is(equalTo(new Class[]{Object.class})));
 	}
 }

@@ -7,6 +7,7 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.Unmarshaller;
 
+import org.junit.jupiter.api.Assertions;
 import org.jvnet.hyperjaxb3.ejb.util.EntityUtils;
 import org.jvnet.jaxb.lang.ContextUtils;
 import org.jvnet.jaxb.lang.EqualsStrategy;
@@ -131,9 +132,10 @@ public abstract class RoundtripTest extends AbstractEntityManagerSamplesTest {
 
 		};
 		;
-		assertTrue("Objects must be equal.", strategy.equals(
+		Assertions.assertTrue(strategy.equals(
 				new DefaultRootObjectLocator(object),
 				new DefaultRootObjectLocator(loadedObject), object,
-				loadedObject, true, true));
+				loadedObject, true, true),
+            "Objects must be equal.");
 	}
 }

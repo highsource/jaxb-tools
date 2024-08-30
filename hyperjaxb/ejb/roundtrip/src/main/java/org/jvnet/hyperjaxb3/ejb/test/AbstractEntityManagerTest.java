@@ -11,17 +11,17 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-import junit.framework.TestCase;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  * Roundtrip test case.
  *
  * @author Aleksei Valikov
  */
-public abstract class AbstractEntityManagerTest extends TestCase {
+public abstract class AbstractEntityManagerTest {
 
   protected Log logger = LogFactory.getLog(getClass());
 
@@ -37,13 +37,18 @@ public abstract class AbstractEntityManagerTest extends TestCase {
     this.entityManagerFactory = entityManagerFactory;
   }
 
+  @BeforeEach
   public void setUp() throws Exception {
-    super.setUp();
     final EntityManagerFactory emf = getEntityManagerFactory();
     if (emf == null || !emf.isOpen() || lastTestClass != getClass()) {
       setEntityManagerFactory(createEntityManagerFactory());
       lastTestClass = getClass();
     }
+  }
+
+
+  @AfterEach
+  public void tearDown() throws Exception {
   }
 
   public String getPersistenceUnitName() {

@@ -3,8 +3,8 @@ package org.jvnet.jaxb.lang.tests;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Polygon;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.jvnet.jaxb.lang.DefaultCopyStrategy;
 import org.jvnet.jaxb.lang.tests.pojo.CloneableNoClone;
 
@@ -39,7 +39,9 @@ public class DefaultCopyStrategyTest {
     public void testCloneableNoCloneKO() {
         final CloneableNoClone object = new CloneableNoClone("no-clone-method-in-it");
 
-        Assert.assertThrows("Exception UnsupportedOperationException not thrown",
-                UnsupportedOperationException.class, () -> new DefaultCopyStrategy().copy(null, object));
+        Assertions.assertThrows(
+            UnsupportedOperationException.class,
+            () -> new DefaultCopyStrategy().copy(null, object),
+            "Exception UnsupportedOperationException not thrown");
     }
 }

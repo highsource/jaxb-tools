@@ -6,7 +6,8 @@ import java.util.Map;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import org.jvnet.jaxb.annox.samples.po.PurchaseOrderType;
 import org.jvnet.jaxb.annox.xml.bind.AnnoxAnnotationReader;
@@ -14,8 +15,9 @@ import org.jvnet.jaxb.annox.xml.bind.AnnoxAnnotationReader;
 import org.glassfish.jaxb.runtime.api.JAXBRIContext;
 import org.glassfish.jaxb.runtime.v2.model.annotation.RuntimeAnnotationReader;
 
-public class AnnotationReaderTest extends TestCase {
+public class AnnotationReaderTest {
 
+    @Test
 	public void testAnnotationReader() throws Exception {
 
 		final RuntimeAnnotationReader annotationReader = new AnnoxAnnotationReader();
@@ -35,15 +37,13 @@ public class AnnotationReaderTest extends TestCase {
 
 		final PurchaseOrderType purchaseOrder = purchaseOrderElement.getValue();
 
-		assertNotNull(purchaseOrder.getOrderDate());
-		assertNotNull(purchaseOrder.getShipTo());
-		assertNotNull(purchaseOrder.getBillTo());
-		assertEquals("Hurry, my lawn is going wild!", purchaseOrder
-				.getComment());
-		assertNotNull(purchaseOrder.getItems());
-		assertEquals(2, purchaseOrder.getItems().getItem().size());
-		assertEquals("Confirm this is electric", purchaseOrder.getItems()
-				.getItem().get(0).getComment());
+		Assertions.assertNotNull(purchaseOrder.getOrderDate());
+		Assertions.assertNotNull(purchaseOrder.getShipTo());
+		Assertions.assertNotNull(purchaseOrder.getBillTo());
+		Assertions.assertEquals("Hurry, my lawn is going wild!", purchaseOrder.getComment());
+		Assertions.assertNotNull(purchaseOrder.getItems());
+		Assertions.assertEquals(2, purchaseOrder.getItems().getItem().size());
+		Assertions.assertEquals("Confirm this is electric", purchaseOrder.getItems().getItem().get(0).getComment());
 
 	}
 

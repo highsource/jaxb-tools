@@ -4,11 +4,13 @@ import java.io.Serializable;
 
 import jakarta.persistence.EntityManager;
 
+import org.junit.jupiter.api.Test;
 import org.jvnet.hyperjaxb3.ejb.cascadedids.tests.Department.DepartmentId;
 import org.jvnet.hyperjaxb3.ejb.test.AbstractEntityManagerTest;
 
 public class EntityManagerTest extends AbstractEntityManagerTest {
 
+    @Test
 	public void testIt() throws Exception {
 
 		final Company company = new Company();

@@ -1,6 +1,6 @@
 package org.jvnet.jaxb.plugin.simplify.tests01;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class Gh18Test {
 

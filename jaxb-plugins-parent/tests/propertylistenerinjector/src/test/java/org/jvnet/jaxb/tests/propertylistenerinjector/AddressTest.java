@@ -1,8 +1,7 @@
 package org.jvnet.jaxb.tests.propertylistenerinjector;
 
-import org.junit.Test;
-
 import generated.Address;
+import org.junit.jupiter.api.Test;
 
 public class AddressTest {
 

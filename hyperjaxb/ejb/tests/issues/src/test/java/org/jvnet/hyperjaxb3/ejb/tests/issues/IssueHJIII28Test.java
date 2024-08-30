@@ -2,15 +2,15 @@ package org.jvnet.hyperjaxb3.ejb.tests.issues;
 
 import jakarta.persistence.Column;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.jvnet.jaxb.annox.reflect.AnnotatedElementFactory;
 import org.jvnet.jaxb.annox.reflect.DualAnnotatedElementFactory;
 import org.jvnet.jaxb.annox.reflect.ParameterizedAnnotatedElement;
 
-public class IssueHJIII28Test extends TestCase {
+public class IssueHJIII28Test {
 
+    @Test
 	public void testLengthAnnotation() throws Exception {
 
 		final AnnotatedElementFactory aef = new DualAnnotatedElementFactory();
@@ -19,11 +19,7 @@ public class IssueHJIII28Test extends TestCase {
 
 		final Column annotation = annotatedElement.getAnnotation(Column.class);
 
-		Assert.assertEquals(1024, annotation.length());
-
-
-
-
+		Assertions.assertEquals(1024, annotation.length());
 	}
 
 }

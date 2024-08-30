@@ -9,9 +9,8 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlTransient;
-
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class AddElementTest {
 
@@ -21,7 +20,7 @@ public class AddElementTest {
 		JAXBContext context = JAXBContext.newInstance(Element.class);
 		final Element element = (Element) context.createUnmarshaller()
 				.unmarshal(getClass().getResource("element.xml"));
-		Assert.assertEquals("beta", element.getChildren().get(1).getValue());
+		Assertions.assertEquals("beta", element.getChildren().get(1).getValue());
 	}
 
 	@XmlRootElement(name = "element")

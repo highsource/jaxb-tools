@@ -1,14 +1,12 @@
 package org.jvnet.hyperjaxb3.hibernate.tests.hhh;
 
-import static org.junit.Assert.assertNotNull;
-
 import java.io.IOException;
 import java.util.Properties;
 
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class EntityManagerFactoryTest {
 
@@ -20,7 +18,7 @@ public class EntityManagerFactoryTest {
 		final String persistenceUnitName = getClass().getPackage().getName();
 		final EntityManagerFactory entityManagerFactory = Persistence
 				.createEntityManagerFactory(persistenceUnitName, properties);
-		assertNotNull(entityManagerFactory);
+		Assertions.assertNotNull(entityManagerFactory);
 
 	}
 

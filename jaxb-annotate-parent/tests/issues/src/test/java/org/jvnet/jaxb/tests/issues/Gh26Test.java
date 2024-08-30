@@ -28,15 +28,12 @@
  */
 package org.jvnet.jaxb.tests.issues;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
-
 import java.lang.reflect.Field;
 
 import jakarta.xml.bind.annotation.XmlElement;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class Gh26Test {
 
@@ -44,6 +41,6 @@ public class Gh26Test {
 	public void fiedlYIsNotAnnotated() throws Exception {
 
 		Field yField = Gh26Type.class.getDeclaredField("y");
-		assertThat(yField.getAnnotation(XmlElement.class), is(nullValue()));
+        Assertions.assertNull(yField.getAnnotation(XmlElement.class));
 	}
 }

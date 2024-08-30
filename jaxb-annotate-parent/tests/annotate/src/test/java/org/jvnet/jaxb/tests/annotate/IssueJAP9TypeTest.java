@@ -1,10 +1,11 @@
 package org.jvnet.jaxb.tests.annotate;
 
 import generated.IssueJAP9Type;
-import org.junit.Assert;
-import org.junit.Test;
 
 import jakarta.xml.bind.annotation.XmlMimeType;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.lang.reflect.Field;
 
 public class IssueJAP9TypeTest {
@@ -15,7 +16,7 @@ public class IssueJAP9TypeTest {
         IssueJAP9Type type = new IssueJAP9Type();
         Field[] fields = type.getClass().getDeclaredFields();
         XmlMimeType ann = type.getClass().getDeclaredField("a").getAnnotation(XmlMimeType.class);
-        Assert.assertEquals(valueInXsd, ann.value());
+        Assertions.assertEquals(valueInXsd, ann.value());
     }
 
     @Test
@@ -23,7 +24,7 @@ public class IssueJAP9TypeTest {
         String valueInXsd = "[0-9]+\\\\.[0-9]{1,2}\\\\.[0-9]{4}\\\\.[0-9]+";
         IssueJAP9Type type = new IssueJAP9Type();
         XmlMimeType ann = type.getClass().getDeclaredField("b").getAnnotation(XmlMimeType.class);
-        Assert.assertEquals(valueInXsd, ann.value());
+        Assertions.assertEquals(valueInXsd, ann.value());
     }
 
     @Test
@@ -31,6 +32,6 @@ public class IssueJAP9TypeTest {
         String valueInXsd = "NoEscapedBackSlashes\"/Here";
         IssueJAP9Type type = new IssueJAP9Type();
         XmlMimeType ann = type.getClass().getDeclaredField("c").getAnnotation(XmlMimeType.class);
-        Assert.assertEquals(valueInXsd, ann.value());
+        Assertions.assertEquals(valueInXsd, ann.value());
     }
 }

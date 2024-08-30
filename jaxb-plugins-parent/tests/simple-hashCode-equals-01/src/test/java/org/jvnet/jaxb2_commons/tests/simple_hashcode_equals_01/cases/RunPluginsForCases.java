@@ -3,18 +3,17 @@ package org.jvnet.jaxb2_commons.tests.simple_hashcode_equals_01.cases;
 import java.io.File;
 import java.net.URL;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import com.sun.codemodel.JCodeModel;
 import com.sun.tools.xjc.ConsoleErrorReporter;
 import com.sun.tools.xjc.ModelLoader;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.Model;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class RunPluginsForCases {
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		System.setProperty("javax.xml.accessExternalSchema", "all");
 	}

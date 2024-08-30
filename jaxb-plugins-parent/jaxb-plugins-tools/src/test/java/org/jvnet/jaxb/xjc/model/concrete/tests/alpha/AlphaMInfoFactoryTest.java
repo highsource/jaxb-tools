@@ -6,9 +6,9 @@ import java.net.URL;
 
 import javax.xml.namespace.QName;
 
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.jvnet.jaxb.xjc.model.concrete.XJCCMInfoFactory;
 import org.jvnet.jaxb.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb.xml.bind.model.MElementInfo;
@@ -30,7 +30,7 @@ public class AlphaMInfoFactoryTest {
 
 	private static MModelInfo<NType, NClass> MODEL_INFO;
 
-	@BeforeClass
+	@BeforeAll
 	public static void createModel() throws BadCommandLineException,
 			IOException {
 		final String generateDirectory = "target/generated-sources/"
@@ -48,7 +48,7 @@ public class AlphaMInfoFactoryTest {
 		options.parseArguments(arguments);
 		ConsoleErrorReporter receiver = new ConsoleErrorReporter();
 		Model model = ModelLoader.load(options, new JCodeModel(), receiver);
-		Assert.assertNotNull(model);
+		Assertions.assertNotNull(model);
 
 		final XJCCMInfoFactory factory = new XJCCMInfoFactory(model);
 
@@ -62,7 +62,7 @@ public class AlphaMInfoFactoryTest {
 
 	@Test
 	public void successfullyLoadsModel() {
-		Assert.assertNotNull(MODEL_INFO);
+		Assertions.assertNotNull(MODEL_INFO);
 	}
 
 	@Test
@@ -70,7 +70,7 @@ public class AlphaMInfoFactoryTest {
 		final MClassInfo<NType, NClass> classInfo = MODEL_INFO
 				.getClassInfo(getClass().getPackage().getName() + "."
 						+ "NamedComplexType");
-		Assert.assertEquals(new QName("urn:test", "NamedComplexType"),
+		Assertions.assertEquals(new QName("urn:test", "NamedComplexType"),
 				classInfo.getTypeName());
 	}
 
@@ -79,8 +79,8 @@ public class AlphaMInfoFactoryTest {
 		final MElementInfo<NType, NClass> elementInfo = MODEL_INFO
 				.getGlobalElementInfo(new QName("urn:test",
 						"UnnamedComplexTypeElement"));
-		Assert.assertNotNull(elementInfo);
-		Assert.assertNull(elementInfo.getTypeInfo().getTypeName());
+		Assertions.assertNotNull(elementInfo);
+		Assertions.assertNull(elementInfo.getTypeInfo().getTypeName());
 	}
 
 	@Test
@@ -88,8 +88,8 @@ public class AlphaMInfoFactoryTest {
 		final MElementInfo<NType, NClass> elementInfo = MODEL_INFO
 				.getGlobalElementInfo(new QName("urn:test",
 						"NamedSimpleTypeElement"));
-		Assert.assertNotNull(elementInfo);
-		Assert.assertEquals(new QName("urn:test", "NamedSimpleType"),
+		Assertions.assertNotNull(elementInfo);
+		Assertions.assertEquals(new QName("urn:test", "NamedSimpleType"),
 				elementInfo.getTypeInfo().getTypeName());
 	}
 
@@ -98,16 +98,16 @@ public class AlphaMInfoFactoryTest {
 		final MElementInfo<NType, NClass> elementInfo = MODEL_INFO
 				.getGlobalElementInfo(new QName("urn:test",
 						"UnnamedSimpleTypeElement"));
-		Assert.assertNotNull(elementInfo);
-		Assert.assertNull(elementInfo.getTypeInfo().getTypeName());
+		Assertions.assertNotNull(elementInfo);
+		Assertions.assertNull(elementInfo.getTypeInfo().getTypeName());
 	}
 
 	@Test
 	public void createsCorrectTypeNameForStringElementType() {
 		final MElementInfo<NType, NClass> elementInfo = MODEL_INFO
 				.getGlobalElementInfo(new QName("urn:test", "StringElement"));
-		Assert.assertNotNull(elementInfo);
-		Assert.assertEquals(XmlSchemaConstants.STRING, elementInfo
+		Assertions.assertNotNull(elementInfo);
+		Assertions.assertEquals(XmlSchemaConstants.STRING, elementInfo
 				.getTypeInfo().getTypeName());
 	}
 
@@ -119,8 +119,8 @@ public class AlphaMInfoFactoryTest {
 				.getGlobalElementInfo(new QName("urn:test",
 						"KnownReferencedTypeElement"));
 		final MTypeInfo<NType, NClass> typeInfo = elementInfo.getTypeInfo();
-		Assert.assertNotNull(typeInfo);
-		Assert.assertEquals(QNameUtils.getKey(typeName),
+		Assertions.assertNotNull(typeInfo);
+		Assertions.assertEquals(QNameUtils.getKey(typeName),
 				QNameUtils.getKey(typeInfo.getTypeName()));
 	}
 
@@ -130,7 +130,7 @@ public class AlphaMInfoFactoryTest {
 				.getGlobalElementInfo(new QName("urn:test",
 						"UnknownReferencedTypeElement"));
 		final MTypeInfo<NType, NClass> typeInfo = elementInfo.getTypeInfo();
-		Assert.assertNotNull(typeInfo);
-		Assert.assertNull(typeInfo.getTypeName());
+		Assertions.assertNotNull(typeInfo);
+		Assertions.assertNull(typeInfo.getTypeName());
 	}
 }

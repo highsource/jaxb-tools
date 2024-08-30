@@ -4,33 +4,36 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Id;
 
-import junit.framework.TestCase;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hyperjaxb3.ejb.util.EntityUtils;
 
-public class EntityUtilsTest extends TestCase {
+public class EntityUtilsTest {
 
+    @Test
 	public void testGetIdOne() throws Exception {
 		final One one = new One(10);
-		assertEquals("Wrong id.", (long) 10, EntityUtils.getId(one));
+		Assertions.assertEquals((long) 10, EntityUtils.getId(one), "Wrong id.");
 	}
 
+    @Test
 	public void testGetIdTwo() throws Exception {
 
 		final Two two = new Two();
 		two.setId(20);
-		assertEquals("Wrong id.", (long) 20, EntityUtils.getId(two));
+        Assertions.assertEquals((long) 20, EntityUtils.getId(two), "Wrong id.");
 	}
 
+    @Test
 	public void testGetIdThree() throws Exception {
 
 		final Alpha threeAlpha = new Alpha();
 		threeAlpha.p = 30;
 		threeAlpha.q = "forty";
 		final Three three = new Three(threeAlpha);
-		assertEquals("Wrong id.", threeAlpha, EntityUtils.getId(three));
+		Assertions.assertEquals(threeAlpha, EntityUtils.getId(three), "Wrong id.");
 	}
 
 	public void testGetIdFour() throws Exception {
@@ -39,7 +42,7 @@ public class EntityUtilsTest extends TestCase {
 		fourAlpha.q = "sixty";
 		final Four four = new Four();
 		four.setId(fourAlpha);
-		assertEquals("Wrong id.", fourAlpha, EntityUtils.getId(four));
+        Assertions.assertEquals(fourAlpha, EntityUtils.getId(four), "Wrong id.");
 	}
 
 	public static class One {

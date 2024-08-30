@@ -4,10 +4,10 @@ import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.testing.stubs.ArtifactStub;
 import org.apache.maven.project.MavenProject;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -22,18 +22,16 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarOutputStream;
 
-import static org.junit.Assert.assertEquals;
-
 public class RawXJCMojoTest {
 
-    @Rule
-    public TemporaryFolder temporaryFolder = new TemporaryFolder();
+    @TempDir
+    public File temporaryFolder;
 
     private File testJarFile;
 
-    @Before
+    @BeforeEach
     public void createJarFile() throws Exception {
-        testJarFile = temporaryFolder.newFile("test.jar");
+        testJarFile = new File(temporaryFolder, "test.jar");
         try (JarOutputStream out = new JarOutputStream(new FileOutputStream(testJarFile))) {
             out.putNextEntry(new JarEntry("dir/"));
             out.closeEntry();
@@ -95,11 +93,11 @@ public class RawXJCMojoTest {
 
         mojo.collectBindingUrisFromDependencies(bindings);
 
-        assertEquals(2, bindings.size());
-        assertEquals(URI.create("jar:" + testJarFile.toURI() + "!/dir/nested.xjb"), bindings.get(0));
-        assertEquals(URI.create("jar:" + testJarFile.toURI() + "!/root.xjb"), bindings.get(1));
-        assertEquals("nested binding", readContent(bindings.get(0)));
-        assertEquals("root binding", readContent(bindings.get(1)));
+        Assertions.assertEquals(2, bindings.size());
+        Assertions.assertEquals(URI.create("jar:" + testJarFile.toURI() + "!/dir/nested.xjb"), bindings.get(0));
+        Assertions.assertEquals(URI.create("jar:" + testJarFile.toURI() + "!/root.xjb"), bindings.get(1));
+        Assertions.assertEquals("nested binding", readContent(bindings.get(0)));
+        Assertions.assertEquals("root binding", readContent(bindings.get(1)));
     }
 
     @Test
@@ -121,11 +119,11 @@ public class RawXJCMojoTest {
 
         mojo.collectBindingUrisFromArtifact(testJarFile, bindings);
 
-        assertEquals(2, bindings.size());
-        assertEquals(URI.create("jar:" + testJarFile.toURI() + "!/dir/nested.xjb"), bindings.get(0));
-        assertEquals(URI.create("jar:" + testJarFile.toURI() + "!/root.xjb"), bindings.get(1));
-        assertEquals("nested binding", readContent(bindings.get(0)));
-        assertEquals("root binding", readContent(bindings.get(1)));
+        Assertions.assertEquals(2, bindings.size());
+        Assertions.assertEquals(URI.create("jar:" + testJarFile.toURI() + "!/dir/nested.xjb"), bindings.get(0));
+        Assertions.assertEquals(URI.create("jar:" + testJarFile.toURI() + "!/root.xjb"), bindings.get(1));
+        Assertions.assertEquals("nested binding", readContent(bindings.get(0)));
+        Assertions.assertEquals("root binding", readContent(bindings.get(1)));
     }
 
     private String readContent(URI uri) throws Exception {

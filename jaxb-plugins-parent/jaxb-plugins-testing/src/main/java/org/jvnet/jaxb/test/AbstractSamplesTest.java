@@ -7,14 +7,13 @@ import java.util.Map;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 
-import org.junit.Assert;
-import junit.framework.TestCase;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-public abstract class AbstractSamplesTest extends TestCase {
+public abstract class AbstractSamplesTest {
 
 	protected Log logger = LogFactory.getLog(getTestClass());
 
@@ -24,6 +23,7 @@ public abstract class AbstractSamplesTest extends TestCase {
 
 	protected abstract void checkSample(File sample) throws Exception;
 
+    @Test
 	public void testSamples() throws Exception {
 		logger.debug("Testing samples.");
 		int failed = 0;
@@ -42,8 +42,8 @@ public abstract class AbstractSamplesTest extends TestCase {
 		}
 		logger.debug("Finished testing samples.");
 
-		Assert.assertTrue("Totally [" + failed + "/" + sampleFiles.length
-				+ "] failed the check.", failed == 0);
+		Assertions.assertTrue(failed == 0,
+            "Totally [" + failed + "/" + sampleFiles.length + "] failed the check.");
 	}
 
 	protected File getBaseDir() {

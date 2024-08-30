@@ -1,4 +1,4 @@
-package org.jvnet.hyperjaxb3.maven2.tests;
+package org.jvnet.hyperjaxb3.maven.tests;
 
 import java.io.File;
 

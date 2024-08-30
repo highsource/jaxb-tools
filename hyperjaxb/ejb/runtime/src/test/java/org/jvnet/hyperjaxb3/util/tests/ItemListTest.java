@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hyperjaxb3.item.DefaultItemList;
 
-public class ItemListTest extends TestCase {
+public class ItemListTest {
 
+    @Test
 	public void testItemList() throws Exception {
 
 		final List<StringItem> items = new ArrayList<StringItem>();
@@ -25,10 +25,10 @@ public class ItemListTest extends TestCase {
 		strings.add("a");
 		strings.add("b");
 
-		Assert.assertEquals("Wrong number of items.", 2, items.size());
+		Assertions.assertEquals(2, items.size(), "Wrong number of items.");
 		final Iterator<StringItem> iterator = items.iterator();
-		Assert.assertEquals("Wrong value.", "a", iterator.next().getItem());
-		Assert.assertEquals("Wrong value.", "b", iterator.next().getItem());
+		Assertions.assertEquals("a", iterator.next().getItem(), "Wrong value.");
+		Assertions.assertEquals("b", iterator.next().getItem(), "Wrong value.");
 
 		final ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
@@ -46,7 +46,7 @@ public class ItemListTest extends TestCase {
 		final List<String> sgnirts = (List<String>) objectInputStream
 				.readObject();
 
-		Assert.assertEquals(strings, sgnirts);
+		Assertions.assertEquals(strings, sgnirts);
 
 	}
 

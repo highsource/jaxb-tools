@@ -2,32 +2,29 @@ package org.jvnet.hyperjaxb3.ejb.tests.issues;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.Version;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
+public class IssueHJIII94Test {
 
-public class IssueHJIII94Test extends TestCase {
+    @Test
+    public void testEntityAnnotationId() throws Exception {
 
-	public void testEntityAnnotation() throws Exception {
+        Assertions.assertNotNull(IssueHJIII94Type.class.getMethod("getHjid",
+            new Class[0]).getAnnotation(Id.class));
 
-		Assert.assertNotNull(IssueHJIII94Type.class.getMethod("getHjid",
-				new Class[0]).getAnnotation(Id.class));
+        Assertions.assertThrows(NoSuchMethodException.class, () ->
+            IssueHJIII94SubType.class.getDeclaredMethod("getHjid", new Class[0]));
+    }
 
-		Assert.assertNotNull(IssueHJIII94Type.class.getMethod("getHjversion",
-				new Class[0]).getAnnotation(Version.class));
+    @Test
+    public void testEntityAnnotationVersion() throws Exception {
 
-		try {
-			IssueHJIII94SubType.class.getDeclaredMethod("getHjid", new Class[0]);
-			Assert.fail("Expected exception.");
-		} catch (NoSuchMethodException nsmex) {
-			Assert.assertTrue(true);
-		}
-		try {
-			IssueHJIII94SubType.class.getDeclaredMethod("getHjversion", new Class[0]);
-			Assert.fail("Expected exception.");
-		} catch (NoSuchMethodException nsmex) {
-			Assert.assertTrue(true);
-		}
-	}
+        Assertions.assertNotNull(IssueHJIII94Type.class.getMethod("getHjversion",
+            new Class[0]).getAnnotation(Version.class));
+
+        Assertions.assertThrows(NoSuchMethodException.class, () ->
+            IssueHJIII94SubType.class.getDeclaredMethod("getHjversion", new Class[0]));
+    }
 
 }

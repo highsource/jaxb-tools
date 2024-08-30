@@ -1,7 +1,7 @@
 package org.jvnet.jaxb.maven.tests.resstar;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class ChecksTest {
 
@@ -13,10 +13,10 @@ public class ChecksTest {
         Class.forName(className);
     }
 
-    @Test(expected = ClassNotFoundException.class)
+    @Test
     public void testNotIncludedNotFound() throws ClassNotFoundException {
         String className = "org.example.xs.PurchaseOrder";
-        Class.forName(className);
-        Assert.fail("Class " + className + " shouldn't have been found");
+        Assertions.assertThrows(ClassNotFoundException.class, () -> Class.forName(className),
+            "Class " + className + " shouldn't have been found");
     }
 }

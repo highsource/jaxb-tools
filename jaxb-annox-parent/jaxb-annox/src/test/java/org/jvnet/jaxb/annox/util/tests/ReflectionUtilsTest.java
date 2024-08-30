@@ -1,12 +1,10 @@
 package org.jvnet.jaxb.annox.util.tests;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.jvnet.jaxb.annox.util.ClassUtils;
 import org.jvnet.jaxb.annox.util.ReflectionUtils;
 
-import junit.framework.TestCase;
-
-public class ReflectionUtilsTest extends TestCase {
+public class ReflectionUtilsTest {
 
 	public static class Test {
 		public Test() {
@@ -43,27 +41,29 @@ public class ReflectionUtilsTest extends TestCase {
 		}
 	}
 
+    @org.junit.jupiter.api.Test
 	public void testGetMethod() throws Exception {
 
-		Assert.assertNotNull(ReflectionUtils.getMethod(Test.class, "one",
+		Assertions.assertNotNull(ReflectionUtils.getMethod(Test.class, "one",
 				ClassUtils.forNames(null)));
-		Assert.assertNotNull(ReflectionUtils.getMethod(Test.class, "two",
+		Assertions.assertNotNull(ReflectionUtils.getMethod(Test.class, "two",
 				ClassUtils.forNames(null)));
-		Assert.assertNotNull(ReflectionUtils.getMethod(Test.class, "two",
+		Assertions.assertNotNull(ReflectionUtils.getMethod(Test.class, "two",
 				ClassUtils.forNames("")));
-		Assert.assertEquals(ReflectionUtils.getMethod(Test.class, "two",
+		Assertions.assertEquals(ReflectionUtils.getMethod(Test.class, "two",
 				ClassUtils.forNames("")), ReflectionUtils.getMethod(Test.class,
 				"two", ClassUtils.forNames("")));
 
-		Assert.assertNotNull(ReflectionUtils.getMethod(Test.class, "two",
+		Assertions.assertNotNull(ReflectionUtils.getMethod(Test.class, "two",
 				ClassUtils.forNames("java.lang.String")));
-		Assert.assertNotNull(ReflectionUtils.getMethod(Test.class, "three",
+		Assertions.assertNotNull(ReflectionUtils.getMethod(Test.class, "three",
 				ClassUtils.forNames("java.lang.String[]")));
-		Assert.assertNotNull(ReflectionUtils.getMethod(Test.class, "four",
+		Assertions.assertNotNull(ReflectionUtils.getMethod(Test.class, "four",
 				ClassUtils.forNames("java.lang.String, int, char[]")));
 
 	}
 
+    @org.junit.jupiter.api.Test
 	public void testGetConstructor() throws Exception {
 
 		ReflectionUtils.getConstructor(Test.class, null);

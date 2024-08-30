@@ -160,17 +160,17 @@
 	</target>
 	<target name="test" depends="test-compile">
 		<mkdir dir="${basedir}/target/junit-reports"/>
-		<junit printsummary="yes" haltonfailure="yes">
+		<junitlauncher printsummary="yes" haltonfailure="yes">
 			<classpath>
 				<pathelement location="${basedir}/target/classes"/>
 				<pathelement location="${basedir}/target/test-classes"/>
 				<path refid="test.path"/>
 			</classpath>
 
-			<formatter type="plain"/>
-			<formatter type="xml"/>
+      <testclasses outputdir="${basedir}/target/junit-reports">
+        <listener type="legacy-xml" sendSysOut="true" sendSysErr="true"/>
+        <listener type="legacy-plain" sendSysOut="true" />
 
-			<batchtest fork="yes" todir="${basedir}/target/junit-reports">
 				<fileset dir="${basedir}/src/test/java">
 					<include name="**/*Test*.java"/>
 					<exclude name="**/AllTests.java"/>
@@ -179,8 +179,8 @@
 					<include name="**/*Test*.java"/>
 					<exclude name="**/AllTests.java"/>
 				</fileset>
-			</batchtest>
-		</junit>
+			</testclasses>
+		</junitlauncher>
 	</target>
 	<target name="package" depends="test">
 		<mkdir dir="${basedir}/target"/>

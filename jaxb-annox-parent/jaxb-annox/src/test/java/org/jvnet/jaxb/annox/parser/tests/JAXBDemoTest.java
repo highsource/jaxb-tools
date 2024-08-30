@@ -2,15 +2,16 @@ package org.jvnet.jaxb.annox.parser.tests;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.jvnet.jaxb.annox.model.XAnnotation;
 import org.jvnet.jaxb.annox.parser.XAnnotationParser;
 import org.jvnet.jaxb.annox.parser.exception.AnnotationExpressionParseException;
 import org.jvnet.jaxb.annox.parser.exception.AnnotationStringParseException;
 
-import junit.framework.TestCase;
+public class JAXBDemoTest {
 
-public class JAXBDemoTest extends TestCase {
-
+    @Test
 	public void testXMLRootElement() throws AnnotationStringParseException,
 			AnnotationExpressionParseException {
 		@SuppressWarnings("unchecked")
@@ -22,11 +23,11 @@ public class JAXBDemoTest extends TestCase {
 
 		// Create an instance of the annotation
 		XmlRootElement xmlRootElement = xannotation.getResult();
-		assertEquals("foo", xmlRootElement.name());
-		assertEquals("##default", xmlRootElement.namespace());
+		Assertions.assertEquals("foo", xmlRootElement.name());
+        Assertions.assertEquals("##default", xmlRootElement.namespace());
 
 		// Analyze the structure of the annotation
-		assertEquals(String.class, xannotation.getFieldsMap().get("name").getType());
-		assertEquals("##default", xannotation.getFieldsMap().get("namespace").getResult());
+        Assertions.assertEquals(String.class, xannotation.getFieldsMap().get("name").getType());
+        Assertions.assertEquals("##default", xannotation.getFieldsMap().get("namespace").getResult());
 	}
 }

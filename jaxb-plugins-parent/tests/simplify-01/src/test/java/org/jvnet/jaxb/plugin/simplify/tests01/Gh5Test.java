@@ -2,16 +2,15 @@ package org.jvnet.jaxb.plugin.simplify.tests01;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class Gh5Test {
 
 	private JAXBContext context;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		context = JAXBContext.newInstance(getClass().getPackage().getName());
 	}
@@ -37,7 +36,7 @@ public class Gh5Test {
 										"simplifyReferencesPropertyAsReferenceProperty.xml")))
 				.getValue();
 
-		Assert.assertEquals(3, value.getBases().size());
-		Assert.assertEquals(3, value.getBaseElements().size());
+		Assertions.assertEquals(3, value.getBases().size());
+        Assertions.assertEquals(3, value.getBaseElements().size());
 	}
 }

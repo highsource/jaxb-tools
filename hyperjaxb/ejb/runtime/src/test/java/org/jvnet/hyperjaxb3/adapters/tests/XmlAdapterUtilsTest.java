@@ -10,9 +10,8 @@ import javax.xml.datatype.Duration;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.namespace.QName;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.DurationAsString;
 import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.QNameAsString;
 import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.TimeStringAsCalendar;
@@ -22,30 +21,33 @@ import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.XMLGregorianCalendarAsT
 import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.XmlAdapterUtils;
 import org.jvnet.hyperjaxb3.xml.datatype.util.XMLGregorianCalendarUtils;
 
-public class XmlAdapterUtilsTest extends TestCase {
+public class XmlAdapterUtilsTest {
 
+    @Test
 	public void testQNameXmlAdapter() throws Exception {
-		
+
 		final String alpha = "{urn:test}test";
 		final QName omega = new QName("urn:test", "test");
 
-		Assert.assertEquals("Conversion failed.", alpha, XmlAdapterUtils
-				.unmarshall(QNameAsString.class, omega));
-		Assert.assertEquals("Conversion failed.", omega, XmlAdapterUtils
-				.marshall(QNameAsString.class, alpha));
+		Assertions.assertEquals(alpha, XmlAdapterUtils
+				.unmarshall(QNameAsString.class, omega), "Conversion failed.");
+		Assertions.assertEquals(omega, XmlAdapterUtils
+				.marshall(QNameAsString.class, alpha), "Conversion failed.");
 	}
 
+    @Test
 	public void testDuration() throws Exception {
 
 		final String alpha = "P1Y2M3DT10H30M12.3S";
 		final Duration omega = DatatypeFactory.newInstance().newDuration(alpha);
 
-		Assert.assertEquals("Conversion failed.", alpha, XmlAdapterUtils
-				.unmarshall(DurationAsString.class, omega));
-		Assert.assertEquals("Conversion failed.", omega, XmlAdapterUtils
-				.marshall(DurationAsString.class, alpha));
+		Assertions.assertEquals(alpha, XmlAdapterUtils
+				.unmarshall(DurationAsString.class, omega), "Conversion failed.");
+		Assertions.assertEquals(omega, XmlAdapterUtils
+				.marshall(DurationAsString.class, alpha), "Conversion failed.");
 	}
 
+    @Test
 	public void testXMLGregorianCalendarXmlAdapter() throws Exception {
 
 		final XMLGregorianCalendar alpha = DatatypeFactory.newInstance()
@@ -58,23 +60,24 @@ public class XmlAdapterUtilsTest extends TestCase {
 				XMLGregorianCalendarAsDateTime.class,
 				XmlAdapterUtils.unmarshall(
 						XMLGregorianCalendarAsDateTime.class, alpha));
-		// Assert.assertEquals("Conversion failed.", alpha.normalize(),
+		// Assertions.assertEquals("Conversion failed.", alpha.normalize(),
 		// omega.normalize());
-		// Assert.assertEquals("Conversion failed.", alpha.normalize(),
+		// Assertions.assertEquals("Conversion failed.", alpha.normalize(),
 		// beta.normalize());
-		// Assert.assertEquals("Conversion failed.", beta.normalize(),
+		// Assertions.assertEquals("Conversion failed.", beta.normalize(),
 		// omega.normalize());
-		Assert.assertEquals("Conversion failed.", XMLGregorianCalendarUtils
+		Assertions.assertEquals(XMLGregorianCalendarUtils
 				.getTimeInMillis(alpha), XMLGregorianCalendarUtils
-				.getTimeInMillis(beta));
-		Assert.assertEquals("Conversion failed.", XMLGregorianCalendarUtils
+				.getTimeInMillis(beta), "Conversion failed.");
+		Assertions.assertEquals(XMLGregorianCalendarUtils
 				.getTimeInMillis(alpha), XMLGregorianCalendarUtils
-				.getTimeInMillis(omega));
-		Assert.assertEquals("Conversion failed.", XMLGregorianCalendarUtils
+				.getTimeInMillis(omega), "Conversion failed.");
+		Assertions.assertEquals(XMLGregorianCalendarUtils
 				.getTimeInMillis(beta), XMLGregorianCalendarUtils
-				.getTimeInMillis(omega));
+				.getTimeInMillis(omega), "Conversion failed.");
 	}
 
+    @Test
 	public void testXMLGregorianCalendarAsDate() throws Exception {
 
 		final java.sql.Date alpha = java.sql.Date.valueOf("2005-01-01");
@@ -95,9 +98,10 @@ public class XmlAdapterUtilsTest extends TestCase {
 		System.out.println("4)"
 				+ delta.toGregorianCalendar().getTime().getTime());
 		System.out.println("4>" + delta);
-		Assert.assertEquals("Conversion failed.", beta, delta);
+		Assertions.assertEquals(beta, delta, "Conversion failed.");
 	}
 
+    @Test
 	public void testXMLGregorianCalendarAsDateInNegativeTimezone()
 			throws Exception {
 
@@ -121,11 +125,12 @@ public class XmlAdapterUtilsTest extends TestCase {
 				XMLGregorianCalendarAsDate.class, gamma);
 		System.out.println("4)"
 				+ delta.toGregorianCalendar().getTime().getTime());
-		Assert.assertEquals("Conversion failed.", beta, delta);
+		Assertions.assertEquals(beta, delta, "Conversion failed.");
 
 		TimeZone.setDefault(_default);
 	}
 
+    @Test
 	public void testXMLGregorianCalendarAsTime() throws Exception {
 
 		final java.sql.Time alpha = java.sql.Time.valueOf("10:12:14");
@@ -137,9 +142,10 @@ public class XmlAdapterUtilsTest extends TestCase {
 				XMLGregorianCalendarAsTime.class, beta);
 		final XMLGregorianCalendar delta = XmlAdapterUtils.marshall(
 				XMLGregorianCalendarAsTime.class, gamma);
-		Assert.assertEquals("Conversion failed.", beta, delta);
+		Assertions.assertEquals(beta, delta, "Conversion failed.");
 	}
 
+    @Test
 	public void testTimeStringAsCalendarXmlAdapter() throws Exception {
 
 		checkTimeStringAsCalendarXmlAdapter("10:20:30");
@@ -158,11 +164,12 @@ public class XmlAdapterUtilsTest extends TestCase {
 				TimeStringAsCalendar.class, gamma);
 		final String epsilon = XmlAdapterUtils.marshall(
 				TimeStringAsCalendar.class, delta);
-		// Assert.assertEquals("Conversion failed.", alpha, gamma);
-		Assert.assertEquals("Conversion failed.", beta, delta);
-		Assert.assertEquals("Conversion failed.", gamma, epsilon);
+		// Assertions.assertEquals("Conversion failed.", alpha, gamma);
+		Assertions.assertEquals(beta, delta, "Conversion failed.");
+		Assertions.assertEquals(gamma, epsilon, "Conversion failed.");
 	}
 
+    @Test
 	public void testXMLGregorianCalendarAsDateTimeXmlAdapter() throws Exception {
 
 		checkXMLGregorianCalendarAsDateTimeXmlAdapter("2005-01-01T00:00:00.000+00:00");
@@ -196,13 +203,13 @@ public class XmlAdapterUtilsTest extends TestCase {
 				XMLGregorianCalendarAsDateTime.class, delta);
 		long e = epsilon.toGregorianCalendar().getTimeInMillis();
 		System.out.println("5]" + e);
-		// Assert.assertEquals("Conversion failed.", alpha, gamma);
-		Assert.assertEquals("Conversion failed.", beta, delta);
-		Assert.assertEquals("Conversion failed.", gamma, epsilon);
-		Assert.assertEquals("Conversion failed.", a, b);
-		Assert.assertEquals("Conversion failed.", b, c);
-		Assert.assertEquals("Conversion failed.", c, d);
-		Assert.assertEquals("Conversion failed.", d, e);
+		// Assertions.assertEquals("Conversion failed.", alpha, gamma);
+		Assertions.assertEquals(beta, delta, "Conversion failed.");
+		Assertions.assertEquals(gamma, epsilon, "Conversion failed.");
+		Assertions.assertEquals(a, b, "Conversion failed.");
+		Assertions.assertEquals(b, c, "Conversion failed.");
+		Assertions.assertEquals(c, d, "Conversion failed.");
+		Assertions.assertEquals(d, e, "Conversion failed.");
 	}
 
 //	public void testXMLGregorianCalendarAsDateXmlAdapter() throws Exception {
@@ -239,12 +246,12 @@ public class XmlAdapterUtilsTest extends TestCase {
 //				XMLGregorianCalendarAsDate.class, delta);
 //		long e = epsilon.toGregorianCalendar().getTimeInMillis();
 //		System.out.println("5>" + e);
-//		// Assert.assertEquals("Conversion failed.", alpha, gamma);
-//		// Assert.assertEquals("Conversion failed.", beta, delta);
-//		// Assert.assertEquals("Conversion failed.", gamma, epsilon);
-//		Assert.assertEquals("Conversion failed.", a, b);
-//		Assert.assertEquals("Conversion failed.", b, c);
-//		Assert.assertEquals("Conversion failed.", c, d);
-//		Assert.assertEquals("Conversion failed.", d, e);
+//		// Assertions.assertEquals("Conversion failed.", alpha, gamma);
+//		// Assertions.assertEquals("Conversion failed.", beta, delta);
+//		// Assertions.assertEquals("Conversion failed.", gamma, epsilon);
+//		Assertions.assertEquals("Conversion failed.", a, b);
+//		Assertions.assertEquals("Conversion failed.", b, c);
+//		Assertions.assertEquals("Conversion failed.", c, d);
+//		Assertions.assertEquals("Conversion failed.", d, e);
 //	}
 }

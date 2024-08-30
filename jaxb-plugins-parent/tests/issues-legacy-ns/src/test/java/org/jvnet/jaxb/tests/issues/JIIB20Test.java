@@ -1,21 +1,21 @@
 package org.jvnet.jaxb.tests.issues;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.util.Arrays;
 import java.util.List;
 
-import junit.framework.TestCase;
+public class JIIB20Test {
 
-import org.junit.Assert;
-
-public class JIIB20Test extends TestCase {
-
+    @Test
 	public void testException() throws Exception {
 
 		final List<String> strings = Arrays.asList("a", "b", "c");
 		final IssueJIIB20 one = new IssueJIIB20();
 		one.setStrings(strings);
-		Assert.assertEquals(strings, one.getStrings());
-		Assert.assertSame(strings, one.getStrings());
+		Assertions.assertEquals(strings, one.getStrings());
+		Assertions.assertSame(strings, one.getStrings());
 
 	}
 }

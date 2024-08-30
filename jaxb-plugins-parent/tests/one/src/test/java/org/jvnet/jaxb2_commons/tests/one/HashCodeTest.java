@@ -2,6 +2,7 @@ package org.jvnet.jaxb2_commons.tests.one;
 
 import java.io.File;
 
+import org.junit.jupiter.api.Assertions;
 import org.jvnet.jaxb.lang.JAXBCopyStrategy;
 import org.jvnet.jaxb.lang.JAXBHashCodeStrategy;
 import org.jvnet.jaxb.test.AbstractSamplesTest;
@@ -22,7 +23,7 @@ public class HashCodeTest extends AbstractSamplesTest {
 				0, rhs);
 		final int copyHashCode = JAXBHashCodeStrategy.getInstance().hashCode(null,
 				0, chs);
-		assertEquals("Values must be equal.", leftHashCode, rightHashCode);
-		assertEquals("Values must be equal.", leftHashCode, copyHashCode);
+		Assertions.assertEquals(leftHashCode, rightHashCode, "Values must be equal.");
+        Assertions.assertEquals(leftHashCode, copyHashCode, "Values must be equal.");
 	}
 }

@@ -18,7 +18,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXException;
 
 public class DynamicSchemaTest {
@@ -36,7 +37,7 @@ public class DynamicSchemaTest {
 		}
 	}
 
-	@Test(expected = MarshalException.class)
+	@Test
 	public void generatesAndUsesSchema() throws JAXBException, IOException,
 			SAXException {
 		final JAXBContext context = JAXBContext.newInstance(A.class);
@@ -60,7 +61,9 @@ public class DynamicSchemaTest {
 		marshaller.setSchema(schema);
 		// Works
 		marshaller.marshal(new A("works"), System.out);
+
 		// Fails
-		marshaller.marshal(new A(null), System.out);
+        Assertions.assertThrows(MarshalException.class,
+            () -> marshaller.marshal(new A(null), System.out));
 	}
 }

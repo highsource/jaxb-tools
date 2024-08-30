@@ -31,8 +31,8 @@ package org.jvnet.jaxb.tests.issues.tests;
 import jakarta.xml.bind.annotation.XmlNsForm;
 import jakarta.xml.bind.annotation.XmlSchema;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.jvnet.jaxb.tests.issues.ObjectFactory;
 
 public class Issue1Test {
@@ -41,7 +41,7 @@ public class Issue1Test {
 	public void testPackageInfoIsAnnotated() {
 		final XmlSchema xmlSchema = ObjectFactory.class.getPackage()
 				.getAnnotation(XmlSchema.class);
-		Assert.assertEquals(XmlNsForm.QUALIFIED, xmlSchema.elementFormDefault());
+		Assertions.assertEquals(XmlNsForm.QUALIFIED, xmlSchema.elementFormDefault());
 	}
 
 }

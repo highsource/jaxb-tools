@@ -1,7 +1,7 @@
 package org.jvnet.jaxb.maven.util;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.List;
@@ -13,13 +13,13 @@ public class IOUtilsTests {
         String[] files = {"a.xsd", "c.xsd", "b.xsd" };
         List<String> orderedFiles = IOUtils.reorderFiles(files, null);
 
-        Assert.assertNotNull("Ordered files list should not be null",
-                orderedFiles);
-        Assert.assertEquals("Ordered files list should contains all elements of initial list",
-                files.length, orderedFiles.size());
-        Assert.assertEquals(files[0], orderedFiles.get(0));
-        Assert.assertEquals(files[1], orderedFiles.get(1));
-        Assert.assertEquals(files[2], orderedFiles.get(2));
+        Assertions.assertNotNull(orderedFiles,
+            "Ordered files list should not be null");
+        Assertions.assertEquals(files.length, orderedFiles.size(),
+            "Ordered files list should contains all elements of initial list");
+        Assertions.assertEquals(files[0], orderedFiles.get(0));
+        Assertions.assertEquals(files[1], orderedFiles.get(1));
+        Assertions.assertEquals(files[2], orderedFiles.get(2));
     }
 
     @Test
@@ -27,13 +27,13 @@ public class IOUtilsTests {
         String[] files = {"a.xsd", "c.xsd", "b.xsd" };
         List<String> orderedFiles = IOUtils.reorderFiles(files, new String[] {});
 
-        Assert.assertNotNull("Ordered files list should not be null",
-                orderedFiles);
-        Assert.assertEquals("Ordered files list should contains all elements of initial list",
-                files.length, orderedFiles.size());
-        Assert.assertEquals(files[0], orderedFiles.get(0));
-        Assert.assertEquals(files[1], orderedFiles.get(1));
-        Assert.assertEquals(files[2], orderedFiles.get(2));
+        Assertions.assertNotNull(orderedFiles,
+            "Ordered files list should not be null");
+        Assertions.assertEquals(files.length, orderedFiles.size(),
+            "Ordered files list should contains all elements of initial list");
+        Assertions.assertEquals(files[0], orderedFiles.get(0));
+        Assertions.assertEquals(files[1], orderedFiles.get(1));
+        Assertions.assertEquals(files[2], orderedFiles.get(2));
     }
 
     @Test
@@ -41,13 +41,13 @@ public class IOUtilsTests {
         String[] files = {"a.xsd", "c.xsd", "b.xsd" };
         List<String> orderedFiles = IOUtils.reorderFiles(files, new String[] { "b.xsd", "c.xsd", "a.xsd" });
 
-        Assert.assertNotNull("Ordered files list should not be null",
-                orderedFiles);
-        Assert.assertEquals("Ordered files list should contains all elements of initial list",
-                files.length, orderedFiles.size());
-        Assert.assertEquals(files[2], orderedFiles.get(0));
-        Assert.assertEquals(files[1], orderedFiles.get(1));
-        Assert.assertEquals(files[0], orderedFiles.get(2));
+        Assertions.assertNotNull(orderedFiles,
+            "Ordered files list should not be null");
+        Assertions.assertEquals(files.length, orderedFiles.size(),
+            "Ordered files list should contains all elements of initial list");
+        Assertions.assertEquals(files[2], orderedFiles.get(0));
+        Assertions.assertEquals(files[1], orderedFiles.get(1));
+        Assertions.assertEquals(files[0], orderedFiles.get(2));
     }
 
     @Test
@@ -55,13 +55,13 @@ public class IOUtilsTests {
         String[] files = {"a.xsd", "b.xsd", "service-ab.xsd" };
         List<String> orderedFiles = IOUtils.reorderFiles(files, new String[] { "b.xsd", "a.xsd", "service-ab.xsd" });
 
-        Assert.assertNotNull("Ordered files list should not be null",
-                orderedFiles);
-        Assert.assertEquals("Ordered files list should contains all elements of initial list",
-                files.length, orderedFiles.size());
-        Assert.assertEquals(files[1], orderedFiles.get(0));
-        Assert.assertEquals(files[0], orderedFiles.get(1));
-        Assert.assertEquals(files[2], orderedFiles.get(2));
+        Assertions.assertNotNull(orderedFiles,
+            "Ordered files list should not be null");
+        Assertions.assertEquals(files.length, orderedFiles.size(),
+            "Ordered files list should contains all elements of initial list");
+        Assertions.assertEquals(files[1], orderedFiles.get(0));
+        Assertions.assertEquals(files[0], orderedFiles.get(1));
+        Assertions.assertEquals(files[2], orderedFiles.get(2));
     }
 
     @Test
@@ -69,19 +69,19 @@ public class IOUtilsTests {
         String[] files = {"a.xsd", "common" + File.separatorChar + "c1.xsd", "b.xsd", "common" + File.separatorChar + "c2.xsd", "common" + File.separatorChar + "a.xsd", "common" + File.separatorChar + "b.xsd" };
         List<String> orderedFiles = IOUtils.reorderFiles(files, new String[] { "common/*.xsd", "a.xsd", "b.xsd" });
 
-        Assert.assertNotNull("Ordered files list should not be null",
-                orderedFiles);
-        Assert.assertEquals("Ordered files list should contains all elements of initial list",
-                files.length, orderedFiles.size());
+        Assertions.assertNotNull(orderedFiles,
+            "Ordered files list should not be null");
+        Assertions.assertEquals(files.length, orderedFiles.size(),
+            "Ordered files list should contains all elements of initial list");
         // we have all common/*.xsd files in same order
-        Assert.assertEquals(files[1], orderedFiles.get(0));
-        Assert.assertEquals(files[3], orderedFiles.get(1));
-        Assert.assertEquals(files[4], orderedFiles.get(2));
-        Assert.assertEquals(files[5], orderedFiles.get(3));
+        Assertions.assertEquals(files[1], orderedFiles.get(0));
+        Assertions.assertEquals(files[3], orderedFiles.get(1));
+        Assertions.assertEquals(files[4], orderedFiles.get(2));
+        Assertions.assertEquals(files[5], orderedFiles.get(3));
         // and then a.xsd
-        Assert.assertEquals(files[0], orderedFiles.get(4));
+        Assertions.assertEquals(files[0], orderedFiles.get(4));
         // and finally b.xsd
-        Assert.assertEquals(files[2], orderedFiles.get(5));
+        Assertions.assertEquals(files[2], orderedFiles.get(5));
     }
 
     @Test
@@ -89,20 +89,20 @@ public class IOUtilsTests {
         String[] files = {"a.xsd", "common" + File.separatorChar + "c1.xsd", "b.xsd", "common" + File.separatorChar + "c2.xsd", "common" + File.separatorChar + "a.xsd", "common" + File.separatorChar + "b.xsd" };
         List<String> orderedFiles = IOUtils.reorderFiles(files, new String[] { "a.xsd", "common/*.xsd", "b.xsd" });
 
-        Assert.assertNotNull("Ordered files list should not be null",
-                orderedFiles);
-        Assert.assertEquals("Ordered files list should contains all elements of initial list",
-                files.length, orderedFiles.size());
+        Assertions.assertNotNull(orderedFiles,
+            "Ordered files list should not be null");
+        Assertions.assertEquals(files.length, orderedFiles.size(),
+            "Ordered files list should contains all elements of initial list");
 
         // we have a.xsd
-        Assert.assertEquals(files[0], orderedFiles.get(0));
+        Assertions.assertEquals(files[0], orderedFiles.get(0));
         // and then all common/*.xsd files in same order
-        Assert.assertEquals(files[1], orderedFiles.get(1));
-        Assert.assertEquals(files[3], orderedFiles.get(2));
-        Assert.assertEquals(files[4], orderedFiles.get(3));
-        Assert.assertEquals(files[5], orderedFiles.get(4));
+        Assertions.assertEquals(files[1], orderedFiles.get(1));
+        Assertions.assertEquals(files[3], orderedFiles.get(2));
+        Assertions.assertEquals(files[4], orderedFiles.get(3));
+        Assertions.assertEquals(files[5], orderedFiles.get(4));
         // and finally b.xsd
-        Assert.assertEquals(files[2], orderedFiles.get(5));
+        Assertions.assertEquals(files[2], orderedFiles.get(5));
     }
 
     @Test
@@ -110,19 +110,19 @@ public class IOUtilsTests {
         String[] files = {"a.xsd", "common" + File.separatorChar + "c1.xsd", "b.xsd", "common" + File.separatorChar + "c2.xsd", "common" + File.separatorChar + "a.xsd", "common" + File.separatorChar + "b.xsd" };
         List<String> orderedFiles = IOUtils.reorderFiles(files, new String[] { "a.xsd", "b.xsd", "common/*.xsd" });
 
-        Assert.assertNotNull("Ordered files list should not be null",
-                orderedFiles);
-        Assert.assertEquals("Ordered files list should contains all elements of initial list",
-                files.length, orderedFiles.size());
+        Assertions.assertNotNull(orderedFiles,
+            "Ordered files list should not be null");
+        Assertions.assertEquals(files.length, orderedFiles.size(),
+            "Ordered files list should contains all elements of initial list");
 
         // we have a.xsd
-        Assert.assertEquals(files[0], orderedFiles.get(0));
+        Assertions.assertEquals(files[0], orderedFiles.get(0));
         // and then b.xsd
-        Assert.assertEquals(files[2], orderedFiles.get(1));
+        Assertions.assertEquals(files[2], orderedFiles.get(1));
         // and finally all common/*.xsd files in same order
-        Assert.assertEquals(files[1], orderedFiles.get(2));
-        Assert.assertEquals(files[3], orderedFiles.get(3));
-        Assert.assertEquals(files[4], orderedFiles.get(4));
-        Assert.assertEquals(files[5], orderedFiles.get(5));
+        Assertions.assertEquals(files[1], orderedFiles.get(2));
+        Assertions.assertEquals(files[3], orderedFiles.get(3));
+        Assertions.assertEquals(files[4], orderedFiles.get(4));
+        Assertions.assertEquals(files[5], orderedFiles.get(5));
     }
 }

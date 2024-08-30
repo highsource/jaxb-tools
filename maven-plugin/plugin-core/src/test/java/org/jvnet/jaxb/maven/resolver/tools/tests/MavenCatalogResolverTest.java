@@ -3,8 +3,8 @@ package org.jvnet.jaxb.maven.resolver.tools.tests;
 import java.io.IOException;
 import java.net.URL;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.xml.sax.InputSource;
 
 import org.apache.xml.resolver.CatalogManager;
@@ -22,7 +22,7 @@ public class MavenCatalogResolverTest {
 		cra.getCatalog().parseCatalog(a);
 		InputSource ea = cra.resolveEntity(null,
 				"http://www.w3.org/1999/xlink.xsd");
-		Assert.assertNotNull(ea);
+		Assertions.assertNotNull(ea);
 
 		CatalogManager cmb = new CatalogManager();
 		cmb.setIgnoreMissingProperties(true);
@@ -32,7 +32,7 @@ public class MavenCatalogResolverTest {
 		crb.getCatalog().parseCatalog(b);
 		InputSource eb = crb.resolveEntity(null,
 				"http://www.w3.org/2005/atom-author-link.xsd");
-		Assert.assertNotNull(eb);
+		Assertions.assertNotNull(eb);
 
 	}
 }

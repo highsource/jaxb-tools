@@ -2,13 +2,12 @@ package org.jvnet.jaxb2_commons.tests.JAXB_1058;
 
 import java.io.File;
 
-import org.junit.Test;
-
 import com.sun.codemodel.JCodeModel;
 import com.sun.tools.xjc.ConsoleErrorReporter;
 import com.sun.tools.xjc.ModelLoader;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.Model;
+import org.junit.jupiter.api.Test;
 
 public class ExecuteJAXB1058 {
 

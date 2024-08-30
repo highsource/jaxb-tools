@@ -2,13 +2,13 @@ package org.jvnet.jaxb.tests.issues;
 
 import jakarta.xml.bind.JAXBContext;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.jvnet.jaxb.lang.ContextUtils;
 
-import junit.framework.TestCase;
+public class JIIB35Test {
 
-public class JIIB35Test extends TestCase {
-
+    @Test
 	public void testException() throws Exception {
 
 		final ObjectFactory objectFactory = new ObjectFactory();
@@ -28,9 +28,9 @@ public class JIIB35Test extends TestCase {
 		four.toString();
 		final String delta = ContextUtils.toString(context, four);
 
-		Assert.assertEquals(alpha, beta);
-		Assert.assertEquals(beta, gamma);
-		Assert.assertEquals(gamma, delta);
+		Assertions.assertEquals(alpha, beta);
+		Assertions.assertEquals(beta, gamma);
+		Assertions.assertEquals(gamma, delta);
 
 	}
 }

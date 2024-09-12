@@ -114,6 +114,9 @@ Please refer to the [wiki](https://github.com/highsource/jaxb-tools/wiki/JAXB2-B
 
 JAXB2 Basics can only be used with JAXB/XJC 2.3.x. JAXB/XJC versions 2.2.x and earlier are no longer supported.
 
+If you're using `jaxb2-basics-runtime` dependency with previous generated code, please be sure to use 0.11 as minimal version or consider upgrading to 2.x.
+The new published artifact `org.jvnet.jaxb:jaxb2-basics-runtime` is backward compatible with `org.jvnet.jaxb2_commons:jaxb2-basics-runtime` from version 0.11 and above.
+
 ## Using JAXB2 Basics
 
 * [Using JAXB2 Basics Plugins](https://github.com/highsource/jaxb-tools/wiki/Using-JAXB2-Basics-Plugins)

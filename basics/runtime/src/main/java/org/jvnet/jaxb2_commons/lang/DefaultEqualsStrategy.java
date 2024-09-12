@@ -557,7 +557,7 @@ public class DefaultEqualsStrategy implements EqualsStrategy2, EqualsStrategy {
 	}
 
 	public static DefaultEqualsStrategy INSTANCE2 = new DefaultEqualsStrategy();
-	public static EqualsStrategy INSTANCE = INSTANCE2;
+	public static DefaultEqualsStrategy INSTANCE = INSTANCE2;
 
 	public static DefaultEqualsStrategy getInstance() {
 		return INSTANCE2;

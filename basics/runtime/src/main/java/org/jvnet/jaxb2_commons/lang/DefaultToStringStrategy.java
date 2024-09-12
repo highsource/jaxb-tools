@@ -1211,7 +1211,7 @@ public class DefaultToStringStrategy implements ToStringStrategy2,
 	}
 
 	public static final DefaultToStringStrategy INSTANCE2 = new DefaultToStringStrategy();
-	public static final ToStringStrategy INSTANCE = INSTANCE2;
+	public static final DefaultToStringStrategy INSTANCE = INSTANCE2;
 
 	public static DefaultToStringStrategy getInstance() {
 		return INSTANCE2;

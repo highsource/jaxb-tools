@@ -29,7 +29,7 @@ public class JAXBMergeStrategy extends DefaultMergeStrategy {
 
 	public static final JAXBMergeStrategy INSTANCE2 = new JAXBMergeStrategy();
 	@SuppressWarnings("deprecation")
-	public static final MergeStrategy INSTANCE = INSTANCE2;
+	public static final JAXBMergeStrategy INSTANCE = INSTANCE2;
 
 	public static JAXBMergeStrategy getInstance() {
 		return INSTANCE2;

@@ -385,7 +385,7 @@ public class DefaultHashCodeStrategy implements HashCodeStrategy2, HashCodeStrat
 	}
 
 	public static final DefaultHashCodeStrategy INSTANCE2 = new DefaultHashCodeStrategy();
-	public static final HashCodeStrategy INSTANCE = INSTANCE2;
+	public static final DefaultHashCodeStrategy INSTANCE = INSTANCE2;
 
 	public static DefaultHashCodeStrategy getInstance() {
 		return INSTANCE2;

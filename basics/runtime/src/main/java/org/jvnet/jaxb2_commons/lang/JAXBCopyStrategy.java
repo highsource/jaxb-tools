@@ -65,7 +65,7 @@ public class JAXBCopyStrategy extends DefaultCopyStrategy {
 
 	public static final JAXBCopyStrategy INSTANCE2 = new JAXBCopyStrategy();
 	@SuppressWarnings("deprecation")
-	public static final CopyStrategy INSTANCE = INSTANCE2;
+	public static final JAXBCopyStrategy INSTANCE = INSTANCE2;
 
 	public static JAXBCopyStrategy getInstance() {
 		return INSTANCE2;

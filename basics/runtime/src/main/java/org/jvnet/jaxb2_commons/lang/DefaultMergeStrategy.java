@@ -485,7 +485,7 @@ public class DefaultMergeStrategy implements MergeStrategy2, MergeStrategy {
 	}
 
 	public static final DefaultMergeStrategy INSTANCE2 = new DefaultMergeStrategy();
-	public static final MergeStrategy INSTANCE = INSTANCE2;
+	public static final DefaultMergeStrategy INSTANCE = INSTANCE2;
 
 	public static DefaultMergeStrategy getInstance() {
 		return INSTANCE2;

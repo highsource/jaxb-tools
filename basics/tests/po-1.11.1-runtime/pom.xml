@@ -4,22 +4,27 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jvnet.jaxb</groupId>
-    <artifactId>jaxb2-basics-tests</artifactId>
+    <artifactId>jaxb-basics-project</artifactId>
     <version>2.0.15-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
-  <artifactId>jaxb2-basics-test-po</artifactId>
+  <artifactId>jaxb2-basics-test-po-1.11.1-runtime</artifactId>
   <packaging>jar</packaging>
-  <name>JAXB Tools :: JAXB Basics :: Test [po]</name>
+  <name>JAXB Tools :: JAXB Basics :: Test [po-1.11.1-runtime]</name>
   <dependencies>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.jvnet.jaxb</groupId>
       <artifactId>jaxb-maven-plugin-testing</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.jvnet.jaxb</groupId>
+      <groupId>org.jvnet.jaxb2_commons</groupId>
       <artifactId>jaxb2-basics-runtime</artifactId>
+      <version>1.11.1</version>
     </dependency>
   </dependencies>
   <build>
@@ -30,16 +35,18 @@
         <artifactId>jaxb-maven-plugin</artifactId>
         <configuration>
           <extension>true</extension>
+          <generatePackage>generated.v1_11_1</generatePackage>
           <args>
             <arg>-Xequals</arg>
             <arg>-XhashCode</arg>
             <arg>-XtoString</arg>
-            <arg>-XtoString-toStringStrategyClass=internal.latest.EnumToStringStrategy</arg>
+            <arg>-XtoString-toStringStrategyClass=internal.v1_11_1.EnumToStringStrategy</arg>
           </args>
           <plugins>
             <plugin>
-              <groupId>org.jvnet.jaxb</groupId>
+              <groupId>org.jvnet.jaxb2_commons</groupId>
               <artifactId>jaxb2-basics</artifactId>
+              <version>1.11.1</version>
             </plugin>
           </plugins>
         </configuration>

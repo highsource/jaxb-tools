@@ -984,7 +984,29 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 		this.plugins = plugins;
 	}
 
-	@Component
+    /**
+     * <p>
+     * A list of artifacts to exclude from XJC Plugins resolveTransitively function.
+     * </p>
+     * <p>
+     * If left undefined, then <code>xerces:xercesImpl</code> and <code>xml-apis</code> will
+     * be excluded by default from the classpath resolution.
+     * </p>
+     */
+    @Parameter
+    private String[] artifactExcludes = new String[] {
+        "xerces:xercesImpl", "xml-apis:xml-apis"
+    };
+
+    public String[] getArtifactExcludes() {
+        return artifactExcludes;
+    }
+
+    public void setArtifactExcludes(String[] artifactExcludes) {
+        this.artifactExcludes = artifactExcludes;
+    }
+
+    @Component
 	private RepositorySystem repositorySystem;
 
 	@Component
@@ -1123,6 +1145,7 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 						+ getScanDependenciesForBindings());
 		getLog().info("xjcPlugins:" + Arrays.toString(getPlugins()));
 		getLog().info("episodes:" + Arrays.toString(getEpisodes()));
+        getLog().info("artifactExcludes:" + Arrays.toString(getArtifactExcludes()));
 	}
 
 	private static final String XML_SCHEMA_CLASS_NAME = "XmlSchema";

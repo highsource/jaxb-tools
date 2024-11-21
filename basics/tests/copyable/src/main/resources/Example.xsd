@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="base">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="a" type="xs:string" minOccurs="0" />
+        <xs:element name="b" type="xs:date" minOccurs="0" />
+        <xs:element name="c" type="xs:dateTime" minOccurs="0" />
+        <xs:element name="d" type="xs:time" minOccurs="0" />
+        <xs:element name="e" type="xs:base64Binary" minOccurs="0" />
+        <xs:element name="listOfString" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="primitives">
+    <xs:sequence>
+      <xs:element name="boolean" type="xs:boolean" />
+      <xs:element name="byte" type="xs:byte" />
+      <!--xs:element name="char" type="xs:char" /-->
+      <xs:element name="double" type="xs:double" />
+      <xs:element name="float" type="xs:float" />
+      <xs:element name="long" type="xs:long" />
+      <xs:element name="int" type="xs:int" />
+      <xs:element name="short" type="xs:short" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="unboxedPrimitives">
+    <xs:complexType>
+      <xs:attribute name="unboxedBoolean" type="xs:boolean" use="optional" />
+      <xs:attribute name="unboxedByte" type="xs:byte" use="optional" />
+      <!--xs:attribute name="unboxedChar" type="xs:char" use="optional" /-->
+      <xs:attribute name="unboxedDouble" type="xs:double" use="optional" />
+      <xs:attribute name="unboxedFloat" type="xs:float" use="optional" />
+      <xs:attribute name="unboxedLong" type="xs:long" use="optional" />
+      <xs:attribute name="unboxedInt" type="xs:int" use="optional" />
+      <xs:attribute name="unboxedShort" type="xs:short" use="optional" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

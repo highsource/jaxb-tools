@@ -29,4 +29,21 @@ public class ArrayUtils {
 
 	}
 
+    public static <T> List<T> filterToList(T[] array, Predicate<T> predicate,
+                                 Class<? extends T> theClass) {
+
+        if (array == null) {
+            return null;
+        } else {
+            final List<T> list = new LinkedList<T>();
+            for (T item : array) {
+                if (predicate.evaluate(item)) {
+                    list.add(item);
+                }
+            }
+            return list;
+        }
+
+    }
+
 }

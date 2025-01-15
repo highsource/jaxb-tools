@@ -1,4 +1,4 @@
-package org.jvnet.jaxb.xjc.model.concrete.tests.ahpla;
+package org.jvnet.jaxb.xjc.model.concrete.tests.alpha;
 
 import java.io.Serializable;
 

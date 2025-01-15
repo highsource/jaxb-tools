@@ -17,6 +17,8 @@ import org.apache.maven.artifact.resolver.ArtifactResolutionRequest;
 import org.apache.maven.artifact.resolver.ArtifactResolutionResult;
 import org.apache.maven.artifact.resolver.filter.ExclusionSetFilter;
 import org.apache.maven.model.Dependency;
+import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.artifact.InvalidDependencyVersionException;
 import org.apache.maven.project.artifact.MavenMetadataSource;
@@ -40,6 +42,7 @@ public class ArtifactUtils {
             artifactFactory, artifactResolver,
             localRepository, artifactMetadataSource,
             dependencies, project,
+            new SystemStreamLog(),
             null);
     }
 
@@ -49,10 +52,11 @@ public class ArtifactUtils {
 			final ArtifactRepository localRepository,
 			final ArtifactMetadataSource artifactMetadataSource,
 			final Dependency[] dependencies, final MavenProject project,
+            final Log log,
             final String[] artifactExcludes)
 			throws InvalidDependencyVersionException,
 			ArtifactResolutionException, ArtifactNotFoundException {
-		if (dependencies == null) {
+		if (dependencies == null || dependencies.length == 0) {
 			return Collections.emptyList();
 		}
 
@@ -74,9 +78,19 @@ public class ArtifactUtils {
 
         final ArtifactResolutionResult artifactResolutionResult = artifactResolver.resolve(request);
 
-		final Set<Artifact> resolvedArtifacts = artifactResolutionResult.getArtifacts();
-
-		return resolvedArtifacts;
+        if (!artifactResolutionResult.isSuccess()) {
+            if (artifactResolutionResult.hasMissingArtifacts()) {
+                log.error("artifactResolutionResult has missing artifacts : " + artifactResolutionResult.getMissingArtifacts());
+                throw new RuntimeException("Artifacts - missing artifacts");
+            } else if (artifactResolutionResult.hasExceptions()) {
+                log.error("artifactResolutionResult has exceptions : " + artifactResolutionResult.getExceptions());
+                throw new RuntimeException("Artifacts - exceptions", artifactResolutionResult.getExceptions().get(0));
+            } else {
+                log.error("artifactResolutionResult status is not success");
+                throw new RuntimeException("Artifacts - not in success");
+            }
+        }
+        return artifactResolutionResult.getArtifacts();
 	}
 
 	public static Collection<Artifact> resolve(
@@ -87,7 +101,7 @@ public class ArtifactUtils {
 			final Dependency[] dependencies, final MavenProject project)
 			throws InvalidDependencyVersionException,
 			ArtifactResolutionException, ArtifactNotFoundException {
-		if (dependencies == null) {
+		if (dependencies == null || dependencies.length == 0) {
 			return Collections.emptyList();
 		}
 

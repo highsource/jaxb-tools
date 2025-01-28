@@ -1,0 +1,26 @@
+<xs:schema
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://customerservice.example.com/model"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
+	targetNamespace="http://customerservice.example.com/model">
+	<xs:complexType name="customer">
+		<xs:sequence>
+			<xs:element name="customerId" type="xs:int" minOccurs="0"/>
+			<xs:element minOccurs="0" name="name" type="xs:string" />
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="address"
+				nillable="true" type="xs:string" />
+			<xs:element minOccurs="0" name="numOrders" type="xs:int" />
+			<xs:element name="revenue" type="xs:double" />
+			<xs:element minOccurs="0" name="test" type="xs:decimal" />
+			<xs:element minOccurs="0" name="birthDate" type="xs:date" />
+			<xs:element minOccurs="0" name="type" type="tns:customerType" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="customerType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PRIVATE" />
+			<xs:enumeration value="BUSINESS" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

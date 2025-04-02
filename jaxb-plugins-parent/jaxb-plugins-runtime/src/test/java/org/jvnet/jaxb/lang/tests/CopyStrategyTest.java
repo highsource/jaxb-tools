@@ -8,7 +8,6 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAnyElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.jvnet.jaxb.lang.CopyStrategy;
 import org.jvnet.jaxb.lang.CopyTo;
@@ -41,14 +40,11 @@ public class CopyStrategyTest {
 	public void testAny() throws Exception {
 		JAXBContext context = JAXBContext.newInstance(A.class);
 
-		final InputStream is = getClass().getResourceAsStream("Test[0].xml");
-		try {
-			A a = (A) context.createUnmarshaller().unmarshal(is);
+		try (InputStream is = getClass().getResourceAsStream("Test[0].xml")) {
+            A a = (A) context.createUnmarshaller().unmarshal(is);
 
-			a.copyTo(a.createNewInstance());
-		} finally {
-			IOUtils.closeQuietly(is);
-		}
+            a.copyTo(a.createNewInstance());
+        }
 	}
 
 	@XmlRootElement(name = "a")

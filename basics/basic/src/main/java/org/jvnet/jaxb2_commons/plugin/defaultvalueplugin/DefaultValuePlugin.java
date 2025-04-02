@@ -1,5 +1,7 @@
 package org.jvnet.jaxb2_commons.plugin.defaultvalueplugin;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Map;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -204,6 +206,24 @@ public class DefaultValuePlugin
                     var.init(JExpr.lit(Double.valueOf(defaultValue)));
                     if (opt.verbose)
                         System.out.println("[INFO] Initializing Double variable "
+                            +fieldInfo.displayName()
+                            +" to "+defaultValue+"");
+                }
+
+                else if ("java.math.BigInteger".equals(typeFullName)) {
+                    JClass biClass = co.implClass.owner().ref(BigInteger.class);
+                    var.init(JExpr._new(biClass).arg(JExpr.lit(defaultValue)));
+                    if (opt.verbose)
+                        System.out.println("[INFO] Initializing BigInteger variable "
+                            +fieldInfo.displayName()
+                            +" to "+defaultValue+"");
+                }
+
+                else if ("java.math.BigDecimal".equals(typeFullName)) {
+                    JClass bdClass = co.implClass.owner().ref(BigDecimal.class);
+                    var.init(JExpr._new(bdClass).arg(JExpr.lit(defaultValue)));
+                    if (opt.verbose)
+                        System.out.println("[INFO] Initializing BigDecimal variable "
                             +fieldInfo.displayName()
                             +" to "+defaultValue+"");
                 }

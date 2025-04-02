@@ -43,13 +43,9 @@ public class XAnnotationParserAnnotationExprTest extends TestCase {
 
 	public String getAnnotationString(final String resourceName)
 			throws Exception {
-		InputStream is = null;
-		try {
-			is = getClass().getResourceAsStream(resourceName);
+		try (InputStream is = getClass().getResourceAsStream(resourceName)) {
 			final String text = IOUtils.toString(is, "UTF-8");
 			return text;
-		} finally {
-			IOUtils.closeQuietly(is);
 		}
 	}
 

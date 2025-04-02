@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.io.IOUtils;
 import org.jvnet.jaxb2_commons.lang.CopyStrategy2;
 import org.jvnet.jaxb2_commons.lang.CopyTo2;
 import org.jvnet.jaxb2_commons.lang.JAXBCopyStrategy;
@@ -40,14 +39,11 @@ public class CopyStrategyTest extends TestCase {
 	public void testAny() throws Exception {
 		JAXBContext context = JAXBContext.newInstance(A.class);
 
-		final InputStream is = getClass().getResourceAsStream("Test[0].xml");
-		try {
-			A a = (A) context.createUnmarshaller().unmarshal(is);
+		try (InputStream is = getClass().getResourceAsStream("Test[0].xml")) {
+            A a = (A) context.createUnmarshaller().unmarshal(is);
 
-			a.copyTo(a.createNewInstance());
-		} finally {
-			IOUtils.closeQuietly(is);
-		}
+            a.copyTo(a.createNewInstance());
+        }
 	}
 
 	@XmlRootElement(name = "a")

@@ -13,6 +13,10 @@ public class MathTypesTest {
     public void testMathTypes() {
         MathTypes m = new MathTypes();
         Assertions.assertEquals(new BigInteger("1000"), m.getBigint());
+        Assertions.assertEquals(new BigInteger("9223372036854775807000"), m.getBigbigint());
+        Assertions.assertEquals(new BigInteger("-1000"), m.getNegbigint());
         Assertions.assertEquals(new BigDecimal("1.0"), m.getBigdec());
+        Assertions.assertEquals(new BigDecimal("9223372036854775807000.0123456789"), m.getBigbigdec());
+        Assertions.assertEquals(new BigDecimal("-1.0"), m.getNegbigdec());
     }
 }

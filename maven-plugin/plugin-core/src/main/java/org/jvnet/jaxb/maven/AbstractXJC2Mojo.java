@@ -1223,6 +1223,8 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	private static final String XML_ELEMENT_REF_CLASS_QNAME = "javax.xml.bind.annotation."
 			+ XML_ELEMENT_REF_CLASS_NAME;
 
+    private static final String JAXB_CONTEXT_FACTORY_CLASS_QNAME = "javax.xml.bind.JAXBContextFactory";
+
 	public ProjectBuilder getMavenProjectBuilder() {
 		return mavenProjectBuilder;
 	}
@@ -1258,22 +1260,24 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 			}
 			getLog().info("JAXB API is loaded from the [" + location + "].");
 
-			try {
-				xmlSchemaClass.getMethod("location");
+            try {
+                final Class<?> jaxbContextFactoryClass = Class.forName(JAXB_CONTEXT_FACTORY_CLASS_QNAME);
+                getLog().info("Detected JAXB API version [2.3].");
+            } catch (final ClassNotFoundException cnfexc) {
+                try {
+                    xmlSchemaClass.getMethod("location");
+                    final Class<?> xmlElementRefClass = Class.forName(XML_ELEMENT_REF_CLASS_QNAME);
 
-				final Class<?> xmlElementRefClass = Class
-						.forName(XML_ELEMENT_REF_CLASS_QNAME);
-
-				try {
-					xmlElementRefClass.getMethod("required");
-					getLog().info("Detected JAXB API version [2.2].");
-				} catch (NoSuchMethodException nsmex2) {
-					getLog().info("Detected JAXB API version [2.1].");
-				}
-			} catch (NoSuchMethodException nsmex1) {
-				getLog().info("Detected JAXB API version [2.0].");
-
-			}
+                    try {
+                        xmlElementRefClass.getMethod("required");
+                        getLog().info("Detected JAXB API version [2.2].");
+                    } catch (NoSuchMethodException nsmex2) {
+                        getLog().info("Detected JAXB API version [2.1].");
+                    }
+                } catch (NoSuchMethodException nsmex1) {
+                    getLog().info("Detected JAXB API version [2.0].");
+                }
+            }
 		} catch (ClassNotFoundException cnfex) {
 			getLog().error(
 					"Could not find JAXB 2.x API classes. Make sure JAXB 2.x API is on the classpath.");

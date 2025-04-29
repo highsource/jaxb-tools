@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.xml.namespace.QName;
 
+import com.sun.tools.xjc.model.CAttributePropertyInfo;
 import org.jvnet.jaxb.lang.CopyStrategy;
 import org.jvnet.jaxb.lang.CopyTo;
 import org.jvnet.jaxb.lang.JAXBCopyStrategy;

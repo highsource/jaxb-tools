@@ -1,6 +1,5 @@
-package org.jvnet.jaxb.tests.fluentapi;
+package org.jvnet.jaxb.tests.copyable;
 
-import generated.Base;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

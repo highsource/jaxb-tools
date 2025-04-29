@@ -1,5 +1,6 @@
 package org.jvnet.jaxb2_commons.util;
 
+import com.sun.tools.xjc.model.CAttributePropertyInfo;
 import org.jvnet.jaxb2_commons.xjc.outline.FieldAccessorEx;
 
 import com.sun.codemodel.JBlock;
@@ -105,6 +106,13 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 			return constantField != null;
 		}
 
+        public boolean isRequiredCollectionAttribute() {
+            return field != null
+                && fieldOutline.getPropertyInfo().isCollection()
+                && fieldOutline.getPropertyInfo() instanceof CAttributePropertyInfo
+                && ((CAttributePropertyInfo) fieldOutline.getPropertyInfo()).isRequired();
+        }
+
 		public FieldOutline owner() {
 			return fieldOutline;
 		}
@@ -124,7 +132,9 @@ public class PropertyFieldAccessorFactory implements FieldAccessorFactory {
 		public JExpression hasSetValue() {
 			if (constantField != null) {
 				return JExpr.TRUE;
-			} else if (isSetter != null) {
+			} else if (isRequiredCollectionAttribute()) {
+                return field.ne(JExpr._null());
+            } else if (isSetter != null) {
 				return targetObject.invoke(isSetter);
 			} else {
 				return fieldAccessor.hasSetValue();

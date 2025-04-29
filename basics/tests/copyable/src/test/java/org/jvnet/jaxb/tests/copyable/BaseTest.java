@@ -1,8 +1,7 @@
-package org.jvnet.jaxb.tests.fluentapi;
+package org.jvnet.jaxb.tests.copyable;
 
-import generated.Base;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -29,13 +28,13 @@ public class BaseTest {
         Base b = new Base();
         a.copyTo(b);
 
-        Assertions.assertEquals("String", b.getA());
-        Assertions.assertEquals(xgc, b.getB());
-        Assertions.assertEquals(xgc, b.getC());
-        Assertions.assertEquals(xgc, b.getD());
-        Assertions.assertArrayEquals(textBytes, b.getE());
-        Assertions.assertNotNull(b.getListOfString());
-        Assertions.assertEquals(6, b.getListOfString().size());
-        Assertions.assertTrue(b.getListOfString().containsAll(Arrays.asList("a", "b", "c", "e", "f", "g")));
+        Assert.assertEquals("String", b.getA());
+        Assert.assertEquals(xgc, b.getB());
+        Assert.assertEquals(xgc, b.getC());
+        Assert.assertEquals(xgc, b.getD());
+        Assert.assertArrayEquals(textBytes, b.getE());
+        Assert.assertNotNull(b.getListOfString());
+        Assert.assertEquals(6, b.getListOfString().size());
+        Assert.assertTrue(b.getListOfString().containsAll(Arrays.asList("a", "b", "c", "e", "f", "g")));
     }
 }

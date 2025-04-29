@@ -12,4 +12,6 @@ public interface FieldAccessorEx extends FieldAccessor {
 	public boolean isVirtual();
 
 	public boolean isAlwaysSet();
+
+    boolean isRequiredCollectionAttribute();
 }

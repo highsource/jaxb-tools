@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+           jaxb:version="3.0">
   <xs:element name="base">
     <xs:complexType>
       <xs:sequence>
@@ -38,4 +41,30 @@
       <xs:attribute name="unboxedShort" type="xs:short" use="optional" />
     </xs:complexType>
   </xs:element>
+
+  <xs:annotation>
+    <xs:appinfo>
+      <jaxb:globalBindings choiceContentProperty="true" generateIsSetMethod="true">
+        <!--xjc:noValidator />
+        <xjc:noValidatingUnmarshaller /-->
+      </jaxb:globalBindings>
+      <jaxb:schemaBindings>
+        <jaxb:package name="org.jvnet.jaxb.tests.copyable"/>
+      </jaxb:schemaBindings>
+    </xs:appinfo>
+  </xs:annotation>
+
+  <!-- this schema describes an element with a *mandatory attribute of type xs:list* -->
+  <xs:element name="FooElement">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="BazAttribute" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="BarAttribute" type="BarType" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:simpleType name="BarType">
+    <xs:list itemType="xs:string"/>
+  </xs:simpleType>
 </xs:schema>

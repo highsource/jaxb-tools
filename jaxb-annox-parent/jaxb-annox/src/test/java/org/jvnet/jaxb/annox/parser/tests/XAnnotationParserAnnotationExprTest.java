@@ -1,7 +1,9 @@
 package org.jvnet.jaxb.annox.parser.tests;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.annotation.Annotation;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -9,7 +11,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.jvnet.jaxb.annox.model.XAnnotation;
 import org.jvnet.jaxb.annox.parser.XAnnotationParser;
@@ -19,9 +20,7 @@ import org.w3c.dom.Element;
 public class XAnnotationParserAnnotationExprTest extends TestCase {
 
 	public Element getElement(final String resourceName) throws Exception {
-		InputStream is = null;
-		try {
-			is = getClass().getResourceAsStream(resourceName);
+		try (InputStream is = getClass().getResourceAsStream(resourceName)){
 			final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
 					.newInstance();
 			documentBuilderFactory.setNamespaceAware(true);
@@ -29,25 +28,27 @@ public class XAnnotationParserAnnotationExprTest extends TestCase {
 					.newDocumentBuilder();
 			final Document document = documentBuilder.parse(is);
 			return document.getDocumentElement();
-		} finally {
-			try {
-				if (is != null) {
-					is.close();
-				}
-			} catch (IOException ioe) {
-				// ignore
-			}
 		}
-
 	}
 
 	public String getAnnotationString(final String resourceName)
 			throws Exception {
 		try (InputStream is = getClass().getResourceAsStream(resourceName)) {
-			final String text = IOUtils.toString(is, "UTF-8");
-			return text;
+			return readFromInputStream(is);
 		}
 	}
+
+    private String readFromInputStream(InputStream inputStream)
+        throws IOException {
+        StringBuilder resultStringBuilder = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                resultStringBuilder.append(line).append("\n");
+            }
+        }
+        return resultStringBuilder.toString();
+    }
 
 	public void check(String javaResourceName, String xmlResourceName,
 			Class<?> clazz, Class<? extends Annotation> annotationClazz)

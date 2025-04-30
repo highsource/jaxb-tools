@@ -10,8 +10,8 @@ import javax.xml.bind.JAXBException;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.Validate;
+import org.junit.Assert;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Persistence;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.SingleProperty;
@@ -25,21 +25,14 @@ public class UnmarshalPersistenceTest extends TestCase {
 	protected Persistence unmarshal(String resourceName) throws IOException,
 			JAXBException {
 		Validate.notNull(resourceName);
-		final InputStream is;
-		if (resourceName.startsWith("/")) {
-			is = getClass().getClassLoader().getResourceAsStream(
-					resourceName.substring(1));
-		} else {
-			is = getClass().getResourceAsStream(resourceName);
-		}
-		assertNotNull(is);
-		try {
+		try (final InputStream is = resourceName.startsWith("/")
+                ? getClass().getClassLoader().getResourceAsStream(resourceName.substring(1))
+                : getClass().getResourceAsStream(resourceName)) {
+            Assert.assertNotNull(is);
 			@SuppressWarnings("unchecked")
 			final JAXBElement<Persistence> persistenceElement = (JAXBElement<Persistence>) getContext()
 					.createUnmarshaller().unmarshal(is);
 			return persistenceElement.getValue();
-		} finally {
-			IOUtils.closeQuietly(is);
 		}
 	}
 

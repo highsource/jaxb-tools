@@ -1,7 +1,7 @@
 package org.jvnet.jaxb2_commons.test;
 
 import java.io.File;
-import java.util.Collection;
+import java.io.FilenameFilter;
 import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
@@ -10,7 +10,6 @@ import javax.xml.bind.JAXBException;
 import org.junit.Assert;
 import junit.framework.TestCase;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -72,11 +71,13 @@ public abstract class AbstractSamplesTest extends TestCase {
 
 	protected File[] getSampleFiles() {
 		File samplesDirectory = getSamplesDirectory();
-		logger.debug("Sample directory [" + samplesDirectory.getAbsolutePath()
-				+ "].");
-		final Collection<File> files = FileUtils.listFiles(samplesDirectory,
-				new String[] { "xml" }, true);
-		return files.toArray(new File[files.size()]);
+		logger.debug("Sample directory [" + samplesDirectory.getAbsolutePath() + "].");
+		return samplesDirectory.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String name) {
+                return name != null && name.endsWith("xml");
+            }
+        });
 	}
 
 	protected ClassLoader getContextClassLoader() {

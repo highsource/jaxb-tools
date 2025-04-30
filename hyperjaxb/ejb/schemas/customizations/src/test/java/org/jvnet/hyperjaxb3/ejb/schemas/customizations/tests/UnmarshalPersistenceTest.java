@@ -8,7 +8,6 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.Validate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -25,21 +24,14 @@ public class UnmarshalPersistenceTest {
 	protected Persistence unmarshal(String resourceName) throws IOException,
 			JAXBException {
 		Validate.notNull(resourceName);
-		final InputStream is;
-		if (resourceName.startsWith("/")) {
-			is = getClass().getClassLoader().getResourceAsStream(
-					resourceName.substring(1));
-		} else {
-			is = getClass().getResourceAsStream(resourceName);
-		}
-        Assertions.assertNotNull(is);
-		try {
+		try (final InputStream is = resourceName.startsWith("/")
+                ? getClass().getClassLoader().getResourceAsStream(resourceName.substring(1))
+                : getClass().getResourceAsStream(resourceName)) {
+            Assertions.assertNotNull(is);
 			@SuppressWarnings("unchecked")
 			final JAXBElement<Persistence> persistenceElement = (JAXBElement<Persistence>) getContext()
 					.createUnmarshaller().unmarshal(is);
 			return persistenceElement.getValue();
-		} finally {
-			IOUtils.closeQuietly(is);
 		}
 	}
 

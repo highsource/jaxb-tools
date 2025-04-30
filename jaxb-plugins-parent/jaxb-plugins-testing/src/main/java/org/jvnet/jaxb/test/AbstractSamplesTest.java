@@ -1,13 +1,12 @@
 package org.jvnet.jaxb.test;
 
 import java.io.File;
-import java.util.Collection;
+import java.io.FilenameFilter;
 import java.util.Map;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Assertions;
@@ -72,11 +71,13 @@ public abstract class AbstractSamplesTest {
 
 	protected File[] getSampleFiles() {
 		File samplesDirectory = getSamplesDirectory();
-		logger.debug("Sample directory [" + samplesDirectory.getAbsolutePath()
-				+ "].");
-		final Collection<File> files = FileUtils.listFiles(samplesDirectory,
-				new String[] { "xml" }, true);
-		return files.toArray(new File[files.size()]);
+		logger.debug("Sample directory [" + samplesDirectory.getAbsolutePath() + "].");
+		return samplesDirectory.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String name) {
+                return name != null && name.endsWith("xml");
+            }
+        });
 	}
 
 	protected ClassLoader getContextClassLoader() {

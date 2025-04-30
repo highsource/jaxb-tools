@@ -1,37 +1,17 @@
 package org.jvnet.hyperjaxb3.ejb.test;
 
 import java.io.File;
-import java.util.Collection;
+import java.io.FilenameFilter;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.FileFilterUtils;
-import org.apache.commons.io.filefilter.IOFileFilter;
-import org.apache.commons.io.filefilter.TrueFileFilter;
-import org.apache.commons.lang3.SystemUtils;
 import org.junit.jupiter.api.Test;
 import org.jvnet.jaxb.test.AbstractSamplesTest;
 import org.jvnet.jaxb.xml.bind.ContextPathAware;
 
 public abstract class AbstractEntityManagerSamplesTest extends
 		AbstractEntityManagerTest implements ContextPathAware {
-
-	private final static IOFileFilter JAVA_1_5_SAMPLES = FileFilterUtils
-			.andFileFilter(FileFilterUtils.suffixFileFilter(".xml"),
-					FileFilterUtils.notFileFilter(
-
-					FileFilterUtils.suffixFileFilter("1.6.xml")));
-
-	private final static IOFileFilter JAVA_1_6_SAMPLES = FileFilterUtils
-			.andFileFilter(FileFilterUtils.suffixFileFilter(".xml"),
-					FileFilterUtils.notFileFilter(
-
-					FileFilterUtils.suffixFileFilter("1.5.xml")));
-
-	private final static IOFileFilter SAMPLES = SystemUtils.IS_JAVA_1_5 ? JAVA_1_5_SAMPLES
-			: JAVA_1_6_SAMPLES;
 
 	private AbstractSamplesTest samplesTest;
 
@@ -123,15 +103,19 @@ public abstract class AbstractEntityManagerSamplesTest extends
 
 	protected File[] getSampleFiles() {
 		File samplesDirectory = getSamplesDirectory();
-		logger.debug("Sample directory [" + samplesDirectory.getAbsolutePath()
-				+ "].");
-		if (samplesDirectory == null || !samplesDirectory.isDirectory()) {
+        if (samplesDirectory == null) {
+            return new File[] {};
+        }
+        logger.debug("Sample directory [" + samplesDirectory.getAbsolutePath() + "].");
+		if (!samplesDirectory.isDirectory()) {
 			return new File[] {};
 		} else {
-
-			final Collection<File> files = FileUtils.listFiles(
-					samplesDirectory, SAMPLES, TrueFileFilter.INSTANCE);
-			return files.toArray(new File[files.size()]);
+			return samplesDirectory.listFiles(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return name != null && name.endsWith(".xml") && !name.endsWith("1.5.xml");
+                }
+            });
 		}
 	}
 

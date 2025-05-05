@@ -9,7 +9,6 @@ import org.jvnet.hyperjaxb3.ejb.strategy.model.ProcessModel;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.base.AbstractWrapBuiltin;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.base.AdaptCollectionBuiltinNonReference;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.base.CreateNoPropertyInfos;
-import org.springframework.beans.factory.annotation.Required;
 
 import com.sun.tools.xjc.model.CBuiltinLeafInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;
@@ -17,13 +16,21 @@ import com.sun.tools.xjc.model.TypeUse;
 
 public class WrapCollectionBuiltinNonReference extends AbstractWrapBuiltin {
 
+    public WrapCollectionBuiltinNonReference() {
+        this(null);
+    }
+
+    public WrapCollectionBuiltinNonReference(CreatePropertyInfos fallback) {
+        super();
+        this.setFallback(fallback);
+    }
+
 	private CreatePropertyInfos fallback;
 
 	public CreatePropertyInfos getFallback() {
 		return fallback;
 	}
 
-	@Required
 	public void setFallback(CreatePropertyInfos fallback) {
 		this.fallback = fallback;
 	}

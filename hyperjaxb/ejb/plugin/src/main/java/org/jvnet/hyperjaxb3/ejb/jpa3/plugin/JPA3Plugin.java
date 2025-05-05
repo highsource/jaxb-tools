@@ -4,7 +4,17 @@ import org.jvnet.hyperjaxb3.ejb.plugin.EjbPlugin;
 
 public class JPA3Plugin extends EjbPlugin {
 
-	public String getOptionName() {
+    public String applicationContextClassName = ApplicationContext.class.getName();
+
+    public String getApplicationContextClassName() {
+        return applicationContextClassName;
+    }
+
+    public void setApplicationContextClassName(String applicationContextClassName) {
+        this.applicationContextClassName = applicationContextClassName;
+    }
+
+    public String getOptionName() {
 		return "Xhyperjaxb3-jpa3";
 	}
 

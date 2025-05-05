@@ -55,4 +55,7 @@ public interface Naming {
 
 	public Naming createEmbeddedNaming(Mapping context,
 			FieldOutline fieldOutline);
+
+    int getMaxIdentifierLength();
+    void setMaxIdentifierLength(int maxIdentifierLength);
 }

@@ -3,6 +3,7 @@ package org.jvnet.hyperjaxb3.ejb.plugin;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Collection;
@@ -16,17 +17,16 @@ import javax.xml.namespace.QName;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jvnet.hyperjaxb3.ejb.IApplicationContext;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.strategy.mapping.Mapping;
 import org.jvnet.hyperjaxb3.ejb.strategy.naming.Naming;
 import org.jvnet.hyperjaxb3.ejb.strategy.processor.ModelAndOutlineProcessor;
 import org.jvnet.hyperjaxb3.ejb.test.RoundtripTest;
 import org.jvnet.hyperjaxb3.xjc.generator.bean.field.UntypedListFieldRenderer;
-import org.jvnet.jaxb.plugin.spring.AbstractSpringConfigurablePlugin;
+import org.jvnet.jaxb.plugin.AbstractParameterizablePlugin;
 import org.jvnet.jaxb.util.CustomizationUtils;
 import org.jvnet.jaxb.util.GeneratorContextUtils;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.w3c.dom.Element;
 import org.xml.sax.ErrorHandler;
 
@@ -57,7 +57,7 @@ import com.sun.tools.xjc.reader.xmlschema.bindinfo.LocalScoping;
  * Hyperjaxb3 EJB plugin.
  *
  */
-public class EjbPlugin extends AbstractSpringConfigurablePlugin {
+public class EjbPlugin extends AbstractParameterizablePlugin {
 
 	protected Log logger = LogFactory.getLog(getClass());
 
@@ -75,19 +75,6 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 	}
 
 	private List<URL> episodeURLs = new LinkedList<URL>();
-
-	// private final Method generateFieldDecl;
-	// {
-	// try {
-	// generateFieldDecl = BeanGenerator.class.getDeclaredMethod(
-	// "generateFieldDecl", new Class[] { ClassOutlineImpl.class,
-	// CPropertyInfo.class });
-	// generateFieldDecl.setAccessible(true);
-	// } catch (Exception ex) {
-	// throw new ExceptionInInitializerError(ex);
-	//
-	// }
-	// }
 
 	public String getOptionName() {
 		return "Xhyperjaxb3-ejb";
@@ -137,18 +124,47 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 		this.persistenceXml = persistenceXml;
 	}
 
-	@Override
-	protected String[] getDefaultConfigLocations() {
-		return new String[] {
-				"classpath*:"
-						+ getClass().getPackage().getName().replace('.', '/')
-						+ "/applicationContext.xml",
-				"classpath*:"
-						+ getClass().getPackage().getName().replace('.', '/')
-						+ "/custom/applicationContext.xml" };
-	}
+    public String applicationContextClassName = null;
 
-	private String result = "annotations";
+    public String getApplicationContextClassName() {
+        return applicationContextClassName;
+    }
+
+    public void setApplicationContextClassName(String applicationContextClassName) {
+        this.applicationContextClassName = applicationContextClassName;
+    }
+
+    public IApplicationContext applicationContext;
+
+    public IApplicationContext getApplicationContext() {
+        if (applicationContext == null) {
+            applicationContext = createApplicationContext();
+            if (getApplicationContextClassName() != null) {
+                try {
+                    applicationContext.setDelegate((IApplicationContext) Class.forName(getApplicationContextClassName()).getDeclaredConstructor().newInstance());
+                } catch (ClassNotFoundException | ClassCastException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return applicationContext;
+    }
+
+    private IApplicationContext createApplicationContext() {
+        return new ApplicationContext();
+    }
+
+    public void setApplicationContext(IApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
+
+    private Integer maxIdentifierLength = null;
+
+    public Integer getMaxIdentifierLength() { return maxIdentifierLength; }
+
+    public void setMaxIdentifierLength(Integer maxIdentifierLength) { this.maxIdentifierLength = maxIdentifierLength; }
+
+    private String result = "annotations";
 
 	public String getResult() {
 		return result;
@@ -189,16 +205,6 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 		return result;
 	}
 
-	// @Override
-	// public List<String> getCustomizationURIs() {
-	// return Collections.singletonList(Constants.NAMESPACE_URI);
-	// }
-	//
-	// @Override
-	// public boolean isCustomizationTagName(String nsUri, String localName) {
-	// return Constants.NAMESPACE_URI.equals(nsUri);
-	// }
-	//
 	@Override
 	public boolean run(Outline outline, Options options) throws Exception {
 
@@ -233,32 +239,12 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 			}
 		}
 
-		/*
-		 * final Ring ring = Ring.begin(); try {
-		 *
-		 * final ErrorReceiverFilter ef = new
-		 * ErrorReceiverFilter(outline.getErrorReceiver());
-		 *
-		 * Ring.add(XSSchemaSet.class,outline.getModel().schemaComponent);
-		 * Ring.add(outline.getModel()); Ring.add(outline.getCodeModel());
-		 * Ring.add(ErrorReceiver.class,ef);
-		 * Ring.add(CodeModelClassFactory.class,new CodeModelClassFactory(ef));
-		 *
-		 * final Class<BGMBuilder> theClass = BGMBuilder.class; Constructor<?>
-		 * constructor = theClass.getDeclaredConstructors()[0];
-		 * constructor.setAccessible(true); constructor.newInstance(new Object[]
-		 * { "a", "b", true, new FieldRendererFactory() });
-		 */
-
 		modelAndOutlineProcessor.process(this, outline, options);
 
 		generateRoundtripTestClass(outline);
 
 		checkCustomizations(outline);
 		return true;
-		/*
-		 * } finally { Ring.end(ring); }
-		 */
 
 	}
 
@@ -362,26 +348,6 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 					+ "Your JAXB model is not customized as serializable, please use the "
 					+ "<jaxb:serializable/> global bindings customization element to make your model serializable.");
 		}
-
-		// final ModelAndOutlineProcessor<EjbPlugin> modelAndOutlineProcessor =
-		// getModelAndOutlineProcessor();
-		//
-		// try {
-		// modelAndOutlineProcessor.process(this, model, model.options);
-		// } catch (Exception ex) {
-		// try {
-		// ex.printStackTrace();
-		// errorHandler.fatalError(new SAXParseException(
-		// "Error postprocessing the model.", "", "", -1, -1, ex));
-		// } catch (SAXException ignored) {
-		// throw new RuntimeException(ignored);
-		// }
-		// }
-	}
-
-	@Override
-	protected int getAutowireMode() {
-		return AutowireCapableBeanFactory.AUTOWIRE_NO;
 	}
 
 	@Override
@@ -406,38 +372,21 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 		super.beforeRun(outline, options);
 
 		if (getModelAndOutlineProcessor() == null) {
-			try {
-				final Object bean = getApplicationContext().getBean(
-						getModelAndOutlineProcessorBeanName());
-				if (!(bean instanceof ModelAndOutlineProcessor)) {
-					throw new BadCommandLineException("Result bean ["
-							+ getModelAndOutlineProcessorBeanName()
-							+ "] of class [" + bean.getClass()
-							+ "] does not implement ["
-							+ ModelAndOutlineProcessor.class.getName()
-							+ "] interface.");
-				} else {
-					@SuppressWarnings("unchecked")
-					final ModelAndOutlineProcessor<EjbPlugin> modelAndOutlineProcessor = (ModelAndOutlineProcessor<EjbPlugin>) bean;
-					setModelAndOutlineProcessor(modelAndOutlineProcessor);
-				}
-
-			} catch (BeansException bex) {
-				throw new BadCommandLineException(
-						"Could not load variant bean ["
-								+ getModelAndOutlineProcessorBeanName() + "].",
-						bex);
-			}
+            final ModelAndOutlineProcessor<EjbPlugin> modelAndOutlineProcessor =
+                getApplicationContext().getModelAndOutlineProcessor(getModelAndOutlineProcessorBeanName());
+            setModelAndOutlineProcessor(modelAndOutlineProcessor);
 		}
 
 		if (getNaming() == null) {
-			setNaming((Naming) getApplicationContext().getBean("naming",
-					Naming.class));
+			setNaming(getApplicationContext().getNaming());
 		}
 
+        if (getMaxIdentifierLength() != null) {
+            getNaming().setMaxIdentifierLength(getMaxIdentifierLength());
+        }
+
 		if (getMapping() == null) {
-			setMapping((Mapping) getApplicationContext().getBean("mapping",
-					Mapping.class));
+			setMapping(getApplicationContext().getMapping());
 		}
 
 		if (getTargetDir() == null) {
@@ -475,17 +424,6 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 	public void setNaming(Naming naming) {
 		this.naming = naming;
 	}
-
-	// private ProcessModel processModel;
-	//
-	// public ProcessModel getProcessModel() {
-	// return processModel;
-	// }
-	//
-	// public void setProcessModel(ProcessModel processModel) {
-	// logger.debug("Setting process model.");
-	// this.processModel = processModel;
-	// }
 
 	@Override
 	public List<String> getCustomizationURIs() {
@@ -529,12 +467,6 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 		final Model model = outline.getModel();
 		CClassInfo target = cc.target;
 
-		// if serialization support is turned on, generate
-		// [RESULT]
-		// class ... implements Serializable {
-		// private static final long serialVersionUID = <id>;
-		// ....
-		// }
 		if (model.serializable) {
 			cc.implClass._implements(Serializable.class);
 			if (model.serialVersionUID != null) {
@@ -544,66 +476,11 @@ public class EjbPlugin extends AbstractSpringConfigurablePlugin {
 			}
 		}
 
-		// used to simplify the generated annotations
-		// String mostUsedNamespaceURI =
-		// cc._package().getMostUsedNamespaceURI();
-
-		// [RESULT]
-		// @XmlType(name="foo", targetNamespace="bar://baz")
-		// XmlTypeWriter xtw = cc.implClass.annotate2(XmlTypeWriter.class);
-		// writeTypeName(cc.target.getTypeName(), xtw, mostUsedNamespaceURI);
-
-		// if(model.options.target.isLaterThan(SpecVersion.V2_1)) {
-		// // @XmlSeeAlso
-		// Iterator<CClassInfo> subclasses = cc.target.listSubclasses();
-		// if(subclasses.hasNext()) {
-		// XmlSeeAlsoWriter saw =
-		// cc.implClass.annotate2(XmlSeeAlsoWriter.class);
-		// while (subclasses.hasNext()) {
-		// CClassInfo s = subclasses.next();
-		// saw.value(outline.getClazz(s).implRef);
-		// }
-		// }
-		// }
-
-		// if(target.isElement()) {
-		// String namespaceURI = target.getElementName().getNamespaceURI();
-		// String localPart = target.getElementName().getLocalPart();
-		//
-		// // [RESULT]
-		// // @XmlRootElement(name="foo", targetNamespace="bar://baz")
-		// XmlRootElementWriter xrew =
-		// cc.implClass.annotate2(XmlRootElementWriter.class);
-		// xrew.name(localPart);
-		// if(!namespaceURI.equals(mostUsedNamespaceURI)) // only generate if
-		// necessary
-		// xrew.namespace(namespaceURI);
-		// }
-
-		// if(target.isOrdered()) {
-		// for(CPropertyInfo p : target.getProperties() ) {
-		// if( ! (p instanceof CAttributePropertyInfo )) {
-		// xtw.propOrder(p.getName(false));
-		// }
-		// }
-		// } else {
-		// // produce empty array
-		// xtw.getAnnotationUse().paramArray("propOrder");
-		// }
-
 		for (CPropertyInfo prop : target.getProperties()) {
 			generateFieldDecl(outline, cc, prop);
 		}
 
 		assert !target.declaresAttributeWildcard();
-		// if( target.declaresAttributeWildcard() ) {
-		// generateAttributeWildcard(cc);
-		// }
-
-		// generate some class level javadoc
-		// cc.ref.javadoc().append(target.javadoc);
-
-		// cc._package().objectFactoryGenerator().populate(cc);
 	}
 
 	private FieldOutline generateFieldDecl(Outline outline,

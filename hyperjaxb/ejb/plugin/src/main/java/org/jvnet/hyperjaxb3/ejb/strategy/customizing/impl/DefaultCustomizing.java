@@ -45,7 +45,6 @@ import org.jvnet.jaxb2_commons.lang.JAXBMergeStrategy;
 import org.jvnet.jaxb2_commons.lang.MergeFrom2;
 import org.jvnet.jaxb2_commons.lang.MergeStrategy2;
 import org.jvnet.jaxb2_commons.util.CustomizationUtils;
-import org.springframework.beans.factory.annotation.Required;
 
 import com.sun.java.xml.ns.persistence.orm.Column;
 import com.sun.tools.xjc.model.CClassInfo;
@@ -173,7 +172,6 @@ public class DefaultCustomizing implements Customizing {
 		return defaultCustomizations;
 	}
 
-	@Required
 	public void setDefaultCustomizations(Persistence defaultCustomization) {
 		this.defaultCustomizations = defaultCustomization;
 	}

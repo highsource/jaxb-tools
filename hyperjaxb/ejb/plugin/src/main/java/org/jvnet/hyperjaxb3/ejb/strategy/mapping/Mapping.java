@@ -4,7 +4,6 @@ import org.jvnet.hyperjaxb3.ejb.strategy.customizing.Customizing;
 import org.jvnet.hyperjaxb3.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.GetTypes;
 import org.jvnet.hyperjaxb3.ejb.strategy.naming.Naming;
-import org.springframework.beans.factory.annotation.Required;
 
 import com.sun.java.xml.ns.persistence.orm.Attributes;
 import com.sun.java.xml.ns.persistence.orm.Basic;
@@ -41,7 +40,6 @@ public class Mapping implements Cloneable {
 		return getTypes;
 	}
 
-	@Required
 	public void setGetTypes(GetTypes<Mapping> getTypes) {
 		this.getTypes = getTypes;
 	}
@@ -108,7 +106,6 @@ public class Mapping implements Cloneable {
 		return embeddableAttributesMapping;
 	}
 
-	@Required
 	public void setEmbeddableAttributesMapping(
 			ClassOutlineMapping<EmbeddableAttributes> embeddableAttributesMapping) {
 		this.embeddableAttributesMapping = embeddableAttributesMapping;
@@ -267,7 +264,6 @@ public class Mapping implements Cloneable {
 		return customizing;
 	}
 
-	@Required
 	public void setCustomizing(Customizing modelCustomizations) {
 		this.customizing = modelCustomizations;
 	}
@@ -278,7 +274,6 @@ public class Mapping implements Cloneable {
 		return naming;
 	}
 
-	@Required
 	public void setNaming(Naming naming) {
 		this.naming = naming;
 	}
@@ -289,7 +284,6 @@ public class Mapping implements Cloneable {
 		return ignoring;
 	}
 
-	@Required
 	public void setIgnoring(Ignoring ignoring) {
 		this.ignoring = ignoring;
 	}

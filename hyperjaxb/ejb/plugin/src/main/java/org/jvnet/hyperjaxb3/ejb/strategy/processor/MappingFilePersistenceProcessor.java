@@ -11,7 +11,6 @@ import org.jvnet.hyperjaxb3.ejb.strategy.naming.Naming;
 import org.jvnet.hyperjaxb3.ejb.strategy.outline.OutlineProcessor;
 import org.jvnet.hyperjaxb3.persistence.util.PersistenceUtils;
 import org.jvnet.jaxb2_commons.lang.JAXBMergeCollectionsStrategy;
-import org.springframework.beans.factory.annotation.Required;
 
 import com.sun.java.xml.ns.persistence.Persistence;
 import com.sun.java.xml.ns.persistence.Persistence.PersistenceUnit;
@@ -28,7 +27,6 @@ public class MappingFilePersistenceProcessor implements
 		return persistenceFactory;
 	}
 
-	@Required
 	public void setPersistenceFactory(PersistenceFactory persistenceFactory) {
 		this.persistenceFactory = persistenceFactory;
 	}
@@ -39,7 +37,6 @@ public class MappingFilePersistenceProcessor implements
 		return persistenceMarshaller;
 	}
 
-	@Required
 	public void setPersistenceMarshaller(
 			PersistenceMarshaller persistenceMarshaller) {
 		this.persistenceMarshaller = persistenceMarshaller;
@@ -84,7 +81,6 @@ public class MappingFilePersistenceProcessor implements
 		return outlineProcessor;
 	}
 
-	@Required
 	public void setOutlineProcessor(OutlineProcessor<EjbPlugin> outlineProcessor) {
 		this.outlineProcessor = outlineProcessor;
 	}

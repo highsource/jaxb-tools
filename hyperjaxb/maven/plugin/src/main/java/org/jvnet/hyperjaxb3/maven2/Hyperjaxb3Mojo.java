@@ -91,6 +91,14 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 	@Parameter(property = "maven.hj3.persistenceXml")
 	public File persistenceXml;
 
+    /**
+     *
+     * ApplicationContext Class Name.
+     *
+     */
+    @Parameter(property = "maven.hj3.applicationContextClassName")
+    public String applicationContextClassName;
+
 	/**
 	 *
 	 * Whether the <code>hashCode()</code> method should be generated.
@@ -121,6 +129,20 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 	 */
 	@Parameter(property = "maven.hj3.result", defaultValue = "annotations")
 	public String result = "annotations";
+
+    /**
+     * Configure the maximum identifier length (SQL, etc.).
+     */
+    @Parameter(property = "maven.hj3.maxIdentifierLength")
+    private Integer maxIdentifierLength = null;
+
+    public Integer getMaxIdentifierLength() {
+        return maxIdentifierLength;
+    }
+
+    public void setMaxIdentifierLength(Integer maxIdentifierLength) {
+        this.maxIdentifierLength = maxIdentifierLength;
+    }
 
 	@Parameter
 	public String[] preArgs = new String[0];
@@ -170,6 +192,8 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 		getLog().info("generateEquals:" + generateEquals);
 		getLog().info("generateTransientId:" + generateTransientId);
 		getLog().info("result:" + result);
+        getLog().info("maxIdentifierLength:" + maxIdentifierLength);
+        getLog().info("applicationContextClassName:" + applicationContextClassName);
 		getLog().info("preArgs:" + Arrays.toString(preArgs));
 		getLog().info("postArgs:" + Arrays.toString(postArgs));
 		try {
@@ -216,6 +240,14 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 				arguments.add("-Xhyperjaxb3-ejb-generateTransientId=true");
 			}
 
+            if (maxIdentifierLength != null) {
+                arguments.add("-Xhyperjaxb3-ejb-maxIdentifierLength=" + maxIdentifierLength);
+            }
+
+            if (applicationContextClassName != null) {
+                arguments.add("-Xhyperjaxb3-ejb-applicationContextClassName=" + applicationContextClassName);
+            }
+
 		} else if ("jpa1".equals(variant)) {
 			arguments.add("-Xhyperjaxb3-jpa1");
 
@@ -236,6 +268,14 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 						+ persistenceXml.getAbsolutePath());
 			}
 
+            if (maxIdentifierLength != null) {
+                arguments.add("-Xhyperjaxb3-jpa1-maxIdentifierLength=" + maxIdentifierLength);
+            }
+
+            if (applicationContextClassName != null) {
+                arguments.add("-Xhyperjaxb3-jpa1-applicationContextClassName=" + applicationContextClassName);
+            }
+
 		} else if ("jpa2".equals(variant)) {
 			arguments.add("-Xhyperjaxb3-jpa2");
 
@@ -255,6 +295,14 @@ public class Hyperjaxb3Mojo extends XJC2Mojo {
 				arguments.add("-Xhyperjaxb3-jpa2-persistenceXml="
 						+ persistenceXml.getAbsolutePath());
 			}
+
+            if (maxIdentifierLength != null) {
+                arguments.add("-Xhyperjaxb3-jpa2-maxIdentifierLength=" + maxIdentifierLength);
+            }
+
+            if (applicationContextClassName != null) {
+                arguments.add("-Xhyperjaxb3-jpa2-applicationContextClassName=" + applicationContextClassName);
+            }
 		}
 
 		if (generateEquals) {

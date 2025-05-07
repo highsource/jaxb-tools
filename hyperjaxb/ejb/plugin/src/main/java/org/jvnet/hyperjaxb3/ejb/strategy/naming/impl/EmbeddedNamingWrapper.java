@@ -120,4 +120,13 @@ public class EmbeddedNamingWrapper implements Naming {
 				fieldOutline);
 	}
 
+    @Override
+    public int getMaxIdentifierLength() {
+        return naming.getMaxIdentifierLength();
+    }
+
+    @Override
+    public void setMaxIdentifierLength(int maxIdentifierLength) {
+        naming.setMaxIdentifierLength(maxIdentifierLength);
+    }
 }

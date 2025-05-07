@@ -19,8 +19,6 @@ import org.jvnet.hyperjaxb3.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb3.ejb.strategy.mapping.Mapping;
 import org.jvnet.hyperjaxb3.ejb.strategy.naming.Naming;
 import org.jvnet.jaxb.util.CodeModelUtils;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Required;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JType;
@@ -37,7 +35,7 @@ import com.sun.tools.xjc.outline.Outline;
 import com.sun.tools.xjc.outline.PackageOutline;
 import org.glassfish.jaxb.core.api.impl.NameConverter;
 
-public class DefaultNaming implements Naming, InitializingBean {
+public class DefaultNaming implements Naming {
 
 	private Pattern camelCasePattern = Pattern
 			.compile("\\p{Lower}\\p{Upper}|\\D\\d");
@@ -70,7 +68,6 @@ public class DefaultNaming implements Naming, InitializingBean {
 		return reservedNames;
 	}
 
-	@Required
 	public void setReservedNames(Properties reservedNames) {
 		this.reservedNames = reservedNames;
 	}
@@ -82,7 +79,7 @@ public class DefaultNaming implements Naming, InitializingBean {
 
 	private Map<String, String> keyNameMap = new TreeMap<String, String>();
 
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() {
 
 		final Set<Entry<Object, Object>> entries = getReservedNames()
 				.entrySet();

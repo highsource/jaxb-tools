@@ -5,7 +5,6 @@ import java.util.Collection;
 import org.jvnet.hyperjaxb3.ejb.plugin.EjbPlugin;
 import org.jvnet.hyperjaxb3.ejb.strategy.model.ModelProcessor;
 import org.jvnet.hyperjaxb3.ejb.strategy.outline.OutlineProcessor;
-import org.springframework.beans.factory.annotation.Required;
 
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.model.CClassInfo;
@@ -18,7 +17,6 @@ public class DefaultModelAndOutlineProcessor implements
 
 	private ModelProcessor<EjbPlugin> modelProcessor;
 
-	@Required
 	public ModelProcessor<EjbPlugin> getModelProcessor() {
 		return modelProcessor;
 	}
@@ -29,7 +27,6 @@ public class DefaultModelAndOutlineProcessor implements
 
 	private OutlineProcessor<EjbPlugin> outlineProcessor;
 
-	@Required
 	public OutlineProcessor<EjbPlugin> getOutlineProcessor() {
 		return outlineProcessor;
 	}

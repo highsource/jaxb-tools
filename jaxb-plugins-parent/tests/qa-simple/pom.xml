@@ -18,8 +18,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.jvnet.jaxb</groupId>
-      <artifactId>jaxb-plugins-runtime</artifactId>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
     </dependency>
   </dependencies>
   <build>
@@ -31,8 +31,8 @@
         <configuration>
           <extension>true</extension>
           <args>
-            <!-- Not implemented yet -->
-            <!--arg>-XsimpleToString</arg-->
+            <arg>-XsimpleToString</arg>
+            <arg>-XsimpleToString:DefaultDateStyle=ISO_OFFSET_DATE_TIME</arg>
             <arg>-XsimpleEquals</arg>
             <arg>-XsimpleHashCode</arg>
           </args>

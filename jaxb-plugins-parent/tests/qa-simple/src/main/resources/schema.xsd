@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
-	jaxb:version="3.0">
+           xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+           xmlns:toString="urn:jaxb.jvnet.org:plugin:toString"
+           jaxb:version="3.0"
+           jaxb:extensionBindingPrefixes="toString">
 
 	<xs:element name="heteroSequence" type="heteroSequenceType"/>
 	<xs:complexType name="heteroSequenceType">
@@ -56,6 +58,11 @@
 			<xs:element name="elementWithListAttribute1" type="elementWithListAttribute1" minOccurs="0"/>
 			<xs:element name="facet" type="facetType" minOccurs="0"/>
 			<xs:element name="ignored" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <toString:ignored />
+          </xs:appinfo>
+        </xs:annotation>
 			</xs:element>
 			<xs:element name="anotherIgnored" type="xs:string"/>
 		</xs:sequence>
@@ -71,7 +78,13 @@
 		<xs:complexContent>
 		    <xs:extension base="sequenceType">
 				<xs:sequence>
-					<xs:element name="c" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="c" type="xs:dateTime" minOccurs="0">
+            <xs:annotation>
+              <xs:appinfo>
+                <toString:date-format formatRef="ISO_LOCAL_DATE" />
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
 					<xs:element name="d" type="xs:base64Binary" minOccurs="0"/>
 				</xs:sequence>
 		    </xs:extension>
@@ -94,7 +107,13 @@
 			<xs:element name="hexBinary" type="xs:hexBinary" minOccurs="0"/>
 			<xs:element name="duration" type="xs:duration" minOccurs="0"/>
 			<xs:element name="dateTime" type="xs:dateTime" minOccurs="0"/>
-			<xs:element name="date" type="xs:date" minOccurs="0"/>
+			<xs:element name="date" type="xs:date" minOccurs="0">
+        <xs:annotation>
+          <xs:appinfo>
+            <toString:date-format format="yyyy MM dd" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
 			<xs:element name="time" type="xs:time" minOccurs="0"/>
 			<xs:element name="gYearMonth" type="xs:gYearMonth" minOccurs="0"/>
 			<xs:element name="gYear" type="xs:gYear" minOccurs="0"/>
@@ -122,6 +141,13 @@
 			<xs:element name="QName" type="xs:QName" minOccurs="0"/>
 			<!--xs:element name="NOTATION" type="xs:NOTATION" minOccurs="0"/-->
 			<xs:element name="string" type="xs:string" minOccurs="0"/>
+			<xs:element name="password" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <toString:masked />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
 			<xs:element name="normalizedString" type="xs:normalizedString" minOccurs="0"/>
 			<xs:element name="token" type="xs:token" minOccurs="0"/>
 			<xs:element name="language" type="xs:language" minOccurs="0"/>

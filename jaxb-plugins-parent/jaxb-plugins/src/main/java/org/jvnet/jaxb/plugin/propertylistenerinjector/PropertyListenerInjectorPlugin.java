@@ -6,13 +6,19 @@ import com.sun.codemodel.JFieldVar;
 import com.sun.codemodel.JInvocation;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
+import com.sun.codemodel.JType;
+import com.sun.codemodel.JVar;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.Plugin;
 import com.sun.tools.xjc.model.CPluginCustomization;
 import com.sun.tools.xjc.outline.ClassOutline;
+import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.outline.Outline;
 import com.sun.tools.xjc.util.DOMUtils;
 import jakarta.xml.bind.annotation.XmlTransient;
+import org.jvnet.jaxb.plugin.map_init.InitClass;
+import org.jvnet.jaxb.plugin.util.FieldOutlineUtils;
+import org.jvnet.jaxb.util.CustomizationUtils;
 import org.xml.sax.ErrorHandler;
 
 import java.beans.PropertyChangeListener;
@@ -23,6 +29,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This Plugin will generate property change events on each setXXX.
@@ -73,10 +80,10 @@ public class PropertyListenerInjectorPlugin extends Plugin {
                 interfaceName = globalInterfaceSetting;
             }
             if (VetoableChangeListener.class.getName().equals(interfaceName)) {
-                addSupport(VetoableChangeListener.class, VetoableChangeSupport.class, co.implClass);
+                addSupport(VetoableChangeListener.class, VetoableChangeSupport.class, co);
             }
             if (PropertyChangeListener.class.getName().equals(interfaceName)) {
-                addSupport(PropertyChangeListener.class, PropertyChangeSupport.class, co.implClass);
+                addSupport(PropertyChangeListener.class, PropertyChangeSupport.class, co);
             }
 
         }
@@ -84,18 +91,19 @@ public class PropertyListenerInjectorPlugin extends Plugin {
         return true;
     }
 
-    private void addSupport(Class listener, Class support, JDefinedClass target) {
+    private void addSupport(Class listener, Class support, ClassOutline classOutline) {
 
+        JDefinedClass target = classOutline.implClass;
         // add the support field.
         // JFieldVar field = target.field(JMod.PRIVATE|JMod.TRANSIENT, support, "support");
-        JFieldVar field = target.field(JMod.PRIVATE, support, "support");
+        JFieldVar fieldSupport = target.field(JMod.PRIVATE, support, "support");
 
-        field.annotate(XmlTransient.class);
+        fieldSupport.annotate(XmlTransient.class);
 
         // and initialize it....
-        field.init(JExpr.direct("new " + support.getSimpleName() + "(this)"));
+        fieldSupport.init(JExpr.direct("new " + support.getSimpleName() + "(this)"));
 
-        // we need to hadd
+        // we need to add
         for (Method method : support.getMethods()) {
             if (Modifier.isPublic(method.getModifiers())) {
                 if (method.getName().startsWith("add")) {
@@ -115,6 +123,38 @@ public class PropertyListenerInjectorPlugin extends Plugin {
                             break;
                         }
                     }
+                }
+            }
+        }
+
+        final FieldOutline[] declaredFields = classOutline.getDeclaredFields();
+        for (final FieldOutline fieldOutline : declaredFields) {
+
+            final String publicName = fieldOutline.getPropertyInfo().getName(true);
+
+            final String setterName = "set" + publicName;
+
+            final JType rawType = fieldOutline.getRawType();
+            final JMethod boxifiedSetter = target.getMethod(setterName, new JType[] { rawType.boxify() });
+            final JMethod unboxifiedSetter = target.getMethod(setterName, new JType[] { rawType.unboxify() });
+            final JMethod setter = boxifiedSetter != null ? boxifiedSetter : unboxifiedSetter;
+
+            if (setter != null) {
+                final String privateName = fieldOutline.getPropertyInfo().getName(false);
+                final JFieldVar field = target.fields().get(privateName);
+                if (field != null) {
+                    /*
+                     *         String oldValue = this.value;
+                     *         this.value = newValue;
+                     *         this.pcs.firePropertyChange("value", oldValue, newValue);
+                     */
+                    setter.body().pos(0);
+
+                    final JVar oldPropertyValue = setter.body().decl(JMod.FINAL,
+                        rawType, "old" + publicName,
+                        field);
+                    setter.body().pos(setter.body().getContents().size());
+                    setter.body().add(fieldSupport.invoke("firePropertyChange").arg(privateName).arg(oldPropertyValue).arg(field));
                 }
             }
         }

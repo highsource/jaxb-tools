@@ -36,6 +36,9 @@ public class AnnotationElementUtils {
 		}
 		if ("value".equals(name) && value == null) {
 			value = annotationElement.getTextContent();
+            if (!StringUtils.isEmpty(value)) {
+                value = value.trim();
+            }
 		}
 		return value;
 	}

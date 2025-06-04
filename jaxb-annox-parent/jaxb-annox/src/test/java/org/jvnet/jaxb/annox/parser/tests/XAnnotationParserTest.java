@@ -268,4 +268,37 @@ public class XAnnotationParserTest extends TestCase {
 		System.out.println(two.toString());
 		Assert.assertEquals("Annotations should be identical.", one, two);
 	}
+
+    public void testN() throws Exception {
+
+        final XAnnotationParser parser = XAnnotationParser.INSTANCE;
+
+        final XAnnotation<?> one = parser.parse(Ten.class
+            .getAnnotation(M.class));
+
+        final Element element = getElement("n.xml");
+
+        final XAnnotation<?> two = parser.parse(element);
+
+        System.out.println(one.toString());
+        System.out.println(two.toString());
+        Assert.assertEquals("Annotations should be identical.", one, two);
+    }
+
+    public void testO() throws Exception {
+
+        final XAnnotationParser parser = XAnnotationParser.INSTANCE;
+
+        final XAnnotation<?> one = parser.parse(Nine.class
+            .getAnnotation(L.class));
+
+        final Element element = getElement("o.xml");
+
+        final XAnnotation<?> two = parser.parse(element);
+
+        System.out.println(one.toString());
+        System.out.println(two.toString());
+        Assert.assertEquals("Annotations should be identical.", one, two);
+
+    }
 }

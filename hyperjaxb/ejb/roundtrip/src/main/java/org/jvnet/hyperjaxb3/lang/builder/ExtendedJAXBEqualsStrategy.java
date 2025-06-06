@@ -3,7 +3,6 @@ package org.jvnet.hyperjaxb3.lang.builder;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.transform.dom.DOMSource;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.Difference;
 import org.custommonkey.xmlunit.DifferenceConstants;
@@ -11,6 +10,8 @@ import org.custommonkey.xmlunit.DifferenceListener;
 import org.jvnet.hyperjaxb3.xml.datatype.util.XMLGregorianCalendarUtils;
 import org.jvnet.jaxb.locator.ObjectLocator;
 import org.w3c.dom.Node;
+
+import java.util.Objects;
 
 public class ExtendedJAXBEqualsStrategy extends
 		org.jvnet.jaxb.lang.ExtendedJAXBEqualsStrategy {
@@ -59,7 +60,7 @@ public class ExtendedJAXBEqualsStrategy extends
 	protected boolean equalsInternal(ObjectLocator leftLocator,
 			ObjectLocator rightLocator, Object lhs, Object rhs) {
 		if (lhs instanceof Comparable<?> && rhs instanceof Comparable<?>
-				&& ObjectUtils.equals(lhs.getClass(), rhs.getClass())) {
+				&& Objects.equals(lhs.getClass(), rhs.getClass())) {
 			return equalsInternal(leftLocator, rightLocator,
 					(Comparable<Object>) lhs, (Comparable<Object>) rhs);
 

@@ -2,15 +2,16 @@ package org.jvnet.hyperjaxb3.xml.bind.annotation.adapters;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.hyperjaxb3.item.Converter;
+
+import java.util.Objects;
 
 public class XmlAdapterConverter<I, O> implements Converter<I, O> {
 
 	private final XmlAdapter<O, I> adapter;
 
 	public XmlAdapterConverter(XmlAdapter<O, I> adapter) {
-		Validate.notNull(adapter);
+		Objects.requireNonNull(adapter, "The adapter must not be null.");
 		this.adapter = adapter;
 	}
 

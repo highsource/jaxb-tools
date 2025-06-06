@@ -4,8 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
-
-import org.apache.commons.lang3.StringUtils;
+import org.jvnet.jaxb.lang.StringUtils;
 
 public class StringListAsString extends XmlAdapter<List<String>, String> {
 
@@ -24,7 +23,7 @@ public class StringListAsString extends XmlAdapter<List<String>, String> {
 		if (list == null) {
 			return null;
 		} else {
-			return Arrays.asList(StringUtils.split(list));
+			return Arrays.asList(StringUtils.split(list, ' '));
 
 		}
 	}

@@ -1,6 +1,6 @@
 package org.jvnet.jaxb.xjc.generator.concrete;
 
-import org.apache.commons.lang3.Validate;
+import java.util.Objects;
 import org.jvnet.jaxb.util.FieldAccessorFactory;
 import org.jvnet.jaxb.util.PropertyFieldAccessorFactory;
 import org.jvnet.jaxb.xjc.generator.MPropertyOutlineGenerator;
@@ -28,8 +28,8 @@ public class CMPropertyOutlineGenerator implements MPropertyOutlineGenerator {
 
 	public CMPropertyOutlineGenerator(Outline outline,
 			CPropertyInfo propertyInfo) {
-		Validate.notNull(outline);
-		Validate.notNull(propertyInfo);
+		Objects.requireNonNull(outline, "Outline must not be null.");
+		Objects.requireNonNull(propertyInfo, "Property info must not be null.");
 		this.outline = outline;
 		this.propertyInfo = propertyInfo;
 	}

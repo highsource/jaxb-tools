@@ -2,10 +2,10 @@ package org.jvnet.jaxb.plugin.setters;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 
 import javax.xml.namespace.QName;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.plugin.AbstractParameterizablePlugin;
 import org.jvnet.jaxb.plugin.ComposedIgnoring;
 import org.jvnet.jaxb.plugin.CustomizedIgnoring;
@@ -98,7 +98,7 @@ public class SettersPlugin extends AbstractParameterizablePlugin {
 	}
 
 	public void setMode(String mode) {
-		Validate.notNull(mode);
+		Objects.requireNonNull(mode, "Mode must not be null.");
 		try {
 			this.mode = Mode.valueOf(mode);
 		} catch (IllegalArgumentException iaex) {

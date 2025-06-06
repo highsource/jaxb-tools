@@ -1,9 +1,10 @@
 package org.jvnet.jaxb.plugin.simplehashcode;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.plugin.codegenerator.CodeGenerationAbstraction;
 
 import com.sun.codemodel.JCodeModel;
+
+import java.util.Objects;
 
 public class HashCodeCodeGenerator extends
 		CodeGenerationAbstraction<HashCodeArguments> {
@@ -11,7 +12,7 @@ public class HashCodeCodeGenerator extends
 	public HashCodeCodeGenerator(JCodeModel codeModel) {
 		super(
 				new HashCodeCodeGenerationImplementor(
-						Validate.notNull(codeModel)));
+						Objects.requireNonNull(codeModel, "codeModel must not be null")));
 	}
 
 }

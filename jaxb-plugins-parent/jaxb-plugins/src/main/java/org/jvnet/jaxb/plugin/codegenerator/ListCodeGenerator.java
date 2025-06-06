@@ -6,8 +6,6 @@ import java.util.Set;
 
 import jakarta.xml.bind.JAXBElement;
 
-import org.apache.commons.lang3.Validate;
-
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JType;
@@ -23,7 +21,9 @@ public class ListCodeGenerator<A extends Arguments<A>> extends
 	@Override
 	public void generate(JBlock block, JType type,
 			Collection<JType> possibleTypes, boolean isAlwaysSet, A arguments) {
-		Validate.isInstanceOf(JClass.class, type);
+        if (!(type instanceof JClass)) {
+            throw new IllegalArgumentException("Type must be a JClass.");
+        }
 		final JClass _class = (JClass) type;
 
 		final JClass jaxbElementClass = getCodeModel().ref(JAXBElement.class);

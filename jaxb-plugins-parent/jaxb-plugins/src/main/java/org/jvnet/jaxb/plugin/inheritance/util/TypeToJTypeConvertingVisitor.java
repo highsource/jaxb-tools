@@ -12,8 +12,7 @@ import com.github.javaparser.ast.visitor.GenericVisitorAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang3.Validate;
+import java.util.Objects;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
@@ -25,7 +24,7 @@ public class TypeToJTypeConvertingVisitor extends
 	private final Map<String, JClass> knownClasses;
 
 	public TypeToJTypeConvertingVisitor(Map<String, JClass> knownClasses) {
-		Validate.notNull(knownClasses);
+		Objects.requireNonNull(knownClasses, "Known classes must not be null. Use empty map instead of null to indicate no known classes.");
 		this.knownClasses = knownClasses;
 	}
 

@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.xjc.generator.concrete;
 
-import org.apache.commons.lang3.Validate;
+import java.util.Objects;
 import org.jvnet.jaxb2_commons.xjc.generator.MElementOutlineGenerator;
 import org.jvnet.jaxb2_commons.xjc.outline.MElementOutline;
 import org.jvnet.jaxb2_commons.xjc.outline.MPackageOutline;
@@ -20,8 +20,8 @@ public class CMElementOutlineGenerator implements MElementOutlineGenerator {
 	private final CElementInfo elementInfo;
 
 	public CMElementOutlineGenerator(Outline outline, CElementInfo elementInfo) {
-		Validate.notNull(outline);
-		Validate.notNull(elementInfo);
+		Objects.requireNonNull(outline, "Outline must not be null.");
+		Objects.requireNonNull(elementInfo, "Element info must not be null.");
 		this.outline = outline;
 		this.elementInfo = elementInfo;
 	}

@@ -4,8 +4,8 @@ import java.net.URI;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
-import org.apache.commons.lang3.Validate;
 import org.apache.maven.plugin.logging.Log;
 import org.jvnet.jaxb.maven.plugin.logging.NullLog;
 
@@ -18,7 +18,7 @@ public class CompositeURILastModifiedResolver implements
 	private final Log logger;
 
 	public CompositeURILastModifiedResolver(Log logger) {
-		this.logger = Validate.notNull(logger);
+		this.logger = Objects.requireNonNull(logger, "logger must not be null.");
 		addResolvers(new FileURILastModifiedResolver(logger),
 				new JarURILastModifiedResolver(logger, this),
 				new HttpURILastModifiedResolver(logger),
@@ -34,8 +34,9 @@ public class CompositeURILastModifiedResolver implements
 	}
 
 	private void addResolvers(SchemeAwareURILastModifiedResolver... resolvers) {
-		Validate.noNullElements(resolvers);
+		Objects.requireNonNull(resolvers, "resolvers must not be null.");
 		for (final SchemeAwareURILastModifiedResolver resolver : resolvers) {
+            Objects.requireNonNull(resolver, "resolver must not be null.");
 			this.resolvers.put(resolver.getScheme().toLowerCase(), resolver);
 		}
 	}

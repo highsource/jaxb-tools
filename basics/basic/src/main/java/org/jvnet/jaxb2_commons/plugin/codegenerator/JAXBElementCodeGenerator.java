@@ -4,11 +4,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.xml.namespace.QName;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb2_commons.codemodel.JCMTypeFactory;
 
 import com.sun.codemodel.JBlock;
@@ -23,7 +23,7 @@ public class JAXBElementCodeGenerator<A extends Arguments<A>> extends
 	public JAXBElementCodeGenerator(CodeGenerator<A> codeGenerator,
 			CodeGenerationImplementor<A> implementor, JCMTypeFactory typeFactory) {
 		super(codeGenerator, implementor);
-		this.typeFactory = Validate.notNull(typeFactory);
+		this.typeFactory = Objects.requireNonNull(typeFactory, "typeFactory is null");
 	}
 
 	private JCMTypeFactory getTypeFactory() {
@@ -33,7 +33,9 @@ public class JAXBElementCodeGenerator<A extends Arguments<A>> extends
 	@Override
 	public void generate(JBlock block, JType type,
 			Collection<JType> possibleTypes, boolean isAlwaysSet, A arguments) {
-		Validate.isInstanceOf(JClass.class, type);
+        if (!(type instanceof JClass)) {
+            throw new IllegalArgumentException("Type must be a JClass.");
+        }
 
 		final JClass _class = (JClass) type;
 
@@ -62,7 +64,9 @@ public class JAXBElementCodeGenerator<A extends Arguments<A>> extends
 		final Set<JType> possibleValueTypes = new HashSet<JType>();
 
 		for (JType possibleType : possibleTypes) {
-			Validate.isInstanceOf(JClass.class, possibleType);
+            if (!(possibleType instanceof JClass)) {
+                throw new IllegalArgumentException("possibleType must be a JClass.");
+            }
 			final JClass possibleClass = (JClass) possibleType;
 			if (possibleClass.getTypeParameters().size() == 1) {
 				possibleValueTypes

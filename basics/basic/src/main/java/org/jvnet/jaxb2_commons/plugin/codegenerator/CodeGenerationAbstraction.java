@@ -5,10 +5,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 import javax.xml.bind.JAXBElement;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb2_commons.codemodel.JCMType;
 import org.jvnet.jaxb2_commons.codemodel.JCMTypeFactory;
 
@@ -29,7 +29,7 @@ public class CodeGenerationAbstraction<A extends Arguments<A>> implements
 
 	public CodeGenerationAbstraction(CodeGenerationImplementor<A> generationImplementor) {
 
-		this.implementor = Validate.notNull(generationImplementor);
+		this.implementor = Objects.requireNonNull(generationImplementor, "generationImplementor must not be null");
 		this.codeModel = generationImplementor.getCodeModel();
 
 		addCodeGenerator(this.codeModel.BOOLEAN, new BooleanCodeGenerator<A>(

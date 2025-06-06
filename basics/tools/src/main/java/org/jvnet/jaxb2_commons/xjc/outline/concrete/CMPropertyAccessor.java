@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.xjc.outline.concrete;
 
-import org.apache.commons.lang3.Validate;
+import java.util.Objects;
 import org.jvnet.jaxb2_commons.xjc.outline.FieldAccessorEx;
 import org.jvnet.jaxb2_commons.xjc.outline.MPropertyAccessor;
 
@@ -14,7 +14,7 @@ public class CMPropertyAccessor implements MPropertyAccessor {
 	private final FieldAccessorEx fieldAccessor;
 
 	public CMPropertyAccessor(FieldAccessorEx fieldAccessor) {
-		Validate.notNull(fieldAccessor);
+		Objects.requireNonNull(fieldAccessor, "Field accessor must not be null.");
 		this.fieldAccessor = fieldAccessor;
 	}
 

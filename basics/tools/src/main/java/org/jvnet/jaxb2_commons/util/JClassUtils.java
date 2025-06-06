@@ -1,8 +1,7 @@
 package org.jvnet.jaxb2_commons.util;
 
 import java.util.Iterator;
-
-import org.apache.commons.lang3.Validate;
+import java.util.Objects;
 
 import com.sun.codemodel.JClass;
 
@@ -10,8 +9,8 @@ public class JClassUtils {
 
 	public static <T> boolean isInstanceOf(JClass _class,
 			Class<? extends T> _interface) {
-		Validate.notNull(_class);
-		Validate.notNull(_interface);
+		Objects.requireNonNull(_class, "Class must not be null.");
+		Objects.requireNonNull(_interface, "Interface must not be null.");
 
 		final String className = _class.fullName();
 

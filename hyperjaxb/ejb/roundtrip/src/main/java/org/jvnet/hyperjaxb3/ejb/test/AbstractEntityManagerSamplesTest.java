@@ -6,7 +6,6 @@ import java.io.FilenameFilter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
-import org.apache.commons.lang3.SystemUtils;
 import org.jvnet.jaxb2_commons.test.AbstractSamplesTest;
 import org.jvnet.jaxb2_commons.xml.bind.ContextPathAware;
 

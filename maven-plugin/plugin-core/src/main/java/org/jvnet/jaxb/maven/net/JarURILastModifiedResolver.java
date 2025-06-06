@@ -5,8 +5,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.MessageFormat;
+import java.util.Objects;
 
-import org.apache.commons.lang3.Validate;
 import org.apache.maven.plugin.logging.Log;
 
 public class JarURILastModifiedResolver extends
@@ -19,7 +19,7 @@ public class JarURILastModifiedResolver extends
 
 	public JarURILastModifiedResolver(Log logger, URILastModifiedResolver parent) {
 		super(SCHEME, logger);
-		this.parent = Validate.notNull(parent);
+		this.parent = Objects.requireNonNull(parent, "Parent resolver must not be null.");
 	}
 
 	private URILastModifiedResolver getParent() {

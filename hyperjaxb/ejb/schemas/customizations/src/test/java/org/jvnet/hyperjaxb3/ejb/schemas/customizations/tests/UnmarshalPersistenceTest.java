@@ -3,6 +3,7 @@ package org.jvnet.hyperjaxb3.ejb.schemas.customizations.tests;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Objects;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -10,7 +11,6 @@ import javax.xml.bind.JAXBException;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.lang3.Validate;
 import org.junit.Assert;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Persistence;
@@ -24,7 +24,7 @@ public class UnmarshalPersistenceTest extends TestCase {
 
 	protected Persistence unmarshal(String resourceName) throws IOException,
 			JAXBException {
-		Validate.notNull(resourceName);
+		Objects.requireNonNull(resourceName);
 		try (final InputStream is = resourceName.startsWith("/")
                 ? getClass().getClassLoader().getResourceAsStream(resourceName.substring(1))
                 : getClass().getResourceAsStream(resourceName)) {

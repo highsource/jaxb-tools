@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import javax.persistence.Transient;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jvnet.jaxb.annox.model.XAnnotation;
@@ -14,6 +13,7 @@ import org.jvnet.hyperjaxb3.ejb.strategy.ignoring.Ignoring;
 import org.jvnet.hyperjaxb3.ejb.strategy.mapping.Mapping;
 import org.jvnet.hyperjaxb3.ejb.strategy.outline.OutlineProcessor;
 import org.jvnet.hyperjaxb3.persistence.util.AttributesUtils;
+import org.jvnet.jaxb2_commons.plugin.util.ArrayUtils;
 import org.jvnet.jaxb2_commons.util.FieldAccessorUtils;
 import org.jvnet.jaxb2_commons.util.OutlineUtils;
 

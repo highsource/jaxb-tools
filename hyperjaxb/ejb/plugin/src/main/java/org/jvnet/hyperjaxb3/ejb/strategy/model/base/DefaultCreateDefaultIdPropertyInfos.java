@@ -2,11 +2,11 @@ package org.jvnet.hyperjaxb3.ejb.strategy.model.base;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.annox.util.ClassUtils;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.GeneratedId;
@@ -57,7 +57,7 @@ public class DefaultCreateDefaultIdPropertyInfos implements
 		final CCustomizations customizations = new CCustomizations();
 		final CPluginCustomization id = createIdCustomization(context, cid);
 		customizations.add(id);
-		//		
+		//
 		// CPluginCustomization generated = CustomizationUtils
 		// .createCustomization(org.jvnet.jaxb2_commons.plugin.Customizations.GENERATED_ELEMENT_NAME);
 		// generated.markAsAcknowledged();
@@ -81,7 +81,10 @@ public class DefaultCreateDefaultIdPropertyInfos implements
 		// final GeneratedId id =
 		// context.getCustomizing().getGeneratedId(classInfo);
 		final String name = id.getName();
-		Validate.notEmpty(name, "The hj:id/@name attribute must not be empty.");
+        Objects.requireNonNull(name, "The hj:id/@name attribute must not be null." );
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("The hj:id/@name attribute must not be empty.");
+        }
 		return name;
 	}
 
@@ -97,11 +100,12 @@ public class DefaultCreateDefaultIdPropertyInfos implements
 		// final GeneratedId id =
 		// context.getCustomizing().getGeneratedId(classInfo);
 		final String javaType = id.getJavaType();
-		Validate.notEmpty(javaType,
-				"The hj:id/@javaType attribute must not be empty.");
+        Objects.requireNonNull(javaType, "The hj:id/@javaType attribute must not be null." );
+        if (javaType.isEmpty()) {
+            throw new IllegalArgumentException("The hj:id/@javaType attribute must not be empty.");
+        }
 		final QName schemaType = id.getSchemaType();
-		Validate.notNull(schemaType,
-				"The hj:id/@schemaType attribute must not be null.");
+        Objects.requireNonNull(schemaType, "The hj:id/@schemaType attribute must not be null." );
 		try {
 			final Class<?> theClass = ClassUtils.forName(javaType);
 			return new CExternalLeafInfo(theClass, schemaType, null);

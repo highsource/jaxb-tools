@@ -6,8 +6,7 @@ import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang3.Validate;
+import java.util.Objects;
 import org.jvnet.jaxb2_commons.xjc.outline.MClassOutline;
 import org.jvnet.jaxb2_commons.xjc.outline.MElementOutline;
 import org.jvnet.jaxb2_commons.xjc.outline.MEnumOutline;
@@ -46,8 +45,8 @@ public class CMModelOutline implements MModelOutline {
 	private final Map<MEnumLeafInfo<NType, NClass>, MEnumOutline> enumOutlinesMap = new IdentityHashMap<MEnumLeafInfo<NType, NClass>, MEnumOutline>();
 
 	public CMModelOutline(MModelInfo<NType, NClass> target, JCodeModel code) {
-		Validate.notNull(target);
-		Validate.notNull(code);
+		Objects.requireNonNull(target, "Model info target must not be null.");
+		Objects.requireNonNull(code, "Code model must not be null.");
 		this.target = target;
 		this.code = code;
 	}
@@ -69,7 +68,7 @@ public class CMModelOutline implements MModelOutline {
 	}
 
 	public void addPackageOutline(MPackageOutline packageOutline) {
-		Validate.notNull(packageOutline);
+		Objects.requireNonNull(packageOutline, "Package outline must not be null.");
 		this.packageOutlines.add(packageOutline);
 		this.packageOutlinesMap.put(packageOutline.getTarget(), packageOutline);
 	}
@@ -83,7 +82,7 @@ public class CMModelOutline implements MModelOutline {
 	}
 
 	public void addClassOutline(MClassOutline classOutline) {
-		Validate.notNull(classOutline);
+		Objects.requireNonNull(classOutline, "Class outline must not be null.");
 		this.classOutlines.add(classOutline);
 		this.classOutlinesMap.put(classOutline.getTarget(), classOutline);
 	}
@@ -97,7 +96,7 @@ public class CMModelOutline implements MModelOutline {
 	}
 
 	public void addEnumOutline(MEnumOutline enumOutline) {
-		Validate.notNull(enumOutline);
+		Objects.requireNonNull(enumOutline, "Enum outline must not be null.");
 		this.enumOutlines.add(enumOutline);
 		this.enumOutlinesMap.put(enumOutline.getTarget(), enumOutline);
 	}
@@ -111,7 +110,7 @@ public class CMModelOutline implements MModelOutline {
 	}
 
 	public void addElementOutline(MElementOutline elementOutline) {
-		Validate.notNull(elementOutline);
+		Objects.requireNonNull(elementOutline, "Element outline must not be null.");
 		this.elementOutlines.add(elementOutline);
 		this.elementOutlinesMap.put(elementOutline.getTarget(), elementOutline);
 	}

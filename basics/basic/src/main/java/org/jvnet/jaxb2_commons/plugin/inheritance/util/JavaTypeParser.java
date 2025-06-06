@@ -13,8 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang3.Validate;
+import java.util.Objects;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
@@ -33,7 +32,7 @@ public class JavaTypeParser {
 	}
 
 	public JavaTypeParser(Map<String, JClass> knownClasses) {
-		Validate.notNull(knownClasses);
+		Objects.requireNonNull(knownClasses, "Known classes must not be null. Use empty map instead of null to indicate no known classes.");
 		this.typeToJTypeConvertingVisitor = new TypeToJTypeConvertingVisitor(
 				knownClasses);
 

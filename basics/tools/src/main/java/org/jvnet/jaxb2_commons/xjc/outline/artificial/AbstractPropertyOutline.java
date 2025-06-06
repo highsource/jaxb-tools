@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.xjc.outline.artificial;
 
-import org.apache.commons.lang3.Validate;
+import java.util.Objects;
 import org.jvnet.jaxb2_commons.xjc.outline.MClassOutline;
 import org.jvnet.jaxb2_commons.xjc.outline.MModelOutline;
 import org.jvnet.jaxb2_commons.xjc.outline.MPropertyAccessor;
@@ -39,9 +39,9 @@ public abstract class AbstractPropertyOutline implements MPropertyOutline {
 
 	public AbstractPropertyOutline(Outline outline, MClassOutline classOutline,
 			MPropertyInfo<NType, NClass> target) {
-		Validate.notNull(outline);
-		Validate.notNull(classOutline);
-		Validate.notNull(target);
+		Objects.requireNonNull(outline, "Outline must not be null.");
+		Objects.requireNonNull(classOutline, "Class outline must not be null.");
+		Objects.requireNonNull(target, "Target property info must not be null.");
 		this.outline = outline;
 		this.modelOutline = classOutline.getParent();
 		this.classOutline = classOutline;
@@ -153,7 +153,7 @@ public abstract class AbstractPropertyOutline implements MPropertyOutline {
 		protected final JExpression target;
 
 		public PropertyAccessor(JExpression target) {
-			Validate.notNull(target);
+			Objects.requireNonNull(target, "Target expression must not be null.");
 			this.target = target;
 		}
 

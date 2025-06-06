@@ -2,8 +2,8 @@ package org.jvnet.jaxb.maven.net;
 
 import java.net.URI;
 import java.text.MessageFormat;
+import java.util.Objects;
 
-import org.apache.commons.lang3.Validate;
 import org.apache.maven.plugin.logging.Log;
 
 public abstract class AbstractSchemeAwareURILastModifiedResolver implements
@@ -13,8 +13,8 @@ public abstract class AbstractSchemeAwareURILastModifiedResolver implements
 	private final String scheme;
 
 	public AbstractSchemeAwareURILastModifiedResolver(String scheme, Log logger) {
-		this.scheme = Validate.notNull(scheme);
-		this.logger = Validate.notNull(logger);
+		this.scheme = Objects.requireNonNull(scheme, "scheme must not be null.");
+		this.logger = Objects.requireNonNull(logger, "logger must not be null.");
 	}
 
 	@Override
@@ -29,9 +29,11 @@ public abstract class AbstractSchemeAwareURILastModifiedResolver implements
 	@Override
 	public Long getLastModified(URI uri) {
 		final String scheme = getScheme();
-		Validate.isTrue(scheme.equalsIgnoreCase(uri.getScheme()), MessageFormat
-				.format("Invalid scheme [{0}] expected [{1}].",
-						uri.getScheme(), scheme));
+		if (!scheme.equalsIgnoreCase(uri.getScheme())) {
+            throw new IllegalArgumentException(MessageFormat
+                .format("Invalid scheme [{0}] expected [{1}].",
+                    uri.getScheme(), scheme));
+        }
 		return getLastModifiedForScheme(uri);
 	}
 

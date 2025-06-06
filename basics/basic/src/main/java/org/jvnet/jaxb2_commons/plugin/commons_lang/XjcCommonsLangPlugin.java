@@ -15,10 +15,6 @@
  */
 package org.jvnet.jaxb2_commons.plugin.commons_lang;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.xml.sax.ErrorHandler;
 
 import com.sun.codemodel.JCodeModel;
@@ -66,12 +62,15 @@ import com.sun.tools.xjc.outline.Outline;
  *
  * The default ToStringStyle adopted by this plugin is MULTI_LINE_STYLE.
  *
- * @see org.apache.commons.lang3.builder.ToStringStyle
  * @author Hanson Char
  */
 public class XjcCommonsLangPlugin extends Plugin
 {
     private static final String TOSTRING_STYLE_PARAM = "-Xcommons-lang:ToStringStyle=";
+    private static final String TOSTRINGSTYLE_CLASSNAME = "org.apache.commons.lang3.builder.ToStringStyle";
+    private static final String EQUALSBUILDER_CLASSNAME = "org.apache.commons.lang3.builder.EqualsBuilder";
+    private static final String HASHCODEBUILDER_CLASSNAME = "org.apache.commons.lang3.builder.HashCodeBuilder";
+    private static final String TOSTRINGBUILDER_CLASSNAME = "org.apache.commons.lang3.builder.ToStringBuilder";
     private String toStringStyle = "MULTI_LINE_STYLE";
     private Class<?> customToStringStyle;
 
@@ -118,7 +117,7 @@ public class XjcCommonsLangPlugin extends Plugin
         toStringMethod.annotate(Override.class);
         final JExpression toStringStyleExpr =
                 customToStringStyle == null
-              ? codeModel.ref(ToStringStyle.class)
+              ? codeModel.ref(TOSTRINGSTYLE_CLASSNAME)
                          .staticRef(toStringStyle)
               : JExpr._new(
                       codeModel.ref(customToStringStyle))
@@ -126,7 +125,7 @@ public class XjcCommonsLangPlugin extends Plugin
         // Invoke ToStringBuilder.reflectionToString(Object,StringStyle)
         toStringMethod.body()
                       ._return(
-                              codeModel.ref(ToStringBuilder.class)
+                              codeModel.ref(TOSTRINGBUILDER_CLASSNAME)
                                        .staticInvoke("reflectionToString")
                                        .arg(JExpr._this())
                                        .arg(toStringStyleExpr)
@@ -144,7 +143,7 @@ public class XjcCommonsLangPlugin extends Plugin
         toStringMethod.annotate(Override.class);
         // Invoke EqualsBuilder.reflectionEquals(Object,Object);
         toStringMethod.body()._return(
-            codeModel.ref(EqualsBuilder.class)
+            codeModel.ref(EQUALSBUILDER_CLASSNAME)
                      .staticInvoke("reflectionEquals")
                      .arg(JExpr._this())
                      .arg(that)
@@ -161,7 +160,7 @@ public class XjcCommonsLangPlugin extends Plugin
         toStringMethod.annotate(Override.class);
         // Invoke EqualsBuilder.reflectionHashCode(Object);
         toStringMethod.body()._return(
-            codeModel.ref(HashCodeBuilder.class)
+            codeModel.ref(HASHCODEBUILDER_CLASSNAME)
                      .staticInvoke("reflectionHashCode")
                      .arg(JExpr._this())
         );
@@ -179,9 +178,9 @@ public class XjcCommonsLangPlugin extends Plugin
         {
             toStringStyle = arg.substring(TOSTRING_STYLE_PARAM.length());
             try {
-                ToStringStyle.class.getField(toStringStyle);
+                Class.forName(TOSTRINGSTYLE_CLASSNAME).getField(toStringStyle);
                 return 1;
-            } catch (SecurityException e) {
+            } catch (ClassNotFoundException | SecurityException e) {
                 throw new BadCommandLineException(e.getMessage());
             } catch (NoSuchFieldException ignore) {
             }

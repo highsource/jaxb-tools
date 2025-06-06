@@ -2,8 +2,7 @@ package org.jvnet.jaxb2_commons.reflection.util;
 
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
-
-import org.apache.commons.lang3.Validate;
+import java.util.Objects;
 
 public class FieldAccessor<T> implements Accessor<T> {
 
@@ -43,7 +42,7 @@ public class FieldAccessor<T> implements Accessor<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public T get(Object target) {
-		Validate.notNull(target);
+		Objects.requireNonNull(target, "Target object must not be null.");
 		try {
 			return (T) field.get(target);
 		} catch (IllegalAccessException iaex) {
@@ -53,7 +52,7 @@ public class FieldAccessor<T> implements Accessor<T> {
 
 	@Override
 	public void set(Object target, T value) {
-		Validate.notNull(target);
+		Objects.requireNonNull(target, "Target object must not be null.");
 		try {
 			this.field.set(target, value);
 		} catch (IllegalAccessException iaex) {

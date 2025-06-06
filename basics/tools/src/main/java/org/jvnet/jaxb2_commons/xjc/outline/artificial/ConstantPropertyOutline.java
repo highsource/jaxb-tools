@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.xjc.outline.artificial;
 
-import org.apache.commons.lang3.Validate;
+import java.util.Objects;
 import org.jvnet.jaxb2_commons.xjc.outline.MClassOutline;
 import org.jvnet.jaxb2_commons.xjc.outline.MPropertyAccessor;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
@@ -24,7 +24,7 @@ public abstract class ConstantPropertyOutline extends AbstractPropertyOutline {
 	public ConstantPropertyOutline(Outline outline, MClassOutline classOutline,
 			MPropertyInfo<NType, NClass> target, final JExpression value) {
 		super(outline, classOutline, target);
-		Validate.notNull(value);
+		Objects.requireNonNull(value, "Value expression must not be null.");
 		this.value = value;
 		this.field = generateField();
 	}

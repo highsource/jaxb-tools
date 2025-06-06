@@ -3,8 +3,7 @@ package org.jvnet.jaxb2_commons.xjc.outline.concrete;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.apache.commons.lang3.Validate;
+import java.util.Objects;
 import org.jvnet.jaxb2_commons.xjc.outline.MEnumConstantOutline;
 import org.jvnet.jaxb2_commons.xjc.outline.MEnumOutline;
 import org.jvnet.jaxb2_commons.xjc.outline.MModelOutline;
@@ -28,10 +27,10 @@ public class CMEnumOutline implements MEnumOutline {
 
 	public CMEnumOutline(MModelOutline parent, MPackageOutline packageOutline,
 			MEnumLeafInfo<NType, NClass> target, JDefinedClass code) {
-		Validate.notNull(parent);
-		Validate.notNull(packageOutline);
-		Validate.notNull(target);
-		Validate.notNull(code);
+		Objects.requireNonNull(parent, "Model outline parent must not be null.");
+		Objects.requireNonNull(packageOutline, "Package outline must not be null.");
+		Objects.requireNonNull(target, "Enum leaf info target must not be null.");
+		Objects.requireNonNull(code, "Code must not be null.");
 		this.parent = parent;
 		this.packageOutline = packageOutline;
 		this.target = target;
@@ -59,8 +58,10 @@ public class CMEnumOutline implements MEnumOutline {
 	}
 
 	public void addEnumConstantOutline(MEnumConstantOutline enumConstantOutline) {
-		Validate.notNull(enumConstantOutline);
-		Validate.isTrue(enumConstantOutline.getEnumOutline() == this);
+		Objects.requireNonNull(enumConstantOutline, "Enum constant outline must not be null.");
+		if (enumConstantOutline.getEnumOutline() != this) {
+			throw new IllegalArgumentException("Enum constant outline must belong to this enum outline.");
+		}
 		this.enumConstantOutlines.add(enumConstantOutline);
 	}
 

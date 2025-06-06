@@ -1,6 +1,6 @@
 package org.jvnet.jaxb2_commons.xjc.outline.concrete;
 
-import org.apache.commons.lang3.Validate;
+import java.util.Objects;
 import org.jvnet.jaxb2_commons.xjc.outline.MClassOutline;
 import org.jvnet.jaxb2_commons.xjc.outline.MPropertyAccessor;
 import org.jvnet.jaxb2_commons.xjc.outline.MPropertyAccessorFactory;
@@ -22,9 +22,9 @@ public class CMPropertyOutline implements MPropertyOutline {
 	public CMPropertyOutline(MClassOutline classOutline,
 			MPropertyInfo<NType, NClass> target,
 			MPropertyAccessorFactory propertyAccessorFactory) {
-		Validate.notNull(classOutline);
-		Validate.notNull(target);
-		Validate.notNull(propertyAccessorFactory);
+		Objects.requireNonNull(classOutline, "Class outline must not be null.");
+		Objects.requireNonNull(target, "Property info target must not be null.");
+		Objects.requireNonNull(propertyAccessorFactory, "Property accessor factory must not be null.");
 		this.classOutline = classOutline;
 		this.target = target;
 		this.propertyAccessorFactory = propertyAccessorFactory;

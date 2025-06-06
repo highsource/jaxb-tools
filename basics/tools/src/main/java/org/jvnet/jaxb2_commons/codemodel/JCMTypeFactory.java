@@ -1,8 +1,7 @@
 package org.jvnet.jaxb2_commons.codemodel;
 
 import java.text.MessageFormat;
-
-import org.apache.commons.lang3.Validate;
+import java.util.Objects;
 
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JNullType;
@@ -15,9 +14,11 @@ public class JCMTypeFactory {
 	public static final JCMTypeFactory INSTANCE = new JCMTypeFactory();
 
 	public <JT extends JType> JCMType<JT> create(JT type) {
-		Validate.notNull(type);
+		Objects.requireNonNull(type, "Type must not be null.");
 		if (type.isArray()) {
-			Validate.isInstanceOf(JClass.class, type);
+			if (!(type instanceof JClass)) {
+				throw new IllegalArgumentException("Array type must be an instance of JClass.");
+			}
 			@SuppressWarnings("unchecked")
 			final JCMType<JT> result = (JCMType<JT>) new JCMArrayClass(this,
 					(JClass) type);

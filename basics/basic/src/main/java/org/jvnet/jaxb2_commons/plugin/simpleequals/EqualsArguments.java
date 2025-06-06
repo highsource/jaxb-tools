@@ -2,8 +2,8 @@ package org.jvnet.jaxb2_commons.plugin.simpleequals;
 
 import java.util.Collection;
 import java.util.ListIterator;
+import java.util.Objects;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb2_commons.plugin.codegenerator.Arguments;
 
 import com.sun.codemodel.JBlock;
@@ -28,11 +28,11 @@ public class EqualsArguments implements Arguments<EqualsArguments> {
 	public EqualsArguments(JCodeModel codeModel, JVar leftValue,
 			JExpression leftHasSetValue, JVar rightValue,
 			JExpression rightHasSetValue) {
-		this.codeModel = Validate.notNull(codeModel);
-		this.leftValue = Validate.notNull(leftValue);
-		this.leftHasSetValue = Validate.notNull(leftHasSetValue);
-		this.rightValue = Validate.notNull(rightValue);
-		this.rightHasSetValue = Validate.notNull(rightHasSetValue);
+		this.codeModel = Objects.requireNonNull(codeModel, "codeModel must not be null.");
+		this.leftValue = Objects.requireNonNull(leftValue, "leftValue must not be null.");
+		this.leftHasSetValue = Objects.requireNonNull(leftHasSetValue, "leftHasSetValue must not be null.");
+		this.rightValue = Objects.requireNonNull(rightValue, "rightValue must not be null.");
+		this.rightHasSetValue = Objects.requireNonNull(rightHasSetValue, "rightHasSetValue must not be null.");
 	}
 
 	private JCodeModel getCodeModel() {

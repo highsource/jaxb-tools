@@ -1,16 +1,17 @@
 package org.jvnet.hyperjaxb3.jaxb2_commons.lang;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Mergeable;
 import org.jvnet.jaxb2_commons.lang.MergeStrategy2;
 import org.jvnet.jaxb2_commons.locator.ObjectLocator;
+
+import java.util.Objects;
 
 public class MergeableMergeStrategy implements MergeStrategy2 {
 
 	private final MergeStrategy2 mergeStrategy;
 
 	public MergeableMergeStrategy(MergeStrategy2 mergeStrategy) {
-		Validate.notNull(mergeStrategy);
+        Objects.requireNonNull(mergeStrategy, "Merge strategy must not be null.");
 		this.mergeStrategy = mergeStrategy;
 	}
 

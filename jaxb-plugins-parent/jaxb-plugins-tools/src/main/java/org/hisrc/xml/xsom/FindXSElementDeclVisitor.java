@@ -2,8 +2,7 @@ package org.hisrc.xml.xsom;
 
 import javax.xml.namespace.QName;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.Validate;
+import java.util.Objects;
 
 import com.sun.xml.xsom.XSAnnotation;
 import com.sun.xml.xsom.XSAttGroupDecl;
@@ -23,6 +22,7 @@ import com.sun.xml.xsom.XSSimpleType;
 import com.sun.xml.xsom.XSWildcard;
 import com.sun.xml.xsom.XSXPath;
 import com.sun.xml.xsom.visitor.XSVisitor;
+import org.jvnet.jaxb.lang.StringUtils;
 
 public class FindXSElementDeclVisitor implements XSVisitor {
 
@@ -31,7 +31,7 @@ public class FindXSElementDeclVisitor implements XSVisitor {
 	private XSElementDecl elementDecl = null;
 
 	public FindXSElementDeclVisitor(final QName name) {
-		Validate.notNull(name);
+		Objects.requireNonNull(name, "QName must not be null.");
 		this.name = name;
 	}
 

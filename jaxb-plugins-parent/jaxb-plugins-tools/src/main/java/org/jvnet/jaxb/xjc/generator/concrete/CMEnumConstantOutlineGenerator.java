@@ -1,6 +1,6 @@
 package org.jvnet.jaxb.xjc.generator.concrete;
 
-import org.apache.commons.lang3.Validate;
+import java.util.Objects;
 import org.jvnet.jaxb.xjc.generator.MEnumConstantOutlineGenerator;
 import org.jvnet.jaxb.xjc.outline.MEnumConstantOutline;
 import org.jvnet.jaxb.xjc.outline.MEnumOutline;
@@ -24,8 +24,8 @@ public class CMEnumConstantOutlineGenerator implements
 
 	public CMEnumConstantOutlineGenerator(Outline outline,
 			CEnumConstant enumConstant) {
-		Validate.notNull(outline);
-		Validate.notNull(enumConstant);
+		Objects.requireNonNull(outline, "Outline must not be null.");
+		Objects.requireNonNull(enumConstant, "Enum constant must not be null.");
 		this.outline = outline;
 		this.enumConstant = enumConstant;
 	}

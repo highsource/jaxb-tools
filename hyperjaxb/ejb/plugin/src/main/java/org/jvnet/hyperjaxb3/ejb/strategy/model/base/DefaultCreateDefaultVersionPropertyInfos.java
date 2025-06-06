@@ -2,11 +2,11 @@ package org.jvnet.hyperjaxb3.ejb.strategy.model.base;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 
 import jakarta.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
-import org.apache.commons.lang3.Validate;
 import org.jvnet.jaxb.annox.util.ClassUtils;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Customizations;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.GeneratedVersion;
@@ -76,8 +76,10 @@ public class DefaultCreateDefaultVersionPropertyInfos implements
 	public String getPropertyName(ProcessModel context,
 			GeneratedVersion cversion) {
 		final String name = cversion.getName();
-		Validate.notEmpty(name,
-				"The hj:version/@name attribute must not be empty.");
+        Objects.requireNonNull(name, "The hj:version/@name attribute must not be null." );
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("The hj:version/@name attribute must not be empty.");
+        }
 		return name;
 	}
 
@@ -90,10 +92,12 @@ public class DefaultCreateDefaultVersionPropertyInfos implements
 	public CNonElement getPropertyTypeInfo(ProcessModel context,
 			GeneratedVersion cversion) {
 		final String javaType = cversion.getJavaType();
-		Validate.notEmpty(javaType,
-				"The hj:version/@javaType attribute must not be empty.");
+        Objects.requireNonNull(javaType, "The hj:version/@javaType attribute must not be null." );
+        if (javaType.isEmpty()) {
+            throw new IllegalArgumentException("The hj:version/@javaType attribute must not be empty.");
+        }
 		final QName schemaType = cversion.getSchemaType();
-		Validate.notNull(schemaType,
+		Objects.requireNonNull(schemaType,
 				"The hj:version/@schemaType attribute must not be null.");
 		try {
 			final Class<?> theClass = ClassUtils.forName(javaType);

@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import org.apache.commons.lang3.Validate;
+import java.util.Objects;
 import org.jvnet.jaxb.xjc.outline.MClassOutline;
 import org.jvnet.jaxb.xjc.outline.MElementOutline;
 import org.jvnet.jaxb.xjc.outline.MEnumOutline;
@@ -40,8 +39,8 @@ public class CMPackageOutline implements MPackageOutline {
 
 	public CMPackageOutline(MModelOutline parent, MPackageInfo target,
 			PackageOutline packageOutline) {
-		Validate.notNull(parent);
-		Validate.notNull(target);
+		Objects.requireNonNull(parent, "Model outline parent must not be null.");
+		Objects.requireNonNull(target, "Package info target must not be null.");
 		this.parent = parent;
 		this.target = target;
 		this.code = packageOutline._package();
@@ -70,8 +69,10 @@ public class CMPackageOutline implements MPackageOutline {
 	}
 
 	public void addClassOutline(MClassOutline classOutline) {
-		Validate.notNull(classOutline);
-		Validate.isTrue(classOutline.getPackageOutline() == this);
+		Objects.requireNonNull(classOutline, "Class outline must not be null.");
+		if (classOutline.getPackageOutline() != this) {
+			throw new IllegalArgumentException("Class outline must belong to this package outline.");
+		}
 		this.classOutlines.add(classOutline);
 	}
 
@@ -80,8 +81,10 @@ public class CMPackageOutline implements MPackageOutline {
 	}
 
 	public void addElementOutline(MElementOutline elementOutline) {
-		Validate.notNull(elementOutline);
-		Validate.isTrue(elementOutline.getPackageOutline() == this);
+		Objects.requireNonNull(elementOutline, "Element outline must not be null.");
+		if (elementOutline.getPackageOutline() != this) {
+			throw new IllegalArgumentException("Element outline must belong to this package outline.");
+		}
 		this.elementOutlines.add(elementOutline);
 	}
 
@@ -90,8 +93,10 @@ public class CMPackageOutline implements MPackageOutline {
 	}
 
 	public void addEnumOutline(MEnumOutline enumOutline) {
-		Validate.notNull(enumOutline);
-		Validate.isTrue(enumOutline.getPackageOutline() == this);
+		Objects.requireNonNull(enumOutline, "Enum outline must not be null.");
+		if (enumOutline.getPackageOutline() != this) {
+			throw new IllegalArgumentException("Enum outline must belong to this package outline.");
+		}
 		this.enumOutlines.add(enumOutline);
 	}
 }

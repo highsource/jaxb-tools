@@ -6,10 +6,10 @@ import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.xml.namespace.QName;
 
-import org.apache.commons.lang3.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jvnet.hyperjaxb3.ejb.schemas.customizations.Basic;
@@ -149,7 +149,7 @@ public class DefaultCustomizing implements Customizing {
 				final T t = (T) CustomizationUtils.unmarshall(
 						Customizations.getContext(), customization);
 				if (defaultValue != null) {
-					Validate.notNull(merge);
+					Objects.requireNonNull(merge, "merge should not be null.");
 					merge.merge(t, defaultValue);
 				}
 				this.customizationsMap.put(customization, t);
@@ -513,8 +513,8 @@ public class DefaultCustomizing implements Customizing {
 
 	public SingleProperty getDefaultSingleProperty(Persistence persistence,
 			QName typeName) {
-		Validate.notNull(persistence);
-		Validate.notNull(typeName);
+		Objects.requireNonNull(persistence, "Persistence must not be null.");
+		Objects.requireNonNull(typeName, "Type name must not be null.");
 		for (final SingleProperty property : persistence
 				.getDefaultSingleProperty()) {
 			if (typeName.equals(property.getType())) {
@@ -526,8 +526,8 @@ public class DefaultCustomizing implements Customizing {
 
 	public CollectionProperty getDefaultCollectionProperty(
 			Persistence persistence, QName typeName) {
-		Validate.notNull(persistence);
-		Validate.notNull(typeName);
+        Objects.requireNonNull(persistence, "Persistence must not be null.");
+        Objects.requireNonNull(typeName, "Type name must not be null.");
 		for (final CollectionProperty property : persistence
 				.getDefaultCollectionProperty()) {
 			if (typeName.equals(property.getType())) {

@@ -13,7 +13,6 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.Validate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jvnet.hyperjaxb3.ejb.strategy.ignoring.Ignoring;
@@ -104,8 +103,7 @@ public class DefaultNaming implements Naming {
 	}
 
 	public String getName(Mapping context, final String draftName) {
-
-		Validate.notNull(draftName, "Name must not be null.");
+        Objects.requireNonNull(draftName, "Name must not be null.");
 		// final String name = draftName.replace('$', '_').toUpperCase();
 		String intermediateName = draftName.replace('$', '_');
 		final Matcher camelCaseMatcher = camelCasePattern

@@ -4,7 +4,7 @@ import jakarta.xml.bind.annotation.XmlAnyAttribute;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlValue;
 
-import org.apache.commons.lang3.Validate;
+import java.util.Objects;
 import org.jvnet.jaxb.xml.bind.model.MAnyAttributePropertyInfo;
 import org.jvnet.jaxb.xml.bind.model.MAnyElementPropertyInfo;
 import org.jvnet.jaxb.xml.bind.model.MAttributePropertyInfo;
@@ -26,7 +26,7 @@ public class AnnotatePropertyVisitor implements
 	private final JAnnotatable annotatable;
 
 	public AnnotatePropertyVisitor(final JAnnotatable annotatable) {
-		Validate.notNull(annotatable);
+		Objects.requireNonNull(annotatable, "Annotatable must not be null.");
 		this.annotatable = annotatable;
 	}
 

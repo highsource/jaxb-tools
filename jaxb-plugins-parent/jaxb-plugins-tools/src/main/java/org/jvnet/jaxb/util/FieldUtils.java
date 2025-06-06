@@ -2,11 +2,10 @@ package org.jvnet.jaxb.util;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.xml.namespace.QName;
-
-import org.apache.commons.lang3.Validate;
 
 import com.sun.codemodel.JType;
 import com.sun.tools.xjc.generator.bean.ClassOutlineImpl;
@@ -175,7 +174,7 @@ public class FieldUtils {
 
 	public static Set<JType> getPossibleTypes(FieldOutline fieldOutline,
 			Aspect aspect) {
-		Validate.notNull(fieldOutline);
+		Objects.requireNonNull(fieldOutline, "Field outline must not be null.");
 		final ClassOutline classOutline = fieldOutline.parent();
 		final Outline outline = classOutline.parent();
 		final CPropertyInfo propertyInfo = fieldOutline.getPropertyInfo();

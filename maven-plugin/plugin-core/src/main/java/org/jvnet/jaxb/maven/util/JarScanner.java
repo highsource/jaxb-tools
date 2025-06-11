@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -54,8 +55,8 @@ public class JarScanner extends AbstractScanner {
             while (jarFileEntries.hasMoreElements()) {
                 JarEntry entry = jarFileEntries.nextElement();
                 String name = entry.getName();
-                File file = new File(destinationDir, name);
-                if ((name != null && name.startsWith("..")) || !file.toPath().normalize().startsWith(destinationDir.toPath())) {
+                Path destinationPath = destinationDir.toPath().resolve(name).normalize();
+                if ((name != null && name.startsWith("..")) || !destinationPath.startsWith(destinationDir.toPath())) {
                     throw new IOException("Bad zip entry for " + entry.getName());
                 }
                 char[][] tokenizedName = tokenizePathToCharArray(name, File.separator);

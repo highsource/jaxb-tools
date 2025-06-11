@@ -8,53 +8,45 @@ on:
 
 jobs:
   build_and_test:
-
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        java: [ '11', '17', '21' ]
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
+    - uses: actions/checkout@v4
+    - name: Setup JDK ${{ matrix.java }}
+      uses: actions/setup-java@v4
       with:
-        java-version: 11
+        java-version: ${{ matrix.java }}
         distribution: 'temurin'
-
-    - name: Maven with JDK 11
+    - name: Maven with JDK ${{ matrix.java }}
       run: mvn -Pall -no-transfer-progress clean install
-
-    - name: Maven with JDK 11 - Parallel
+    - name: Maven with JDK ${{ matrix.java }} - Parallel
       run: mvn -T4 -Pall -no-transfer-progress clean install
-
-    - name: Maven with JDK 11 - Release dry run
+    - name: Maven with JDK ${{ matrix.java }} - Release dry run
       run: mvn -Prelease-dry-run,sonatype-oss-release,release -DperformRelease -DdryRun=true -Darguments="-Dgpg.skip=true" -B release:clean release:prepare clean install
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
+  build_and_test_mvn4:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '17', '21' ]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Maven4
+      run: |
+        MAVEN_VERSION=4.0.0-rc-3
+        wget https://archive.apache.org/dist/maven/maven-4/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz
+        tar xzvf apache-maven-$MAVEN_VERSION-bin.tar.gz
+        sudo mv apache-maven-$MAVEN_VERSION /opt/maven
+        sudo rm -f /usr/bin/mvn # Remove existing symbolic link if it exists
+        sudo ln -s /opt/maven/bin/mvn /usr/bin/mvn  # Create new symbolic link
+    - name: Setup JDK ${{ matrix.java }}
+      uses: actions/setup-java@v4
       with:
-        java-version: 17
+        java-version: ${{ matrix.java }}
         distribution: 'temurin'
-
-    - name: Maven with JDK 17
+    - name: Maven4 with JDK ${{ matrix.java }}
       run: mvn -Pall -no-transfer-progress clean install
-
-    - name: Maven with JDK 17 - Parallel
+    - name: Maven4 with JDK ${{ matrix.java }} - Parallel
       run: mvn -T4 -Pall -no-transfer-progress clean install
-
-    - name: Maven with JDK 17 - Release dry run
-      run: mvn -Prelease-dry-run,sonatype-oss-release,release -DperformRelease -DdryRun=true -Darguments="-Dgpg.skip=true" -B release:clean release:prepare clean install
-
-    - name: Set up JDK 21
-      uses: actions/setup-java@v3
-      with:
-        java-version: 21-ea
-        distribution: 'temurin'
-
-    - name: Maven with JDK 21 
-      run: mvn -Pall -no-transfer-progress  clean install
-
-    - name: Maven with JDK 21 - Parallel
-      run: mvn -T4 -Pall -no-transfer-progress  clean install
-
-    - name: Maven with JDK 21 - Release dry run
-      run: mvn -Prelease-dry-run,sonatype-oss-release,release -DperformRelease -DdryRun=true -Darguments="-Dgpg.skip=true" -B release:clean release:prepare clean install
- 

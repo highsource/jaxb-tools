@@ -21,6 +21,8 @@ jobs:
         distribution: 'temurin'
     - name: Maven with JDK ${{ matrix.java }}
       run: mvn -Pall -no-transfer-progress clean install
+    - name: Maven with JDK ${{ matrix.java }} - Reproducible
+      run: mvn -Pall -no-transfer-progress clean verify artifact:compare
     - name: Maven with JDK ${{ matrix.java }} - Parallel
       run: mvn -T4 -Pall -no-transfer-progress clean install
     - name: Maven with JDK ${{ matrix.java }} - Release dry run
@@ -48,5 +50,7 @@ jobs:
         distribution: 'temurin'
     - name: Maven4 with JDK ${{ matrix.java }}
       run: mvn -Pall -no-transfer-progress clean install
+    - name: Maven4 with JDK ${{ matrix.java }} - Reproducible
+      run: mvn -Pall -no-transfer-progress clean verify artifact:compare
     - name: Maven4 with JDK ${{ matrix.java }} - Parallel
       run: mvn -T4 -Pall -no-transfer-progress clean install

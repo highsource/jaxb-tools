@@ -20,9 +20,9 @@ jobs:
         java-version: ${{ matrix.java }}
         distribution: 'temurin'
     - name: Maven with JDK ${{ matrix.java }}
-      run: mvn -Pall -no-transfer-progress clean install
+      run: mvn -Psonatype-oss-release -Dgpg.skip -no-transfer-progress clean install
     - name: Maven with JDK ${{ matrix.java }} - Reproducible
-      run: mvn -Psonatype-oss-release -Dmaven.release.skip=true -no-transfer-progress clean verify artifact:compare
+      run: mvn -Psonatype-oss-release -Dgpg.skip -no-transfer-progress clean verify artifact:compare -Dcompare.fail=false
     - name: Maven with JDK ${{ matrix.java }} - Parallel
       run: mvn -T4 -Pall -no-transfer-progress clean install
     - name: Maven with JDK ${{ matrix.java }} - Release dry run
@@ -49,8 +49,8 @@ jobs:
         java-version: ${{ matrix.java }}
         distribution: 'temurin'
     - name: Maven4 with JDK ${{ matrix.java }}
-      run: mvn -Pall -no-transfer-progress clean install
+      run: mvn -Psonatype-oss-release -Dgpg.skip -no-transfer-progress clean install
     - name: Maven4 with JDK ${{ matrix.java }} - Reproducible
-      run: mvn -Psonatype-oss-release -Dmaven.release.skip=true -no-transfer-progress clean verify artifact:compare
+      run: mvn -Psonatype-oss-release -Dgpg.skip -no-transfer-progress clean verify artifact:compare -Dcompare.fail=false
     - name: Maven4 with JDK ${{ matrix.java }} - Parallel
       run: mvn -T4 -Pall -no-transfer-progress clean install

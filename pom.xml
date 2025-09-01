@@ -95,7 +95,7 @@
     <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
     <maven-war-plugin.version>3.4.0</maven-war-plugin.version>
     <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
-    <maven-nexus-staging-maven-plugin.version>1.6.8</maven-nexus-staging-maven-plugin.version>
+    <maven-central-publishing-maven-plugin.version>0.8.0</maven-central-publishing-maven-plugin.version>
     <maven-release-plugin.version>3.0.0-M7</maven-release-plugin.version>
     <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
     <maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
@@ -164,15 +164,13 @@
             </configuration>
           </plugin>
           <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>${maven-nexus-staging-maven-plugin.version}</version>
-            <extensions>true</extensions>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>${maven-central-publishing-maven-plugin.version}</version>
             <configuration>
-              <serverId>jakarta-oss-sonatype-staging</serverId>
-              <nexusUrl>https://jakarta.oss.sonatype.org/</nexusUrl>
-              <autoReleaseAfterClose>false</autoReleaseAfterClose>
-              <stagingProgressTimeoutMinutes>30</stagingProgressTimeoutMinutes>
+              <publishingServerId>ossrh-central</publishingServerId>
+              <deploymentName>jaxb-tools-${project.version}</deploymentName>
+              <waitUntil>uploaded</waitUntil>
             </configuration>
           </plugin>
         </plugins>
@@ -594,6 +592,7 @@
           <configuration>
             <source>${jdk.version}</source>
             <target>${jdk.version}</target>
+            <release>${jdk.version}</release>
           </configuration>
         </plugin>
         <plugin>

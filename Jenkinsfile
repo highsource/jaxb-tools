@@ -105,9 +105,9 @@ pipeline {
             steps {
                 script {
                     if (!params.ReleaseVersion.isEmpty() && !params.NextSnapshotVersion.isEmpty()) {
-                        sh "mvn -Pall,release-dry-run -B -DdryRun=true -DreleaseVersion=${params.ReleaseVersion} -DdevelopmentVersion=${params.NextSnapshotVersion} release:prepare release:perform"
+                        sh "mvn -Psonatype-oss-release,release,release-dry-run -B -DdryRun=true -DreleaseVersion=${params.ReleaseVersion} -DdevelopmentVersion=${params.NextSnapshotVersion} release:prepare release:perform"
                     } else {
-                        sh "mvn -Pall,release-dry-run -B -DdryRun=true release:prepare release:perform"
+                        sh "mvn -Psonatype-oss-release,release,release-dry-run -B -DdryRun=true release:prepare release:perform"
                     }
                 }
             }

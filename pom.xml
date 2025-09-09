@@ -117,6 +117,7 @@
     </profile>
     <profile>
       <id>sonatype-oss-release</id>
+      <distributionManagement />
       <build>
         <plugins>
           <plugin>
@@ -152,6 +153,13 @@
                 </goals>
               </execution>
             </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <version>${maven-deploy-plugin.version}</version>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
           </plugin>
           <plugin>
             <artifactId>maven-release-plugin</artifactId>
@@ -221,12 +229,12 @@
   </profiles>
   <distributionManagement>
     <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://jakarta.oss.sonatype.org/content/repositories/snapshots</url>
+      <id>ossrh-central</id>
+      <url>https://central.sonatype.com/repository/maven-snapshots/</url>
     </snapshotRepository>
     <repository>
-      <id>ossrh</id>
-      <url>https://jakarta.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      <id>ossrh-central</id>
+      <url>https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/</url>
     </repository>
   </distributionManagement>
   <dependencies>

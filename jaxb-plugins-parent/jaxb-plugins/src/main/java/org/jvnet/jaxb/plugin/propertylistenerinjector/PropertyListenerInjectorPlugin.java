@@ -23,6 +23,7 @@ import org.xml.sax.ErrorHandler;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.beans.VetoableChangeSupport;
 import java.lang.reflect.Method;
@@ -80,10 +81,10 @@ public class PropertyListenerInjectorPlugin extends Plugin {
                 interfaceName = globalInterfaceSetting;
             }
             if (VetoableChangeListener.class.getName().equals(interfaceName)) {
-                addSupport(VetoableChangeListener.class, VetoableChangeSupport.class, co);
+                addSupport(VetoableChangeListener.class, VetoableChangeSupport.class, co, "fireVetoableChange", PropertyVetoException.class);
             }
             if (PropertyChangeListener.class.getName().equals(interfaceName)) {
-                addSupport(PropertyChangeListener.class, PropertyChangeSupport.class, co);
+                addSupport(PropertyChangeListener.class, PropertyChangeSupport.class, co, "firePropertyChange", null);
             }
 
         }
@@ -91,7 +92,7 @@ public class PropertyListenerInjectorPlugin extends Plugin {
         return true;
     }
 
-    private void addSupport(Class listener, Class support, ClassOutline classOutline) {
+    private void addSupport(Class listener, Class support, ClassOutline classOutline, String methodName, Class exceptionSetter) {
 
         JDefinedClass target = classOutline.implClass;
         // add the support field.
@@ -145,16 +146,22 @@ public class PropertyListenerInjectorPlugin extends Plugin {
                 if (field != null) {
                     /*
                      *         String oldValue = this.value;
-                     *         this.value = newValue;
+                     *  // if VetoableChangeSupport
+                     *         this.pcs.fireVetoableChange("value", oldValue, newValue);
+                     *  // else if PropertyChangeSupport
                      *         this.pcs.firePropertyChange("value", oldValue, newValue);
+                     *  // end of setter
+                     *         this.value = newValue;
                      */
                     setter.body().pos(0);
+                    if (exceptionSetter != null) {
+                        setter._throws(exceptionSetter);
+                    }
 
                     final JVar oldPropertyValue = setter.body().decl(JMod.FINAL,
                         rawType, "old" + publicName,
                         field);
-                    setter.body().pos(setter.body().getContents().size());
-                    setter.body().add(fieldSupport.invoke("firePropertyChange").arg(privateName).arg(oldPropertyValue).arg(field));
+                    setter.body().add(fieldSupport.invoke(methodName).arg(privateName).arg(oldPropertyValue).arg(setter.params().get(0)));
                 }
             }
         }

@@ -108,6 +108,8 @@
     <cxf-codegen-plugin.version>4.0.2</cxf-codegen-plugin.version>
     <editorconfig-maven-plugin.version>0.1.3</editorconfig-maven-plugin.version>
 
+    <!-- enable failOnError for javadoc generation -->
+    <maven-javadoc-fail-on-error>true</maven-javadoc-fail-on-error>
     <!-- enable maven-antrun by default -->
     <maven-antrun-plugin.skip>false</maven-antrun-plugin.skip>
   </properties>
@@ -645,6 +647,9 @@
         <plugin>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>${maven-javadoc-plugin.version}</version>
+          <configuration>
+            <failOnError>${maven-javadoc-fail-on-error}</failOnError>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-release-plugin</artifactId>

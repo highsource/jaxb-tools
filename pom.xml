@@ -107,6 +107,9 @@
     <cxf-xjc-runtime.version>4.0.0</cxf-xjc-runtime.version>
     <cxf-codegen-plugin.version>4.0.2</cxf-codegen-plugin.version>
     <editorconfig-maven-plugin.version>0.1.3</editorconfig-maven-plugin.version>
+
+    <!-- enable maven-antrun by default -->
+    <maven-antrun-plugin.skip>false</maven-antrun-plugin.skip>
   </properties>
   <profiles>
     <profile>
@@ -118,6 +121,10 @@
     <profile>
       <id>sonatype-oss-release</id>
       <distributionManagement />
+      <properties>
+        <!-- disable maven-antrun on release process -->
+        <maven-antrun-plugin.skip>true</maven-antrun-plugin.skip>
+      </properties>
       <build>
         <plugins>
           <plugin>
@@ -586,6 +593,9 @@
               <version>${junit5.version}</version>
             </dependency>
           </dependencies>
+          <configuration>
+            <skip>${maven-antrun-plugin.skip}</skip>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-assembly-plugin</artifactId>

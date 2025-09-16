@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jvnet.jaxb</groupId>
   <artifactId>jaxb-tools-project</artifactId>
-  <version>4.0.11-SNAPSHOT</version>
+  <version>4.0.11</version>
   <packaging>pom</packaging>
   <name>JAXB Tools :: Project</name>
   <description>JAXB tools work with generate Java sources and XML Schemas.</description>
@@ -19,7 +19,7 @@
   <scm>
     <connection>scm:git:https://github.com/highsource/jaxb-tools.git</connection>
     <url>https://github.com/highsource/jaxb-tools</url>
-    <tag>${project.version}</tag>
+    <tag>4.0.11</tag>
   </scm>
   <developers>
     <developer>
@@ -58,7 +58,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <jdk.version>11</jdk.version>
-    <project.build.outputTimestamp>2025-09-09T19:38:41Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2025-09-16T13:25:06Z</project.build.outputTimestamp>
 
     <!-- used by maven-plugin prerequisites -->
     <maven.minimal.version>3.1.0</maven.minimal.version>
@@ -216,6 +216,12 @@
     </profile>
     <profile>
       <id>release-dry-run</id>
+      <activation>
+        <property>
+          <name>dryRun</name>
+          <value>true</value>
+        </property>
+      </activation>
       <build>
         <plugins>
           <plugin>

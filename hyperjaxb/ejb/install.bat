@@ -1,1 +1,0 @@
-mvn -P samples,templates,tests clean install

@@ -147,6 +147,8 @@ JAXB Basics can only be used with JAXB/XJC 4.x.
 * [Xml ElementWrapper Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB-XML-ElementWrapper-Plugin) - generates `jakarta.xml.bind.annotation.XmlElementWrapper` annotation to simplify generated structure.
 * [Parent Pointer Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB-Parent-Pointer-Plugin) - generates getter in child elements to get the parent object (depends on `jaxb-plugins-runtime`)
 * [Property Listener Injector Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB-Property-Listener-Injector-Plugin) - adds methods in order to configure the generation of events on each `setXXX` method
+* [NoSetter Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB-NoBean-Plugin) - Removes setter methods (`setXXX`) from generated classes
+* [NoGetter Plugin](https://github.com/highsource/jaxb-tools/wiki/JAXB-NoBean-Plugin) - Removes getter methods (`getXXX` and `isXXX`) from generated classes
 
 ## Credits
 

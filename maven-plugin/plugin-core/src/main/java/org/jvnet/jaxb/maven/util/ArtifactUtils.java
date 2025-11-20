@@ -66,6 +66,7 @@ public class ArtifactUtils {
 
         ArtifactResolutionRequest request = new ArtifactResolutionRequest();
         request.setResolveTransitively(true);
+        request.setManagedVersionMap(Collections.emptyMap());
         request.setResolveRoot(false);
         request.setArtifact(project.getArtifact());
         request.setArtifactDependencies(artifacts);

@@ -55,7 +55,7 @@ public class JAXBEqualsStrategy extends DefaultEqualsStrategy {
 				left.getName(), right.getName()) &&
 		//
 				equals(property(leftLocator, "value", left.getValue()),
-						property(rightLocator, "name", right.getValue()),
+						property(rightLocator, "value", right.getValue()),
 						left.getValue(), right.getValue());
 	}
 

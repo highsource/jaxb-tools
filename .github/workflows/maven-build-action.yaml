@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '8', '11', '17', '21' ]
+        java: [ '8', '11', '17', '21', '25' ]
     steps:
     - uses: actions/checkout@v4
     - name: Setup JDK ${{ matrix.java }}
@@ -37,12 +37,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '17', '21' ]
+        java: [ '17', '21', '25' ]
     steps:
     - uses: actions/checkout@v4
     - name: Setup Maven4
       run: |
-        MAVEN_VERSION=4.0.0-rc-3
+        MAVEN_VERSION=4.0.0-rc-5
         wget https://archive.apache.org/dist/maven/maven-4/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz
         tar xzvf apache-maven-$MAVEN_VERSION-bin.tar.gz
         sudo mv apache-maven-$MAVEN_VERSION /opt/maven

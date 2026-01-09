@@ -23,7 +23,7 @@ jobs:
       run: mvn -Psonatype-oss-release -Dgpg.skip -no-transfer-progress clean install
     - name: Maven with JDK ${{ matrix.java }} - Reproducible
       run: mvn -Psonatype-oss-release -Dgpg.skip -no-transfer-progress clean verify artifact:compare -Dcompare.fail=false
-    - name: Maven with JDK ${{ matrix.java }} - Parallel
+    - name: Maven with JDK ${{ matrix.java }} - All w/ Parallel
       run: mvn -T4 -Pall -no-transfer-progress clean install
     - name: Maven with JDK ${{ matrix.java }} - Release dry run
       run: mvn -Prelease-dry-run,sonatype-oss-release,release -DperformRelease -DdryRun=true -Darguments="-Dgpg.skip=true" -B release:clean release:prepare clean install
@@ -47,17 +47,23 @@ jobs:
         MAVEN_VERSION=4.0.0-rc-5
         wget https://archive.apache.org/dist/maven/maven-4/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz
         tar xzvf apache-maven-$MAVEN_VERSION-bin.tar.gz
-        sudo mv apache-maven-$MAVEN_VERSION /opt/maven
-        sudo rm -f /usr/bin/mvn # Remove existing symbolic link if it exists
-        sudo ln -s /opt/maven/bin/mvn /usr/bin/mvn  # Create new symbolic link
+        sudo mv apache-maven-$MAVEN_VERSION /opt/maven4
+        sudo ln -s /opt/maven4/bin/mvn /usr/bin/mvn4  # Create new symbolic link
     - name: Setup JDK ${{ matrix.java }}
       uses: actions/setup-java@v4
       with:
         java-version: ${{ matrix.java }}
         distribution: 'temurin'
     - name: Maven4 with JDK ${{ matrix.java }}
-      run: mvn -Psonatype-oss-release -Dgpg.skip -no-transfer-progress clean install
+      run: mvn4 -Psonatype-oss-release -Dgpg.skip -no-transfer-progress clean install
     - name: Maven4 with JDK ${{ matrix.java }} - Reproducible
-      run: mvn -Psonatype-oss-release -Dgpg.skip -no-transfer-progress clean verify artifact:compare -Dcompare.fail=false
-    - name: Maven4 with JDK ${{ matrix.java }} - Parallel
-      run: mvn -T4 -Pall -no-transfer-progress clean install
+      run: mvn4 -Psonatype-oss-release -Dgpg.skip -no-transfer-progress clean verify artifact:compare -Dcompare.fail=false
+    - name: Maven4 with JDK ${{ matrix.java }} - All w/ Parallel
+      run: mvn4 -T4 -Pall -no-transfer-progress clean install
+    - name: Upload results to path
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: results-m4
+        path: ${{ github.workspace }}/**/*.log
+        if-no-files-found: ignore

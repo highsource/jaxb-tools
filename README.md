@@ -1,6 +1,6 @@
 # JAXB Tools
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.jvnet.jaxb/jaxb-tools-project/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.jvnet.jaxb/jaxb-tools-project/)
+[![Maven Central](https://maven-badges.sml.io/maven-central/org.jvnet.jaxb/jaxb-tools-project/badge.svg)](https://maven-badges.sml.io/maven-central/org.jvnet.jaxb/jaxb-tools-project/)
 [![GitHub Actions Status](https://github.com/highsource/jaxb-tools/workflows/Maven%20CI/badge.svg)](https://github.com/highsource/jaxb-tools/actions)
 [![CodeQL](https://github.com/highsource/jaxb-tools/workflows/CodeQL/badge.svg)](https://github.com/highsource/jaxb-tools/actions/workflows/codeql-analysis.yml?query=workflow%3ACodeQL)
 

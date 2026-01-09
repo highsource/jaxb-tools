@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '11', '17', '21', '25-ea' ]
+        java: [ '11', '17', '21', '25' ]
     steps:
     - uses: actions/checkout@v4
     - name: Setup JDK ${{ matrix.java }}
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '17', '21', '25-ea' ]
+        java: [ '17', '21', '25' ]
     steps:
     - uses: actions/checkout@v4
     - name: Setup Maven4

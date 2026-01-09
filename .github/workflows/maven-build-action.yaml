@@ -27,6 +27,13 @@ jobs:
       run: mvn -T4 -Pall -no-transfer-progress clean install
     - name: Maven with JDK ${{ matrix.java }} - Release dry run
       run: mvn -Prelease-dry-run,sonatype-oss-release,release -DperformRelease -DdryRun=true -Darguments="-Dgpg.skip=true" -B release:clean release:prepare clean install
+    - name: Upload results to path
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: results
+        path: ${{ github.workspace }}/**/*.log
+        if-no-files-found: ignore
 
   build_and_test_mvn4:
     runs-on: ubuntu-latest

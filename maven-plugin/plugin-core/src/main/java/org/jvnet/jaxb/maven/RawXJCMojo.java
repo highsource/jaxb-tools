@@ -22,16 +22,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -45,21 +36,19 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.DefaultArtifact;
-import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
-import org.apache.maven.artifact.resolver.ArtifactResolutionException;
 import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
 import org.apache.maven.artifact.resolver.filter.ScopeArtifactFilter;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.DependencyManagement;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.project.artifact.InvalidDependencyVersionException;
 import org.apache.maven.settings.Proxy;
 import org.apache.maven.settings.Settings;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.DefaultArtifact;
+import org.eclipse.aether.util.artifact.JavaScopes;
 import org.jvnet.jaxb.maven.net.CompositeURILastModifiedResolver;
 import org.jvnet.jaxb.maven.net.FileURILastModifiedResolver;
 import org.jvnet.jaxb.maven.net.URILastModifiedResolver;
@@ -67,10 +56,7 @@ import org.jvnet.jaxb.maven.resolver.tools.LoggingCatalogResolver;
 import org.jvnet.jaxb.maven.resolver.tools.MavenCatalogResolver;
 import org.jvnet.jaxb.maven.resolver.tools.ReResolvingEntityResolverWrapper;
 import org.jvnet.jaxb.maven.resolver.tools.RelativeCatalog;
-import org.jvnet.jaxb.maven.util.ArtifactUtils;
-import org.jvnet.jaxb.maven.util.CollectionUtils;
-import org.jvnet.jaxb.maven.util.IOUtils;
-import org.jvnet.jaxb.maven.util.LocaleUtils;
+import org.jvnet.jaxb.maven.util.*;
 import org.jvnet.jaxb.maven.util.CollectionUtils.Function;
 import org.sonatype.plexus.build.incremental.BuildContext;
 import org.sonatype.plexus.build.incremental.ThreadBuildContext;
@@ -350,16 +336,15 @@ public abstract class RawXJCMojo<O> extends AbstractXJCMojo<O> {
 	@SuppressWarnings("unchecked")
 	protected void injectDependencyDefaults(Dependency[] dependencies) {
 		if (dependencies != null) {
-			final Map<String, Dependency> dependencyMap = new TreeMap<String, Dependency>();
+			final Map<String, Dependency> dependencyMap = new TreeMap<>();
 			for (final Dependency dependency : dependencies) {
 				if (dependency.getScope() == null) {
-					dependency.setScope(Artifact.SCOPE_RUNTIME);
+					dependency.setScope(JavaScopes.RUNTIME);
 				}
 				dependencyMap.put(dependency.getManagementKey(), dependency);
 			}
 
 			final DependencyManagement dependencyManagement = getProject().getDependencyManagement();
-
 			if (dependencyManagement != null) {
 				merge(dependencyMap, dependencyManagement.getDependencies());
 			}
@@ -370,7 +355,7 @@ public abstract class RawXJCMojo<O> extends AbstractXJCMojo<O> {
 	private void merge(final Map<String, Dependency> dependencyMap, final List<Dependency> managedDependencies) {
 		for (final Dependency managedDependency : managedDependencies) {
 			final String key = managedDependency.getManagementKey();
-			final Dependency dependency = (Dependency) dependencyMap.get(key);
+			final Dependency dependency = dependencyMap.get(key);
 			if (dependency != null) {
 				ArtifactUtils.mergeDependencyWithDefaults(dependency, managedDependency);
 			}
@@ -379,51 +364,51 @@ public abstract class RawXJCMojo<O> extends AbstractXJCMojo<O> {
 
 	protected void resolveArtifacts() throws MojoExecutionException {
 		try {
-
 			resolveXJCPluginArtifacts();
 			resolveEpisodeArtifacts();
-		} catch (ArtifactResolutionException arex) {
-			throw new MojoExecutionException("Could not resolve the artifact.", arex);
-		} catch (ArtifactNotFoundException anfex) {
-			throw new MojoExecutionException("Artifact not found.", anfex);
-		} catch (InvalidDependencyVersionException idvex) {
-			throw new MojoExecutionException("Invalid dependency version.", idvex);
+		} catch (Exception e) {
+			throw new MojoExecutionException("Could not resolve the artifact.", e);
 		}
 	}
 
-	protected void resolveXJCPluginArtifacts()
-			throws ArtifactResolutionException, ArtifactNotFoundException, InvalidDependencyVersionException {
+	protected void resolveXJCPluginArtifacts() {
 
-		this.xjcPluginArtifacts = ArtifactUtils.resolveTransitively(
-            getArtifactFactory(), getRepositorySystem(),
-            getMavenSession().getLocalRepository(), getArtifactMetadataSource(),
-            getPlugins(), getProject(), getLog(), getArtifactExcludes());
-		this.xjcPluginFiles = ArtifactUtils.getFiles(this.xjcPluginArtifacts);
+		this.xjcPluginArtifacts = ArtifactResolverUtils.resolveTransitively(
+            getRepositorySystem(),
+			getRepositorySystemSession(),
+            getProject(),
+            getPlugins(),
+            getLog(),
+            getArtifactExcludes());
+		this.xjcPluginFiles = ArtifactResolverUtils.getFiles(this.xjcPluginArtifacts);
 		this.xjcPluginURLs = CollectionUtils.apply(this.xjcPluginFiles, IOUtils.GET_URL);
 	}
 
-	protected void resolveEpisodeArtifacts()
-			throws ArtifactResolutionException, ArtifactNotFoundException, InvalidDependencyVersionException {
+	protected void resolveEpisodeArtifacts() {
 		this.episodeArtifacts = new LinkedHashSet<Artifact>();
 		{
-			final Collection<Artifact> episodeArtifacts = ArtifactUtils.resolve(getArtifactFactory(),
-					getRepositorySystem(), getMavenSession().getLocalRepository(), getArtifactMetadataSource(), getEpisodes(),
-					getProject());
+			final Collection<Artifact> episodeArtifacts = ArtifactResolverUtils.resolve(
+                getRepositorySystem(),
+                getRepositorySystemSession(),
+                getProject(),
+                getEpisodes());
 			this.episodeArtifacts.addAll(episodeArtifacts);
 		}
 		{
 			if (getUseDependenciesAsEpisodes()) {
 				@SuppressWarnings("unchecked")
-				final Collection<Artifact> projectArtifacts = getProject().getArtifacts();
-				final ArtifactFilter filter = new ScopeArtifactFilter(DefaultArtifact.SCOPE_COMPILE);
-				for (Artifact artifact : projectArtifacts) {
+				final Collection<org.apache.maven.artifact.Artifact> projectArtifacts = getProject().getArtifacts();
+				final ArtifactFilter filter = new ScopeArtifactFilter(org.apache.maven.artifact.Artifact.SCOPE_COMPILE);
+				for (org.apache.maven.artifact.Artifact artifact : projectArtifacts) {
 					if (filter.include(artifact) && "jar".equals(artifact.getType())) {
-						this.episodeArtifacts.add(artifact);
+						this.episodeArtifacts.add(new DefaultArtifact(artifact.getGroupId(), artifact.getArtifactId(),
+								artifact.getClassifier(), artifact.getArtifactHandler().getExtension(),
+								artifact.getVersion(), null, artifact.getFile()));
 					}
 				}
 			}
 		}
-		this.episodeFiles = ArtifactUtils.getFiles(this.episodeArtifacts);
+		this.episodeFiles = ArtifactResolverUtils.getFiles(this.episodeArtifacts);
 	}
 
 	protected URLClassLoader createClassLoader(ClassLoader parent) {
@@ -801,16 +786,16 @@ public abstract class RawXJCMojo<O> extends AbstractXJCMojo<O> {
 
 	void collectBindingUrisFromDependencies(List<URI> bindingUris) throws MojoExecutionException {
 		@SuppressWarnings("unchecked")
-		final Collection<Artifact> projectArtifacts = getProject().getArtifacts();
-		final List<Artifact> compileScopeArtifacts = new ArrayList<Artifact>(projectArtifacts.size());
-		final ArtifactFilter scopeFilter = new ScopeArtifactFilter(DefaultArtifact.SCOPE_COMPILE);
-		for (Artifact artifact : projectArtifacts) {
+		final Collection<org.apache.maven.artifact.Artifact> projectArtifacts = getProject().getArtifacts();
+		final List<org.apache.maven.artifact.Artifact> compileScopeArtifacts = new ArrayList<>(projectArtifacts.size());
+		final ArtifactFilter scopeFilter = new ScopeArtifactFilter(org.apache.maven.artifact.Artifact.SCOPE_COMPILE);
+		for (org.apache.maven.artifact.Artifact artifact : projectArtifacts) {
 			if (scopeFilter.include(artifact) && !"pom".equals(artifact.getType())) {
 				compileScopeArtifacts.add(artifact);
 			}
 		}
 
-		for (Artifact artifact : compileScopeArtifacts) {
+		for (org.apache.maven.artifact.Artifact artifact : compileScopeArtifacts) {
 			getLog().debug(MessageFormat.format("Scanning artifact [{0}] for JAXB binding files.", artifact));
 			collectBindingUrisFromArtifact(artifact.getFile(), bindingUris);
 		}

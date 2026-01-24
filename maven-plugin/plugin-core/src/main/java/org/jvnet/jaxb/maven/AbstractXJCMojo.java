@@ -11,18 +11,10 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-import java.util.stream.Collectors;
 
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.factory.ArtifactFactory;
-import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
-import org.apache.maven.artifact.resolver.ArtifactResolutionRequest;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.FileSet;
@@ -32,10 +24,14 @@ import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.ProjectBuilder;
-import org.apache.maven.project.artifact.InvalidDependencyVersionException;
-import org.apache.maven.project.artifact.MavenMetadataSource;
-import org.apache.maven.repository.RepositorySystem;
 import org.apache.maven.settings.Settings;
+import org.eclipse.aether.RepositorySystem;
+import org.eclipse.aether.RepositorySystemSession;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.DefaultArtifact;
+import org.eclipse.aether.repository.RemoteRepository;
+import org.eclipse.aether.resolution.ArtifactRequest;
+import org.eclipse.aether.resolution.ArtifactResult;
 import org.jvnet.jaxb.maven.util.ArtifactUtils;
 import org.jvnet.jaxb.maven.util.IOUtils;
 import org.sonatype.plexus.build.incremental.BuildContext;
@@ -1007,11 +1003,11 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
     @Component
 	private RepositorySystem repositorySystem;
 
-	@Component
-	private ArtifactMetadataSource artifactMetadataSource;
+	@Parameter(defaultValue = "${repositorySystemSession}", readonly = true)
+	private RepositorySystemSession repositorySystemSession;
 
-	@Component
-	private ArtifactFactory artifactFactory;
+	@Parameter(defaultValue = "${project.remoteProjectRepositories}", readonly = true)
+	private List<RemoteRepository> remoteRepositories;
 
 	/**
 	 * Maven current session.
@@ -1027,12 +1023,6 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 
 	@Component
 	private BuildContext buildContext = new DefaultBuildContext();
-
-	/**
-	 * Plugin artifacts.
-	 */
-	@Parameter(defaultValue = "${plugin.artifacts}", required = true)
-	private List<org.apache.maven.artifact.Artifact> pluginArtifacts;
 
 	/**
 	 * If you want to use existing artifacts as episodes for separate
@@ -1100,7 +1090,6 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 
 		logApiConfiguration();
 
-		getLog().info("pluginArtifacts:" + getPluginArtifacts());
 		getLog().info("specVersion:" + getSpecVersion());
 		getLog().info("encoding:" + getEncoding());
 		getLog().info("locale:" + getLocale());
@@ -1173,24 +1162,23 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 	private static final String XML_SCHEMA_RESOURCE_NAME = XML_SCHEMA_CLASS_NAME
 			+ ".class";
 
-	public ArtifactMetadataSource getArtifactMetadataSource() {
-		return artifactMetadataSource;
-	}
-
-	public void setArtifactMetadataSource(
-			ArtifactMetadataSource artifactMetadataSource) {
-		this.artifactMetadataSource = artifactMetadataSource;
-	}
-
 	private static final String XML_SCHEMA_RESOURCE_QNAME = "/jakarta/xml/bind/annotation/"
 			+ XML_SCHEMA_RESOURCE_NAME;
 
-	public ArtifactFactory getArtifactFactory() {
-		return artifactFactory;
+	public RepositorySystemSession getRepositorySystemSession() {
+		return repositorySystemSession;
 	}
 
-	public void setArtifactFactory(ArtifactFactory artifactFactory) {
-		this.artifactFactory = artifactFactory;
+	public void setRepositorySystemSession(RepositorySystemSession repositorySystemSession) {
+		this.repositorySystemSession = repositorySystemSession;
+	}
+
+	public List<RemoteRepository> getRemoteRepositories() {
+		return remoteRepositories;
+	}
+
+	public void setRemoteRepositories(List<RemoteRepository> remoteRepositories) {
+		this.remoteRepositories = remoteRepositories;
 	}
 
 	private static final String XML_ELEMENT_REF_CLASS_NAME = "XmlElementRef";
@@ -1246,25 +1234,16 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 		}
 	}
 
-	public List<org.apache.maven.artifact.Artifact> getPluginArtifacts() {
-		return pluginArtifacts;
-	}
-
-	public void setPluginArtifacts(
-			List<org.apache.maven.artifact.Artifact> plugingArtifacts) {
-		this.pluginArtifacts = plugingArtifacts;
-	}
-
 	public List<Dependency> getProjectDependencies() {
 
 		@SuppressWarnings("unchecked")
-		final Set<Artifact> artifacts = getProject().getArtifacts();
+		final Set<org.apache.maven.artifact.Artifact> artifacts = getProject().getArtifacts();
 
 		if (artifacts == null) {
 			return Collections.emptyList();
 		} else {
 			final List<Dependency> dependencies = new ArrayList<Dependency>(artifacts.size());
-			for (Artifact artifact : artifacts) {
+			for (org.apache.maven.artifact.Artifact artifact : artifacts) {
 				final Dependency dependency = new Dependency();
 				dependency.setGroupId(artifact.getGroupId());
 				dependency.setArtifactId(artifact.getArtifactId());
@@ -1365,56 +1344,39 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 		}
 
 		try {
-			@SuppressWarnings("unchecked")
-			final Set<Artifact> artifacts = MavenMetadataSource
-					.createArtifacts(getArtifactFactory(),
-							Arrays.<Dependency>asList(dependencyResource),
-							Artifact.SCOPE_RUNTIME, null, getProject());
+			final Artifact artifact = new DefaultArtifact(dependencyResource.getGroupId(),
+					dependencyResource.getArtifactId(), dependencyResource.getClassifier(),
+					dependencyResource.getType(), dependencyResource.getVersion());
 
-			if (artifacts.size() != 1) {
-				getLog().error(
-						MessageFormat
-								.format("Resolved dependency resource [{0}] to artifacts [{1}].",
-										dependencyResource, artifacts));
-				throw new MojoExecutionException(MessageFormat.format(
-						"Could not create artifact for dependency [{0}].",
-						dependencyResource));
-			}
+			final ArtifactRequest artifactRequest = new ArtifactRequest();
+			artifactRequest.setArtifact(artifact);
+			artifactRequest.setRepositories(getRemoteRepositories());
 
-			final Artifact artifact = artifacts.iterator().next();
+			final ArtifactResult artifactResult = getRepositorySystem().resolveArtifact(getRepositorySystemSession(),
+					artifactRequest);
 
-            ArtifactResolutionRequest artifactResolutionRequest = new ArtifactResolutionRequest();
-            artifactResolutionRequest.setArtifact(artifact);
-            artifactResolutionRequest.setRemoteRepositories(getProject().getRemoteArtifactRepositories());
-            artifactResolutionRequest.setLocalRepository(getMavenSession().getLocalRepository());
-			getRepositorySystem().resolve(artifactResolutionRequest);
+			final Artifact resolvedArtifact = artifactResult.getArtifact();
 
 			final String resource = dependencyResource.getResource();
 			if (resource == null) {
-				throw new MojoExecutionException(
-						MessageFormat
-								.format("Dependency resource [{0}] does not define the resource.",
-										dependencyResource));
+				throw new MojoExecutionException(MessageFormat.format(
+						"Dependency resource [{0}] does not define the resource.", dependencyResource));
 			}
-            if (resource.contains("*")) {
-                final File artifactFile = artifact.getFile();
-                List<URI> uris = getResourceUris(artifactFile, resource);
-                getLog().debug(
-                    MessageFormat
-                        .format("Resolved dependency resource [{0}] to resources URI [{1}].",
-                            dependencyResource, uris));
-                return uris;
-            } else {
-                final URI resourceURI = createArtifactResourceUri(artifact, resource);
-                getLog().debug(
-                    MessageFormat
-                        .format("Resolved dependency resource [{0}] to resource URI [{1}].",
-                            dependencyResource, resourceURI));
-                return Arrays.asList(resourceURI);
-            }
-		} catch (InvalidDependencyVersionException e) {
-			throw new MojoExecutionException(MessageFormat.format(
-					"Invalid version of dependency [{0}].", dependencyResource));
+			if (resource.contains("*")) {
+				final File artifactFile = resolvedArtifact.getFile();
+				List<URI> uris = getResourceUris(artifactFile, resource);
+				getLog().debug(MessageFormat.format("Resolved dependency resource [{0}] to resources URI [{1}].",
+						dependencyResource, uris));
+				return uris;
+			} else {
+				final URI resourceURI = createArtifactResourceUri(resolvedArtifact, resource);
+				getLog().debug(MessageFormat.format("Resolved dependency resource [{0}] to resource URI [{1}].",
+						dependencyResource, resourceURI));
+				return Arrays.asList(resourceURI);
+			}
+		} catch (Exception e) {
+			throw new MojoExecutionException(
+					MessageFormat.format("Could not resolve dependency resource [{0}].", dependencyResource), e);
 		}
 	}
 

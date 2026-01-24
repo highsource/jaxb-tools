@@ -4,8 +4,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import generated.Person;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class PersonTest {
 
@@ -13,8 +13,8 @@ public class PersonTest {
     public void testPerson() {
         Person p = new Person();
         // No plugin default-value present, checking everything is null or default java value
-        Assertions.assertEquals(false, p.isMailingAddressIdentical());
+        Assert.assertEquals(false, p.isMailingAddressIdentical());
 
-        Assertions.assertEquals(ToStringBuilder.reflectionToString(p, ToStringStyle.SIMPLE_STYLE), p.toString());
+        Assert.assertEquals(ToStringBuilder.reflectionToString(p, ToStringStyle.SIMPLE_STYLE), p.toString());
     }
 }

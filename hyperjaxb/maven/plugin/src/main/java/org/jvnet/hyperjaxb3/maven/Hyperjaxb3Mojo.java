@@ -21,17 +21,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.Layout;
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
-import org.apache.log4j.spi.LoggingEvent;
-import org.apache.log4j.varia.NullAppender;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -39,10 +30,14 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 
 import com.sun.tools.xjc.Options;
 import org.jvnet.jaxb.maven.XJCMojo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.COMPILE, threadSafe = true)
 public class Hyperjaxb3Mojo extends XJCMojo {
 
+    // Maintain compatability with previous log package namespace
+    private static final Logger logger = LoggerFactory.getLogger("org.jvnet.hyperjaxb3");
 	/**
 	 * Target directory for the generated mappings. If left empty, mappings are
 	 * generated together with sources.
@@ -151,60 +146,58 @@ public class Hyperjaxb3Mojo extends XJCMojo {
 	public String[] postArgs = new String[0];
 
 	/**
-	 * Sets up the verbose and debug mode depending on mvn logging level, and
-	 * sets up hyperjaxb logging.
-	 */
-	protected void setupLogging() {
-		super.setupLogging();
-
-		final Logger rootLogger = LogManager.getRootLogger();
-		rootLogger.addAppender(new NullAppender());
-		final Logger logger = LogManager.getLogger("org.jvnet.hyperjaxb3");
-
-		final Log log = getLog();
-		logger.addAppender(new Appender(getLog(), new PatternLayout(
-				"%m%n        %c%n")));
-
-		if (this.getDebug()) {
-			log.debug("Logger level set to [debug].");
-			logger.setLevel(Level.DEBUG);
-		} else if (this.getVerbose())
-			logger.setLevel(Level.INFO);
-		else if (log.isWarnEnabled())
-			logger.setLevel(Level.WARN);
-		else
-			logger.setLevel(Level.ERROR);
-	}
-
-	/**
 	 * Logs options defined directly as mojo parameters.
 	 */
 	protected void logConfiguration() throws MojoExecutionException {
 		super.logConfiguration();
 
-		getLog().info("target:" + target);
-		getLog().info("roundtripTestClassName:" + roundtripTestClassName);
-		getLog().info("resourceIncludes:" + resourceIncludes);
-		getLog().info("variant:" + variant);
-		getLog().info("persistenceUnitName:" + persistenceUnitName);
-		getLog().info("persistenceXml:" + persistenceXml);
-		getLog().info("generateHashCode:" + generateHashCode);
-		getLog().info("generateEquals:" + generateEquals);
-		getLog().info("generateTransientId:" + generateTransientId);
-		getLog().info("result:" + result);
-        getLog().info("maxIdentifierLength:" + maxIdentifierLength);
-        getLog().info("applicationContextClassName:" + applicationContextClassName);
-		getLog().info("preArgs:" + Arrays.toString(preArgs));
-		getLog().info("postArgs:" + Arrays.toString(postArgs));
-		try {
-			getLog().info(
-					"XJC loaded from:"
-							+ Options.class.getResource("Options.class")
-									.toURI().toURL().toExternalForm());
-		} catch (IOException ignored) {
-		} catch (URISyntaxException ignored) {
-		}
-
+        if(this.getVerbose()) {
+            getLog().info("target:" + target);
+            getLog().info("roundtripTestClassName:" + roundtripTestClassName);
+            getLog().info("resourceIncludes:" + resourceIncludes);
+            getLog().info("variant:" + variant);
+            getLog().info("persistenceUnitName:" + persistenceUnitName);
+            getLog().info("persistenceXml:" + persistenceXml);
+            getLog().info("generateHashCode:" + generateHashCode);
+            getLog().info("generateEquals:" + generateEquals);
+            getLog().info("generateTransientId:" + generateTransientId);
+            getLog().info("result:" + result);
+            getLog().info("maxIdentifierLength:" + maxIdentifierLength);
+            getLog().info("applicationContextClassName:" + applicationContextClassName);
+            getLog().info("preArgs:" + Arrays.toString(preArgs));
+            getLog().info("postArgs:" + Arrays.toString(postArgs));
+            try {
+                getLog().info(
+                    "XJC loaded from:"
+                        + Options.class.getResource("Options.class")
+                        .toURI().toURL().toExternalForm());
+            } catch (IOException ignored) {
+            } catch (URISyntaxException ignored) {
+            }
+        } else {
+            getLog().debug("target:" + target);
+            getLog().debug("roundtripTestClassName:" + roundtripTestClassName);
+            getLog().debug("resourceIncludes:" + resourceIncludes);
+            getLog().debug("variant:" + variant);
+            getLog().debug("persistenceUnitName:" + persistenceUnitName);
+            getLog().debug("persistenceXml:" + persistenceXml);
+            getLog().debug("generateHashCode:" + generateHashCode);
+            getLog().debug("generateEquals:" + generateEquals);
+            getLog().debug("generateTransientId:" + generateTransientId);
+            getLog().debug("result:" + result);
+            getLog().debug("maxIdentifierLength:" + maxIdentifierLength);
+            getLog().debug("applicationContextClassName:" + applicationContextClassName);
+            getLog().debug("preArgs:" + Arrays.toString(preArgs));
+            getLog().debug("postArgs:" + Arrays.toString(postArgs));
+            try {
+                getLog().debug(
+                    "XJC loaded from:"
+                        + Options.class.getResource("Options.class")
+                        .toURI().toURL().toExternalForm());
+            } catch (IOException ignored) {
+            } catch (URISyntaxException ignored) {
+            }
+        }
 	}
 
 	protected List<String> getArguments() {
@@ -311,45 +304,6 @@ public class Hyperjaxb3Mojo extends XJCMojo {
 		if (this.roundtripTestClassName != null) {
 			getProject().addTestCompileSourceRoot(
 					getGenerateDirectory().getPath());
-		}
-	}
-
-	public static class Appender extends AppenderSkeleton {
-		private final Log log;
-
-		private final Layout layout;
-
-		public Appender(final Log log, final Layout layout) {
-			super();
-			this.log = log;
-			this.layout = layout;
-		}
-
-		@Override
-		public boolean requiresLayout() {
-			return true;
-		}
-
-		@Override
-		protected void append(LoggingEvent event) {
-
-			if (event.getLevel().equals(Level.TRACE)) {
-				log.debug(layout.format(event));
-			} else if (event.getLevel().equals(Level.DEBUG)) {
-				log.debug(layout.format(event));
-			} else if (event.getLevel().equals(Level.INFO)) {
-				log.info(layout.format(event));
-			} else if (event.getLevel().equals(Level.WARN)) {
-				log.warn(layout.format(event));
-			} else if (event.getLevel().equals(Level.ERROR)) {
-				log.error(layout.format(event));
-			} else if (event.getLevel().equals(Level.FATAL)) {
-				log.error(layout.format(event));
-			}
-		}
-
-		@Override
-		public void close() {
 		}
 	}
 }

@@ -588,6 +588,10 @@ public class CustomizationUtils {
 		return customizations;
 	}
 
+    public static CCustomizations getGlobalCustomizations(Outline outline) {
+        return outline.getModel().getCustomizations();
+    }
+
 	public static CCustomizations getCustomizations(ClassOutline classOutline) {
 		return getCustomizations(classOutline.target);
 	}

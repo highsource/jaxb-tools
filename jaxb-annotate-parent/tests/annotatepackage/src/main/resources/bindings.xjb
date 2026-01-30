@@ -1,0 +1,34 @@
+<jaxb:bindings version="3.0"
+               xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+
+               xmlns:annox="urn:jaxb.jvnet.org:annox"
+               jaxb:extensionBindingPrefixes="annox">
+
+  <jaxb:bindings schemaLocation="./Integration.xsd" node="/xsd:schema">
+    <jaxb:schemaBindings>
+      <jaxb:package name="mypackage.model.integration">
+      </jaxb:package>
+    </jaxb:schemaBindings>
+    <annox:annotateSchemaPackage package="mypackage.model.integration">@java.lang.Deprecated(since = "4.0.1")</annox:annotateSchemaPackage>
+  </jaxb:bindings>
+
+  <jaxb:bindings schemaLocation="./Extegration.xsd" node="/xsd:schema">
+    <jaxb:schemaBindings>
+      <jaxb:package name="mypackage.model.extegration">
+      </jaxb:package>
+    </jaxb:schemaBindings>
+    <annox:annotateSchemaPackage package="mypackage.model.extegration">@java.lang.Deprecated(since = "4.0.2")</annox:annotateSchemaPackage>
+  </jaxb:bindings>
+
+  <jaxb:bindings schemaLocation="./BaseTypes.xsd" node="/xsd:schema">
+    <jaxb:schemaBindings>
+      <jaxb:package name="mypackage.model.base">
+      </jaxb:package>
+    </jaxb:schemaBindings>
+    <annox:annotateSchemaPackage package="mypackage.model.base">@java.lang.Deprecated(since = "4.0.3")</annox:annotateSchemaPackage>
+  </jaxb:bindings>
+</jaxb:bindings>

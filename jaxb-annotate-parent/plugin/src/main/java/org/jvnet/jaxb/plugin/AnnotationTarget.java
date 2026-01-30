@@ -57,10 +57,18 @@ import com.sun.tools.xjc.outline.EnumConstantOutline;
 import com.sun.tools.xjc.outline.EnumOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.outline.Outline;
+import com.sun.tools.xjc.outline.PackageOutline;
 
 public enum AnnotationTarget {
 
 	//
+    SCHEMA_PACKAGE("schemaPackage", AnnotatePlugin.ANNOTATE_SCHEMA_PACKAGE_QNAME) {
+        @Override
+        public JAnnotatable getAnnotatable(Outline outline, PackageOutline packageOutline)
+            throws IllegalArgumentException, UnsupportedOperationException {
+            return packageOutline._package();
+        }
+    },
 	PACKAGE("package", AnnotatePlugin.ANNOTATE_PACKAGE_QNAME, AnnotatePlugin.LEGACY_ANNOTATE_PACKAGE_QNAME) {
 		@Override
 		public JAnnotatable getAnnotatable(Outline outline,
@@ -280,6 +288,13 @@ public enum AnnotationTarget {
 	public String getTarget() {
 		return target;
 	}
+
+    public JAnnotatable getAnnotatable(Outline outline, PackageOutline packageOutline)
+        throws IllegalArgumentException, UnsupportedOperationException {
+            throw new UnsupportedOperationException(MessageFormat.format(
+                "Annotation target [{0}] cannot be applied to a package.",
+                getTarget()));
+    }
 
 	public JAnnotatable getAnnotatable(Outline outline, EnumOutline enumOutline)
 			throws IllegalArgumentException, UnsupportedOperationException {

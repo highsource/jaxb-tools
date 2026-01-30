@@ -1,0 +1,32 @@
+<xs:schema xmlns="http://example.org/integration/1"
+           targetNamespace="http://example.org/integration/1"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:base="http://example.org/base/1">
+
+  <xs:import namespace="http://example.org/base/1" schemaLocation="./BaseTypes.xsd"/>
+
+  <xs:element name="baseA">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="base:baseAType">
+          <xs:sequence>
+            <xs:element name="description" type="xs:string"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="baseB">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="base:baseBType">
+          <xs:sequence>
+            <xs:element name="description" type="xs:string"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

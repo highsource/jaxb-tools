@@ -31,6 +31,7 @@ package org.jvnet.jaxb.plugin.annotate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -63,6 +64,7 @@ import com.sun.tools.xjc.outline.EnumConstantOutline;
 import com.sun.tools.xjc.outline.EnumOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.outline.Outline;
+import com.sun.tools.xjc.outline.PackageOutline;
 
 public class AnnotatePlugin extends AbstractParameterizablePlugin {
 
@@ -76,8 +78,10 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 			Constants.NAMESPACE_URI, "annotatePropertyField");
 	public static final QName ANNOTATE_PROPERTY_SETTER_PARAMETER_QNAME = new QName(
 			Constants.NAMESPACE_URI, "annotatePropertySetterParameter");
-	public static final QName ANNOTATE_PACKAGE_QNAME = new QName(
-			Constants.NAMESPACE_URI, "annotatePackage");
+	public static final QName ANNOTATE_SCHEMA_PACKAGE_QNAME = new QName(
+			Constants.NAMESPACE_URI, "annotateSchemaPackage");
+    public static final QName ANNOTATE_PACKAGE_QNAME = new QName(
+        Constants.NAMESPACE_URI, "annotatePackage");
 	public static final QName ANNOTATE_CLASS_QNAME = new QName(
 			Constants.NAMESPACE_URI, "annotateClass");
 	public static final QName ANNOTATE_ELEMENT_QNAME = new QName(
@@ -123,6 +127,7 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
     public static final Set<QName> CUSTOMIZATION_ELEMENT_QNAMES = Collections.unmodifiableSet(
         new HashSet<QName>(Arrays.asList(
             ANNOTATE_QNAME,
+            ANNOTATE_SCHEMA_PACKAGE_QNAME,
             ANNOTATE_PACKAGE_QNAME,
             ANNOTATE_CLASS_QNAME,
             ANNOTATE_ELEMENT_QNAME,
@@ -215,10 +220,41 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 		for (final EnumOutline enumOutline : outline.getEnums()) {
 			processEnumOutline(enumOutline, options, errorHandler);
 		}
+
+        CCustomizations globalCustomizations = CustomizationUtils.getGlobalCustomizations(outline);
+        if (globalCustomizations != null && !globalCustomizations.isEmpty()) {
+            annotatePackage(outline, globalCustomizations, errorHandler);
+        }
 		return true;
 	}
 
-	protected void processElementOutline(ElementOutline elementOutline,
+    private void annotatePackage(Outline outline, CCustomizations customizations, ErrorHandler errorHandler) {
+        for (final CPluginCustomization customization : customizations) {
+            final Element element = customization.element;
+            final QName name = new QName(element.getNamespaceURI(),
+                element.getLocalName());
+            if (isCustomizationElementName(name)) {
+                customization.markAsAcknowledged();
+                final AnnotationTarget annotationTarget = AnnotationTarget.getAnnotationTarget(element, AnnotationTarget.SCHEMA_PACKAGE);
+
+                String targetPackage = element.getAttribute("package");
+
+                Iterable<? extends PackageOutline> pos = targetPackage == null || "".equals(targetPackage) || "*".equals(targetPackage)
+                    ? outline.getAllPackageContexts()
+                    : List.of(outline.getPackageContext(outline.getCodeModel()._package(targetPackage)));
+                for (PackageOutline po : pos) {
+                    try {
+                        final JAnnotatable annotatable = annotationTarget.getAnnotatable(outline, po);
+                        annotate(outline.getCodeModel(), errorHandler, customization, element, annotatable);
+                    } catch (IllegalArgumentException iaex) {
+                        logger.error("Error applying the annotation.", iaex);
+                    }
+                }
+            }
+        }
+    }
+
+    protected void processElementOutline(ElementOutline elementOutline,
 			Options options, ErrorHandler errorHandler) {
 
 		final CCustomizations customizations = CustomizationUtils

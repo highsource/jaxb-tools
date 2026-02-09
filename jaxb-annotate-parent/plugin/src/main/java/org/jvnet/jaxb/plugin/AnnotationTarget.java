@@ -203,6 +203,12 @@ public enum AnnotationTarget {
 	},
 	//
 	ENUM("enum", AnnotatePlugin.ANNOTATE_ENUM_QNAME, AnnotatePlugin.LEGACY_ANNOTATE_ENUM_QNAME) {
+        @Override
+        public JAnnotatable getAnnotatable(Outline outline,
+                                           FieldOutline fieldOutline) {
+            return null;
+        }
+
 		@Override
 		public JAnnotatable getAnnotatable(Outline outline,
 				EnumConstantOutline enumConstantOutline)

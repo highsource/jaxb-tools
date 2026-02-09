@@ -446,6 +446,9 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 			ErrorHandler errorHandler,
 			final CPluginCustomization customization, final Element element,
 			final JAnnotatable annotatable) {
+        if (annotatable == null) {
+            return;
+        }
 		final NodeList elements = element.getChildNodes();
 		for (int index = 0; index < elements.getLength(); index++) {
 			final Node node = elements.item(index);

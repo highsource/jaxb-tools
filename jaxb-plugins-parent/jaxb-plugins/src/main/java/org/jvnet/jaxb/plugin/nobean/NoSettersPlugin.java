@@ -4,6 +4,7 @@ import com.sun.codemodel.JMethod;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.Plugin;
 import com.sun.tools.xjc.outline.ClassOutline;
+import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.outline.Outline;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -35,8 +36,10 @@ public class NoSettersPlugin extends Plugin {
     @Override
     public boolean run(Outline model, Options opts, ErrorHandler errors) throws SAXException {
         for (ClassOutline co : model.getClasses()) {
-            Collection<JMethod> methods = co.implClass.methods();
-            methods.removeIf(next -> next.name().startsWith("set"));
+            for (FieldOutline fo : co.getDeclaredFields()) {
+                String setterName = "set" + fo.getPropertyInfo().getName(true);
+                co.implClass.methods().removeIf(n -> setterName.equals(n.name()));
+            }
         }
         return true;
     }

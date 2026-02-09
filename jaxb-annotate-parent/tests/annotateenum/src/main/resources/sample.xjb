@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               jaxb:version="3.0"
+               xmlns:annox="urn:jaxb.jvnet.org:annox">
+    <jaxb:bindings schemaLocation="sample.xsd">
+        <jaxb:bindings node="//xsd:simpleType[@name='enumType']">
+            <annox:annotateEnum>@org.jvnet.jaxb.plugin.annotate.tests.annotations.SampleAnnotation</annox:annotateEnum>
+        </jaxb:bindings>
+    </jaxb:bindings>
+</jaxb:bindings>

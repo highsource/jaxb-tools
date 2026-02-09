@@ -32,64 +32,53 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>jaxb-annotate-plugin-tests</artifactId>
-  <packaging>pom</packaging>
-  <name>JAXB Tools :: Annotate :: Tests</name>
   <parent>
     <groupId>org.jvnet.jaxb</groupId>
-    <artifactId>jaxb-annotate-plugin-parent</artifactId>
+    <artifactId>jaxb-annotate-plugin-tests</artifactId>
     <version>4.1.0-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
-  <modules>
-    <module>annotations</module>
-    <module>annox</module>
-    <module>annotate</module>
-    <module>annotateenum</module>
-    <module>annotatepackage</module>
-    <module>base-dependent</module>
-    <module>issues</module>
-    <module>one</module>
-    <module>removexmlannotate</module>
-  </modules>
-  <properties>
-    <maven.deploy.skip>true</maven.deploy.skip>
-  </properties>
+  <artifactId>jaxb-annotate-plugin-test-annotateenum</artifactId>
+  <packaging>jar</packaging>
+  <name>JAXB Tools :: Annotate :: Test [annotate-enum]</name>
   <dependencies>
     <dependency>
       <groupId>org.jvnet.jaxb</groupId>
-      <artifactId>jaxb-maven-plugin</artifactId>
-      <version>${project.version}</version>
-      <type>maven-plugin</type>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jvnet.jaxb</groupId>
-      <artifactId>jaxb-plugins</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.jaxb</groupId>
-      <artifactId>jaxb-runtime</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jvnet.jaxb</groupId>
-      <artifactId>jaxb-plugins-runtime</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jvnet.jaxb</groupId>
-      <artifactId>jaxb-plugins-testing</artifactId>
+      <artifactId>jaxb-maven-plugin-testing</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jvnet.jaxb</groupId>
+      <artifactId>jaxb-plugin-annotate</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jvnet.jaxb</groupId>
+      <artifactId>jaxb-annotate-plugin-test-annotations</artifactId>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
   <build>
     <defaultGoal>test</defaultGoal>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
+        <groupId>org.jvnet.jaxb</groupId>
+        <artifactId>jaxb-maven-plugin</artifactId>
         <configuration>
-          <skip>true</skip>
+          <extension>true</extension>
+          <args>
+            <arg>-Xannotate</arg>
+          </args>
+          <plugins>
+            <plugin>
+              <groupId>org.jvnet.jaxb</groupId>
+              <artifactId>jaxb-plugin-annotate</artifactId>
+            </plugin>
+            <plugin>
+              <groupId>org.jvnet.jaxb</groupId>
+              <artifactId>jaxb-annotate-plugin-test-annotations</artifactId>
+              <version>${project.version}</version>
+            </plugin>
+          </plugins>
         </configuration>
       </plugin>
     </plugins>

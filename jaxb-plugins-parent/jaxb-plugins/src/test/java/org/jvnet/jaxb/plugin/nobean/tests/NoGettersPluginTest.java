@@ -46,7 +46,8 @@ class NoGettersPluginTest extends RunXJCMojo {
             List<String> lines = Files.readAllLines(javaFile);
             for (int i = 0; i < lines.size(); i++) {
                 String line = lines.get(i);
-                if (line.matches("^ *public [a-zA-Z]+ (isSet|get)[A-Z]\\w+\\(\\) \\{")) {
+                if (line.matches("^ *public [a-zA-Z]+ (is|get)[A-Z]\\w+\\(\\) \\{")
+                    && !line.matches("^ *public boolean isSet[A-Z]\\w*\\(\\) \\{")) {
                     String fileLinePath = getGeneratedDirectory()
                                               .toPath()
                                               .relativize(javaFile)

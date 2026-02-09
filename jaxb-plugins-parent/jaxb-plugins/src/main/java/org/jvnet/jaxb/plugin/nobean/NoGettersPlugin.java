@@ -4,7 +4,9 @@ import com.sun.codemodel.JMethod;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.Plugin;
 import com.sun.tools.xjc.outline.ClassOutline;
+import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.outline.Outline;
+import org.jvnet.jaxb.plugin.util.FieldOutlineUtils;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 
@@ -35,9 +37,12 @@ public class NoGettersPlugin extends Plugin {
     @Override
     public boolean run(Outline model, Options opts, ErrorHandler errors) throws SAXException {
         for (ClassOutline co : model.getClasses()) {
-            Collection<JMethod> methods = co.implClass.methods();
-            methods.removeIf(next -> next.name().startsWith("get"));
-            methods.removeIf(next -> next.name().startsWith("is"));
+            for (FieldOutline fo : co.getDeclaredFields()) {
+                String getterSuffix = fo.getPropertyInfo().getName(true);
+                String getterName = "get" + getterSuffix;
+                String isGetterName = "is" + getterSuffix;
+                co.implClass.methods().removeIf(n -> getterName.equals(n.name()) || isGetterName.equals(n.name()));
+            }
         }
         return true;
     }

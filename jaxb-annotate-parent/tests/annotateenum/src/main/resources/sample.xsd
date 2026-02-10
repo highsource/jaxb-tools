@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.example.org/sample"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.example.org/sample"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:simpleType name="enumType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="VALUE_1"/>
+            <xs:enumeration value="VALUE_2"/>
+            <xs:enumeration value="VALUE_3"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="enumWithCommentType">
+        <xs:simpleContent>
+            <xs:extension base="enumType">
+                <xs:attribute name="comment" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+</xs:schema>

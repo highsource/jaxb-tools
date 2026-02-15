@@ -29,6 +29,7 @@ public class OptionsConfiguration {
 	private final boolean noFileHeader;
 	private final boolean enableIntrospection;
 	private final boolean disableXmlSecurity;
+	private final boolean disableJaxpLimits;
 	private final String accessExternalSchema;
 	private final String accessExternalDTD;
 	private final boolean enableExternalEntityProcessing;
@@ -54,6 +55,7 @@ public class OptionsConfiguration {
 			File generateDirectory, boolean readOnly,
 			boolean packageLevelAnnotations, boolean noFileHeader,
 			boolean enableIntrospection, boolean disableXmlSecurity,
+            boolean disableJaxpLimits,
 			String accessExternalSchema, String accessExternalDTD,
 			boolean enableExternalEntityProcessing,
 			boolean contentForWildcard,
@@ -73,6 +75,7 @@ public class OptionsConfiguration {
 		this.noFileHeader = noFileHeader;
 		this.enableIntrospection = enableIntrospection;
 		this.disableXmlSecurity = disableXmlSecurity;
+        this.disableJaxpLimits = disableJaxpLimits;
 		this.accessExternalSchema = accessExternalSchema;
 		this.accessExternalDTD = accessExternalDTD;
 		this.enableExternalEntityProcessing = enableExternalEntityProcessing;
@@ -134,7 +137,11 @@ public class OptionsConfiguration {
 		return disableXmlSecurity;
 	}
 
-	public String getAccessExternalSchema() {
+    public boolean isDisableJaxpLimits() {
+        return disableJaxpLimits;
+    }
+
+    public String getAccessExternalSchema() {
 		return accessExternalSchema;
 	}
 
@@ -207,22 +214,24 @@ public class OptionsConfiguration {
 						"enableIntrospection={10}\n " +
 						//
 						"disableXmlSecurity={11}\n " +
+                        //
+                        "disableJaxpLimits={12}\n " +
 						//
-						"accessExternalSchema={12}\n " +
+						"accessExternalSchema={13}\n " +
 						//
-						"accessExternalDTD={13}\n " +
+						"accessExternalDTD={14}\n " +
 						//
-						"contentForWildcard={14}\n " +
+						"contentForWildcard={15}\n " +
 						//
-						"extension={15}\n " +
+						"extension={16}\n " +
 						//
-						"strict={16}\n " +
+						"strict={17}\n " +
 						//
-						"verbose={17}\n " +
+						"verbose={18}\n " +
 						//
-						"debugMode={18}\n " +
+						"debugMode={19}\n " +
 						//
-						"arguments={19}" +
+						"arguments={20}" +
 						//
 						"]",
 				// 0
@@ -233,10 +242,11 @@ public class OptionsConfiguration {
 				getSystemIds(bindFiles), plugins, readOnly,
 				packageLevelAnnotations, noFileHeader,
 				// 10
-				enableIntrospection, disableXmlSecurity, accessExternalSchema,
-				accessExternalDTD, contentForWildcard,
+                enableIntrospection, disableXmlSecurity, disableJaxpLimits, accessExternalSchema, accessExternalDTD,
 				// 15
-				extension, strict, verbose, debugMode, arguments);
+                contentForWildcard, extension, strict, verbose, debugMode,
+                // 20
+                arguments);
 
 	}
 

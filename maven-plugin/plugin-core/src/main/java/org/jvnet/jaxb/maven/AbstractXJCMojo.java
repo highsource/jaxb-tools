@@ -620,6 +620,20 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 		this.disableXmlSecurity = disableXmlSecurity;
 	}
 
+    /**
+     * If 'true', disables XML JAXP Limits when parsing XML documents
+     */
+    @Parameter(defaultValue = "false", property = "maven.xjc2.disableJaxpLimits")
+    private boolean disableJaxpLimits = false;
+
+    public boolean getDisableJaxpLimits() {
+        return disableJaxpLimits;
+    }
+
+    public void setDisableJaxpLimits(boolean disableJaxpLimits) {
+        this.disableJaxpLimits = disableJaxpLimits;
+    }
+
 	/**
 	 * Restrict access to the protocols specified for external reference set by
 	 * the schemaLocation attribute, Import and Include element. Value: a list

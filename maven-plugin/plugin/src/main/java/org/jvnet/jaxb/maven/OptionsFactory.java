@@ -63,6 +63,16 @@ public class OptionsFactory implements IOptionsFactory<Options> {
 				.isEnableIntrospection();
 		options.disableXmlSecurity = optionsConfiguration
 				.isDisableXmlSecurity();
+        if (optionsConfiguration.isDisableJaxpLimits()) {
+            System.setProperty("jdk.xml.entityExpansionLimit", "0");
+            System.setProperty("jdk.xml.elementAttributeLimit", "0");
+            System.setProperty("jdk.xml.maxOccurLimit", "0");
+            System.setProperty("jdk.xml.totalEntitySizeLimit", "0");
+            System.setProperty("jdk.xml.maxGeneralEntitySizeLimit", "0");
+            System.setProperty("jdk.xml.maxParameterEntitySizeLimit", "0");
+            System.setProperty("jdk.xml.entityReplacementLimit", "0");
+            System.setProperty("jdk.xml.maxElementDepth", "0");
+        }
 		if (optionsConfiguration.getAccessExternalSchema() != null) {
 			System.setProperty("javax.xml.accessExternalSchema",
 					optionsConfiguration.getAccessExternalSchema());

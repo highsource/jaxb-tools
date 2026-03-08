@@ -1473,7 +1473,14 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 		String[] includesArray = includes.toArray(new String[includes.size()]);
 		String[] excludesArray = excludes.toArray(new String[excludes.size()]);
 		try {
-			final List<File> files = IOUtils.scanDirectoryForFiles(
+            if (directory.startsWith("classpath:")) {
+                String classpathDirectory = directory.replaceFirst("classpath:", "");
+                return IOUtils.scanClasspathDirectoryForFiles(
+                    getBuildContext(), new File(classpathDirectory), includesArray,
+                    excludesArray, !getDisableDefaultExcludes());
+            }
+
+            final List<File> files = IOUtils.scanDirectoryForFiles(
 					getBuildContext(), new File(directory), includesArray,
 					excludesArray, !getDisableDefaultExcludes());
 

@@ -2,6 +2,7 @@ package org.jvnet.jaxb.maven.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -15,6 +16,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.stream.Collectors;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.util.DirectoryScanner;
@@ -135,6 +137,27 @@ public class IOUtils {
             throw new MojoExecutionException(
                 "Unable to read the artifact JAR file [" + artifactFile.getAbsolutePath() + "].", ioex);
         }
+    }
+
+    public static List<URI> scanClasspathDirectoryForFiles(BuildContext buildContext, final File directory,
+                                                   final String[] includes, final String[] excludes, boolean defaultExcludes) throws IOException, MojoExecutionException {
+
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        URL url = loader.getResource(directory.getPath());
+
+        String path = url.getPath();
+        File file = new File(path);
+
+        if (file.isDirectory()) {
+            return scanDirectoryForFiles(buildContext, file, includes, excludes, defaultExcludes).stream()
+                .map(File::toURI)
+                .collect(Collectors.toList());
+        } else {
+            path = ((JarURLConnection) url.openConnection()).getJarFile().getName();
+            file = new File(path);
+            return scanJarForFiles(buildContext, file, includes, excludes, defaultExcludes);
+        }
+
     }
 
 	private static boolean isWildcard (final String s) {

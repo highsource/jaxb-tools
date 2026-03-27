@@ -48,6 +48,19 @@ public class ToStringPlugin extends AbstractParameterizablePlugin {
 	public String getUsage() {
 		return "TBD";
 	}
+	@Override
+	protected void setProperty(String propertyName, String value) {
+		switch (propertyName) {
+		case "toStringStrategyClass":
+			setToStringStrategyClass(value);
+			return;
+		case "toStringEnums":
+			setToStringEnums(Boolean.parseBoolean(value));
+			return;
+		default:
+			super.setProperty(propertyName, value);
+		}
+	}
 
 	private FieldAccessorFactory fieldAccessorFactory = PropertyFieldAccessorFactory.INSTANCE;
 

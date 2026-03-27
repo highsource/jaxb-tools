@@ -84,7 +84,37 @@ public class EjbPlugin extends AbstractParameterizablePlugin {
 		return "  -Xhyperjaxb3-ejb: Hyperjaxb3 EJB plugin";
 	}
 
-	private String roundtripTestClassName;
+	@Override
+	protected void setProperty(String propertyName, String value) {
+		switch (propertyName) {
+		case "roundtripTestClassName":
+			setRoundtripTestClassName(value);
+			return;
+		case "persistenceUnitName":
+			setPersistenceUnitName(value);
+			return;
+		case "targetDir":
+			setTargetDir(new File(value));
+			return;
+		case "persistenceXml":
+			setPersistenceXml(new File(value));
+			return;
+		case "applicationContextClassName":
+			setApplicationContextClassName(value);
+			return;
+		case "maxIdentifierLength":
+			setMaxIdentifierLength(Integer.parseInt(value));
+			return;
+		case "result":
+			setResult(value);
+			return;
+		default:
+			super.setProperty(propertyName, value);
+		}
+	}
+
+
+    private String roundtripTestClassName;
 
 	public String getRoundtripTestClassName() {
 		return roundtripTestClassName;

@@ -2,8 +2,6 @@ package org.jvnet.jaxb.plugin;
 
 import java.io.IOException;
 
-import org.apache.commons.beanutils.BeanUtils;
-
 import com.sun.tools.xjc.BadCommandLineException;
 import com.sun.tools.xjc.Options;
 
@@ -42,14 +40,22 @@ public abstract class AbstractParameterizablePlugin extends AbstractPlugin {
 
 			final String value = arg.substring(equalsPosition + 1);
 			consumed++;
-			try {
-				BeanUtils.setProperty(this, propertyName, value);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				throw new BadCommandLineException("Error setting property ["
-						+ propertyName + "], value [" + value + "].");
-			}
+			setProperty(propertyName, value);
 		}
 		return consumed;
+	}
+
+	/**
+	 * Set the {@code propertyName} filed of this {@link AbstractParameterizablePlugin} to the specified {@code value}.
+	 * <p>
+	 * This implementation always throws {@link UnsupportedOperationException}.
+	 * It is up to the subclasses of {@link #AbstractParameterizablePlugin()} to property implement this method and
+	 * possibly delegate to this implementation if an unknown property occurs.
+	 *
+	 * @param propertyName the field to set
+	 * @param value the value to set
+	 */
+	protected void setProperty(String propertyName, String value) {
+		throw new UnsupportedOperationException("Cannot set property " + propertyName + " on " + this.getClass().getName());
 	}
 }

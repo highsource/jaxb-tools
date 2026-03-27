@@ -50,6 +50,17 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 		return "TBD";
 	}
 
+	@Override
+	protected void setProperty(String propertyName, String value) {
+		switch (propertyName) {
+		case "mergeStrategyClass":
+			setMergeStrategyClass(value);
+			return;
+		default:
+			super.setProperty(propertyName, value);
+		}
+	}
+
 	private FieldAccessorFactory fieldAccessorFactory = PropertyFieldAccessorFactory.INSTANCE;
 
 	public FieldAccessorFactory getFieldAccessorFactory() {

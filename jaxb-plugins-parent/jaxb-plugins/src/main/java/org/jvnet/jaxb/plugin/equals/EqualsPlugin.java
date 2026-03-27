@@ -1,5 +1,6 @@
 package org.jvnet.jaxb.plugin.equals;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -46,6 +47,17 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 	@Override
 	public String getUsage() {
 		return "TBD";
+	}
+
+	@Override
+	protected void setProperty(String propertyName, String value) {
+		switch (propertyName) {
+		case "equalsStrategyClass":
+			setEqualsStrategyClass(value);
+			return;
+		default:
+			super.setProperty(propertyName, value);
+		}
 	}
 
 	private FieldAccessorFactory fieldAccessorFactory = PropertyFieldAccessorFactory.INSTANCE;

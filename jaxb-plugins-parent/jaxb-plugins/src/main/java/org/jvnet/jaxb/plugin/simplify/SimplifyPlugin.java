@@ -57,6 +57,16 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 				+ " Please visit https://github.com/highsource/jaxb-tools/wiki/JAXB2-Simplify-Plugin"
 				+ " for plugin documentation.";
 	}
+	@Override
+	protected void setProperty(String propertyName, String value) {
+		switch (propertyName) {
+		case "usePluralForm":
+			setUsePluralForm(Boolean.parseBoolean(value));
+			return;
+		default:
+			super.setProperty(propertyName, value);
+		}
+	}
 
     private Ignoring ignoring = new ComposedIgnoring(
         logger,

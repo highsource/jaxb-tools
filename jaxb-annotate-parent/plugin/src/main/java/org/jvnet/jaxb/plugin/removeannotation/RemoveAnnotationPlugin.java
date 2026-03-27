@@ -189,6 +189,16 @@ public class RemoveAnnotationPlugin extends AbstractParameterizablePlugin {
 	public String getUsage() {
 		return "TBD";
 	}
+        @Override
+        protected void setProperty(String propertyName, String value) {
+                switch (propertyName) {
+                case "defaultFieldTarget":
+                        setDefaultFieldTarget(value);
+                        return;
+                default:
+                        super.setProperty(propertyName, value);
+                }
+        }
 
 	private String defaultFieldTarget = "getter";
 

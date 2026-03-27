@@ -40,6 +40,17 @@ public class SettersPlugin extends AbstractParameterizablePlugin {
 		return "Generates setters for collections.";
 	}
 
+	@Override
+	protected void setProperty(String propertyName, String value) {
+		switch (propertyName) {
+		case "mode":
+			setMode(value);
+			return;
+		default:
+			super.setProperty(propertyName, value);
+		}
+	}
+
 	public boolean run(Outline outline, Options opt, ErrorHandler errorHandler) {
 		for (final ClassOutline classOutline : outline.getClasses())
 			if (!getIgnoring().isIgnored(classOutline)) {

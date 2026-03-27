@@ -44,6 +44,16 @@ public class MapInitPlugin extends AbstractParameterizablePlugin {
         return "Change getter for maps to initialize Maps.";
     }
 
+	@Override
+	protected void setProperty(String propertyName, String value) {
+		switch (propertyName) {
+		case "mapClass":
+			setMapClass(value);
+			return;
+		default:
+			super.setProperty(propertyName, value);
+		}
+	}
     private String mapClass = HashMap.class.getName();
 
     public void setMapClass(String mapClass) {

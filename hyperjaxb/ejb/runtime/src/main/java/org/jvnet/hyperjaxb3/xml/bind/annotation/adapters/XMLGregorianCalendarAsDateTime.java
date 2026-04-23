@@ -23,5 +23,6 @@ public class XMLGregorianCalendarAsDateTime extends
 		calendar.setMinute(date.getMinutes());
 		calendar.setSecond(date.getSeconds());
 		calendar.setMillisecond(((int) (date.getTime() % 1000) + 1000) % 1000);
+        calendar.setTimezone(-date.getTimezoneOffset());
 	}
 }

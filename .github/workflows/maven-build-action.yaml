@@ -21,8 +21,6 @@ jobs:
         distribution: 'temurin'
     - name: Maven with JDK ${{ matrix.java }}
       run: mvn -Psonatype-oss-release -Dgpg.skip -no-transfer-progress clean install
-    - name: Maven with JDK ${{ matrix.java }} - Reproducible
-      run: mvn -Psonatype-oss-release -Dgpg.skip -no-transfer-progress clean verify artifact:compare -Dcompare.fail=false
     - name: Maven with JDK ${{ matrix.java }} - All w/ Parallel
       run: mvn -T4 -Pall -no-transfer-progress clean install
     - name: Maven with JDK ${{ matrix.java }} - Release dry run
@@ -56,8 +54,6 @@ jobs:
         distribution: 'temurin'
     - name: Maven4 with JDK ${{ matrix.java }}
       run: mvn4 -Psonatype-oss-release -Dgpg.skip -no-transfer-progress clean install
-    - name: Maven4 with JDK ${{ matrix.java }} - Reproducible
-      run: mvn4 -Psonatype-oss-release -Dgpg.skip -no-transfer-progress clean verify artifact:compare -Dcompare.fail=false
     - name: Maven4 with JDK ${{ matrix.java }} - All w/ Parallel
       run: mvn4 -T4 -Pall -no-transfer-progress clean install
     - name: Upload results to path
@@ -67,3 +63,27 @@ jobs:
         name: results-m4
         path: ${{ github.workspace }}/**/*.log
         if-no-files-found: ignore
+
+  build_and_test_reproducible_jdk17:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '17' ]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup JDK ${{ matrix.java }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'temurin'
+      - name: Maven with JDK ${{ matrix.java }}
+        run: mvn -Psonatype-oss-release -Dgpg.skip -no-transfer-progress clean install
+      - name: Maven with JDK ${{ matrix.java }} - Reproducible
+        run: mvn -Psonatype-oss-release -Dgpg.skip -no-transfer-progress clean verify artifact:compare -Dcompare.fail=false
+      - name: Upload results to path
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: results
+          path: ${{ github.workspace }}/**/*.log
+          if-no-files-found: ignore

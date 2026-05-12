@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.xml.namespace.QName;
 
+import com.sun.codemodel.JType;
 import org.jvnet.jaxb.lang.Equals;
 import org.jvnet.jaxb.lang.EqualsStrategy;
 import org.jvnet.jaxb.lang.JAXBEqualsStrategy;
@@ -188,10 +189,9 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 
 			final JExpression _this = JExpr._this();
 
-			final FieldOutline[] declaredFields = FieldOutlineUtils.filter(
-					classOutline.getDeclaredFields(), getIgnoring());
+			final FieldOutline[] declaredFields = FieldOutlineUtils.filter(classOutline.getDeclaredFields(), getIgnoring());
 
-			if (declaredFields.length > 0) {
+			if (declaredFields.length > 0 || classOutline.target.declaresAttributeWildcard()) {
 
 				final JVar _that = body.decl(JMod.FINAL, theClass, "that",
 						JExpr.cast(theClass, object));
@@ -247,6 +247,38 @@ public class EqualsPlugin extends AbstractParameterizablePlugin {
 									.arg(rightFieldHasSetValue)))._then()
 							._return(JExpr.FALSE);
 				}
+
+                if (classOutline.target.declaresAttributeWildcard()) {
+                    final JBlock block = body.block();
+
+                    final String name = FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME;
+                    final JType type = FieldOutlineUtils.getOtherAttributesType(codeModel);
+
+                    final JVar lhsValue = block.decl(type, "lhs" + name,
+                        _this.invoke("get" + FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME));
+                    final JVar rhsValue = block.decl(type, "rhs" + name,
+                        _that.invoke("get" + FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME));
+
+                    final JExpression leftFieldLocator = codeModel
+                        .ref(LocatorUtils.class).staticInvoke("property")
+                        .arg(leftLocator)
+                        .arg(FieldOutlineUtils.OTHER_ATTRIBUTES_PRIVATE_NAME)
+                        .arg(lhsValue);
+                    final JExpression rightFieldLocator = codeModel
+                        .ref(LocatorUtils.class).staticInvoke("property")
+                        .arg(rightLocator)
+                        .arg(FieldOutlineUtils.OTHER_ATTRIBUTES_PRIVATE_NAME)
+                        .arg(rhsValue);
+                    block._if(
+                            JOp.not(JExpr.invoke(equalsStrategy, "equals")
+                                .arg(leftFieldLocator)
+                                .arg(rightFieldLocator)
+                                .arg(lhsValue)
+                                .arg(rhsValue)
+                                .arg(JExpr.TRUE)
+                                .arg(JExpr.TRUE)))._then()
+                        ._return(JExpr.FALSE);
+                }
 			}
 			body._return(JExpr.TRUE);
 		}

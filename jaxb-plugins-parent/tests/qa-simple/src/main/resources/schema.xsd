@@ -148,6 +148,9 @@
 			<xs:pattern value="[A-Z]{2}([0-9]|[A-Z]){7}"/>
 		</xs:restriction>
 	</xs:simpleType>
+  <xs:complexType name="complexTypeWithAny">
+    <xs:anyAttribute namespace="##other" processContents="strict"/>
+  </xs:complexType>
 	<xs:element name="facet" type="facetType"/>
 	<xs:complexType name="facetType">
 		<xs:sequence>

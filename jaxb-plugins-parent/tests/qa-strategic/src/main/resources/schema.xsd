@@ -149,6 +149,9 @@
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:element name="facet" type="facetType"/>
+  <xs:complexType name="complexTypeWithAny">
+    <xs:anyAttribute namespace="##other" processContents="strict"/>
+  </xs:complexType>
 	<xs:complexType name="facetType">
 		<xs:sequence>
 			<xs:element name="singlePattern" minOccurs="0">

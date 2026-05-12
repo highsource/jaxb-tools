@@ -217,6 +217,28 @@ public class HashCodePlugin extends AbstractParameterizablePlugin {
 									.arg(valueIsSet));
 				}
 			}
+
+            if (classOutline.target.declaresAttributeWildcard()) {
+                final JBlock block = body.block();
+
+                final JVar theValue = block.decl(FieldOutlineUtils.getOtherAttributesType(codeModel),
+                    "the" + FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME,
+                    JExpr._this().invoke("get" + FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME));
+
+                block.assign(
+                    currentHashCode,
+                    hashCodeStrategy
+                        .invoke("hashCode")
+                        .arg(codeModel
+                            .ref(LocatorUtils.class)
+                            .staticInvoke("property")
+                            .arg(locator)
+                            .arg(FieldOutlineUtils.OTHER_ATTRIBUTES_PRIVATE_NAME)
+                            .arg(theValue))
+                        .arg(currentHashCode).arg(theValue)
+                        .arg(JExpr.TRUE));
+            }
+
 			body._return(currentHashCode);
 		}
 		return hashCode$hashCode;

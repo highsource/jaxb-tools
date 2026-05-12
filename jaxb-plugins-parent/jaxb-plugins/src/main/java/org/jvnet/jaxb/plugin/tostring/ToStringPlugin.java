@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 
 import com.sun.codemodel.JFieldVar;
+import com.sun.codemodel.JType;
 import com.sun.tools.xjc.outline.EnumOutline;
 import org.jvnet.jaxb.lang.JAXBToStringStrategy;
 import org.jvnet.jaxb.lang.ToString;
@@ -264,6 +265,20 @@ public class ToStringPlugin extends AbstractParameterizablePlugin {
 							.arg(valueIsSet);
 				}
 			}
+
+            if (classOutline.target.declaresAttributeWildcard()) {
+                final JBlock block = body.block();
+                final String name = FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME;
+                final JType type = FieldOutlineUtils.getOtherAttributesType(codeModel);
+
+                final JVar theValue = block.decl(type, "the" + name, JExpr._this().invoke("get" + FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME));
+
+                block.invoke(toStringStrategy, "appendField")
+                    .arg(locator)
+                    .arg(JExpr._this())
+                    .arg(JExpr.lit(FieldOutlineUtils.OTHER_ATTRIBUTES_PRIVATE_NAME)).arg(buffer).arg(theValue)
+                    .arg(JExpr.TRUE);
+            }
 			body._return(buffer);
 		}
 		return toString$appendFields;

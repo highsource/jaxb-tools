@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import javax.xml.namespace.QName;
 
-import com.sun.tools.xjc.model.CAttributePropertyInfo;
 import org.jvnet.jaxb.lang.CopyStrategy;
 import org.jvnet.jaxb.lang.CopyTo;
 import org.jvnet.jaxb.lang.JAXBCopyStrategy;
@@ -262,7 +261,7 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 			final FieldOutline[] declaredFields = FieldOutlineUtils.filter(
 					classOutline.getDeclaredFields(), getIgnoring());
 
-			if (declaredFields.length > 0) {
+			if (declaredFields.length > 0 || classOutline.target.declaresAttributeWildcard()) {
 
 				final JBlock bl = body._if(draftCopy._instanceof(theClass))
 						._then();
@@ -343,6 +342,20 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 
 					copyFieldAccessor.unsetValues(ifShouldBeUnsetBlock);
 				}
+
+                if (classOutline.target.declaresAttributeWildcard()) {
+                    final JBlock block = bl.block();
+
+                    final String name = FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME;
+                    final JType type = FieldOutlineUtils.getOtherAttributesType(codeModel);
+
+                    final JVar sourceField = block.decl(type, "source" + name,
+                        JExpr._this().invoke("get" + FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME));
+                    final JVar copyField = block.decl(type, "copy" + name,
+                        copy.invoke("get" + FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME));
+                    block.invoke(copyField, "clear");
+                    block.invoke(copyField, "putAll").arg(sourceField);
+                }
 			}
 
 			body._return(draftCopy);

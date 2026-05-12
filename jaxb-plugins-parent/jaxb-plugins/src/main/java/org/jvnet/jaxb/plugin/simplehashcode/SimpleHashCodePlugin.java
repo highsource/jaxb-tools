@@ -1,6 +1,7 @@
 package org.jvnet.jaxb.plugin.simplehashcode;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import javax.xml.namespace.QName;
 
@@ -34,8 +35,8 @@ public class SimpleHashCodePlugin extends
 
 	@Override
 	public String getUsage() {
-		return "  -XsimpleEquals :  Generate reflection-free runtime-free hashCode() methods.\n" +
-		       "                    See https://github.com/highsource/jaxb-tools/wiki/JAXB2-SimpleHashCode-Plugin";
+		return "  -XsimpleHashCode :  Generate reflection-free runtime-free hashCode() methods.\n" +
+		       "                      See https://github.com/highsource/jaxb-tools/wiki/JAXB2-SimpleHashCode-Plugin";
 	}
 
 	@Override
@@ -121,6 +122,25 @@ public class SimpleHashCodePlugin extends
 									getMultiplier(), value, hasSetValue));
 				}
 			}
+
+            if (classOutline.target.declaresAttributeWildcard()) {
+                final JBlock block = body.block();
+
+                block.assign(currentHashCode,
+                    currentHashCode.mul(JExpr.lit(getMultiplier())));
+                final JType exposedType = FieldOutlineUtils.getOtherAttributesType(codeModel);
+                final JVar value = block.decl(exposedType, "the" + FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME,
+                    JExpr._this().invoke("get" + FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME));
+
+                getCodeGenerator().generate(
+                    block,
+                    exposedType,
+                    Collections.emptyList(),
+                    true,
+                    new HashCodeArguments(codeModel, currentHashCode,
+                        getMultiplier(), value, JExpr.TRUE));
+            }
+
 			body._return(currentHashCode);
 		}
 	}

@@ -1,6 +1,7 @@
 package org.jvnet.jaxb.plugin.simpleequals;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import javax.xml.namespace.QName;
 
@@ -77,7 +78,7 @@ public class SimpleEqualsPlugin extends
 		final FieldOutline[] fields = FieldOutlineUtils.filter(
 				classOutline.getDeclaredFields(), getIgnoring());
 
-		if (fields.length > 0) {
+		if (fields.length > 0 || classOutline.target.declaresAttributeWildcard()) {
 
 			final JVar _that = body.decl(JMod.FINAL, theClass, "that",
 					JExpr.cast(theClass, object));
@@ -133,6 +134,26 @@ public class SimpleEqualsPlugin extends
 						new EqualsArguments(codeModel, leftValue,
 								leftHasSetValue, rightValue, rightHasSetValue));
 			}
+
+            if (classOutline.target.declaresAttributeWildcard()) {
+                final JBlock block = body.block();
+
+                final String name = FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME;
+
+                final JType type = FieldOutlineUtils.getOtherAttributesType(codeModel);
+                final JVar leftValue = block.decl(type, "left" + name,
+                    _this.invoke("get" + FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME));
+                final JVar rightValue = block.decl(type, "left" + name,
+                    _that.invoke("get" + FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME));
+
+                getCodeGenerator().generate(
+                    block,
+                    type,
+                    Collections.emptyList(),
+                    true,
+                    new EqualsArguments(codeModel, leftValue,
+                        JExpr.TRUE, rightValue, JExpr.TRUE));
+            }
 		}
 		body._return(JExpr.TRUE);
 

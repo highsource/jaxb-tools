@@ -194,7 +194,7 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 			final FieldOutline[] declaredFields = FieldOutlineUtils.filter(
 					classOutline.getDeclaredFields(), getIgnoring());
 
-			if (declaredFields.length > 0) {
+			if (declaredFields.length > 0 || classOutline.target.declaresAttributeWildcard()) {
 
 				final JBlock body = methodBody._if(right._instanceof(theClass))
 						._then();
@@ -300,6 +300,43 @@ public class MergeablePlugin extends AbstractParameterizablePlugin {
 
 					targetFieldAccessor.unsetValues(ifShouldBeUnsetBlock);
 				}
+
+                if (classOutline.target.declaresAttributeWildcard()) {
+                    final JBlock block = body.block();
+
+                    final String name = FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME;
+                    final JType type = FieldOutlineUtils.getOtherAttributesType(codeModel);
+
+                    final JVar lhsValue = block.decl(type, "lhs" + name,
+                        leftObject.invoke("get" + FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME));
+                    final JVar rhsValue = block.decl(type, "rhs" + name,
+                        rightObject.invoke("get" + FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME));
+
+                    final JExpression leftFieldLocator = codeModel
+                        .ref(LocatorUtils.class).staticInvoke("property")
+                        .arg(leftLocator)
+                        .arg(FieldOutlineUtils.OTHER_ATTRIBUTES_PRIVATE_NAME)
+                        .arg(lhsValue);
+                    final JExpression rightFieldLocator = codeModel
+                        .ref(LocatorUtils.class).staticInvoke("property")
+                        .arg(rightLocator)
+                        .arg(FieldOutlineUtils.OTHER_ATTRIBUTES_PRIVATE_NAME)
+                        .arg(rhsValue);
+
+                    final JExpression mergedValue = JExpr.cast(
+                        type,
+                        mergeStrategy.invoke("merge")
+                            .arg(leftFieldLocator)
+                            .arg(rightFieldLocator)
+                            .arg(lhsValue)
+                            .arg(rhsValue)
+                            .arg(JExpr.TRUE)
+                            .arg(JExpr.TRUE));
+
+                    final JVar merged = block.decl(type, "merged" + name, target.invoke("get" + FieldOutlineUtils.OTHER_ATTRIBUTES_PUBLIC_NAME));
+                    block.invoke(merged, "clear");
+                    block.invoke(merged, "putAll").arg(mergedValue);
+                }
 			}
 		}
 		return mergeFrom;

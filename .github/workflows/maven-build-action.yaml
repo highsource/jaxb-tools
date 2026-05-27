@@ -77,9 +77,9 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
       - name: Maven with JDK ${{ matrix.java }}
-        run: mvn -Psonatype-oss-release -Dgpg.skip -no-transfer-progress clean install
+        run: mvn -Dgpg.skip -no-transfer-progress clean install
       - name: Maven with JDK ${{ matrix.java }} - Reproducible
-        run: mvn -Psonatype-oss-release -Dgpg.skip -no-transfer-progress clean verify artifact:compare -Dcompare.fail=false
+        run: mvn -Dgpg.skip -no-transfer-progress clean verify artifact:compare -Dcompare.fail=false
       - name: Upload results to path
         uses: actions/upload-artifact@v4
         if: failure()

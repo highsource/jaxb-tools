@@ -82,7 +82,7 @@ jobs:
         run: mvn -Dgpg.skip -no-transfer-progress clean verify artifact:compare -Dcompare.fail=false
       - name: Upload buildinfo to path
         uses: actions/upload-artifact@v4
-        if: failure()
+        if: always()
         with:
           name: results
           path: ${{ github.workspace }}/**/*.build*

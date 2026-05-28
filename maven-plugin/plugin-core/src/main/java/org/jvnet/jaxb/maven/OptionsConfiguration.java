@@ -27,6 +27,7 @@ public class OptionsConfiguration {
 
 	private final boolean packageLevelAnnotations;
 	private final boolean noFileHeader;
+    private final boolean noFileHeaderDate;
 	private final boolean enableIntrospection;
 	private final boolean disableXmlSecurity;
 	private final String accessExternalSchema;
@@ -52,7 +53,7 @@ public class OptionsConfiguration {
 			List<InputSource> grammars, List<InputSource> bindFiles,
 			EntityResolver entityResolver, String generatePackage,
 			File generateDirectory, boolean readOnly,
-			boolean packageLevelAnnotations, boolean noFileHeader,
+			boolean packageLevelAnnotations, boolean noFileHeader, boolean noFileHeaderDate,
 			boolean enableIntrospection, boolean disableXmlSecurity,
 			String accessExternalSchema, String accessExternalDTD,
 			boolean enableExternalEntityProcessing,
@@ -71,6 +72,7 @@ public class OptionsConfiguration {
 		this.readOnly = readOnly;
 		this.packageLevelAnnotations = packageLevelAnnotations;
 		this.noFileHeader = noFileHeader;
+        this.noFileHeaderDate = noFileHeaderDate;
 		this.enableIntrospection = enableIntrospection;
 		this.disableXmlSecurity = disableXmlSecurity;
 		this.accessExternalSchema = accessExternalSchema;
@@ -125,6 +127,10 @@ public class OptionsConfiguration {
 	public boolean isNoFileHeader() {
 		return noFileHeader;
 	}
+
+    public boolean isNoFileHeaderDate() {
+        return noFileHeaderDate;
+    }
 
 	public boolean isEnableIntrospection() {
 		return enableIntrospection;
@@ -203,26 +209,28 @@ public class OptionsConfiguration {
 						"packageLevelAnnotations={8}\n " +
 						//
 						"noFileHeader={9}\n " +
+                        //
+                        "noFileHeaderDate={10}\n " +
 						//
-						"enableIntrospection={10}\n " +
+						"enableIntrospection={11}\n " +
 						//
-						"disableXmlSecurity={11}\n " +
+						"disableXmlSecurity={12}\n " +
 						//
-						"accessExternalSchema={12}\n " +
+						"accessExternalSchema={13}\n " +
 						//
-						"accessExternalDTD={13}\n " +
+						"accessExternalDTD={14}\n " +
 						//
-						"contentForWildcard={14}\n " +
+						"contentForWildcard={15}\n " +
 						//
-						"extension={15}\n " +
+						"extension={16}\n " +
 						//
-						"strict={16}\n " +
+						"strict={17}\n " +
 						//
-						"verbose={17}\n " +
+						"verbose={18}\n " +
 						//
-						"debugMode={18}\n " +
+						"debugMode={19}\n " +
 						//
-						"arguments={19}" +
+						"arguments={20}" +
 						//
 						"]",
 				// 0
@@ -233,10 +241,12 @@ public class OptionsConfiguration {
 				getSystemIds(bindFiles), plugins, readOnly,
 				packageLevelAnnotations, noFileHeader,
 				// 10
-				enableIntrospection, disableXmlSecurity, accessExternalSchema,
-				accessExternalDTD, contentForWildcard,
+                noFileHeaderDate, enableIntrospection, disableXmlSecurity, accessExternalSchema,
+				accessExternalDTD,
 				// 15
-				extension, strict, verbose, debugMode, arguments);
+                contentForWildcard, extension, strict, verbose, debugMode,
+                // 20
+                arguments);
 
 	}
 

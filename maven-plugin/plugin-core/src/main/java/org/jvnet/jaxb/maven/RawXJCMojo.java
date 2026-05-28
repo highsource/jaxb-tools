@@ -1143,7 +1143,7 @@ public abstract class RawXJCMojo<O> extends AbstractXJCMojo<O> {
 
 		final OptionsConfiguration optionsConfiguration = new OptionsConfiguration(getEncoding(), getSchemaLanguage(),
 				getGrammars(), getBindFiles(), getEntityResolver(), getGeneratePackage(), getGenerateDirectory(),
-				getReadOnly(), getPackageLevelAnnotations(), getNoFileHeader(), getEnableIntrospection(),
+				getReadOnly(), getPackageLevelAnnotations(), getNoFileHeader(), getNoFileHeaderDate(), getEnableIntrospection(),
 				getDisableXmlSecurity(), getAccessExternalSchema(), getAccessExternalDTD(), isEnableExternalEntityProcessing(),
 				getContentForWildcard(),
 				getExtension(), getStrict(), getVerbose(), getDebug(), getArguments(), getXjcPluginURLs(),

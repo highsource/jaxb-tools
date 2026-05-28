@@ -36,8 +36,7 @@ public class OptionsFactory implements IOptionsFactory<Options> {
 			options.encoding = createEncoding(encoding);
 		}
 
-		options.setSchemaLanguage(createLanguage(optionsConfiguration
-				.getSchemaLanguage()));
+		options.setSchemaLanguage(createLanguage(optionsConfiguration.getSchemaLanguage()));
 
 		options.entityResolver = optionsConfiguration.getEntityResolver();
 
@@ -56,13 +55,11 @@ public class OptionsFactory implements IOptionsFactory<Options> {
 
 		options.strictCheck = optionsConfiguration.isStrict();
 		options.readOnly = optionsConfiguration.isReadOnly();
-		options.packageLevelAnnotations = optionsConfiguration
-				.isPackageLevelAnnotations();
+		options.packageLevelAnnotations = optionsConfiguration.isPackageLevelAnnotations();
 		options.noFileHeader = optionsConfiguration.isNoFileHeader();
-		options.enableIntrospection = optionsConfiguration
-				.isEnableIntrospection();
-		options.disableXmlSecurity = optionsConfiguration
-				.isDisableXmlSecurity();
+        options.noFileHeaderDate = optionsConfiguration.isNoFileHeaderDate();
+		options.enableIntrospection = optionsConfiguration.isEnableIntrospection();
+		options.disableXmlSecurity = optionsConfiguration.isDisableXmlSecurity();
 		if (optionsConfiguration.getAccessExternalSchema() != null) {
 			System.setProperty("javax.xml.accessExternalSchema",
 					optionsConfiguration.getAccessExternalSchema());
@@ -74,8 +71,7 @@ public class OptionsFactory implements IOptionsFactory<Options> {
 		if (optionsConfiguration.isEnableExternalEntityProcessing()) {
 			System.setProperty("enableExternalEntityProcessing", Boolean.TRUE.toString());
 		}
-		options.contentForWildcard = optionsConfiguration
-				.isContentForWildcard();
+		options.contentForWildcard = optionsConfiguration.isContentForWildcard();
 
 		if (optionsConfiguration.isExtension()) {
 			options.compatibilityMode = Options.EXTENSION;
@@ -83,8 +79,7 @@ public class OptionsFactory implements IOptionsFactory<Options> {
 
 		final List<String> arguments = optionsConfiguration.getArguments();
 		try {
-			options.parseArguments(arguments.toArray(new String[arguments
-					.size()]));
+			options.parseArguments(arguments.toArray(new String[arguments.size()]));
 		}
 
 		catch (BadCommandLineException bclex) {

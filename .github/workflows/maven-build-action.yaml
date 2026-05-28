@@ -79,7 +79,7 @@ jobs:
       - name: Maven with JDK ${{ matrix.java }}
         run: mvn -Dgpg.skip -no-transfer-progress clean install
       - name: Maven with JDK ${{ matrix.java }} - Reproducible
-        run: mvn -Dgpg.skip -no-transfer-progress clean verify artifact:compare -Dcompare.fail=false
+        run: mvn -Dgpg.skip -no-transfer-progress clean verify artifact:compare -Dcompare.fail=true
       - name: Upload buildinfo to path
         uses: actions/upload-artifact@v4
         if: always()

@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.jvnet.jaxb.locator.ObjectLocator;
 
@@ -30,11 +33,25 @@ public class JAXBMergeCollectionsStrategy extends JAXBMergeStrategy {
 			set.addAll(leftCollection);
 			set.addAll(rightCollection);
 			return set;
-		} else {
+        } else {
 			return super.mergeInternal(leftLocator, rightLocator,
 					leftCollection, rightCollection);
 		}
 	}
+
+    protected Object mergeInternal(ObjectLocator leftLocator,
+                                   ObjectLocator rightLocator,
+                                   @SuppressWarnings("rawtypes") Map leftMap,
+                                   @SuppressWarnings("rawtypes") Map rightMap) {
+        @SuppressWarnings("rawtypes") Set<Map.Entry> leftMapEntrySet = leftMap.entrySet();
+        @SuppressWarnings("rawtypes") Set<Map.Entry> rightMapEntrySet = rightMap.entrySet();
+
+        return Stream.concat(leftMapEntrySet.stream(), rightMapEntrySet.stream()).collect(Collectors.toMap(
+            (v) -> v.getKey(),
+            (v) -> v.getValue(),
+            (value1, value2) -> merge(leftLocator, rightLocator, value1, value2)
+        ));
+    }
 
 	public static final JAXBMergeCollectionsStrategy INSTANCE = new JAXBMergeCollectionsStrategy();
 

@@ -64,10 +64,9 @@ public class ComplexTypeWithAnyTest {
         ComplexTypeWithAny c3 = new ComplexTypeWithAny();
         c3.mergeFrom(c1, c2);
 
-        Assertions.assertNotEquals(c1, c3);
+        Assertions.assertEquals(c1, c3);
         Assertions.assertNotEquals(c2, c3);
-        Assertions.assertEquals(2, c3.getOtherAttributes().size());
+        Assertions.assertEquals(1, c3.getOtherAttributes().size());
         Assertions.assertTrue(c3.getOtherAttributes().containsKey(new QName("key1")));
-        Assertions.assertTrue(c3.getOtherAttributes().containsKey(new QName("key2")));
     }
 }

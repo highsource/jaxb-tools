@@ -967,6 +967,20 @@ public abstract class AbstractXJC2Mojo<O> extends AbstractMojo implements
 	}
 
 	/**
+	 * If true, removes the comment parts in the generated episode files.
+	 */
+	@Parameter(property = "maven.xjc2.removeCommentsFromEpisode", defaultValue = "false")
+	private boolean removeCommentsFromEpisode = false;
+
+	public boolean isRemoveCommentsFromEpisode() {
+		return removeCommentsFromEpisode;
+	}
+
+	public void setRemoveCommentsFromEpisode(boolean removeCommentsFromEpisode) {
+		this.removeCommentsFromEpisode = removeCommentsFromEpisode;
+	}
+
+	/**
 	 * If true, marks generated classes using a @Generated annotation - i.e.
 	 * turns on XJC -mark-generated option. Default is false.
 	 */

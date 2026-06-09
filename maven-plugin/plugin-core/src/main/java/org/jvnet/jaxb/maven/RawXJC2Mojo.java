@@ -80,6 +80,9 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 	public static final String ADD_IF_EXISTS_TO_EPISODE_SCHEMA_BINDINGS_TRANSFORMATION_RESOURCE_NAME = "/"
 			+ RawXJC2Mojo.class.getPackage().getName().replace('.', '/') + "/addIfExistsToEpisodeSchemaBindings.xslt";
 
+	public static final String REMOVE_COMMENTS_FROM_EPISODE_TRANSFORMATION_RESOURCE_NAME = "/"
+			+ RawXJC2Mojo.class.getPackage().getName().replace('.', '/') + "/removeCommentsFromEpisode.xslt";
+
     private final XJCVersion version;
 
 	private Collection<Artifact> xjcPluginArtifacts;
@@ -476,7 +479,8 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 			setupDirectories();
             if (!configurationPhase) {
                 doExecute(options);
-                addIfExistsToEpisodeSchemaBindings();
+              		addIfExistsToEpisodeSchemaBindings();
+              		removeCommentsFromEpisode();
             } else {
                 getLog().info("Sources will not be generated since running in EclipseEmptyBuildContext, XJC will be skipped.");
             }
@@ -572,6 +576,39 @@ public abstract class RawXJC2Mojo<O> extends AbstractXJC2Mojo<O> {
 		} catch (TransformerException e) {
 			throw new MojoExecutionException(MessageFormat.format(
 					"Error augmenting the episode file [{0}] with if-exists=\"true\" attributes. Transformation failed with an unexpected error.",
+					episodeFile), e);
+		} finally {
+			IOUtil.close(is);
+		}
+	}
+
+	private void removeCommentsFromEpisode() throws MojoExecutionException {
+		if (!getEpisode() || !isRemoveCommentsFromEpisode()) {
+			return;
+		}
+		final File episodeFile = getEpisodeFile();
+		if (!episodeFile.canWrite()) {
+			getLog().warn(MessageFormat
+					.format("Episode file [{0}] is not writable, could not remove comment parts.", episodeFile));
+			return;
+		}
+		InputStream is = null;
+		try {
+			final TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			is = getClass().getResourceAsStream(REMOVE_COMMENTS_FROM_EPISODE_TRANSFORMATION_RESOURCE_NAME);
+			final Transformer removeCommentsFromEpisodeTransformer = transformerFactory
+					.newTransformer(new StreamSource(is));
+			final DOMResult result = new DOMResult();
+			removeCommentsFromEpisodeTransformer.transform(new StreamSource(episodeFile), result);
+			final DOMSource source = new DOMSource(result.getNode());
+			final Transformer identityTransformer = transformerFactory.newTransformer();
+			identityTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			identityTransformer.transform(source, new StreamResult(episodeFile));
+			getLog().info(MessageFormat.format("Episode file [{0}] was augmented by removing comment parts.",
+					episodeFile));
+		} catch (TransformerException e) {
+			throw new MojoExecutionException(MessageFormat.format(
+					"Error augmenting the episode file [{0}] by removing comment parts. Transformation failed with an unexpected error.",
 					episodeFile), e);
 		} finally {
 			IOUtil.close(is);

@@ -26,7 +26,7 @@ jobs:
     - name: Maven with JDK ${{ matrix.java }} - Release dry run
       run: mvn -Prelease-dry-run,sonatype-oss-release,release -DperformRelease -DdryRun=true -Darguments="-Dgpg.skip=true" -B release:clean release:prepare clean install
     - name: Upload results to path
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       if: failure()
       with:
         name: results
@@ -57,7 +57,7 @@ jobs:
     - name: Maven4 with JDK ${{ matrix.java }} - All w/ Parallel
       run: mvn4 -T4 -Pall -no-transfer-progress clean install
     - name: Upload results to path
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       if: failure()
       with:
         name: results-m4
@@ -81,7 +81,7 @@ jobs:
       - name: Maven with JDK ${{ matrix.java }} - Reproducible
         run: mvn -Dgpg.skip -no-transfer-progress clean verify artifact:compare -Dcompare.fail=true
       - name: Upload buildinfo to path
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: results

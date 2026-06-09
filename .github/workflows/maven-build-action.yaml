@@ -63,3 +63,27 @@ jobs:
         name: results-m4
         path: ${{ github.workspace }}/**/*.log
         if-no-files-found: ignore
+
+  build_and_test_reproducible_jdk17:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '8' ]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup JDK ${{ matrix.java }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'temurin'
+      - name: Maven with JDK ${{ matrix.java }}
+        run: mvn -Dgpg.skip -no-transfer-progress clean install
+      - name: Maven with JDK ${{ matrix.java }} - Reproducible
+        run: mvn -Dgpg.skip -no-transfer-progress clean verify artifact:compare -Dcompare.fail=true
+      - name: Upload buildinfo to path
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: results
+          path: ${{ github.workspace }}/**/*.build*
+          if-no-files-found: ignore

@@ -13,9 +13,9 @@ jobs:
       matrix:
         java: [ '11', '17', '21', '25' ]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Setup JDK ${{ matrix.java }}
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         java-version: ${{ matrix.java }}
         distribution: 'temurin'
@@ -39,7 +39,7 @@ jobs:
       matrix:
         java: [ '17', '21', '25' ]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Setup Maven4
       run: |
         MAVEN_VERSION=4.0.0-rc-5
@@ -48,7 +48,7 @@ jobs:
         sudo mv apache-maven-$MAVEN_VERSION /opt/maven4
         sudo ln -s /opt/maven4/bin/mvn /usr/bin/mvn4  # Create new symbolic link
     - name: Setup JDK ${{ matrix.java }}
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         java-version: ${{ matrix.java }}
         distribution: 'temurin'
@@ -70,9 +70,9 @@ jobs:
       matrix:
         java: [ '17' ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Setup JDK ${{ matrix.java }}
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'

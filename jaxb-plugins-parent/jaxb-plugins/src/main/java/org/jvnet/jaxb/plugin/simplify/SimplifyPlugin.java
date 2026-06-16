@@ -13,6 +13,7 @@ import org.jvnet.jaxb.plugin.ComposedIgnoring;
 import org.jvnet.jaxb.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb.plugin.Ignoring;
 import org.jvnet.jaxb.util.CustomizationUtils;
+import org.jvnet.jaxb.util.FieldAccessorFactory;
 import org.xml.sax.ErrorHandler;
 
 import com.sun.codemodel.JJavaName;
@@ -57,6 +58,15 @@ public class SimplifyPlugin extends AbstractParameterizablePlugin {
 				+ " Please visit https://github.com/highsource/jaxb-tools/wiki/JAXB2-Simplify-Plugin"
 				+ " for plugin documentation.";
 	}
+
+    @Override
+    protected void doSetProperty(String propertyName, String value) throws Exception {
+        if ("usePluralForm".equals(propertyName)) {
+            setUsePluralForm(Boolean.parseBoolean(value));
+        } else {
+            super.doSetProperty(propertyName, value);
+        }
+    }
 
     private Ignoring ignoring = new ComposedIgnoring(
         logger,

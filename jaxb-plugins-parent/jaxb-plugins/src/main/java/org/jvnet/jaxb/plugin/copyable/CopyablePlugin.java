@@ -51,6 +51,17 @@ public class CopyablePlugin extends AbstractParameterizablePlugin {
 		return "TBD";
 	}
 
+    @Override
+    protected void doSetProperty(String propertyName, String value) throws Exception {
+        if ("fieldAccessorFactory".equals(propertyName)) {
+            setFieldAccessorFactory((FieldAccessorFactory) Class.forName(value).getConstructor().newInstance());
+        } else if ("copyStrategyClass".equals(propertyName)) {
+            setCopyStrategyClass(value);
+        } else {
+            super.doSetProperty(propertyName, value);
+        }
+    }
+
 	private FieldAccessorFactory fieldAccessorFactory = PropertyFieldAccessorFactory.INSTANCE;
 
 	public FieldAccessorFactory getFieldAccessorFactory() {

@@ -15,6 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.jvnet.jaxb.plugin.AbstractParameterizablePlugin;
 import org.jvnet.jaxb.util.ClassUtils;
+import org.jvnet.jaxb.util.FieldAccessorFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -66,6 +67,17 @@ public class CustomizationsPlugin extends AbstractParameterizablePlugin {
 	public String getUsage() {
 		return "  -Xcustomizations   :  reads and adds customizations from files";
 	}
+
+    @Override
+    protected void doSetProperty(String propertyName, String value) throws Exception {
+        if ("verbose".equals(propertyName)) {
+            setVerbose(Boolean.parseBoolean(value));
+        } else if ("directory".equals(propertyName)) {
+            setDirectory(new File(value));
+        } else {
+            super.doSetProperty(propertyName, value);
+        }
+    }
 
 	@Override
 	public void postProcessModel(Model model, ErrorHandler errorHandler) {

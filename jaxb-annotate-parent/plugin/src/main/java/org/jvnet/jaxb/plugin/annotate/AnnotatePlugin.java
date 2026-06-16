@@ -164,7 +164,20 @@ public class AnnotatePlugin extends AbstractParameterizablePlugin {
 		return "TBD";
 	}
 
-	private String defaultFieldTarget = "getter";
+    @Override
+    protected void doSetProperty(String propertyName, String value) throws Exception {
+        if ("defaultFieldTarget".equals(propertyName)) {
+            setDefaultFieldTarget(value);
+        } else if ("annotationParser".equals(propertyName)) {
+            setAnnotationParser((XAnnotationParser) Class.forName(value).getDeclaredConstructor().newInstance());
+        } else if ("annotator".equals(propertyName)) {
+            setAnnotator((Annotator) Class.forName(value).getDeclaredConstructor().newInstance());
+        } else {
+            super.doSetProperty(propertyName, value);
+        }
+    }
+
+    private String defaultFieldTarget = "getter";
 
 	public String getDefaultFieldTarget() {
 		return defaultFieldTarget;

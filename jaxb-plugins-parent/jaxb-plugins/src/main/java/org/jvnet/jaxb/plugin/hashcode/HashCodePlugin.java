@@ -47,6 +47,17 @@ public class HashCodePlugin extends AbstractParameterizablePlugin {
 		return "TBD";
 	}
 
+    @Override
+    protected void doSetProperty(String propertyName, String value) throws Exception {
+        if ("fieldAccessorFactory".equals(propertyName)) {
+            setFieldAccessorFactory((FieldAccessorFactory) Class.forName(value).getConstructor().newInstance());
+        } else if ("hashCodeStrategyClass".equals(propertyName)) {
+            setHashCodeStrategyClass(value);
+        } else {
+            super.doSetProperty(propertyName, value);
+        }
+    }
+
 	private FieldAccessorFactory fieldAccessorFactory = PropertyFieldAccessorFactory.INSTANCE;
 
 	public FieldAccessorFactory getFieldAccessorFactory() {

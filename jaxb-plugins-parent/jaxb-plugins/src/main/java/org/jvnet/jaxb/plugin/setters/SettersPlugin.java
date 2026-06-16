@@ -11,6 +11,7 @@ import org.jvnet.jaxb.plugin.ComposedIgnoring;
 import org.jvnet.jaxb.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb.plugin.Ignoring;
 import org.jvnet.jaxb.plugin.util.FieldOutlineUtils;
+import org.jvnet.jaxb.util.FieldAccessorFactory;
 import org.xml.sax.ErrorHandler;
 
 import com.sun.codemodel.JDefinedClass;
@@ -39,6 +40,15 @@ public class SettersPlugin extends AbstractParameterizablePlugin {
 	public String getUsage() {
 		return "Generates setters for collections.";
 	}
+
+    @Override
+    protected void doSetProperty(String propertyName, String value) throws Exception {
+        if ("mode".equals(propertyName)) {
+            setMode(value);
+        } else {
+            super.doSetProperty(propertyName, value);
+        }
+    }
 
 	public boolean run(Outline outline, Options opt, ErrorHandler errorHandler) {
 		for (final ClassOutline classOutline : outline.getClasses())

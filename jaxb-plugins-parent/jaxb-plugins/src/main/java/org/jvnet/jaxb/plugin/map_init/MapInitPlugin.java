@@ -21,6 +21,7 @@ import org.jvnet.jaxb.plugin.Ignoring;
 import org.jvnet.jaxb.plugin.inheritance.ExtendsClass;
 import org.jvnet.jaxb.plugin.util.FieldOutlineUtils;
 import org.jvnet.jaxb.util.CustomizationUtils;
+import org.jvnet.jaxb.util.FieldAccessorFactory;
 import org.xml.sax.ErrorHandler;
 
 import javax.xml.namespace.QName;
@@ -42,6 +43,15 @@ public class MapInitPlugin extends AbstractParameterizablePlugin {
     @Override
     public String getUsage() {
         return "Change getter for maps to initialize Maps.";
+    }
+
+    @Override
+    protected void doSetProperty(String propertyName, String value) throws Exception {
+        if ("mapClass".equals(propertyName)) {
+            setMapClass(value);
+        } else {
+            super.doSetProperty(propertyName, value);
+        }
     }
 
     private String mapClass = HashMap.class.getName();

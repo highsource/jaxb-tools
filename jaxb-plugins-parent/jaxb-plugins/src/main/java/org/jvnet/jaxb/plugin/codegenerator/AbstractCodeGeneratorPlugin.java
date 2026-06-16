@@ -21,6 +21,15 @@ import com.sun.tools.xjc.outline.Outline;
 public abstract class AbstractCodeGeneratorPlugin<A extends Arguments<A>> extends
 		AbstractParameterizablePlugin {
 
+    @Override
+    protected void doSetProperty(String propertyName, String value) throws Exception {
+        if ("fieldAccessorFactory".equals(propertyName)) {
+            setFieldAccessorFactory((FieldAccessorFactory) Class.forName(value).getConstructor().newInstance());
+        } else {
+            super.doSetProperty(propertyName, value);
+        }
+    }
+
 	private FieldAccessorFactory fieldAccessorFactory = PropertyFieldAccessorFactory.INSTANCE;
 
 	public FieldAccessorFactory getFieldAccessorFactory() {

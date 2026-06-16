@@ -17,12 +17,12 @@ import com.sun.tools.xjc.outline.Outline;
 public class AutoInheritancePlugin extends AbstractParameterizablePlugin {
 
 	private String xmlRootElementsExtend = null;
-	private List<String> xmlRootElementsImplement = new LinkedList<String>();
+	private List<String> xmlRootElementsImplement = new LinkedList<>();
 
 	private String xmlTypesExtend = null;
-	private List<String> xmlTypesImplement = new LinkedList<String>();
+	private List<String> xmlTypesImplement = new LinkedList<>();
 
-	private List<String> jaxbElementsImplement = new LinkedList<String>();
+	private List<String> jaxbElementsImplement = new LinkedList<>();
 
 	public String getXmlRootElementsExtend() {
 		return xmlRootElementsExtend;
@@ -73,6 +73,23 @@ public class AutoInheritancePlugin extends AbstractParameterizablePlugin {
 	public String getUsage() {
 		return "TBD";
 	}
+
+    @Override
+    protected void doSetProperty(String propertyName, String value) throws Exception {
+        if ("xmlRootElementsExtend".equals(propertyName)) {
+            setXmlRootElementsExtend(value);
+        } else if ("xmlRootElementsImplement".equals(propertyName)) {
+            setXmlRootElementsImplement(value);
+        } else if ("xmlTypesExtend".equals(propertyName)) {
+            setXmlTypesExtend(value);
+        } else if ("xmlTypesImplement".equals(propertyName)) {
+            setXmlTypesImplement(value);
+        } else if ("jaxbElementsImplement".equals(propertyName)) {
+            setJaxbElementsImplement(value);
+        } else {
+            super.doSetProperty(propertyName, value);
+        }
+    }
 
 	@Override
 	public boolean run(Outline outline, Options opt, ErrorHandler errorHandler) {

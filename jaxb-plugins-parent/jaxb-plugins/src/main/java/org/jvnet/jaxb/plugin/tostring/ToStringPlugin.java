@@ -50,6 +50,19 @@ public class ToStringPlugin extends AbstractParameterizablePlugin {
 		return "TBD";
 	}
 
+    @Override
+    protected void doSetProperty(String propertyName, String value) throws Exception {
+        if ("fieldAccessorFactory".equals(propertyName)) {
+            setFieldAccessorFactory((FieldAccessorFactory) Class.forName(value).getConstructor().newInstance());
+        } else if ("toStringStrategyClass".equals(propertyName)) {
+            setToStringStrategyClass(value);
+        } else if ("toStringEnums".equals(propertyName)) {
+            setToStringEnums(Boolean.parseBoolean(value));
+        } else {
+            super.doSetProperty(propertyName, value);
+        }
+    }
+
 	private FieldAccessorFactory fieldAccessorFactory = PropertyFieldAccessorFactory.INSTANCE;
 
 	public FieldAccessorFactory getFieldAccessorFactory() {

@@ -38,9 +38,11 @@ import java.util.Set;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb.annox.Constants;
+import org.jvnet.jaxb.annox.parser.XAnnotationParser;
 import org.jvnet.jaxb.annox.util.StringUtils;
 import org.jvnet.jaxb.plugin.AbstractParameterizablePlugin;
 import org.jvnet.jaxb.plugin.AnnotationTarget;
+import org.jvnet.jaxb.plugin.annotate.Annotator;
 import org.jvnet.jaxb.util.CustomizationUtils;
 import org.w3c.dom.Element;
 import org.xml.sax.ErrorHandler;
@@ -189,6 +191,15 @@ public class RemoveAnnotationPlugin extends AbstractParameterizablePlugin {
 	public String getUsage() {
 		return "TBD";
 	}
+
+    @Override
+    protected void doSetProperty(String propertyName, String value) throws Exception {
+        if ("defaultFieldTarget".equals(propertyName)) {
+            setDefaultFieldTarget(value);
+        } else {
+            super.doSetProperty(propertyName, value);
+        }
+    }
 
 	private String defaultFieldTarget = "getter";
 

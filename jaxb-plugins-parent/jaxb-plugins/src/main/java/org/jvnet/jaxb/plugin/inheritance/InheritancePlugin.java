@@ -10,7 +10,7 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
-import org.jvnet.jaxb.plugin.AbstractParameterizablePlugin;
+import org.jvnet.jaxb.plugin.AbstractPlugin;
 import org.jvnet.jaxb.plugin.inheritance.util.JavaTypeParser;
 import org.jvnet.jaxb.util.CustomizationUtils;
 import org.xml.sax.ErrorHandler;
@@ -33,7 +33,7 @@ import com.sun.tools.xjc.outline.Outline;
 import com.sun.tools.xjc.outline.PackageOutline;
 import com.sun.tools.xjc.reader.xmlschema.bindinfo.BIEnum;
 
-public class InheritancePlugin extends AbstractParameterizablePlugin {
+public class InheritancePlugin extends AbstractPlugin {
 
 	@Override
 	public String getOptionName() {

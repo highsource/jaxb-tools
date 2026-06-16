@@ -6,7 +6,7 @@ import java.util.Collection;
 import javax.xml.namespace.QName;
 
 import org.jvnet.jaxb.lang.EnumValue;
-import org.jvnet.jaxb.plugin.AbstractParameterizablePlugin;
+import org.jvnet.jaxb.plugin.AbstractPlugin;
 import org.jvnet.jaxb.plugin.ComposedIgnoring;
 import org.jvnet.jaxb.plugin.CustomizedIgnoring;
 import org.jvnet.jaxb.plugin.Ignoring;
@@ -24,7 +24,7 @@ import com.sun.tools.xjc.model.CEnumLeafInfo;
 import com.sun.tools.xjc.outline.EnumOutline;
 import com.sun.tools.xjc.outline.Outline;
 
-public class EnumValuePlugin extends AbstractParameterizablePlugin {
+public class EnumValuePlugin extends AbstractPlugin {
 
 	@Override
 	public String getOptionName() {

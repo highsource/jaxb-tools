@@ -26,6 +26,7 @@ import org.jvnet.hyperjaxb3.ejb.test.RoundtripTest;
 import org.jvnet.hyperjaxb3.xjc.generator.bean.field.UntypedListFieldRenderer;
 import org.jvnet.jaxb.plugin.AbstractParameterizablePlugin;
 import org.jvnet.jaxb.util.CustomizationUtils;
+import org.jvnet.jaxb.util.FieldAccessorFactory;
 import org.jvnet.jaxb.util.GeneratorContextUtils;
 import org.w3c.dom.Element;
 import org.xml.sax.ErrorHandler;
@@ -83,6 +84,31 @@ public class EjbPlugin extends AbstractParameterizablePlugin {
 	public String getUsage() {
 		return "  -Xhyperjaxb3-ejb: Hyperjaxb3 EJB plugin";
 	}
+
+    @Override
+    protected void doSetProperty(String propertyName, String value) throws Exception {
+        if ("roundtripTestClassName".equals(propertyName)) {
+            setRoundtripTestClassName(value);
+        } else if ("persistenceUnitName".equals(propertyName)) {
+            setPersistenceUnitName(value);
+        } else if ("targetDir".equals(propertyName)) {
+            setTargetDir(new File(value));
+        } else if ("persistenceXml".equals(propertyName)) {
+            setPersistenceXml(new File(value));
+        } else if ("applicationContextClassName".equals(propertyName)) {
+            setApplicationContextClassName(value);
+        } else if ("applicationContext".equals(propertyName)) {
+            setApplicationContext((IApplicationContext) Class.forName(value).getDeclaredConstructor().newInstance());
+        } else if ("maxIdentifierLength".equals(propertyName)) {
+            setMaxIdentifierLength(Integer.parseInt(value));
+        } else if ("result".equals(propertyName)) {
+            setResult(value);
+        } else if ("generateTransientId".equals(propertyName)) {
+            setGenerateTransientId(Boolean.parseBoolean(value));
+        } else {
+            super.doSetProperty(propertyName, value);
+        }
+    }
 
 	private String roundtripTestClassName;
 
@@ -173,19 +199,18 @@ public class EjbPlugin extends AbstractParameterizablePlugin {
 	public void setResult(String variant) {
 		this.result = variant;
 	}
+    private boolean generateTransientId = false;
 
-	public String getModelAndOutlineProcessorBeanName() {
+    public boolean isGenerateTransientId() {
+        return generateTransientId;
+    }
+
+    public void setGenerateTransientId(boolean generateTransientId) {
+        this.generateTransientId = generateTransientId;
+    }
+
+    public String getModelAndOutlineProcessorBeanName() {
 		return getResult();
-	}
-
-	private String[] mergePersistenceUnits = new String[0];
-
-	public String[] getMergePersistenceUnits() {
-		return mergePersistenceUnits;
-	}
-
-	public void setMergePersistenceUnits(String[] mergePersistenceUnits) {
-		this.mergePersistenceUnits = mergePersistenceUnits;
 	}
 
 	@Override

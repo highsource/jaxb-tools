@@ -25,7 +25,7 @@ public class ParentPointerPlugin extends Plugin {
 
     protected final String OPTION_NAME = "Xparent-pointer";
 
-    private static final String className = Plugin.class.getName();
+    private static final String className = ParentPointerPlugin.class.getName();
 
     private static final Logger logger = Logger.getLogger(className);
 

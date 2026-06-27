@@ -32,7 +32,7 @@ import com.sun.tools.xjc.outline.Outline;
 
 /**
  * Automatically generates the toString(), hashCode() and equals() methods
- * using Jakarta's commons-lang.
+ * using org.apache.commons:commons-lang3.
  *
  * Supports the optional ToStringStyle command line parameter to specify
  * the style for use within the toString method.
@@ -62,17 +62,37 @@ import com.sun.tools.xjc.outline.Outline;
  *
  * The default ToStringStyle adopted by this plugin is MULTI_LINE_STYLE.
  *
+ *
+ * To disable one of the generated plugins if you wish to use another module use one of the following:
+ *
+ * <pre>
+ *  -Xcommons-lang:addToStringMethod=TRUE|FALSE (default: TRUE)
+ *  -Xcommons-lang:addHashCodeMethod=TRUE|FALSE (default: TRUE)
+ *  -Xcommons-lang:addEqualsMethod=TRUE|FALSE (default: TRUE)
+ * </pre>
+ *
  * @author Hanson Char
+ * @author William Dutton (disable methods)
  */
 public class XjcCommonsLangPlugin extends Plugin
 {
     private static final String TOSTRING_STYLE_PARAM = "-Xcommons-lang:ToStringStyle=";
+    private static final String TOSTRING_DISABLED_PARAM = "-Xcommons-lang:addToStringMethod=";
+    private static final String HASH_CODE_DISABLED_PARAM = "-Xcommons-lang:addHashCodeMethod=";
+    private static final String EQUALS_DISABLED_PARAM = "-Xcommons-lang:addEqualsMethod=";
+
+    //Classes
     private static final String TOSTRINGSTYLE_CLASSNAME = "org.apache.commons.lang3.builder.ToStringStyle";
     private static final String EQUALSBUILDER_CLASSNAME = "org.apache.commons.lang3.builder.EqualsBuilder";
     private static final String HASHCODEBUILDER_CLASSNAME = "org.apache.commons.lang3.builder.HashCodeBuilder";
     private static final String TOSTRINGBUILDER_CLASSNAME = "org.apache.commons.lang3.builder.ToStringBuilder";
+
     private String toStringStyle = "MULTI_LINE_STYLE";
     private Class<?> customToStringStyle;
+
+    private boolean toStringEnabled = true;
+    private boolean equalsEnabled = true;
+    private boolean hashCodeEnabled = true;
 
     @Override
     public String getOptionName()
@@ -83,13 +103,18 @@ public class XjcCommonsLangPlugin extends Plugin
     @Override
     public String getUsage()
     {
-        return "  -Xcommons-lang        :  generate toString(), hashCode() and equals() for generated code using Jakarta's common-lang\n"
+        return "  -Xcommons-lang        :  generate toString(), hashCode() and equals() for generated code using Jakarta's common-lang "
              + " [-Xcommons-lang:ToStringStyle=MULTI_LINE_STYLE\n\t"
              + "| DEFAULT_STYLE\n\t"
              + "| NO_FIELD_NAMES_STYLE\n\t"
              + "| SHORT_PREFIX_STYLE\n\t"
              + "| SIMPLE_STYLE\n\t"
              + "| <Fully qualified class name of a ToStringStyle subtype>]\n"
+             + "\n"
+             + " To disable one of the generated plugins if you wish to use another module use one of the following:\n"
+             + "  -Xcommons-lang:addToStringMethod=FALSE\n"
+             + "  -Xcommons-lang:addHashCodeMethod=FALSE\n"
+             + "  -Xcommons-lang:addEqualsMethod=FALSE\n"
              ;
     }
 
@@ -110,6 +135,9 @@ public class XjcCommonsLangPlugin extends Plugin
 
     private void createToStringMethod(JDefinedClass implClass)
     {
+        if (!toStringEnabled) {
+            return;
+        }
         JCodeModel codeModel = implClass.owner();
         JMethod toStringMethod =
             implClass.method(JMod.PUBLIC, codeModel.ref(String.class), "toString");
@@ -135,6 +163,9 @@ public class XjcCommonsLangPlugin extends Plugin
 
     private void createEqualsMethod(JDefinedClass implClass)
     {
+        if (!equalsEnabled) {
+            return;
+        }
         JCodeModel codeModel = implClass.owner();
         JMethod toStringMethod =
             implClass.method(JMod.PUBLIC, codeModel.BOOLEAN, "equals");
@@ -153,6 +184,9 @@ public class XjcCommonsLangPlugin extends Plugin
 
     private void createHashCodeMethod(JDefinedClass implClass)
     {
+        if (!hashCodeEnabled) {
+            return;
+        }
         JCodeModel codeModel = implClass.owner();
         JMethod toStringMethod =
             implClass.method(JMod.PUBLIC, codeModel.INT, "hashCode");
@@ -189,6 +223,30 @@ public class XjcCommonsLangPlugin extends Plugin
             } catch (ClassNotFoundException e) {
                 throw new BadCommandLineException(e.getMessage());
             }
+            return 1;
+        }
+
+        // eg. -Xcommons-lang:addToStringMethod=TRUE
+        if (arg.startsWith(TOSTRING_DISABLED_PARAM))
+        {
+            String toStringBoolean = arg.substring(TOSTRING_DISABLED_PARAM.length());
+            toStringEnabled = Boolean.parseBoolean(toStringBoolean);
+            return 1;
+        }
+
+        // eg. -Xcommons-lang:addEqualsMethod=TRUE
+        if (arg.startsWith(EQUALS_DISABLED_PARAM))
+        {
+            String toStringBoolean = arg.substring(EQUALS_DISABLED_PARAM.length());
+            equalsEnabled = Boolean.parseBoolean(toStringBoolean);
+            return 1;
+        }
+
+        // eg. -Xcommons-lang:addHashCodeMethod=TRUE
+        if (arg.startsWith(HASH_CODE_DISABLED_PARAM))
+        {
+            String toStringBoolean = arg.substring(HASH_CODE_DISABLED_PARAM.length());
+            hashCodeEnabled = Boolean.parseBoolean(toStringBoolean);
             return 1;
         }
         return 0;

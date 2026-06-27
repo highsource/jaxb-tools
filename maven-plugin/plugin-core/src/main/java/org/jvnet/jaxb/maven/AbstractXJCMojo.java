@@ -590,6 +590,21 @@ public abstract class AbstractXJCMojo<O> extends AbstractMojo implements
 		this.noFileHeader = noFileHeader;
 	}
 
+    /**
+     * If 'true', suppresses generation of the timestamp in file header, xjc's
+     * -no-header-date option.
+     */
+    @Parameter(defaultValue = "false", property = "maven.xjc2.noFileHeaderDate")
+    private boolean noFileHeaderDate = false;
+
+    public boolean getNoFileHeaderDate() {
+        return noFileHeaderDate;
+    }
+
+    public void setNoFileHeaderDate(boolean noFileHeaderDate) {
+        this.noFileHeaderDate = noFileHeaderDate;
+    }
+
 	/**
 	 * If 'true', enables correct generation of Boolean getters/setters to
 	 * enable Bean Introspection apis; xjc's -enableIntrospection option.

@@ -70,7 +70,7 @@
 
     <!-- Dependencies versions -->
     <ant.version>1.10.14</ant.version>
-    <jaxb.version>4.0.6</jaxb.version>
+    <jaxb.version>4.0.8</jaxb.version>
 
     <commons-beanutils.version>1.11.0</commons-beanutils.version>
     <commons-lang3.version>3.18.0</commons-lang3.version>
@@ -81,7 +81,7 @@
     <slf4j.version>1.7.36</slf4j.version>
     <stax-ex.version>1.8.3</stax-ex.version>
     <plexus-build-api.version>1.2.0</plexus-build-api.version>
-    <plexus-utils.version>3.5.1</plexus-utils.version>
+    <plexus-utils.version>3.6.1</plexus-utils.version>
 
     <!-- Maven plugin versions -->
     <maven.plugin.plugin.version>3.10.2</maven.plugin.plugin.version>
@@ -98,7 +98,7 @@
     <maven-war-plugin.version>3.4.0</maven-war-plugin.version>
     <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
     <maven-central-publishing-maven-plugin.version>0.8.0</maven-central-publishing-maven-plugin.version>
-    <maven-release-plugin.version>3.0.0-M7</maven-release-plugin.version>
+    <maven-release-plugin.version>3.3.1</maven-release-plugin.version>
     <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
     <maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
     <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
@@ -277,7 +277,7 @@
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>com.sun.xml.bind</groupId>
+        <groupId>org.glassfish.jaxb</groupId>
         <artifactId>jaxb-bom-ext</artifactId>
         <version>${jaxb.version}</version>
         <type>pom</type>
@@ -365,6 +365,10 @@
           <exclusion>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
           </exclusion>
         </exclusions>
       </dependency>

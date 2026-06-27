@@ -70,7 +70,7 @@ import static com.sun.codemodel.JExpr.lit;
  * -Xcommons-lang:equalsTestTransients=TRUE|FALSE (default: FALSE)
  * -Xcommons-lang:equalsTestRecursive=TRUE|FALSE (default: FALSE)
  * </pre>
- * <p>NOTE: <br/>
+ * <p>NOTE:
  * When enabled equals passing when sub objects where last object POJO returns by ref check only but contents is equals
  * </p><p>
  * Performance Cost: Deep reflection is significantly slower than standard equality checks.

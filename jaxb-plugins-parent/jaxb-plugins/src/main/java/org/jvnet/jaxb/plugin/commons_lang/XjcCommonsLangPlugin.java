@@ -15,6 +15,8 @@
  */
 package org.jvnet.jaxb.plugin.commons_lang;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.xml.sax.ErrorHandler;
 
 import com.sun.codemodel.JCodeModel;
@@ -32,7 +34,7 @@ import com.sun.tools.xjc.outline.Outline;
 
 /**
  * Automatically generates the toString(), hashCode() and equals() methods
- * using Jakarta's commons-lang.
+ * using org.apache.commons:commons-lang3.
  *
  * Supports the optional ToStringStyle command line parameter to specify
  * the style for use within the toString method.
@@ -50,11 +52,11 @@ import com.sun.tools.xjc.outline.Outline;
  * Example 2:
  *
  *     -Xcommons-lang
- *     -Xcommons-lang:ToStringStyle=my.CustomToStringStyle
+ *     -Xcommons-lang:ToStringStyle=my.CustomToStringStyleClass
  *
  *     to specify the use of
  *
- *     my.CustomToStringStyle, which must be a subclass of
+ *     my.CustomToStringStyleClass, which must be a subclass of
  *
  *     org.apache.commons.lang3.builder.ToStringStyle, and contains a public no-arg constructor.
  *
@@ -71,8 +73,11 @@ public class XjcCommonsLangPlugin extends Plugin
     private static final String EQUALSBUILDER_CLASSNAME = "org.apache.commons.lang3.builder.EqualsBuilder";
     private static final String HASHCODEBUILDER_CLASSNAME = "org.apache.commons.lang3.builder.HashCodeBuilder";
     private static final String TOSTRINGBUILDER_CLASSNAME = "org.apache.commons.lang3.builder.ToStringBuilder";
+
+    protected Log logger = LogFactory.getLog(getClass());
+
     private String toStringStyle = "MULTI_LINE_STYLE";
-    private Class<?> customToStringStyle;
+    private String toStringClass = null;
 
     @Override
     public String getOptionName()
@@ -83,13 +88,20 @@ public class XjcCommonsLangPlugin extends Plugin
     @Override
     public String getUsage()
     {
-        return "  -Xcommons-lang        :  generate toString(), hashCode() and equals() for generated code using Jakarta's common-lang\n"
-             + " [-Xcommons-lang:ToStringStyle=MULTI_LINE_STYLE\n\t"
-             + "| DEFAULT_STYLE\n\t"
-             + "| NO_FIELD_NAMES_STYLE\n\t"
-             + "| SHORT_PREFIX_STYLE\n\t"
-             + "| SIMPLE_STYLE\n\t"
-             + "| <Fully qualified class name of a ToStringStyle subtype>]\n"
+        return "  -Xcommons-lang        :  generate toString(), hashCode() and equals() for generated code using Jakarta's common-lang "
+            + "[\n"
+            + "\t  -Xcommons-lang:ToStringStyle=MULTI_LINE_STYLE\n"
+            + "\t| -Xcommons-lang:ToStringStyle=DEFAULT_STYLE\n"
+            + "\t| -Xcommons-lang:ToStringStyle=NO_FIELD_NAMES_STYLE\n"
+            + "\t| -Xcommons-lang:ToStringStyle=SHORT_PREFIX_STYLE\n"
+            + "\t| -Xcommons-lang:ToStringStyle=SIMPLE_STYLE\n"
+            + "\t| -Xcommons-lang:ToStringStyle=NO_CLASS_NAME_STYLE\n"
+            + "\t| -Xcommons-lang:ToStringStyle=JSON_STYLE\n"
+            + "\t| -Xcommons-lang:ToStringStyle=<any static final variables inside org.apache.commons.lang3.builder.ToStringStyle following regex ^[A-Z0-9_]+>$\n"
+            + "\t| -Xcommons-lang:ToStringStyle=<Fully qualified class name of a ToStringStyle subtype>\n"
+            + "]\n"
+            + " Note: custom ToStringStyle class is needed if you wish to turn off setUseIdentityHashCode on top of MULTI_LINE_STYLE"
+            + "\n"
              ;
     }
 
@@ -115,22 +127,25 @@ public class XjcCommonsLangPlugin extends Plugin
             implClass.method(JMod.PUBLIC, codeModel.ref(String.class), "toString");
         // Annotate with @Override
         toStringMethod.annotate(Override.class);
-        final JExpression toStringStyleExpr =
-                customToStringStyle == null
-              ? codeModel.ref(TOSTRINGSTYLE_CLASSNAME)
-                         .staticRef(toStringStyle)
-              : JExpr._new(
-                      codeModel.ref(customToStringStyle))
-              ;
+
+        //Build body of method
+        final JExpression toStringStyleExpr;
+        if (toStringClass == null) {
+            // Call Static Reference i.e. ToStringStyle.JSON_STYLE;
+            toStringStyleExpr = codeModel.ref(TOSTRINGSTYLE_CLASSNAME).staticRef(toStringStyle);
+        } else {
+            //Direct class passed and calls new on it;
+            toStringStyleExpr = JExpr._new(codeModel.ref(toStringClass));
+        }
+
         // Invoke ToStringBuilder.reflectionToString(Object,StringStyle)
         toStringMethod.body()
-                      ._return(
-                              codeModel.ref(TOSTRINGBUILDER_CLASSNAME)
-                                       .staticInvoke("reflectionToString")
-                                       .arg(JExpr._this())
-                                       .arg(toStringStyleExpr)
-                              );
-        return;
+            ._return(
+                codeModel.ref(TOSTRINGBUILDER_CLASSNAME)
+                    .staticInvoke("reflectionToString")
+                    .arg(JExpr._this())
+                    .arg(toStringStyleExpr)
+            );
     }
 
     private void createEqualsMethod(JDefinedClass implClass)
@@ -171,24 +186,31 @@ public class XjcCommonsLangPlugin extends Plugin
     public int parseArgument(Options opt, String[] args, int i)
         throws BadCommandLineException
     {
-        // eg. -Xcommons-lang ToStringStyle=SIMPLE_STYLE
+        // eg.
+        //   -Xcommons-lang:ToStringStyle=SIMPLE_STYLE
+        // or
+        //   -Xcommons-lang:ToStringStyle=<Fully qualified class name of a ToStringStyle subtype>
         String arg = args[i].trim();
 
         if (arg.startsWith(TOSTRING_STYLE_PARAM))
         {
-            toStringStyle = arg.substring(TOSTRING_STYLE_PARAM.length());
-            try {
-                Class.forName(TOSTRINGSTYLE_CLASSNAME).getField(toStringStyle);
+            String value = arg.substring(TOSTRING_STYLE_PARAM.length());
+
+            if (value.matches("^[A-Z0-9_]+$")) {
+                try {
+                    Class.forName(TOSTRINGSTYLE_CLASSNAME).getField(value);
+                } catch (NoSuchFieldException | ClassNotFoundException | SecurityException e) {
+                    logger.error("Could not verify : '" + TOSTRINGSTYLE_CLASSNAME + "." + value + "'. Assume it's not visible to generator.", e);
+                }
+                toStringStyle = value;
                 return 1;
-            } catch (ClassNotFoundException | SecurityException e) {
-                throw new BadCommandLineException(e.getMessage());
-            } catch (NoSuchFieldException ignore) {
             }
             try {
-                customToStringStyle = Class.forName(toStringStyle);
+                Class.forName(value);
             } catch (ClassNotFoundException e) {
-                throw new BadCommandLineException(e.getMessage());
+                logger.warn("Could not find class: '" + value + "'. Assume it's not visible to generator.");
             }
+            toStringClass = value;
             return 1;
         }
         return 0;

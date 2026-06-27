@@ -32,6 +32,9 @@ import com.sun.tools.xjc.Plugin;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
 
+import static com.sun.codemodel.JExpr._null;
+import static com.sun.codemodel.JExpr.lit;
+
 /**
  * Automatically generates the toString(), hashCode() and equals() methods
  * using org.apache.commons:commons-lang3.
@@ -64,6 +67,16 @@ import com.sun.tools.xjc.outline.Outline;
  *
  * The default ToStringStyle adopted by this plugin is MULTI_LINE_STYLE.
  *
+ * Equals options:
+ * <pre>
+ * -Xcommons-lang:equalsTestTransients=TRUE|FALSE (default: FALSE)
+ * -Xcommons-lang:equalsTestRecursive=TRUE|FALSE (default: FALSE)
+ * </pre>
+ * <p>NOTE:
+ * When enabled equals passing when sub objects where last object POJO returns by ref check only but contents is equals
+ * </p><p>
+ * Performance Cost: Deep reflection is significantly slower than standard equality checks.
+ * </p>
  *
  * To disable one of the generated plugins if you wish to use another module use one of the following:
  *
@@ -82,6 +95,8 @@ public class XjcCommonsLangPlugin extends Plugin
     private static final String TOSTRING_DISABLED_PARAM = "-Xcommons-lang:addToStringMethod=";
     private static final String HASH_CODE_DISABLED_PARAM = "-Xcommons-lang:addHashCodeMethod=";
     private static final String EQUALS_DISABLED_PARAM = "-Xcommons-lang:addEqualsMethod=";
+    private static final String EQUALS_TEST_TRANSIENTS_PARAM = "-Xcommons-lang:equalsTestTransients=";
+    private static final String EQUALS_TEST_RECURSIVE_PARAM = "-Xcommons-lang:equalsTestRecursive=";
 
     //Classes
     private static final String TOSTRINGSTYLE_CLASSNAME = "org.apache.commons.lang3.builder.ToStringStyle";
@@ -91,12 +106,14 @@ public class XjcCommonsLangPlugin extends Plugin
 
     protected Log logger = LogFactory.getLog(getClass());
 
-    private String toStringStyle = "MULTI_LINE_STYLE";
+    private String toStringStyle = "MULTI_LINE_STYLE"; //Default Style
     private String toStringClass = null;
 
     private boolean toStringEnabled = true;
     private boolean equalsEnabled = true;
     private boolean hashCodeEnabled = true;
+    private boolean equalsTestTransients = false;
+    private boolean equalsTestRecursive = false;
 
     @Override
     public String getOptionName()
@@ -120,6 +137,12 @@ public class XjcCommonsLangPlugin extends Plugin
             + "\t| -Xcommons-lang:ToStringStyle=<Fully qualified class name of a ToStringStyle subtype>\n"
             + "]\n"
             + " Note: custom ToStringStyle class is needed if you wish to turn off setUseIdentityHashCode on top of MULTI_LINE_STYLE\n"
+            + "\n"
+            + " Equals options:\n"
+            + "  -Xcommons-lang:equalsTestTransients=TRUE|FALSE (default: FALSE)\n"
+            + "  -Xcommons-lang:equalsTestRecursive=TRUE|FALSE (default: FALSE)\n"
+            + " NOTE: \n"
+            + " Performance Cost: When equalsTestRecursive is TRUE, due to Deep reflection is significantly slower than standard equality checks.\n"
             + "\n"
             + " To disable one of the generated plugins if you wish to use another module use one of the following:\n"
             + "  -Xcommons-lang:addToStringMethod=FALSE\n"
@@ -185,14 +208,27 @@ public class XjcCommonsLangPlugin extends Plugin
         JVar that = toStringMethod.param(Object.class, "that");
         // Annotate with @Override
         toStringMethod.annotate(Override.class);
-        // Invoke EqualsBuilder.reflectionEquals(Object,Object);
-        toStringMethod.body()._return(
-            codeModel.ref(EQUALSBUILDER_CLASSNAME)
-                     .staticInvoke("reflectionEquals")
-                     .arg(JExpr._this())
-                     .arg(that)
-        );
-        return;
+        if (equalsTestTransients || equalsTestRecursive) {
+            //Since: 3.6
+            toStringMethod.body()._return(
+                codeModel.ref(EQUALSBUILDER_CLASSNAME)
+                    .staticInvoke("reflectionEquals") // public static boolean reflectionEquals(
+                    .arg(JExpr._this()) //final Object lhs,
+                    .arg(that) // final Object rhs,
+                    .arg(lit(equalsTestTransients)) // final boolean testTransients,
+                    .arg(_null()) // final Class<?> reflectUpToClass,
+                    .arg(lit(equalsTestRecursive)) // final boolean testRecursive,
+                    .arg(_null()) // final String... excludeFields) {
+            );
+        } else {
+            // Invoke EqualsBuilder.reflectionEquals(Object,Object);
+            toStringMethod.body()._return(
+                codeModel.ref(EQUALSBUILDER_CLASSNAME)
+                    .staticInvoke("reflectionEquals")
+                    .arg(JExpr._this())
+                    .arg(that)
+            );
+        }
     }
 
     private void createHashCodeMethod(JDefinedClass implClass)
@@ -267,6 +303,22 @@ public class XjcCommonsLangPlugin extends Plugin
         {
             String toStringBoolean = arg.substring(HASH_CODE_DISABLED_PARAM.length());
             hashCodeEnabled = Boolean.parseBoolean(toStringBoolean);
+            return 1;
+        }
+
+        // eg. -Xcommons-lang:equalsTestTransients=TRUE
+        if (arg.startsWith(EQUALS_TEST_TRANSIENTS_PARAM))
+        {
+            String toStringBoolean = arg.substring(EQUALS_TEST_TRANSIENTS_PARAM.length());
+            equalsTestTransients = Boolean.parseBoolean(toStringBoolean);
+            return 1;
+        }
+
+        // eg. -Xcommons-lang:equalsTestRecursive=TRUE
+        if (arg.startsWith(EQUALS_TEST_RECURSIVE_PARAM))
+        {
+            String toStringBoolean = arg.substring(EQUALS_TEST_RECURSIVE_PARAM.length());
+            equalsTestRecursive = Boolean.parseBoolean(toStringBoolean);
             return 1;
         }
         return 0;

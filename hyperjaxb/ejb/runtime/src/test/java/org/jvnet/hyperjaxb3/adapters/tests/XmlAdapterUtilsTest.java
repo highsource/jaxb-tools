@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import jakarta.xml.bind.JAXBElement;
+
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
@@ -254,4 +256,142 @@ public class XmlAdapterUtilsTest {
 //		Assertions.assertEquals("Conversion failed.", c, d);
 //		Assertions.assertEquals("Conversion failed.", d, e);
 //	}
+
+    @Test
+	public void testGetConverter() throws Exception {
+		final org.jvnet.hyperjaxb3.item.Converter<String, QName> converter = XmlAdapterUtils
+				.getConverter(QNameAsString.class);
+		Assertions.assertNotNull(converter);
+		final QName qname = new QName("urn:test", "test");
+		Assertions.assertEquals("{urn:test}test", converter.direct(qname));
+		Assertions.assertEquals(qname, converter.inverse("{urn:test}test"));
+	}
+
+    @Test
+	public void testAsConverter() throws Exception {
+		final jakarta.xml.bind.annotation.adapters.XmlAdapter<QName, String> adapter = new QNameAsString();
+		final org.jvnet.hyperjaxb3.item.Converter<String, QName> converter = XmlAdapterUtils
+				.asConverter(adapter);
+		Assertions.assertNotNull(converter);
+		final QName qname = new QName("urn:test", "test");
+		Assertions.assertEquals(qname, converter.inverse("{urn:test}test"));
+	}
+
+    @Test
+	public void testIsJAXBElementWithValueNull() {
+		final QName name = new QName("urn:test", "test");
+		Assertions.assertFalse(XmlAdapterUtils.isJAXBElement(String.class, name,
+				Object.class, null));
+	}
+
+    @Test
+	public void testIsJAXBElementWithNonJAXBElementValue() {
+		final QName name = new QName("urn:test", "test");
+		Assertions.assertFalse(XmlAdapterUtils.isJAXBElement(String.class, name,
+				Object.class, "not a jaxb element"));
+	}
+
+    @Test
+	public void testIsJAXBElementWithMatchingElement() {
+		final QName name = new QName("urn:test", "test");
+		final JAXBElement<String> element = new JAXBElement<String>(name,
+				String.class, null, "value");
+		Assertions.assertTrue(XmlAdapterUtils.isJAXBElement(String.class, name,
+				Object.class, element));
+	}
+
+    @Test
+	public void testIsJAXBElementWithNonMatchingName() {
+		final QName name = new QName("urn:test", "test");
+		final QName otherName = new QName("urn:other", "other");
+		final JAXBElement<String> element = new JAXBElement<String>(otherName,
+				String.class, null, "value");
+		Assertions.assertFalse(XmlAdapterUtils.isJAXBElement(String.class, name,
+				Object.class, element));
+	}
+
+    @Test
+	public void testIsJAXBElementWithNonMatchingType() {
+		final QName name = new QName("urn:test", "test");
+		final JAXBElement<String> element = new JAXBElement<String>(name,
+				String.class, null, "value");
+		Assertions.assertFalse(XmlAdapterUtils.isJAXBElement(Integer.class, name,
+				Object.class, element));
+	}
+
+    @Test
+	public void testIsJAXBElementWithAssignableType() {
+		final QName name = new QName("urn:test", "test");
+		final JAXBElement<String> element = new JAXBElement<String>(name,
+				String.class, null, "value");
+		Assertions.assertTrue(XmlAdapterUtils.isJAXBElement(Object.class, name,
+				Object.class, element));
+	}
+
+    @Test
+	public void testUnmarshallJAXBElementWithNull() {
+		Assertions.assertNull(XmlAdapterUtils.unmarshallJAXBElement(
+				QNameAsString.class, (JAXBElement<QName>) null));
+	}
+
+    @Test
+	public void testUnmarshallJAXBElementWithValue() throws Exception {
+		final QName qname = new QName("urn:test", "test");
+		final JAXBElement<QName> element = new JAXBElement<QName>(
+				new QName("urn:test", "element"), QName.class, null, qname);
+		final String result = XmlAdapterUtils.unmarshallJAXBElement(
+				QNameAsString.class, element);
+		Assertions.assertEquals("{urn:test}test", result);
+	}
+
+    @Test
+	public void testUnmarshallJAXBElementSimpleWithNull() {
+		Assertions.assertNull(XmlAdapterUtils
+				.unmarshallJAXBElement((JAXBElement<String>) null));
+	}
+
+    @Test
+	public void testUnmarshallJAXBElementSimpleWithValue() {
+		final QName name = new QName("urn:test", "element");
+		final JAXBElement<String> element = new JAXBElement<String>(name,
+				String.class, null, "hello");
+		final String result = XmlAdapterUtils.unmarshallJAXBElement(element);
+		Assertions.assertEquals("hello", result);
+	}
+
+    @Test
+	public void testMarshallJAXBElementWithNull() {
+		final QName name = new QName("urn:test", "element");
+		Assertions.assertNull(XmlAdapterUtils.marshallJAXBElement(
+				QNameAsString.class, QName.class, name, Object.class,
+				(String) null));
+	}
+
+    @Test
+	public void testMarshallJAXBElementWithValue() throws Exception {
+		final QName name = new QName("urn:test", "element");
+		final String value = "{urn:test}test";
+		final JAXBElement<QName> result = XmlAdapterUtils.marshallJAXBElement(
+				QNameAsString.class, QName.class, name, Object.class, value);
+		Assertions.assertNotNull(result);
+		Assertions.assertEquals(name, result.getName());
+		Assertions.assertEquals(new QName("urn:test", "test"), result.getValue());
+	}
+
+    @Test
+	public void testMarshallJAXBElementSimpleWithNull() {
+		final QName name = new QName("urn:test", "element");
+		Assertions.assertNull(XmlAdapterUtils.marshallJAXBElement(String.class,
+				name, Object.class, (String) null));
+	}
+
+    @Test
+	public void testMarshallJAXBElementSimpleWithValue() {
+		final QName name = new QName("urn:test", "element");
+		final JAXBElement<String> result = XmlAdapterUtils.marshallJAXBElement(
+				String.class, name, Object.class, "hello");
+		Assertions.assertNotNull(result);
+		Assertions.assertEquals(name, result.getName());
+		Assertions.assertEquals("hello", result.getValue());
+	}
 }

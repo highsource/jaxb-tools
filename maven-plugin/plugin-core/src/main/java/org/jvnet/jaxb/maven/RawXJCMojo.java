@@ -378,6 +378,7 @@ public abstract class RawXJCMojo<O> extends AbstractXJCMojo<O> {
 			getRepositorySystemSession(),
             getProject(),
             getPlugins(),
+            getEpisodes(),
             getLog(),
             getArtifactExcludes());
 		this.xjcPluginFiles = ArtifactResolverUtils.getFiles(this.xjcPluginArtifacts);

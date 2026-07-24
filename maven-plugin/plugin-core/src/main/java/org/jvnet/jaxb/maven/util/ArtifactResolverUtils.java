@@ -30,6 +30,7 @@ public class ArtifactResolverUtils {
 
 	}
 
+    @Deprecated
     public static Collection<Artifact> resolveTransitively(
             final RepositorySystem repositorySystem,
             final RepositorySystemSession repositorySystemSession,
@@ -37,23 +38,37 @@ public class ArtifactResolverUtils {
             final org.apache.maven.model.Dependency[] dependencies,
             final Log log,
             final String[] artifactExcludes) {
+        return resolveTransitively(repositorySystem, repositorySystemSession, project, dependencies, null, log, artifactExcludes);
+    }
+
+    public static Collection<Artifact> resolveTransitively(
+            final RepositorySystem repositorySystem,
+            final RepositorySystemSession repositorySystemSession,
+            final MavenProject project,
+            final org.apache.maven.model.Dependency[] dependencies,
+            final org.apache.maven.model.Dependency[] episodes,
+            final Log log,
+            final String[] artifactExcludes) {
         if (dependencies == null || dependencies.length == 0) {
             return Collections.emptyList();
         }
 
         CollectRequest collectRequest = new CollectRequest();
-        collectRequest.setRootArtifact(
-            new DefaultArtifact(
-                project.getGroupId(),
-                project.getArtifactId(),
-                project.getPackaging(),
-                project.getVersion()
-            )
-        );
+        collectRequest.setRootArtifact(new DefaultArtifact(
+            project.getGroupId(),
+            project.getArtifactId(),
+            project.getPackaging(),
+            project.getVersion()
+        ));
 
         final List<Dependency> aetherDependencies = new ArrayList<>(dependencies.length);
         for (org.apache.maven.model.Dependency dependency : dependencies) {
             aetherDependencies.add(toAetherDependency(dependency));
+        }
+        if (episodes != null) {
+            for (org.apache.maven.model.Dependency episode : episodes) {
+                aetherDependencies.add(toAetherDependency(episode));
+            }
         }
         collectRequest.setDependencies(aetherDependencies);
         collectRequest.setRepositories(project.getRemoteProjectRepositories());
